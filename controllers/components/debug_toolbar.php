@@ -46,7 +46,7 @@ class DebugToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('session', 'timers', 'request', 'sqlLog', 'memory');
+	var $_defaultPanels = array('session', 'timer', 'request', 'sqlLog', 'memory');
 	
 	var $panels = array();
 /**
@@ -81,12 +81,12 @@ class DebugToolbarComponent extends Object {
  **/
 	function startup(&$controller) {
 		DebugKitDebugger::stopTimer('componentInit');
-		
+
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
 		}
-		
+
 		DebugKitDebugger::startTimer('controllerAction', __('Controller Action start', true));
 	}
 /**
@@ -110,7 +110,7 @@ class DebugToolbarComponent extends Object {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
 			if (!class_exists($className) && !App::import('Vendor', 'debug_panels' . DS .$className)) {
-				trigger_error(sprintf(__('Could not load Panel %s', true), $panel), E_USER_WARNING);
+				trigger_error(sprintf(__('Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
 				continue;
 			}
 			$panelObj =& new $className();
@@ -149,7 +149,6 @@ class DebugPanel extends Object {
 
 }
 
-
 /**
  * Session Panel
  *
@@ -170,6 +169,39 @@ class SessionPanel extends DebugPanel {
  **/
 class RequestPanel extends DebugPanel {
 	
+}
+
+/**
+ * Timer Panel
+ *
+ * Provides debug information on all timers used in a request.
+ *
+ * @package cake.debug_kit.panels
+ **/
+class TimerPanel extends DebugPanel {
+	
+}
+
+/**
+ * Memory Panel
+ *
+ * Provides debug information on the memory consumption.
+ *
+ * @package cake.debug_kit.panels
+ **/
+class MemoryPanel extends DebugPanel {
+	
+}
+
+/**
+ * sqlLog Panel
+ *
+ * Provides debug information on the SQL logs and provides links to an ajax explain interface.
+ *
+ * @package cake.debug_kit.panels
+ **/
+class sqlLogPanel extends DebugPanel {
+
 }
 
 ?>

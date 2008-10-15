@@ -90,7 +90,7 @@ class DebugToolbarComponent extends Object {
  **/
 	function startup(&$controller) {
 		if (!isset($controller->params['url']['ext']) || (isset($controller->param['url']['ext']) && $controller->params['url']['ext'] == 'html')) {
-			$controller->viewClass = 'DebugKit.DebugView';
+			$controller->view = 'DebugKit.DebugView';
 		} else {
 			//use firephp view class.
 		}

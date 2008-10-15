@@ -37,6 +37,8 @@ class TestDebugToolbarComponent extends DebugToolbarComponent {
 	
 }
 
+Mock::generate('DebugPanel');
+
 /**
 * DebugToolbar Test case
 */
@@ -69,9 +71,37 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @access public
  **/
 	function testInitialize() {
-		$this->Controller->components = array('DebugToolbar');
+		$this->Controller->components = array('DebugKit.DebugToolbar');
 		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
 		
+		$this->assertFalse(empty($this->Controller->DebugToolbar->panels));
+
+		$timers = DebugKitDebugger::getTimers();
+		$this->assertTrue(isset($timers['componentInit']));
+	}
+	
+/**
+ * test startup
+ *
+ * @return void
+ **/
+	function testStartup() {
+		$this->Controller->components = array(
+			'DebugKit.DebugToolbar' => array(
+				'panels' => array('MockDebug')
+			)
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->DebugToolbar->panels['MockDebug']->expectOnce('startup');
+		$this->Controller->DebugToolbar->startup($this->Controller);
+
+		$this->assertEqual(count($this->Controller->DebugToolbar->panels), 1);
+		$this->assertEqual($this->Controller->viewClass, 'DebugKit.DebugView');
+
+		$timers = DebugKitDebugger::getTimers();
+		$this->assertTrue(isset($timers['controllerAction']));
 	}
 
 /**
@@ -81,6 +111,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function tearDown() {
 		unset($this->Controller);
+		DebugKitDebugger::clearTimers();
 	}
 }
 ?>

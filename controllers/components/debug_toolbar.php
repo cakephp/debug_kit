@@ -33,11 +33,16 @@
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
 class DebugToolbarComponent extends Object {
+/**
+ * Controller instance reference
+ *
+ * @var object
+ */
 	var $controller;
 /**
  * Components used by DebugToolbar
  *
- * @var string
+ * @var array
  */
 	var $components = array('RequestHandler');
 /**
@@ -47,7 +52,11 @@ class DebugToolbarComponent extends Object {
  * @var array
  */
 	var $_defaultPanels = array('session', 'timer', 'request', 'sqlLog', 'memory');
-	
+/**
+ * Built panels
+ *
+ * @var array
+ */	
 	var $panels = array();
 /**
  * initialize
@@ -80,13 +89,17 @@ class DebugToolbarComponent extends Object {
  * @return bool
  **/
 	function startup(&$controller) {
-		DebugKitDebugger::stopTimer('componentInit');
-
+		if (!isset($controller->params['url']['ext']) || (isset($controller->param['url']['ext']) && $controller->params['url']['ext'] == 'html')) {
+			$controller->viewClass = 'DebugKit.DebugView';
+		} else {
+			//use firephp view class.
+		}
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
 		}
-
+		
+		DebugKitDebugger::stopTimer('componentInit');
 		DebugKitDebugger::startTimer('controllerAction', __('Controller Action start', true));
 	}
 /**
@@ -97,7 +110,12 @@ class DebugToolbarComponent extends Object {
 	function beforeRender(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
 		
-		DebugKitDebugger::startTimer('ControllerRender', __('Begin Rendering', true));
+		$panels = array_keys($this->panels);
+		foreach ($panels as $panelName) {
+			$this->panels[$panelName]->beforeRender($controller);
+		}
+		
+		DebugKitDebugger::startTimer('ControllerRender', __('Render start', true));
 	}
 	
 /**
@@ -170,7 +188,6 @@ class SessionPanel extends DebugPanel {
 class RequestPanel extends DebugPanel {
 	
 }
-
 /**
  * Timer Panel
  *
@@ -181,7 +198,6 @@ class RequestPanel extends DebugPanel {
 class TimerPanel extends DebugPanel {
 	
 }
-
 /**
  * Memory Panel
  *

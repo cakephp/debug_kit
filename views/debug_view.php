@@ -26,7 +26,16 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+App::import('Core', 'View');
+App::import('Vendor', 'DebugKit.DebugKitDebugger');
+
 class DebugView extends View {
+/**
+ * The old extension of the current template.
+ *
+ * @var string
+ */
+	var $_oldExtension = null;
 /**
  * Overload _render to capture filenames and time actual rendering of each file
  *
@@ -36,11 +45,16 @@ class DebugView extends View {
  * @access protected
  */
 	function _render($___viewFn, $___dataForView, $loadHelpers = true, $cached = false) {
-		DebugKitDebugger::startTimer('render' . $___viewFn, sprintf(__('Rendering %s', true), $___viewFn)); 
+		if (isset($this->_oldExtension)) {
+			$___viewFn = substr($___viewFn, 0, -10) . $this->_oldExtension;
+			$this->_oldExtension = null;
+		}
+		DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__('Rendering %s', true), $___viewFn));
 		$out = parent::_render($___viewFn, $___dataForView, $loadHelpers, $cached);
-		DebugKitDebugger::stopTimer('render' . $___viewFn);
-		return $out;	
+		DebugKitDebugger::stopTimer('render_' . basename($___viewFn));
+		return $out;
 	}
+	
 /**
  * Renders view for given action and layout. If $file is given, that is used
  * for a view filename (e.g. customFunkyView.ctp).
@@ -52,43 +66,53 @@ class DebugView extends View {
  * @return string Rendered Element
  */	
 	function render($action = null, $layout = null, $file = null) {
-		DebugKitDebugger::startTimer('viewRender', __('Rendering View', true);
-		if ($this->hasRendered) {
-			return true;
-		}
-		$out = null;
-
-		if ($file != null) {
-			$action = $file;
-		}
-
-		if ($action !== false && $viewFileName = $this->_getViewFileName($action)) {
-			$out = $this->_render($viewFileName, $this->viewVars);
-		}
-
-		if ($layout === null) {
-			$layout = $this->layout;
-		}
-
-		if ($out !== false) {
-			if ($layout && $this->autoLayout) {
-				$out = $this->renderLayout($out, $layout);
-				if (isset($this->loaded['cache']) && (($this->cacheAction != false)) && (Configure::read('Cache.check') === true)) {
-					$replace = array('<cake:nocache>', '</cake:nocache>');
-					$out = str_replace($replace, '', $out);
-				}
-			}
-			$this->hasRendered = true;
-		} else {
-			$out = $this->_render($viewFileName, $this->viewVars);
-			trigger_error(sprintf(__("Error in view %s, got: <blockquote>%s</blockquote>", true), $viewFileName, $out), E_USER_ERROR);
-		}
-
+		DebugKitDebugger::startTimer('viewRender', __('Rendering View', true));
+		$out = parent::render($action, $layout, $file);
 		DebugKitDebugger::stopTimer('viewRender');
 		$out = $this->_injectToolbar($out);
 		return $out;
 	}
-
+	
+/**
+ * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
+ * Creates temporary extension to trick View::render() & View::renderLayout()
+ *
+ * @param string $name Action name.
+ * @return string
+ **/
+	function _getViewFileName($name = null) {
+		$filename = parent::_getViewFileName($name);
+		return $this->_replaceExtension($filename);
+	}
+	
+/**
+ * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
+ * Creates temporary extension to trick View::render() & View::renderLayout()
+ *
+ * @param string $name Layout Name
+ * @return string
+ **/
+	function _getLayoutFileName($name = null) {
+		$filename = parent::_getLayoutFileName($name);
+		return $this->_replaceExtension($filename);
+	}
+	
+/**
+ * replace the Extension on a filename and set the temporary workaround extension.
+ *
+ * @param string $filename Filename to replace extension for.
+ * @return string
+ **/
+	function _replaceExtension($filename) {
+		if (substr($filename, -3) == 'ctp') {
+			$this->_oldExtension = 'ctp';
+			$filename = substr($filename, 0, strlen($filename) -3) . 'debug_view';
+		} elseif (substr($filename, -5) == 'thtml') {
+			$this->_oldExtension = 'thtml';
+			$filename = substr($filename, 0, strlen($filename) -5) . 'debug_view';
+		}
+		return $filename;
+	}
 /**
  * Inject the toolbar elements into a rendered view.
  *

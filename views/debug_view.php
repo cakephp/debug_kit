@@ -114,14 +114,39 @@ class DebugView extends View {
 		return $filename;
 	}
 /**
+ * Recursively goes through an array and makes neat HTML out of it.
+ *
+ * @return string
+ **/
+	function makeNeatArray($array) {
+		$out = '<dl class="neat-array">';
+		foreach ($array as $key => $value) {
+			$out .= '<dt>' . $key . '</dt>';
+			$out .= '<dd>';
+			if (is_array($value)) {
+				$out .= $this->makeNeatArray($value);
+			} else {
+				$out .= $value;
+			}
+			$out .= '</dd>';
+		}
+		$out .= '</dl>';
+		return $out;
+	}
+	
+/**
  * Inject the toolbar elements into a rendered view.
  *
  * @param string $output 
  * @access public
- * @return void
+ * @return string
  */
 	function _injectToolbar($output) {
-		//Inject toolbar
+		$toolbar = $this->element('debug_toolbar', array('plugin' => 'debugKit'));
+		$bodyEnd = '#</body>\s*</html>#';
+		if (preg_match($bodyEnd, $output)) {
+			$output = preg_replace($bodyEnd, $toolbar . "</body>\n</html>", $output, 1);
+		}
 		return $output;
 	}
 }

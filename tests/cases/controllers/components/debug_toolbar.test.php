@@ -103,6 +103,33 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
 	}
+	
+/**
+ * Test Before Render callback
+ *
+ * @return void
+ **/
+	function testBeforeRender() {
+		$this->Controller->components = array(
+			'DebugKit.DebugToolbar' => array(
+				'panels' => array('MockDebug', 'session')
+			)
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->DebugToolbar->panels['MockDebug']->expectOnce('beforeRender');
+		$this->Controller->DebugToolbar->beforeRender($this->Controller);
+		
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarPanels']));
+		$vars = $this->Controller->viewVars['debugToolbarPanels'];
+
+		$expected = array(
+			'plugin' => 'debugKit',
+			'elementName' => 'session_panel',
+			'vars' => $this->Controller->Session->read(),
+		);
+		$this->assertEqual($expected, $vars['session']);
+	}
 
 /**
  * teardown

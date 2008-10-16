@@ -105,16 +105,26 @@ class DebugToolbarComponent extends Object {
 /**
  * beforeRender callback
  *
+ * Calls beforeRender on all the panels and set the aggregate to the controller.
+ *
  * @return void
  **/
 	function beforeRender(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
-		
+		$vars = array();
 		$panels = array_keys($this->panels);
+
 		foreach ($panels as $panelName) {
-			$this->panels[$panelName]->beforeRender($controller);
+			$panel =& $this->panels[$panelName];
+			$vars[$panelName]['vars'] = $panel->beforeRender($controller);
+			$elementName = Inflector::underscore($panelName) . '_panel';
+			if (isset($panel->elementName)) {
+				$elementName = $panel->elementName;
+			}
+			$vars[$panelName]['elementName'] = $elementName;
+			$vars[$panelName]['plugin'] = $panel->plugin;
 		}
-		
+		$controller->set('debugToolbarPanels', $vars);
 		DebugKitDebugger::startTimer('ControllerRender', __('Render start', true));
 	}
 	
@@ -148,6 +158,12 @@ class DebugToolbarComponent extends Object {
  */
 class DebugPanel extends Object {
 /**
+ * Plugin defines which plugin this panel is from so the element can be located.
+ *
+ * @var string
+ */
+	var $plugin = null;
+/**
  * startup the panel
  *
  * Pull information from the controller / request
@@ -164,7 +180,6 @@ class DebugPanel extends Object {
  * @return void
  **/
 	function beforeRender(&$controller) { }
-
 }
 
 /**
@@ -175,7 +190,11 @@ class DebugPanel extends Object {
  * @package cake.debug_kit.panels
  **/
 class SessionPanel extends DebugPanel {
+	var $plugin = 'debugKit';
 	
+	function beforeRender(&$controller) {
+		return $controller->Session->read();
+	}
 }
 
 /**
@@ -186,7 +205,15 @@ class SessionPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class RequestPanel extends DebugPanel {
-	
+	var $plugin = 'debugKit';
+/**
+ * beforeRender callback - grabs request params
+ *
+ * @return array
+ **/
+	function beforeRender(&$controller) {
+		return $controller->params;
+	}
 }
 /**
  * Timer Panel
@@ -196,7 +223,7 @@ class RequestPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class TimerPanel extends DebugPanel {
-	
+	var $plugin = 'debugKit';
 }
 /**
  * Memory Panel
@@ -206,7 +233,7 @@ class TimerPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class MemoryPanel extends DebugPanel {
-	
+	var $plugin = 'debugKit';
 }
 
 /**
@@ -217,7 +244,7 @@ class MemoryPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class sqlLogPanel extends DebugPanel {
-
+	var $plugin = 'debugKit';
 }
 
 ?>

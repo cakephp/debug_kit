@@ -53,7 +53,8 @@ class DebugViewTestCase extends CakeTestCase {
 	function startCase() {
 		$this->_viewPaths = Configure::read('viewPaths');
 		Configure::write('viewPaths', array(
-			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS, 
+			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
+			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
 			ROOT . DS . LIBS . 'view' . DS
 		));
 	}
@@ -90,13 +91,90 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->Controller->layout = 'default';
 		$View =& new DebugView($this->Controller, false);
 		$View->render('index');
+		
 		$result = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($result), 3);
+		$this->assertEqual(count($result), 4);
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));
 	}
 	
+/**
+ * Test injection of toolbar
+ *
+ * @return void
+ **/
+	function testInjectToolbar() {
+		$this->Controller->viewPath = 'posts';
+		$this->Controller->action = 'index';
+		$this->Controller->params = array(
+			'action' => 'index',
+			'controller' => 'posts',
+			'plugin' => null,
+			'url' => array('url' => 'posts/index'),
+			'base' => null,
+			'here' => '/posts/index',
+		);
+		$this->Controller->layout = 'default';
+		$View =& new DebugView($this->Controller, false);
+		$result = $View->render('index');
+		$result = str_replace(array("\n", "\r"), '', $result);
+		$this->assertPattern('#<div id\="debugKitToolbar">.+</div></body>#', $result);
+	}
+
+/**
+ * test Neat Array formatting
+ *
+ * @return void
+ **/
+	function testMakeNeatArray() {
+		$in = array('key' => 'value');
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'dl' => array('class' => 'neat-array'),
+			'<dt', 'key', '/dt',
+			'<dd', 'value', '/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+		
+		$in = array('key' => 'value', 'foo' => 'bar');
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'dl' => array('class' => 'neat-array'),
+			'<dt', 'key', '/dt',
+			'<dd', 'value', '/dd',
+			'<dt', 'foo', '/dt',
+			'<dd', 'bar', '/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+		
+		$in = array(
+			'key' => 'value', 
+			'foo' => array(
+				'this' => 'deep',
+				'another' => 'value'
+			)
+		);
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'dl' => array('class' => 'neat-array'),
+			'<dt', 'key', '/dt',
+			'<dd', 'value', '/dd',
+			'<dt', 'foo', '/dt',
+			'<dd', 
+				array('dl' => array('class' => 'neat-array')),
+				'<dt', 'this', '/dt',
+				'<dd', 'deep', '/dd',
+				'<dt', 'another', '/dt',
+				'<dd', 'value', '/dd',
+				'/dl',
+			'/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+	}
 /**
  * reset the view paths
  *

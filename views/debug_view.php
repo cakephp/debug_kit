@@ -137,8 +137,8 @@ class DebugView extends View {
 /**
  * Inject the toolbar elements into a rendered view.
  *
- * @param string $output 
- * @access public
+ * @param string $output Rendered Layout and view.
+ * @access protected
  * @return string
  */
 	function _injectToolbar($output) {

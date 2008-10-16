@@ -158,7 +158,7 @@ class DebugToolbarComponent extends Object {
  */
 class DebugPanel extends Object {
 /**
- * Plugin defines which plugin this panel is from so the element can be located.
+ * Defines which plugin this panel is from so the element can be located.
  *
  * @var string
  */

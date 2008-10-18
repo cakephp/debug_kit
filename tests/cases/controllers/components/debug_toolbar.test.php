@@ -98,7 +98,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->DebugToolbar->startup($this->Controller);
 
 		$this->assertEqual(count($this->Controller->DebugToolbar->panels), 1);
-		$this->assertEqual($this->Controller->view, 'DebugKit.DebugView');
+		$this->assertEqual($this->Controller->view, 'DebugKit.Debug');
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
@@ -126,7 +126,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$expected = array(
 			'plugin' => 'debugKit',
 			'elementName' => 'session_panel',
-			'vars' => $this->Controller->Session->read(),
+			'content' => $this->Controller->Session->read(),
 		);
 		$this->assertEqual($expected, $vars['session']);
 	}

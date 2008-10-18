@@ -27,4 +27,4 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
-<?php echo $this->makeNeatArray($vars); ?>
+<?php echo $this->makeNeatArray($content); ?>

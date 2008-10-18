@@ -27,7 +27,7 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Core', array('View', 'Controller'));
-App::import('View', 'DebugKit.DebugView');
+App::import('View', 'DebugKit.Debug');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 /**
  * Debug View Test Case
@@ -119,7 +119,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$View =& new DebugView($this->Controller, false);
 		$result = $View->render('index');
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<div id\="debugKitToolbar">.+</div></body>#', $result);
+		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
 	}
 
 /**
@@ -131,9 +131,19 @@ class DebugViewTestCase extends CakeTestCase {
 		$in = array('key' => 'value');
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array'),
+			'dl' => array('class' => 'neat-array depth-0'),
 			'<dt', 'key', '/dt',
 			'<dd', 'value', '/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+		
+		$in = array('key' => null);
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'dl' => array('class' => 'neat-array depth-0'),
+			'<dt', 'key', '/dt',
+			'<dd', '(null)', '/dd',
 			'/dl'
 		);
 		$this->assertTags($result, $expected);
@@ -141,7 +151,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$in = array('key' => 'value', 'foo' => 'bar');
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array'),
+			'dl' => array('class' => 'neat-array depth-0'),
 			'<dt', 'key', '/dt',
 			'<dd', 'value', '/dd',
 			'<dt', 'foo', '/dt',
@@ -159,18 +169,95 @@ class DebugViewTestCase extends CakeTestCase {
 		);
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array'),
+			'dl' => array('class' => 'neat-array depth-0'),
 			'<dt', 'key', '/dt',
 			'<dd', 'value', '/dd',
 			'<dt', 'foo', '/dt',
 			'<dd', 
-				array('dl' => array('class' => 'neat-array')),
+				array('dl' => array('class' => 'neat-array depth-1')),
 				'<dt', 'this', '/dt',
 				'<dd', 'deep', '/dd',
 				'<dt', 'another', '/dt',
 				'<dd', 'value', '/dd',
 				'/dl',
 			'/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+
+		$in = array(
+			'key' => 'value', 
+			'foo' => array(
+				'this' => 'deep',
+				'another' => 'value'
+			),
+			'lotr' => array(
+				'gandalf' => 'wizard',
+				'bilbo' => 'hobbit'
+			)
+		);
+		$result = $this->View->makeNeatArray($in, 1);
+		$expected = array(
+			'dl' => array('class' => 'neat-array depth-0 expanded'),
+			'<dt', 'key', '/dt',
+			'<dd', 'value', '/dd',
+			'<dt', 'foo', '/dt',
+			'<dd', 
+				array('dl' => array('class' => 'neat-array depth-1')),
+				'<dt', 'this', '/dt',
+				'<dd', 'deep', '/dd',
+				'<dt', 'another', '/dt',
+				'<dd', 'value', '/dd',
+				'/dl',
+			'/dd',
+			'<dt', 'lotr', '/dt',
+			'<dd', 
+				array('dl' => array('class' => 'neat-array depth-1')),
+				'<dt', 'gandalf', '/dt',
+				'<dd', 'wizard', '/dd',
+				'<dt', 'bilbo', '/dt',
+				'<dd', 'hobbit', '/dd',
+				'/dl',
+			'/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+		
+		$result = $this->View->makeNeatArray($in, 2);
+		$expected = array(
+			'dl' => array('class' => 'neat-array depth-0 expanded'),
+			'<dt', 'key', '/dt',
+			'<dd', 'value', '/dd',
+			'<dt', 'foo', '/dt',
+			'<dd', 
+				array('dl' => array('class' => 'neat-array depth-1 expanded')),
+				'<dt', 'this', '/dt',
+				'<dd', 'deep', '/dd',
+				'<dt', 'another', '/dt',
+				'<dd', 'value', '/dd',
+				'/dl',
+			'/dd',
+			'<dt', 'lotr', '/dt',
+			'<dd', 
+				array('dl' => array('class' => 'neat-array depth-1 expanded')),
+				'<dt', 'gandalf', '/dt',
+				'<dd', 'wizard', '/dd',
+				'<dt', 'bilbo', '/dt',
+				'<dd', 'hobbit', '/dd',
+				'/dl',
+			'/dd',
+			'/dl'
+		);
+		$this->assertTags($result, $expected);
+		
+		$in = array('key' => 'value', 'array' => array());
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'dl' => array('class' => 'neat-array depth-0'),
+			'<dt', 'key', '/dt',
+			'<dd', 'value', '/dd',
+			'<dt', 'array', '/dt',
+			'<dd', '(empty)', '/dd',
 			'/dl'
 		);
 		$this->assertTags($result, $expected);

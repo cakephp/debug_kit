@@ -89,8 +89,11 @@ class DebugToolbarComponent extends Object {
  * @return bool
  **/
 	function startup(&$controller) {
-		if (!isset($controller->params['url']['ext']) || (isset($controller->param['url']['ext']) && $controller->params['url']['ext'] == 'html')) {
-			$controller->view = 'DebugKit.DebugView';
+		if (!isset($controller->params['url']['ext']) 
+			|| (isset($controller->param['url']['ext']) 
+			&& $controller->params['url']['ext'] == 'html')
+		) {
+			$controller->view = 'DebugKit.Debug';
 		} else {
 			//use firephp view class.
 		}
@@ -116,7 +119,7 @@ class DebugToolbarComponent extends Object {
 
 		foreach ($panels as $panelName) {
 			$panel =& $this->panels[$panelName];
-			$vars[$panelName]['vars'] = $panel->beforeRender($controller);
+			$vars[$panelName]['content'] = $panel->beforeRender($controller);
 			$elementName = Inflector::underscore($panelName) . '_panel';
 			if (isset($panel->elementName)) {
 				$elementName = $panel->elementName;
@@ -190,7 +193,7 @@ class DebugPanel extends Object {
  * @package cake.debug_kit.panels
  **/
 class SessionPanel extends DebugPanel {
-	var $plugin = 'debugKit';
+	var $plugin = 'debug_kit';
 	
 	function beforeRender(&$controller) {
 		return $controller->Session->read();
@@ -205,7 +208,7 @@ class SessionPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class RequestPanel extends DebugPanel {
-	var $plugin = 'debugKit';
+	var $plugin = 'debug_kit';
 /**
  * beforeRender callback - grabs request params
  *
@@ -223,7 +226,7 @@ class RequestPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class TimerPanel extends DebugPanel {
-	var $plugin = 'debugKit';
+	var $plugin = 'debug_kit';
 }
 /**
  * Memory Panel
@@ -233,7 +236,7 @@ class TimerPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class MemoryPanel extends DebugPanel {
-	var $plugin = 'debugKit';
+	var $plugin = 'debug_kit';
 }
 
 /**
@@ -244,7 +247,7 @@ class MemoryPanel extends DebugPanel {
  * @package cake.debug_kit.panels
  **/
 class sqlLogPanel extends DebugPanel {
-	var $plugin = 'debugKit';
+	var $plugin = 'debug_kit';
 }
 
 ?>

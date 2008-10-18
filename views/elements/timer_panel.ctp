@@ -1,9 +1,9 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Debug Toolbar Element
+ * Session Panel Element
  *
- * Renders all of the other panel elements.
+ * 
  *
  * PHP versions 4 and 5
  *
@@ -26,14 +26,8 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+$timers = DebugKitDebugger::getTimers();
+array_pop($timers);
+echo $this->makeNeatArray($timers);
 ?>
-<div id="debug-kit-toolbar">
-	<?php if (empty($debugToolbarPanels)) :?>
-		<p class="warning"><?php __('There are no active panels. You must enable a panel to see its output.'); ?></p>
-	<?php else: ?>
-		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo) : ?>
-			<div class="panel-tab"><?php echo Inflector::humanize(Inflector::underscore($panelName)); ?></div>
-			<div class="panel-content"><?php echo $this->element($panelInfo['elementName'], $panelInfo); ?></div>
-		<?php endforeach; ?>
-	<?php endif; ?>
-</div>
+

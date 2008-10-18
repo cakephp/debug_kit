@@ -237,6 +237,18 @@ class TimerPanel extends DebugPanel {
  **/
 class MemoryPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+}
+
+/**
+ * sqlLog Panel
+ *
+ * Provides debug information on the SQL logs and provides links to an ajax explain interface.
+ *
+ * @package cake.debug_kit.panels
+ **/
+class sqlLogPanel extends DebugPanel {
+	var $plugin = 'debug_kit';
+	
 /**
  * get db configs.
  *
@@ -252,6 +264,7 @@ class MemoryPanel extends DebugPanel {
 		$this->dbConfigs = ConnectionManager::sourceList();
 		return true;
 	}
+
 /**
  * Get Sql Logs for each DB config
  *
@@ -272,17 +285,6 @@ class MemoryPanel extends DebugPanel {
 		}
 		return $queryLogs;
 	}
-}
-
-/**
- * sqlLog Panel
- *
- * Provides debug information on the SQL logs and provides links to an ajax explain interface.
- *
- * @package cake.debug_kit.panels
- **/
-class sqlLogPanel extends DebugPanel {
-	var $plugin = 'debug_kit';
 }
 
 ?>

@@ -280,7 +280,9 @@ class sqlLogPanel extends DebugPanel {
 		foreach ($this->dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
 			if ($db->isInterfaceSupported('showLog')) {
-				$queryLogs[$configName] = $db->showLog();
+				ob_start();
+				$db->showLog();
+				$queryLogs[$configName] = ob_get_clean();
 			}
 		}
 		return $queryLogs;

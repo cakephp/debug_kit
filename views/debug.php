@@ -49,9 +49,15 @@ class DebugView extends View {
 			$___viewFn = substr($___viewFn, 0, -10) . $this->_oldExtension;
 			$this->_oldExtension = null;
 		}
-		DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__('Rendering %s', true), $___viewFn));
+		if (!isset($___dataForView['disableTimer'])) {
+			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__('Rendering %s', true), Debugger::trimPath($___viewFn)));
+		}
+		
 		$out = parent::_render($___viewFn, $___dataForView, $loadHelpers, $cached);
-		DebugKitDebugger::stopTimer('render_' . basename($___viewFn));
+		
+		if (!isset($___dataForView['disableTimer'])) {
+			DebugKitDebugger::stopTimer('render_' . basename($___viewFn));
+		}
 		return $out;
 	}
 	
@@ -69,6 +75,7 @@ class DebugView extends View {
 		DebugKitDebugger::startTimer('viewRender', __('Rendering View', true));
 		$out = parent::render($action, $layout, $file);
 		DebugKitDebugger::stopTimer('viewRender');
+		DebugKitDebugger::stopTimer('controllerRender');
 		$out = $this->_injectToolbar($out);
 		return $out;
 	}

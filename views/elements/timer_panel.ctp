@@ -28,6 +28,10 @@
  */
 $timers = DebugKitDebugger::getTimers();
 array_pop($timers);
-echo $this->makeNeatArray($timers);
 ?>
+<?php foreach ($timers as $timerName => $timeInfo): ?>
+	<div class="debug-timer">
+		<p class="timer-message"><?php echo $timeInfo['message']; ?> <strong><?php echo $timeInfo['time']; ?> </strong> </p>
+	</div>
+<?php endforeach; ?>
 

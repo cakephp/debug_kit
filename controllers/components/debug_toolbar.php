@@ -51,7 +51,7 @@ class DebugToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('session', 'timer', 'request', 'sqlLog', 'memory');
+	var $_defaultPanels = array('session', 'request', 'sqlLog', 'memory', 'timer');
 /**
  * Built panels
  *
@@ -103,7 +103,7 @@ class DebugToolbarComponent extends Object {
 		}
 		
 		DebugKitDebugger::stopTimer('componentInit');
-		DebugKitDebugger::startTimer('controllerAction', __('Controller Action start', true));
+		DebugKitDebugger::startTimer('controllerAction', __('Controller Action', true));
 	}
 /**
  * beforeRender callback
@@ -126,9 +126,10 @@ class DebugToolbarComponent extends Object {
 			}
 			$vars[$panelName]['elementName'] = $elementName;
 			$vars[$panelName]['plugin'] = $panel->plugin;
+			$vars[$panelName]['disableTimer'] = true;
 		}
 		$controller->set('debugToolbarPanels', $vars);
-		DebugKitDebugger::startTimer('ControllerRender', __('Render start', true));
+		DebugKitDebugger::startTimer('controllerRender', __('Render Action', true));
 	}
 	
 /**

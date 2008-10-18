@@ -27,3 +27,13 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
+<?php if (!empty($content)) : ?>
+	<?php foreach ($content as $dbName => $queryLog) : ?>
+	<div class="sql-log-panel-query-log">
+		<h4><?php echo $dbName ?></h4>
+		<?php echo $queryLog; ?>
+	</div>
+	<?php endforeach; ?>
+<?php else: ?>
+	<p class="warning"><?php __('No active database connections'); ?>
+<?php endif; ?>

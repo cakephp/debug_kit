@@ -159,10 +159,9 @@ class DebugView extends View {
 			$className .= ' expanded';
 		}
 		$nextDepth = $currentDepth + 1;
-		$out = "<dl class=\"$className\">";
+		$out = "<ul class=\"$className\">";
 		foreach ($array as $key => $value) {
-			$out .= '<dt>' . $key . '</dt>';
-			$out .= '<dd>';
+			$out .= '<li><strong>' . $key . '</strong>';
 			if ($value === null) {
 				$value = '(null)';
 			}
@@ -174,9 +173,9 @@ class DebugView extends View {
 			} else {
 				$out .= $value;
 			}
-			$out .= '</dd>';
+			$out .= '</li>';
 		}
-		$out .= '</dl>';
+		$out .= '</ul>';
 		return $out;
 	}
 	

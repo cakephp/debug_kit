@@ -131,32 +131,28 @@ class DebugViewTestCase extends CakeTestCase {
 		$in = array('key' => 'value');
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0'),
-			'<dt', 'key', '/dt',
-			'<dd', 'value', '/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', 'key', '/strong', 'value', '/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 		
 		$in = array('key' => null);
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0'),
-			'<dt', 'key', '/dt',
-			'<dd', '(null)', '/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', 'key', '/strong', '(null)', '/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 		
 		$in = array('key' => 'value', 'foo' => 'bar');
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0'),
-			'<dt', 'key', '/dt',
-			'<dd', 'value', '/dd',
-			'<dt', 'foo', '/dt',
-			'<dd', 'bar', '/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', 'key', '/strong', 'value', '/li',
+			'<li', '<strong', 'foo', '/strong', 'bar', '/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 		
@@ -169,19 +165,15 @@ class DebugViewTestCase extends CakeTestCase {
 		);
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0'),
-			'<dt', 'key', '/dt',
-			'<dd', 'value', '/dd',
-			'<dt', 'foo', '/dt',
-			'<dd', 
-				array('dl' => array('class' => 'neat-array depth-1')),
-				'<dt', 'this', '/dt',
-				'<dd', 'deep', '/dd',
-				'<dt', 'another', '/dt',
-				'<dd', 'value', '/dd',
-				'/dl',
-			'/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', 'key', '/strong', 'value', '/li',
+			'<li', '<strong', 'foo', '/strong',
+				array('ul' => array('class' => 'neat-array depth-1')),
+				'<li', '<strong', 'this', '/strong', 'deep', '/li',
+				'<li', '<strong', 'another', '/strong', 'value', '/li',
+				'/ul',
+			'/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 
@@ -198,67 +190,51 @@ class DebugViewTestCase extends CakeTestCase {
 		);
 		$result = $this->View->makeNeatArray($in, 1);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0 expanded'),
-			'<dt', 'key', '/dt',
-			'<dd', 'value', '/dd',
-			'<dt', 'foo', '/dt',
-			'<dd', 
-				array('dl' => array('class' => 'neat-array depth-1')),
-				'<dt', 'this', '/dt',
-				'<dd', 'deep', '/dd',
-				'<dt', 'another', '/dt',
-				'<dd', 'value', '/dd',
-				'/dl',
-			'/dd',
-			'<dt', 'lotr', '/dt',
-			'<dd', 
-				array('dl' => array('class' => 'neat-array depth-1')),
-				'<dt', 'gandalf', '/dt',
-				'<dd', 'wizard', '/dd',
-				'<dt', 'bilbo', '/dt',
-				'<dd', 'hobbit', '/dd',
-				'/dl',
-			'/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0 expanded'),
+			'<li', '<strong', 'key', '/strong', 'value', '/li',
+			'<li', '<strong', 'foo', '/strong', 
+				array('ul' => array('class' => 'neat-array depth-1')),
+				'<li', '<strong', 'this', '/strong', 'deep', '/li',
+				'<li', '<strong', 'another', '/strong', 'value', '/li',
+				'/ul',
+			'/li',
+			'<li', '<strong', 'lotr', '/strong', 
+				array('ul' => array('class' => 'neat-array depth-1')),
+				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
+				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
+				'/ul',
+			'/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 		
 		$result = $this->View->makeNeatArray($in, 2);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0 expanded'),
-			'<dt', 'key', '/dt',
-			'<dd', 'value', '/dd',
-			'<dt', 'foo', '/dt',
-			'<dd', 
-				array('dl' => array('class' => 'neat-array depth-1 expanded')),
-				'<dt', 'this', '/dt',
-				'<dd', 'deep', '/dd',
-				'<dt', 'another', '/dt',
-				'<dd', 'value', '/dd',
-				'/dl',
-			'/dd',
-			'<dt', 'lotr', '/dt',
-			'<dd', 
-				array('dl' => array('class' => 'neat-array depth-1 expanded')),
-				'<dt', 'gandalf', '/dt',
-				'<dd', 'wizard', '/dd',
-				'<dt', 'bilbo', '/dt',
-				'<dd', 'hobbit', '/dd',
-				'/dl',
-			'/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0 expanded'),
+			'<li', '<strong', 'key', '/strong', 'value', '/li',
+			'<li', '<strong', 'foo', '/strong', 
+				array('ul' => array('class' => 'neat-array depth-1 expanded')),
+				'<li', '<strong', 'this', '/strong', 'deep', '/li',
+				'<li', '<strong', 'another', '/strong', 'value', '/li',
+				'/ul',
+			'/li',
+			'<li', '<strong', 'lotr', '/strong',
+				array('ul' => array('class' => 'neat-array depth-1 expanded')),
+				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
+				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
+				'/ul',
+			'/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 		
 		$in = array('key' => 'value', 'array' => array());
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
-			'dl' => array('class' => 'neat-array depth-0'),
-			'<dt', 'key', '/dt',
-			'<dd', 'value', '/dd',
-			'<dt', 'array', '/dt',
-			'<dd', '(empty)', '/dd',
-			'/dl'
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', 'key', '/strong', 'value', '/li',
+			'<li', '<strong', 'array', '/strong', '(empty)', '/li',
+			'/ul'
 		);
 		$this->assertTags($result, $expected);
 	}

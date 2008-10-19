@@ -32,7 +32,11 @@
 		<p class="warning"><?php __('There are no active panels. You must enable a panel to see its output.'); ?></p>
 	<?php else: ?>
 		<ul id="panel-tabs">
-			<li class="panel-tab icon"><?php echo $html->image('cake.icon.gif', array('alt' => 'cakePHP')); ?></li>
+			<li class="panel-tab icon">
+				<a href="#hide" id="hide-toolbar">
+					<?php echo $html->image('cake.icon.gif', array('alt' => 'cakePHP')); ?>
+				</a>
+			</li>
 			<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
 				<li class="panel-tab">
 					<a href="#<?php echo Inflector::underscore($panelName); ?>">

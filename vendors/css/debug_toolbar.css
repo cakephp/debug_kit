@@ -12,6 +12,13 @@
 	margin: 0;
 }
 #debug-kit-toolbar .panel-tab {
+	clear: none;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+#debug-kit-toolbar .panel-tab a{
 	float: left;
 	clear: none;
 	background: #efefef;
@@ -21,9 +28,13 @@
 	font-size: 16px;
 	line-height: 16px;
 	margin: 0;
+	display: block;
 }
-#debug-kit-toolbar .panel-tab.icon {
-	padding: 4px 4px 2px;
+#debug-kit-toolbar .panel-tab .active {
+	background: #fff;
+}
+#debug-kit-toolbar .panel-tab.icon a{
+	padding: 4px;
 }
 
 /* panel content */

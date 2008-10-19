@@ -51,16 +51,21 @@ DebugKit.NeatArray = function() {
  *
  */
 DebugKit.Toolbar = function() {
-	$('#debug-kit-toolbar .panel-tab a').toggle(
+	var tabCollection = $('#debug-kit-toolbar > div');
+	 
+	$('#debug-kit-toolbar .panel-tab a').click(
 		function(e){
 			e.preventDefault();
-			var targetPanelId = $(this).attr('href') + '-tab';
-			$(targetPanelId).show();
-		},
-		function(e) {
-			e.preventDefault();
-			var targetPanelId = $(this).attr('href') + '-tab';
-			$(targetPanelId).hide();
+			var targetPanel = $(this.hash + '-tab');
+			if (targetPanel.hasClass('active')) {
+				tabCollection.hide().removeClass('active');
+			} else {
+				tabCollection
+					.hide().removeClass('active')
+					.filter(this.hash + '-tab').show().addClass('active');
+			}
+			$('#debug-kit-toolbar .panel-tab a').removeClass('active');
+			$(this).addClass('active');
 		}
 	);
 }

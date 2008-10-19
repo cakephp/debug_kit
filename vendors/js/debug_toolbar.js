@@ -25,3 +25,23 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+$(document).ready(function(){
+	DebugKit.NeatArray();
+});
+
+var DebugKit = {};
+/**
+ * Create all behaviors for neat array elements
+ *
+ */
+DebugKit.NeatArray = function() {
+	$('.neat-array').find('li:has(ul)').toggle(
+			function() {
+				$(this).toggleClass('expanded').find('ul:first').show();
+			},
+			function() {
+				$(this).toggleClass('expanded').find('ul:first').hide();
+			}
+		).addClass('expandable').find('ul').hide();
+}

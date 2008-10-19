@@ -124,9 +124,10 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$vars = $this->Controller->viewVars['debugToolbarPanels'];
 
 		$expected = array(
-			'plugin' => 'debugKit',
+			'plugin' => 'debug_kit',
 			'elementName' => 'session_panel',
 			'content' => $this->Controller->Session->read(),
+			'disableTimer' => true,
 		);
 		$this->assertEqual($expected, $vars['session']);
 	}

@@ -133,7 +133,7 @@ class DebugKitDebugger extends Debugger {
 			$start = env('REQUEST_TIME');
 		}
 		$now = getMicroTime();
-		return ($start - $now);
+		return ($now - $start);
 	}
 
 /**

@@ -88,7 +88,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$result1 = DebugKitDebugger::requestTime();
 		usleep(50);
 		$result2 = DebugKitDebugger::requestTime();
-		$this->assertTrue($result1 > $result2);
+		$this->assertTrue($result1 < $result2);
 	}
 
 /**

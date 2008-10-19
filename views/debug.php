@@ -28,7 +28,12 @@
  */
 App::import('Core', 'View');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
-
+/**
+ * DebugView used by DebugKit
+ *
+ * @package debug_kit.views
+ * @todo Remove workarounds.
+ */
 class DebugView extends View {
 /**
  * The old extension of the current template.
@@ -77,9 +82,28 @@ class DebugView extends View {
 		DebugKitDebugger::stopTimer('viewRender');
 		DebugKitDebugger::stopTimer('controllerRender');
 		$out = $this->_injectToolbar($out);
+		
+		//Temporary work around to hide the SQL dump at page bottom
+		Configure::write('debug', 0);
+		
 		return $out;
 	}
 	
+/**
+ * undocumented function
+ *
+ * @return void
+ **/
+	function renderLayout($content_for_layout, $layout = null) {
+		if (isset($this->loaded['html'])) {
+			$this->addScript('debug_toolbar_css', $this->loaded['html']->css('debug_toolbar'));
+		}
+		if (isset($this->loaded['javascript'])) {
+			$this->addScript('jquery', $this->loaded['javascript']->link('jquery'));
+			$this->addScript('debug_toolbar', $this->loaded['javascript']->link('debug_toolbar'));
+		}
+		return parent::renderLayout($content_for_layout, $layout);
+	}
 /**
  * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
  * Creates temporary extension to trick View::render() & View::renderLayout()
@@ -120,6 +144,7 @@ class DebugView extends View {
 		}
 		return $filename;
 	}
+
 /**
  * Recursively goes through an array and makes neat HTML out of it.
  *

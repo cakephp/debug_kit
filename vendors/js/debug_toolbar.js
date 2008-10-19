@@ -39,12 +39,12 @@ var DebugKit = {};
 DebugKit.NeatArray = function() {
 	$('.neat-array').find('li:has(ul)').toggle(
 		function() {
-			$(this).toggleClass('expanded').find('ul:first').show();
+			$(this).toggleClass('expanded').removeClass('collapsed').find('ul:first').show();
 		},
 		function() {
-			$(this).toggleClass('expanded').find('ul:first').hide();
+			$(this).toggleClass('expanded').addClass('collapsed').find('ul:first').hide();
 		}
-	).addClass('expandable').find('ul').hide();
+	).addClass('expandable').find('ul').hide().find('li').addClass('collapsed');
 }
 /**
  * Add behavior for toolbar buttons
@@ -66,6 +66,17 @@ DebugKit.Toolbar = function() {
 			}
 			$('#debug-kit-toolbar .panel-tab a').removeClass('active');
 			$(this).addClass('active');
+		}
+	);
+	
+	//enable hiding of toolbar.
+	var panelButtons = $('#debug-kit-toolbar .panel-tab:not(.panel-tab.icon)');
+	$('#debug-kit-toolbar #hide-toolbar').toggle(
+		function() {
+			panelButtons.hide();
+		},
+		function() {
+			panelButtons.show();
 		}
 	);
 }

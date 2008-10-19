@@ -92,9 +92,19 @@ table.debug-timers td {
 .neat-array li strong {
 	padding: 0 8px;
 }
+
+/* expandable sections */
 .neat-array li.expandable {
 	cursor: pointer;
 }
+.neat-array li.expandable.expanded > strong:before {
+	content: 'v ';
+}
+.neat-array li.expandable.collapsed > strong:before,
+.neat-array li.expandable.expanded .expandable.collapsed > strong:before {
+	content: '> ';
+}
+
 .neat-array li {
 	cursor: normal;
 }

@@ -31,9 +31,18 @@
 	<?php if (empty($debugToolbarPanels)) :?>
 		<p class="warning"><?php __('There are no active panels. You must enable a panel to see its output.'); ?></p>
 	<?php else: ?>
+		<ul id="panel-tabs">
+			<li class="panel-tab icon"><?php echo $html->image('cake.icon.gif', array('alt' => 'cakePHP')); ?></li>
+			<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
+				<li class="panel-tab <?php echo Inflector::underscore($panelName); ?>">
+					<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
+				</li>
+			<?php endforeach ?>
+		</ul>
 		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo) : ?>
-			<div class="panel-tab"><?php echo Inflector::humanize(Inflector::underscore($panelName)); ?></div>
-			<div class="panel-content"><?php echo $this->element($panelInfo['elementName'], $panelInfo); ?></div>
+			<div class="panel-content <?php echo Inflector::underscore($panelName); ?>">
+				<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+			</div>
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>

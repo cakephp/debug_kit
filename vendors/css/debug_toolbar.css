@@ -1,6 +1,56 @@
-/* @override http://localhost/cake_debug_kit/css/debug_toolbar.css */
+/* @override http://localhost/cake_debug_kit/debug_kit/css/debug_toolbar.css */
 #debug-kit-toolbar {
 	position: fixed;
 	top: 0px;
 	right:0px;
+	width: 100%;
 }
+/* panel tabs */
+#debug-kit-toolbar #panel-tabs {
+	float: right;
+	list-style: none;
+	margin: 0;
+}
+#debug-kit-toolbar .panel-tab {
+	float: left;
+	clear: none;
+	background: #efefef;
+	color: #222;
+	padding: 6px;
+	border-right: 1px solid #ccc;
+	font-size: 16px;
+	line-height: 16px;
+	margin: 0;
+}
+#debug-kit-toolbar .panel-tab.icon {
+	padding: 4px 4px 5px;
+}
+
+/* panel content */
+#debug-kit-toolbar .panel-content {
+	position: absolute;
+	width: auto	;
+	top:28px;
+	right: 0px;
+	background: #fff;
+	color: #000;
+	width:100%
+}
+
+/* timer panel */
+table.debug-timers {
+	width: auto;
+}
+table.debug-timers td {
+	text-align: left;
+}
+
+.panel-content {
+	display: none;
+}
+.panel-content.request {
+	display: block;
+}
+
+
+/** Neat Array styles **/

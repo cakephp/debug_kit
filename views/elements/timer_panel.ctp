@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Session Panel Element
+ * Timer Panel Element
  *
  * 
  *
@@ -29,10 +29,20 @@
 $timers = DebugKitDebugger::getTimers();
 array_pop($timers);
 ?>
-<p class="request-time"><?php __('Total Request Time'); echo DebugKitDebugger::requestTime(); ?></p>
-<?php foreach ($timers as $timerName => $timeInfo): ?>
-	<div class="debug-timers">
-		<p class="timer-message"><?php echo $timeInfo['message']; ?> <strong><?php echo $timeInfo['time']; ?> </strong></p>
-	</div>
-<?php endforeach; ?>
-
+<p class="request-time"><?php echo sprintf(__('Total Request Time: %s (seconds)', true), DebugKitDebugger::requestTime()); ?></p>
+<table class="debug-timers">
+	<thead>
+		<tr>
+			<th>Message</th>
+			<th>time in seconds</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($timers as $timerName => $timeInfo): ?>
+		<tr>
+			<td><?php echo $timeInfo['message']?></td>
+			<td><?php echo $timeInfo['time'] ?> </td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>

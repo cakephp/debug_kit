@@ -1,5 +1,6 @@
-/**
- * Debug Toolbar CSS
- *
- *
- */
+/* @override http://localhost/cake_debug_kit/css/debug_toolbar.css */
+#debug-kit-toolbar {
+	position: fixed;
+	top: 0px;
+	right:0px;
+}

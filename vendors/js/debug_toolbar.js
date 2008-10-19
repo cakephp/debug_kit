@@ -27,6 +27,7 @@
  */
 
 $(document).ready(function(){
+	DebugKit.Toolbar();
 	DebugKit.NeatArray();
 });
 
@@ -37,11 +38,29 @@ var DebugKit = {};
  */
 DebugKit.NeatArray = function() {
 	$('.neat-array').find('li:has(ul)').toggle(
-			function() {
-				$(this).toggleClass('expanded').find('ul:first').show();
-			},
-			function() {
-				$(this).toggleClass('expanded').find('ul:first').hide();
-			}
-		).addClass('expandable').find('ul').hide();
+		function() {
+			$(this).toggleClass('expanded').find('ul:first').show();
+		},
+		function() {
+			$(this).toggleClass('expanded').find('ul:first').hide();
+		}
+	).addClass('expandable').find('ul').hide();
+}
+/**
+ * Add behavior for toolbar buttons
+ *
+ */
+DebugKit.Toolbar = function() {
+	$('#debug-kit-toolbar .panel-tab a').toggle(
+		function(e){
+			e.preventDefault();
+			var targetPanelId = $(this).attr('href') + '-tab';
+			$(targetPanelId).show();
+		},
+		function(e) {
+			e.preventDefault();
+			var targetPanelId = $(this).attr('href') + '-tab';
+			$(targetPanelId).hide();
+		}
+	);
 }

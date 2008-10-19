@@ -23,7 +23,7 @@
 	margin: 0;
 }
 #debug-kit-toolbar .panel-tab.icon {
-	padding: 4px 4px 5px;
+	padding: 4px 4px 2px;
 }
 
 /* panel content */
@@ -34,7 +34,14 @@
 	right: 0px;
 	background: #fff;
 	color: #000;
-	width:100%
+	width:95%;
+	padding:20px 2.5%;
+}
+.panel-content {
+	display: none;
+}
+.panel-content p {
+	margin: 1em;
 }
 
 /* timer panel */
@@ -45,12 +52,27 @@ table.debug-timers td {
 	text-align: left;
 }
 
-.panel-content {
-	display: none;
-}
-.panel-content.request {
+
+.panel-content.timer {
 	display: block;
 }
 
 
 /** Neat Array styles **/
+.neat-array {
+	padding: 0 0 0 20px;
+	background: #CE9E23;
+	list-style: none;
+	margin: 0;
+}
+.neat-array li {
+	background: #FEF6E5;
+	border-top: 1px solid #CE9E23;
+	border-bottom: 1px solid #CE9E23;
+	margin: 0;
+	line-height: 1.5em;
+}
+.neat-array li strong {
+	padding: 0 8px;
+}
+

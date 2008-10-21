@@ -32,7 +32,7 @@
  */
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
-class DebugToolbarComponent extends Object {
+class ToolbarComponent extends Object {
 /**
  * Controller instance reference
  *

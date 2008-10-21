@@ -27,9 +27,9 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Core', array('Controller', 'Component'));
-App::import('Component', 'DebugKit.DebugToolbar');
+App::import('Component', 'DebugKit.Toolbar');
 
-class TestDebugToolbarComponent extends DebugToolbarComponent {
+class TestToolbarComponent extends ToolbarComponent {
 
 	function loadPanels($panels) {
 		$this->_loadPanels($panels);
@@ -47,7 +47,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 	function setUp() {
 		$this->Controller =& new Controller();
 		$this->Controller->Component =& new Component();
-		$this->Controller->DebugToolbar =& new TestDebugToolbarComponent();
+		$this->Controller->Toolbar =& new TestToolbarComponent();
 	}
 	
 /**
@@ -56,12 +56,12 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testLoadPanels() {
-		$this->Controller->DebugToolbar->loadPanels(array('session', 'request'));
-		$this->assertTrue(is_a($this->Controller->DebugToolbar->panels['session'], 'SessionPanel'));
-		$this->assertTrue(is_a($this->Controller->DebugToolbar->panels['request'], 'RequestPanel'));
+		$this->Controller->Toolbar->loadPanels(array('session', 'request'));
+		$this->assertTrue(is_a($this->Controller->Toolbar->panels['session'], 'SessionPanel'));
+		$this->assertTrue(is_a($this->Controller->Toolbar->panels['request'], 'RequestPanel'));
 
 		$this->expectError();
-		$this->Controller->DebugToolbar->loadPanels(array('randomNonExisting', 'request'));
+		$this->Controller->Toolbar->loadPanels(array('randomNonExisting', 'request'));
 	}
 	
 /**
@@ -71,11 +71,11 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @access public
  **/
 	function testInitialize() {
-		$this->Controller->components = array('DebugKit.DebugToolbar');
+		$this->Controller->components = array('DebugKit.Toolbar');
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
 		
-		$this->assertFalse(empty($this->Controller->DebugToolbar->panels));
+		$this->assertFalse(empty($this->Controller->Toolbar->panels));
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['componentInit']));
@@ -88,16 +88,16 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testStartup() {
 		$this->Controller->components = array(
-			'DebugKit.DebugToolbar' => array(
+			'DebugKit.Toolbar' => array(
 				'panels' => array('MockDebug')
 			)
 		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->DebugToolbar->panels['MockDebug']->expectOnce('startup');
-		$this->Controller->DebugToolbar->startup($this->Controller);
+		$this->Controller->Toolbar->panels['MockDebug']->expectOnce('startup');
+		$this->Controller->Toolbar->startup($this->Controller);
 
-		$this->assertEqual(count($this->Controller->DebugToolbar->panels), 1);
+		$this->assertEqual(count($this->Controller->Toolbar->panels), 1);
 		$this->assertEqual($this->Controller->view, 'DebugKit.Debug');
 
 		$timers = DebugKitDebugger::getTimers();
@@ -111,14 +111,14 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testBeforeRender() {
 		$this->Controller->components = array(
-			'DebugKit.DebugToolbar' => array(
+			'DebugKit.Toolbar' => array(
 				'panels' => array('MockDebug', 'session')
 			)
 		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->DebugToolbar->panels['MockDebug']->expectOnce('beforeRender');
-		$this->Controller->DebugToolbar->beforeRender($this->Controller);
+		$this->Controller->Toolbar->panels['MockDebug']->expectOnce('beforeRender');
+		$this->Controller->Toolbar->beforeRender($this->Controller);
 		
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarPanels']));
 		$vars = $this->Controller->viewVars['debugToolbarPanels'];

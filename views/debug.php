@@ -148,27 +148,27 @@ class DebugView extends View {
 /**
  * Recursively goes through an array and makes neat HTML out of it.
  *
- * @param array $array Array to make pretty.
+ * @param mixed $values Array to make pretty.
  * @param int $openDepth Depth to add open class
  * @param int $currentDepth current depth.
  * @return string
  **/
-	function makeNeatArray($array, $openDepth = 0, $currentDepth = 0) {
+	function makeNeatArray($values, $openDepth = 0, $currentDepth = 0) {
 		$className ="neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {
 			$className .= ' expanded';
 		}
 		$nextDepth = $currentDepth + 1;
 		$out = "<ul class=\"$className\">";
-		if (!is_array($array)) {
-			if (is_bool($array)) {
-				$array = array($array);
+		if (!is_array($values)) {
+			if (is_bool($values)) {
+				$values = array($values);
 			}
-			if (is_null($array)) {
-				$array = array(null);
+			if (is_null($values)) {
+				$values = array(null);
 			}
 		}
-		foreach ($array as $key => $value) {
+		foreach ($values as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
 			if ($value === null) {
 				$value = '(null)';

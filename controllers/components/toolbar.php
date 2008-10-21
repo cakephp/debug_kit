@@ -216,7 +216,13 @@ class RequestPanel extends DebugPanel {
  * @return array
  **/
 	function beforeRender(&$controller) {
-		return $controller->params;
+		$out = array();
+		$out['params'] = $controller->params;
+		if (isset($controller->Cookie)) {
+			$out['cookie'] = $controller->Cookie->read();
+		}
+		$out['get'] = $_GET;
+		return $out;
 	}
 }
 /**
@@ -250,6 +256,7 @@ class MemoryPanel extends DebugPanel {
 class sqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
 	
+	var $dbConfigs = array();
 /**
  * get db configs.
  *

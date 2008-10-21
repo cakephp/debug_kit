@@ -28,10 +28,14 @@
  */
 ?>
 <h4>Cake Params</h4>
-<?php echo $this->makeNeatArray($content); ?>
-
-<h4>$_POST</h4>
-<?php echo $this->makeNeatArray($_POST); ?>
+<?php echo $this->makeNeatArray($content['params']); ?>
 
 <h4>$_GET</h4>
-<?php echo $this->makeNeatArray($_GET); ?>
+<?php echo $this->makeNeatArray($content['get']); ?>
+
+<h4>Cookie</h4>
+<?php if (isset($content['cookie'])): ?>	
+	<?php echo $this->makeNeatArray($content['cookie']); ?>
+<?php else: ?>
+	<p class="warning">To view Cookies, add CookieComponent to Controller 
+<?php endif; ?>

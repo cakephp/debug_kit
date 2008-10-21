@@ -43,6 +43,7 @@ class DebugViewTestCase extends CakeTestCase {
 	function setUp() {
 		$this->Controller =& new Controller();
 		$this->View =& new DebugView($this->Controller, false);
+		$this->_debug = Configure::read('debug');
 	}
 	
 /**
@@ -128,6 +129,33 @@ class DebugViewTestCase extends CakeTestCase {
  * @return void
  **/
 	function testMakeNeatArray() {
+		$in = false;
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', '0' , '/strong', '(false)', '/li',
+			'/ul'
+		);
+		$this->assertTags($result, $expected);
+
+		$in = null;
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', '0' , '/strong', '(null)', '/li',
+			'/ul'
+		);
+		$this->assertTags($result, $expected);
+
+		$in = true;
+		$result = $this->View->makeNeatArray($in);
+		$expected = array(
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', '0' , '/strong', '(true)', '/li',
+			'/ul'
+		);
+		$this->assertTags($result, $expected);
+
 		$in = array('key' => 'value');
 		$result = $this->View->makeNeatArray($in);
 		$expected = array(
@@ -254,6 +282,7 @@ class DebugViewTestCase extends CakeTestCase {
 	function tearDown() {
 		unset($this->View, $this->Controller);
 		DebugKitDebugger::clearTimers();
+		Configure::write('debug', $this->_debug);
 	}
 }
 ?>

@@ -160,10 +160,24 @@ class DebugView extends View {
 		}
 		$nextDepth = $currentDepth + 1;
 		$out = "<ul class=\"$className\">";
+		if (!is_array($array)) {
+			if (is_bool($array)) {
+				$array = array($array);
+			}
+			if (is_null($array)) {
+				$array = array(null);
+			}
+		}
 		foreach ($array as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
 			if ($value === null) {
 				$value = '(null)';
+			}
+			if ($value === false) {
+				$value = '(false)';
+			}
+			if ($value === true) {
+				$value = '(true)';
 			}
 			if (empty($value) && $value != 0) {
 				$value = '(empty)';

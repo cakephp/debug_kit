@@ -44,7 +44,7 @@ DebugKit.NeatArray = function() {
 		function() {
 			$(this).toggleClass('expanded').addClass('collapsed').find('ul:first').hide();
 		}
-	).addClass('expandable').find('ul').hide().find('li').addClass('collapsed');
+	).addClass('expandable').addClass('collapsed').find('ul').hide();
 }
 /**
  * Add behavior for toolbar buttons

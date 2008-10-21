@@ -84,8 +84,7 @@ class DebugView extends View {
 		$out = $this->_injectToolbar($out);
 		
 		//Temporary work around to hide the SQL dump at page bottom
-		Configure::write('debug', 0);
-		
+		Configure::write('debug', 0);		
 		return $out;
 	}
 	

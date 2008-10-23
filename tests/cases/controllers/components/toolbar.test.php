@@ -131,7 +131,91 @@ class DebugToolbarTestCase extends CakeTestCase {
 		);
 		$this->assertEqual($expected, $vars['session']);
 	}
+/**
+ * test alternate javascript library use
+ *
+ * @return void
+ **/
+	function testAlternateJavascript() {
+		$this->Controller->components = array(
+			'DebugKit.Toolbar'
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'behavior' => '/debug_kit/js/jquery_debug_toolbar',
+			'library' => '/debug_kit/js/jquery',
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => 'mootools',
+			),
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'library' => 'mootools',
+			'behavior' => 'mootools_debug_toolbar'
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => 'mootools',
+				'library' => false
+			),
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'behavior' => 'mootools_debug_toolbar'
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => 'my_personal',
+				'library' => 'my_custom_stuff'
+			),
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'behavior' => 'my_personal_debug_toolbar',
+			'library' => 'my_custom_stuff',
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => 'my_personal',
+			),
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'behavior' => 'my_personal_debug_toolbar',
+			'library' => 'my_personal',
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);		
+	}
 /**
  * teardown
  *

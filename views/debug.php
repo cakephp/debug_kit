@@ -98,8 +98,8 @@ class DebugView extends View {
 			$this->addScript('debug_toolbar_css', $this->loaded['html']->css('/debug_kit/css/debug_toolbar'));
 		}
 		if (isset($this->loaded['javascript'])) {
-			$this->addScript('jquery', $this->loaded['javascript']->link('/debug_kit/js/jquery-1.2.6.min.js'));
-			$this->addScript('debug_toolbar', $this->loaded['javascript']->link('/debug_kit/js/debug_toolbar'));
+			$this->addScript('jquery', $this->loaded['javascript']->link('/debug_kit/js/jquery'));
+			$this->addScript('debug_toolbar', $this->loaded['javascript']->link('/debug_kit/js/jquery_debug_toolbar'));
 		}
 		return parent::renderLayout($content_for_layout, $layout);
 	}

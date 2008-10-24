@@ -46,18 +46,34 @@ class ToolbarComponent extends Object {
  */
 	var $components = array('RequestHandler');
 /**
- * the default panels the toolbar uses.
+ * The default panels the toolbar uses.
  * which panels are used can be configured when attaching the component
  *
  * @var array
  */
 	var $_defaultPanels = array('session', 'request', 'sqlLog', 'memory', 'timer');
 /**
- * Built panels
+ * Loaded panel objects.
  *
  * @var array
  */	
 	var $panels = array();
+	
+/**
+ * fallback for javascript settings
+ *
+ * @var array
+ **/
+	var $_defaultJavascript = array(
+		'library' => '/debug_kit/js/jquery', 
+		'behavior' => '/debug_kit/js/debug_toolbar'
+	);
+/**
+ * javascript files component will be using.
+ *
+ * @var array
+ **/
+	var $javascript = array();
 /**
  * initialize
  *
@@ -75,6 +91,11 @@ class ToolbarComponent extends Object {
 		if (!isset($settings['panels'])) {
 			$settings['panels'] = $this->_defaultPanels;
 		}
+		if (isset($settings['javascript'])) {
+			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
+		} else {
+			$settings['javascript'] = $this->_defaultJavascript;
+		} 
 		$this->_loadPanels($settings['panels']);
 		unset($settings['panels']);
 		
@@ -128,7 +149,8 @@ class ToolbarComponent extends Object {
 			$vars[$panelName]['plugin'] = $panel->plugin;
 			$vars[$panelName]['disableTimer'] = true;
 		}
-		$controller->set('debugToolbarPanels', $vars);
+
+		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __('Render Action', true));
 	}
 	
@@ -150,6 +172,33 @@ class ToolbarComponent extends Object {
 				$this->panels[$panel] =& $panelObj;
 			}
 		}
+	}
+	
+/**
+ * Set the javascript to user scripts.
+ *
+ * Set either script key to false to exclude it from the rendered layout.
+ *
+ * @param array $scripts Javascript config information
+ * @return array 
+ * @access protected
+ **/
+	function _setJavascript($scripts) {
+		if (is_string($scripts)) {
+			$scripts = (array)$scripts;
+		}
+		if (isset($scripts[0])) {
+			$library = $scripts[0];
+		}
+		if (!isset($scripts['behavior'])) {
+			$behavior = $library . '_debug_toolbar';
+		} else {
+			$behavior = $scripts['behavior'];
+		}
+		if (isset($scripts['library'])) {
+			$library = $scripts['library'];
+		}
+		return compact('library', 'behavior');
 	}
 }
 

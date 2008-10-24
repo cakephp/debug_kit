@@ -137,7 +137,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testAlternateJavascript() {
-		$this->Controller->components = array(
+/*		$this->Controller->components = array(
 			'DebugKit.Toolbar'
 		);
 		$this->Controller->Component->init($this->Controller);
@@ -146,14 +146,14 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
-			'behavior' => '/debug_kit/js/jquery_debug_toolbar',
+			'behavior' => '/debug_kit/js/debug_toolbar',
 			'library' => '/debug_kit/js/jquery',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-
+*/
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
-				'javascript' => 'mootools',
+				'javascript' => array('mootools'),
 			),
 		);
 		$this->Controller->Component->init($this->Controller);
@@ -169,8 +169,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
-				'javascript' => 'mootools',
-				'library' => false
+				'javascript' => array('mootools', 'library' => false)
 			),
 		);
 		$this->Controller->Component->init($this->Controller);
@@ -179,14 +178,14 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
+			'library' => false,
 			'behavior' => 'mootools_debug_toolbar'
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
-				'javascript' => 'my_personal',
-				'library' => 'my_custom_stuff'
+				'javascript' => array('behavior' => 'my/path/to/file', 'library' => 'my_custom_stuff')
 			),
 		);
 		$this->Controller->Component->init($this->Controller);
@@ -195,14 +194,14 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
-			'behavior' => 'my_personal_debug_toolbar',
+			'behavior' => 'my/path/to/file',
 			'library' => 'my_custom_stuff',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
-				'javascript' => 'my_personal',
+				'javascript' => array('my_personal'),
 			),
 		);
 		$this->Controller->Component->init($this->Controller);

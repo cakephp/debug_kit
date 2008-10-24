@@ -28,6 +28,7 @@
  */
 App::import('Core', 'View');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
+App::import('Component', 'DebugKit.Toolbar');
 /**
  * DebugView used by DebugKit
  *
@@ -98,8 +99,10 @@ class DebugView extends View {
 			$this->addScript('debug_toolbar_css', $this->loaded['html']->css('/debug_kit/css/debug_toolbar'));
 		}
 		if (isset($this->loaded['javascript'])) {
-			$this->addScript('jquery', $this->loaded['javascript']->link('/debug_kit/js/jquery'));
-			$this->addScript('debug_toolbar', $this->loaded['javascript']->link('/debug_kit/js/jquery_debug_toolbar'));
+			$javascripts = $this->viewVars['debugToolbarJavascript'];
+			foreach ($javascripts as $script) {
+				$this->addScript($this->loaded['javascript']->link($script));
+			}
 		}
 		return parent::renderLayout($content_for_layout, $layout);
 	}

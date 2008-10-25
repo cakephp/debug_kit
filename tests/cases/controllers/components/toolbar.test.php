@@ -131,13 +131,16 @@ class DebugToolbarTestCase extends CakeTestCase {
 		);
 		$this->assertEqual($expected, $vars['session']);
 	}
+	function getTests() {
+		return array('testAlternateJavascript');
+	}
 /**
  * test alternate javascript library use
  *
  * @return void
  **/
 	function testAlternateJavascript() {
-/*		$this->Controller->components = array(
+		$this->Controller->components = array(
 			'DebugKit.Toolbar'
 		);
 		$this->Controller->Component->init($this->Controller);
@@ -150,7 +153,25 @@ class DebugToolbarTestCase extends CakeTestCase {
 			'library' => '/debug_kit/js/jquery',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-*/
+
+
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => false
+			)
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'library' => false,
+			'behavior' => false,
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+		
+
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'javascript' => array('mootools'),

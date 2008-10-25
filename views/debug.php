@@ -101,7 +101,9 @@ class DebugView extends View {
 		if (isset($this->loaded['javascript'])) {
 			$javascripts = $this->viewVars['debugToolbarJavascript'];
 			foreach ($javascripts as $script) {
-				$this->addScript($this->loaded['javascript']->link($script));
+				if ($script) {
+					$this->addScript($this->loaded['javascript']->link($script));
+				}
 			}
 		}
 		return parent::renderLayout($content_for_layout, $layout);

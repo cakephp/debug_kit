@@ -91,6 +91,7 @@ class ToolbarComponent extends Object {
 		if (!isset($settings['panels'])) {
 			$settings['panels'] = $this->_defaultPanels;
 		}
+
 		if (isset($settings['javascript'])) {
 			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
 		} else {
@@ -184,17 +185,23 @@ class ToolbarComponent extends Object {
  * @access protected
  **/
 	function _setJavascript($scripts) {
-		if (is_string($scripts)) {
+		if (!is_array($scripts)) {
 			$scripts = (array)$scripts;
 		}
 		if (isset($scripts[0])) {
 			$library = $scripts[0];
 		}
+		
+		if (isset($library) && $library === false) {
+			return array('library' => false, 'behavior' => false);
+		}
+		
 		if (!isset($scripts['behavior'])) {
 			$behavior = $library . '_debug_toolbar';
 		} else {
 			$behavior = $scripts['behavior'];
 		}
+		
 		if (isset($scripts['library'])) {
 			$library = $scripts['library'];
 		}

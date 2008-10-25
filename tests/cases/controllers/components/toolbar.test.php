@@ -131,9 +131,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		);
 		$this->assertEqual($expected, $vars['session']);
 	}
-	function getTests() {
-		return array('testAlternateJavascript');
-	}
+
 /**
  * test alternate javascript library use
  *

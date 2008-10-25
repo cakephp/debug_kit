@@ -29,7 +29,12 @@
 $timers = DebugKitDebugger::getTimers();
 array_pop($timers);
 ?>
-<p class="request-time"><?php echo sprintf(__('Total Request Time: %s (seconds)', true), DebugKitDebugger::requestTime()); ?></p>
+<h2><?php __('Timers'); ?></h2>
+<p class="request-time">
+	<strong><?php __('Total Request Time:') ?></strong>
+	<?php echo sprintf(__('%s (seconds)', true), DebugKitDebugger::requestTime()); ?>
+</p>
+
 <table class="debug-timers">
 	<thead>
 		<tr>
@@ -38,11 +43,13 @@ array_pop($timers);
 		</tr>
 	</thead>
 	<tbody>
+	<?php $i = 0; ?>
 	<?php foreach ($timers as $timerName => $timeInfo): ?>
-		<tr>
+		<tr class="<?php echo ($i % 2) ? 'even' : 'odd'; ?>">
 			<td><?php echo $timeInfo['message']?></td>
 			<td><?php echo $timeInfo['time'] ?> </td>
 		</tr>
+	<?php $i++; ?>
 	<?php endforeach; ?>
 	</tbody>
 </table>

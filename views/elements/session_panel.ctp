@@ -27,5 +27,5 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
-<h4>Session</h4>
+<h2><?php __('Session'); ?></h2>
 <?php echo $this->makeNeatArray($content); ?>

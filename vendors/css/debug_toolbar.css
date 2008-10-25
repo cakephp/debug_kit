@@ -18,7 +18,7 @@
 	padding: 0;
 }
 
-#debug-kit-toolbar .panel-tab a{
+#debug-kit-toolbar .panel-tab a {
 	float: left;
 	clear: none;
 	background: #efefef;
@@ -33,36 +33,60 @@
 #debug-kit-toolbar .panel-tab .active {
 	background: #fff;
 }
-#debug-kit-toolbar .panel-tab.icon a{
+#debug-kit-toolbar .panel-tab.icon a {
 	padding: 4px;
+}
+#debug-kit-toolbar .panel-tab a:hover {
+	background: #fff;
+}
+
+/* Hovering over link shows tab, useful for no js  */
+#debug-kit-toolbar .panel-tab a:hover + .panel-content {
+	display: block;
 }
 
 /* panel content */
 #debug-kit-toolbar .panel-content {
 	position: absolute;
-	width: auto	;
+	width: auto;
 	top:28px;
-	right: 0px;
+	right:0px;
 	background: #fff;
 	color: #000;
-	width:95%;
-	padding:20px 2.5%;
+	width:96%;
+	padding:20px 2%;
+	max-height: 550px;
+	overflow:auto;
+	border-bottom: 3px solid #333;
 }
+
+/* Hide panel content by default */
 .panel-content {
 	display: none;
 }
+
 .panel-content p {
-	margin: 1em;
+	margin: 1em 0;
 }
 
 /* timer panel */
 table.debug-timers {
 	width: auto;
+	border: 0;
 }
-table.debug-timers td {
+table.debug-timers td,
+table.debug-timers th {
 	text-align: left;
+	border: 0;
+	padding: 3px;
 }
-
+table.debug-timers th {
+	border-bottom: 1px solid #222;
+	background: 0;;
+}
+table.debug-timers tr.even td {
+	background:#efefef;
+}
 
 .panel-content.request {
 	display: block;

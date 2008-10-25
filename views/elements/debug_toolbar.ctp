@@ -42,13 +42,11 @@
 					<a href="#<?php echo Inflector::underscore($panelName); ?>">
 						<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
 					</a>
+					<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
+						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+					</div>
 				</li>
 			<?php endforeach ?>
 		</ul>
-		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo) : ?>
-			<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
-				<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
-			</div>
-		<?php endforeach; ?>
 	<?php endif; ?>
 </div>

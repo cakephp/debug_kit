@@ -27,6 +27,7 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
+<h2> <?php __('Request'); ?></h2>
 <h4>Cake Params</h4>
 <?php echo $this->makeNeatArray($content['params']); ?>
 

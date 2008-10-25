@@ -27,6 +27,7 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
+<h2><?php __('Sql Logs')?></h2>
 <?php if (!empty($content)) : ?>
 	<?php foreach ($content as $dbName => $queryLog) : ?>
 	<div class="sql-log-panel-query-log">

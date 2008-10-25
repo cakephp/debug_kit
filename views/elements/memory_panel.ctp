@@ -27,5 +27,6 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
-<p class="current-mem-use">Current Memory Use: <?php echo DebugKitDebugger::getMemoryUse(); ?> bytes</p>
-<p class="peak-mem-use">Peak Memory Use: <?php echo DebugKitDebugger::getPeakMemoryUse(); ?> bytes</p>
+<h2><?php __('Memory'); ?></h2>
+<p class="current-mem-use"><strong><?php __('Current Memory Use'); ?>:</strong> <?php echo DebugKitDebugger::getMemoryUse(); ?> bytes</p>
+<p class="peak-mem-use"><strong><?php __('Peak Memory Use'); ?>:</strong> <?php echo DebugKitDebugger::getPeakMemoryUse(); ?> bytes</p>

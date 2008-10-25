@@ -51,7 +51,7 @@ DebugKit.NeatArray = function() {
  *
  */
 DebugKit.Toolbar = function() {
-	var tabCollection = $('#debug-kit-toolbar > div');
+	var tabCollection = $('#debug-kit-toolbar li > div');
 	 
 	$('#debug-kit-toolbar .panel-tab a').click(
 		function(e){

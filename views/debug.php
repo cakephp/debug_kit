@@ -43,7 +43,7 @@ class DebugView extends View {
  */
 	var $_oldExtension = null;
 /**
- * Overload _render to capture filenames and time actual rendering of each file
+ * Overload _render to capture filenames and time actual rendering of each view file
  *
  * @param string $___viewFn Filename of the view
  * @param array $___dataForView Data to include in rendered view
@@ -90,7 +90,9 @@ class DebugView extends View {
 	}
 	
 /**
- * undocumented function
+ * Render Layout.
+ * 
+ * Adds toolbar CSS and Javascript if helpers are loaded.
  *
  * @return void
  **/

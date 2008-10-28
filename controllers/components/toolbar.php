@@ -102,6 +102,8 @@ class ToolbarComponent extends Object {
 		
 		$this->_set($settings);
 		$this->controller =& $controller;
+		$this->controller->helpers = array('Html', 'Javascript', 'Number');
+		
 		return false;
 	}
 	

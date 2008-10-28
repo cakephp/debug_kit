@@ -251,7 +251,13 @@ class DebugPanel extends Object {
  **/
 class SessionPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-	
+/**
+ * beforeRender callback
+ *
+ * @param object $controller 
+ * @access public
+ * @return array
+ */
 	function beforeRender(&$controller) {
 		return $controller->Session->read();
 	}
@@ -281,6 +287,7 @@ class RequestPanel extends DebugPanel {
 		return $out;
 	}
 }
+
 /**
  * Timer Panel
  *
@@ -291,6 +298,7 @@ class RequestPanel extends DebugPanel {
 class TimerPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
 }
+
 /**
  * Memory Panel
  *
@@ -350,6 +358,22 @@ class sqlLogPanel extends DebugPanel {
 			}
 		}
 		return $queryLogs;
+	}
+}
+/**
+ * Log Panel - Reads log entries made this request.
+ *
+ * @package cake.debug_kit.panels
+ */
+class LogPanel extends DebugPanel {
+	var $plugin = 'debug_kit';
+/**
+ * beforeRender Callback
+ *
+ * @return array
+ **/
+	function beforeRender(&$controller) {
+		
 	}
 }
 

@@ -41,6 +41,8 @@ class DebugViewTestCase extends CakeTestCase {
  * @return void
  **/
 	function setUp() {
+		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+		Router::parse('/');
 		$this->Controller =& new Controller();
 		$this->View =& new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');

@@ -45,6 +45,8 @@ Mock::generate('DebugPanel');
 class DebugToolbarTestCase extends CakeTestCase {
 	
 	function setUp() {
+		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+		Router::parse('/');
 		$this->Controller =& new Controller();
 		$this->Controller->Component =& new Component();
 		$this->Controller->Toolbar =& new TestToolbarComponent();
@@ -233,6 +235,24 @@ class DebugToolbarTestCase extends CakeTestCase {
 			'library' => 'my_personal',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);		
+	}
+/**
+ * test the Log panel log reading.
+ *
+ * @return void
+ **/
+	function testLogPanel() {
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'panels' => array('log', 'session')
+			)
+		);	
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$vars = $this->Controller->viewVars['debugToolbarPanels']['log'];
+		debug($vars);
 	}
 /**
  * teardown

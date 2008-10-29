@@ -125,15 +125,26 @@ class DebugKitDebugger extends Debugger {
  * @static
  */
 	function requestTime() {
-		if (defined('TIME_START')) {
-			$start = TIME_START;
-		} else if (isset($_GLOBALS['TIME_START'])) {
-			$start = $_GLOBALS['TIME_START'];
-		} else {
-			$start = env('REQUEST_TIME');
-		}
+		$start = DebugKitDebugger::requestStartTime();
 		$now = getMicroTime();
 		return ($now - $start);
+	}
+/**
+ * get the time the current request started.
+ *
+ * @access public
+ * @return float time of request start
+ * @static
+ */	
+	function requestStartTime() {
+		if (defined('TIME_START')) {
+			$startTime = TIME_START;
+		} else if (isset($_GLOBALS['TIME_START'])) {
+			$startTime = $_GLOBALS['TIME_START'];
+		} else {
+			$startTime = env('REQUEST_TIME');
+		}
+		return $startTime;
 	}
 
 /**

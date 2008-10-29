@@ -51,7 +51,7 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('session', 'request', 'sqlLog', 'memory', 'timer');
+	var $_defaultPanels = array('session', 'request', 'sqlLog', 'timer', 'log', 'memory');
 /**
  * Loaded panel objects.
  *
@@ -169,7 +169,7 @@ class ToolbarComponent extends Object {
 				continue;
 			}
 			$panelObj =& new $className();
-			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'DebugPanel')) {
+			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
 				$this->panels[$panel] =& $panelObj;
 			}
 		}
@@ -284,6 +284,7 @@ class RequestPanel extends DebugPanel {
 			$out['cookie'] = $controller->Cookie->read();
 		}
 		$out['get'] = $_GET;
+		$out['currentRoute'] = Router::currentRoute();
 		return $out;
 	}
 }
@@ -367,13 +368,21 @@ class sqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+	
+	var $logFiles = array('error.log', 'debug.log');
 /**
  * beforeRender Callback
  *
  * @return array
  **/
 	function beforeRender(&$controller) {
-		
+		$startTime = DebugKitDebugger::requestStartTime();
+		$currentTime = DebugKitDebugger::requestTime();
+		$out = array();
+		foreach ($this->logFiles as $log) {
+			$file = LOGS . $log;
+		}
+		return $out;
 	}
 }
 

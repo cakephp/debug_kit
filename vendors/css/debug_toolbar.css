@@ -70,21 +70,21 @@
 }
 
 /* timer panel */
-table.debug-timers {
+table.debug-table {
 	width: auto;
 	border: 0;
 }
-table.debug-timers td,
-table.debug-timers th {
+table.debug-table td,
+table.debug-table th {
 	text-align: left;
 	border: 0;
 	padding: 3px;
 }
-table.debug-timers th {
+table.debug-table th {
 	border-bottom: 1px solid #222;
 	background: 0;;
 }
-table.debug-timers tr.even td {
+table.debug-table tr.even td {
 	background:#efefef;
 }
 

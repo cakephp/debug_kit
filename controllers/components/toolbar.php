@@ -419,7 +419,7 @@ class LogPanel extends DebugPanel {
 				unset($chunks[$i], $chunks[$i + 1]);
 			}
 		}
-		return $chunks;
+		return array_values($chunks);
 	}
 }
 

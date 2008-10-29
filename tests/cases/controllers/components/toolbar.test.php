@@ -257,9 +257,15 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->startup($this->Controller);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
+		
 		$this->assertEqual(count($result['content']), 2);
 		$this->assertEqual(count($result['content']['error.log']), 4);
 		$this->assertEqual(count($result['content']['debug.log']), 2);
+		
+		$this->assertTrue(isset($result['content']['debug.log'][0]));
+		$this->assertTrue(isset($result['content']['debug.log'][1]));
+		$this->assertTrue(isset($result['content']['error.log'][0]));
+		$this->assertTrue(isset($result['content']['error.log'][1]));
 	}
 	
 /**

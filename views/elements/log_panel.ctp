@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Timer Panel Element
+ * Log Panel Element
  *
  * 
  *
@@ -20,36 +20,27 @@
  * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
  * @package			cake
  * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
  * @version			$Revision$
  * @modifiedby		$LastChangedBy$
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-$timers = DebugKitDebugger::getTimers();
-array_pop($timers);
 ?>
-<h2><?php __('Timers'); ?></h2>
-<p class="request-time">
-	<strong><?php __('Total Request Time:') ?></strong>
-	<?php echo sprintf(__('%s (seconds)', true), DebugKitDebugger::requestTime()); ?>
-</p>
-
-<table class="debug-table">
-	<thead>
-		<tr>
+<h2><?php __('Logs') ?></h2>
+<?php foreach ($content as $logName => $logs): ?>
+	<h3><?php echo $logName ?></h3>
+	<table class="debug-table" cellspacing="0" cellpadding="0">
+		<thead>
+			<th>Time</th>
 			<th>Message</th>
-			<th>time in seconds</th>
+		</thead>
+		<tbody>
+	<?php for ($i = 0, $len = count($logs); $i < $len; $i+=2): ?>
+		<tr>
+			<td><?php echo $logs[$i] ?></td>
+			<td><?php echo $logs[$i+1] ?></td>
 		</tr>
-	</thead>
-	<tbody>
-	<?php $i = 0; ?>
-	<?php foreach ($timers as $timerName => $timeInfo): ?>
-		<tr class="<?php echo ($i % 2) ? 'even' : 'odd'; ?>">
-			<td><?php echo $timeInfo['message']?></td>
-			<td><?php echo $timeInfo['time'] ?> </td>
-		</tr>
-	<?php $i++; ?>
-	<?php endforeach; ?>
-	</tbody>
-</table>
+	<?php endfor; ?>
+		</tbody>
+	</table>
+<?php endforeach ?>

@@ -243,9 +243,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testLogPanel() {
 		usleep(20);
-		$this->Controller->log('This is a log I made this request ' . time());
-		$this->Controller->log('This is the second  log I made this request ' . time());
-		$this->Controller->log('This time in the debug log! ' . time(), LOG_DEBUG);
+		$this->Controller->log('This is a log I made this request');
+		$this->Controller->log('This is the second  log I made this request');
+		$this->Controller->log('This time in the debug log!', LOG_DEBUG);
 		
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
@@ -262,10 +262,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual(count($result['content']['error.log']), 4);
 		$this->assertEqual(count($result['content']['debug.log']), 2);
 		
-		$this->assertTrue(isset($result['content']['debug.log'][0]));
-		$this->assertTrue(isset($result['content']['debug.log'][1]));
-		$this->assertTrue(isset($result['content']['error.log'][0]));
-		$this->assertTrue(isset($result['content']['error.log'][1]));
+		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
+		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
 	}
 	
 /**

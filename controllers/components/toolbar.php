@@ -102,8 +102,6 @@ class ToolbarComponent extends Object {
 		
 		$this->_set($settings);
 		$this->controller =& $controller;
-		$this->controller->helpers = array('Html', 'Javascript', 'Number');
-		
 		return false;
 	}
 	
@@ -300,6 +298,16 @@ class RequestPanel extends DebugPanel {
  **/
 class TimerPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+/**
+ * startup - add in necessary helpers
+ *
+ * @return void
+ **/
+	function startup(&$controller) {
+		if (!in_array('Number', $controller->helpers)) {
+			$controller->helpers[] = 'Number';
+		}
+	}
 }
 
 /**
@@ -311,6 +319,16 @@ class TimerPanel extends DebugPanel {
  **/
 class MemoryPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+/**
+ * startup - add in necessary helpers
+ *
+ * @return void
+ **/
+	function startup(&$controller) {
+		if (!in_array('Number', $controller->helpers)) {
+			$controller->helpers[] = 'Number';
+		}
+	}
 }
 
 /**

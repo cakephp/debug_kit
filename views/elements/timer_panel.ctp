@@ -32,7 +32,7 @@ array_pop($timers);
 <h2><?php __('Timers'); ?></h2>
 <p class="request-time">
 	<strong><?php __('Total Request Time:') ?></strong>
-	<?php echo sprintf(__('%s (seconds)', true), DebugKitDebugger::requestTime()); ?>
+	<?php echo sprintf(__('%s (seconds)', true), $number->precision(DebugKitDebugger::requestTime(), 6)); ?>
 </p>
 
 <table class="debug-table">
@@ -47,7 +47,7 @@ array_pop($timers);
 	<?php foreach ($timers as $timerName => $timeInfo): ?>
 		<tr class="<?php echo ($i % 2) ? 'even' : 'odd'; ?>">
 			<td><?php echo $timeInfo['message']?></td>
-			<td><?php echo $timeInfo['time'] ?> </td>
+			<td><?php echo $number->precision($timeInfo['time'], 6); ?> </td>
 		</tr>
 	<?php $i++; ?>
 	<?php endforeach; ?>

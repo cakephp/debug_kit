@@ -125,6 +125,19 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
 	}
 	
+	/**
+	 * Test for correct loading of helpers into custom view
+	 *
+	 * @return void
+	 */
+	function testLoadHelpers() {
+		$loaded = array();
+		$result = $this->View->_loadHelpers($loaded, array('Html', 'Javascript', 'Number'));
+		$this->assertTrue(is_object($result['Html']));
+		$this->assertTrue(is_object($result['Javascript']));
+		$this->assertTrue(is_object($result['Number']));
+	}
+	
 /**
  * test injection of javascript
  *

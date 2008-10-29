@@ -207,7 +207,7 @@ class DebugView extends View {
  * @return string
  */
 	function _injectToolbar($output) {
-		$toolbar = $this->element('debug_toolbar', array('plugin' => 'debug_kit'));
+		$toolbar = $this->element('debug_toolbar', array('plugin' => 'debug_kit'), true);
 		$bodyEnd = '#</body>\s*</html>#';
 		if (preg_match($bodyEnd, $output)) {
 			$output = preg_replace($bodyEnd, $toolbar . "</body>\n</html>", $output, 1);

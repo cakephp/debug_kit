@@ -368,21 +368,58 @@ class sqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-	
+/**
+ * Log files to scan
+ *
+ * @var array
+ */	
 	var $logFiles = array('error.log', 'debug.log');
+/**
+ * startup
+ *
+ * @return void
+ **/
+	function startup(&$controller) {
+		if (!class_exists('CakeLog')) {
+			App::import('Core', 'Log');
+		}
+	}
 /**
  * beforeRender Callback
  *
  * @return array
  **/
 	function beforeRender(&$controller) {
-		$startTime = DebugKitDebugger::requestStartTime();
-		$currentTime = DebugKitDebugger::requestTime();
+		$this->startTime = DebugKitDebugger::requestStartTime();
+		$this->currentTime = DebugKitDebugger::requestTime();
 		$out = array();
 		foreach ($this->logFiles as $log) {
 			$file = LOGS . $log;
+			if (!file_exists($file)) {
+				continue;
+			}
+			$out[$log] = $this->_parseFile($file); 
 		}
 		return $out;
+	}
+/**
+ * parse a log file and find the relevant entries
+ *
+ * @param string $filename Name of file to read
+ * @access protected
+ * @return array
+ */
+	function _parseFile($filename) {
+		$file =& new File($filename);
+		$contents = $file->read();
+		$timePattern = '/(\d{4}-\d{2}\-\d{2}\s\d{1,2}\:\d{1,2}\:\d{1,2})/';
+		$chunks = preg_split($timePattern, $contents, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+		for ($i = 0, $len = count($chunks); $i < $len; $i += 2) {
+			if (strtotime($chunks[$i]) < $this->startTime) {
+				unset($chunks[$i], $chunks[$i + 1]);
+			}
+		}
+		return $chunks;
 	}
 }
 

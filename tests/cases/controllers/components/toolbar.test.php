@@ -242,18 +242,26 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testLogPanel() {
+		usleep(20);
+		$this->Controller->log('This is a log I made this request ' . time());
+		$this->Controller->log('This is the second  log I made this request ' . time());
+		$this->Controller->log('This time in the debug log! ' . time(), LOG_DEBUG);
+		
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'panels' => array('log', 'session')
 			)
-		);	
+		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
 		$this->Controller->Component->startup($this->Controller);
 		$this->Controller->Component->beforeRender($this->Controller);
-		$vars = $this->Controller->viewVars['debugToolbarPanels']['log'];
-		debug($vars);
+		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
+		$this->assertEqual(count($result['content']), 2);
+		$this->assertEqual(count($result['content']['error.log']), 4);
+		$this->assertEqual(count($result['content']['debug.log']), 2);
 	}
+	
 /**
  * teardown
  *

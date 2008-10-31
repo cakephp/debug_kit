@@ -26,7 +26,6 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Core', array('View', 'Controller'));
 App::import('View', 'DebugKit.Debug');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 /**
@@ -43,8 +42,8 @@ class DebugViewTestCase extends CakeTestCase {
 	function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		$this->Controller =& new Controller();
-		$this->View =& new DebugView($this->Controller, false);
+		$this->Controller =& ClassRegistry::init('Controller');
+		$this->View  =& new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');
 	}
 	

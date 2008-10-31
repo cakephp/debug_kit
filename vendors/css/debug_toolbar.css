@@ -48,6 +48,7 @@
 /* panel content */
 #debug-kit-toolbar .panel-content {
 	position: absolute;
+	text-align: left;
 	width: auto;
 	top:28px;
 	right:0px;

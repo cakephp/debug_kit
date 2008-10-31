@@ -26,7 +26,6 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Core', array('Controller', 'Component'));
 App::import('Component', 'DebugKit.Toolbar');
 
 class TestToolbarComponent extends ToolbarComponent {
@@ -47,9 +46,9 @@ class DebugToolbarTestCase extends CakeTestCase {
 	function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		$this->Controller =& new Controller();
-		$this->Controller->Component =& new Component();
-		$this->Controller->Toolbar =& new TestToolbarComponent();
+		$this->Controller =& ClassRegistry::init('Controller');
+		$this->Controller->Component =& ClassRegistry::init('Component');
+		$this->Controller->Toolbar =& ClassRegistry::init('TestToolBarComponent', 'Component');
 	}
 
 /**

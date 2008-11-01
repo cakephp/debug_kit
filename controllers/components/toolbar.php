@@ -184,27 +184,23 @@ class ToolbarComponent extends Object {
  * @access protected
  **/
 	function _setJavascript($scripts) {
+		$behavior = false;
 		if (!is_array($scripts)) {
 			$scripts = (array)$scripts;
 		}
 		if (isset($scripts[0])) {
-			$library = $scripts[0];
+			$behavior = $scripts[0];
 		}
-		
-		if (isset($library) && $library === false) {
-			return array('library' => false, 'behavior' => false);
-		}
-		
-		if (!isset($scripts['behavior'])) {
-			$behavior = $library . '_debug_toolbar';
-		} else {
+		if (isset($scripts['behavior'])) {
 			$behavior = $scripts['behavior'];
 		}
-		
-		if (isset($scripts['library'])) {
-			$library = $scripts['library'];
+		if (!$behavior) {
+			return array();
 		}
-		return compact('library', 'behavior');
+		if (strpos($behavior, '/') !== 0) {
+			$behavior .= '_debug_toolbar';
+		}
+		return compact('behavior');
 	}
 }
 

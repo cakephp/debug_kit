@@ -164,9 +164,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->startup($this->Controller);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => false,
-		);
+		$expected = array();
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 		
 
@@ -196,13 +194,13 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
-			'behavior' => 'my/path/to/file',
+			'behavior' => '/my/path/to/file',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
-				'javascript' => array('/js/custom_behavior'),
+				'javascript' => '/js/custom_behavior',
 			),
 		);
 		$this->Controller->Component->init($this->Controller);

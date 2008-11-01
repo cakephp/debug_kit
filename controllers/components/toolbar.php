@@ -65,7 +65,6 @@ class ToolbarComponent extends Object {
  * @var array
  **/
 	var $_defaultJavascript = array(
-		'library' => '/debug_kit/js/jquery', 
 		'behavior' => '/debug_kit/js/debug_toolbar'
 	);
 /**

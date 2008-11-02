@@ -200,6 +200,10 @@ class ToolbarComponent extends Object {
 		if (strpos($behavior, '/') !== 0) {
 			$behavior .= '_debug_toolbar';
 		}
+		$pluginFile = APP . 'plugins' . DS . 'debug_kit' . DS . 'vendors' . DS . 'js' . DS . $behavior . '.js';
+		if (file_exists($pluginFile)) {
+			$behavior = '/debug_kit/js/' . $behavior . '.js';
+		}
 		return compact('behavior');
 	}
 }

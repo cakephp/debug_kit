@@ -219,7 +219,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testExistingAlterateJavascript() {
-		$filename = APP . 'plugins' . DS . 'debug_kit' . DS . 'vendors' . DS . 'js' . 'test_alternate_debug_toolbar.js';
+		$filename = APP . 'plugins' . DS . 'debug_kit' . DS . 'vendors' . DS . 'js' . DS . 'test_alternate_debug_toolbar.js';
+		$this->skipIf(!is_writable(dirname($filename)), 'Skipping existing javascript test, debug_kit/vendors/js must be writable');
+		
 		touch($filename);
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(

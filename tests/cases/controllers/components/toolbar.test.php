@@ -211,7 +211,31 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$expected = array(
 			'behavior' => '/js/custom_behavior',
 		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);		
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+	}
+/**
+ * Test alternate javascript existing in the plugin.
+ *
+ * @return void
+ **/
+	function testExistingAlterateJavascript() {
+		$filename = APP . 'plugins' . DS . 'debug_kit' . DS . 'vendors' . DS . 'js' . 'test_alternate_debug_toolbar.js';
+		touch($filename);
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => 'test_alternate',
+			),
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'behavior' => '/debug_kit/js/test_alternate_debug_toolbar.js',
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+		@unlink($filename);
 	}
 /**
  * test the Log panel log reading.

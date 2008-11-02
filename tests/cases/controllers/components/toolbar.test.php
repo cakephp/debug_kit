@@ -34,7 +34,7 @@ class TestToolbarComponent extends ToolbarComponent {
 	function loadPanels($panels) {
 		$this->_loadPanels($panels);
 	}
-	
+
 }
 
 Mock::generate('DebugPanel');
@@ -51,7 +51,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component =& new Component();
 		$this->Controller->Toolbar =& new TestToolbarComponent();
 	}
-	
+
 /**
  * test Loading of panel classes
  *
@@ -65,7 +65,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->expectError();
 		$this->Controller->Toolbar->loadPanels(array('randomNonExisting', 'request'));
 	}
-	
+
 /**
  * test initialize
  *
@@ -76,7 +76,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->components = array('DebugKit.Toolbar');
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
-		
+
 		$this->assertFalse(empty($this->Controller->Toolbar->panels));
 
 		$timers = DebugKitDebugger::getTimers();
@@ -105,7 +105,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
 	}
-	
+
 /**
  * Test Before Render callback
  *
@@ -149,7 +149,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
-			'behavior' => '/debug_kit/js/debug_toolbar',
+			'behavior' => '/debug_kit/js/jquery_debug_toolbar',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 
@@ -242,7 +242,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
 		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
 	}
-	
+
 /**
  * teardown
  *

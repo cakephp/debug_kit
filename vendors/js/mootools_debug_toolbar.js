@@ -1,8 +1,7 @@
 /* SVN FILE: $Id: cake.generic.css 7337 2008-07-13 23:28:45Z mark_story $ */
 /**
- * Debug Toolbar Javascript.  jQuery 1.2.x compatible
+ * Debug Toolbar Javascript.  Mootools 1.2 compatible
  *
- * Custom Debug View class, helps with development.
  *
  * PHP versions 4 and 5
  *
@@ -25,12 +24,10 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-
-$(document).ready(function(){
+document.addEvent('dom:ready', function() {
 	DebugKit.Toolbar();
 	DebugKit.NeatArray();
 });
-
 var DebugKit = {};
 /**
  * Create all behaviors for neat array elements
@@ -46,6 +43,7 @@ DebugKit.NeatArray = function() {
 		}
 	).addClass('expandable').addClass('collapsed').find('ul').hide();
 }
+
 /**
  * Add behavior for toolbar buttons
  *

@@ -25,19 +25,17 @@
 	color: #222;
 	padding: 6px;
 	border-right: 1px solid #ccc;
-	font-size: 16px;
+	font-size: 12px;
 	line-height: 16px;
 	margin: 0;
 	display: block;
 }
-#debug-kit-toolbar .panel-tab .active {
+#debug-kit-toolbar .panel-tab .active,
+#debug-kit-toolbar .panel-tab a:hover {
 	background: #fff;
 }
 #debug-kit-toolbar .panel-tab.icon a {
 	padding: 4px;
-}
-#debug-kit-toolbar .panel-tab a:hover {
-	background: #fff;
 }
 
 /* Hovering over link shows tab, useful for no js  */

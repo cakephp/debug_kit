@@ -24,7 +24,7 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-document.addEvent('dom:ready', function() {
+window.addEvent('domready', function() {
 	DebugKit.Toolbar();
 	DebugKit.NeatArray();
 });
@@ -42,5 +42,34 @@ DebugKit.NeatArray = function() {
  *
  */
 DebugKit.Toolbar = function() {
-
+	var tabCollection = $$('#debug-kit-toolbar li > div');
+	 
+	$$('#debug-kit-toolbar .panel-tab a').addEvent('click', function(event) {
+		event.stop();
+		var buttonId = this.hash.substring(1, this.hash.length) + '-tab';
+		var targetPanel = $(buttonId);
+		if (!targetPanel) return;
+		if (targetPanel.hasClass('active')) {
+			tabCollection.removeClass('active').setStyle('display', 'none');
+		} else {
+			tabCollection.setStyle('display', 'none').removeClass('active');
+			targetPanel.addClass('active').setStyle('display', 'block');
+		}
+		
+	});
+	
+	//enable hiding of toolbar.
+	var panelButtons = $$('#debug-kit-toolbar .panel-tab:not(.panel-tab.icon)');
+	var toolbarHide = $('hide-toolbar').set('state', 'open');
+	toolbarHide.addEvent('click', function(event) {
+		event.stop();
+		var state = this.get('state');
+		if (state == 'open') {
+			panelButtons.setStyle('display', 'none');
+			this.set('state', 'closed')
+		} else {
+			panelButtons.setStyle('display');
+			this.set('state', 'open');
+		}
+	});
 }

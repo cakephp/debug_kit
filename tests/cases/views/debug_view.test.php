@@ -163,8 +163,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/debug_toolbar.js"\s*>\s?</script>#', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/jquery.js"\s*>\s?</script>#', $result);
+		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/jquery_debug_toolbar.js"\s*>\s?</script>#', $result);
 	}
 	
 /**
@@ -185,7 +184,7 @@ class DebugViewTestCase extends CakeTestCase {
 			'here' => '/posts/index',
 		);
 		$this->Controller->helpers = array('Javascript', 'Html');
-		$this->Controller->components = array('DebugKit.Toolbar' => array('javascript' => array('mootools', 'library' => false)));
+		$this->Controller->components = array('DebugKit.Toolbar' => array('javascript' => array('my_custom')));
 		$this->Controller->layout = 'default';
 		$this->Controller->constructClasses();
 		$this->Controller->Component->initialize($this->Controller);
@@ -193,7 +192,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/mootools_debug_toolbar.js"\s*>\s?</script>#', $result);
+		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/my_custom_debug_toolbar.js"\s*>\s?</script>#', $result);
 	}
 
 /**

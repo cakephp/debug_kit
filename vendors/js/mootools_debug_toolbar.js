@@ -34,14 +34,7 @@ var DebugKit = {};
  *
  */
 DebugKit.NeatArray = function() {
-	$('.neat-array').find('li:has(ul)').toggle(
-		function() {
-			$(this).toggleClass('expanded').removeClass('collapsed').find('ul:first').show();
-		},
-		function() {
-			$(this).toggleClass('expanded').addClass('collapsed').find('ul:first').hide();
-		}
-	).addClass('expandable').addClass('collapsed').find('ul').hide();
+
 }
 
 /**
@@ -49,32 +42,5 @@ DebugKit.NeatArray = function() {
  *
  */
 DebugKit.Toolbar = function() {
-	var tabCollection = $('#debug-kit-toolbar li > div');
-	 
-	$('#debug-kit-toolbar .panel-tab a').click(
-		function(e){
-			e.preventDefault();
-			var targetPanel = $(this.hash + '-tab');
-			if (targetPanel.hasClass('active')) {
-				tabCollection.hide().removeClass('active');
-			} else {
-				tabCollection
-					.hide().removeClass('active')
-					.filter(this.hash + '-tab').show().addClass('active');
-			}
-			$('#debug-kit-toolbar .panel-tab a').removeClass('active');
-			$(this).addClass('active');
-		}
-	);
-	
-	//enable hiding of toolbar.
-	var panelButtons = $('#debug-kit-toolbar .panel-tab:not(.panel-tab.icon)');
-	$('#debug-kit-toolbar #hide-toolbar').toggle(
-		function() {
-			panelButtons.hide();
-		},
-		function() {
-			panelButtons.show();
-		}
-	);
+
 }

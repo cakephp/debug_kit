@@ -40,3 +40,6 @@
 <?php else: ?>
 	<p class="warning">To view Cookies, add CookieComponent to Controller 
 <?php endif; ?>
+
+<h4><?php __('Current Route') ?></h4>
+<?php echo $this->makeNeatArray($content['currentRoute']); ?>

@@ -67,8 +67,21 @@
 .panel-content p {
 	margin: 1em 0;
 }
+.panel-content h2 {
+	padding: 0;
+	margin-top:0;
+}
+.panel-content h3 {
+	padding: 0;
+	margin-top: 1em;
+}
+.panel-content .info {
+	padding: 4px;
+	border-top: 1px dashed #6c6cff;
+	border-bottom: 1px dashed #6c6cff;
+}
 
-/* timer panel */
+/* panel tables */
 table.debug-table {
 	width: auto;
 	border: 0;
@@ -86,6 +99,12 @@ table.debug-table th {
 table.debug-table tr.even td {
 	background:#efefef;
 }
+
+table.code-table td {
+	white-space: pre;
+	font-family: monaco, corsiva, "courier new", courier, monospaced;
+}
+
 
 .panel-content.request {
 	display: block;

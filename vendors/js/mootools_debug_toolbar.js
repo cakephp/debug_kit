@@ -67,11 +67,13 @@ var DebugKit = new Class({
 			var buttonId = this.hash.substring(1, this.hash.length) + '-tab';
 			var targetPanel = $(buttonId);
 			if (!targetPanel) return;
+			$$('#debug-kit-toolbar .panel-tab a').removeClass('active');
 			if (targetPanel.hasClass('active')) {
 				tabCollection.removeClass('active').setStyle('display', 'none');
 			} else {
 				tabCollection.setStyle('display', 'none').removeClass('active');
 				targetPanel.addClass('active').setStyle('display', 'block');
+				this.addClass('active');
 			}
 		});
 

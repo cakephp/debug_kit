@@ -33,7 +33,7 @@
 		$len = count($logs);
 		if ($len > 0):
 	?>
-	<table class="debug-table" cellspacing="0" cellpadding="0">
+	<table class="debug-table code-table" cellspacing="0" cellpadding="0">
 		<thead>
 			<th>Time</th>
 			<th>Message</th>

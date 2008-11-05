@@ -39,7 +39,8 @@
 }
 
 /* Hovering over link shows tab, useful for no js  */
-#debug-kit-toolbar .panel-tab a:hover + .panel-content {
+#debug-kit-toolbar .panel-tab a:hover + .panel-content,
+#debug-kit-toolbar .panel-tab a + .panel-content:hover {
 	display: block;
 }
 

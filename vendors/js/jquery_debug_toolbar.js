@@ -1,6 +1,6 @@
-/* SVN FILE: jQueryId: cake.generic.css 7337 2008-07-13 23:28:45Z mark_story jQuery */
+/* SVN FILE: $Id: cake.generic.css 7337 2008-07-13 23:28:45Z mark_story $ */
 /**
- * Debug Toolbar Javascript.  jQuery 1.2.x compatible
+ * Debug Toolbar Javascript.  $ 1.2.x compatible
  *
  * Custom Debug View class, helps with development.
  *
@@ -20,14 +20,12 @@
  * @package			cake
  * @subpackage		cake.cake.libs.
  * @since			CakePHP v 1.2.0.4487
- * @version			jQueryRevisionjQuery
- * @modifiedby		jQueryLastChangedByjQuery
- * @lastmodified	jQueryDatejQuery
+ * @version			$Revision$
+ * @modifiedby		$LastChangedBy$
+ * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-jQuery.noConflict();
-
-jQuery(document).ready(function(){
+$(document).ready(function(){
 	DebugKit.Toolbar();
 	DebugKit.NeatArray();
 });
@@ -38,12 +36,12 @@ var DebugKit = {};
  *
  */
 DebugKit.NeatArray = function() {
-	jQuery('.neat-array').find('li:has(ul)').toggle(
+	$('.neat-array').find('li:has(ul)').toggle(
 		function() {
-			jQuery(this).toggleClass('expanded').removeClass('collapsed').find('ul:first').show();
+			$(this).toggleClass('expanded').removeClass('collapsed').find('ul:first').show();
 		},
 		function() {
-			jQuery(this).toggleClass('expanded').addClass('collapsed').find('ul:first').hide();
+			$(this).toggleClass('expanded').addClass('collapsed').find('ul:first').hide();
 		}
 	).addClass('expandable').addClass('collapsed').find('ul').hide();
 }
@@ -52,12 +50,12 @@ DebugKit.NeatArray = function() {
  *
  */
 DebugKit.Toolbar = function() {
-	var tabCollection = jQuery('#debug-kit-toolbar li > div');
+	var tabCollection = $('#debug-kit-toolbar li > div');
 	 
-	jQuery('#debug-kit-toolbar .panel-tab a').click(
+	$('#debug-kit-toolbar .panel-tab a').click(
 		function(e){
 			e.preventDefault();
-			var targetPanel = jQuery(this.hash + '-tab');
+			var targetPanel = $(this.hash + '-tab');
 			if (targetPanel.hasClass('active')) {
 				tabCollection.hide().removeClass('active');
 			} else {
@@ -65,14 +63,14 @@ DebugKit.Toolbar = function() {
 					.hide().removeClass('active')
 					.filter(this.hash + '-tab').show().addClass('active');
 			}
-			jQuery('#debug-kit-toolbar .panel-tab a').removeClass('active');
-			jQuery(this).addClass('active');
+			$('#debug-kit-toolbar .panel-tab a').removeClass('active');
+			$(this).addClass('active');
 		}
 	);
 	
 	//enable hiding of toolbar.
-	var panelButtons = jQuery('#debug-kit-toolbar .panel-tab:not(.panel-tab.icon)');
-	jQuery('#debug-kit-toolbar #hide-toolbar').toggle(
+	var panelButtons = $('#debug-kit-toolbar .panel-tab:not(.panel-tab.icon)');
+	$('#debug-kit-toolbar #hide-toolbar').toggle(
 		function() {
 			panelButtons.hide();
 		},

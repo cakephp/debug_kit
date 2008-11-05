@@ -100,7 +100,7 @@ class DebugView extends View {
 		if (isset($this->loaded['html'])) {
 			$this->addScript('debug_toolbar_css', $this->loaded['html']->css('/debug_kit/css/debug_toolbar'));
 		}
-		if (isset($this->loaded['javascript'])) {
+		if (isset($this->loaded['javascript']) && isset($this->viewVars['debugToolbarJavascript'])) {
 			$javascripts = $this->viewVars['debugToolbarJavascript'];
 			foreach ($javascripts as $script) {
 				if ($script) {

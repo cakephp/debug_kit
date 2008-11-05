@@ -29,13 +29,17 @@
 <h2><?php __('Logs') ?></h2>
 <?php foreach ($content as $logName => $logs): ?>
 	<h3><?php echo $logName ?></h3>
+	<?php 
+		$len = count($logs);
+		if ($len > 0):
+	?>
 	<table class="debug-table" cellspacing="0" cellpadding="0">
 		<thead>
 			<th>Time</th>
 			<th>Message</th>
 		</thead>
 		<tbody>
-	<?php for ($i = 0, $len = count($logs); $i < $len; $i+=2): ?>
+	<?php for ($i = 0; $i < $len; $i+=2): ?>
 		<tr>
 			<td><?php echo $logs[$i] ?></td>
 			<td><?php echo $logs[$i+1] ?></td>
@@ -43,4 +47,7 @@
 	<?php endfor; ?>
 		</tbody>
 	</table>
-<?php endforeach ?>
+	<?php else: ?>
+		<p class="info"><?php __('There were no log entries made this request'); ?></p>
+	<?php endif; ?>
+<?php endforeach; ?>

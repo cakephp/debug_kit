@@ -163,7 +163,7 @@ class ToolbarComponent extends Object {
 	function _loadPanels($panels) {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
-			if (!class_exists($className) && !App::import('Vendor', 'debug_panels' . DS .$className)) {
+			if (!class_exists($className) && !App::import('Vendor',  $className)) {
 				trigger_error(sprintf(__('Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
 				continue;
 			}

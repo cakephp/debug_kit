@@ -64,6 +64,29 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->expectError();
 		$this->Controller->Toolbar->loadPanels(array('randomNonExisting', 'request'));
 	}
+	
+/**
+ * test loading of vendor panels from test_app folder
+ *
+ * @access public
+ * @return void
+ */
+	function testVendorPanels() {
+		$_back = Configure::read('vendorPaths');
+		Configure::write('vendorPaths', array(APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'panels' => array('test'),
+			)
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->assertTrue(isset($this->Controller->Toolbar->panels['test']));
+		$this->assertTrue(is_a($this->Controller->Toolbar->panels['test'], 'TestPanel'));
+
+		Configure::write('vendorPaths', $_back);
+	}
 
 /**
  * test initialize
@@ -221,7 +244,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$filename = APP . 'plugins' . DS . 'debug_kit' . DS . 'vendors' . DS . 'js' . DS . 'test_alternate_debug_toolbar.js';
 		$this->skipIf(!is_writable(dirname($filename)), 'Skipping existing javascript test, debug_kit/vendors/js must be writable');
 		
-		touch($filename);
+		@touch($filename);
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'javascript' => 'test_alternate',
@@ -267,6 +290,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
 		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
 	}
+
 
 /**
  * teardown

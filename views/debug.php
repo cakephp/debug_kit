@@ -26,7 +26,7 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Core', 'View');
+App::import('View', 'Theme');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 App::import('Component', 'DebugKit.Toolbar');
 /**
@@ -35,7 +35,7 @@ App::import('Component', 'DebugKit.Toolbar');
  * @package debug_kit.views
  * @todo Remove workarounds.
  */
-class DebugView extends View {
+class DebugView extends ThemeView {
 /**
  * The old extension of the current template.
  *

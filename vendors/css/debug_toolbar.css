@@ -100,9 +100,16 @@ table.debug-table tr.even td {
 	background:#efefef;
 }
 
+/** code tables **/
 table.code-table td {
 	white-space: pre;
 	font-family: monaco, corsiva, "courier new", courier, monospaced;
+}
+table.code-table td:first-child {
+	width: 15%;
+}
+table.code-table td:last-child {
+	width: 80%;
 }
 
 

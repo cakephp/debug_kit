@@ -4,6 +4,8 @@
 	top: 0px;
 	right:0px;
 	width: 100%;
+	height: 1%;
+	overflow: visible;
 }
 /* panel tabs */
 #debug-kit-toolbar #panel-tabs {

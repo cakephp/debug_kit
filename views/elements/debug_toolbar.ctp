@@ -43,7 +43,7 @@
 						<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
 					</a>
 					<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
-						<?php echo $this->element($panelInfo['elementName'], $panelInfo, true); ?>
+						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
 					</div>
 				</li>
 			<?php endforeach ?>

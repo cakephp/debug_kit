@@ -27,7 +27,6 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 $timers = DebugKitDebugger::getTimers();
-array_pop($timers);
 ?>
 <h2><?php __('Timers'); ?></h2>
 <p class="request-time">

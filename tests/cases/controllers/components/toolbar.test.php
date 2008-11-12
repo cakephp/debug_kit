@@ -122,7 +122,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->startup($this->Controller);
 
 		$this->assertEqual(count($this->Controller->Toolbar->panels), 1);
-		$this->assertEqual($this->Controller->view, 'DebugKit.Debug');
+		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
+		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar'], array('backend' => 'DebugKit.HtmlToolbar'));
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));

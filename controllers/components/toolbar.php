@@ -98,7 +98,7 @@ class ToolbarComponent extends Object {
 		}
 		$this->_loadPanels($settings['panels']);
 		unset($settings['panels']);
-
+		
 		$this->_set($settings);
 		$this->controller =& $controller;
 		return false;
@@ -110,7 +110,8 @@ class ToolbarComponent extends Object {
  * @return bool
  **/
 	function startup(&$controller) {
-		$controller->helpers[] = 'DebugKit.Toolbar';
+		$format = 'Html'; // stub
+		$controller->helpers['DebugKit.Toolbar'] = array('backend' => sprintf('DebugKit.%sToolbar', $format));
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
@@ -143,7 +144,7 @@ class ToolbarComponent extends Object {
 		}
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugKitDebugger::startTimer('controllerRender', __('Render Action', true));
+		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
 	}
 
 /**

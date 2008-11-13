@@ -26,12 +26,6 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-
-/**
- * Requires its own debugger class for now.
- */
-App::import('Vendor', 'DebugKit.DebugKitDebugger');
-
 class ToolbarComponent extends Object {
 /**
  * Controller instance reference
@@ -86,6 +80,8 @@ class ToolbarComponent extends Object {
 			$this->enabled = false;
 			return false;
 		}
+		App::import('Vendor', 'DebugKit.DebugKitDebugger');
+		
 		DebugKitDebugger::startTimer('componentInit', __('Component initialization and startup', true));
 		if (!isset($settings['panels'])) {
 			$settings['panels'] = $this->_defaultPanels;

@@ -35,7 +35,7 @@ App::import('Component', 'DebugKit.Toolbar');
  * @package debug_kit.views
  * @todo Remove workarounds.
  */
-class DebugView extends ThemeView {
+class DebugView extends DoppelGangerView {
 /**
  * The old extension of the current template.
  *

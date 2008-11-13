@@ -106,6 +106,10 @@ class ToolbarComponent extends Object {
  * @return bool
  **/
 	function startup(&$controller) {
+		$currentViewClass = $controller->view;
+		$this->_makeViewClass($currentViewClass);
+		$controller->view = 'DebugKit.Debug';
+		
 		$format = 'Html'; // stub
 		$controller->helpers['DebugKit.Toolbar'] = array('backend' => sprintf('DebugKit.%sToolbar', $format));
 		$panels = array_keys($this->panels);
@@ -194,6 +198,24 @@ class ToolbarComponent extends Object {
 			$behavior = '/debug_kit/js/' . $behavior . '.js';
 		}
 		return compact('behavior');
+	}
+/**
+ * Makes the DoppleGangerView class if it doesn't already exist.
+ * This allows DebugView to be compatible with all view classes.
+ *
+ * @param string $baseClassName 
+ * @access protected
+ * @return void
+ */
+	function _makeViewClass($baseClassName) {
+		if (!class_exists('DoppelGangerView')) {
+			App::import('View', $baseClassName);
+			if (strpos('View', $baseClassName) === false) {
+				$baseClassName .= 'View';
+			}
+			$class = "class DoppelGangerView extends $baseClassName {}";
+			eval($class);
+		}
 	}
 }
 

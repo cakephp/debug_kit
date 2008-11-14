@@ -26,6 +26,12 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+App::import('Core', 'View');
+
+if (!class_exists('DoppelGangerView')) {
+	class DoppelGangerView extends View {}
+}
+
 App::import('View', 'DebugKit.Debug');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 /**
@@ -73,6 +79,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$result = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($result['render_test_element.ctp']));
 	}
+
 /**
  * test rendering and ensure that timers are being set.
  *
@@ -124,11 +131,11 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
 	}
 	
-	/**
-	 * Test for correct loading of helpers into custom view
-	 *
-	 * @return void
-	 */
+/**
+ * Test for correct loading of helpers into custom view
+ *
+ * @return void
+ */
 	function testLoadHelpers() {
 		$loaded = array();
 		$result = $this->View->_loadHelpers($loaded, array('Html', 'Javascript', 'Number'));
@@ -195,149 +202,6 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/my_custom_debug_toolbar.js"\s*>\s?</script>#', $result);
 	}
 
-/**
- * test Neat Array formatting
- *
- * @return void
- **/
-	function testMakeNeatArray() {
-		$in = false;
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(false)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = null;
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(null)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = true;
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(true)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = array('key' => 'value');
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array('key' => null);
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', '(null)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array('key' => 'value', 'foo' => 'bar');
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 'bar', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array(
-			'key' => 'value', 
-			'foo' => array(
-				'this' => 'deep',
-				'another' => 'value'
-			)
-		);
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong',
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = array(
-			'key' => 'value', 
-			'foo' => array(
-				'this' => 'deep',
-				'another' => 'value'
-			),
-			'lotr' => array(
-				'gandalf' => 'wizard',
-				'bilbo' => 'hobbit'
-			)
-		);
-		$result = $this->View->makeNeatArray($in, 1);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0 expanded'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'<li', '<strong', 'lotr', '/strong', 
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
-				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$result = $this->View->makeNeatArray($in, 2);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0 expanded'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 
-				array('ul' => array('class' => 'neat-array depth-1 expanded')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'<li', '<strong', 'lotr', '/strong',
-				array('ul' => array('class' => 'neat-array depth-1 expanded')),
-				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
-				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array('key' => 'value', 'array' => array());
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'array', '/strong', '(empty)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-	}
 /**
  * reset the view paths
  *

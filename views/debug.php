@@ -150,54 +150,6 @@ class DebugView extends DoppelGangerView {
 		}
 		return $filename;
 	}
-
-/**
- * Recursively goes through an array and makes neat HTML out of it.
- *
- * @param mixed $values Array to make pretty.
- * @param int $openDepth Depth to add open class
- * @param int $currentDepth current depth.
- * @return string
- **/
-	function makeNeatArray($values, $openDepth = 0, $currentDepth = 0) {
-		$className ="neat-array depth-$currentDepth";
-		if ($openDepth > $currentDepth) {
-			$className .= ' expanded';
-		}
-		$nextDepth = $currentDepth + 1;
-		$out = "<ul class=\"$className\">";
-		if (!is_array($values)) {
-			if (is_bool($values)) {
-				$values = array($values);
-			}
-			if (is_null($values)) {
-				$values = array(null);
-			}
-		}
-		foreach ($values as $key => $value) {
-			$out .= '<li><strong>' . $key . '</strong>';
-			if ($value === null) {
-				$value = '(null)';
-			}
-			if ($value === false) {
-				$value = '(false)';
-			}
-			if ($value === true) {
-				$value = '(true)';
-			}
-			if (empty($value) && $value != 0) {
-				$value = '(empty)';
-			}
-			if (is_array($value) && !empty($value)) {
-				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth);
-			} else {
-				$out .= $value;
-			}
-			$out .= '</li>';
-		}
-		$out .= '</ul>';
-		return $out;
-	}
 	
 /**
  * Inject the toolbar elements into a rendered view.

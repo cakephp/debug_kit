@@ -102,33 +102,10 @@ class DebugViewTestCase extends CakeTestCase {
 		$View->render('index');
 		
 		$result = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($result), 4);
+		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));
-	}
-	
-/**
- * Test injection of toolbar
- *
- * @return void
- **/
-	function testInjectToolbar() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => null,
-			'here' => '/posts/index',
-		);
-		$this->Controller->layout = 'default';
-		$View =& new DebugView($this->Controller, false);
-		$result = $View->render('index');
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
 	}
 	
 /**
@@ -143,64 +120,6 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertTrue(is_object($result['Javascript']));
 		$this->assertTrue(is_object($result['Number']));
 	}
-	
-/**
- * test injection of javascript
- *
- * @return void
- **/
-	function testJavascriptInjection() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->uses = null;
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => '/',
-			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Javascript', 'Html');
-		$this->Controller->components = array('DebugKit.Toolbar');
-		$this->Controller->layout = 'default';
-		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$result = $this->Controller->render();
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/jquery_debug_toolbar.js"\s*>\s?</script>#', $result);
-	}
-	
-/**
- * test Injection of user defined javascript
- *
- * @return void
- **/
-	function testCustomJavascriptInjection() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->uses = null;
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => '/',
-			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Javascript', 'Html');
-		$this->Controller->components = array('DebugKit.Toolbar' => array('javascript' => array('my_custom')));
-		$this->Controller->layout = 'default';
-		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$result = $this->Controller->render();
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/my_custom_debug_toolbar.js"\s*>\s?</script>#', $result);
-	}
 
 /**
  * reset the view paths
@@ -210,6 +129,7 @@ class DebugViewTestCase extends CakeTestCase {
 	function endCase() {
 		Configure::write('viewPaths', $this->_viewPaths);
 	}
+
 /**
  * tear down function
  *

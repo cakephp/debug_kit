@@ -107,7 +107,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (preg_match('#</head>#', $view->output)) {
 			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
 		}
-		$toolbar = $view->element('debug_toolbar', array('plugin' => 'debug_kit'));
+		$toolbar = $view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		if (preg_match('#</body>\s*</html>#', $view->output)) {
 			$view->output = preg_replace('#</body>\s*</html>#', $toolbar . "\n</body>\n</html>", $view->output, 1);
 		}
@@ -115,12 +115,14 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	}
 	
 /**
- * beforeLayoutHtml method
+ * beforeLayout method
+ *
+ * Inject CSS and Javascript
  *
  * @return void
  * @access protected
  */
-	function _beforeLayout() {
+	function beforeLayout() {
 		$view =& ClassRegistry::getObject('view');
 		$view->addScript($this->Html->css('/debug_kit/css/debug_toolbar'));
 		if (isset($view->viewVars['debugToolbarJavascript'])) {

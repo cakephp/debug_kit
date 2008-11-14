@@ -58,6 +58,7 @@ class ToolbarHelper extends AppHelper {
 		$this->_backEndClassName =  $className;
 		$this->helpers = array($options['backend']);
 	}
+
 /**
  * call__
  *
@@ -73,25 +74,6 @@ class ToolbarHelper extends AppHelper {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}
 	}
-/**
- * beforeLayout method
- *
- * @return void
- * @access public
- */
-	function beforeLayout() {
-		DebugKitDebugger::startTimer('layoutRender', __('Rendering Layout', true));
-		$this->_beforeLayout();
-	}
-/**
- * _beforeLayout - callback for back end helpers.
- *
- * @access public
- * @return void
- */
-	function _beforeLayout() {
-		//Override me.
-	}
 
 /**
  * afterLayout method
@@ -100,27 +82,7 @@ class ToolbarHelper extends AppHelper {
  * @access public
  */
 	function afterLayout() {
-		DebugKitDebugger::stopTimer('layoutRender');
-		DebugKitDebugger::stopTimer('controllerRender');
 		$this->_send();
-	}
-
-/**
- * beforeRender view callback
- *
- * @return void
- **/
-	function beforeRender() {
-		DebugKitDebugger::startTimer('renderViewFile', __('Rendering View file', true));
-	}
-
-/**
- * afterRender view callback
- *
- * @return void
- **/
-	function afterRender() {
-		DebugKitDebugger::stopTimer('renderViewFile');
 	}
 
 /**

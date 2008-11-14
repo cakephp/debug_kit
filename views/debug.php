@@ -82,34 +82,12 @@ class DebugView extends DoppelGangerView {
 		$out = parent::render($action, $layout, $file);
 		DebugKitDebugger::stopTimer('viewRender');
 		DebugKitDebugger::stopTimer('controllerRender');
-		$out = $this->_injectToolbar($out);
 		
 		//Temporary work around to hide the SQL dump at page bottom
-		Configure::write('debug', 0);		
+		Configure::write('debug', 0);
 		return $out;
 	}
-	
-/**
- * Render Layout.
- * 
- * Adds toolbar CSS and Javascript if helpers are loaded.
- *
- * @return void
- **/
-	function renderLayout($content_for_layout, $layout = null) {
-		if (isset($this->loaded['html'])) {
-			$this->addScript('debug_toolbar_css', $this->loaded['html']->css('/debug_kit/css/debug_toolbar'));
-		}
-		if (isset($this->loaded['javascript']) && isset($this->viewVars['debugToolbarJavascript'])) {
-			$javascripts = $this->viewVars['debugToolbarJavascript'];
-			foreach ($javascripts as $script) {
-				if ($script) {
-					$this->addScript($this->loaded['javascript']->link($script));
-				}
-			}
-		}
-		return parent::renderLayout($content_for_layout, $layout);
-	}
+
 /**
  * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
  * Creates temporary extension to trick View::render() & View::renderLayout()
@@ -149,22 +127,6 @@ class DebugView extends DoppelGangerView {
 			$filename = substr($filename, 0, strlen($filename) -5) . 'debug_view';
 		}
 		return $filename;
-	}
-	
-/**
- * Inject the toolbar elements into a rendered view.
- *
- * @param string $output Rendered Layout and view.
- * @access protected
- * @return string
- */
-	function _injectToolbar($output) {
-		$toolbar = $this->element('debug_toolbar', array('plugin' => 'debug_kit'), true);
-		$bodyEnd = '#</body>\s*</html>#';
-		if (preg_match($bodyEnd, $output)) {
-			$output = preg_replace($bodyEnd, $toolbar . "</body>\n</html>", $output, 1);
-		}
-		return $output;
 	}
 }
 ?>

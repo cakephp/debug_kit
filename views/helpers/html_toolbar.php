@@ -96,6 +96,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
  */
 	function _send() {
 		$view =& ClassRegistry::getObject('view');
+		if (Configure::read('debug') == 0) {
+			return;
+		}
 		$head = $this->Html->css('/debug_kit/css/debug_toolbar');
 		if (isset($view->viewVars['debugToolbarJavascript'])) {
 			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {

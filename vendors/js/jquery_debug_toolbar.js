@@ -53,7 +53,7 @@ DebugKit.NeatArray = function() {
 DebugKit.Toolbar = function() {
 	var tabCollection = $('#debug-kit-toolbar li > div');
 	 
-	$('#debug-kit-toolbar .panel-tab a').click(
+	$('#debug-kit-toolbar .panel-tab > a').click(
 		function(e){
 			e.preventDefault();
 			var targetPanel = $(this.hash + '-tab');
@@ -64,7 +64,7 @@ DebugKit.Toolbar = function() {
 					.hide().removeClass('active')
 					.filter(this.hash + '-tab').show().addClass('active');
 			}
-			$('#debug-kit-toolbar .panel-tab a').removeClass('active');
+			$('#debug-kit-toolbar .panel-tab > a').removeClass('active');
 			$(this).addClass('active');
 		}
 	);

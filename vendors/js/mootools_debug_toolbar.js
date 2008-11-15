@@ -62,12 +62,12 @@ var DebugKit = new Class({
 	toolbar : function() {
 		var tabCollection = $$('#debug-kit-toolbar li > div');
 
-		$$('#debug-kit-toolbar .panel-tab a').addEvent('click', function(event) {
+		$$('#debug-kit-toolbar .panel-tab > a').addEvent('click', function(event) {
 			event.stop();
 			var buttonId = this.hash.substring(1, this.hash.length) + '-tab';
 			var targetPanel = $(buttonId);
 			if (!targetPanel) return;
-			$$('#debug-kit-toolbar .panel-tab a').removeClass('active');
+			$$('#debug-kit-toolbar .panel-tab > a').removeClass('active');
 			if (targetPanel.hasClass('active')) {
 				tabCollection.removeClass('active').setStyle('display', 'none');
 			} else {

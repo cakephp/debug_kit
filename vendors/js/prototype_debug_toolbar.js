@@ -39,7 +39,7 @@ var DebugKit = Class.create({
   toolbar: function(){
   	var tabCollection = $('debug-kit-toolbar').select('li > div');
 	 
-  	$('debug-kit-toolbar').select('.panel-tab a').invoke('observe', 'click', function(e){
+  	$('debug-kit-toolbar').select('.panel-tab > a').invoke('observe', 'click', function(e){
   			e.stop();
   			var targetPanel = $(e.element().hash.replace(/#/, '') + '-tab');
   			if (targetPanel.hasClassName('active')) {
@@ -54,7 +54,7 @@ var DebugKit = Class.create({
 				    }
   				});
   			}
-  			$('debug-kit-toolbar').select('.panel-tab a').invoke('removeClassName', 'active');
+  			$('debug-kit-toolbar').select('.panel-tab > a').invoke('removeClassName', 'active');
   			e.element().addClassName('active');
   	});
 	

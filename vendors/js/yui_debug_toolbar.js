@@ -47,7 +47,7 @@ YAHOO.CakePHP.DebugKit = function() {
 	var toolbar = function() {
 		var tabCollection = Selector.query('#debug-kit-toolbar li > div');
 		
-		Dom.batch(Selector.query('#debug-kit-toolbar .panel-tab a'), function(el) {
+		Dom.batch(Selector.query('#debug-kit-toolbar .panel-tab > a'), function(el) {
 			Event.on(el, 'click', function(ev) {
 				Event.preventDefault(ev);
 				targetPanel =Dom.get(el.hash.replace(/#/, '') + '-tab');
@@ -70,7 +70,7 @@ YAHOO.CakePHP.DebugKit = function() {
 					});
 				}
 				
-				Dom.removeClass(Selector.query('#debug-kit-toolbar .panel-tab a'), 'active');
+				Dom.removeClass(Selector.query('#debug-kit-toolbar .panel-tab > a'), 'active');
 				Dom.addClass(el, 'active');
 			});
 		});

@@ -3,7 +3,7 @@
 /**
  * Session Panel Element
  *
- * 
+ *
  *
  * PHP versions 4 and 5
  *
@@ -16,16 +16,16 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 ?>
 <h2><?php __('Session'); ?></h2>
-<?php echo $this->makeNeatArray($content); ?>
+<?php echo $toolbar->makeNeatArray($content); ?>

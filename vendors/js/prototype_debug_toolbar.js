@@ -14,15 +14,15 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 document.observe('dom:loaded', function() {
@@ -39,7 +39,7 @@ var DebugKit = Class.create({
   toolbar: function(){
   	var tabCollection = $('debug-kit-toolbar').select('li > div');
 	 
-  	$('debug-kit-toolbar').select('.panel-tab a').invoke('observe', 'click', function(e){
+  	$('debug-kit-toolbar').select('.panel-tab > a').invoke('observe', 'click', function(e){
   			e.stop();
   			var targetPanel = $(e.element().hash.replace(/#/, '') + '-tab');
   			if (targetPanel.hasClassName('active')) {
@@ -54,7 +54,7 @@ var DebugKit = Class.create({
 				    }
   				});
   			}
-  			$('debug-kit-toolbar').select('.panel-tab a').invoke('removeClassName', 'active');
+  			$('debug-kit-toolbar').select('.panel-tab > a').invoke('removeClassName', 'active');
   			e.element().addClassName('active');
   	});
 	

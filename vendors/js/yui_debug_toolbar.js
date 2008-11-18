@@ -14,15 +14,15 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 YAHOO.namespace('CakePHP.DebugKit');
@@ -47,7 +47,7 @@ YAHOO.CakePHP.DebugKit = function() {
 	var toolbar = function() {
 		var tabCollection = Selector.query('#debug-kit-toolbar li > div');
 		
-		Dom.batch(Selector.query('#debug-kit-toolbar .panel-tab a'), function(el) {
+		Dom.batch(Selector.query('#debug-kit-toolbar .panel-tab > a'), function(el) {
 			Event.on(el, 'click', function(ev) {
 				Event.preventDefault(ev);
 				targetPanel =Dom.get(el.hash.replace(/#/, '') + '-tab');
@@ -70,7 +70,7 @@ YAHOO.CakePHP.DebugKit = function() {
 					});
 				}
 				
-				Dom.removeClass(Selector.query('#debug-kit-toolbar .panel-tab a'), 'active');
+				Dom.removeClass(Selector.query('#debug-kit-toolbar .panel-tab > a'), 'active');
 				Dom.addClass(el, 'active');
 			});
 		});

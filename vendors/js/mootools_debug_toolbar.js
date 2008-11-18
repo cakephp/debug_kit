@@ -16,15 +16,15 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 window.addEvent('domready', function() {
 	new DebugKit();
@@ -62,12 +62,12 @@ var DebugKit = new Class({
 	toolbar : function() {
 		var tabCollection = $$('#debug-kit-toolbar li > div');
 
-		$$('#debug-kit-toolbar .panel-tab a').addEvent('click', function(event) {
+		$$('#debug-kit-toolbar .panel-tab > a').addEvent('click', function(event) {
 			event.stop();
 			var buttonId = this.hash.substring(1, this.hash.length) + '-tab';
 			var targetPanel = $(buttonId);
 			if (!targetPanel) return;
-			$$('#debug-kit-toolbar .panel-tab a').removeClass('active');
+			$$('#debug-kit-toolbar .panel-tab > a').removeClass('active');
 			if (targetPanel.hasClass('active')) {
 				tabCollection.removeClass('active').setStyle('display', 'none');
 			} else {

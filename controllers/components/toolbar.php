@@ -1,9 +1,9 @@
-<?php 
+<?php
 /* SVN FILE: $Id$ */
 /**
  * DebugKit DebugToolbar Component
  *
- * 
+ *
  *
  * PHP versions 4 and 5
  *
@@ -16,15 +16,15 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 class ToolbarComponent extends Object {
 /**
@@ -50,9 +50,9 @@ class ToolbarComponent extends Object {
  * Loaded panel objects.
  *
  * @var array
- */	
+ */
 	var $panels = array();
-	
+
 /**
  * fallback for javascript settings
  *
@@ -71,7 +71,7 @@ class ToolbarComponent extends Object {
  * initialize
  *
  * If debug is off the component will be disabled and not do any further time tracking
- * or view switching.
+ * or load the toolbar helper.
  *
  * @return bool
  **/
@@ -91,7 +91,7 @@ class ToolbarComponent extends Object {
 			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
 		} else {
 			$settings['javascript'] = $this->_defaultJavascript;
-		} 
+		}
 		$this->_loadPanels($settings['panels']);
 		unset($settings['panels']);
 		
@@ -99,26 +99,26 @@ class ToolbarComponent extends Object {
 		$this->controller =& $controller;
 		return false;
 	}
-	
+
 /**
  * Component Startup
  *
  * @return bool
  **/
 	function startup(&$controller) {
-		if (!isset($controller->params['url']['ext']) 
-			|| (isset($controller->params['url']['ext']) 
-			&& $controller->params['url']['ext'] == 'html')
-		) {
-			$controller->view = 'DebugKit.Debug';
+		$currentViewClass = $controller->view;
+		$this->_makeViewClass($currentViewClass);
+		$controller->view = 'DebugKit.Debug';
+		if (!isset($controller->params['url']['ext']) || (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')) {
+			$format = 'Html';
 		} else {
-			//use firephp view class.
+			$format = 'FirePhp';
 		}
+		$controller->helpers['DebugKit.Toolbar'] = array('backend' => sprintf('DebugKit.%sToolbar', $format));
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
 		}
-		
 		DebugKitDebugger::stopTimer('componentInit');
 		DebugKitDebugger::startTimer('controllerAction', __('Controller Action', true));
 	}
@@ -147,9 +147,9 @@ class ToolbarComponent extends Object {
 		}
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugKitDebugger::startTimer('controllerRender', __('Render Action', true));
+		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
 	}
-	
+
 /**
  * Load Panels used in the debug toolbar
  *
@@ -169,14 +169,14 @@ class ToolbarComponent extends Object {
 			}
 		}
 	}
-	
+
 /**
  * Set the javascript to user scripts.
  *
  * Set either script key to false to exclude it from the rendered layout.
  *
  * @param array $scripts Javascript config information
- * @return array 
+ * @return array
  * @access protected
  **/
 	function _setJavascript($scripts) {
@@ -202,6 +202,24 @@ class ToolbarComponent extends Object {
 		}
 		return compact('behavior');
 	}
+/**
+ * Makes the DoppleGangerView class if it doesn't already exist.
+ * This allows DebugView to be compatible with all view classes.
+ *
+ * @param string $baseClassName 
+ * @access protected
+ * @return void
+ */
+	function _makeViewClass($baseClassName) {
+		if (!class_exists('DoppelGangerView')) {
+			App::import('View', $baseClassName);
+			if (strpos('View', $baseClassName) === false) {
+				$baseClassName .= 'View';
+			}
+			$class = "class DoppelGangerView extends $baseClassName {}";
+			eval($class);
+		}
+	}
 }
 
 /**
@@ -209,7 +227,7 @@ class ToolbarComponent extends Object {
  *
  * Abstract class for debug panels.
  *
- * @package cake.debug_kit
+ * @package       cake.debug_kit
  */
 class DebugPanel extends Object {
 /**
@@ -242,14 +260,14 @@ class DebugPanel extends Object {
  *
  * Provides debug information on the Session contents.
  *
- * @package cake.debug_kit.panels
+ * @package       cake.debug_kit.panels
  **/
 class SessionPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
 /**
  * beforeRender callback
  *
- * @param object $controller 
+ * @param object $controller
  * @access public
  * @return array
  */
@@ -263,7 +281,7 @@ class SessionPanel extends DebugPanel {
  *
  * Provides debug information on the Current request params.
  *
- * @package cake.debug_kit.panels
+ * @package       cake.debug_kit.panels
  **/
 class RequestPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
@@ -289,7 +307,7 @@ class RequestPanel extends DebugPanel {
  *
  * Provides debug information on all timers used in a request.
  *
- * @package cake.debug_kit.panels
+ * @package       cake.debug_kit.panels
  **/
 class TimerPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
@@ -310,7 +328,7 @@ class TimerPanel extends DebugPanel {
  *
  * Provides debug information on the memory consumption.
  *
- * @package cake.debug_kit.panels
+ * @package       cake.debug_kit.panels
  **/
 class MemoryPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
@@ -331,16 +349,16 @@ class MemoryPanel extends DebugPanel {
  *
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
  *
- * @package cake.debug_kit.panels
+ * @package       cake.debug_kit.panels
  **/
 class sqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-	
+
 	var $dbConfigs = array();
 /**
  * get db configs.
  *
- * @param string $controller 
+ * @param string $controller
  * @access public
  * @return void
  */
@@ -352,11 +370,10 @@ class sqlLogPanel extends DebugPanel {
 		$this->dbConfigs = ConnectionManager::sourceList();
 		return true;
 	}
-
 /**
  * Get Sql Logs for each DB config
  *
- * @param string $controller 
+ * @param string $controller
  * @access public
  * @return void
  */
@@ -376,10 +393,11 @@ class sqlLogPanel extends DebugPanel {
 		return $queryLogs;
 	}
 }
+
 /**
  * Log Panel - Reads log entries made this request.
  *
- * @package cake.debug_kit.panels
+ * @package       cake.debug_kit.panels
  */
 class LogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
@@ -387,7 +405,7 @@ class LogPanel extends DebugPanel {
  * Log files to scan
  *
  * @var array
- */	
+ */
 	var $logFiles = array('error.log', 'debug.log');
 /**
  * startup
@@ -413,7 +431,7 @@ class LogPanel extends DebugPanel {
 			if (!file_exists($file)) {
 				continue;
 			}
-			$out[$log] = $this->_parseFile($file); 
+			$out[$log] = $this->_parseFile($file);
 		}
 		return $out;
 	}
@@ -437,5 +455,4 @@ class LogPanel extends DebugPanel {
 		return array_values($chunks);
 	}
 }
-
 ?>

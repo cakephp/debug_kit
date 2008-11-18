@@ -16,15 +16,15 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Component', 'DebugKit.Toolbar');
 
@@ -122,7 +122,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->startup($this->Controller);
 
 		$this->assertEqual(count($this->Controller->Toolbar->panels), 1);
-		$this->assertEqual($this->Controller->view, 'DebugKit.Debug');
+		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
+		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar'], array('backend' => 'DebugKit.HtmlToolbar'));
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
@@ -299,7 +300,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function tearDown() {
 		unset($this->Controller);
-		DebugKitDebugger::clearTimers();
+		if (class_exists('DebugKitDebugger')) {
+			DebugKitDebugger::clearTimers();
+		}
 	}
 }
 ?>

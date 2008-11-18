@@ -16,22 +16,28 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright		Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package			cake
- * @subpackage		cake.cake.libs.
- * @since			CakePHP v 1.2.0.4487
- * @version			$Revision$
- * @modifiedby		$LastChangedBy$
- * @lastmodified	$Date$
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
+ * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.
+ * @since         CakePHP v 1.2.0.4487
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
+ * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+App::import('Core', 'View');
+
+if (!class_exists('DoppelGangerView')) {
+	class DoppelGangerView extends View {}
+}
+
 App::import('View', 'DebugKit.Debug');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 /**
  * Debug View Test Case
  *
- * @package debug_kit.tests
+ * @package       debug_kit.tests
  */
 class DebugViewTestCase extends CakeTestCase {
 /**
@@ -73,6 +79,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$result = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($result['render_test_element.ctp']));
 	}
+
 /**
  * test rendering and ensure that timers are being set.
  *
@@ -95,40 +102,17 @@ class DebugViewTestCase extends CakeTestCase {
 		$View->render('index');
 		
 		$result = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($result), 4);
+		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));
 	}
 	
 /**
- * Test injection of toolbar
+ * Test for correct loading of helpers into custom view
  *
  * @return void
- **/
-	function testInjectToolbar() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => null,
-			'here' => '/posts/index',
-		);
-		$this->Controller->layout = 'default';
-		$View =& new DebugView($this->Controller, false);
-		$result = $View->render('index');
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
-	}
-	
-	/**
-	 * Test for correct loading of helpers into custom view
-	 *
-	 * @return void
-	 */
+ */
 	function testLoadHelpers() {
 		$loaded = array();
 		$result = $this->View->_loadHelpers($loaded, array('Html', 'Javascript', 'Number'));
@@ -136,208 +120,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertTrue(is_object($result['Javascript']));
 		$this->assertTrue(is_object($result['Number']));
 	}
-	
-/**
- * test injection of javascript
- *
- * @return void
- **/
-	function testJavascriptInjection() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->uses = null;
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => '/',
-			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Javascript', 'Html');
-		$this->Controller->components = array('DebugKit.Toolbar');
-		$this->Controller->layout = 'default';
-		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$result = $this->Controller->render();
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/jquery_debug_toolbar.js"\s*>\s?</script>#', $result);
-	}
-	
-/**
- * test Injection of user defined javascript
- *
- * @return void
- **/
-	function testCustomJavascriptInjection() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->uses = null;
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => '/',
-			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Javascript', 'Html');
-		$this->Controller->components = array('DebugKit.Toolbar' => array('javascript' => array('my_custom')));
-		$this->Controller->layout = 'default';
-		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$result = $this->Controller->render();
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/my_custom_debug_toolbar.js"\s*>\s?</script>#', $result);
-	}
 
-/**
- * test Neat Array formatting
- *
- * @return void
- **/
-	function testMakeNeatArray() {
-		$in = false;
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(false)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = null;
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(null)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = true;
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(true)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = array('key' => 'value');
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array('key' => null);
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', '(null)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array('key' => 'value', 'foo' => 'bar');
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 'bar', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array(
-			'key' => 'value', 
-			'foo' => array(
-				'this' => 'deep',
-				'another' => 'value'
-			)
-		);
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong',
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-
-		$in = array(
-			'key' => 'value', 
-			'foo' => array(
-				'this' => 'deep',
-				'another' => 'value'
-			),
-			'lotr' => array(
-				'gandalf' => 'wizard',
-				'bilbo' => 'hobbit'
-			)
-		);
-		$result = $this->View->makeNeatArray($in, 1);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0 expanded'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'<li', '<strong', 'lotr', '/strong', 
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
-				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$result = $this->View->makeNeatArray($in, 2);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0 expanded'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 
-				array('ul' => array('class' => 'neat-array depth-1 expanded')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'<li', '<strong', 'lotr', '/strong',
-				array('ul' => array('class' => 'neat-array depth-1 expanded')),
-				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
-				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-		
-		$in = array('key' => 'value', 'array' => array());
-		$result = $this->View->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'array', '/strong', '(empty)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-	}
 /**
  * reset the view paths
  *
@@ -346,6 +129,7 @@ class DebugViewTestCase extends CakeTestCase {
 	function endCase() {
 		Configure::write('viewPaths', $this->_viewPaths);
 	}
+
 /**
  * tear down function
  *

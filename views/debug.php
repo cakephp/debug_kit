@@ -26,7 +26,7 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Core', 'View');
+App::import('View', 'Theme');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 App::import('Component', 'DebugKit.Toolbar');
 /**
@@ -35,7 +35,7 @@ App::import('Component', 'DebugKit.Toolbar');
  * @package debug_kit.views
  * @todo Remove workarounds.
  */
-class DebugView extends View {
+class DebugView extends DoppelGangerView {
 /**
  * The old extension of the current template.
  *
@@ -58,9 +58,9 @@ class DebugView extends View {
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__('Rendering %s', true), Debugger::trimPath($___viewFn)));
 		}
-		
+
 		$out = parent::_render($___viewFn, $___dataForView, $loadHelpers, $cached);
-		
+
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::stopTimer('render_' . basename($___viewFn));
 		}
@@ -82,34 +82,24 @@ class DebugView extends View {
 		$out = parent::render($action, $layout, $file);
 		DebugKitDebugger::stopTimer('viewRender');
 		DebugKitDebugger::stopTimer('controllerRender');
-		$out = $this->_injectToolbar($out);
-		
-		//Temporary work around to hide the SQL dump at page bottom
-		Configure::write('debug', 0);		
-		return $out;
-	}
-	
-/**
- * Render Layout.
- * 
- * Adds toolbar CSS and Javascript if helpers are loaded.
- *
- * @return void
- **/
-	function renderLayout($content_for_layout, $layout = null) {
-		if (isset($this->loaded['html'])) {
-			$this->addScript('debug_toolbar_css', $this->loaded['html']->css('/debug_kit/css/debug_toolbar'));
-		}
-		if (isset($this->loaded['javascript']) && isset($this->viewVars['debugToolbarJavascript'])) {
-			$javascripts = $this->viewVars['debugToolbarJavascript'];
-			foreach ($javascripts as $script) {
-				if ($script) {
-					$this->addScript($this->loaded['javascript']->link($script));
+
+		if (!empty($this->loaded)) {
+			$helpers = array_keys($this->loaded);
+			foreach ($helpers as $helperName) {
+				$helper =& $this->loaded[$helperName];
+				if (is_object($helper)) {
+					if ((is_subclass_of($helper, 'Helper') || is_subclass_of($helper, 'helper')) && method_exists($helper, 'postRender')) {
+						$helper->postRender();
+					}
 				}
 			}
 		}
-		return parent::renderLayout($content_for_layout, $layout);
+
+		//Temporary work around to hide the SQL dump at page bottom
+		Configure::write('debug', 0);
+		return $this->output;
 	}
+
 /**
  * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
  * Creates temporary extension to trick View::render() & View::renderLayout()
@@ -149,70 +139,6 @@ class DebugView extends View {
 			$filename = substr($filename, 0, strlen($filename) -5) . 'debug_view';
 		}
 		return $filename;
-	}
-
-/**
- * Recursively goes through an array and makes neat HTML out of it.
- *
- * @param mixed $values Array to make pretty.
- * @param int $openDepth Depth to add open class
- * @param int $currentDepth current depth.
- * @return string
- **/
-	function makeNeatArray($values, $openDepth = 0, $currentDepth = 0) {
-		$className ="neat-array depth-$currentDepth";
-		if ($openDepth > $currentDepth) {
-			$className .= ' expanded';
-		}
-		$nextDepth = $currentDepth + 1;
-		$out = "<ul class=\"$className\">";
-		if (!is_array($values)) {
-			if (is_bool($values)) {
-				$values = array($values);
-			}
-			if (is_null($values)) {
-				$values = array(null);
-			}
-		}
-		foreach ($values as $key => $value) {
-			$out .= '<li><strong>' . $key . '</strong>';
-			if ($value === null) {
-				$value = '(null)';
-			}
-			if ($value === false) {
-				$value = '(false)';
-			}
-			if ($value === true) {
-				$value = '(true)';
-			}
-			if (empty($value) && $value != 0) {
-				$value = '(empty)';
-			}
-			if (is_array($value) && !empty($value)) {
-				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth);
-			} else {
-				$out .= $value;
-			}
-			$out .= '</li>';
-		}
-		$out .= '</ul>';
-		return $out;
-	}
-	
-/**
- * Inject the toolbar elements into a rendered view.
- *
- * @param string $output Rendered Layout and view.
- * @access protected
- * @return string
- */
-	function _injectToolbar($output) {
-		$toolbar = $this->element('debug_toolbar', array('plugin' => 'debug_kit'), true);
-		$bodyEnd = '#</body>\s*</html>#';
-		if (preg_match($bodyEnd, $output)) {
-			$output = preg_replace($bodyEnd, $toolbar . "</body>\n</html>", $output, 1);
-		}
-		return $output;
 	}
 }
 ?>

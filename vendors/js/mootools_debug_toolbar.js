@@ -1,9 +1,8 @@
-/* SVN FILE: $Id: cake.generic.css 7337 2008-07-13 23:28:45Z mark_story $ */
+/* SVN FILE: $Id$ */
 /**
- * Debug Toolbar Javascript.  Mootools 1.2 compatible
+ * Debug Toolbar Javascript.  Mootools 1.2 compatible.
  *
  * Requires Class, Event, Element, and Selectors 
- *
  *
  * PHP versions 4 and 5
  *

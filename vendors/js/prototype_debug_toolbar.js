@@ -1,7 +1,8 @@
+/* SVN FILE: $Id$ */
 /**
- * Debug Toolbar Javascript.  Prototype 1.6.x compatible
+ * Debug Toolbar Javascript.  Prototype 1.6.x compatible.
  *
- * Custom Debug View class, helps with development.
+ * Long description here.
  *
  * PHP versions 4 and 5
  *

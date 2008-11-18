@@ -1,7 +1,8 @@
+/* SVN FILE: $Id$ */
 /**
  * Debug Toolbar Javascript.  YUI 2.6 compatible.
  *
- * Custom Debug View class, helps with development.
+ * Long description here.
  *
  * PHP versions 4 and 5
  *

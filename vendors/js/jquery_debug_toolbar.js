@@ -1,8 +1,8 @@
-/* SVN FILE: $Id: cake.generic.css 7337 2008-07-13 23:28:45Z mark_story $ */
+/* SVN FILE: $Id$ */
 /**
- * Debug Toolbar Javascript.  $ 1.2.x compatible
+ * Debug Toolbar Javascript.  jQuery 1.2.x compatible.
  *
- * Custom Debug View class, helps with development.
+ * Long description here.
  *
  * PHP versions 4 and 5
  *

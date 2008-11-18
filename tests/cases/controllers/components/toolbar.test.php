@@ -300,7 +300,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function tearDown() {
 		unset($this->Controller);
-		DebugKitDebugger::clearTimers();
+		if (class_exists('DebugKitDebugger')) {
+			DebugKitDebugger::clearTimers();
+		}
 	}
 }
 ?>

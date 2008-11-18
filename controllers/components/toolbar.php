@@ -110,7 +110,11 @@ class ToolbarComponent extends Object {
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
 		
-		$format = 'Html'; // stub
+		if (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html') {
+			$format = 'Html';
+		} else {
+			$format = 'FirePhp';
+		}
 		$controller->helpers['DebugKit.Toolbar'] = array('backend' => sprintf('DebugKit.%sToolbar', $format));
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {

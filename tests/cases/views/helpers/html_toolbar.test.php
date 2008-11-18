@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Toolbar Abstract Helper Test Case
+ * Toolbar HTML Helper Test Case
  *
  * 
  *

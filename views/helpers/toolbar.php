@@ -76,12 +76,15 @@ class ToolbarHelper extends AppHelper {
 	}
 
 /**
- * afterLayout method
+ * postRender method
+ *
+ * Custom Callback defined in DebugView to allow helpers to modify
+ * View output after all rendering is complete.
  *
  * @return void
  * @access public
  */
-	function afterLayout() {
+	function postRender() {
 		$this->_send();
 	}
 

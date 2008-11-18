@@ -367,7 +367,6 @@ class sqlLogPanel extends DebugPanel {
 		$this->dbConfigs = ConnectionManager::sourceList();
 		return true;
 	}
-
 /**
  * Get Sql Logs for each DB config
  *
@@ -391,6 +390,7 @@ class sqlLogPanel extends DebugPanel {
 		return $queryLogs;
 	}
 }
+
 /**
  * Log Panel - Reads log entries made this request.
  *

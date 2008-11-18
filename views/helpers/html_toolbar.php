@@ -95,10 +95,10 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @access protected
  */
 	function _send() {
-		$view =& ClassRegistry::getObject('view');
 		if (Configure::read('debug') == 0) {
 			return;
 		}
+		$view =& ClassRegistry::getObject('view');
 		$head = $this->Html->css('/debug_kit/css/debug_toolbar');
 		if (isset($view->viewVars['debugToolbarJavascript'])) {
 			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {
@@ -114,7 +114,6 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (preg_match('#</body>\s*</html>#', $view->output)) {
 			$view->output = preg_replace('#</body>\s*</html>#', $toolbar . "\n</body>\n</html>", $view->output, 1);
 		}
-		Configure::write('debug', 0);
 	}
 	
 /**

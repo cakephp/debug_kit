@@ -226,8 +226,13 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		);
 		$this->Controller->helpers = array('Html', 'Javascript', 'DebugKit.Toolbar');
 		$this->Controller->layout = 'default';
-		$View =& new View($this->Controller);
-		$result = $View->render('index');
+		$this->Controller->uses = null;
+		$this->Controller->components = array('DebugKit.Toolbar');
+		$this->Controller->constructClasses();
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
 		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
 	}

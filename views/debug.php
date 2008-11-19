@@ -26,7 +26,6 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('View', 'Theme');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 App::import('Component', 'DebugKit.Toolbar');
 /**

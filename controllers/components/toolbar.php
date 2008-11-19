@@ -59,7 +59,7 @@ class ToolbarComponent extends Object {
  * @var array
  **/
 	var $_defaultJavascript = array(
-		'behavior' => '/debug_kit/js/jquery_debug_toolbar'
+		'behavior' => '/debug_kit/js/js_debug_toolbar'
 	);
 /**
  * javascript files component will be using.
@@ -192,6 +192,8 @@ class ToolbarComponent extends Object {
 		}
 		if (!$behavior) {
 			return array();
+		} elseif ($behavior === true) {
+			$behavior = 'js';
 		}
 		if (strpos($behavior, '/') !== 0) {
 			$behavior .= '_debug_toolbar';

@@ -31,14 +31,14 @@ var DebugKit = function(id) {
 		elements = {},
 		panels = {},
 		hidden = false;
-	
+
 	this.initialize = function(id) {
 		elements.toolbar = document.getElementById(id || 'debug-kit-toolbar');
 
 		if (elements.toolbar === undefined) {
 			throw new Exception('Toolbar not found, make sure you loaded it.');
 		}
-   
+
 		for (var i in elements.toolbar.childNodes) {
 			var element = elements.toolbar.childNodes[i];
 			if (element.nodeName && element.id === 'panel-tabs') {
@@ -46,7 +46,7 @@ var DebugKit = function(id) {
 				break;
 			}
 		}
-   
+
 		for (var i in elements.panel.childNodes) {
 			var element = elements.panel.childNodes[i];
 			if (element.className && element.className.match(/panel-tab/)) {
@@ -63,7 +63,9 @@ var DebugKit = function(id) {
 			++index;
 		}
 	}
-
+/**
+ * Add a panel to the toolbar
+ */
 	this.addPanel = function(tab, callback) {
 		if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
 			throw new Exception('Toolbar not found, make sure you loaded it.');
@@ -85,26 +87,27 @@ var DebugKit = function(id) {
 			} else if (tag === 'DIV') {
 				panel.content = element;
 			}
-		}		
+		}
 		if (!panel.id) {
 			throw new Exception('invalid element');
 		}
-		
+
 		if (panel.button.id && panel.button.id === 'hide-toolbar') {
 			panel.callback = this.toggleToolbar;
 		}
-		if (panel.content !== undefined) {
-			panel.element.onmouseover = function() { return window.DebugKit.activatePanel(panel.id, true); };
-			panel.element.onmouseout = function() { return window.DebugKit.deactivatePanel(panel.id); };
-		}
+
 		if (panel.callback !== undefined) {
 			panel.button.onclick = function() { return panel.callback(); };
+		} else {
+			panel.button.onclick = function() { return window.DebugKit.togglePanel(panel.id); };
 		}
 
 		panels[panel.id] = panel;
 		return panel.id;
 	};
-	
+/**
+ * Hide/show the toolbar (minimize cake)
+ */	
 	this.toggleToolbar = function() {
 		for (var i in panels) {
 			var panel = panels[i],
@@ -116,7 +119,22 @@ var DebugKit = function(id) {
 		hidden = !hidden;
 		return true;
 	};
-
+/**
+ * Toggle a panel
+ */
+	this.togglePanel = function(id) {
+		if (panels[id] && panels[id].active) {
+			this.deactivatePanel(true);
+			panels[id].active = false;
+		} else {
+			this.deactivatePanel(true);
+			this.activatePanel(id);
+			panels[id].active = true;
+		}
+	}
+/**
+ * Make a panel active.
+ */
 	this.activatePanel = function(id, unique) {
 		if (panels[id] !== undefined && !panels[id].active) {
 			var panel = panels[id];
@@ -130,7 +148,9 @@ var DebugKit = function(id) {
 		}
 		return false;
 	};
-
+/**
+ * Deactivate a panel.  use true to hide all panels.
+ */
 	this.deactivatePanel = function(id) {
 		if (id === true) {
 			for (var i in panels) {
@@ -149,14 +169,17 @@ var DebugKit = function(id) {
 		}
 		return false;
 	};
-
+/**
+ * Add neat array functionality.
+ */
 	function neatArray(list) {
 		if (!list.className.match(/depth-0/)) {
 			var item = list.parentNode;
 			list.style.display = 'none';
 			item.className = (item.className || '').replace(/^(.*)$/, '$1 expandable collapsed');
 			item.onclick = function(event) {
-				var element = (event === undefined)? this: event.target,
+				//var element = (event === undefined)? this: event.target;
+				var element = this,
 					event = event || window.event,
 					act = Boolean(item === element),
 					hide = Boolean(list.style.display === 'block');

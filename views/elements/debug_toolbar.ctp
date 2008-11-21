@@ -34,7 +34,7 @@
 		<ul id="panel-tabs">
 			<li class="panel-tab icon">
 				<a href="#hide" id="hide-toolbar">
-					<?php echo $html->image('cake.icon.gif', array('alt' => 'cakePHP')); ?>
+					<?php echo $html->image('/debug_kit/img/cake.icon.png', array('alt' => 'cakePHP')); ?>
 				</a>
 			</li>
 			<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>

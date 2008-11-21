@@ -26,9 +26,17 @@
  * @lastmodified    
  * @license         http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Vendor', 'DebugKit.Firephp');
+App::import('Vendor', 'DebugKit.FireCake');
 
-class CakeFirePHPTestCase extends CakeTestCase {
+class TestFireCake extends FireCake {
+	var $sentHeaders = array();
+
+	function _sendHeader($name, $value) {
+		$this->sentHeaders[$name] = $value;
+	}
+}
+
+class FireCakeTestCase extends CakeTestCase {
 /**
  * setup test
  *
@@ -36,7 +44,28 @@ class CakeFirePHPTestCase extends CakeTestCase {
  * @return void
  */
 	function setUp() {
-		$this->firephp =& new CakeFirePHP();
+		$this->firephp =& TestFireCake::getInstance();
+	}
+
+/**
+ * test get instance
+ *
+ * @return void
+ **/
+	function testGetInstance() {
+		$instance =& TestFireCake::getInstance();
+		$instance2 =& TestFireCake::getInstance();
+		$this->assertReference($instance, $instance2);
+		$this->assertIsA($instance, 'FireCake');
+		$this->assertIsA($instance, 'TestFireCake');
+	}	
+/**
+ * testsetoption
+ *
+ * @return void
+ **/
+	function testSetOptions() {
+
 	}
 }
 ?>

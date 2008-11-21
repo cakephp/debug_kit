@@ -26,6 +26,19 @@
 App::import('helper', 'DebugKit.Toolbar');
 
 class FirePhpToolbarHelper extends ToolbarHelper {
-
+/**
+ * send method
+ *
+ * @return void
+ * @access protected
+ */
+	function _send() {
+		$view =& ClassRegistry::getObject('view');
+		$firephp = FirePHP::getInstance(true);
+		foreach($view->viewVars['debugToolbarPanels'] as $panel => $data) {
+			$firephp->fb($data, $panel, FirePHP::TABLE);
+		}
+		Configure::write('debug', 1);
+	}
 }
 ?>

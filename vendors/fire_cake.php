@@ -29,16 +29,16 @@
  * @lastmodified    $Date$
  * @license         http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-class CakeFirePHP extends Object {
+class FireCake extends Object {
 /**
- * Options for CakeFirePHP.
+ * Options for FireCake.
  *
  * @see _defaultOptions and setOptions();
  * @var string
  */
 	var	$options = array();
 /**
- * Default Options used in CakeFirePHP
+ * Default Options used in CakeFirePhp
  *
  * @var string
  * @access protected
@@ -55,26 +55,52 @@ class CakeFirePHP extends Object {
  * @var array
  */	
 	var $_levels = array(
-		'log' => array(),
-		'info' => array(),
-		'warn' => array(),
-		'error' => array(),
-		'dump' => array(),
-		'trace' => array(),
-		'exception' => array(),
-		'table' => array(),
-		'groupStart' => array(),
-		'groupEnd' => array(),
+		'log' => 'LOG',
+		'info' => 'INFO',
+		'warn' => 'WARN',
+		'error' => 'ERROR',
+		'dump' => 'DUMP',
+		'trace' => 'TRACE',
+		'exception' => 'EXCEPTION',
+		'table' => 'TABLE',
+		'groupStart' => 'GROUP_START',
+		'groupEnd' => 'GROUP_END',
 	);
 /**
- * Constructor
+ * get Instance of the singleton
  *
- * @param array $options Array of options to override defaults
  * @access public
  * @return void
  */
-	function __construct($options = array()) {
-		$this->options = array_merge($this->_defaultOptions, $options);
+	function &getInstance() {
+		static $instance = array();
+		if (!isset($instance[0]) || !$instance[0]) {
+			$instance[0] =& new FireCake();
+		}
+		return $instance[0];
+	}
+
+/**
+ * setOptions
+ *
+ * @param array $options Array of options to set.
+ * @access public
+ * @return void
+ */
+	function setOptions($options = array()) {
+		if (empty($this->options)) {
+			$this->options = array_merge($this->_defaultOptions, $options);
+		} else {
+			$this->options = array_merge($this->options, $options);
+		}
+	}
+/**
+ * fb - Send messages with FireCake to FirePHP
+ *
+ * @return void
+ **/
+	function fb() {
+		
 	}
 }
 ?>

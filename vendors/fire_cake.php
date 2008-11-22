@@ -66,6 +66,15 @@ class FireCake extends Object {
 		'groupStart' => 'GROUP_START',
 		'groupEnd' => 'GROUP_END',
 	);
+	
+	var $_version = '0.2.1';
+/**
+ * internal messageIndex counter
+ *
+ * @var int
+ * @access protected
+ */
+	var $_messageIndex = 1;
 /**
  * get Instance of the singleton
  *
@@ -75,7 +84,11 @@ class FireCake extends Object {
 	function &getInstance() {
 		static $instance = array();
 		if (!isset($instance[0]) || !$instance[0]) {
-			$instance[0] =& new FireCake();
+			$args = func_get_args();
+			if (!isset($args[0])) {
+				$args[0] = 'FireCake';
+			}
+			$instance[0] = new $args[0]();
 		}
 		return $instance[0];
 	}
@@ -85,14 +98,40 @@ class FireCake extends Object {
  *
  * @param array $options Array of options to set.
  * @access public
+ * @static
  * @return void
  */
 	function setOptions($options = array()) {
-		if (empty($this->options)) {
-			$this->options = array_merge($this->_defaultOptions, $options);
+		$_this = FireCake::getInstance();
+		if (empty($_this->options)) {
+			$_this->options = array_merge($_this->_defaultOptions, $options);
 		} else {
-			$this->options = array_merge($this->options, $options);
+			$_this->options = array_merge($_this->options, $options);
 		}
+	}
+	
+	function log($message) {
+
+	}
+	
+	function warn($message) {
+
+	}
+	
+	function info($message) {
+
+	}
+	
+	function error($message) {
+		
+	}
+	
+	function table($message) {
+		
+	}
+	
+	function dump($message) {
+		
 	}
 /**
  * fb - Send messages with FireCake to FirePHP
@@ -100,7 +139,19 @@ class FireCake extends Object {
  * @return void
  **/
 	function fb() {
+		$_this = FireCake::getInstance();
 		
+		$this->_setHeader('X-Wf-Protocol-1','http://meta.wildfirehq.org/Protocol/JsonStream/0.2');
+	  	$this->_setHeader('X-Wf-1-Plugin-1','http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'. $_this->_version);
+	}
+
+/**
+ * Send Headers - write headers.
+ *
+ * @return void
+ **/
+	function _sendHeaders($name, $value) {
+		header($name . ': ' . $value);
 	}
 }
 ?>

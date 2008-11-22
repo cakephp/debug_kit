@@ -115,25 +115,5 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			$view->output = preg_replace('#</body>\s*</html>#', $toolbar . "\n</body>\n</html>", $view->output, 1);
 		}
 	}
-	
-/**
- * beforeLayout method
- *
- * Inject CSS and Javascript
- *
- * @return void
- * @access protected
- */
-	function beforeLayout() {
-		$view =& ClassRegistry::getObject('view');
-		$view->addScript($this->Html->css('/debug_kit/css/debug_toolbar'));
-		if (isset($view->viewVars['debugToolbarJavascript'])) {
-			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {
-				if ($script) {
-					$view->addScript($this->Javascript->link($script));
-				}
-			}
-		}
-	}
 }
 ?>

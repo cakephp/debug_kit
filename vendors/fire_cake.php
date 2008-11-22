@@ -21,9 +21,9 @@
  * @filesource
  * @copyright       Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link            http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package         cake
- * @subpackage      cake.cake.libs.
- * @since           CakePHP v 1.2.0.4487
+ * @package         debug_kit.
+ * @subpackage      debug_kit.vendors
+ * @since           
  * @version         $Revision$
  * @modifiedby      $LastChangedBy$
  * @lastmodified    $Date$
@@ -112,6 +112,28 @@ class FireCake extends Object {
 		}
 	}
 /**
+ * Return boolean based on presence of FirePHP extension
+ *
+ * @access public
+ * @return boolean
+ **/
+	function detectClientExtension() {
+		$ua = FireCake::getUserAgent();
+		if (!preg_match('/\sFirePHP\/([\.|\d]*)\s?/si', $ua, $match) || !version_compare($match[1], '0.0.6', '>=')) {
+			return false;
+		}
+		return true;
+	}
+/**
+ * Get the Current UserAgent
+ *
+ * @access public
+ * @return string UserAgent string of active client connection
+ **/
+	function getUserAgent() {
+		return env('HTTP_USER_AGENT');
+	}
+/**
  * Convenience wrapper for LOG messages 
  *
  * @param string $message Message to log 
@@ -170,11 +192,11 @@ class FireCake extends Object {
  * Convenience wrapper for DUMP messages 
  *
  * @param string $message Message to log 
- * @param string $label Label for message (optional)
+ * @param string $label Unique label for message
  * @access public
  * @return void
  */	
-	function dump($message, $label = null) {
+	function dump($message, $label) {
 		FireCake::fb($message, $label, 'dump');
 	}
 /**
@@ -261,7 +283,8 @@ class FireCake extends Object {
 		$_this->_sendHeader('X-Wf-1-Plugin-1','http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'. $_this->_version);
 		
 		if ($type == $_this->_levels['dump']) {
-			//handle dump
+			$dump = $_this->jsonEncode($message, $skipFinalObjectEncode);
+			$msg = sprintf('{"%s":%s}', $label, $dump);
 		} else {
 			$metaMsg = array('Type' => $type);
 			if ($label !== null) {
@@ -300,7 +323,7 @@ class FireCake extends Object {
 		return true;
 	}
 /**
- * undocumented function
+ * Encode an object into 
  *
  * @param mixed $object Object or array to json encode
  * @param boolean $doIt
@@ -308,33 +331,28 @@ class FireCake extends Object {
  * @return string
  **/
 	function jsonEncode($object, $doIt = false) {
-		if (function_exists('json_encode')) {
+		$_this = FireCake::getInstance();
+		if (function_exists('json_encode') && $_this->options['useNativeJsonEncode']) {
 			return json_encode($object);
+		} else {
+			return $_this->_jsonEncode($object);
 		}
 	}
 /**
- * Return boolean based on presence of FirePHP extension
+ * jsonEncode Helper method for PHP4 compatibility
  *
- * @access public
- * @return boolean
+ * @param mixed $object Something to encode
+ * @access protected
+ * @return string
  **/
-	function detectClientExtension() {
-		$ua = FireCake::getUserAgent();
-		if (!preg_match('/\sFirePHP\/([\.|\d]*)\s?/si', $ua, $match) || !version_compare($match[1], '0.0.6', '>=')) {
-			return false;
+	function _jsonEncode($object) {
+		if (!class_exists('JavascriptHelper')) {
+			App::import('Helper', 'Javascript');
 		}
-		return true;
+		$javascript = new JavascriptHelper();
+		$javascript->useNative = false;
+		return $javascript->object($object);
 	}
-/**
- * Get the Current UserAgent
- *
- * @access public
- * @return string UserAgent string of active client connection
- **/
-	function getUserAgent() {
-		return env('HTTP_USER_AGENT');
-	}
-
 /**
  * Send Headers - write headers.
  *

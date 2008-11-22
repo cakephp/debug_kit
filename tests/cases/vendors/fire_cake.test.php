@@ -18,8 +18,8 @@
  * @filesource
  * @copyright       Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link            http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package         cake
- * @subpackage      cake.cake.libs.
+ * @package         debug_kit
+ * @subpackage      cake.debug_kit.tests
  * @since           CakePHP v 1.2.0.4487
  * @version         
  * @modifiedby      
@@ -27,14 +27,8 @@
  * @license         http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Vendor', 'DebugKit.FireCake');
-/*
-require APP . 'plugins' . DS . 'debug_kit' . DS . '_reference' . DS . 'FirePHP.class.php';
 
-$fb = FirePHP::getInstance(true);
-$fb->setOptions(array('includeLineNumbers' => false));
-$fb->fb('Test', FirePHP::WARN);
-$fb->fb('Test', 'Custom label', FirePHP::WARN);
-*/
+
 /**
  * TestFireCake class allows for testing of FireCake
  *
@@ -132,7 +126,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '38|[{"Type":"INFO"},"I have information"]|');
-		
+
 		FireCake::info('I have information', 'info-label');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '59|[{"Type":"INFO","Label":"info-label"},"I have information"]|');
 	}
@@ -154,6 +148,35 @@ class FireCakeTestCase extends CakeTestCase {
 
 		FireCake::warn('A Warning', 'Bzzz');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '44|[{"Type":"WARN","Label":"Bzzz"},"A Warning"]|');
+	}
+	
+/**
+ * test error()
+ *
+ * @access public
+ * @return void
+ **/
+	function testError() {
+		FireCake::setOptions(array('includeLineNumbers' => false));
+		FireCake::error('An error');
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"ERROR"},"An error"]|');
+		
+		FireCake::error('An error', 'wonky');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"ERROR","Label":"wonky"},"An error"]|');
+	}
+/**
+ * test dump()
+ *
+ * @return void
+ **/
+	function testDump() {
+		FireCake::dump(array('one' => 1, 'two' => 2), 'mydump');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-2-1-1'], '28|{"mydump":{"one":1,"two":2}}|');
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-2']));
 	}
 /**
  * test fb() parameter parsing
@@ -203,6 +226,23 @@ class FireCakeTestCase extends CakeTestCase {
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4';
 		$this->assertFalse(FireCake::detectClientExtension());
 		$_SERVER['HTTP_USER_AGENT'] = $back;
+	}
+	
+/**
+ * test of Non Native JSON encoding.
+ *
+ * @return void
+ **/
+	function testNonNativeEncoding() {
+		FireCake::setOptions(array('useNativeJsonEncode' => false));
+		$json = FireCake::jsonEncode(array('one' => 1, 'two' => 2));
+		$this->assertEqual($json, '{"one":1,"two":2}');
+		
+		$json = FireCake::jsonEncode(array(1,2,3));
+		$this->assertEqual($json, '[1,2,3]');
+		
+		$json = FireCake::jsonEncode(FireCake::getInstance());
+		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:10,/', $json);
 	}
 /**
  * reset the FireCake counters and headers.

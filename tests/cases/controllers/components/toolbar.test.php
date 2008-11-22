@@ -172,7 +172,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
-			'behavior' => '/debug_kit/js/jquery_debug_toolbar',
+			'behavior' => '/debug_kit/js/js_debug_toolbar',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 

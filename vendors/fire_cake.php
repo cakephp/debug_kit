@@ -29,6 +29,8 @@
  * @lastmodified    $Date$
  * @license         http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+App::import('Core', 'Debugger');
+
 class FireCake extends Object {
 /**
  * Options for FireCake.
@@ -109,29 +111,82 @@ class FireCake extends Object {
 			$_this->options = array_merge($_this->options, $options);
 		}
 	}
-	
-	function log($message) {
-		FireCake::fb($message, 'log');
+/**
+ * Convenience wrapper for LOG messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function log($message, $label = null) {
+		FireCake::fb($message, $label, 'log');
 	}
-	
-	function warn($message) {
-		FireCake::fb($message, 'warn');
+/**
+ * Convenience wrapper for WARN messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function warn($message, $label = null) {
+		FireCake::fb($message, $label, 'warn');
 	}
-	
-	function info($message) {
-		FireCake::fb($message, 'info');
+/**
+ * Convenience wrapper for INFO messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function info($message, $label = null) {
+		FireCake::fb($message, $label, 'info');
 	}
-	
-	function error($message) {
-		FireCake::fb($message, 'error');
+/**
+ * Convenience wrapper for ERROR messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function error($message, $label = null) {
+		FireCake::fb($message, $label, 'error');
 	}
-	
-	function table($message) {
-		FireCake::fb($message, 'table');
+/**
+ * Convenience wrapper for TABLE messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function table($message, $label = null) {
+		FireCake::fb($message, $label, 'table');
 	}
-	
-	function dump($message) {
-		FireCake::fb($message, 'dump');
+/**
+ * Convenience wrapper for DUMP messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function dump($message, $label = null) {
+		FireCake::fb($message, $label, 'dump');
+	}
+/**
+ * Convenience wrapper for TRACE messages 
+ *
+ * @param string $message Message to log 
+ * @param string $label Label for message (optional)
+ * @access public
+ * @return void
+ */	
+	function trace($message, $label = null) {
+		FireCake::fb($message, $label, 'trace');
 	}
 /**
  * fb - Send messages with FireCake to FirePHP

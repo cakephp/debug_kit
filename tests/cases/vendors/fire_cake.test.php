@@ -27,7 +27,19 @@
  * @license         http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Vendor', 'DebugKit.FireCake');
+/*
+require APP . 'plugins' . DS . 'debug_kit' . DS . '_reference' . DS . 'FirePHP.class.php';
 
+$fb = FirePHP::getInstance(true);
+$fb->setOptions(array('includeLineNumbers' => false));
+$fb->fb('Test', FirePHP::WARN);
+$fb->fb('Test', 'Custom label', FirePHP::WARN);
+*/
+/**
+ * TestFireCake class allows for testing of FireCake
+ *
+ * @package debug_kit.tests.
+ */
 class TestFireCake extends FireCake {
 	var $sentHeaders = array();
 
@@ -46,7 +58,11 @@ class TestFireCake extends FireCake {
 		$_this->_messageIndex = 1;
 	}
 }
-
+/**
+ * Test Case For FireCake
+ *
+ * @package debug_kit.tests
+ */
 class FireCakeTestCase extends CakeTestCase {
 /**
  * setup test
@@ -72,7 +88,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$instance2 =& FireCake::getInstance();
 		$this->assertReference($instance, $instance2);
 		$this->assertIsA($instance, 'FireCake');
-		$this->assertIsA($instance, 'TestFireCake', 'Stored instance is not a copy of TestFireCake, bad things will happen.');
+		$this->assertIsA($instance, 'TestFireCake', 'Stored instance is not a copy of TestFireCake, test case is broken.');
 	}	
 /**
  * testsetoption
@@ -97,6 +113,9 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '26|[{"Type":"LOG"},"Testing"]|');
+		
+		FireCake::log('Testing', 'log-info');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"LOG","Label":"log-info"},"Testing"]|');
 	}
 
 /**
@@ -113,6 +132,9 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '38|[{"Type":"INFO"},"I have information"]|');
+		
+		FireCake::info('I have information', 'info-label');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '59|[{"Type":"INFO","Label":"info-label"},"I have information"]|');
 	}
 
 /**
@@ -129,6 +151,9 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"WARN"},"A Warning"]|');
+
+		FireCake::warn('A Warning', 'Bzzz');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '44|[{"Type":"WARN","Label":"Bzzz"},"A Warning"]|');
 	}
 /**
  * test fb() parameter parsing
@@ -136,6 +161,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  **/
 	function testFbParameterParsing() {
+		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Test');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '23|[{"Type":"LOG"},"Test"]|');
 
@@ -149,6 +175,17 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertFalse(FireCake::fb('Test', 'Custom label', 'warn', 'more parameters'));
 
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
+	}
+
+/**
+ * Test defaulting to log if incorrect message type is used
+ *
+ * @return void
+ **/
+	function testIncorrectMessageType() {
+		FireCake::setOptions(array('includeLineNumbers' => false));
+		FireCake::fb('Hello World', 'foobared');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '30|[{"Type":"LOG"},"Hello World"]|');
 	}
 /**
  * testClientExtensionDetection.

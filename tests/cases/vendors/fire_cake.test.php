@@ -32,7 +32,8 @@ class TestFireCake extends FireCake {
 	var $sentHeaders = array();
 
 	function _sendHeader($name, $value) {
-		$this->sentHeaders[$name] = $value;
+		$_this = FireCake::getInstance();
+		$_this->sentHeaders[$name] = $value;
 	}
 /**
  * Reset the fireCake
@@ -95,7 +96,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '40|[{"Type":"LOG","Label":"LOG"},"Testing"]|');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '26|[{"Type":"LOG"},"Testing"]|');
 	}
 
 /**
@@ -127,9 +128,51 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '	29|[{"Type":"WARN"},"A Warning"]|');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"WARN"},"A Warning"]|');
 	}
+/**
+ * test fb() parameter parsing
+ *
+ * @return void
+ **/
+	function testFbParameterParsing() {
+		FireCake::fb('Test');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '23|[{"Type":"LOG"},"Test"]|');
 
+		FireCake::fb('Test', 'warn');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '24|[{"Type":"WARN"},"Test"]|');
+
+		FireCake::fb('Test', 'Custom label', 'warn');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '47|[{"Type":"WARN","Label":"Custom label"},"Test"]|');
+
+		$this->expectError();
+		$this->assertFalse(FireCake::fb('Test', 'Custom label', 'warn', 'more parameters'));
+
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
+	}
+/**
+ * testClientExtensionDetection.
+ *
+ * @return void
+ **/
+	function testDetectClientExtension() {
+		$back = env('HTTP_USER_AGENT');
+		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4 FirePHP/0.2.1';
+		$this->assertTrue(FireCake::detectClientExtension());
+		
+		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4 FirePHP/0.0.4';
+		$this->assertFalse(FireCake::detectClientExtension());
+		
+		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4';
+		$this->assertFalse(FireCake::detectClientExtension());
+		$_SERVER['HTTP_USER_AGENT'] = $back;
+	}
+/**
+ * reset the FireCake counters and headers.
+ *
+ * @access public
+ * @return void
+ */
 	function tearDown() {
 		TestFireCake::reset();
 	}

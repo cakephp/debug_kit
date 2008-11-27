@@ -19,7 +19,7 @@
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
  * @package       cake
- * @subpackage    cake.cake.libs.
+ * @subpackage    cake.debug_kit.views.elements
  * @version       $Revision$
  * @modifiedby    $LastChangedBy$
  * @lastmodified  $Date$

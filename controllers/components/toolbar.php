@@ -258,9 +258,9 @@ class DebugPanel extends Object {
 }
 
 /**
- * ViewVars Panel
+ * Variables Panel
  *
- * Provides debug information on the Session contents.
+ * Provides debug information on the View variables.
  *
  * @package       cake.debug_kit.panels
  **/

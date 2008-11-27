@@ -45,7 +45,7 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('session', 'request', 'sqlLog', 'timer', 'log', 'memory');
+	var $_defaultPanels = array('session', 'request', 'sqlLog', 'timer', 'log', 'memory', 'variables');
 /**
  * Loaded panel objects.
  *
@@ -255,6 +255,17 @@ class DebugPanel extends Object {
  * @return void
  **/
 	function beforeRender(&$controller) { }
+}
+
+/**
+ * ViewVars Panel
+ *
+ * Provides debug information on the Session contents.
+ *
+ * @package       cake.debug_kit.panels
+ **/
+class VariablesPanel extends DebugPanel {
+	var $plugin = 'debug_kit';
 }
 
 /**

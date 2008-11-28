@@ -48,6 +48,15 @@ class TestFireCake extends FireCake {
 		$_this->sentHeaders[$name] = $value;
 	}
 /**
+ * skip client detection as headers are not being sent.
+ *
+ * @access public
+ * @return void
+ */	
+	function detectClientExtension() {
+		return true;
+	}
+/**
  * Reset the fireCake
  *
  * @return void
@@ -75,15 +84,6 @@ class FireCakeTestCase extends CakeTestCase {
 	function setUp() {
 		$this->firecake =& FireCake::getInstance('TestFireCake');
 	}	
-/**
- * Skip this case if there is no firePHP
- *
- * @return void
- **/
-	function skip() {
-		$instance = FireCake::getInstance('TestFireCake');
-		$this->skipIf($instance->detectClientExtension() == false, 'This test requires Firefox, Firebug & FirePHP to be installed');
-	}
 /**
  * test getInstance cheat.
  *

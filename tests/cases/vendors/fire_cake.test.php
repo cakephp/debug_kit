@@ -28,6 +28,12 @@
  */
 App::import('Vendor', 'DebugKit.FireCake');
 
+require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
+
+$fb = FirePHP::getInstance(true);
+$fb->setOptions(array('includeLineNumbers' => false));
+$fb->dump('mydump', array('one' => '1', 'two' => 2));
+$fb->fb('Test', 'Custom label', FirePHP::WARN);
 
 /**
  * TestFireCake class allows for testing of FireCake
@@ -68,8 +74,16 @@ class FireCakeTestCase extends CakeTestCase {
  */
 	function setUp() {
 		$this->firecake =& FireCake::getInstance('TestFireCake');
+	}	
+/**
+ * Skip this case if there is no firePHP
+ *
+ * @return void
+ **/
+	function skip() {
+		$instance = FireCake::getInstance('TestFireCake');
+		$this->skipIf($instance->detectClientExtension() == false, 'This test requires Firefox, Firebug & FirePHP to be installed');
 	}
-
 /**
  * test getInstance cheat.
  *
@@ -111,7 +125,6 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::log('Testing', 'log-info');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"LOG","Label":"log-info"},"Testing"]|');
 	}
-
 /**
  * test info()
  *
@@ -130,7 +143,6 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::info('I have information', 'info-label');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '59|[{"Type":"INFO","Label":"info-label"},"I have information"]|');
 	}
-
 /**
  * test info()
  *
@@ -149,7 +161,6 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::warn('A Warning', 'Bzzz');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '44|[{"Type":"WARN","Label":"Bzzz"},"A Warning"]|');
 	}
-	
 /**
  * test error()
  *
@@ -199,7 +210,6 @@ class FireCakeTestCase extends CakeTestCase {
 
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
 	}
-
 /**
  * Test defaulting to log if incorrect message type is used
  *
@@ -226,8 +236,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4';
 		$this->assertFalse(FireCake::detectClientExtension());
 		$_SERVER['HTTP_USER_AGENT'] = $back;
-	}
-	
+	}	
 /**
  * test of Non Native JSON encoding.
  *

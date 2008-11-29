@@ -30,9 +30,13 @@ App::import('Vendor', 'DebugKit.FireCake');
 
 //require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
 
-//$fb = FirePHP::getInstance(true);
-//$fb->setOptions(array('includeLineNumbers' => false));
-//$fb->trace('myTrace');
+// $fb = FirePHP::getInstance(true);
+// $fb->setOptions(array('includeLineNumbers' => false));
+// $table[] = array('Col 1 Heading','Col 2 Heading');
+// $table[] = array('Row 1 Col 1','Row 1 Col 2');
+// $table[] = array('Row 2 Col 1','Row 2 Col 2');
+// $table[] = array('Row 3 Col 1','Row 3 Col 2');
+// $fb->table('myTrace', $table);
 //$fb->fb('Test', 'Custom label', FirePHP::WARN);
 
 /**
@@ -186,9 +190,23 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  **/
 	function testDump() {
-		FireCake::dump(array('one' => 1, 'two' => 2), 'mydump');
+		FireCake::dump('mydump', array('one' => 1, 'two' => 2));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-2-1-1'], '28|{"mydump":{"one":1,"two":2}}|');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-2']));
+	}
+/**
+ * test table() generation
+ *
+ * @return void
+ **/
+	function testTable() {
+		$table[] = array('Col 1 Heading','Col 2 Heading');
+		$table[] = array('Row 1 Col 1','Row 1 Col 2');
+		$table[] = array('Row 2 Col 1','Row 2 Col 2');
+		$table[] = array('Row 3 Col 1','Row 3 Col 2');
+		FireCake::table('myTrace', $table);
+		$expected = '162|[{"Type":"TABLE","Label":"myTrace"},[["Col 1 Heading","Col 2 Heading"],["Row 1 Col 1","Row 1 Col 2"],["Row 2 Col 1","Row 2 Col 2"],["Row 3 Col 1","Row 3 Col 2"]]]|';
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], $expected);
 	}
 /**
  * testStringEncoding

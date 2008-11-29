@@ -199,7 +199,7 @@ class FireCake extends Object {
  * @static
  * @return void
  */	
-	function table($message, $label = null) {
+	function table($label, $message) {
 		FireCake::fb($message, $label, 'table');
 	}
 /**
@@ -211,7 +211,7 @@ class FireCake extends Object {
  * @static
  * @return void
  */	
-	function dump($message, $label) {
+	function dump($label, $message) {
 		FireCake::fb($message, $label, 'dump');
 	}
 /**
@@ -221,7 +221,7 @@ class FireCake extends Object {
  * @access public
  * @return void
  */	
-	function trace($label = null) {
+	function trace($label)  {
 		FireCake::fb($label, 'trace');
 	}
 /**
@@ -295,11 +295,6 @@ class FireCake extends Object {
 					break;
 				}
 			}
-			$skipFinalObjectEncode = true;
-		}
-		if ($type == $_this->_levels['table']) {
-			//handle tables
-			
 			$skipFinalObjectEncode = true;
 		}
 

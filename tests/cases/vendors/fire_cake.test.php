@@ -28,12 +28,12 @@
  */
 App::import('Vendor', 'DebugKit.FireCake');
 
-require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
+//require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
 
-$fb = FirePHP::getInstance(true);
-$fb->setOptions(array('includeLineNumbers' => false));
-$fb->dump('mydump', array('one' => '1', 'two' => 2));
-$fb->fb('Test', 'Custom label', FirePHP::WARN);
+//$fb = FirePHP::getInstance(true);
+//$fb->setOptions(array('includeLineNumbers' => false));
+//$fb->trace('myTrace');
+//$fb->fb('Test', 'Custom label', FirePHP::WARN);
 
 /**
  * TestFireCake class allows for testing of FireCake
@@ -67,6 +67,7 @@ class TestFireCake extends FireCake {
 		$_this->_messageIndex = 1;
 	}
 }
+
 /**
  * Test Case For FireCake
  *
@@ -190,6 +191,59 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-2']));
 	}
 /**
+ * testStringEncoding
+ *
+ * @return void
+ **/
+	function testStringEncode() {
+		$result = $this->firecake->stringEncode(array(1,2,3));
+		$this->assertEqual($result, array(1,2,3));
+
+		$this->firecake->setOptions(array('maxArrayDepth' => 3));
+		$deep = array(1 => array(2 => array(3)));
+		$result = $this->firecake->stringEncode($deep);
+		$this->assertEqual($result, array(1 => array(2 => '** Max Array Depth (3) **')));
+
+		$obj =& FireCake::getInstance();
+		$result = $this->firecake->stringEncode($obj);
+		$this->assertTrue(is_array($result));
+		$this->assertEqual($result['_defaultOptions']['useNativeJsonEncode'], 'true');
+		$this->assertEqual($result['_log'], 'null');
+		$this->assertEqual($result['_encodedObjects'][0], '** Recursion (TestFireCake) **');
+	}
+/**
+ * test trace()
+ *
+ * @return void
+ **/
+	function testTrace() {
+		FireCake::trace('myTrace');
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
+		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
+		$dump = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
+		$this->assertPattern('/"Message":"myTrace"/', $dump);
+		$this->assertPattern('/"Trace":\[/', $dump);
+	}
+/**
+ * test correct line continuation markers on multi line headers.
+ *
+ * @access public
+ * @return void
+ */	
+	function testMultiLineOutput() {
+		FireCake::trace('myTrace');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
+		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
+		$this->assertEqual(substr($header, -2), '|\\');
+		
+		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-2'];
+		$this->assertEqual(substr($header, -2), '|\\');
+		
+		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-3'];
+		$this->assertEqual(substr($header, -1), '|');
+	}
+/**
  * test fb() parameter parsing
  *
  * @return void
@@ -251,7 +305,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertEqual($json, '[1,2,3]');
 		
 		$json = FireCake::jsonEncode(FireCake::getInstance());
-		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:10,/', $json);
+		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:\d*,/', $json);
 	}
 /**
  * reset the FireCake counters and headers.

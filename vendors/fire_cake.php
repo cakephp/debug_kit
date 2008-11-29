@@ -82,7 +82,13 @@ class FireCake extends Object {
  *
  * @var array
  **/
-	var $_encodedObjects = array();
+	var $_encodedObjects = array();	
+/**
+ * methodIndex to include in tracebacks when using includeLineNumbers
+ *
+ * @var array
+ **/
+	var $_methodIndex = array('info', 'log', 'warn', 'error', 'table', 'trace');
 /**
  * get Instance of the singleton
  *
@@ -277,30 +283,25 @@ class FireCake extends Object {
 			if (!$trace) {
 				return false;
 			}
-			for ($i = 0, $len = count($trace); $i < $len ; $i++) {
-				$selfCall = (isset($trace[$i]['class']) && isset($trace[$i]['file']) && $trace[$i]['class'] == 'FireCake');
-				if (!$selfCall) {
-					$message = array(
-						'Class' => isset($trace[$i]['class']) ? $trace[$i]['class'] : '',
-						'Type' => isset($trace[$i]['type']) ? $trace[$i]['type'] : '',
-						'Function' => isset($trace[$i]['function']) ? $trace[$i]['function'] : '',
-						'Message' => $args[0],
-						'File' => isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '',
-						'Line' => isset($trace[$i]['line']) ? $trace[$i]['line'] : '',
-						'Args' => isset($trace[$i]['args']) ? $_this->stringEncode($trace[$i]['args']) : '',
-						'Trace' => $_this->_escapeTrace(array_splice($trace, $i+1))
-					);
-					$meta['file'] = isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']):'';
-					$meta['line'] = isset($trace[$i]['line']) ? $trace[$i]['line']:'';
-					break;
-				}
-			}
+			$message = $_this->_parseTrace($trace, $args[0]);
 			$skipFinalObjectEncode = true;
 		}
 
 		if ($_this->options['includeLineNumbers']) {
-			//handle line numbers
+			if (!isset($meta['file']) || !isset($meta['line'])) {
+				$trace = debug_backtrace();
+				for ($i = 0, $len = count($trace); $i < $len ; $i++) {
+					$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
+					$selfCall = ($keySet && $trace[$i]['class'] == 'FireCake' && in_array($trace[$i]['function'], $_this->_methodIndex));
+					if ($selfCall) {
+						$meta['file'] = isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '';
+						$meta['line'] = isset($trace[$i]['line']) ? $trace[$i]['line'] : '';
+						break;
+					}
+				}
+			}
 		}
+
 		$structureIndex = 1;
 		if ($type == $_this->_levels['dump']) {
 			$structureIndex = 2;
@@ -309,11 +310,11 @@ class FireCake extends Object {
 			$_this->_sendHeader('X-Wf-1-Structure-1','http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1');
 		}
 
-		$_this->_sendHeader('X-Wf-Protocol-1','http://meta.wildfirehq.org/Protocol/JsonStream/0.2');
-		$_this->_sendHeader('X-Wf-1-Plugin-1','http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'. $_this->_version);
-		
+		$_this->_sendHeader('X-Wf-Protocol-1', 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2');
+		$_this->_sendHeader('X-Wf-1-Plugin-1', 'http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'. $_this->_version);
+
 		if ($type == $_this->_levels['dump']) {
-			$dump = $_this->jsonEncode($message, $skipFinalObjectEncode);
+			$dump = $_this->jsonEncode($message);
 			$msg = sprintf('{"%s":%s}', $label, $dump);
 		} else {
 			$metaMsg = array('Type' => $type);
@@ -328,6 +329,7 @@ class FireCake extends Object {
 			}
 			$msg = '[' . $_this->jsonEncode($metaMsg) . ',' . $_this->jsonEncode($message, $skipFinalObjectEncode).']';
 		}
+
 		$lines = explode("\n", chunk_split($msg, 5000, "\n"));
 		foreach ($lines as $i => $line) {
 			if (empty($line)) {
@@ -350,6 +352,36 @@ class FireCake extends Object {
 		}
 		$_this->_sendHeader('X-Wf-1-Index', $_this->_messageIndex - 1);
 		return true;
+	}
+/**
+ * Parse a debug backtrace
+ *
+ * @param array $trace Debug backtrace output
+ * @access protected
+ * @return array
+ **/
+	function _parseTrace($trace, $messageName) {
+		$message = array();
+		for ($i = 0, $len = count($trace); $i < $len ; $i++) {
+			$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
+			$selfCall = ($keySet && $trace[$i]['class'] == 'FireCake');
+			if (!$selfCall) {
+				$message = array(
+					'Class' => isset($trace[$i]['class']) ? $trace[$i]['class'] : '',
+					'Type' => isset($trace[$i]['type']) ? $trace[$i]['type'] : '',
+					'Function' => isset($trace[$i]['function']) ? $trace[$i]['function'] : '',
+					'Message' => $messageName,
+					'File' => isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '',
+					'Line' => isset($trace[$i]['line']) ? $trace[$i]['line'] : '',
+					'Args' => isset($trace[$i]['args']) ? $this->stringEncode($trace[$i]['args']) : '',
+					'Trace' => $this->_escapeTrace(array_splice($trace, $i+1))
+				);
+				$meta['file'] = isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']):'';
+				$meta['line'] = isset($trace[$i]['line']) ? $trace[$i]['line']:'';
+				break;
+			}
+		}
+		return $message;
 	}
 /**
  * Fix a trace for use in output

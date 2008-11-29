@@ -261,6 +261,19 @@ class FireCakeTestCase extends CakeTestCase {
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-3'];
 		$this->assertEqual(substr($header, -1), '|');
 	}
+	
+/**
+ * test inclusion of line numbers
+ *
+ * @return void
+ **/
+	function testIncludeLineNumbers() {
+		FireCake::setOptions(array('includeLineNumbers' => true));
+		FireCake::info('Testing');
+		$result = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
+		$this->assertPattern('/"File"\:"APP.*fire_cake.test.php/', $result);
+		$this->assertPattern('/"Line"\:\d+/', $result);
+	}
 /**
  * test fb() parameter parsing
  *

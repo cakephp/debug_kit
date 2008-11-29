@@ -28,16 +28,13 @@
  */
 App::import('Vendor', 'DebugKit.FireCake');
 
-//require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
+require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
 
-// $fb = FirePHP::getInstance(true);
-// $fb->setOptions(array('includeLineNumbers' => false));
-// $table[] = array('Col 1 Heading','Col 2 Heading');
-// $table[] = array('Row 1 Col 1','Row 1 Col 2');
-// $table[] = array('Row 2 Col 1','Row 2 Col 2');
-// $table[] = array('Row 3 Col 1','Row 3 Col 2');
-// $fb->table('myTrace', $table);
-//$fb->fb('Test', 'Custom label', FirePHP::WARN);
+$fb = FirePHP::getInstance(true);
+$fb->setOptions(array('includeLineNumbers' => false));
+$fb->group('test');
+$fb->info('my info');
+$fb->groupEnd();
 
 /**
  * TestFireCake class allows for testing of FireCake
@@ -225,8 +222,8 @@ class FireCakeTestCase extends CakeTestCase {
 		$obj =& FireCake::getInstance();
 		$result = $this->firecake->stringEncode($obj);
 		$this->assertTrue(is_array($result));
-		$this->assertEqual($result['_defaultOptions']['useNativeJsonEncode'], 'true');
-		$this->assertEqual($result['_log'], 'null');
+		$this->assertEqual($result['_defaultOptions']['useNativeJsonEncode'], true);
+		$this->assertEqual($result['_log'], null);
 		$this->assertEqual($result['_encodedObjects'][0], '** Recursion (TestFireCake) **');
 	}
 /**
@@ -273,6 +270,19 @@ class FireCakeTestCase extends CakeTestCase {
 		$result = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
 		$this->assertPattern('/"File"\:"APP.*fire_cake.test.php/', $result);
 		$this->assertPattern('/"Line"\:\d+/', $result);
+	}
+/**
+ * test Group messages
+ *
+ * @return void
+ **/
+	function testGroup() {
+		FireCake::group('test');
+		FireCake::info('my info');
+		FireCake::groupEnd();
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '44|[{"Type":"GROUP_START","Label":"test"},null]|');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '27|[{"Type":"GROUP_END"},null]|');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
 	}
 /**
  * test fb() parameter parsing

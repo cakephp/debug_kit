@@ -108,7 +108,6 @@ class FireCake extends Object {
 		}
 		return $instance[0];
 	}
-
 /**
  * setOptions
  *
@@ -229,6 +228,28 @@ class FireCake extends Object {
  */	
 	function trace($label)  {
 		FireCake::fb($label, 'trace');
+	}
+/**
+ * Convenience wrapper for GROUP messages 
+ * Messages following the group call will be nested in a group block
+ *
+ * @param string $label Label for group (optional)
+ * @access public
+ * @return void
+ */	
+	function group($label)  {
+		FireCake::fb(null, $label, 'groupStart');
+	}
+/**
+ * Convenience wrapper for GROUPEND messages 
+ * Closes a group block
+ *
+ * @param string $label Label for group (optional)
+ * @access public
+ * @return void
+ */	
+	function groupEnd()  {
+		FireCake::fb(null, null, 'groupEnd');
 	}
 /**
  * fb - Send messages with FireCake to FirePHP
@@ -447,11 +468,8 @@ class FireCake extends Object {
 		if (is_string($object) || is_numeric($object)) {
 			return $object;
 		}
-		if (is_bool($object)) {
-			return ($object) ? 'true' : 'false';
-		}
-		if (is_null($object)) {
-			return 'null';
+		if (is_bool($object) || is_null($object)) {
+			return $object;
 		}
 		return $return;
 	}

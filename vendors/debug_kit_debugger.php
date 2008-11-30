@@ -1,8 +1,8 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * 
- *
+ * DebugKit Debugger class. Extends and enhances core
+ * debugger. Adds benchmarking and timing functionality.
  * 
  *
  * PHP versions 4 and 5
@@ -26,6 +26,7 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+App::import('Core', 'Debugger');
 /**
  * Debug Kit Temporary Debugger Class
  *

@@ -3,7 +3,7 @@
 /**
  * FirePHP Toolbar Helper
  *
- * Injects the toolbar elements into non-HTML layouts.
+ * Injects the toolbar elements into non-HTML layouts via FireCake.
  *
  * CakePHP :  Rapid Development Framework <http://www.cakephp.org/>
  * Copyright 2006-2008, Cake Software Foundation, Inc.
@@ -24,6 +24,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('helper', 'DebugKit.Toolbar');
+App::import('Vendor', 'DebugKit.FireCake');
 
 class FirePhpToolbarHelper extends ToolbarHelper {
 /**
@@ -34,11 +35,24 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  */
 	function _send() {
 		$view =& ClassRegistry::getObject('view');
-		$firephp = FirePHP::getInstance(true);
 		foreach($view->viewVars['debugToolbarPanels'] as $panel => $data) {
-			$firephp->fb($data, $panel, FirePHP::TABLE);
+			$table = $data['content'];
+			$label = $data['elementName'];
+			FireCake::info($table, $label);
 		}
+		//$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		Configure::write('debug', 1);
+	}
+/**
+ * makeNeatArray.
+ *
+ * wraps FireCake::dump() allowing panel elements to continue functioning
+ *
+ * @param string $values 
+ * @return void
+ */	
+	function makeNeatArray($values) {
+		FireCake::info($values);
 	}
 }
 ?>

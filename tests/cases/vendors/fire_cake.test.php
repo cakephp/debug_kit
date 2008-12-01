@@ -277,6 +277,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  **/
 	function testGroup() {
+		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::group('test');
 		FireCake::info('my info');
 		FireCake::groupEnd();

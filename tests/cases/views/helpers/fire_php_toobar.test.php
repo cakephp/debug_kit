@@ -25,8 +25,43 @@
  * @lastmodified	$Date$
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-App::import('Helper', array('DebugKit.FirePhpToolbar', 'Html', 'Javascript'));
+App::import('Helper', 'DebugKit.FirePhpToolbar');
 App::import('Core', array('View', 'Controller'));
+
+/**
+ * TestFireCake class allows for testing of FireCake
+ *
+ * @package debug_kit.tests.
+ */
+class TestFireCakeToolbar extends FireCake {
+	var $sentHeaders = array();
+
+	function _sendHeader($name, $value) {
+		$_this = FireCake::getInstance();
+		$_this->sentHeaders[$name] = $value;
+	}
+/**
+ * skip client detection as headers are not being sent.
+ *
+ * @access public
+ * @return void
+ */	
+	function detectClientExtension() {
+		return true;
+	}
+/**
+ * Reset the fireCake
+ *
+ * @return void
+ **/
+	function reset() {
+		$_this = FireCake::getInstance();
+		$_this->sentHeaders = array();
+		$_this->_messageIndex = 1;
+	}
+}
+
+FireCake::getInstance('TestFireCakeToolbar');
 
 class FirePhpToolbarHelperTestCase extends CakeTestCase {
 /**
@@ -59,8 +94,54 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 			ROOT . DS . LIBS . 'view' . DS
 		));
 		$this->_debug = Configure::read('debug');
+		$this->firecake =& FireCake::getInstance();
 	}
-
+/**
+ * test neat array (dump)creation
+ *
+ * @return void
+ */
+	function testMakeNeatArray() {
+		$this->Toolbar->makeNeatArray(array(1,2,3));
+		$result = $this->firecake->sentHeaders;
+		$this->assertTrue(isset($result['X-Wf-1-1-1-1']));
+		$this->assertPattern('/\[1,2,3\]/', $result['X-Wf-1-1-1-1']);
+	}
+/**
+ * testAfterlayout element rendering
+ *
+ * @return void
+ */
+	function testAfterLayout(){
+		$this->Controller->viewPath = 'posts';
+		$this->Controller->action = 'index';
+		$this->Controller->params = array(
+			'action' => 'index',
+			'controller' => 'posts',
+			'plugin' => null,
+			'url' => array('url' => 'posts/index', 'ext' => 'xml'),
+			'base' => null,
+			'here' => '/posts/index',
+		);
+		$this->Controller->layout = 'default';
+		$this->Controller->uses = null;
+		$this->Controller->components = array('DebugKit.Toolbar');
+		$this->Controller->constructClasses();
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$result = $this->Controller->render();
+		var_dump($this->firecake->sentHeaders);
+		
+	}
+/**
+ * endTest()
+ *
+ * @return void
+ */
+	function endTest() {
+		TestFireCakeToolbar::reset();
+	}
 /**
  * reset the view paths
  *
@@ -80,6 +161,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		unset($this->Toolbar, $this->Controller);
 		ClassRegistry::removeObject('view');
 		ClassRegistry::flush();
+		Router::reload();
 	}
 }
 ?>

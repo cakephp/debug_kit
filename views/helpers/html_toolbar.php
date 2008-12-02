@@ -89,6 +89,32 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		return $out;
 	}
 /**
+ * Create an HTML message
+ *
+ * @param string $label label content
+ * @param string $message message content
+ * @return string
+ */	
+	function message($label, $message) {
+		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
+	}
+/**
+ * Create a table.
+ *
+ * @param array $rows Rows to make.
+ * @param array $headers Optional header row.
+ * @return string
+ */
+	function table($rows, $headers = array()) {
+		$out = '<table class="debug-table">';
+		if (!empty($headers)) {
+			$out .= $this->Html->tableHeaders($headers);
+		}
+		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'));
+		$out .= '</table>';
+		return $out;
+	}
+/**
  * send method
  *
  * @return void

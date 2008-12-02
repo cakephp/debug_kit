@@ -38,7 +38,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 		
-		$this->Toolbar =& new ToolbarHelper(array('backend' => 'DebugKit.HtmlToolbar'));
+		$this->Toolbar =& new ToolbarHelper(array('output' => 'DebugKit.HtmlToolbar'));
 		$this->Toolbar->HtmlToolbar =& new HtmlToolbarHelper();
 		$this->Toolbar->HtmlToolbar->Html =& new HtmlHelper();
 		$this->Toolbar->HtmlToolbar->Javascript =& new JavascriptHelper();
@@ -294,7 +294,46 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$result = str_replace(array("\n", "\r"), '', $result);
 		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/my_custom_debug_toolbar.js"\s*>\s?</script>#', $result);
 	}
-	
+/**
+ * test message creation
+ *
+ * @return void
+ */
+	function testMessage() {
+		$result = $this->Toolbar->message('test', 'one, two');
+		$expected = array(
+			'<p',
+				'<strong', 'test', '/strong',
+				' one, two',
+			'/p',
+		);
+		$this->assertTags($result, $expected);
+	}
+/**
+ * Test Table generation
+ *
+ * @return void
+ */
+	function testTable() {
+		$rows = array(
+			array(1,2),
+			array(3,4),
+		);
+		$result = $this->Toolbar->table($rows);
+		$expected = array(
+			'table' => array('class' =>'debug-table'),
+			array('tr' => array('class' => 'odd')),
+			'<td', '1', '/td',
+			'<td', '2', '/td',
+			'/tr',
+			array('tr' => array('class' => 'even')),
+			'<td', '3', '/td',
+			'<td', '4', '/td',
+			'/tr',
+			'/table'
+		);
+		$this->assertTags($result, $expected);
+	}
 /**
  * reset the view paths
  *

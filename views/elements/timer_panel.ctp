@@ -30,25 +30,14 @@ $timers = DebugKitDebugger::getTimers();
 ?>
 <h2><?php __('Timers'); ?></h2>
 <p class="request-time">
-	<strong><?php __('Total Request Time:') ?></strong>
-	<?php echo sprintf(__('%s (seconds)', true), $number->precision(DebugKitDebugger::requestTime(), 6)); ?>
+	<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision(DebugKitDebugger::requestTime(), 6)); ?>
+	<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
 </p>
 
-<table class="debug-table">
-	<thead>
-		<tr>
-			<th>Message</th>
-			<th>time in seconds</th>
-		</tr>
-	</thead>
-	<tbody>
-	<?php $i = 0; ?>
-	<?php foreach ($timers as $timerName => $timeInfo): ?>
-		<tr class="<?php echo ($i % 2) ? 'even' : 'odd'; ?>">
-			<td><?php echo $timeInfo['message']?></td>
-			<td><?php echo $number->precision($timeInfo['time'], 6); ?> </td>
-		</tr>
-	<?php $i++; ?>
-	<?php endforeach; ?>
-	</tbody>
-</table>
+<?php foreach ($timers as $timerName => $timeInfo):
+	$rows[] = array(
+		$timeInfo['message'],
+		$number->precision($timeInfo['time'], 6)
+	);
+endforeach; ?>
+<?php echo $toolbar->table($rows, array(__('Message', true), __('time in seconds', true))); ?>

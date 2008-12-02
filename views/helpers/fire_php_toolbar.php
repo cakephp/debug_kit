@@ -36,11 +36,8 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 	function _send() {
 		$view =& ClassRegistry::getObject('view');
 		foreach($view->viewVars['debugToolbarPanels'] as $panel => $data) {
-			$table = $data['content'];
-			$label = $data['elementName'];
-			FireCake::info($table, $label);
+			$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		}
-		//$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		Configure::write('debug', 1);
 	}
 /**
@@ -53,6 +50,20 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  */	
 	function makeNeatArray($values) {
 		FireCake::info($values);
+	}
+/**
+ * Create a simple message
+ *
+ * @param string $label Label of message
+ * @param string $message Message content
+ * @return void
+ */
+	function message($label, $message) {
+		FireCake::log($message, $label);
+	}
+	
+	function table($rows) {
+		
 	}
 }
 ?>

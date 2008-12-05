@@ -81,19 +81,10 @@ class DebugView extends DoppelGangerView {
 		$out = parent::render($action, $layout, $file);
 		DebugKitDebugger::stopTimer('viewRender');
 		DebugKitDebugger::stopTimer('controllerRender');
-
-		if (!empty($this->loaded)) {
-			$helpers = array_keys($this->loaded);
-			foreach ($helpers as $helperName) {
-				$helper =& $this->loaded[$helperName];
-				if (is_object($helper)) {
-					if ((is_subclass_of($helper, 'Helper') || is_subclass_of($helper, 'helper')) && method_exists($helper, 'postRender')) {
-						$helper->postRender();
-					}
-				}
-			}
+		
+		if (isset($this->loaded['toolbar'])) {
+			$this->loaded['toolbar']->postRender();
 		}
-
 		//Temporary work around to hide the SQL dump at page bottom
 		Configure::write('debug', 0);
 		return $this->output;

@@ -87,17 +87,4 @@ class ToolbarHelper extends AppHelper {
 	function postRender() {
 		$this->_send();
 	}
-
-/**
- * _send - apply content changes to view output.
- *
- * Overloaded in sub classes
- *
- * @param string $format
- * @return void
- * @access protected
- */
-	function _send() {
-		//Override me
-	}
 }

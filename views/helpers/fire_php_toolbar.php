@@ -35,9 +35,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  */
 	function _send() {
 		$view =& ClassRegistry::getObject('view');
-		foreach($view->viewVars['debugToolbarPanels'] as $panel => $data) {
-			$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
-		}
+		$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		Configure::write('debug', 1);
 	}
 /**
@@ -61,9 +59,21 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 	function message($label, $message) {
 		FireCake::log($message, $label);
 	}
-	
-	function table($rows) {
-		
+/**
+ * Generate a table with FireCake
+ *
+ * @param array $rows Rows to print
+ * @param array $headers Headers for table
+ * @param array $options Additional options and params
+ * @return void
+ */
+	function table($rows, $headers, $options = array()) {
+		$title = $headers[0];
+		if (isset($options['title'])) {
+			$title = $options['title'];
+		}
+		array_unshift($rows, $headers);
+		FireCake::table($title, $rows);
 	}
 }
 ?>

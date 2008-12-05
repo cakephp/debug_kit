@@ -45,3 +45,4 @@
 		<p class="info"><?php __('There were no log entries made this request'); ?></p>
 	<?php endif; ?>
 <?php endforeach; ?>
+</div>

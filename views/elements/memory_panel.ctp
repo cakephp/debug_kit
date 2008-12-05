@@ -28,5 +28,16 @@
  */
 ?>
 <h2><?php __('Memory'); ?></h2>
-<p class="current-mem-use"><strong><?php __('Current Memory Use'); ?>:</strong> <?php echo $number->toReadableSize(DebugKitDebugger::getMemoryUse()); ?></p>
-<p class="peak-mem-use"><strong><?php __('Peak Memory Use'); ?>:</strong> <?php echo $number->toReadableSize(DebugKitDebugger::getPeakMemoryUse()); ?></p>
+<p class="current-mem-use">
+	<?php echo $toolbar->message(
+		__('Current Memory Use',true),
+		$number->toReadableSize(DebugKitDebugger::getMemoryUse())
+	);?>
+</p>
+<p class="peak-mem-use">
+<?php
+	echo $toolbar->message(
+		__('Peak Memory Use', true),
+		$number->toReadableSize(DebugKitDebugger::getPeakMemoryUse())
+	);
+?></p>

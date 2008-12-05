@@ -39,5 +39,6 @@ $timers = DebugKitDebugger::getTimers();
 		$timeInfo['message'],
 		$number->precision($timeInfo['time'], 6)
 	);
-endforeach; ?>
-<?php echo $toolbar->table($rows, array(__('Message', true), __('time in seconds', true))); ?>
+	$headers = array(__('Message', true), __('time in seconds', true));
+endforeach;
+echo $toolbar->table($rows, $headers, array('title' => 'Timers')); ?>

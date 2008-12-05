@@ -123,7 +123,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$this->assertEqual(count($this->Controller->Toolbar->panels), 1);
 		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
-		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar'], array('backend' => 'DebugKit.HtmlToolbar'));
+		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar'], array('output' => 'DebugKit.HtmlToolbar'));
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
@@ -173,6 +173,21 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
 		$expected = array(
 			'behavior' => '/debug_kit/js/js_debug_toolbar',
+		);
+		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
+		
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'javascript' => 'jquery',
+			),
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
+		$expected = array(
+			'behavior' => '/debug_kit/js/jquery_debug_toolbar.js',
 		);
 		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
 

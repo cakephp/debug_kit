@@ -114,7 +114,7 @@ class ToolbarComponent extends Object {
 		} else {
 			$format = 'FirePhp';
 		}
-		$controller->helpers['DebugKit.Toolbar'] = array('backend' => sprintf('DebugKit.%sToolbar', $format));
+		$controller->helpers['DebugKit.Toolbar'] = array('output' => sprintf('DebugKit.%sToolbar', $format));
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);

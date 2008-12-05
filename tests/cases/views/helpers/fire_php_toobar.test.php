@@ -131,7 +131,9 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Component->startup($this->Controller);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->render();
-		var_dump($this->firecake->sentHeaders);
+		$this->assertNoPattern('/debug-toolbar/', $result);
+		$result = $this->firecake->sentHeaders;
+		$this->assertTrue(is_array($result));
 		
 	}
 /**

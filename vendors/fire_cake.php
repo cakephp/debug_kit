@@ -318,8 +318,8 @@ class FireCake extends Object {
 					$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
 					$selfCall = ($keySet && $trace[$i]['class'] == 'FireCake' && in_array($trace[$i]['function'], $_this->_methodIndex));
 					if ($selfCall) {
-						$meta['file'] = isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '';
-						$meta['line'] = isset($trace[$i]['line']) ? $trace[$i]['line'] : '';
+						$meta['File'] = isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '';
+						$meta['Line'] = isset($trace[$i]['line']) ? $trace[$i]['line'] : '';
 						break;
 					}
 				}
@@ -341,17 +341,11 @@ class FireCake extends Object {
 			$dump = $_this->jsonEncode($message);
 			$msg = '{"' . $label .'":' . $dump .'}';
 		} else {
-			$metaMsg = array('Type' => $type);
+			$meta['Type'] = $type;
 			if ($label !== null) {
-				$metaMsg['Label'] = $label;
+				$meta['Label'] = $label;
 			}
-			if (isset($meta['file'])) {
-				$metaMsg['File'] = $meta['file'];
-			}
-			if (isset($meta['line'])) {
-				$metaMsg['Line'] = $meta['line'];
-			}
-			$msg = '[' . $_this->jsonEncode($metaMsg) . ',' . $_this->jsonEncode($message, $skipFinalObjectEncode).']';
+			$msg = '[' . $_this->jsonEncode($meta) . ',' . $_this->jsonEncode($message, $skipFinalObjectEncode).']';
 		}
 
 		$lines = explode("\n", chunk_split($msg, 5000, "\n"));

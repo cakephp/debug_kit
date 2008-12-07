@@ -1,7 +1,7 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * Short description for file.
+ * DebugKit Debugger Test Case File
  *
  * Long description for file
  *
@@ -29,6 +29,8 @@
 App::import('Core', 'Debugger');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
+require_once APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'cases' . DS . 'test_objects.php';
+
 /**
  * Short description for class.
  *
@@ -36,8 +38,6 @@ App::import('Vendor', 'DebugKit.DebugKitDebugger');
  * @subpackage    cake.tests.cases.libs
  */
 class DebugKitDebuggerTest extends CakeTestCase {
-
-//do not move code below or it change line numbers which are used in the tests
 /**
  * setUp method
  *
@@ -122,6 +122,25 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		
 		$result = DebugKitDebugger::getPeakMemoryUse();
 		$this->assertTrue(is_int($result));
+	}
+/**
+ * test _output switch to firePHP
+ *
+ * @return void
+ */
+	function testOutput() {
+		$firecake =& FireCake::getInstance('TestFireCake');
+		Debugger::invoke(DebugKitDebugger::getInstance('DebugKitDebugger'));
+		Debugger::output('fb');
+		$foo .= '';
+		$result = $firecake->sentHeaders;
+		
+		$this->assertPattern('/GROUP_START/', $result['X-Wf-1-1-1-1']);
+		$this->assertPattern('/ERROR/', $result['X-Wf-1-1-1-2']);
+		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-5']);
+		
+		Debugger::invoke(Debugger::getInstance('Debugger'));
+		Debugger::output();
 	}
 
 /**

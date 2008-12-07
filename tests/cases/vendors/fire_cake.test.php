@@ -28,47 +28,7 @@
  */
 App::import('Vendor', 'DebugKit.FireCake');
 
-require APP . 'plugins' . DS . 'debug_kit' . DS . 'reference' . DS . 'FirePHP.class.php';
-
-$fb = FirePHP::getInstance(true);
-$fb->setOptions(array('includeLineNumbers' => false));
-$fb->group('test');
-$fb->info('my info');
-$fb->groupEnd();
-
-/**
- * TestFireCake class allows for testing of FireCake
- *
- * @package debug_kit.tests.
- */
-class TestFireCake extends FireCake {
-	var $sentHeaders = array();
-
-	function _sendHeader($name, $value) {
-		$_this = FireCake::getInstance();
-		$_this->sentHeaders[$name] = $value;
-	}
-/**
- * skip client detection as headers are not being sent.
- *
- * @access public
- * @return void
- */	
-	function detectClientExtension() {
-		return true;
-	}
-/**
- * Reset the fireCake
- *
- * @return void
- **/
-	function reset() {
-		$_this = FireCake::getInstance();
-		$_this->sentHeaders = array();
-		$_this->_messageIndex = 1;
-	}
-}
-
+require_once APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'cases' . DS . 'test_objects.php';
 /**
  * Test Case For FireCake
  *

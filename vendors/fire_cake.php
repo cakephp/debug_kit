@@ -92,18 +92,21 @@ class FireCake extends Object {
 /**
  * get Instance of the singleton
  *
+ * @param string $class Class instance to store in the singleton. Used with subclasses and Tests.
  * @access public
  * @static
  * @return void
  */
-	function &getInstance() {
+	function &getInstance($class = null) {
 		static $instance = array();
-		if (!isset($instance[0]) || !$instance[0]) {
-			$args = func_get_args();
-			if (!isset($args[0])) {
-				$args[0] = 'FireCake';
+		if (!empty($class)) {
+			if (!$instance || strtolower($class) != strtolower(get_class($instance[0]))) {
+				$instance[0] = new $class();
+				$instance[0]->setOptions();
 			}
-			$instance[0] = new $args[0]();
+		}
+		if (!isset($instance[0]) || !$instance[0]) {
+			$instance[0] = new FireCake();
 			$instance[0]->setOptions();
 		}
 		return $instance[0];

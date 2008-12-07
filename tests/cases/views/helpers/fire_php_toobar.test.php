@@ -27,41 +27,9 @@
  */
 App::import('Helper', 'DebugKit.FirePhpToolbar');
 App::import('Core', array('View', 'Controller'));
+require_once APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'cases' . DS . 'test_objects.php';
 
-/**
- * TestFireCake class allows for testing of FireCake
- *
- * @package debug_kit.tests.
- */
-class TestFireCakeToolbar extends FireCake {
-	var $sentHeaders = array();
-
-	function _sendHeader($name, $value) {
-		$_this = FireCake::getInstance();
-		$_this->sentHeaders[$name] = $value;
-	}
-/**
- * skip client detection as headers are not being sent.
- *
- * @access public
- * @return void
- */	
-	function detectClientExtension() {
-		return true;
-	}
-/**
- * Reset the fireCake
- *
- * @return void
- **/
-	function reset() {
-		$_this = FireCake::getInstance();
-		$_this->sentHeaders = array();
-		$_this->_messageIndex = 1;
-	}
-}
-
-FireCake::getInstance('TestFireCakeToolbar');
+FireCake::getInstance('TestFireCake');
 
 class FirePhpToolbarHelperTestCase extends CakeTestCase {
 /**
@@ -142,7 +110,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	function endTest() {
-		TestFireCakeToolbar::reset();
+		TestFireCake::reset();
 	}
 /**
  * reset the view paths

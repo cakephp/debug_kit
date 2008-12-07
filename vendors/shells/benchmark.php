@@ -32,12 +32,47 @@ class BenchmarkShell extends Shell {
 		$this->out(sprintf('-> Testing %s', $url));
 
 		$n = 100;
+		$t = $i = 0;
+		if (isset($this->params['n'])) {
+			$n = $this->params['n'];
+		}
+		if (isset($this->params['t'])) {
+			$t = $this->params['t'];
+		}
 		$start = microtime(true);
-		for ($i = 0; $i < $n; $i++) {
+		while (true) {
+			if ($t && $t <= floor(microtime(true) - $start)) {
+				break;
+			}
+			if ($n <= $i) {
+				break;
+			}
 			file_get_contents($url);
+			$i++;
 		}
 		$duration = microtime(true) - $start;
+		$this->out('Total Requests made: ' . $i);
+		$this->out('Total Time elapsed: ' . $duration . '(s)');
 		$this->out(round($n / $duration, 2).' req/sec');
+	}
+	
+	function help() {
+		$out = <<<EOL
+	DebugKit Benchmark Shell
+	
+	Test a fully qualified url to get avg requests per second.
+	By default it does 100 requests to the provided url.
+	
+	Use:
+		cake benchmark [params] [url]
+	
+	Params
+		-n The maximum number of iterations to do.
+		
+		-t The maximum time to take. If a single request takes more
+			than this time. Only one request will be made.
+EOL;
+		$this->out($out);
 	}
 }
 

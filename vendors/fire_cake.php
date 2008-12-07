@@ -270,7 +270,7 @@ class FireCake extends Object {
 		$_this = FireCake::getInstance();
 
 		if (headers_sent($filename, $linenum)) {
-			trigger_error(sprintf(__('Headers already sent in %s on line %s. Cannot send log data to FirePHP.', true),$filename, $linenum), E_USER_WARNING);
+			trigger_error(sprintf(__('Headers already sent in %s on line %s. Cannot send log data to FirePHP.', true), $filename, $linenum), E_USER_WARNING);
 			return false;
 		}
 		if (!$_this->detectClientExtension()) {
@@ -339,7 +339,7 @@ class FireCake extends Object {
 
 		if ($type == $_this->_levels['dump']) {
 			$dump = $_this->jsonEncode($message);
-			$msg = sprintf('{"%s":%s}', $label, $dump);
+			$msg = '{"' . $label .'":' . $dump .'}';
 		} else {
 			$metaMsg = array('Type' => $type);
 			if ($label !== null) {
@@ -359,12 +359,11 @@ class FireCake extends Object {
 			if (empty($line)) {
 				continue;
 			}
-			$header = sprintf('X-Wf-1-%s-1-%s', $structureIndex, $_this->_messageIndex);
+			$header = 'X-Wf-1-' . $structureIndex . '-1-' . $_this->_messageIndex;
 			if (count($lines) > 2) {
-				// Message needs to be split into multiple parts
 				$first = ($i == 0) ? strlen($msg) : '';
 				$end = ($i < count($lines) - 2) ? '\\' : '';
-				$message = sprintf('%s|%s|%s', $first, $line, $end);
+				$message = $first . '|' . $line . '|' . $end;
 				$_this->_sendHeader($header, $message);
 			} else {
 				$_this->_sendHeader($header, strlen($line) . '|' . $line . '|');
@@ -468,10 +467,7 @@ class FireCake extends Object {
 				$return[$key] = FireCake::stringEncode($value, 1, $arrayDepth + 1);
 			}
 		}
-		if (is_string($object) || is_numeric($object)) {
-			return $object;
-		}
-		if (is_bool($object) || is_null($object)) {
+		if (is_string($object) || is_numeric($object) || is_bool($object) || is_null($object)) {
 			return $object;
 		}
 		return $return;

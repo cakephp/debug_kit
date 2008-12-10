@@ -391,7 +391,7 @@ class FireCake extends Object {
 					'File' => isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '',
 					'Line' => isset($trace[$i]['line']) ? $trace[$i]['line'] : '',
 					'Args' => isset($trace[$i]['args']) ? $this->stringEncode($trace[$i]['args']) : '',
-					'Trace' => $this->_escapeTrace(array_splice($trace, $i+1))
+					'Trace' => $this->_escapeTrace(array_splice($trace, $i + 1))
 				);
 				break;
 			}

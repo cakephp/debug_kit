@@ -90,6 +90,12 @@ class FireCake extends Object {
  **/
 	var $_methodIndex = array('info', 'log', 'warn', 'error', 'table', 'trace');
 /**
+ * FireCake output status
+ *
+ * @var bool
+ **/
+	var $_enabled = true;
+/**
  * get Instance of the singleton
  *
  * @param string $class Class instance to store in the singleton. Used with subclasses and Tests.
@@ -149,6 +155,25 @@ class FireCake extends Object {
  **/
 	function getUserAgent() {
 		return env('HTTP_USER_AGENT');
+	}
+/**
+ * Disable FireCake output 
+ * All subsequent output calls will not be run.
+ *
+ * @return void
+ **/
+	function disable() {
+		$_this = FireCake::getInstance();
+		$_this->_enabled = false;
+	}
+/**
+ * Enable FireCake output
+ *
+ * @return void
+ **/
+	function enable() {
+		$_this = FireCake::getInstance();
+		$_this->_enabled = true;
 	}
 /**
  * Convenience wrapper for LOG messages 
@@ -273,7 +298,7 @@ class FireCake extends Object {
 			trigger_error(sprintf(__('Headers already sent in %s on line %s. Cannot send log data to FirePHP.', true), $filename, $linenum), E_USER_WARNING);
 			return false;
 		}
-		if (!$_this->detectClientExtension()) {
+		if (!$_this->_enabled || !$_this->detectClientExtension()) {
 			return false;
 		}
 	

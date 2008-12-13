@@ -201,6 +201,20 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertPattern('/"Trace":\[/', $dump);
 	}
 /**
+ * test enabling and disabling of FireCake output
+ *
+ * @return void
+ **/
+	function testEnableDisable() {
+		FireCake::disable();
+		FireCake::trace('myTrace');
+		$this->assertTrue(empty($this->firecake->sentHeaders));
+		
+		FireCake::enable();
+		FireCake::trace('myTrace');
+		$this->assertFalse(empty($this->firecake->sentHeaders));
+	}
+/**
  * test correct line continuation markers on multi line headers.
  *
  * @access public

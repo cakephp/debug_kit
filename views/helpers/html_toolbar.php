@@ -4,7 +4,7 @@
  * Html Toolbar Helper
  *
  * Injects the toolbar elements into HTML layouts.
- * Contains helper methods for 
+ * Contains helper methods for
  *
  * CakePHP :  Rapid Development Framework <http://www.cakephp.org/>
  * Copyright 2006-2008, Cake Software Foundation, Inc.
@@ -78,6 +78,11 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if (empty($value) && $value != 0) {
 				$value = '(empty)';
 			}
+
+			if (is_object($value)) {
+				$value = Set::reverse($value, true);
+			}
+
 			if (is_array($value) && !empty($value)) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth);
 			} else {
@@ -94,7 +99,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param string $label label content
  * @param string $message message content
  * @return string
- */	
+ */
 	function message($label, $message) {
 		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
 	}

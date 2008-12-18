@@ -40,7 +40,7 @@ class DebugView extends DoppelGangerView {
  *
  * @var string
  */
-	var $_oldExtension = null;
+	var $_oldExtension = array();
 /**
  * Overload _render to capture filenames and time actual rendering of each view file
  *
@@ -50,9 +50,8 @@ class DebugView extends DoppelGangerView {
  * @access protected
  */
 	function _render($___viewFn, $___dataForView, $loadHelpers = true, $cached = false) {
-		if (isset($this->_oldExtension)) {
+		if (isset($this->_oldExtension) && strstr($___viewFn, '.debug_view')) {
 			$___viewFn = substr($___viewFn, 0, -10) . $this->_oldExtension;
-			$this->_oldExtension = null;
 		}
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__('Rendering %s', true), Debugger::trimPath($___viewFn)));

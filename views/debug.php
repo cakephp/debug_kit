@@ -40,7 +40,7 @@ class DebugView extends DoppelGangerView {
  *
  * @var string
  */
-	var $_oldExtension = array();
+	var $_oldExtension = null;
 /**
  * Overload _render to capture filenames and time actual rendering of each view file
  *

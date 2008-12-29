@@ -29,10 +29,10 @@
 $timers = DebugKitDebugger::getTimers();
 ?>
 <h2><?php __('Timers'); ?></h2>
-<p class="request-time">
+<div class="request-time">
 	<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision(DebugKitDebugger::requestTime(), 6)); ?>
 	<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
-</p>
+</div>
 
 <?php foreach ($timers as $timerName => $timeInfo):
 	$rows[] = array(

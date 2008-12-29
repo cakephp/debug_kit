@@ -36,5 +36,5 @@
 	</div>
 	<?php endforeach; ?>
 <?php else: ?>
-	<p class="warning"><?php __('No active database connections'); ?>
+	<p class="warning"><?php __('No active database connections'); ?></p>
 <?php endif; ?>

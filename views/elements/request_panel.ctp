@@ -38,7 +38,7 @@
 <?php if (isset($content['cookie'])): ?>
 	<?php echo $toolbar->makeNeatArray($content['cookie']); ?>
 <?php else: ?>
-	<p class="warning">To view Cookies, add CookieComponent to Controller
+	<p class="warning">To view Cookies, add CookieComponent to Controller</p>
 <?php endif; ?>
 
 <h4><?php __('Current Route') ?></h4>

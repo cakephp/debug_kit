@@ -31,6 +31,12 @@
  */
 App::import('Core', 'Debugger');
 
+if (!function_exists('firecake')) {
+	function firecake($message, $label = null) {
+		FireCake::fb($message, $label, 'log');
+	}
+}
+
 class FireCake extends Object {
 /**
  * Options for FireCake.

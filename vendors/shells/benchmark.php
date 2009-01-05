@@ -28,6 +28,10 @@
  */
 class BenchmarkShell extends Shell {
 	function main() {
+		if (empty($this->args)) {
+			$this->err('You must supply a URL to benchmark');
+			return;
+		}
 		$url = $this->args[0];
 		$this->out(sprintf('-> Testing %s', $url));
 

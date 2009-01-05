@@ -19,8 +19,8 @@
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
  * @package       cake
- * @subpackage    cake.cake.libs.
- * @since         CakePHP v 1.2.0.4487
+ * @subpackage    cake.debug_kit.views.elements
+ * @since         
  * @version       $Revision$
  * @modifiedby    $LastChangedBy$
  * @lastmodified  $Date$
@@ -38,7 +38,7 @@
 <?php if (isset($content['cookie'])): ?>
 	<?php echo $toolbar->makeNeatArray($content['cookie']); ?>
 <?php else: ?>
-	<p class="warning">To view Cookies, add CookieComponent to Controller
+	<p class="warning">To view Cookies, add CookieComponent to Controller</p>
 <?php endif; ?>
 
 <h4><?php __('Current Route') ?></h4>

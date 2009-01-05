@@ -125,11 +125,9 @@ var DebugKit = function(id) {
 	this.togglePanel = function(id) {
 		if (panels[id] && panels[id].active) {
 			this.deactivatePanel(true);
-			panels[id].active = false;
 		} else {
 			this.deactivatePanel(true);
 			this.activatePanel(id);
-			panels[id].active = true;
 		}
 	}
 /**

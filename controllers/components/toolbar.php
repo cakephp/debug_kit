@@ -109,12 +109,12 @@ class ToolbarComponent extends Object {
 		$currentViewClass = $controller->view;
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
-		if (!isset($controller->params['url']['ext']) || (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')) {
+		if (!$this->RequestHandler->isAjax() && (!isset($controller->params['url']['ext']) || (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html'))) {
 			$format = 'Html';
 		} else {
 			$format = 'FirePhp';
 		}
-		$controller->helpers['DebugKit.Toolbar'] = array('backend' => sprintf('DebugKit.%sToolbar', $format));
+		$controller->helpers['DebugKit.Toolbar'] = array('output' => sprintf('DebugKit.%sToolbar', $format));
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
@@ -258,9 +258,9 @@ class DebugPanel extends Object {
 }
 
 /**
- * ViewVars Panel
+ * Variables Panel
  *
- * Provides debug information on the Session contents.
+ * Provides debug information on the View variables.
  *
  * @package       cake.debug_kit.panels
  **/

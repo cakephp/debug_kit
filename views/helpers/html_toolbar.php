@@ -4,7 +4,7 @@
  * Html Toolbar Helper
  *
  * Injects the toolbar elements into HTML layouts.
- * Contains helper methods for 
+ * Contains helper methods for
  *
  * CakePHP :  Rapid Development Framework <http://www.cakephp.org/>
  * Copyright 2006-2008, Cake Software Foundation, Inc.
@@ -78,6 +78,11 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if (empty($value) && $value != 0) {
 				$value = '(empty)';
 			}
+
+			if (is_object($value)) {
+				$value = Set::reverse($value, true);
+			}
+
 			if (is_array($value) && !empty($value)) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth);
 			} else {
@@ -86,6 +91,32 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			$out .= '</li>';
 		}
 		$out .= '</ul>';
+		return $out;
+	}
+/**
+ * Create an HTML message
+ *
+ * @param string $label label content
+ * @param string $message message content
+ * @return string
+ */
+	function message($label, $message) {
+		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
+	}
+/**
+ * Create a table.
+ *
+ * @param array $rows Rows to make.
+ * @param array $headers Optional header row.
+ * @return string
+ */
+	function table($rows, $headers = array()) {
+		$out = '<table class="debug-table">';
+		if (!empty($headers)) {
+			$out .= $this->Html->tableHeaders($headers);
+		}
+		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'));
+		$out .= '</table>';
 		return $out;
 	}
 /**
@@ -111,8 +142,8 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
 		}
 		$toolbar = $view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
-		if (preg_match('#</body>\s*</html>#', $view->output)) {
-			$view->output = preg_replace('#</body>\s*</html>#', $toolbar . "\n</body>\n</html>", $view->output, 1);
+		if (preg_match('#</body>#', $view->output)) {
+			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
 		}
 	}
 }

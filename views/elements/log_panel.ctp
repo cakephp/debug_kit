@@ -19,7 +19,7 @@
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
  * @package       cake
- * @subpackage    cake.cake.libs.
+ * @subpackage    cake.debug_kit.views.elements
  * @version       $Revision$
  * @modifiedby    $LastChangedBy$
  * @lastmodified  $Date$
@@ -27,27 +27,22 @@
  */
 ?>
 <h2><?php __('Logs') ?></h2>
+<div class="code-table">
 <?php foreach ($content as $logName => $logs): ?>
 	<h3><?php echo $logName ?></h3>
 	<?php 
 		$len = count($logs);
 		if ($len > 0):
-	?>
-	<table class="debug-table code-table" cellspacing="0" cellpadding="0">
-		<thead>
-			<th>Time</th>
-			<th>Message</th>
-		</thead>
-		<tbody>
-	<?php for ($i = 0; $i < $len; $i+=2): ?>
-		<tr>
-			<td><?php echo $logs[$i] ?></td>
-			<td><?php echo $logs[$i+1] ?></td>
-		</tr>
-	<?php endfor; ?>
-		</tbody>
-	</table>
-	<?php else: ?>
+			$headers = array(__('Time', true), __('Message', true));
+			$rows = array();
+			for ($i = 0; $i < $len; $i += 2):
+				$rows[] = array(
+					$logs[$i], $logs[$i + 1]
+				);
+			endfor;
+			echo $toolbar->table($rows, $headers, array('title' => $logName));
+		else: ?>
 		<p class="info"><?php __('There were no log entries made this request'); ?></p>
 	<?php endif; ?>
 <?php endforeach; ?>
+</div>

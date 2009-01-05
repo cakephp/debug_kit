@@ -50,9 +50,8 @@ class DebugView extends DoppelGangerView {
  * @access protected
  */
 	function _render($___viewFn, $___dataForView, $loadHelpers = true, $cached = false) {
-		if (isset($this->_oldExtension)) {
+		if (isset($this->_oldExtension) && strstr($___viewFn, '.debug_view')) {
 			$___viewFn = substr($___viewFn, 0, -10) . $this->_oldExtension;
-			$this->_oldExtension = null;
 		}
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__('Rendering %s', true), Debugger::trimPath($___viewFn)));
@@ -81,19 +80,10 @@ class DebugView extends DoppelGangerView {
 		$out = parent::render($action, $layout, $file);
 		DebugKitDebugger::stopTimer('viewRender');
 		DebugKitDebugger::stopTimer('controllerRender');
-
-		if (!empty($this->loaded)) {
-			$helpers = array_keys($this->loaded);
-			foreach ($helpers as $helperName) {
-				$helper =& $this->loaded[$helperName];
-				if (is_object($helper)) {
-					if ((is_subclass_of($helper, 'Helper') || is_subclass_of($helper, 'helper')) && method_exists($helper, 'postRender')) {
-						$helper->postRender();
-					}
-				}
-			}
+		
+		if (isset($this->loaded['toolbar'])) {
+			$this->loaded['toolbar']->postRender();
 		}
-
 		//Temporary work around to hide the SQL dump at page bottom
 		Configure::write('debug', 0);
 		return $this->output;

@@ -43,20 +43,20 @@ class ToolbarHelper extends AppHelper {
  * @return void
  */
 	function __construct($options = array()) {
-		$this->_myName = get_class($this);
-		if ($this->_myName !== 'ToolbarHelper') {
+		$this->_myName = strtolower(get_class($this));
+		if ($this->_myName !== 'toolbarhelper') {
 			return;
 		}
-		if (!isset($options['backend'])) {
-			$options['backend'] = 'DebugKit.HtmlToolbar';
+		if (!isset($options['output'])) {
+			$options['output'] = 'DebugKit.HtmlToolbar';
 		}
-		App::import('Helper', $options['backend']);
-		$className = $options['backend'];
-		if (strpos($options['backend'], '.') !== false) {
-			list($plugin, $className) = explode('.', $options['backend']);
+		App::import('Helper', $options['output']);
+		$className = $options['output'];
+		if (strpos($options['output'], '.') !== false) {
+			list($plugin, $className) = explode('.', $options['output']);
 		}
 		$this->_backEndClassName =  $className;
-		$this->helpers = array($options['backend']);
+		$this->helpers = array($options['output']);
 	}
 
 /**
@@ -86,18 +86,5 @@ class ToolbarHelper extends AppHelper {
  */
 	function postRender() {
 		$this->_send();
-	}
-
-/**
- * _send - apply content changes to view output.
- *
- * Overloaded in sub classes
- *
- * @param string $format
- * @return void
- * @access protected
- */
-	function _send() {
-		//Override me
 	}
 }

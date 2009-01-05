@@ -19,8 +19,8 @@
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
  * @package       cake
- * @subpackage    cake.cake.libs.
- * @since         CakePHP v 1.2.0.4487
+ * @subpackage    cake.debug_kit.views.elements
+ * @since         
  * @version       $Revision$
  * @modifiedby    $LastChangedBy$
  * @lastmodified  $Date$
@@ -28,5 +28,16 @@
  */
 ?>
 <h2><?php __('Memory'); ?></h2>
-<p class="current-mem-use"><strong><?php __('Current Memory Use'); ?>:</strong> <?php echo $number->toReadableSize(DebugKitDebugger::getMemoryUse()); ?></p>
-<p class="peak-mem-use"><strong><?php __('Peak Memory Use'); ?>:</strong> <?php echo $number->toReadableSize(DebugKitDebugger::getPeakMemoryUse()); ?></p>
+<div class="current-mem-use">
+	<?php echo $toolbar->message(
+		__('Current Memory Use',true),
+		$number->toReadableSize(DebugKitDebugger::getMemoryUse())
+	);?>
+</div>
+<div class="peak-mem-use">
+<?php
+	echo $toolbar->message(
+		__('Peak Memory Use', true),
+		$number->toReadableSize(DebugKitDebugger::getPeakMemoryUse())
+	);
+?></div>

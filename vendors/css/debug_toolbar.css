@@ -19,6 +19,7 @@
 	float: left;
 	margin: 0;
 	padding: 0;
+	list-style: none;
 }
 
 #debug-kit-toolbar .panel-tab a {
@@ -105,14 +106,14 @@ table.debug-table tr.even td {
 }
 
 /** code tables **/
-table.code-table td {
+#debug-kit-toolbar .code-table td {
 	white-space: pre;
 	font-family: monaco, corsiva, "courier new", courier, monospaced;
 }
-table.code-table td:first-child {
+#debug-kit-toolbar .code-table td:first-child {
 	width: 15%;
 }
-table.code-table td:last-child {
+#debug-kit-toolbar .code-table td:last-child {
 	width: 80%;
 }
 

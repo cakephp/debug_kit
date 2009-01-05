@@ -19,8 +19,8 @@
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
  * @package       cake
- * @subpackage    cake.cake.libs.
- * @since         CakePHP v 1.2.0.4487
+ * @subpackage    cake.debug_kit.views.elements
+ * @since         
  * @version       $Revision$
  * @modifiedby    $LastChangedBy$
  * @lastmodified  $Date$
@@ -36,5 +36,5 @@
 	</div>
 	<?php endforeach; ?>
 <?php else: ?>
-	<p class="warning"><?php __('No active database connections'); ?>
+	<p class="warning"><?php __('No active database connections'); ?></p>
 <?php endif; ?>

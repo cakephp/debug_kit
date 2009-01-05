@@ -1,8 +1,8 @@
 <?php
 /* SVN FILE: $Id$ */
 /**
- * 
- *
+ * DebugKit Debugger class. Extends and enhances core
+ * debugger. Adds benchmarking and timing functionality.
  * 
  *
  * PHP versions 4 and 5
@@ -26,6 +26,8 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+App::import('Core', 'Debugger');
+App::import('Vendor', 'DebugKit.FireCake');
 /**
  * Debug Kit Temporary Debugger Class
  *
@@ -173,9 +175,52 @@ class DebugKitDebugger extends Debugger {
 		return memory_get_peak_usage();
 	}
 
+/**
+ * Handles object conversion to debug string.
+ *
+ * @param string $var Object to convert
+ * @access protected
+ */
+	function _output($level, $error, $code, $helpCode, $description, $file, $line, $kontext) {
+		$files = $this->trace(array('start' => 2, 'format' => 'points'));
+		$listing = $this->excerpt($files[0]['file'], $files[0]['line'] - 1, 1);
+		$trace = $this->trace(array('start' => 2, 'depth' => '20'));
+		$context = array();
+
+		foreach ((array)$kontext as $var => $value) {
+			$context[] = "\${$var}\t=\t" . $this->exportVar($value, 1);
+		}
+		if ($this->_outputFormat == 'fb') {
+			$this->_fireError($error, $code, $description, $file, $line, $trace, $context);
+		} else {
+			echo parent::_output($level, $error, $code, $helpCode, $description, $file, $line, $kontext);
+		}
+	}
+/**
+ * Create a FirePHP error message
+ *
+ * @param string $error Name of error
+ * @param string $code  Code of error
+ * @param string $description Description of error
+ * @param string $file File error occured in
+ * @param string $line Line error occured on
+ * @param string $trace Stack trace at time of error
+ * @param string $context context of error
+ * @return void
+ * @access protected
+ */
+	function _fireError($error, $code, $description, $file, $line, $trace, $context) {
+		$name = $error . ' - ' . $description;
+		$message = "$error $code $description on line: $line in file: $file";
+		FireCake::group($name);
+		FireCake::error($message, $name);
+		FireCake::log($context, 'Context');
+		FireCake::log($trace, 'Trace');
+		FireCake::groupEnd();
+	}
 }
 
 
 Debugger::invoke(DebugKitDebugger::getInstance());
-
+Debugger::getInstance('DebugKitDebugger');
 ?>

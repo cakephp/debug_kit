@@ -109,7 +109,7 @@ class ToolbarComponent extends Object {
 		$currentViewClass = $controller->view;
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
-		if (!isset($controller->params['url']['ext']) || (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')) {
+		if (!$this->RequestHandler->isAjax() && (!isset($controller->params['url']['ext']) || (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html'))) {
 			$format = 'Html';
 		} else {
 			$format = 'FirePhp';

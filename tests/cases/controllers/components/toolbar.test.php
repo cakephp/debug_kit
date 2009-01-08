@@ -29,11 +29,9 @@
 App::import('Component', 'DebugKit.Toolbar');
 
 class TestToolbarComponent extends ToolbarComponent {
-
 	function loadPanels($panels) {
 		$this->_loadPanels($panels);
 	}
-
 }
 
 Mock::generate('DebugPanel');
@@ -306,7 +304,19 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
 		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
 	}
-
+/**
+ * Test that the FireCake toolbar is used on AJAX requests
+ *
+ * @return void
+ **/
+	function testAjaxToolbar() {
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+		$this->Controller->components = array('DebugKit.Toolbar');
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
+	}
 
 /**
  * teardown

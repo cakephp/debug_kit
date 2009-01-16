@@ -163,3 +163,17 @@ table.debug-table tr.even td {
 	cursor: default;
 }
 
+.debug-kit-graph-bar,
+.debug-kit-graph-bar-value {
+	margin: 0;
+	padding: 0;
+	border: none;
+	overflow: hidden;
+	height: 10px;
+}
+.debug-kit-graph-bar {
+	background-color: #ccc;
+}
+.debug-kit-graph-bar-value {
+	background-color: #CE9E23;
+}

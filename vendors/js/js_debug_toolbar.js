@@ -62,6 +62,7 @@ var DebugKit = function(id) {
 			}
 			++index;
 		}
+		this.deactivatePanel(true);
 	}
 /**
  * Add a panel to the toolbar
@@ -97,9 +98,17 @@ var DebugKit = function(id) {
 		}
 
 		if (panel.callback !== undefined) {
-			panel.button.onclick = function() { return panel.callback(); };
+			panel.button.onclick = function(event) { 
+				event || window.event;
+				event.preventDefault();
+				return panel.callback(); 
+			};
 		} else {
-			panel.button.onclick = function() { return window.DebugKit.togglePanel(panel.id); };
+			panel.button.onclick = function(event) {
+				event || window.event;
+				event.preventDefault();
+				return window.DebugKit.togglePanel(panel.id); 
+			};
 		}
 
 		panels[panel.id] = panel;
@@ -111,7 +120,7 @@ var DebugKit = function(id) {
 	this.toggleToolbar = function() {
 		for (var i in panels) {
 			var panel = panels[i],
-				display = hidden? 'block': 'none';
+				display = hidden ? 'block': 'none';
 			if (panel.content !== undefined) {
 				panel.element.style.display = display;
 			}
@@ -136,7 +145,6 @@ var DebugKit = function(id) {
 	this.activatePanel = function(id, unique) {
 		if (panels[id] !== undefined && !panels[id].active) {
 			var panel = panels[id];
-			this.deactivatePanel(true);
 			if (panel.content !== undefined) {
 				panel.content.style.display = 'block';
 			}
@@ -156,7 +164,7 @@ var DebugKit = function(id) {
 			}
 			return true;
 		}
-		if (panels[id] !== undefined && panels[id].active) {
+		if (panels[id] !== undefined) {
 			var panel = panels[id];
 			if (panel.content !== undefined) {
 				panel.content.style.display = 'none';

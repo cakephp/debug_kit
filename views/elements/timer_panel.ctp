@@ -34,11 +34,18 @@ $timers = DebugKitDebugger::getTimers();
 	<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
 </div>
 
-<?php foreach ($timers as $timerName => $timeInfo):
+<?php
+$maxTime = 0;
+foreach ($timers as $timerName => $timeInfo):
+	$maxTime = max($maxTime, $timeInfo['time']);
+endforeach;
+
+foreach ($timers as $timerName => $timeInfo):
 	$rows[] = array(
 		$timeInfo['message'],
-		$number->precision($timeInfo['time'], 6)
+		$number->precision($timeInfo['time'], 6),
+		$simpleGraph->bar($number->precision($timeInfo['time'], 6), array('max' => $maxTime))
 	);
-	$headers = array(__('Message', true), __('time in seconds', true));
+	$headers = array(__('Message', true), __('time in seconds', true), __('graph', true));
 endforeach;
 echo $toolbar->table($rows, $headers, array('title' => 'Timers')); ?>

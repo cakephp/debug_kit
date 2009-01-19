@@ -1,0 +1,165 @@
+/* @override http://localhost/cake_debug_kit/debug_kit/css/debug_toolbar.css */
+#debug-kit-toolbar {
+	position: fixed;
+	top: 0px;
+	right:0px;
+	width: 100%;
+	height: 1%;
+	overflow: visible;
+	z-index:10000;
+}
+/* panel tabs */
+#debug-kit-toolbar #panel-tabs {
+	float: right;
+	list-style: none;
+	margin: 0;
+}
+#debug-kit-toolbar .panel-tab {
+	clear: none;
+	float: left;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#debug-kit-toolbar .panel-tab a {
+	float: left;
+	clear: none;
+	background: #efefef;
+	color: #222;
+	padding: 6px;
+	border-right: 1px solid #ccc;
+	font-size: 12px;
+	line-height: 16px;
+	margin: 0;
+	display: block;
+}
+#debug-kit-toolbar .panel-tab .active,
+#debug-kit-toolbar .panel-tab a:hover {
+	background: #fff;
+}
+#debug-kit-toolbar .panel-tab.icon a {
+	padding: 4px;
+}
+
+/* Hovering over link shows tab, useful for no js  */
+#debug-kit-toolbar .panel-tab a:hover + .panel-content,
+#debug-kit-toolbar .panel-tab a + .panel-content:hover {
+	display: block;
+}
+
+/* panel content */
+#debug-kit-toolbar .panel-content {
+	position: absolute;
+	text-align: left;
+	width: auto;
+	top:28px;
+	right:0px;
+	background: #fff;
+	color: #000;
+	width:96%;
+	padding:20px 2%;
+	max-height: 550px;
+	overflow:auto;
+	border-bottom: 3px solid #333;
+}
+
+/* Hide panel content by default */
+.panel-content {
+	display: none;
+}
+
+.panel-content p {
+	margin: 1em 0;
+}
+.panel-content h2 {
+	padding: 0;
+	margin-top:0;
+}
+.panel-content h3 {
+	padding: 0;
+	margin-top: 1em;
+}
+.panel-content .info {
+	padding: 4px;
+	border-top: 1px dashed #6c6cff;
+	border-bottom: 1px dashed #6c6cff;
+}
+
+/* panel tables */
+table.debug-table {
+	width: auto;
+	border: 0;
+}
+table.debug-table td,
+table.debug-table th {
+	text-align: left;
+	border: 0;
+	padding: 3px;
+}
+table.debug-table th {
+	border-bottom: 1px solid #222;
+	background: 0;;
+}
+table.debug-table tr.even td {
+	background:#efefef;
+}
+
+/** code tables **/
+#debug-kit-toolbar .code-table td {
+	white-space: pre;
+	font-family: monaco, corsiva, "courier new", courier, monospaced;
+}
+#debug-kit-toolbar .code-table td:first-child {
+	width: 15%;
+}
+#debug-kit-toolbar .code-table td:last-child {
+	width: 80%;
+}
+
+
+.panel-content.request {
+	display: block;
+}
+
+
+/** Neat Array styles **/
+.neat-array {
+	padding: 1px 2px 1px 20px;
+	background: #CE9E23;
+	list-style: none;
+	margin: 0;
+}
+.neat-array .neat-array {
+	padding: 0 0 0 20px;
+}
+.neat-array li {
+	background: #FEF6E5;
+	border-top: 1px solid #CE9E23;
+	border-bottom: 1px solid #CE9E23;
+	margin: 0;
+	line-height: 1.5em;
+}
+.neat-array li:hover {
+	background: #fff;
+}
+.neat-array li strong {
+	padding: 0 8px;
+}
+
+/* expandable sections */
+.neat-array li.expandable {
+	cursor: pointer;
+}
+.neat-array li.expandable.expanded > strong:before {
+	content: 'v ';
+}
+.neat-array li.expandable.collapsed > strong:before,
+.neat-array li.expandable.expanded .expandable.collapsed > strong:before {
+	content: '> ';
+}
+
+.neat-array li {
+	cursor: default;
+}
+

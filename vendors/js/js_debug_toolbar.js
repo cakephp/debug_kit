@@ -30,7 +30,8 @@ var DebugKit = function(id) {
 	var undefined,
 		elements = {},
 		panels = {},
-		hidden = false;
+		toolbarHidden = false,
+		Cookie = new DebugKit.Util.Cookie();
 
 	this.initialize = function(id) {
 		elements.toolbar = document.getElementById(id || 'debug-kit-toolbar');
@@ -63,6 +64,10 @@ var DebugKit = function(id) {
 			++index;
 		}
 		this.deactivatePanel(true);
+		if (Cookie.read('toolbarDisplay') == 'none') {
+			toolbarHidden = true;
+			this.toggleToolbar()
+		}
 	}
 /**
  * Add a panel to the toolbar
@@ -120,12 +125,13 @@ var DebugKit = function(id) {
 	this.toggleToolbar = function() {
 		for (var i in panels) {
 			var panel = panels[i],
-				display = hidden ? 'block': 'none';
+				display = toolbarHidden ? 'none' : 'block';
 			if (panel.content !== undefined) {
 				panel.element.style.display = display;
+				Cookie.write('toolbarDisplay', display);
 			}
 		}
-		hidden = !hidden;
+		toolbarHidden = !toolbarHidden;
 		return true;
 	};
 /**

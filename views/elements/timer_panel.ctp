@@ -37,7 +37,7 @@ $timers = DebugKitDebugger::getTimers();
 <?php
 $maxTime = 0;
 foreach ($timers as $timerName => $timeInfo):
-	$maxTime = max($maxTime, $timeInfo['time']);
+	$maxTime += $timeInfo['time'];
 endforeach;
 
 foreach ($timers as $timerName => $timeInfo):
@@ -46,6 +46,6 @@ foreach ($timers as $timerName => $timeInfo):
 		$number->precision($timeInfo['time'], 6),
 		$simpleGraph->bar($number->precision($timeInfo['time'], 6), array('max' => $maxTime))
 	);
-	$headers = array(__('Message', true), __('time in seconds', true), __('graph', true));
+	$headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
 endforeach;
 echo $toolbar->table($rows, $headers, array('title' => 'Timers')); ?>

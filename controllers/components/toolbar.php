@@ -334,6 +334,9 @@ class TimerPanel extends DebugPanel {
 		if (!in_array('Number', $controller->helpers)) {
 			$controller->helpers[] = 'Number';
 		}
+		if (!in_array('SimpleGraph', $controller->helpers)) {
+			$controller->helpers[] = 'DebugKit.SimpleGraph';
+		}
 	}
 }
 

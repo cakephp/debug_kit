@@ -33,7 +33,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @var array
  * @access public
  */
-	var $helpers = array('Html', 'Javascript', 'DebugKit.SimpleGraph');
+	var $helpers = array('Html', 'Javascript');
 /**
  * settings property
  *

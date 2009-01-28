@@ -165,8 +165,8 @@ class BenchmarkShell extends Shell {
 		$this->out(__("\t\tcake benchmark [-n iterations] [-t timeout] url", true));
 		$this->out("");
 		$this->out(__("\tParams:", true));
-		$this->out(__("\t\t-n Number of iterations to perform. Defaults to 10. Must be an integer.", true));
-		$this->out(__("\t\t-t Maximum total time for all iterations, in seconds. Defaults to 100. Must be an integer.", true));
+		$this->out(__("\t\t-n Number of iterations to perform. Defaults to 10. \n\t\t   Must be an integer.", true));
+		$this->out(__("\t\t-t Maximum total time for all iterations, in seconds. \n\t\t   Defaults to 100. Must be an integer.", true));
 		$this->out("");
 		$this->out(__("\tIf a single iteration takes more than the \n\ttimeout specified, only one request will be made.", true));
 		$this->out("");

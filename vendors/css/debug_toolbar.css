@@ -177,3 +177,14 @@ table.debug-table tr.even td {
 .debug-kit-graph-bar-value {
 	background-color: #CE9E23;
 }
+
+/* previous panels */
+.panel-content-history {
+  display: none;
+}
+#debug-kit-toolbar #history-tab a {
+  float: none;
+}
+#debug-kit-toolbar #history-tab a.active {
+  background: #FEF6E5;
+}

@@ -30,6 +30,7 @@
 $(document).ready(function(){
 	DebugKit.Toolbar();
 	DebugKit.NeatArray();
+  DebugKit.History();
 });
 
 var DebugKit = {};
@@ -80,5 +81,22 @@ DebugKit.Toolbar = function() {
 			panelButtons.show();
 		}
 	);
+}
+/**
+ * Handle hiding/displaying panels from previous requests
+ *
+ */
+DebugKit.History = function() {
+  $('.history-link').click(function() {
+    var id = $(this).attr('href').replace('#', '');
+    
+    $('.history-link').removeClass('active');
+    $(this).addClass('active');
+    
+    $('.panel-content-data').hide();
+    $('.panel-content' + id).show();
+    
+    return false;
+  });
 }
 })(jQuery);

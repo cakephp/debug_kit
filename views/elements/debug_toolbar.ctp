@@ -34,7 +34,7 @@
 		<ul id="panel-tabs">
 			<li class="panel-tab icon">
 				<a href="#hide" id="hide-toolbar">
-					<?php echo $html->image('/debug_kit/img/cake.icon.png', array('alt' => 'cakePHP')); ?>
+					<?php echo $html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP')); ?>
 				</a>
 			</li>
 			<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
@@ -43,8 +43,23 @@
 						<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
 					</a>
 					<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
-						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+          <?php
+            $classes = array();
+            if($panelName != 'history') {
+              $classes = array('panel-content-data',  'panel-content0');
+            }
+          ?>
+            
+						<div class="<?php echo implode(' ', $classes) ?>"><?php echo $this->element($panelInfo['elementName'], $panelInfo); ?></div>
+            
+            <?php foreach ($debugToolbarPanelsHistory as $i => $panelContents): ?>
+              <?php if (!empty($panelContents[$panelName])) :?>
+                <div class="panel-content-history panel-content-data panel-content<?php echo $i ?>"><?php echo $this->element($panelInfo['elementName'], $panelContents[$panelName]); ?></div>
+              <?php endif; ?>
+            <?php endforeach ?>
 					</div>
+        
+          
 				</li>
 			<?php endforeach ?>
 		</ul>

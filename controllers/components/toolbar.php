@@ -329,7 +329,7 @@ class VariablesPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
   
   function beforeRender(&$controller) {
-    return $controller->viewVars;
+    return array_merge($controller->viewVars, $controller->data);
   }
 }
 

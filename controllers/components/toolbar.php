@@ -370,23 +370,6 @@ class MemoryPanel extends DebugPanel {
  **/
 class sqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
-	var $dbConfigs = array();
-/**
- * get db configs.
- *
- * @param string $controller
- * @access public
- * @return void
- */
-	function startUp(&$controller) {
-		if (!class_exists('ConnectionManager')) {
-			$this->dbConfigs = array();
-			return false;
-		}
-		$this->dbConfigs = ConnectionManager::sourceList();
-		return true;
-	}
 /**
  * Get Sql Logs for each DB config
  *
@@ -399,7 +382,8 @@ class sqlLogPanel extends DebugPanel {
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
-		foreach ($this->dbConfigs as $configName) {
+		$dbConfigs = ConnectionManager::sourceList();
+		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
 			if ($db->isInterfaceSupported('showLog')) {
 				ob_start();

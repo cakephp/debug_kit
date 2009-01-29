@@ -52,11 +52,13 @@
             
 						<div class="<?php echo implode(' ', $classes) ?>"><?php echo $this->element($panelInfo['elementName'], $panelInfo); ?></div>
             
-            <?php foreach ($debugToolbarPanelsHistory as $i => $panelContents): ?>
-              <?php if (!empty($panelContents[$panelName])) :?>
-                <div class="panel-content-history panel-content-data panel-content<?php echo $i ?>"><?php echo $this->element($panelInfo['elementName'], $panelContents[$panelName]); ?></div>
-              <?php endif; ?>
-            <?php endforeach ?>
+            <?php if (!empty($debugToolbarPanelsHistory)) :?>
+              <?php foreach ($debugToolbarPanelsHistory as $i => $panelContents): ?>
+                <?php if (!empty($panelContents[$panelName])) :?>
+                  <div class="panel-content-history panel-content-data panel-content<?php echo $i ?>"><?php echo $this->element($panelInfo['elementName'], $panelContents[$panelName]); ?></div>
+                <?php endif; ?>
+              <?php endforeach ?>
+            <?php endif; ?>
 					</div>
         
           

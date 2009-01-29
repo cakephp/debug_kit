@@ -93,6 +93,14 @@ class ToolbarComponent extends Object {
 			$settings['panels'] = $this->_defaultPanels;
 		}
 
+    if (isset($settings['history'])) {
+      $this->history = $settings['history'];
+    }
+    if(!$this->history) {
+      unset($settings['panels'][array_search('history', $settings['panels'])]);
+      $settings['panels'] = array_values($settings['panels']);
+    }
+    
 		if (isset($settings['javascript'])) {
 			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
 		} else {

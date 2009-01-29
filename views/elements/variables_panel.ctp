@@ -28,8 +28,4 @@
  */
 ?>
 <h2> <?php __('View Variables'); ?></h2>
-<?php 
-	$vars = $this->viewVars; 
-	unset($vars['debugToolbarPanels'], $vars['debugToolbarJavascript'], $vars['debugToolbarPanelsHistory']);
-?>
-<?php echo $toolbar->makeNeatArray($vars); ?>
+<?php echo $toolbar->makeNeatArray($content); ?>

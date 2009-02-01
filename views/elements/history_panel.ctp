@@ -29,7 +29,7 @@
 ?>
 <h2> <?php __('Request History'); ?></h2>
 <?php $history = $this->viewVars['debugToolbarPanelsHistory']; ?>
-<?php if (empty($history)) :?>
+<?php if (empty($history)): ?>
   <p class="warning"><?php __('No previous requests logged.'); ?></p>
 <?php else: ?>
 	<?php echo count($history); ?> <?php __('previous requests available') ?>

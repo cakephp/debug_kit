@@ -140,11 +140,15 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::stopTimer('componentInit');
 		DebugKitDebugger::startTimer('controllerAction', __('Controller Action', true));
 	}
-  
-  function beforeRedirect(&$controller) {
+/**
+ * beforeRedirect callback
+ *
+ * @return void
+ **/
+	function beforeRedirect(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
-    $vars = $this->_gatherVars($controller);
-  }
+		$vars = $this->_gatherVars($controller);
+	}
 /**
  * beforeRender callback
  *
@@ -165,7 +169,7 @@ class ToolbarComponent extends Object {
  * @return array Array of all panel beforeRender()
  * @access protected
  **/  
-  function _gatherVars(&$controller) {
+	function _gatherVars(&$controller) {
 		$vars = array();
 		$panels = array_keys($this->panels);
 
@@ -180,10 +184,9 @@ class ToolbarComponent extends Object {
 			$vars[$panelName]['plugin'] = $panel->plugin;
 			$vars[$panelName]['disableTimer'] = true;
 		}
-    
-    $this->_setHistory($controller, $vars);
-    return $vars;
-  }
+		$this->_setHistory($controller, $vars);
+		return $vars;
+	}
 
 /**
  * Load Panels used in the debug toolbar
@@ -279,11 +282,11 @@ class ToolbarComponent extends Object {
 		if (count($historicalVars) > $this->history) {
 			array_pop($historicalVars);
 		}
-	
+
 		unset($vars['history']);
 		array_unshift($historicalVars, $vars);
 		$controller->Session->write('DebugToolbar.historicalVars', $historicalVars);
-
+		
 		unset($historicalVars[0]);
 		$controller->set(array('debugToolbarPanelsHistory' => $historicalVars));
 	}

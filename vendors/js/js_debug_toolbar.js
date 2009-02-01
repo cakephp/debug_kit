@@ -227,7 +227,18 @@ var DebugKit = function(id) {
 						var regex = new RegExp('panel-content' + id);
 						if (panelData.className && panelData.className.match(regex)) {
 							panelData.style.display = 'block';
+							var panelWrapper = panelData.parentNode;
+							if (!panelData.parentNode.className.match(/panel-history-active/)) {
+								var newClass = panelWrapper.className.replace(/^(.*)$/, '$1 panel-history-active');
+								panelWrapper.className = newClass;
+							}
 						}
+					}
+					if (id == 0) {
+						console.log(panels[i].content.className);
+						var newClass = panels[i].content.className.replace(/ ?(panel-history-active) ?/, '');
+						console.log(newClass);
+						panels[i].content.className = newClass;
 					}
 				}
 			});

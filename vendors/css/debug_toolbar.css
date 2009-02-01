@@ -117,8 +117,7 @@ table.debug-table tr.even td {
 	width: 80%;
 }
 
-
-.panel-content.request {
+#debug-kit-toolbar .panel-content.request {
 	display: block;
 }
 
@@ -163,28 +162,31 @@ table.debug-table tr.even td {
 	cursor: default;
 }
 
-.debug-kit-graph-bar,
-.debug-kit-graph-bar-value {
+#debug-kit-toolbar .debug-kit-graph-bar,
+#debug-kit-toolbar .debug-kit-graph-bar-value {
 	margin: 0;
 	padding: 0;
 	border: none;
 	overflow: hidden;
 	height: 10px;
 }
-.debug-kit-graph-bar {
+#debug-kit-toolbar .debug-kit-graph-bar {
 	background-color: #ccc;
 }
-.debug-kit-graph-bar-value {
+#debug-kit-toolbar .debug-kit-graph-bar-value {
 	background-color: #CE9E23;
 }
 
 /* previous panels */
-.panel-content-history {
-  display: none;
+#debug-kit-toolbar .panel-history-active {
+	background:#eeffff;
+}
+#debug-kit-toolbar .panel-content-history {
+	display: none;
 }
 #debug-kit-toolbar #history-tab a {
-  float: none;
+	float: none;
 }
 #debug-kit-toolbar #history-tab a.active {
-  background: #FEF6E5;
+	background: #FEF6E5;
 }

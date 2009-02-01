@@ -32,18 +32,18 @@
 <?php if (empty($history)) :?>
   <p class="warning"><?php __('No previous requests logged.'); ?></p>
 <?php else: ?>
-  <?php echo count($history); ?> <?php __('previous requests available') ?>
-  <?php
-    for($i = 0; $i <= count($history); $i++):
-      if($i == 0) {
-        $title = '(' . __('current', true) . ') ' . $this->here;
-      } else {
-        $title = $i;
-        if(!empty($history[$i]['request'])) {
-          $title = $history[$i]['request']['content']['params']['url']['url'];
-        }        
-      }
-  ?>
-    <div><?php echo $html->link($title, '#' . $i, array('class' => 'history-link')); ?></div>
-  <?php endfor ?>
+	<?php echo count($history); ?> <?php __('previous requests available') ?>
+	<?php
+	for ($i = 0; $i <= count($history); $i++):
+		if ($i == 0) :
+			$title = '(' . __('current', true) . ') ' . $this->here;
+		else :
+			$title = $i;
+			if (!empty($history[$i]['request'])) :
+				$title = $history[$i]['request']['content']['params']['url']['url'];
+			endif;
+		endif;
+	?>
+	<div><?php echo $html->link($title, '#' . $i, array('class' => 'history-link')); ?></div>
+	<?php endfor ?>
 <?php endif; ?>

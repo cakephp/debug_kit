@@ -69,7 +69,7 @@ class SimpleGraphHelper extends AppHelper {
 			'debug-kit-graph-bar',
 			$this->Html->div(
 				'debug-kit-graph-bar-value',
-				null,
+				' ',
 				array('style' => "width: {$value}px")),
 			array('style' => "width: {$width}px;"),
 			false);

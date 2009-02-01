@@ -37,24 +37,22 @@
 					<?php echo $html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP')); ?>
 				</a>
 			</li>
-			<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
-				<li class="panel-tab">
-					<a href="#<?php echo Inflector::underscore($panelName); ?>">
-						<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
-					</a>
-					<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
-		  <?php
-			$classes = array();
-			if($panelName != 'history') {
-				$classes = array('panel-content-data',  'panel-content0');
-			}
-		  ?>
-
-					<div class="<?php echo implode(' ', $classes) ?>">
-						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
-					</div>
-            
-			<?php if (!empty($debugToolbarPanelsHistory)) :?>
+		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
+			<li class="panel-tab">
+				<a href="#<?php echo Inflector::underscore($panelName); ?>">
+					<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
+				</a>
+				<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
+		  	<?php
+				$classes = array();
+				if ($panelName != 'history') {
+					$classes = array('panel-content-data',  'panel-content0');
+				}
+		  		?>
+				<div class="<?php echo implode(' ', $classes) ?>">
+					<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+				</div>
+			<?php if (!empty($debugToolbarPanelsHistory) && $toolbar->getName() !== 'FirePHPToolbar'):?>
 			  <?php foreach ($debugToolbarPanelsHistory as $i => $panelContents): ?>
 				<?php if (!empty($panelContents[$panelName])) :?>
 					<div class="panel-content-history panel-content-data panel-content<?php echo $i ?>">

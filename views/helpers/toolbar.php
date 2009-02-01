@@ -60,6 +60,15 @@ class ToolbarHelper extends AppHelper {
 	}
 
 /**
+ * Get the name of the backend Helper
+ * used to conditionally trigger toolbar output
+ *
+ * @return string
+ **/
+	function getName() {
+		return $this->_backEndClassName;
+	}
+/**
  * call__
  *
  * Allows method calls on backend helper

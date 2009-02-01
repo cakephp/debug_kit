@@ -88,14 +88,18 @@ class ToolbarComponent extends Object {
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 		
 		DebugKitDebugger::startTimer('componentInit', __('Component initialization and startup', true));
-		if (!isset($settings['panels'])) {
-			$settings['panels'] = $this->_defaultPanels;
+
+		$panels = $this->_defaultPanels;
+		if (isset($settings['panels'])) {
+			$panels = $settings['panels'];
+			unset($settings['panels']);
 		}
 
 		if (isset($settings['history'])) {
 			$this->history = $settings['history'];
 		}
-		if(!$this->history) {
+
+		if (!$this->history) {
 			unset($settings['panels'][array_search('history', $settings['panels'])]);
 			$settings['panels'] = array_values($settings['panels']);
 		}
@@ -105,8 +109,7 @@ class ToolbarComponent extends Object {
 		} else {
 			$settings['javascript'] = $this->_defaultJavascript;
 		}
-		$this->_loadPanels($settings['panels']);
-		unset($settings['panels']);
+		$this->_loadPanels($panels, $settings);
 		
 		$this->_set($settings);
 		$this->controller =& $controller;
@@ -194,14 +197,14 @@ class ToolbarComponent extends Object {
  * @return 	void
  * @access protected
  **/
-	function _loadPanels($panels) {
+	function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
 			if (!class_exists($className) && !App::import('Vendor',  $className)) {
 				trigger_error(sprintf(__('Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
 				continue;
 			}
-			$panelObj =& new $className();
+			$panelObj =& new $className($settings);
 			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
 				$this->panels[$panel] =& $panelObj;
 			}

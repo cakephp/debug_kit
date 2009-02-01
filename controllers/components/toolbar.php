@@ -45,14 +45,13 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('session', 'request', 'sqlLog', 'timer', 'log', 'memory', 'variables');
+	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'memory', 'variables');
 /**
  * Loaded panel objects.
  *
  * @var array
  */
 	var $panels = array();
-
 /**
  * fallback for javascript settings
  *
@@ -67,6 +66,12 @@ class ToolbarComponent extends Object {
  * @var array
  **/
 	var $javascript = array();
+/**
+ * how many historical requests to keep data for.
+ *
+ * @var int
+ **/  
+	var $history = 5;
 /**
  * initialize
  *
@@ -87,6 +92,14 @@ class ToolbarComponent extends Object {
 			$settings['panels'] = $this->_defaultPanels;
 		}
 
+		if (isset($settings['history'])) {
+			$this->history = $settings['history'];
+		}
+		if(!$this->history) {
+			unset($settings['panels'][array_search('history', $settings['panels'])]);
+			$settings['panels'] = array_values($settings['panels']);
+		}
+    
 		if (isset($settings['javascript'])) {
 			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
 		} else {
@@ -109,7 +122,11 @@ class ToolbarComponent extends Object {
 		$currentViewClass = $controller->view;
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
-		$isHtml = (!isset($controller->params['url']['ext']) || (isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html'));
+		$isHtml = (
+			!isset($controller->params['url']['ext']) || 
+			(isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')
+		);
+
 		if (!$this->RequestHandler->isAjax() && $isHtml) {
 			$format = 'Html';
 		} else {
@@ -124,6 +141,15 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::startTimer('controllerAction', __('Controller Action', true));
 	}
 /**
+ * beforeRedirect callback
+ *
+ * @return void
+ **/
+	function beforeRedirect(&$controller) {
+		DebugKitDebugger::stopTimer('controllerAction');
+		$vars = $this->_gatherVars($controller);
+	}
+/**
  * beforeRender callback
  *
  * Calls beforeRender on all the panels and set the aggregate to the controller.
@@ -132,6 +158,18 @@ class ToolbarComponent extends Object {
  **/
 	function beforeRender(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
+		$vars = $this->_gatherVars($controller);
+
+		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
+		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
+	}
+/**
+ * collects the panel contents
+ *
+ * @return array Array of all panel beforeRender()
+ * @access protected
+ **/  
+	function _gatherVars(&$controller) {
 		$vars = array();
 		$panels = array_keys($this->panels);
 
@@ -146,9 +184,8 @@ class ToolbarComponent extends Object {
 			$vars[$panelName]['plugin'] = $panel->plugin;
 			$vars[$panelName]['disableTimer'] = true;
 		}
-
-		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
+		$this->_setHistory($controller, $vars);
+		return $vars;
 	}
 
 /**
@@ -223,6 +260,36 @@ class ToolbarComponent extends Object {
 			eval($class);
 		}
 	}
+/**
+ * setHistory save the current toolbar variables to the session
+ *
+ * @param object $controller Controller instance
+ * @param array $vars Vars to save.
+ * @access protected
+ * @return void
+ **/
+	function _setHistory(&$controller, $vars) {
+		if (!$this->history) {
+			return;
+		}
+
+		$historicalVars = $controller->Session->read('DebugToolbar.historicalVars');
+
+		if (empty($historicalVars)) {
+			$historicalVars = array();
+		}
+
+		if (count($historicalVars) > $this->history) {
+			array_pop($historicalVars);
+		}
+
+		unset($vars['history']);
+		array_unshift($historicalVars, $vars);
+		$controller->Session->write('DebugToolbar.historicalVars', $historicalVars);
+		
+		unset($historicalVars[0]);
+		$controller->set(array('debugToolbarPanelsHistory' => $historicalVars));
+	}
 }
 
 /**
@@ -259,6 +326,17 @@ class DebugPanel extends Object {
 }
 
 /**
+ * History Panel
+ *
+ * Provides debug information on previous requests.
+ *
+ * @package       cake.debug_kit.panels
+ **/
+class HistoryPanel extends DebugPanel {
+	var $plugin = 'debug_kit';
+}
+
+/**
  * Variables Panel
  *
  * Provides debug information on the View variables.
@@ -267,6 +345,14 @@ class DebugPanel extends Object {
  **/
 class VariablesPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+/**
+ * beforeRender callback
+ *
+ * @return array
+ **/
+	function beforeRender(&$controller) {
+		return array_merge($controller->viewVars, array('$this->data' => $controller->data));
+	}
 }
 
 /**
@@ -286,7 +372,9 @@ class SessionPanel extends DebugPanel {
  * @return array
  */
 	function beforeRender(&$controller) {
-		return $controller->Session->read();
+		$sessions = $controller->Session->read();
+		unset($sessions['DebugToolbar']);
+		return $sessions;
 	}
 }
 

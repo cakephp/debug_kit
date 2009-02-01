@@ -31,13 +31,14 @@ var DebugKit = function(id) {
 		elements = {},
 		panels = {},
 		toolbarHidden = false,
-		Cookie = new DebugKit.Util.Cookie();
+		Cookie = new DebugKit.Util.Cookie(),
+		Util = DebugKit.Util;
 
 	this.initialize = function(id) {
 		elements.toolbar = document.getElementById(id || 'debug-kit-toolbar');
 
 		if (elements.toolbar === undefined) {
-			throw new Exception('Toolbar not found, make sure you loaded it.');
+			throw('Toolbar not found, make sure you loaded it.');
 		}
 
 		for (var i in elements.toolbar.childNodes) {
@@ -63,6 +64,7 @@ var DebugKit = function(id) {
 			}
 			++index;
 		}
+		
 		this.deactivatePanel(true);
 		if (Cookie.read('toolbarDisplay') == 'none') {
 			toolbarHidden = true;
@@ -74,7 +76,7 @@ var DebugKit = function(id) {
  */
 	this.addPanel = function(tab, callback) {
 		if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
-			throw new Exception('Toolbar not found, make sure you loaded it.');
+			throw('Toolbar not found, make sure you loaded it.');
 		}
 		var panel = {
 			id : false,
@@ -86,7 +88,7 @@ var DebugKit = function(id) {
 		};
 		for (var i in tab.childNodes) {
 			var element = tab.childNodes[i],
-				tag = element.nodeName? element.nodeName.toUpperCase(): false;
+				tag = element.nodeName ? element.nodeName.toUpperCase() : false;
 			if (tag === 'A') {
 				panel.id = element.hash.replace(/^#/, '');
 				panel.button = element;
@@ -95,27 +97,31 @@ var DebugKit = function(id) {
 			}
 		}
 		if (!panel.id) {
-			throw new Exception('invalid element');
+			throw('invalid element');
 		}
 
 		if (panel.button.id && panel.button.id === 'hide-toolbar') {
 			panel.callback = this.toggleToolbar;
 		}
 
-		if (panel.callback !== undefined) {
-			panel.button.onclick = function(event) { 
-				event || window.event;
-				event.preventDefault();
-				return panel.callback(); 
-			};
-		} else {
-			panel.button.onclick = function(event) {
-				event || window.event;
-				event.preventDefault();
-				return window.DebugKit.togglePanel(panel.id); 
-			};
+		var callbackName = "activate" + panel.id.replace('-tab', '');
+		if (this[callbackName] !== undefined) {
+			this[callbackName](panel);
 		}
 
+		if (panel.callback !== undefined) {
+			Util.addEvent(panel.button, 'click', function(event) {
+				event || window.event;
+				event.preventDefault();
+				return panel.callback();
+			});
+		} else {
+			Util.addEvent(panel.button, 'click', function(event) {
+				event || window.event;
+				event.preventDefault();
+				return window.DebugKit.togglePanel(panel.id);
+			})
+		}
 		panels[panel.id] = panel;
 		return panel.id;
 	};
@@ -123,16 +129,16 @@ var DebugKit = function(id) {
  * Hide/show the toolbar (minimize cake)
  */	
 	this.toggleToolbar = function() {
+		var display = toolbarHidden ? 'block' : 'none';
 		for (var i in panels) {
-			var panel = panels[i],
-				display = toolbarHidden ? 'none' : 'block';
-			if (panel.content !== undefined) {
+			var panel = panels[i];
+			if (panel.content != undefined) {
 				panel.element.style.display = display;
 				Cookie.write('toolbarDisplay', display);
 			}
 		}
 		toolbarHidden = !toolbarHidden;
-		return true;
+		return false;
 	};
 /**
  * Toggle a panel
@@ -182,14 +188,71 @@ var DebugKit = function(id) {
 		return false;
 	};
 /**
+ * Activate history panel.
+ * adds events to all the button
+ */	
+	this.activatehistory = function(panel) {
+		var anchors = panel.element.getElementsByTagName('A'),
+			historyLinks = [];
+			
+		for (var i in anchors) {
+			var button = anchors[i];
+			if (button.className && button.className.match(/history-link/)) {
+				historyLinks.push(button);
+			}
+		}
+		for (var i in historyLinks) {
+			var button = historyLinks[i];
+
+			Util.addEvent(button, 'click', function (event) {
+				event.preventDefault();
+				var id = this.hash.replace(/^#/, '');
+				for (var i in historyLinks) {
+					historyLinks[i].className = historyLinks[i].className.replace(/ ?(active) ?/, '');
+				}
+				this.className = this.className.replace(/^(.*)$/, '$1 active');
+				
+				//hide all panel-content-data
+				for (var i in panels) {
+					if (!panels[i].content) {
+						continue;
+					}
+					var curPanel = panels[i].content;
+					var panelDivs = curPanel.getElementsByTagName('DIV');
+					for (var j in panelDivs) {
+						var panelData = panelDivs[j];
+						if (panelData.className && panelData.className.match(/panel-content-data/)) {
+							panelData.style.display = 'none';
+						}
+						var regex = new RegExp('panel-content' + id);
+						if (panelData.className && panelData.className.match(regex)) {
+							panelData.style.display = 'block';
+							var panelWrapper = panelData.parentNode;
+							if (!panelData.parentNode.className.match(/panel-history-active/)) {
+								var newClass = panelWrapper.className.replace(/^(.*)$/, '$1 panel-history-active');
+								panelWrapper.className = newClass;
+							}
+						}
+					}
+					if (id == 0) {
+						console.log(panels[i].content.className);
+						var newClass = panels[i].content.className.replace(/ ?(panel-history-active) ?/, '');
+						console.log(newClass);
+						panels[i].content.className = newClass;
+					}
+				}
+			});
+		}
+	};
+/**
  * Add neat array functionality.
  */
-	function neatArray(list) {
+	var neatArray = function(list) {
 		if (!list.className.match(/depth-0/)) {
 			var item = list.parentNode;
 			list.style.display = 'none';
 			item.className = (item.className || '').replace(/^(.*)$/, '$1 expandable collapsed');
-			item.onclick = function(event) {
+			Util.addEvent(item, 'click', function(event) {
 				//var element = (event === undefined)? this: event.target;
 				var element = this,
 					event = event || window.event,
@@ -207,22 +270,11 @@ var DebugKit = function(id) {
 					event.cancelBubble = true;
 				}
 				return false;
-			}
+			});
 		}
 	}
-
 	this.initialize(id);
 }
-
-DebugKit.install = function() {
-	var initializer = window.onload || function() {};
-	window.onload = function() {
-		initializer();
-		// makes DebugKit a singletone instance
-		window.DebugKit = new DebugKit();
-	}
-}
-
 
 /** 
  * Utility functions for debugKit Js
@@ -265,7 +317,7 @@ DebugKit.Util.Cookie = function() {
 /**
  * Delete a cookie by name.
  */
-	this.delete = function (name) {
+	this.del = function (name) {
 		var date = new Date();
 		date.setFullYear(2000,0,1);
 		var expires = " ; expires=" + date.toGMTString();
@@ -273,5 +325,51 @@ DebugKit.Util.Cookie = function() {
 	}
 }
 
+/**
+ * Cross browser domready handler.
+ *
+ */
+DebugKit.Util.domready = function(callback) {
+	if (document.addEventListener) {
+		return document.addEventListener("DOMContentLoaded", callback, false);
+	}
 
-DebugKit.install();
+	if (document.all && !window.opera){ 
+		//Define a "blank" external JavaScript tag
+		document.write('<script type="text/javascript" id="domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
+		var contentloadtag = document.getElementById("domreadywatcher")
+		contentloadtag.onreadystatechange = function(){
+			if (this.readyState == "complete") {
+				callback();
+			}
+		}
+		return;
+	}
+
+	if (/Webkit/i.test(navigator.userAgent)){
+		var _timer = setInterval(function(){
+		if (/loaded|complete/.test(document.readyState)) {
+			clearInterval(_timer)
+			callback();
+		}}, 10);
+	}
+}
+/**
+ * Cross browser event registration.
+ */
+DebugKit.Util.addEvent = function(element, type, handler, capture) {
+	capture = (capture == undefined) ? false : capture;
+	if (element.addEventListener) {
+		return element.addEventListener(type, handler, capture);
+	}
+	if (element.attachEvent) {
+		type = 'on' + type;
+		return element.attachEvent(type, handler);
+	}
+	return obj['on' + type] = handler;
+}
+
+
+DebugKit.Util.domready(function() {
+	window.DebugKit = new DebugKit();
+});

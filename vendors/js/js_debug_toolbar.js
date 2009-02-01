@@ -37,7 +37,7 @@ var DebugKit = function(id) {
 		elements.toolbar = document.getElementById(id || 'debug-kit-toolbar');
 
 		if (elements.toolbar === undefined) {
-			throw new Exception('Toolbar not found, make sure you loaded it.');
+			throw('Toolbar not found, make sure you loaded it.');
 		}
 
 		for (var i in elements.toolbar.childNodes) {
@@ -63,6 +63,7 @@ var DebugKit = function(id) {
 			}
 			++index;
 		}
+		
 		this.deactivatePanel(true);
 		if (Cookie.read('toolbarDisplay') == 'none') {
 			toolbarHidden = true;
@@ -74,7 +75,7 @@ var DebugKit = function(id) {
  */
 	this.addPanel = function(tab, callback) {
 		if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
-			throw new Exception('Toolbar not found, make sure you loaded it.');
+			throw('Toolbar not found, make sure you loaded it.');
 		}
 		var panel = {
 			id : false,
@@ -95,7 +96,7 @@ var DebugKit = function(id) {
 			}
 		}
 		if (!panel.id) {
-			throw new Exception('invalid element');
+			throw('invalid element');
 		}
 
 		if (panel.button.id && panel.button.id === 'hide-toolbar') {
@@ -123,16 +124,16 @@ var DebugKit = function(id) {
  * Hide/show the toolbar (minimize cake)
  */	
 	this.toggleToolbar = function() {
+		var display = toolbarHidden ? 'block' : 'none';
 		for (var i in panels) {
-			var panel = panels[i],
-				display = toolbarHidden ? 'none' : 'block';
-			if (panel.content !== undefined) {
+			var panel = panels[i];
+			if (panel.content != undefined) {
 				panel.element.style.display = display;
 				Cookie.write('toolbarDisplay', display);
 			}
 		}
 		toolbarHidden = !toolbarHidden;
-		return true;
+		return false;
 	};
 /**
  * Toggle a panel
@@ -184,7 +185,7 @@ var DebugKit = function(id) {
 /**
  * Add neat array functionality.
  */
-	function neatArray(list) {
+	var neatArray = function(list) {
 		if (!list.className.match(/depth-0/)) {
 			var item = list.parentNode;
 			list.style.display = 'none';

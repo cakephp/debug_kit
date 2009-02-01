@@ -28,6 +28,21 @@
  */
 $timers = DebugKitDebugger::getTimers();
 ?>
+<h2><?php __('Memory'); ?></h2>
+<div class="current-mem-use">
+	<?php echo $toolbar->message(
+		__('Current Memory Use',true),
+		$number->toReadableSize(DebugKitDebugger::getMemoryUse())
+	);?>
+</div>
+<div class="peak-mem-use">
+<?php
+	echo $toolbar->message(
+		__('Peak Memory Use', true),
+		$number->toReadableSize(DebugKitDebugger::getPeakMemoryUse())
+	);
+?></div>
+
 <h2><?php __('Timers'); ?></h2>
 <div class="request-time">
 	<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision(DebugKitDebugger::requestTime(), 6)); ?>

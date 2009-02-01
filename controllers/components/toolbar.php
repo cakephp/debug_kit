@@ -45,7 +45,7 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'memory', 'variables');
+	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
 /**
  * Loaded panel objects.
  *
@@ -424,27 +424,6 @@ class TimerPanel extends DebugPanel {
 		}
 		if (!in_array('SimpleGraph', $controller->helpers)) {
 			$controller->helpers[] = 'DebugKit.SimpleGraph';
-		}
-	}
-}
-
-/**
- * Memory Panel
- *
- * Provides debug information on the memory consumption.
- *
- * @package       cake.debug_kit.panels
- **/
-class MemoryPanel extends DebugPanel {
-	var $plugin = 'debug_kit';
-/**
- * startup - add in necessary helpers
- *
- * @return void
- **/
-	function startup(&$controller) {
-		if (!in_array('Number', $controller->helpers)) {
-			$controller->helpers[] = 'Number';
 		}
 	}
 }

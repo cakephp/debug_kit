@@ -27,8 +27,7 @@
  */
 
 var DebugKit = function (id) {
-	var undefined,
-		elements = {},
+	var elements = {},
 		panels = {},
 		toolbarHidden = false,
 		Cookie = new DebugKit.Util.Cookie(),
@@ -36,40 +35,43 @@ var DebugKit = function (id) {
 		Element = DebugKit.Util.Element;
 
 	this.initialize = function (id) {
+		var i, element, lists, index;
 		elements.toolbar = document.getElementById(id || 'debug-kit-toolbar');
 
 		if (elements.toolbar === undefined) {
 			throw('Toolbar not found, make sure you loaded it.');
 		}
+		
 
-		for (var i in elements.toolbar.childNodes) {
-			var element = elements.toolbar.childNodes[i];
+		for (i in elements.toolbar.childNodes) {
+			element = elements.toolbar.childNodes[i];
 			if (element.nodeName && element.id === 'panel-tabs') {
 				elements.panel = element;
 				break;
 			}
 		}
 
-		for (var i in elements.panel.childNodes) {
-			var element = elements.panel.childNodes[i];
+		for (i in elements.panel.childNodes) {
+			element = elements.panel.childNodes[i];
 			if (Element.hasClass(element, 'panel-tab')) {
 				this.addPanel(element);
 			}
 		}
 
-		var lists = document.getElementsByTagName('ul'), index = 0;
-		while (lists[index] !== undefined) {
-			var element = lists[index];
+		lists = document.getElementsByTagName('ul');
+		i = 0;
+		while (lists[i] !== undefined) {
+			element = lists[i];
 			if (Element.hasClass(element, 'neat-array')) {
 				neatArray(element);
 			}
-			++index;
+			++i;
 		}
 		
 		this.deactivatePanel(true);
 		if (Cookie.read('toolbarDisplay') == 'none') {
 			toolbarHidden = true;
-			this.toggleToolbar()
+			this.toggleToolbar();
 		}
 	}
 /**
@@ -112,16 +114,16 @@ var DebugKit = function (id) {
 
 		if (panel.callback !== undefined) {
 			Util.addEvent(panel.button, 'click', function(event) {
-				event || window.event;
+				event = event || window.event;
 				event.preventDefault();
 				return panel.callback();
 			});
 		} else {
 			Util.addEvent(panel.button, 'click', function(event) {
-				event || window.event;
+				event = event || window.event;
 				event.preventDefault();
 				return window.DebugKit.togglePanel(panel.id);
-			})
+			});
 		}
 		panels[panel.id] = panel;
 		return panel.id;
@@ -133,7 +135,7 @@ var DebugKit = function (id) {
 		var display = toolbarHidden ? 'block' : 'none';
 		for (var i in panels) {
 			var panel = panels[i];
-			if (panel.content != undefined) {
+			if (panel.content !== undefined) {
 				panel.element.style.display = display;
 				Cookie.write('toolbarDisplay', display);
 			}
@@ -151,7 +153,7 @@ var DebugKit = function (id) {
 			this.deactivatePanel(true);
 			this.activatePanel(id);
 		}
-	}
+	};
 /**
  * Make a panel active.
  */
@@ -194,50 +196,54 @@ var DebugKit = function (id) {
  */	
 	this.activatehistory = function (panel) {
 		var anchors = panel.element.getElementsByTagName('A'),
-			historyLinks = [];
+			historyLinks = [], 
+			i = 0, j =0, 
+			button;
 			
-		for (var i in anchors) {
-			var button = anchors[i];
+		for (i in anchors) {
+			button = anchors[i];
 			if (Element.hasClass(button, 'history-link')) {
 				historyLinks.push(button);
 			}
 		}
-		for (var i in historyLinks) {
-			var button = historyLinks[i];
 
-			Util.addEvent(button, 'click', function (event) {
-				event.preventDefault();
-				var id = this.hash.replace(/^#/, '');
-				for (var i in historyLinks) {
-					Element.removeClass(historyLinks[i], 'active');
+		var handleHistoryLink = function (event) {
+			event.preventDefault();
+			var id = this.hash.replace(/^#/, '');
+			for (i in historyLinks) {
+				Element.removeClass(historyLinks[i], 'active');
+			}
+			Element.addClass(this, 'active');
+			
+			//hide all panel-content-data
+			for (i in panels) {
+				if (!panels[i].content) {
+					continue;
 				}
-				Element.addClass(this, 'active');
-				
-				//hide all panel-content-data
-				for (var i in panels) {
-					if (!panels[i].content) {
-						continue;
+				var curPanel = panels[i].content;
+				var panelDivs = curPanel.getElementsByTagName('DIV');
+				for (j in panelDivs) {
+					var panelData = panelDivs[j];
+					if (Element.hasClass(panelData, 'panel-content-data')) {
+						Element.hide(panelData);
 					}
-					var curPanel = panels[i].content;
-					var panelDivs = curPanel.getElementsByTagName('DIV');
-					for (var j in panelDivs) {
-						var panelData = panelDivs[j];
-						if (Element.hasClass(panelData, 'panel-content-data')) {
-							Element.hide(panelData);
+					if (Element.hasClass(panelData, 'panel-content' + id)) {
+						Element.show(panelData);
+						var panelWrapper = panelData.parentNode;
+						if (!Element.hasClass(panelWrapper, 'panel-history-active')) {
+							Element.addClass(panelWrapper, 'panel-history-active');
 						}
-						if (Element.hasClass(panelData, 'panel-content' + id)) {
-							Element.show(panelData);
-							var panelWrapper = panelData.parentNode;
-							if (!Element.hasClass(panelWrapper, 'panel-history-active')) {
-								Element.addClass(panelWrapper, 'panel-history-active');
-							}
-						}
-					}
-					if (id == 0) {
-						Element.removeClass(panels[i].content, 'panel-history-active');
 					}
 				}
-			});
+				if (id == 0) {
+					Element.removeClass(panels[i].content, 'panel-history-active');
+				}
+			}
+		};
+
+		for (i in historyLinks) {
+			button = historyLinks[i];
+			Util.addEvent(button, 'click', handleHistoryLink);
 		}
 	};
 /**
@@ -270,7 +276,7 @@ var DebugKit = function (id) {
 		}
 	}
 	this.initialize(id);
-}
+};
 
 /** 
  * Utility functions for debugKit Js
@@ -290,7 +296,7 @@ DebugKit.Util.Cookie = function() {
 		var expires = "; expires=" + date.toGMTString();
 		document.cookie = name + "=" + value + expires + "; path=/";
 		return true;
-	}
+	};
 /**
  * Read from the cookie
  * @param [string] name Name of cookie to read.
@@ -305,11 +311,11 @@ DebugKit.Util.Cookie = function() {
 				chips = chips.substring(1, chips.length);
 			}
 			if (chips.indexOf(name) == 0) {
-				return chips.substring(name.length, chips.length)
+				return chips.substring(name.length, chips.length);
 			}
 		}
 		return false;
-	}
+	};
 /**
  * Delete a cookie by name.
  */
@@ -318,8 +324,8 @@ DebugKit.Util.Cookie = function() {
 		date.setFullYear(2000,0,1);
 		var expires = " ; expires=" + date.toGMTString();
 		document.cookie = name + "=" + expires + "; path=/";
-	}
-}
+	};
+};
 
 /**
  * Cross browser domready handler.
@@ -330,40 +336,42 @@ DebugKit.Util.domready = function(callback) {
 		return document.addEventListener("DOMContentLoaded", callback, false);
 	}
 
-	if (document.all && !window.opera){ 
+	if (document.all && !window.opera) { 
 		//Define a "blank" external JavaScript tag
 		document.write('<script type="text/javascript" id="domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
-		var contentloadtag = document.getElementById("domreadywatcher")
-		contentloadtag.onreadystatechange = function(){
+		var contentloadtag = document.getElementById("domreadywatcher");
+		contentloadtag.onreadystatechange = function (){
 			if (this.readyState == "complete") {
 				callback();
 			}
-		}
+		};
 		return;
 	}
 
 	if (/Webkit/i.test(navigator.userAgent)){
-		var _timer = setInterval(function(){
-		if (/loaded|complete/.test(document.readyState)) {
-			clearInterval(_timer)
-			callback();
-		}}, 10);
+		var _timer = setInterval(function (){
+			if (/loaded|complete/.test(document.readyState)) {
+				clearInterval(_timer);
+				callback();
+			}
+		}, 10);
 	}
-}
+};
 /**
  * Cross browser event registration.
  */
 DebugKit.Util.addEvent = function(element, type, handler, capture) {
-	capture = (capture == undefined) ? false : capture;
+	capture = (capture === undefined) ? false : capture;
 	if (element.addEventListener) {
-		return element.addEventListener(type, handler, capture);
-	}
-	if (element.attachEvent) {
+		element.addEventListener(type, handler, capture);
+	} else if (element.attachEvent) {
 		type = 'on' + type;
-		return element.attachEvent(type, handler);
+		element.attachEvent(type, handler);
+	} else {
+		type = 'on' + type;
+		obj[type] = handler;
 	}
-	return obj['on' + type] = handler;
-}
+};
 /**
  * Simple Element manipulation shortcuts.
  */
@@ -392,7 +400,7 @@ DebugKit.Util.Element = {
 	hide : function (element) {
 		element.style.display = 'none';
 	}
-}
+};
 
 
 DebugKit.Util.domready(function() {

@@ -26,15 +26,16 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-var DebugKit = function(id) {
+var DebugKit = function (id) {
 	var undefined,
 		elements = {},
 		panels = {},
 		toolbarHidden = false,
 		Cookie = new DebugKit.Util.Cookie(),
-		Util = DebugKit.Util;
+		Util = DebugKit.Util,
+		Element = DebugKit.Util.Element;
 
-	this.initialize = function(id) {
+	this.initialize = function (id) {
 		elements.toolbar = document.getElementById(id || 'debug-kit-toolbar');
 
 		if (elements.toolbar === undefined) {
@@ -51,7 +52,7 @@ var DebugKit = function(id) {
 
 		for (var i in elements.panel.childNodes) {
 			var element = elements.panel.childNodes[i];
-			if (element.className && element.className.match(/panel-tab/)) {
+			if (Element.hasClass(element, 'panel-tab')) {
 				this.addPanel(element);
 			}
 		}
@@ -59,7 +60,7 @@ var DebugKit = function(id) {
 		var lists = document.getElementsByTagName('ul'), index = 0;
 		while (lists[index] !== undefined) {
 			var element = lists[index];
-			if (element.className && element.className.match(/neat-array/)) {
+			if (Element.hasClass(element, 'neat-array')) {
 				neatArray(element);
 			}
 			++index;
@@ -74,7 +75,7 @@ var DebugKit = function(id) {
 /**
  * Add a panel to the toolbar
  */
-	this.addPanel = function(tab, callback) {
+	this.addPanel = function (tab, callback) {
 		if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
 			throw('Toolbar not found, make sure you loaded it.');
 		}
@@ -128,7 +129,7 @@ var DebugKit = function(id) {
 /**
  * Hide/show the toolbar (minimize cake)
  */	
-	this.toggleToolbar = function() {
+	this.toggleToolbar = function () {
 		var display = toolbarHidden ? 'block' : 'none';
 		for (var i in panels) {
 			var panel = panels[i];
@@ -143,7 +144,7 @@ var DebugKit = function(id) {
 /**
  * Toggle a panel
  */
-	this.togglePanel = function(id) {
+	this.togglePanel = function (id) {
 		if (panels[id] && panels[id].active) {
 			this.deactivatePanel(true);
 		} else {
@@ -154,13 +155,13 @@ var DebugKit = function(id) {
 /**
  * Make a panel active.
  */
-	this.activatePanel = function(id, unique) {
+	this.activatePanel = function (id, unique) {
 		if (panels[id] !== undefined && !panels[id].active) {
 			var panel = panels[id];
 			if (panel.content !== undefined) {
-				panel.content.style.display = 'block';
+				Element.show(panel.content);
 			}
-			panel.button.className = panel.button.className.replace(/^(.*)$/, '$1 active');
+			Element.addClass(panel.button, 'active');
 			panel.active = true;
 			return true;
 		}
@@ -169,7 +170,7 @@ var DebugKit = function(id) {
 /**
  * Deactivate a panel.  use true to hide all panels.
  */
-	this.deactivatePanel = function(id) {
+	this.deactivatePanel = function (id) {
 		if (id === true) {
 			for (var i in panels) {
 				this.deactivatePanel(i);
@@ -179,9 +180,9 @@ var DebugKit = function(id) {
 		if (panels[id] !== undefined) {
 			var panel = panels[id];
 			if (panel.content !== undefined) {
-				panel.content.style.display = 'none';
+				Element.hide(panel.content);
 			}
-			panel.button.className = panel.button.className.replace(/ ?(active) ?/, '');
+			Element.removeClass(panel.button, 'active');
 			panel.active = false;
 			return true;
 		}
@@ -191,13 +192,13 @@ var DebugKit = function(id) {
  * Activate history panel.
  * adds events to all the button
  */	
-	this.activatehistory = function(panel) {
+	this.activatehistory = function (panel) {
 		var anchors = panel.element.getElementsByTagName('A'),
 			historyLinks = [];
 			
 		for (var i in anchors) {
 			var button = anchors[i];
-			if (button.className && button.className.match(/history-link/)) {
+			if (Element.hasClass(button, 'history-link')) {
 				historyLinks.push(button);
 			}
 		}
@@ -208,9 +209,9 @@ var DebugKit = function(id) {
 				event.preventDefault();
 				var id = this.hash.replace(/^#/, '');
 				for (var i in historyLinks) {
-					historyLinks[i].className = historyLinks[i].className.replace(/ ?(active) ?/, '');
+					Element.removeClass(historyLinks[i], 'active');
 				}
-				this.className = this.className.replace(/^(.*)$/, '$1 active');
+				Element.addClass(this, 'active');
 				
 				//hide all panel-content-data
 				for (var i in panels) {
@@ -221,24 +222,19 @@ var DebugKit = function(id) {
 					var panelDivs = curPanel.getElementsByTagName('DIV');
 					for (var j in panelDivs) {
 						var panelData = panelDivs[j];
-						if (panelData.className && panelData.className.match(/panel-content-data/)) {
-							panelData.style.display = 'none';
+						if (Element.hasClass(panelData, 'panel-content-data')) {
+							Element.hide(panelData);
 						}
-						var regex = new RegExp('panel-content' + id);
-						if (panelData.className && panelData.className.match(regex)) {
-							panelData.style.display = 'block';
+						if (Element.hasClass(panelData, 'panel-content' + id)) {
+							Element.show(panelData);
 							var panelWrapper = panelData.parentNode;
-							if (!panelData.parentNode.className.match(/panel-history-active/)) {
-								var newClass = panelWrapper.className.replace(/^(.*)$/, '$1 panel-history-active');
-								panelWrapper.className = newClass;
+							if (!Element.hasClass(panelWrapper, 'panel-history-active')) {
+								Element.addClass(panelWrapper, 'panel-history-active');
 							}
 						}
 					}
 					if (id == 0) {
-						console.log(panels[i].content.className);
-						var newClass = panels[i].content.className.replace(/ ?(panel-history-active) ?/, '');
-						console.log(newClass);
-						panels[i].content.className = newClass;
+						Element.removeClass(panels[i].content, 'panel-history-active');
 					}
 				}
 			});
@@ -247,22 +243,22 @@ var DebugKit = function(id) {
 /**
  * Add neat array functionality.
  */
-	var neatArray = function(list) {
+	function neatArray(list) {
 		if (!list.className.match(/depth-0/)) {
 			var item = list.parentNode;
-			list.style.display = 'none';
-			item.className = (item.className || '').replace(/^(.*)$/, '$1 expandable collapsed');
-			Util.addEvent(item, 'click', function(event) {
+			Element.hide(list);
+			Element.addClass(item, 'expandable collapsed');
+			Util.addEvent(item, 'click', function (event) {
 				//var element = (event === undefined)? this: event.target;
 				var element = this,
 					event = event || window.event,
 					act = Boolean(item === element),
 					hide = Boolean(list.style.display === 'block');
 				if (act && hide) {
-					list.style.display = 'none';
+					Element.hide(list);
 					item.className = item.className.replace(/expanded|$/, 'collapsed');
 				} else if (act) {
-					list.style.display = 'block';
+					Element.show(list);
 					item.className = item.className.replace('collapsed', 'expanded');
 				}
 				
@@ -367,6 +363,35 @@ DebugKit.Util.addEvent = function(element, type, handler, capture) {
 		return element.attachEvent(type, handler);
 	}
 	return obj['on' + type] = handler;
+}
+/**
+ * Simple Element manipulation shortcuts.
+ */
+DebugKit.Util.Element = {
+	hasClass : function (element, className) {
+		if (!element.className) {
+			return false;
+		}
+		return element.className.match(new RegExp(className));
+	},
+	addClass : function (element, className) {
+		if (!element.className) {
+			element.className = '';
+		}
+		element.className = element.className.replace(/^(.*)$/, '$1 ' + className);
+	},
+	removeClass : function (element, className) {
+		if (!element.className) {
+			return false;
+		} 
+		element.className = element.className.replace(new RegExp(' ?(' + className +') ?'), '');
+	},
+	show : function (element) {
+		element.style.display = 'block';
+	},
+	hide : function (element) {
+		element.style.display = 'none';
+	}
 }
 
 

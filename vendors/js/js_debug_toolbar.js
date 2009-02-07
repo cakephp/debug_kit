@@ -369,7 +369,7 @@ DebugKit.Util.addEvent = function(element, type, handler, capture) {
 		element.attachEvent(type, handler);
 	} else {
 		type = 'on' + type;
-		obj[type] = handler;
+		element[type] = handler;
 	}
 };
 /**

@@ -7,6 +7,7 @@
 	height: 1%;
 	overflow: visible;
 	z-index:10000;
+	font-family: helvetica, arial, sans-serif;
 }
 /* panel tabs */
 #debug-kit-toolbar #panel-tabs {
@@ -85,25 +86,38 @@
 	border-top: 1px dashed #6c6cff;
 	border-bottom: 1px dashed #6c6cff;
 }
+#debug-kit-toolbar h1,
+#debug-kit-toolbar h2,
+#debug-kit-toolbar h3,
+#debug-kit-toolbar h4,
+#debug-kit-toolbar h5,
+#debug-kit-toolbar th {
+	font-family: "Trebuchet MS", trebuchet, helvetica, arial, sans-serif;
+	margin-bottom:0.6em;
+}
 
 /* panel tables */
-table.debug-table {
+#debug-kit-toolbar table.debug-table {
 	width: auto;
 	border: 0;
 }
-table.debug-table td,
-table.debug-table th {
+#debug-kit-toolbar table.debug-table td,
+#debug-kit-toolbar table.debug-table th {
 	text-align: left;
 	border: 0;
 	padding: 3px;
 }
-table.debug-table th {
+#debug-kit-toolbar table.debug-table th {
 	border-bottom: 1px solid #222;
 	background: 0;;
 }
-table.debug-table tr.even td {
-	background:#efefef;
+#debug-kit-toolbar table.debug-table tr:nth-child(2n+1) td {
+	background:#f6f6f6;
 }
+#debug-kit-toolbar table.debug-table tr.even td {
+	background:#f7f7f7;
+}
+
 
 /** code tables **/
 #debug-kit-toolbar .code-table td {
@@ -123,14 +137,21 @@ table.debug-table tr.even td {
 
 
 /** Neat Array styles **/
+#debug-kit-toolbar .neat-array,
+#debug-kit-toolbar .neat-array li {
+	list-style:none;
+	list-style-image:none;
+}
 .neat-array {
 	padding: 1px 2px 1px 20px;
 	background: #CE9E23;
 	list-style: none;
-	margin: 0;
+	margin: 0 0 1em 0;
 }
 .neat-array .neat-array {
 	padding: 0 0 0 20px;
+	margin:0;
+	border-top:1px solid #CE9E23;
 }
 .neat-array li {
 	background: #FEF6E5;
@@ -150,6 +171,9 @@ table.debug-table tr.even td {
 .neat-array li.expandable {
 	cursor: pointer;
 }
+.neat-array .expanded {
+	border-bottom:0;
+}
 .neat-array li.expandable.expanded > strong:before {
 	content: 'v ';
 }
@@ -157,7 +181,6 @@ table.debug-table tr.even td {
 .neat-array li.expandable.expanded .expandable.collapsed > strong:before {
 	content: '> ';
 }
-
 .neat-array li {
 	cursor: default;
 }
@@ -165,13 +188,14 @@ table.debug-table tr.even td {
 #debug-kit-toolbar .debug-kit-graph-bar,
 #debug-kit-toolbar .debug-kit-graph-bar-value {
 	margin: 0;
-	padding: 0;
+	padding: 0px;
 	border: none;
 	overflow: hidden;
 	height: 10px;
 }
 #debug-kit-toolbar .debug-kit-graph-bar {
-	background-color: #ccc;
+	background-color: #ddd;
+	padding:2px;
 }
 #debug-kit-toolbar .debug-kit-graph-bar-value {
 	background-color: #CE9E23;

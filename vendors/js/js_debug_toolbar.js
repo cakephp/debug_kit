@@ -329,7 +329,6 @@ DebugKit.Util.Cookie = function() {
 
 /**
  * Cross browser domready handler.
- *
  */
 DebugKit.Util.domready = function(callback) {
 	if (document.addEventListener) {
@@ -357,6 +356,7 @@ DebugKit.Util.domready = function(callback) {
 		}, 10);
 	}
 };
+
 /**
  * Cross browser event registration.
  */
@@ -372,6 +372,7 @@ DebugKit.Util.addEvent = function(element, type, handler, capture) {
 		element[type] = handler;
 	}
 };
+
 /**
  * Simple Element manipulation shortcuts.
  */
@@ -401,8 +402,110 @@ DebugKit.Util.Element = {
 		element.style.display = 'none';
 	}
 };
+/**
+ * Object merge takes any number of arguments and glues them together
+ * @param [Object] one first object
+ * @return object 
+ */
+DebugKit.merge = function() {
+	var out = {};
+	for (var i = 0; i < arguments.length; i++) {
+		var current = arguments[i];
+		for (prop in current) {
+			out[prop] = current[prop];
+		}
+	}
+	return out;
+};
+
+/**
+ * Simple wrapper for XmlHttpRequest objects.
+ * 
+ */
+DebugKit.Util.Request = function (options) {
+	var _defaults = {
+		onComplete : function (){},
+		onRequest : function (){},
+		onFail : function (){},
+		method : 'POST',
+		async : true,
+	};
+
+	var self = this;
+	this.options = DebugKit.merge(_defaults, options);
+	this.options.method = this.options.method.toUpperCase();
+
+	var ajax = this.createObj();
+	this.transport = ajax;
+
+	//event assignment
+	this.onComplete = options.onComplete;
+	this.onRequest = options.onRequest;
+	this.onFail = options.onFail;
+
+	this.send = function (url, data) {
+		if (this.options.method == 'GET' && data) {
+			url = url + ( (url.charAt(url.length -1) == '?') ? '&' : '?') + data; //check for ? at the end of the string
+			data = null;
+		}
+		//open connection
+		this.transport.open(this.options.method, url, this.options.async);
+		//set statechange and pass the active XHR object to it.  From here it handles all status changes.
+		this.transport.onreadystatechange = function () {
+			return function () {
+				self.onReadyStateChange.apply(self, arguments);
+			}
+		}
+		this.onRequest();
+		this.transport.send(data);
+	}
+};
+DebugKit.Util.Request.prototype.onReadyStateChange = function (){
+	if (this.transport.readyState !== 4) {
+		return;
+	}
+	if (this.transport.status == 200 || this.transport.status > 300 && this.transport.status < 400 ) {
+		this.response = { 
+			xml: this.transport.responseXML,
+			text: this.transport.responseText
+		};
+		
+		if (typeof this.onComplete == 'function') {
+			this.onComplete.apply(this, this.response);
+		} else {
+			return this.response;
+		}
+	} else if (this.transport.status > 400) {
+		if (typeof this.onFail == 'function') {
+			this.onFail.apply(this);
+		} else {
+			console.error('request failed');
+		}
+	}
+};
+/*
+* Creates cross-broswer XHR object used for requests
+*/
+DebugKit.Util.Request.prototype.createObj = function(){
+	var request = null;
+	try {
+		request = new XMLHttpRequest();
+	} catch(MS) {
+		try {
+			request = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch(old_MS) {
+			try {
+				request = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch(failure) {
+				request = null
+			}
+		}
+	}
+	return request;
+};
 
 
 DebugKit.Util.domready(function() {
 	window.DebugKit = new DebugKit();
+	testXHR();
 });

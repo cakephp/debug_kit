@@ -73,6 +73,7 @@ var DebugKit = function (id) {
 			toolbarHidden = true;
 			this.toggleToolbar();
 		}
+		return this;
 	}
 /**
  * Add a panel to the toolbar
@@ -427,7 +428,7 @@ DebugKit.Util.Request = function (options) {
 		onComplete : function (){},
 		onRequest : function (){},
 		onFail : function (){},
-		method : 'POST',
+		method : 'GET',
 		async : true,
 	};
 
@@ -452,14 +453,13 @@ DebugKit.Util.Request = function (options) {
 		this.transport.open(this.options.method, url, this.options.async);
 		//set statechange and pass the active XHR object to it.  From here it handles all status changes.
 		this.transport.onreadystatechange = function () {
-			return function () {
-				self.onReadyStateChange.apply(self, arguments);
-			}
+			self.onReadyStateChange.apply(self, arguments);
 		}
 		this.onRequest();
 		this.transport.send(data);
 	}
 };
+
 DebugKit.Util.Request.prototype.onReadyStateChange = function (){
 	if (this.transport.readyState !== 4) {
 		return;
@@ -471,21 +471,21 @@ DebugKit.Util.Request.prototype.onReadyStateChange = function (){
 		};
 		
 		if (typeof this.onComplete == 'function') {
-			this.onComplete.apply(this, this.response);
+			this.onComplete.apply(this, [this, this.response]);
 		} else {
 			return this.response;
 		}
 	} else if (this.transport.status > 400) {
 		if (typeof this.onFail == 'function') {
-			this.onFail.apply(this);
+			this.onFail.apply(this, []);
 		} else {
 			console.error('request failed');
 		}
 	}
 };
-/*
-* Creates cross-broswer XHR object used for requests
-*/
+/**
+ * Creates cross-broswer XHR object used for requests
+ */
 DebugKit.Util.Request.prototype.createObj = function(){
 	var request = null;
 	try {
@@ -506,6 +506,5 @@ DebugKit.Util.Request.prototype.createObj = function(){
 
 
 DebugKit.Util.domready(function() {
-	window.DebugKit = new DebugKit();
-	testXHR();
+	window.debugkit = new DebugKit();
 });

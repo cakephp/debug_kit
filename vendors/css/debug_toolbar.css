@@ -94,6 +94,7 @@
 #debug-kit-toolbar th {
 	font-family: "Trebuchet MS", trebuchet, helvetica, arial, sans-serif;
 	margin-bottom:0.6em;
+	background:none;
 }
 
 /* panel tables */

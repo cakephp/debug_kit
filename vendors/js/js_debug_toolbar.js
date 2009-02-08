@@ -123,7 +123,7 @@ var DebugKit = function (id) {
 			Util.addEvent(panel.button, 'click', function(event) {
 				event = event || window.event;
 				event.preventDefault();
-				return window.DebugKit.togglePanel(panel.id);
+				return DebugKit.togglePanel(panel.id);
 			});
 		}
 		panels[panel.id] = panel;
@@ -423,7 +423,7 @@ DebugKit.merge = function() {
  * Simple wrapper for XmlHttpRequest objects.
  * 
  */
-DebugKit.Util.Request = function (options) {
+DebugKit.Request = function (options) {
 	var _defaults = {
 		onComplete : function (){},
 		onRequest : function (){},
@@ -460,7 +460,7 @@ DebugKit.Util.Request = function (options) {
 	}
 };
 
-DebugKit.Util.Request.prototype.onReadyStateChange = function (){
+DebugKit.Request.prototype.onReadyStateChange = function (){
 	if (this.transport.readyState !== 4) {
 		return;
 	}
@@ -486,7 +486,7 @@ DebugKit.Util.Request.prototype.onReadyStateChange = function (){
 /**
  * Creates cross-broswer XHR object used for requests
  */
-DebugKit.Util.Request.prototype.createObj = function(){
+DebugKit.Request.prototype.createObj = function(){
 	var request = null;
 	try {
 		request = new XMLHttpRequest();
@@ -506,5 +506,5 @@ DebugKit.Util.Request.prototype.createObj = function(){
 
 
 DebugKit.Util.domready(function() {
-	window.debugkit = new DebugKit();
+	window.DebugKit = new DebugKit();
 });

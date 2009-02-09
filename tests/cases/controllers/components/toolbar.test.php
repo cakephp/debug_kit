@@ -29,8 +29,8 @@
 App::import('Component', 'DebugKit.Toolbar');
 
 class TestToolbarComponent extends ToolbarComponent {
-	function loadPanels($panels) {
-		$this->_loadPanels($panels);
+	function loadPanels($panels, $settings = array()) {
+		$this->_loadPanels($panels, $settings);
 	}
 }
 
@@ -126,7 +126,20 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
 	}
-
+/**
+ * Test that cache config generation works.
+ *
+ * @return void
+ **/
+	function testCacheConfigGeneration() {
+		$this->Controller->components = array('DebugKit.Toolbar');
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		
+		$results = Cache::config($this->Controller->Toolbar->cacheConfig);
+		$this->assertTrue(is_array($results));
+	}
 /**
  * Test Before Render callback
  *

@@ -67,11 +67,17 @@ class ToolbarComponent extends Object {
  **/
 	var $javascript = array();
 /**
- * how many historical requests to keep data for.
+ * Name of debugKit's cache file.
  *
- * @var int
+ * @var string
  **/  
-	var $history = 5;
+	var $cacheConfig = 'debug_kit_history';
+/**
+ * Duration of the debug kit history cache
+ *
+ * @var string
+ **/
+	var $cacheDuration = '+4 hours';
 /**
  * initialize
  *
@@ -95,13 +101,8 @@ class ToolbarComponent extends Object {
 			unset($settings['panels']);
 		}
 
-		if (isset($settings['history'])) {
-			$this->history = $settings['history'];
-		}
-
-		if (!$this->history) {
-			unset($settings['panels'][array_search('history', $settings['panels'])]);
-			$settings['panels'] = array_values($settings['panels']);
+		if (!isset($settings['history']) || (isset($settings['history']) && $settings['history'] !== false)) {
+			$this->_createCacheConfig();
 		}
     
 		if (isset($settings['javascript'])) {
@@ -150,7 +151,7 @@ class ToolbarComponent extends Object {
  **/
 	function beforeRedirect(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
-		$vars = $this->_gatherVars($controller);
+		$this->_gatherVars($controller);
 	}
 /**
  * beforeRender callback
@@ -165,6 +166,14 @@ class ToolbarComponent extends Object {
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
+	}
+/**
+ * Create the cache config for the history
+ *
+ * @return void
+ **/
+	function _createCacheConfig() {
+		Cache::config($this->cacheConfig, array('duration' => $this->cacheDuration, 'engine' => 'File'));
 	}
 /**
  * collects the panel contents
@@ -187,7 +196,7 @@ class ToolbarComponent extends Object {
 			$vars[$panelName]['plugin'] = $panel->plugin;
 			$vars[$panelName]['disableTimer'] = true;
 		}
-		$this->_setHistory($controller, $vars);
+		$this->_saveState($controller, $vars);
 		return $vars;
 	}
 
@@ -264,19 +273,15 @@ class ToolbarComponent extends Object {
 		}
 	}
 /**
- * setHistory save the current toolbar variables to the session
+ * Save the current state of the toolbar varibles to the cache file.
  *
  * @param object $controller Controller instance
  * @param array $vars Vars to save.
  * @access protected
  * @return void
  **/
-	function _setHistory(&$controller, $vars) {
-		if (!$this->history) {
-			return;
-		}
-
-		$historicalVars = $controller->Session->read('DebugToolbar.historicalVars');
+	function _saveState(&$controller, $vars) {
+	/*	$historicalVars = $controller->Session->read('DebugToolbar.historicalVars');
 
 		if (empty($historicalVars)) {
 			$historicalVars = array();
@@ -292,6 +297,7 @@ class ToolbarComponent extends Object {
 		
 		unset($historicalVars[0]);
 		$controller->set(array('debugToolbarPanelsHistory' => $historicalVars));
+	*/
 	}
 }
 
@@ -337,6 +343,31 @@ class DebugPanel extends Object {
  **/
 class HistoryPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+/**
+ * Number of history elements to keep
+ *
+ * @var string
+ **/
+	var $history = 5;
+/**
+ * Constructor
+ * 
+ * @param array $settings Array of settings.
+ * @return void
+ **/
+	function __construct($settings) {
+		if (isset($settings['history'])) {
+			$this->history = $settings['history'];
+		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ **/
+	function beforeRender(&$controller) {
+		//$controller->Toolbar->
+	}
 }
 
 /**
@@ -376,7 +407,6 @@ class SessionPanel extends DebugPanel {
  */
 	function beforeRender(&$controller) {
 		$sessions = $controller->Session->read();
-		unset($sessions['DebugToolbar']);
 		return $sessions;
 	}
 }

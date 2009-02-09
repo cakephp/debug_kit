@@ -151,7 +151,8 @@ class ToolbarComponent extends Object {
  **/
 	function beforeRedirect(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
-		$this->_gatherVars($controller);
+		$vars = $this->_gatherVars($controller);
+		$this->_saveState($controller, $vars);
 	}
 /**
  * beforeRender callback
@@ -163,6 +164,7 @@ class ToolbarComponent extends Object {
 	function beforeRender(&$controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
 		$vars = $this->_gatherVars($controller);
+		$this->_saveState($controller, $vars);
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
@@ -171,6 +173,7 @@ class ToolbarComponent extends Object {
  * Create the cache config for the history
  *
  * @return void
+ * @access protected
  **/
 	function _createCacheConfig() {
 		Cache::config($this->cacheConfig, array('duration' => $this->cacheDuration, 'engine' => 'File'));
@@ -196,10 +199,8 @@ class ToolbarComponent extends Object {
 			$vars[$panelName]['plugin'] = $panel->plugin;
 			$vars[$panelName]['disableTimer'] = true;
 		}
-		$this->_saveState($controller, $vars);
 		return $vars;
 	}
-
 /**
  * Load Panels used in the debug toolbar
  *
@@ -281,23 +282,20 @@ class ToolbarComponent extends Object {
  * @return void
  **/
 	function _saveState(&$controller, $vars) {
-	/*	$historicalVars = $controller->Session->read('DebugToolbar.historicalVars');
-
-		if (empty($historicalVars)) {
-			$historicalVars = array();
+		$config = Cache::config($this->cacheConfig);
+		if (empty($config) || !isset($this->panels['history'])) {
+			return;
 		}
-
-		if (count($historicalVars) > $this->history) {
-			array_pop($historicalVars);
+		$history = Cache::read('toolbar_history', $this->cacheConfig);
+		if (empty($history)) {
+			$history = array();
 		}
-
+		if (count($history) > $this->panels['history']->history) {
+			array_pop($history);
+		}
 		unset($vars['history']);
-		array_unshift($historicalVars, $vars);
-		$controller->Session->write('DebugToolbar.historicalVars', $historicalVars);
-		
-		unset($historicalVars[0]);
-		$controller->set(array('debugToolbarPanelsHistory' => $historicalVars));
-	*/
+		array_unshift($history, $vars);
+		Cache::write('toolbar_history', $history, $this->cacheConfig);
 	}
 }
 
@@ -361,12 +359,12 @@ class HistoryPanel extends DebugPanel {
 		}
 	}
 /**
- * undocumented function
+ * beforeRender callback function
  *
- * @return void
+ * @return array contents for panel
  **/
 	function beforeRender(&$controller) {
-		//$controller->Toolbar->
+		
 	}
 }
 

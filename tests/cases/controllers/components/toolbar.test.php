@@ -141,6 +141,26 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertTrue(is_array($results));
 	}
 /**
+ * test state saving of toolbar
+ *
+ * @return void
+ **/
+	function testStateSaving() {
+		$this->Controller->components = array('DebugKit.Toolbar');
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$configName = $this->Controller->Toolbar->cacheConfig;
+		
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->set('test', 'testing');
+		$this->Controller->Component->beforeRender($this->Controller);
+		
+		$result = Cache::read('toolbar_history', $configName);
+		debug($result);
+		$this->assertEqual($result[0]['variables']['content']['test'], 'testing');
+		Cache::delete('toolbar_history', $configName);
+	}
+/**
  * Test Before Render callback
  *
  * @return void

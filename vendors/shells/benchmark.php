@@ -52,11 +52,10 @@ class BenchmarkShell extends Shell {
 		$url = $this->args[0];
 		$defaults = array('t' => 100, 'n' => 10);
 		$options  = array_merge($defaults, $this->params);
-		$times = array();		
+		$times = array();
 		
 		$this->out(String::insert(__('-> Testing :url', true), compact('url')));
 		$this->out("");
-				
 		for ($i = 0; $i < $options['n']; $i++) {
 			if (floor($options['t'] - array_sum($times)) <= 0 || $options['n'] <= 1) {
 				break;

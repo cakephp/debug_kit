@@ -290,7 +290,7 @@ class ToolbarComponent extends Object {
 		if (empty($history)) {
 			$history = array();
 		}
-		if (count($history) > $this->panels['history']->history) {
+		if (count($history) == $this->panels['history']->history) {
 			array_pop($history);
 		}
 		unset($vars['history']);
@@ -364,7 +364,16 @@ class HistoryPanel extends DebugPanel {
  * @return array contents for panel
  **/
 	function beforeRender(&$controller) {
-		
+		$cacheConfig = $controller->Toolbar->cacheConfig;
+		$toolbarHistory = (array)Cache::read('toolbar_history', $cacheConfig);
+		$historyStates = array();
+		foreach ($toolbarHistory as $i => $state) {
+			$historyStates[] = array(
+				'title' => $state['request']['content']['params']['url']['url'],
+				'url' => Router::url(array('plugin' => 'debug_kit', 'controller' => 'toolbar', 'action' => 'get_state', $i))
+			);
+		}
+		return $historyStates;
 	}
 }
 

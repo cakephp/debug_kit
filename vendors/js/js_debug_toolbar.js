@@ -421,7 +421,6 @@ DebugKit.merge = function() {
 
 /**
  * Simple wrapper for XmlHttpRequest objects.
- * 
  */
 DebugKit.Request = function (options) {
 	var _defaults = {
@@ -490,10 +489,10 @@ DebugKit.Request.prototype.createObj = function(){
 	var request = null;
 	try {
 		request = new XMLHttpRequest();
-	} catch(MS) {
+	} catch (MS) {
 		try {
 			request = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch(old_MS) {
+		} catch (old_MS) {
 			try {
 				request = new ActiveXObject("Microsoft.XMLHTTP");
 			} catch(failure) {

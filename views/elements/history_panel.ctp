@@ -28,22 +28,16 @@
  */
 ?>
 <h2> <?php __('Request History'); ?></h2>
-<?php $history = $this->viewVars['debugToolbarPanelsHistory']; ?>
-<?php if (empty($history)): ?>
+<?php if (empty($content)): ?>
   <p class="warning"><?php __('No previous requests logged.'); ?></p>
 <?php else: ?>
-	<?php echo count($history); ?> <?php __('previous requests available') ?>
-	<?php
-	for ($i = 0; $i <= count($history); $i++):
-		if ($i == 0) :
-			$title = '(' . __('current', true) . ') ' . $this->here;
-		else :
-			$title = $i;
-			if (!empty($history[$i]['request'])) :
-				$title = $history[$i]['request']['content']['params']['url']['url'];
-			endif;
-		endif;
-	?>
-	<div><?php echo $html->link($title, '#' . $i, array('class' => 'history-link')); ?></div>
-	<?php endfor ?>
+	<?php echo count($content); ?> <?php __('previous requests available') ?>
+	<ul class="history-list">
+		<li><?php echo $html->link(__('Restore to current request', true), 
+			'#', array('class' => 'history-link', 'id' => 'history-restore-current')); ?>
+		</li>
+		<?php foreach ($content as $previous): ?>
+			<li><?php echo $html->link($previous['title'], $previous['url'], array('class' => 'history-link')); ?></li>
+		<?php endforeach; ?>
+	</ul>
 <?php endif; ?>

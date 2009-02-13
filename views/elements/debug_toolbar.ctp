@@ -38,33 +38,21 @@
 				</a>
 			</li>
 		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
+			<?php $panelUnderscore = Inflector::underscore($panelName);?>
 			<li class="panel-tab">
-				<a href="#<?php echo Inflector::underscore($panelName); ?>">
-					<?php echo Inflector::humanize(Inflector::underscore($panelName)); ?>
+				<a href="#<?php echo $panelUnderscore; ?>">
+					<?php echo Inflector::humanize($panelUnderscore); ?>
 				</a>
-				<div class="panel-content" id="<?php echo Inflector::underscore($panelName); ?>-tab">
-		  	<?php
-				$classes = array();
-				if ($panelName != 'history') {
-					$classes = array('panel-content-data',  'panel-content0');
-				}
-		  		?>
-				<div class="<?php echo implode(' ', $classes) ?>">
-					<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
+					<div class="panel-content-data">
+						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+					</div>
+					<div class="panel-content-data panel-content-history" id="<?php echo $panelUnderscore; ?>-history">
+						<!-- content here -->
+					</div>
 				</div>
-			<?php if (!empty($debugToolbarPanelsHistory) && $toolbar->getName() !== 'FirePHPToolbar'):?>
-			  <?php foreach ($debugToolbarPanelsHistory as $i => $panelContents): ?>
-				<?php if (!empty($panelContents[$panelName])) :?>
-					<div class="panel-content-history panel-content-data panel-content<?php echo $i ?>">
-						<?php echo $this->element($panelInfo['elementName'], $panelContents[$panelName]); ?>
-					</div>
-				<?php endif; ?>
-			  <?php endforeach ?>
-			<?php endif; ?>
-					</div>
-
-				</li>
-			<?php endforeach ?>
+			</li>
+		<?php endforeach ?>
 		</ul>
 	<?php endif; ?>
 </div>

@@ -156,7 +156,6 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		
 		$result = Cache::read('toolbar_history', $configName);
-		debug($result);
 		$this->assertEqual($result[0]['variables']['content']['test'], 'testing');
 		Cache::delete('toolbar_history', $configName);
 	}

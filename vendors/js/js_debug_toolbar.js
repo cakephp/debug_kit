@@ -67,10 +67,10 @@ var DebugKit = function (id) {
 			}
 			++i;
 		}
-		
 		this.deactivatePanel(true);
-		if (Cookie.read('toolbarDisplay') == 'none') {
-			toolbarHidden = true;
+		var toolbarState = Cookie.read('toolbarDisplay');
+		if (toolbarState != 'block') {
+			toolbarHidden = false;
 			this.toggleToolbar();
 		}
 		return this;

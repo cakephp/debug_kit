@@ -429,6 +429,10 @@ DebugKit.Request = function (options) {
 		onFail : function (){},
 		method : 'GET',
 		async : true,
+		headers : {
+			'X-Requested-With': 'XMLHttpRequest',
+			'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
+		}
 	};
 
 	var self = this;
@@ -450,9 +454,13 @@ DebugKit.Request = function (options) {
 		}
 		//open connection
 		this.transport.open(this.options.method, url, this.options.async);
+
 		//set statechange and pass the active XHR object to it.  From here it handles all status changes.
 		this.transport.onreadystatechange = function () {
 			self.onReadyStateChange.apply(self, arguments);
+		}
+		for (var key in this.options.headers) {
+			this.transport.setRequestHeader(key, this.options.headers[key]);
 		}
 		this.onRequest();
 		this.transport.send(data);

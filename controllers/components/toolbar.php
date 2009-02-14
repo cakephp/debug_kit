@@ -18,9 +18,9 @@
  * @filesource
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package       cake
- * @subpackage    cake.cake.libs.
- * @since         CakePHP v 1.2.0.4487
+ * @package       debug_kit
+ * @subpackage    debug_kit.controllers.components
+ * @since         DebugKit 0.1
  * @version       $Revision$
  * @modifiedby    $LastChangedBy$
  * @lastmodified  $Date$
@@ -73,6 +73,12 @@ class ToolbarComponent extends Object {
  **/  
 	var $cacheConfig = 'debug_kit_history';
 /**
+ * CacheKey used for the cache file.
+ *
+ * @var string
+ **/
+	var $cacheKey = 'toolbar_cache';
+/**
  * Duration of the debug kit history cache
  *
  * @var string
@@ -100,7 +106,7 @@ class ToolbarComponent extends Object {
 			$panels = $settings['panels'];
 			unset($settings['panels']);
 		}
-
+		$this->cacheKey .= $controller->Session->read('Config.userAgent');
 		if (!isset($settings['history']) || (isset($settings['history']) && $settings['history'] !== false)) {
 			$this->_createCacheConfig();
 		}
@@ -168,6 +174,19 @@ class ToolbarComponent extends Object {
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
+	}
+/**
+ * Load a toolbar state from cache
+ *
+ * @param int $key
+ * @return array
+ **/
+	function loadState($key) {
+		$history = Cache::read($this->cacheKey, $this->cacheConfig);
+		if (isset($history[$key])) {
+			return $history[$key];
+		}
+		return $history;
 	}
 /**
  * Create the cache config for the history
@@ -286,7 +305,7 @@ class ToolbarComponent extends Object {
 		if (empty($config) || !isset($this->panels['history'])) {
 			return;
 		}
-		$history = Cache::read('toolbar_history', $this->cacheConfig);
+		$history = Cache::read($this->cacheKey, $this->cacheConfig);
 		if (empty($history)) {
 			$history = array();
 		}
@@ -295,7 +314,7 @@ class ToolbarComponent extends Object {
 		}
 		unset($vars['history']);
 		array_unshift($history, $vars);
-		Cache::write('toolbar_history', $history, $this->cacheConfig);
+		Cache::write($this->cacheKey, $history, $this->cacheConfig);
 	}
 }
 
@@ -365,12 +384,13 @@ class HistoryPanel extends DebugPanel {
  **/
 	function beforeRender(&$controller) {
 		$cacheConfig = $controller->Toolbar->cacheConfig;
-		$toolbarHistory = (array)Cache::read('toolbar_history', $cacheConfig);
+		$cacheKey = $controller->Toolbar->cacheKey;
+		$toolbarHistory = (array)Cache::read($cacheKey, $cacheConfig);
 		$historyStates = array();
 		foreach ($toolbarHistory as $i => $state) {
 			$historyStates[] = array(
 				'title' => $state['request']['content']['params']['url']['url'],
-				'url' => Router::url(array('plugin' => 'debug_kit', 'controller' => 'toolbar', 'action' => 'get_state', $i))
+				'url' => Router::url(array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i))
 			);
 		}
 		return $historyStates;

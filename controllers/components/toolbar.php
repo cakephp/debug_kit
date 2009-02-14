@@ -186,7 +186,7 @@ class ToolbarComponent extends Object {
 		if (isset($history[$key])) {
 			return $history[$key];
 		}
-		return $history;
+		return array();
 	}
 /**
  * Create the cache config for the history
@@ -390,7 +390,7 @@ class HistoryPanel extends DebugPanel {
 		foreach ($toolbarHistory as $i => $state) {
 			$historyStates[] = array(
 				'title' => $state['request']['content']['params']['url']['url'],
-				'url' => Router::url(array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i))
+				'url' => array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i)
 			);
 		}
 		return $historyStates;

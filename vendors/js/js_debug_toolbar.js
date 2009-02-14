@@ -32,6 +32,7 @@ var DebugKit = function (id) {
 		toolbarHidden = false,
 		Cookie = new DebugKit.Util.Cookie(),
 		Util = DebugKit.Util,
+		Request = DebugKit.prototype.Request,
 		Element = DebugKit.Util.Element;
 
 	this.initialize = function (id) {
@@ -207,10 +208,19 @@ var DebugKit = function (id) {
 				historyLinks.push(button);
 			}
 		}
+		
+		var switchHistory = function (responseData) {
+			console.log(arguments);
+		}
 
 		var handleHistoryLink = function (event) {
 			event.preventDefault();
-			var id = this.hash.replace(/^#/, '');
+			var remote = new Request({
+				onComplete : switchHistory
+			});
+			remote.send(this.href);
+			
+			/*var id = this.hash.replace(/^#/, '');
 			for (i in historyLinks) {
 				Element.removeClass(historyLinks[i], 'active');
 			}
@@ -239,7 +249,7 @@ var DebugKit = function (id) {
 				if (id == 0) {
 					Element.removeClass(panels[i].content, 'panel-history-active');
 				}
-			}
+			}*/
 		};
 
 		for (i in historyLinks) {
@@ -408,12 +418,14 @@ DebugKit.Util.Element = {
  * @param [Object] one first object
  * @return object 
  */
-DebugKit.merge = function() {
+DebugKit.prototype.merge = function() {
 	var out = {};
 	for (var i = 0; i < arguments.length; i++) {
 		var current = arguments[i];
 		for (prop in current) {
-			out[prop] = current[prop];
+			if (current[prop] !== undefined){
+				out[prop] = current[prop];
+			}
 		}
 	}
 	return out;
@@ -422,7 +434,7 @@ DebugKit.merge = function() {
 /**
  * Simple wrapper for XmlHttpRequest objects.
  */
-DebugKit.Request = function (options) {
+DebugKit.prototype.Request = function (options) {
 	var _defaults = {
 		onComplete : function (){},
 		onRequest : function (){},
@@ -443,9 +455,9 @@ DebugKit.Request = function (options) {
 	this.transport = ajax;
 
 	//event assignment
-	this.onComplete = options.onComplete;
-	this.onRequest = options.onRequest;
-	this.onFail = options.onFail;
+	this.onComplete = this.options.onComplete;
+	this.onRequest = this.options.onRequest;
+	this.onFail = this.options.onFail;
 
 	this.send = function (url, data) {
 		if (this.options.method == 'GET' && data) {
@@ -467,7 +479,7 @@ DebugKit.Request = function (options) {
 	}
 };
 
-DebugKit.Request.prototype.onReadyStateChange = function (){
+DebugKit.prototype.Request.prototype.onReadyStateChange = function (){
 	if (this.transport.readyState !== 4) {
 		return;
 	}
@@ -493,7 +505,7 @@ DebugKit.Request.prototype.onReadyStateChange = function (){
 /**
  * Creates cross-broswer XHR object used for requests
  */
-DebugKit.Request.prototype.createObj = function(){
+DebugKit.prototype.Request.prototype.createObj = function(){
 	var request = null;
 	try {
 		request = new XMLHttpRequest();

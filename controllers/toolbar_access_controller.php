@@ -34,11 +34,20 @@ class ToolbarAccessController extends DebugKitAppController {
  */
 	var $name = 'ToolbarAccess';
 /**
- * Uses
+ * uses array
  *
  * @var array
  **/
 	var $uses = array();
+/**
+ * Helpers
+ *
+ * @var array
+ **/
+	var $helpers = array(
+		'DebugKit.Toolbar' => array('output' => 'DebugKit.HtmlToolbar'),
+		'Javascript', 'Number', 'DebugKit.SimpleGraph'
+	);
 /**
  * components
  *

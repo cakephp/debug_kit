@@ -67,12 +67,6 @@ class ToolbarComponent extends Object {
  **/
 	var $javascript = array();
 /**
- * Name of debugKit's cache file.
- *
- * @var string
- **/  
-	var $cacheConfig = 'debug_kit_history';
-/**
  * CacheKey used for the cache file.
  *
  * @var string
@@ -142,7 +136,11 @@ class ToolbarComponent extends Object {
 		} else {
 			$format = 'FirePhp';
 		}
-		$controller->helpers['DebugKit.Toolbar'] = array('output' => sprintf('DebugKit.%sToolbar', $format));
+		$controller->helpers['DebugKit.Toolbar'] = array(
+			'output' => sprintf('DebugKit.%sToolbar', $format)
+			'cacheKey' => $this->cacheKey,
+			'cacheConfig' => 'debug_kit',
+		);
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
@@ -182,7 +180,7 @@ class ToolbarComponent extends Object {
  * @return array
  **/
 	function loadState($key) {
-		$history = Cache::read($this->cacheKey, $this->cacheConfig);
+		$history = Cache::read($this->cacheKey, 'debug_kit');
 		if (isset($history[$key])) {
 			return $history[$key];
 		}
@@ -195,7 +193,7 @@ class ToolbarComponent extends Object {
  * @access protected
  **/
 	function _createCacheConfig() {
-		Cache::config($this->cacheConfig, array('duration' => $this->cacheDuration, 'engine' => 'File'));
+		Cache::config('debug_kit', array('duration' => $this->cacheDuration, 'engine' => 'File'));
 	}
 /**
  * collects the panel contents
@@ -301,11 +299,11 @@ class ToolbarComponent extends Object {
  * @return void
  **/
 	function _saveState(&$controller, $vars) {
-		$config = Cache::config($this->cacheConfig);
+		$config = Cache::config('debug_kit');
 		if (empty($config) || !isset($this->panels['history'])) {
 			return;
 		}
-		$history = Cache::read($this->cacheKey, $this->cacheConfig);
+		$history = Cache::read($this->cacheKey, 'debug_kit');
 		if (empty($history)) {
 			$history = array();
 		}
@@ -314,7 +312,7 @@ class ToolbarComponent extends Object {
 		}
 		unset($vars['history']);
 		array_unshift($history, $vars);
-		Cache::write($this->cacheKey, $history, $this->cacheConfig);
+		Cache::write($this->cacheKey, $history, 'debug_kit');
 	}
 }
 

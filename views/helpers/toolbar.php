@@ -36,6 +36,12 @@ class ToolbarHelper extends AppHelper {
  */
 	var $settings = array();
 /**
+ * flag for whether or not cache is enabled.
+ *
+ * @var boolean
+ **/
+	var $_cacheEnabled = false;
+/**
  * Construct the helper and make the backend helper.
  *
  * @param string $options 
@@ -57,6 +63,11 @@ class ToolbarHelper extends AppHelper {
 		}
 		$this->_backEndClassName =  $className;
 		$this->helpers = array($options['output']);
+		if (isset($options['cacheKey']) && isset($options['cacheConfig'])) {
+			$this->_cacheKey = $options['cacheKey'];
+			$this->_cacheConfig = $options['cacheConfig'];
+			$this->_cacheEnabled = true;
+		}
 	}
 
 /**
@@ -83,7 +94,40 @@ class ToolbarHelper extends AppHelper {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}
 	}
-
+/**
+ * Allows for writing to panel cache from view.
+ * Some panels generate all variables in the view by 
+ * necessity ie. Timer.  Using this method, will allow you to replace in full
+ * the content for a panel.
+ *
+ * @param string $name Name of the panel you are replacing.
+ * @param string $content Content to write to the panel.
+ * @return boolean Sucess of write.
+ **/
+	function writeCache($name, $content) {
+		if (!$this->_cacheEnabled) {
+			return false;
+		}
+		$existing = (array)Cache::read($this->_cacheKey, $this->_cacheConfig);
+		$existing[$name]['content'] = $content;
+		return Cache::write($this->_cacheKey, $existing, $this->_cacheConfig);
+	}
+/**
+ * Read the toolbar
+ *
+ * @param string $name Name of the panel you want cached data for
+ * @return mixed Boolean false on failure, array of data otherwise.
+ **/
+	function readCache($name) {
+		if (!$this->_cacheEnabled) {
+			return false;
+		}
+		$existing = (array)Cache::read($this->_cacheKey, $this->_cacheConfig);
+		if (!isset($existing[$name]['content'])) {
+			return false;
+		}
+		return $existing[$name]['content'];
+	}
 /**
  * postRender method
  *

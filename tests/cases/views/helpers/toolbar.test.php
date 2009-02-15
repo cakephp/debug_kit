@@ -75,10 +75,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 	function testCacheWrite() {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result);
-		
-		$this->Toolbar = new ToolbarHelper(array('output' => 'MockBackendHelper'));
-		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
-		$this->assertFalse($result);
 	}
 /**
  * test cache reading for views
@@ -87,10 +83,30 @@ class ToolbarHelperTestCase extends CakeTestCase {
  **/
 	function testCacheRead() {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
-		$this->assertTrue($result);
+		$this->assertTrue($result, 'Cache write failed %s');
 		
 		$result = $this->Toolbar->readCache('test');
-		$this->assertEqual($result, array('stuff', 'to', 'cache'));
+		$this->assertEqual($result, array('stuff', 'to', 'cache'), 'Cache value is wrong %s');
+		
+		$result = $this->Toolbar->writeCache('test', array('new', 'stuff'));
+		$this->assertTrue($result, 'Cache write failed %s');
+		
+		$result = $this->Toolbar->readCache('test');
+		$this->assertEqual($result, array('new', 'stuff'), 'Cache value is wrong %s');
+	}
+/**
+ * Test that reading/writing doesn't work with no cache config.
+ *
+ * @return void
+ **/
+	function testNoCacheConfigPresent() {
+		$this->Toolbar = new ToolbarHelper(array('output' => 'MockBackendHelper'));
+		
+		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
+		$this->assertFalse($result, 'Writing to cache succeeded with no cache config %s');
+			
+		$result = $this->Toolbar->readCache('test');
+		$this->assertFalse($result, 'Reading cache succeeded with no cache config %s');
 	}
 /**
  * reset the view paths

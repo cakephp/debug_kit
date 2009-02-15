@@ -387,8 +387,11 @@ class HistoryPanel extends DebugPanel {
 		foreach ($toolbarHistory as $i => $state) {
 			$historyStates[] = array(
 				'title' => $state['request']['content']['params']['url']['url'],
-				'url' => array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i)
+				'url' => array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i + 1)
 			);
+		}
+		if (count($historyStates) >= $this->history) {
+			array_pop($historyStates);
 		}
 		return $historyStates;
 	}

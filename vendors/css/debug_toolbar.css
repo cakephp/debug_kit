@@ -203,11 +203,9 @@
 }
 
 /* previous panels */
-#debug-kit-toolbar .panel-history-active {
-	background:#eeffff;
-}
 #debug-kit-toolbar .panel-content-history {
 	display: none;
+	background:#eeffff;
 }
 #debug-kit-toolbar #history-tab a {
 	float: none;

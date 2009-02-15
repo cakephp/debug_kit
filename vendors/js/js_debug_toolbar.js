@@ -60,14 +60,8 @@ var DebugKit = function (id) {
 		}
 
 		lists = document.getElementsByTagName('ul');
-		i = 0;
-		while (lists[i] !== undefined) {
-			element = lists[i];
-			if (Element.hasClass(element, 'neat-array')) {
-				neatArray(element);
-			}
-			++i;
-		}
+		this.makeNeatArray(lists);
+
 		this.deactivatePanel(true);
 		var toolbarState = Cookie.read('toolbarDisplay');
 		if (toolbarState != 'block') {
@@ -200,7 +194,7 @@ var DebugKit = function (id) {
 		var anchors = panel.element.getElementsByTagName('A'),
 			historyLinks = [], 
 			i = 0, j =0, 
-			button;
+			button, self = this;
 			
 		for (i in anchors) {
 			button = anchors[i];
@@ -226,14 +220,16 @@ var DebugKit = function (id) {
 				}
 				var panelDivs = panel.content.childNodes;
 				for (var i in panelDivs) {
+
 					//toggle history element, hide current request one.
 					var panelContent = panelDivs[i],
 						tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
-
 					if (tag === 'DIV' && Element.hasClass(panelContent, 'panel-content-history')) {
 						var panelId = panelContent.id.replace('-history', '');
 						if (responseJson[panelId]) {
 							panelContent.innerHTML = responseJson[panelId];
+							var lists = panelContent.getElementsByTagName('UL');
+							self.makeNeatArray(lists);
 						}
 						Element.show(panelContent);
 					} else if (tag === 'DIV') {
@@ -246,17 +242,21 @@ var DebugKit = function (id) {
 		/**
 		 * Private method to handle restoration to current request.
 		 */
-		var restortCurrentState = function (event) {
+		var restoreCurrentState = function () {
 			var id, i, panelContent;
-			event.preventDefault();
+
 			for (id in panels) {
 				panel = panels[id];
+				if (panel.content === undefined) {
+					continue;
+				}
 				var panelDivs = panel.content.childNodes;
 				for (i in panelDivs) {
-					panelContent = panelDivs[i];
-					if (Element.hasClass(panelContent, 'panel-content-history')) {
+					panelContent = panelDivs[i]
+						tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
+					if (tag === 'DIV' && Element.hasClass(panelContent, 'panel-content-history')) {
 						Element.hide(panelContent);
-					} else {
+					} else if (tag === 'DIV') {
 						Element.show(panelContent)
 					}
 				}
@@ -290,16 +290,26 @@ var DebugKit = function (id) {
 			Util.addEvent(button, 'click', handleHistoryLink);
 		}
 	};
+
+	this.makeNeatArray = function (lists) {
+		i = 0;
+		while (lists[i] !== undefined) {
+			var element = lists[i];
+			if (Element.hasClass(element, 'neat-array')) {
+				neatArray(element);
+			}
+			++i;
+		}
+	}
 /**
  * Add neat array functionality.
  */
-	function neatArray(list) {
+	var neatArray = function (list) {
 		if (!list.className.match(/depth-0/)) {
 			var item = list.parentNode;
 			Element.hide(list);
 			Element.addClass(item, 'expandable collapsed');
 			Util.addEvent(item, 'click', function (event) {
-				//var element = (event === undefined)? this: event.target;
 				var element = this,
 					event = event || window.event,
 					act = Boolean(item === element),
@@ -318,7 +328,8 @@ var DebugKit = function (id) {
 				return false;
 			});
 		}
-	}
+	};
+
 	this.initialize(id);
 };
 

@@ -64,7 +64,7 @@ class ToolbarAccessController extends DebugKitAppController {
 			$this->Toolbar->enabled = false;
 		}
 		$this->helpers['DebugKit.Toolbar']['cacheKey'] = $this->Toolbar->cacheKey;
-		$this->helpers['DebugKit.Toolbar']['cacheConfig'] = $this->Toolbar->cacheConfig;
+		$this->helpers['DebugKit.Toolbar']['cacheConfig'] = 'debug_kit';
 	}
 /**
  * Get a stored history state from the toolbar cache.
@@ -74,5 +74,6 @@ class ToolbarAccessController extends DebugKitAppController {
 	function history_state($key = null) {
 		$oldState = $this->Toolbar->loadState($key);
 		$this->set('toolbarState', $oldState);
+		$this->set('debugKitInHistoryMode', true);
 	}
 }

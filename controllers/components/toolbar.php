@@ -137,7 +137,7 @@ class ToolbarComponent extends Object {
 			$format = 'FirePhp';
 		}
 		$controller->helpers['DebugKit.Toolbar'] = array(
-			'output' => sprintf('DebugKit.%sToolbar', $format)
+			'output' => sprintf('DebugKit.%sToolbar', $format),
 			'cacheKey' => $this->cacheKey,
 			'cacheConfig' => 'debug_kit',
 		);
@@ -381,9 +381,8 @@ class HistoryPanel extends DebugPanel {
  * @return array contents for panel
  **/
 	function beforeRender(&$controller) {
-		$cacheConfig = $controller->Toolbar->cacheConfig;
 		$cacheKey = $controller->Toolbar->cacheKey;
-		$toolbarHistory = (array)Cache::read($cacheKey, $cacheConfig);
+		$toolbarHistory = (array)Cache::read($cacheKey, 'debug_kit');
 		$historyStates = array();
 		foreach ($toolbarHistory as $i => $state) {
 			$historyStates[] = array(

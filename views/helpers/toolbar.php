@@ -109,7 +109,7 @@ class ToolbarHelper extends AppHelper {
 			return false;
 		}
 		$existing = (array)Cache::read($this->_cacheKey, $this->_cacheConfig);
-		$existing[$name]['content'] = $content;
+		$existing[0][$name]['content'] = $content;
 		return Cache::write($this->_cacheKey, $existing, $this->_cacheConfig);
 	}
 /**
@@ -118,15 +118,15 @@ class ToolbarHelper extends AppHelper {
  * @param string $name Name of the panel you want cached data for
  * @return mixed Boolean false on failure, array of data otherwise.
  **/
-	function readCache($name) {
+	function readCache($name, $index = 0) {
 		if (!$this->_cacheEnabled) {
 			return false;
 		}
 		$existing = (array)Cache::read($this->_cacheKey, $this->_cacheConfig);
-		if (!isset($existing[$name]['content'])) {
+		if (!isset($existing[$index][$name]['content'])) {
 			return false;
 		}
-		return $existing[$name]['content'];
+		return $existing[$index][$name]['content'];
 	}
 /**
  * postRender method

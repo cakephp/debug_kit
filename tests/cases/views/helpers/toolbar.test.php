@@ -77,6 +77,26 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTrue($result);
 	}
 /**
+ * Ensure that the cache writing only affects the 
+ * top most level of the history stack. As this is where the current request is stored.
+ *
+ * @return void
+ **/
+	function testOnlyWritingToFirstElement() {
+		$values = array(
+			array('test' => array('content' => array('first', 'values'))),
+			array('test' => array('content' => array('second', 'values'))),
+		);
+		Cache::write('debug_kit_toolbar_test_case', $values);
+		$this->Toolbar->writeCache('test', array('new', 'values'));
+		
+		$result = $this->Toolbar->readCache('test');
+		$this->assertEqual($result, array('new', 'values'));
+		
+		$result = $this->Toolbar->readCache('test', 1);
+		$this->assertEqual($result, array('second', 'values'));
+	}
+/**
  * test cache reading for views
  *
  * @return void

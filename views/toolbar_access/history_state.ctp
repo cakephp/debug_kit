@@ -33,4 +33,5 @@ foreach ($toolbarState as $panelName => $panel) {
 	));
 }
 echo $javascript->object($panels);
+Configure::write('debug', 0);
 ?>

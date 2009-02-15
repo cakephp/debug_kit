@@ -208,48 +208,81 @@ var DebugKit = function (id) {
 				historyLinks.push(button);
 			}
 		}
+		/**
+		 * Private methods to handle JSON response and insertion of 
+		 * new content.
+		 */
+		var switchHistory = function (response) {
+			try {
+				var responseJson = eval( '(' + response.response.text + ')');
+			} catch (e) {
+				alert('Could not convert JSON response');
+				return false;
+			}
+			for (var id in panels) {
+				var panel = panels[id];
+				if (panel.content === undefined || responseJson[id] === undefined) {
+					continue;
+				}
+				var panelDivs = panel.content.childNodes;
+				for (var i in panelDivs) {
+					//toggle history element, hide current request one.
+					var panelContent = panelDivs[i],
+						tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
+
+					if (tag === 'DIV' && Element.hasClass(panelContent, 'panel-content-history')) {
+						var panelId = panelContent.id.replace('-history', '');
+						if (responseJson[panelId]) {
+							panelContent.innerHTML = responseJson[panelId];
+						}
+						Element.show(panelContent);
+					} else if (tag === 'DIV') {
+						Element.hide(panelContent);
+					}
+				}
+			}
+		};
 		
-		var switchHistory = function (responseData) {
-			console.log(arguments);
-		}
+		/**
+		 * Private method to handle restoration to current request.
+		 */
+		var restortCurrentState = function (event) {
+			var id, i, panelContent;
+			event.preventDefault();
+			for (id in panels) {
+				panel = panels[id];
+				var panelDivs = panel.content.childNodes;
+				for (i in panelDivs) {
+					panelContent = panelDivs[i];
+					if (Element.hasClass(panelContent, 'panel-content-history')) {
+						Element.hide(panelContent);
+					} else {
+						Element.show(panelContent)
+					}
+				}
+			}
+		};
 
 		var handleHistoryLink = function (event) {
 			event.preventDefault();
-			var remote = new Request({
-				onComplete : switchHistory
-			});
-			remote.send(this.href);
-			
-			/*var id = this.hash.replace(/^#/, '');
+
 			for (i in historyLinks) {
 				Element.removeClass(historyLinks[i], 'active');
 			}
 			Element.addClass(this, 'active');
 			
-			//hide all panel-content-data
-			for (i in panels) {
-				if (!panels[i].content) {
-					continue;
+			if (this.id === 'history-restore-current') {
+				restoreCurrentState();
+				return false;
+			}
+
+			var remote = new Request({
+				onComplete : switchHistory,
+				onFail : function () {
+					alert('History retrieval failed');
 				}
-				var curPanel = panels[i].content;
-				var panelDivs = curPanel.getElementsByTagName('DIV');
-				for (j in panelDivs) {
-					var panelData = panelDivs[j];
-					if (Element.hasClass(panelData, 'panel-content-data')) {
-						Element.hide(panelData);
-					}
-					if (Element.hasClass(panelData, 'panel-content' + id)) {
-						Element.show(panelData);
-						var panelWrapper = panelData.parentNode;
-						if (!Element.hasClass(panelWrapper, 'panel-history-active')) {
-							Element.addClass(panelWrapper, 'panel-history-active');
-						}
-					}
-				}
-				if (id == 0) {
-					Element.removeClass(panels[i].content, 'panel-history-active');
-				}
-			}*/
+			});
+			remote.send(this.href);
 		};
 
 		for (i in historyLinks) {

@@ -69,7 +69,7 @@ var DebugKit = function (id) {
 			this.toggleToolbar();
 		}
 		return this;
-	}
+	};
 /**
  * Add a panel to the toolbar
  */
@@ -243,7 +243,7 @@ var DebugKit = function (id) {
 		 * Private method to handle restoration to current request.
 		 */
 		var restoreCurrentState = function () {
-			var id, i, panelContent;
+			var id, i, panelContent, tag;
 
 			for (id in panels) {
 				panel = panels[id];
@@ -252,12 +252,12 @@ var DebugKit = function (id) {
 				}
 				var panelDivs = panel.content.childNodes;
 				for (i in panelDivs) {
-					panelContent = panelDivs[i]
-						tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
+					panelContent = panelDivs[i];
+					tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
 					if (tag === 'DIV' && Element.hasClass(panelContent, 'panel-content-history')) {
 						Element.hide(panelContent);
 					} else if (tag === 'DIV') {
-						Element.show(panelContent)
+						Element.show(panelContent);
 					}
 				}
 			}
@@ -300,7 +300,7 @@ var DebugKit = function (id) {
 			}
 			++i;
 		}
-	}
+	};
 /**
  * Add neat array functionality.
  */
@@ -514,13 +514,13 @@ DebugKit.prototype.Request = function (options) {
 		//set statechange and pass the active XHR object to it.  From here it handles all status changes.
 		this.transport.onreadystatechange = function () {
 			self.onReadyStateChange.apply(self, arguments);
-		}
+		};
 		for (var key in this.options.headers) {
 			this.transport.setRequestHeader(key, this.options.headers[key]);
 		}
 		this.onRequest();
 		this.transport.send(data);
-	}
+	};
 };
 
 DebugKit.prototype.Request.prototype.onReadyStateChange = function (){
@@ -560,7 +560,7 @@ DebugKit.prototype.Request.prototype.createObj = function(){
 			try {
 				request = new ActiveXObject("Microsoft.XMLHTTP");
 			} catch(failure) {
-				request = null
+				request = null;
 			}
 		}
 	}

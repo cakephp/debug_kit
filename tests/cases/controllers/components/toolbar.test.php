@@ -43,8 +43,9 @@ class DebugToolbarTestCase extends CakeTestCase {
 	
 	function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-		Router::parse('/');
 		$this->Controller =& ClassRegistry::init('Controller');
+		$this->Controller->params = Router::parse('/');
+		$this->Controller->params['url']['url'] = '/';
 		$this->Controller->Component =& ClassRegistry::init('Component');
 		$this->Controller->Toolbar =& ClassRegistry::init('TestToolBarComponent', 'Component');
 	}

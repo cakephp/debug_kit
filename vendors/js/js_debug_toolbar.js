@@ -202,6 +202,7 @@ var DebugKit = function (id) {
 				historyLinks.push(button);
 			}
 		}
+
 		/**
 		 * Private methods to handle JSON response and insertion of 
 		 * new content.
@@ -213,6 +214,11 @@ var DebugKit = function (id) {
 				alert('Could not convert JSON response');
 				return false;
 			}
+
+			for (var i in historyLinks) {
+				Element.removeClass(historyLinks[i], 'loading');
+			}
+
 			for (var id in panels) {
 				var panel = panels[id];
 				if (panel.content === undefined || responseJson[id] === undefined) {
@@ -269,7 +275,7 @@ var DebugKit = function (id) {
 			for (i in historyLinks) {
 				Element.removeClass(historyLinks[i], 'active');
 			}
-			Element.addClass(this, 'active');
+			Element.addClass(this, 'active loading');
 			
 			if (this.id === 'history-restore-current') {
 				restoreCurrentState();

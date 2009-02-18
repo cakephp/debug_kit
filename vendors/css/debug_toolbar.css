@@ -213,3 +213,7 @@
 #debug-kit-toolbar #history-tab a.active {
 	background: #FEF6E5;
 }
+#debug-kit-toolbar #history-tab a.loading:after {
+	content : ' Loading...';
+	font-style:italic;
+}

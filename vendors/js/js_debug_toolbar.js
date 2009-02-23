@@ -250,6 +250,10 @@ var DebugKit = function (id) {
 		 */
 		var restoreCurrentState = function () {
 			var id, i, panelContent, tag;
+			
+			for (i in historyLinks) {
+				Element.removeClass(historyLinks[i], 'loading');
+			}
 
 			for (id in panels) {
 				panel = panels[id];

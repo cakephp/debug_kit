@@ -86,7 +86,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if (is_array($value) && !empty($value)) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth);
 			} else {
-				$out .= $value;
+				$out .= h($value);
 			}
 			$out .= '</li>';
 		}

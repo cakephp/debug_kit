@@ -354,7 +354,6 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->startup($this->Controller);
 		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
 	}
-
 /**
  * teardown
  *

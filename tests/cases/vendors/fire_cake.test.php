@@ -27,8 +27,8 @@
  * @license         http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Vendor', 'DebugKit.FireCake');
+App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
 
-require_once APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'cases' . DS . 'test_objects.php';
 /**
  * Test Case For FireCake
  *
@@ -242,7 +242,7 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::setOptions(array('includeLineNumbers' => true));
 		FireCake::info('Testing');
 		$result = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
-		$this->assertPattern('/"File"\:"APP.*fire_cake.test.php/', $result);
+		$this->assertPattern('/"File"\:".*fire_cake.test.php/', $result);
 		$this->assertPattern('/"Line"\:\d+/', $result);
 	}
 /**

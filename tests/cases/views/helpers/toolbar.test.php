@@ -36,7 +36,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function setUp() {
+	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 		
@@ -89,10 +89,10 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		);
 		Cache::write('debug_kit_toolbar_test_case', $values);
 		$this->Toolbar->writeCache('test', array('new', 'values'));
-		
+
 		$result = $this->Toolbar->readCache('test');
 		$this->assertEqual($result, array('new', 'values'));
-		
+
 		$result = $this->Toolbar->readCache('test', 1);
 		$this->assertEqual($result, array('second', 'values'));
 	}

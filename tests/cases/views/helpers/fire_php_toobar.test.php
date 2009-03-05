@@ -27,7 +27,7 @@
  */
 App::import('Helper', 'DebugKit.FirePhpToolbar');
 App::import('Core', array('View', 'Controller'));
-require_once APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'cases' . DS . 'test_objects.php';
+App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
 
 FireCake::getInstance('TestFireCake');
 

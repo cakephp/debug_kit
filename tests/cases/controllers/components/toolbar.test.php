@@ -71,8 +71,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  */
 	function testVendorPanels() {
+	    $f = Configure::read('pluginPaths');
 		$_back = Configure::read('vendorPaths');
-		Configure::write('vendorPaths', array(APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
+		Configure::write('vendorPaths', array($f[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'panels' => array('test'),

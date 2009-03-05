@@ -28,8 +28,7 @@
  */
 App::import('Core', 'Debugger');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
-
-require_once APP . 'plugins' . DS . 'debug_kit' . DS . 'tests' . DS . 'cases' . DS . 'test_objects.php';
+App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
 
 /**
  * Short description for class.

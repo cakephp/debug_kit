@@ -193,7 +193,9 @@ class ToolbarComponent extends Object {
  * @access protected
  **/
 	function _createCacheConfig() {
-		Cache::config('debug_kit', array('duration' => $this->cacheDuration, 'engine' => 'File'));
+		if (Configure::read('Cache.disable') !== true) {
+			Cache::config('debug_kit', array('duration' => $this->cacheDuration, 'engine' => 'File'));
+		}
 	}
 /**
  * collects the panel contents

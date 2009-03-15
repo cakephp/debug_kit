@@ -45,7 +45,7 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
+	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables','sqlExplain');
 /**
  * Loaded panel objects.
  *
@@ -92,7 +92,7 @@ class ToolbarComponent extends Object {
 			return false;
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
-		
+
 		DebugKitDebugger::startTimer('componentInit', __('Component initialization and startup', true));
 
 		$panels = $this->_defaultPanels;
@@ -104,14 +104,14 @@ class ToolbarComponent extends Object {
 		if (!isset($settings['history']) || (isset($settings['history']) && $settings['history'] !== false)) {
 			$this->_createCacheConfig();
 		}
-    
+
 		if (isset($settings['javascript'])) {
 			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
 		} else {
 			$settings['javascript'] = $this->_defaultJavascript;
 		}
 		$this->_loadPanels($panels, $settings);
-		
+
 		$this->_set($settings);
 		$this->controller =& $controller;
 		return false;
@@ -127,7 +127,7 @@ class ToolbarComponent extends Object {
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
 		$isHtml = (
-			!isset($controller->params['url']['ext']) || 
+			!isset($controller->params['url']['ext']) ||
 			(isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')
 		);
 
@@ -202,7 +202,7 @@ class ToolbarComponent extends Object {
  *
  * @return array Array of all panel beforeRender()
  * @access protected
- **/  
+ **/
 	function _gatherVars(&$controller) {
 		$vars = array();
 		$panels = array_keys($this->panels);
@@ -281,7 +281,7 @@ class ToolbarComponent extends Object {
  * Makes the DoppleGangerView class if it doesn't already exist.
  * This allows DebugView to be compatible with all view classes.
  *
- * @param string $baseClassName 
+ * @param string $baseClassName
  * @access protected
  * @return void
  */
@@ -371,7 +371,7 @@ class HistoryPanel extends DebugPanel {
 	var $history = 5;
 /**
  * Constructor
- * 
+ *
  * @param array $settings Array of settings.
  * @return void
  **/
@@ -588,6 +588,106 @@ class LogPanel extends DebugPanel {
 			}
 		}
 		return array_values($chunks);
+	}
+}
+
+
+/**
+ * SQL Explain Panel
+ *
+ * Provides SQL Explain results and provides links to an ajax explain interface.
+ *
+ * @package       cake.debug_kit.panels
+ * @author Yasushi Ichikawa
+ **/
+class sqlExplainPanel extends DebugPanel {
+	var $plugin = 'debug_kit';
+
+	var $dbConfigs = array();
+
+	var $slowQueryThreshold = 0;
+
+/**
+ * get db configs.
+ *
+ * @param string $controller
+ * @access public
+ * @return void
+ */
+	function startUp(&$controller) {
+		if (!class_exists('ConnectionManager')) {
+			$this->dbConfigs = array();
+			return false;
+		}
+		$this->dbConfigs = ConnectionManager::sourceList();
+		return true;
+	}
+/**
+ * Get Sql Explain results for each DB config
+ *
+ * @param string $controller
+ * @access public
+ * @return array
+ */
+	function beforeRender(&$controller) {
+		$queryLogs = array();
+		if (!class_exists('ConnectionManager')) {
+			return array();
+		}
+
+
+		$count=1;
+
+		foreach ( $this->dbConfigs as $configName ) {
+			$db =& ConnectionManager::getDataSource( $configName );
+
+			if( empty($db->_queriesLog[0]) ){
+				continue;
+			}
+
+			$driver = $db->config['driver'];
+
+
+			if( $driver === 'mysql' || $driver === 'postgres' ){
+				$explain_results['sqlexplain_driver'] =  $driver;
+
+
+				foreach( $db->_queriesLog as $key => $value ){
+
+					if( preg_match( '/^SELECT /i', $value['query'] ) && $value['took'] >= $this->slowQueryThreshold ){
+
+						$reesults = null;
+						$results = $db->query( "Explain ". $value['query'] );
+
+
+						if( $driver === 'postgres' ){
+							//merge QIERY PLAN value
+							$query_plan = array();
+							foreach( $results as $postgre_value ){
+								$query_plan[] = $postgre_value[0]['QUERY PLAN'] ;
+							}
+							$results[0][0]['QUERY PLAN'] = $query_plan;
+
+							//change column order
+							$results[0][0] = array_merge( array("id" => $count), $results[0][0] );
+						}
+
+						$results[0][0]['query'] =  $value['query'];
+						$results[0][0]['id'] = $count;
+
+						$explain_results[] = $results[0][0];
+
+						$count++;
+					}
+				}
+
+			}
+
+		}
+
+
+
+		return $explain_results;
 	}
 }
 ?>

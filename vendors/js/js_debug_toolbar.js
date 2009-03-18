@@ -107,6 +107,33 @@ DEBUGKIT.Util.Element = {
 			type = 'on' + type;
 			element[type] = handler;
 		}
+	},
+	
+	domready : function(callback) {
+		if (document.addEventListener) {
+			return document.addEventListener("DOMContentLoaded", callback, false);
+		}
+
+		if (document.all && !window.opera) { 
+			//Define a "blank" external JavaScript tag
+			document.write('<script type="text/javascript" id="domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
+			var contentloadtag = document.getElementById("domreadywatcher");
+			contentloadtag.onreadystatechange = function (){
+				if (this.readyState == "complete") {
+					callback();
+				}
+			};
+			return;
+		}
+
+		if (/Webkit/i.test(navigator.userAgent)){
+			var _timer = setInterval(function (){
+				if (/loaded|complete/.test(document.readyState)) {
+					clearInterval(_timer);
+					callback();
+				}
+			}, 10);
+		}
 	}
 };
 
@@ -320,14 +347,13 @@ DEBUGKIT.toolbar = function () {
 			}
 			return false;
 		}
-
 	};
 }();
 DEBUGKIT.loader.register(DEBUGKIT.toolbar.init, DEBUGKIT.toolbar);
 
-window.addEventListener('DOMContentLoaded', function () {
+DEBUGKIT.Util.Element.domready(function () {
 	DEBUGKIT.loader.init();
-}, false);
+});
 
 
 /*

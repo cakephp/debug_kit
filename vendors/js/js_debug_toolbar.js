@@ -78,6 +78,13 @@ DEBUGKIT.Util.Element = {
 		} 
 		element.className = element.className.replace(new RegExp(' ?(' + className +') ?'), '');
 	},
+	
+	swapClass : function (element, removeClass, addClass) {
+		if (!element.className) {
+			return false;
+		}
+		element.className = element.className.replace(removeClass, addClass);
+	},
 
 	show : function (element) {
 		element.style.display = 'block';
@@ -205,10 +212,10 @@ DEBUGKIT.toolbar = function () {
 					hide = Boolean(list.style.display === 'block');
 				if (act && hide) {
 					Element.hide(list);
-					item.className = item.className.replace(/expanded|$/, 'collapsed');
+					Element.swapClass(item, 'expanded', 'collapsed');
 				} else if (act) {
 					Element.show(list);
-					item.className = item.className.replace('collapsed', 'expanded');
+					Element.swapClass(item, 'collapsed', 'expanded');
 				}
 
 				if (event.cancelBubble !== undefined) {
@@ -373,7 +380,7 @@ DEBUGKIT.toolbar = function () {
 			}
 			return false;
 		},
-		
+
 		makeNeatArray : function (lists) {
 			var i = 0;
 			while (lists[i] !== undefined) {
@@ -386,6 +393,7 @@ DEBUGKIT.toolbar = function () {
 		}
 	};
 }();
+
 DEBUGKIT.loader.register(DEBUGKIT.toolbar);
 
 DEBUGKIT.Util.Event.domready(function () {

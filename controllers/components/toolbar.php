@@ -630,62 +630,83 @@ class sqlExplainPanel extends DebugPanel {
  * @return array
  */
 	function beforeRender(&$controller) {
+
+		App::import('Core', 'Xml');
+
 		$queryLogs = array();
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
 
-
-		$count=1;
-
-		foreach ( $this->dbConfigs as $configName ) {
-			$db =& ConnectionManager::getDataSource( $configName );
-
-			if( empty($db->_queriesLog[0]) ){
-				continue;
-			}
-
-			$driver = $db->config['driver'];
+		$explain_results = array();
 
 
-			if( $driver === 'mysql' || $driver === 'postgres' ){
-				$explain_results['sqlexplain_driver'] =  $driver;
+		$dbConfigs = ConnectionManager::sourceList();
+		foreach ($dbConfigs as $configName) {
+			$db =& ConnectionManager::getDataSource($configName);
+			if ($db->isInterfaceSupported('showLog')) {
+
+				//Get sql queries with html tag.
+				$logs = null;
+				ob_start();
+				$db->showLog();
+				$queryLogs[$configName] = ob_get_clean();
+
+				$Xml = new Xml($queryLogs[$configName]);
+				$logs = $Xml->toArray();
+				$logs = Set::classicExtract($logs, 'Table.Tbody.Tr.{n}.Td');
+
+				$for_explain_queries = null;
+				foreach( $logs as $num => $showLogResult ){
+					//Skip error query.
+					//Get only SELECT query.
+					if( !empty($showLogResult[4]) && preg_match( '/^SELECT /i', $showLogResult[1]) ){
+						$for_explain_queries[$num]['query'] = $showLogResult[1];
+						$for_explain_queries[$num]['took'] = $showLogResult[4]['value'];
+					}
+				}
+
+				if( count($for_explain_queries) === 0 ){
+					continue;
+				}
+
+				$driver = $db->config['driver'];
+
+				if( $driver === 'mysql' || $driver === 'postgres' ){
+					$explain_results[$configName]['sqlexplain_driver'] =  $driver;
+
+					$count=1;
+					foreach(  $for_explain_queries as $key => $value ){
+						if( $value['took'] >= $this->slowQueryThreshold ){
+							$reesults = null;
+							$results = $db->query( "Explain ". $value['query'] );
 
 
-				foreach( $db->_queriesLog as $key => $value ){
+							if( $driver === 'postgres' ){
+								//merge QIERY PLAN value
+								$query_plan = array();
+								foreach( $results as $postgre_value ){
+									$query_plan[] = $postgre_value[0]['QUERY PLAN'] ;
+								}
+								$results[0][0]['QUERY PLAN'] = $query_plan;
 
-					if( preg_match( '/^SELECT /i', $value['query'] ) && $value['took'] >= $this->slowQueryThreshold ){
-
-						$reesults = null;
-						$results = $db->query( "Explain ". $value['query'] );
-
-
-						if( $driver === 'postgres' ){
-							//merge QIERY PLAN value
-							$query_plan = array();
-							foreach( $results as $postgre_value ){
-								$query_plan[] = $postgre_value[0]['QUERY PLAN'] ;
+								//change column order
+								$results[0][0] = array_merge( array("id" => $count), $results[0][0] );
 							}
-							$results[0][0]['QUERY PLAN'] = $query_plan;
 
-							//change column order
-							$results[0][0] = array_merge( array("id" => $count), $results[0][0] );
+							$results[0][0]['query'] =  $value['query'];
+							$results[0][0]['id'] = $count;
+
+							$explain_results[$configName][] = $results[0][0];
+
+							$count++;
 						}
-
-						$results[0][0]['query'] =  $value['query'];
-						$results[0][0]['id'] = $count;
-
-						$explain_results[] = $results[0][0];
-
-						$count++;
 					}
 				}
 
 			}
 
 		}
-
-
 
 		return $explain_results;
 	}

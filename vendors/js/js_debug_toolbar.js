@@ -26,6 +26,24 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
+var DEBUGKIT = function () {
+	var undef;
+	return {
+		module : function (newmodule) {
+			if (this[newmodule] === undef) {
+				this[newmodule] = {};
+				return this[newmodule];
+			}
+			return this[newmodule];
+		}
+	}
+}() ;
+
+DEBUGKIT.module('toolbar');
+
+
+
+
 var DebugKit = function (id) {
 	var elements = {},
 		panels = {},

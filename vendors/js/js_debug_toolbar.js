@@ -2,7 +2,9 @@
 /**
  * Debug Toolbar Javascript.
  *
- * Long description here.
+ * Creates the DEBUGKIT namespace and provides methods for extending 
+ * and enhancing the Html toolbar.  Includes library agnostic Event, Element,
+ * Cookie and Request wrappers.
  *
  * PHP versions 4 and 5
  *
@@ -17,12 +19,8 @@
  * @filesource
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package       cake
- * @subpackage    cake.cake.libs.
- * @since         CakePHP v 1.2.0.4487
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
+ * @package       debugkit
+ * @subpackage    debugkit.vendors.js
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 var DEBUGKIT = function () {
@@ -45,20 +43,13 @@ DEBUGKIT.loader = function () {
 		_startup : [],
 	
 		//register a new method to be run on dom ready.
-		register : function (method, context) {
-			if (context !== undefined) {
-				var bound = function () {
-					return method.apply(context);
-				}
-				this._startup.push(bound);
-				return;
-			}
+		register : function (method) {
 			this._startup.push(method);
 		},
 
 		init : function () {
 			for (var i = 0; i < this._startup.length; i++) {
-				this._startup[i]();
+				this._startup[i].init();
 			}
 		}
 	};
@@ -94,8 +85,12 @@ DEBUGKIT.Util.Element = {
 
 	hide : function (element) {
 		element.style.display = 'none';
-	},
-	
+	}
+};
+
+
+//Event binding
+DEBUGKIT.Util.Event = {
 	addEvent :function(element, type, handler, capture) {
 		capture = (capture === undefined) ? false : capture;
 		if (element.addEventListener) {
@@ -191,6 +186,7 @@ DEBUGKIT.toolbar = function () {
 	var Request = DEBUGKIT.Request,
 		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
+		Event = DEBUGKIT.Util.Event,
 		toolbarHidden = false;
 
 	return {
@@ -268,14 +264,14 @@ DEBUGKIT.toolbar = function () {
 			}
 
 			if (panel.callback !== undefined) {
-				Element.addEvent(panel.button, 'click', function(event) {
+				Event.addEvent(panel.button, 'click', function(event) {
 					event = event || window.event;
 					event.preventDefault();
 					return panel.callback();
 				});
 			} else {
 				var self = this;
-				Element.addEvent(panel.button, 'click', function(event) {
+				Event.addEvent(panel.button, 'click', function(event) {
 					event = event || window.event;
 					event.preventDefault();
 					return self.togglePanel(panel.id);
@@ -349,9 +345,9 @@ DEBUGKIT.toolbar = function () {
 		}
 	};
 }();
-DEBUGKIT.loader.register(DEBUGKIT.toolbar.init, DEBUGKIT.toolbar);
+DEBUGKIT.loader.register(DEBUGKIT.toolbar);
 
-DEBUGKIT.Util.Element.domready(function () {
+DEBUGKIT.Util.Event.domready(function () {
 	DEBUGKIT.loader.init();
 });
 

@@ -183,11 +183,41 @@ DEBUGKIT.Util.Cookie = function() {
 //Basic toolbar module.
 DEBUGKIT.module('toolbar');
 DEBUGKIT.toolbar = function () {
+	//shortcuts
 	var Request = DEBUGKIT.Request,
 		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
 		Event = DEBUGKIT.Util.Event,
 		toolbarHidden = false;
+
+	/**
+	 * Add neat array functionality.
+	 */
+	function neatArray (list) {
+		if (!list.className.match(/depth-0/)) {
+			var item = list.parentNode;
+			Element.hide(list);
+			Element.addClass(item, 'expandable collapsed');
+			Event.addEvent(item, 'click', function (event) {
+				var element = this,
+					event = event || window.event,
+					act = Boolean(item === element),
+					hide = Boolean(list.style.display === 'block');
+				if (act && hide) {
+					Element.hide(list);
+					item.className = item.className.replace(/expanded|$/, 'collapsed');
+				} else if (act) {
+					Element.show(list);
+					item.className = item.className.replace('collapsed', 'expanded');
+				}
+
+				if (event.cancelBubble !== undefined) {
+					event.cancelBubble = true;
+				}
+				return false;
+			});
+		}
+	};
 
 	return {
 		elements : {},
@@ -215,8 +245,8 @@ DEBUGKIT.toolbar = function () {
 					this.addPanel(element);
 				}
 			}
-			//lists = document.getElementsByTagName('ul');
-			//this.makeNeatArray(lists);
+			lists = document.getElementsByTagName('ul');
+			this.makeNeatArray(lists);
 
 			this.deactivatePanel(true);
 			var toolbarState = Cookie.read('toolbarDisplay');
@@ -342,6 +372,17 @@ DEBUGKIT.toolbar = function () {
 				return true;
 			}
 			return false;
+		},
+		
+		makeNeatArray : function (lists) {
+			var i = 0;
+			while (lists[i] !== undefined) {
+				var element = lists[i];
+				if (Element.hasClass(element, 'neat-array')) {
+					neatArray(element);
+				}
+				++i;
+			}
 		}
 	};
 }();

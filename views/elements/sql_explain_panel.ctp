@@ -30,54 +30,53 @@
 <h2><?php __('Sql Explain Results')?></h2>
 <?php if (!empty($content)) : ?>
 
-	<?php
-		$driver = $content['sqlexplain_driver'];
-		unset($content['sqlexplain_driver']);
-	?>
 
-
-
-<div class="cake-sql-log">
-
-	<?php if( $driver === 'mysql' || $driver === 'postgres' ): ?>
-
-
+	<?php foreach( $content as $configName => $explain_results): ?>
 		<?php
-			$headers = array_keys($content[0]);
-
-			foreach( $content as $rownum => $value ){
-
-				foreach( $value as $title => $linevalue ){
-					if( is_array($linevalue) ){
-						$linevalue_li = "<ul>";
-						foreach( $linevalue as $num => $arr_val ){
-							$linevalue_li  .= "<li>";
-							$linevalue_li  .= $arr_val;
-							$linevalue_li  .= "</li>";
-						}
-						$linevalue_li .= "</ul>";
-						$linevalue = $linevalue_li;
-					}
-					$row[$rownum][] = $linevalue;
-				}
-
-			}
-
-			echo $toolbar->table($row, $headers, array('title' => 'SQL Explain Results'));
+			$driver = $explain_results['sqlexplain_driver'];
+			unset($explain_results['sqlexplain_driver']);
 		?>
 
+		<div class="cake-sql-log">
+
+		<?php if( $driver === 'mysql' || $driver === 'postgres' ): ?>
+
+
+			<?php
+				$headers = array_keys($explain_results[0]);
+
+				foreach( $explain_results as $rownum => $value ){
+
+					foreach( $value as $title => $linevalue ){
+						if( is_array($linevalue) ){
+							$linevalue_li = "<ul>";
+							foreach( $linevalue as $num => $arr_val ){
+								$linevalue_li  .= "<li>";
+								$linevalue_li  .= $arr_val;
+								$linevalue_li  .= "</li>";
+							}
+							$linevalue_li .= "</ul>";
+							$linevalue = $linevalue_li;
+						}
+						$row[$rownum][] = $linevalue;
+					}
+
+				}
+				echo $configName;
+				echo $toolbar->table($row, $headers, array('title' => 'SQL Explain Results'));
+			?>
 
 
 
-	<?php else: ?>
-		<p><?php __('support only MySQL and PostgreSQL.'); ?></p>
 
-	<?php endif; ?>
+		<?php else: ?>
+			<p><?php __('support only MySQL and PostgreSQL.'); ?></p>
 
+		<?php endif; ?>
 
+		</div>
+	<?php endforeach; ?>
 
-
-</div>
 
 <?php else: ?>
 	<p class="warning"><?php __('No active database connections'); ?></p>

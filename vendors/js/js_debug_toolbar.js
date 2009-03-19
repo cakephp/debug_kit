@@ -604,7 +604,7 @@ DEBUGKIT.historyPanel = function () {
 			Element.removeClass(historyLinks[i], 'active');
 		}
 		Element.addClass(this, 'active loading');
-		
+
 		if (this.id === 'history-restore-current') {
 			restoreCurrentState();
 			return false;
@@ -618,7 +618,7 @@ DEBUGKIT.historyPanel = function () {
 		});
 		remote.send(this.href);
 	};
-	
+
 	return {
 		init : function () {
 			if (toolbar.panels['history'] === undefined) {
@@ -632,12 +632,8 @@ DEBUGKIT.historyPanel = function () {
 				button = anchors[i];
 				if (Element.hasClass(button, 'history-link')) {
 					historyLinks.push(button);
+					Event.addEvent(button, 'click', handleHistoryLink);
 				}
-			}
-			console.log(historyLinks);
-			for (i in historyLinks) {
-				button = historyLinks[i];
-				Event.addEvent(button, 'click', handleHistoryLink);
 			}
 		}
 	};

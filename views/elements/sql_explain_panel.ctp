@@ -44,7 +44,8 @@
 
 			<?php
 				$headers = array_keys($explain_results[0]);
-
+				$row = array();
+				
 				foreach( $explain_results as $rownum => $value ){
 
 					foreach( $value as $title => $linevalue ){
@@ -62,6 +63,7 @@
 					}
 
 				}
+				
 				echo $configName;
 				echo $toolbar->table($row, $headers, array('title' => 'SQL Explain Results'));
 			?>

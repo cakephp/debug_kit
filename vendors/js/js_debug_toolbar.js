@@ -256,11 +256,6 @@ DEBUGKIT.toolbar = function () {
 			this.makeNeatArray(lists);
 
 			this.deactivatePanel(true);
-			var toolbarState = Cookie.read('toolbarDisplay');
-			if (toolbarState != 'block') {
-				toolbarHidden = false;
-				this.toggleToolbar();
-			}
 		},
 		/**
 		 * Add a panel to the toolbar
@@ -287,17 +282,8 @@ DEBUGKIT.toolbar = function () {
 					panel.content = element;
 				}
 			}
-			if (!panel.id) {
-				throw('invalid element');
-			}
-
-			if (panel.button.id && panel.button.id === 'hide-toolbar') {
-				panel.callback = this.toggleToolbar;
-			}
-
-			var callbackName = "activate" + panel.id.replace('-tab', '');
-			if (this[callbackName] !== undefined) {
-				this[callbackName](panel);
+			if (!panel.id || !panel.content) {
+				return false;
 			}
 
 			if (panel.callback !== undefined) {
@@ -316,19 +302,6 @@ DEBUGKIT.toolbar = function () {
 			}
 			this.panels[panel.id] = panel;
 			return panel.id;
-		},
-		
-		toggleToolbar : function () {
-			var display = toolbarHidden ? 'block' : 'none';
-			for (var i in this.panels) {
-				var panel = this.panels[i];
-				if (panel.content !== undefined) {
-					panel.element.style.display = display;
-					Cookie.write('toolbarDisplay', display);
-				}
-			}
-			toolbarHidden = !toolbarHidden;
-			return false;
 		},
 
 	/**
@@ -393,8 +366,44 @@ DEBUGKIT.toolbar = function () {
 		}
 	};
 }();
-
 DEBUGKIT.loader.register(DEBUGKIT.toolbar);
+
+DEBUGKIT.toolbarToggle = function () {
+	var toolbar = DEBUGKIT.toolbar,
+		Cookie = DEBUGKIT.Util.Cookie,
+		Event = DEBUGKIT.Util.Event,
+		toolbarHidden = false;
+
+	return {
+		init : function () {
+			var button = document.getElementById('hide-toolbar'),
+				self = this;
+
+			Event.addEvent(button, 'click', function (event) {
+				event.preventDefault();
+				self.toggleToolbar();
+			});
+
+			var toolbarState = Cookie.read('toolbarDisplay');
+			if (toolbarState != 'block') {
+				toolbarHidden = false;
+				this.toggleToolbar();
+			}
+		},
+
+		toggleToolbar : function () {
+			var display = toolbarHidden ? 'block' : 'none';
+			for (var i in toolbar.panels) {
+				var panel = toolbar.panels[i];
+				panel.element.style.display = display;
+				Cookie.write('toolbarDisplay', display);
+			}
+			toolbarHidden = !toolbarHidden;
+			return false;
+		}
+	};
+}();
+DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
 
 DEBUGKIT.Util.Event.domready(function () {
 	DEBUGKIT.loader.init();

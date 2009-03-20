@@ -209,6 +209,7 @@ class ToolbarComponent extends Object {
 
 		foreach ($panels as $panelName) {
 			$panel =& $this->panels[$panelName];
+			$panelName = Inflector::underscore($panelName);
 			$vars[$panelName]['content'] = $panel->beforeRender($controller);
 			$elementName = Inflector::underscore($panelName) . '_panel';
 			if (isset($panel->elementName)) {

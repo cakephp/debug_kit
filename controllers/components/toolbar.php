@@ -657,6 +657,10 @@ class sqlExplainPanel extends DebugPanel {
 				$logs = $Xml->toArray();
 				$logs = Set::classicExtract($logs, 'Table.Tbody.Tr.{n}.Td');
 
+				if( empty($logs) ){
+					continue;
+				}
+
 				$for_explain_queries = null;
 				foreach( $logs as $num => $showLogResult ){
 					//Skip error query.

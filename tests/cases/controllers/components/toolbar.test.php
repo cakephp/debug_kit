@@ -18,12 +18,8 @@
  * @filesource
  * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
  * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package       cake
- * @subpackage    cake.cake.libs.
- * @since         CakePHP v 1.2.0.4487
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
+ * @package       debug_kit
+ * @subpackage    debug_kit.tests
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 App::import('Component', 'DebugKit.Toolbar');
@@ -41,7 +37,7 @@ Mock::generate('DebugPanel');
 */
 class DebugToolbarTestCase extends CakeTestCase {
 	
-	function setUp() {
+	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		$this->Controller =& ClassRegistry::init('Controller');
 		$this->Controller->params = Router::parse('/');
@@ -49,7 +45,17 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component =& ClassRegistry::init('Component');
 		$this->Controller->Toolbar =& ClassRegistry::init('TestToolBarComponent', 'Component');
 	}
-
+/**
+ * endTest
+ *
+ * @return void
+ **/
+	function endTest() {
+		unset($this->Controller);
+		if (class_exists('DebugKitDebugger')) {
+			DebugKitDebugger::clearTimers();
+		}
+	}
 /**
  * test Loading of panel classes
  *
@@ -356,15 +362,13 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
 	}
 /**
- * teardown
+ * Test that the toolbar does not interfere with requestAction
  *
  * @return void
  **/
-	function tearDown() {
-		unset($this->Controller);
-		if (class_exists('DebugKitDebugger')) {
-			DebugKitDebugger::clearTimers();
-		}
+	function testNoRequestActionInterference() {
+		
 	}
+
 }
 ?>

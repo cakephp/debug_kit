@@ -614,19 +614,17 @@ class sqlExplainPanel extends DebugPanel {
  */
 	function beforeRender(&$controller) {
 		App::import('Core', 'Xml');
-		$queryLogs = array();
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
-		$explain_results = array();
 
-
+		$explainResults = $queryLogs = array();
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
 			if ($db->isInterfaceSupported('showLog')) {
-				//Get sql queries with html tag.
 				$logs = null;
+
 				ob_start();
 				$db->showLog();
 				$queryLogs[$configName] = ob_get_clean();
@@ -639,46 +637,46 @@ class sqlExplainPanel extends DebugPanel {
 					continue;
 				}
 
-				$for_explain_queries = null;
+				$explainQueries = null;
 				foreach ($logs as $num => $showLogResult) {
 					//Skip error query.
 					//Get only SELECT query.
 					if (!empty($showLogResult[4]) && preg_match( '/^SELECT /i', $showLogResult[1])) {
-						$for_explain_queries[$num]['query'] = $showLogResult[1];
-						$for_explain_queries[$num]['took'] = $showLogResult[4]['value'];
+						$explainQueries[$num]['query'] = $showLogResult[1];
+						$explainQueries[$num]['took'] = $showLogResult[4]['value'];
 					}
 				}
 
-				if (count($for_explain_queries) === 0){
+				if (count($explainQueries) === 0){
 					continue;
 				}
 
 				$driver = $db->config['driver'];
 				if ($driver === 'mysql' || $driver === 'postgres') {
-					$explain_results[$configName]['sqlexplain_driver'] =  $driver;
+					$explainResults[$configName]['sqlexplain_driver'] =  $driver;
 
 					$count = 1;
-					foreach ( $for_explain_queries as $key => $value) {
+					foreach ($explainQueries as $key => $value) {
 						if ($value['took'] >= $this->slowQueryThreshold) {
-							$reesults = null;
-							$results = $db->query("Explain ". $value['query']);
+							$results = null;
+							$results = $db->query("EXPLAIN ". $value['query']);
 
 							if ($driver === 'postgres') {
 								//merge QIERY PLAN value
-								$query_plan = array();
-								foreach ($results as $postgre_value) {
-									$query_plan[] = $postgre_value[0]['QUERY PLAN'] ;
+								$queryPlan = array();
+								foreach ($results as $postgreValue) {
+									$queryPlan[] = $postgreValue[0]['QUERY PLAN'] ;
 								}
-								$results[0][0]['QUERY PLAN'] = $query_plan;
+								$results[0][0]['QUERY PLAN'] = $queryPlan;
 
 								//change column order
-								$results[0][0] = array_merge( array("id" => $count), $results[0][0] );
+								$results[0][0] = array_merge(array("id" => $count), $results[0][0]);
 							}
 
 							$results[0][0]['query'] =  $value['query'];
 							$results[0][0]['id'] = $count;
 
-							$explain_results[$configName][] = $results[0][0];
+							$explainResults[$configName][] = $results[0][0];
 
 							$count++;
 						}
@@ -686,7 +684,7 @@ class sqlExplainPanel extends DebugPanel {
 				}
 			}
 		}
-		return $explain_results;
+		return $explainResults;
 	}
 }
 ?>

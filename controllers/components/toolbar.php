@@ -45,7 +45,7 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables','sqlExplain');
+	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'sqlExplain');
 /**
  * Loaded panel objects.
  *
@@ -657,40 +657,38 @@ class sqlExplainPanel extends DebugPanel {
 				$logs = $Xml->toArray();
 				$logs = Set::classicExtract($logs, 'Table.Tbody.Tr.{n}.Td');
 
-				if( empty($logs) ){
+				if (empty($logs)) {
 					continue;
 				}
 
 				$for_explain_queries = null;
-				foreach( $logs as $num => $showLogResult ){
+				foreach ($logs as $num => $showLogResult) {
 					//Skip error query.
 					//Get only SELECT query.
-					if( !empty($showLogResult[4]) && preg_match( '/^SELECT /i', $showLogResult[1]) ){
+					if (!empty($showLogResult[4]) && preg_match( '/^SELECT /i', $showLogResult[1])) {
 						$for_explain_queries[$num]['query'] = $showLogResult[1];
 						$for_explain_queries[$num]['took'] = $showLogResult[4]['value'];
 					}
 				}
 
-				if( count($for_explain_queries) === 0 ){
+				if (count($for_explain_queries) === 0){
 					continue;
 				}
 
 				$driver = $db->config['driver'];
-
-				if( $driver === 'mysql' || $driver === 'postgres' ){
+				if ($driver === 'mysql' || $driver === 'postgres') {
 					$explain_results[$configName]['sqlexplain_driver'] =  $driver;
 
 					$count=1;
-					foreach(  $for_explain_queries as $key => $value ){
-						if( $value['took'] >= $this->slowQueryThreshold ){
+					foreach ( $for_explain_queries as $key => $value) {
+						if ($value['took'] >= $this->slowQueryThreshold) {
 							$reesults = null;
-							$results = $db->query( "Explain ". $value['query'] );
+							$results = $db->query("Explain ". $value['query']);
 
-
-							if( $driver === 'postgres' ){
+							if ($driver === 'postgres') {
 								//merge QIERY PLAN value
 								$query_plan = array();
-								foreach( $results as $postgre_value ){
+								foreach ($results as $postgre_value) {
 									$query_plan[] = $postgre_value[0]['QUERY PLAN'] ;
 								}
 								$results[0][0]['QUERY PLAN'] = $query_plan;
@@ -708,11 +706,8 @@ class sqlExplainPanel extends DebugPanel {
 						}
 					}
 				}
-
 			}
-
 		}
-
 		return $explain_results;
 	}
 }

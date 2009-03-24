@@ -45,12 +45,32 @@ class DebugViewTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function setUp() {
+	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 		$this->Controller =& ClassRegistry::init('Controller');
 		$this->View  =& new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');
+		$this->_paths = array();
+		$this->_paths['plugin'] = Configure::read('pluginPaths');
+		$this->_paths['view'] = Configure::read('viewPaths');
+		$this->_paths['vendor'] = Configure::read('vendorPaths');
+		$this->_paths['controller'] = Configure::read('controllerPaths');
+	}
+/**
+ * tear down function
+ *
+ * @return void
+ **/
+	function endTest() {
+		Configure::write('pluginPaths', $this->_paths['plugin']);
+		Configure::write('viewPaths', $this->_paths['view']);
+		Configure::write('vendorPaths', $this->_paths['vendor']);
+		Configure::write('controllerPaths', $this->_paths['controller']);
+
+		unset($this->View, $this->Controller);
+		DebugKitDebugger::clearTimers();
+		Configure::write('debug', $this->_debug);
 	}
 	
 /**
@@ -120,25 +140,25 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertTrue(is_object($result['Javascript']));
 		$this->assertTrue(is_object($result['Number']));
 	}
-
 /**
- * reset the view paths
+ * test that $out is returned when a layout is rendered instead of the empty
+ * $this->output.  As this causes issues with requestAction()
  *
  * @return void
  **/
-	function endCase() {
-		Configure::write('viewPaths', $this->_viewPaths);
-	}
+	function testProperReturnUnderRequestAction() {
+		$plugins = Configure::read('pluginPaths');
+		$views = Configure::read('viewPaths');
+		$testapp = $plugins[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
+		array_unshift($views, $testapp);
+		Configure::write('viewPaths', $views);
+		
+		$this->View->set('test', 'I have been rendered.');
+		$this->View->viewPath = 'debug_kit_test';
+		$this->View->layout = false;
+		$result = $this->View->render('request_action_render');
 
-/**
- * tear down function
- *
- * @return void
- **/
-	function tearDown() {
-		unset($this->View, $this->Controller);
-		DebugKitDebugger::clearTimers();
-		Configure::write('debug', $this->_debug);
+		$this->assertEqual($result, 'I have been rendered.');
 	}
 }
 ?>

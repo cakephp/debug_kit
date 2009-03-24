@@ -32,6 +32,12 @@ class TestToolbarComponent extends ToolbarComponent {
 
 Mock::generate('DebugPanel');
 
+if (!class_exists('AppController')) {
+	class AppController extends Controller {
+		
+	}
+}
+
 /**
 * DebugToolbar Test case
 */
@@ -44,6 +50,13 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->params['url']['url'] = '/';
 		$this->Controller->Component =& ClassRegistry::init('Component');
 		$this->Controller->Toolbar =& ClassRegistry::init('TestToolBarComponent', 'Component');
+		
+		$this->_server = $_SERVER;
+		$this->_paths = array();
+		$this->_paths['plugin'] = Configure::read('pluginPaths');
+		$this->_paths['view'] = Configure::read('viewPaths');
+		$this->_paths['vendor'] = Configure::read('vendorPaths');
+		$this->_paths['controller'] = Configure::read('controllerPaths');
 	}
 /**
  * endTest
@@ -51,6 +64,12 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function endTest() {
+		$_SERVER = $this->_server;
+		Configure::write('pluginPaths', $this->_paths['plugin']);
+		Configure::write('viewPaths', $this->_paths['view']);
+		Configure::write('vendorPaths', $this->_paths['vendor']);
+		Configure::write('controllerPaths', $this->_paths['controller']);
+
 		unset($this->Controller);
 		if (class_exists('DebugKitDebugger')) {
 			DebugKitDebugger::clearTimers();
@@ -78,7 +97,6 @@ class DebugToolbarTestCase extends CakeTestCase {
  */
 	function testVendorPanels() {
 	    $f = Configure::read('pluginPaths');
-		$_back = Configure::read('vendorPaths');
 		Configure::write('vendorPaths', array($f[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
@@ -90,8 +108,6 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->startup($this->Controller);
 		$this->assertTrue(isset($this->Controller->Toolbar->panels['test']));
 		$this->assertTrue(is_a($this->Controller->Toolbar->panels['test'], 'TestPanel'));
-
-		Configure::write('vendorPaths', $_back);
 	}
 
 /**
@@ -367,7 +383,22 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testNoRequestActionInterference() {
-		
+		$f = Configure::read('pluginPaths');
+		$testapp = $f[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'controllers' . DS;
+		array_unshift($f, $testapp);
+		Configure::write('controllerPaths', $f);
+
+		$plugins = Configure::read('pluginPaths');
+		$views = Configure::read('viewPaths');
+		$testapp = $plugins[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
+		array_unshift($views, $testapp);
+		Configure::write('viewPaths', $views);
+
+		$result = $this->Controller->requestAction('/debug_kit_test/request_action_return', array('return'));
+		$this->assertEqual($result, 'I am some value from requestAction.');
+
+		$result = $this->Controller->requestAction('/debug_kit_test/request_action_render', array('return'));
+		$this->assertEqual($result, 'I have been rendered.');
 	}
 
 }

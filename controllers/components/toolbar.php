@@ -604,25 +604,7 @@ class LogPanel extends DebugPanel {
 class sqlExplainPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
 
-	var $dbConfigs = array();
-
 	var $slowQueryThreshold = 0;
-
-/**
- * get db configs.
- *
- * @param string $controller
- * @access public
- * @return void
- */
-	function startUp(&$controller) {
-		if (!class_exists('ConnectionManager')) {
-			$this->dbConfigs = array();
-			return false;
-		}
-		$this->dbConfigs = ConnectionManager::sourceList();
-		return true;
-	}
 /**
  * Get Sql Explain results for each DB config
  *
@@ -631,14 +613,11 @@ class sqlExplainPanel extends DebugPanel {
  * @return array
  */
 	function beforeRender(&$controller) {
-
 		App::import('Core', 'Xml');
-
 		$queryLogs = array();
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
-
 		$explain_results = array();
 
 
@@ -646,7 +625,6 @@ class sqlExplainPanel extends DebugPanel {
 		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
 			if ($db->isInterfaceSupported('showLog')) {
-
 				//Get sql queries with html tag.
 				$logs = null;
 				ob_start();
@@ -679,7 +657,7 @@ class sqlExplainPanel extends DebugPanel {
 				if ($driver === 'mysql' || $driver === 'postgres') {
 					$explain_results[$configName]['sqlexplain_driver'] =  $driver;
 
-					$count=1;
+					$count = 1;
 					foreach ( $for_explain_queries as $key => $value) {
 						if ($value['took'] >= $this->slowQueryThreshold) {
 							$reesults = null;

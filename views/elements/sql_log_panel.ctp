@@ -37,7 +37,7 @@
 			echo $toolbar->table($queryLog['queries'], $headers);
 		
 			if (!empty($queryLog['explains'])):
-				$name = sprintf(__('toggle query explains for %s', true), $dbName);
+				$name = sprintf(__('toggle (%s) query explains for %s', true), count($queryLog['explains']), $dbName);
 				echo $html->link($name, '#', array('class' => 'show-slow'));
 
 				echo '<div class="slow-query-container">';
@@ -78,6 +78,4 @@ DEBUGKIT.sqlLog = function () {
 	};
 }();
 DEBUGKIT.loader.register(DEBUGKIT.sqlLog);
-
-
 </script>

@@ -505,8 +505,12 @@ class TimerPanel extends DebugPanel {
  **/
 class sqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-	
-	var $threshold = 0;
+/**
+ * The minimum number of milliseconds a query must take before an EXPLAIN is run.
+ *
+ * @var int
+ **/	
+	var $threshold = 10;
 /**
  * Get Sql Logs for each DB config
  *
@@ -580,7 +584,6 @@ class sqlLogPanel extends DebugPanel {
 		if ($driver === 'myslqi' || $driver === 'mysql' || $driver === 'postgres') {
 			$results = $db->query('EXPLAIN ' . $queryString);
 			if ($driver === 'postgres') {
-				//merge QUERY PLAN value
 				$queryPlan = array();
 				foreach ($results as $postgreValue) {
 					$queryPlan[] = $postgreValue[0]['QUERY PLAN'];

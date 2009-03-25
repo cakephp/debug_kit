@@ -35,14 +35,49 @@
 		<?php
 			$headers = array('Nr', 'Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)');
 			echo $toolbar->table($queryLog['queries'], $headers);
-			
+		
 			if (!empty($queryLog['explains'])):
-				$headers = array_keys($queryLog['explains'][0]);
-				echo $toolbar->table($queryLog['explains'], $headers);
-			endif;
-		?>
+				$name = sprintf(__('toggle query explains for %s', true), $dbName);
+				echo $html->link($name, '#', array('class' => 'show-slow'));
+
+				echo '<div class="slow-query-container">';
+					$headers = array_keys($queryLog['explains'][0]);
+					echo $toolbar->table($queryLog['explains'], $headers);
+				echo '</div>';
+			else: ?>
+			<p class="warning"><?php __('No slow queries!, or your database does not support EXPLAIN'); ?> </p>
+		<?php endif; ?>
 	</div>
 	<?php endforeach; ?>
 <?php else: ?>
 	<p class="warning"><?php __('No active database connections'); ?></p>
 <?php endif; ?>
+
+<script type="text/javascript">
+DEBUGKIT.module('sqlLog');
+DEBUGKIT.sqlLog = function () {
+	var Element = DEBUGKIT.Util.Element,
+		Event = DEBUGKIT.Util.Event;
+
+	return {
+		init : function () {
+			var sqlPanel = document.getElementById('sql_log-tab');
+			var buttons = sqlPanel.getElementsByTagName('A');
+			for (var i in buttons) {
+				var button = buttons[i];
+				if (Element.hasClass(button, 'show-slow')) {
+					var nextDiv = button.nextSibling;
+					Event.addEvent(button, 'click', function (event) {
+						event.preventDefault();
+						Element.toggle(nextDiv);
+					});
+					Element.hide(nextDiv);
+				}
+			}
+		}
+	};
+}();
+DEBUGKIT.loader.register(DEBUGKIT.sqlLog);
+
+
+</script>

@@ -45,7 +45,7 @@ class ToolbarComponent extends Object {
  *
  * @var array
  */
-	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'sqlExplain');
+	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
 /**
  * Loaded panel objects.
  *

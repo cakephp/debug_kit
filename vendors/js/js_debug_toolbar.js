@@ -95,7 +95,7 @@ DEBUGKIT.Util.Element = {
 	},
 	
 	toggle : function (element) {
-		element.style.display == 'none' ? Element.show(element) : Element.hide(element);
+		element.style.display == 'none' ? this.show(element) : this.hide(element);
 	}
 };
 

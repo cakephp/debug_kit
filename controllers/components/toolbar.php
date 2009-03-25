@@ -544,8 +544,7 @@ class sqlLogPanel extends DebugPanel {
 				$sqlLog = $Xml->toArray();
 				$queries = $explained = array();
 				foreach ($sqlLog['Table']['Tbody']['Tr'] as $query) {
-					$tds = $query['Td'];
-					$this->_restructureCells($tds);
+					$tds = $this->_restructureCells($query['Td']);
 					$queries[] = $tds;
 					$isSlow = (($tds[4] / $tds[5]) >= ($this->rowCount / $this->threshold));
 					if ($isSlow && preg_match('/^SELECT /', $tds[1])) {
@@ -566,17 +565,19 @@ class sqlLogPanel extends DebugPanel {
  *
  * @return void
  **/
-	function _restructureCells(&$tds) {
+	function _restructureCells($tds) {
 		if (count($tds) == 5) {
-			$tds[3] = $tds[2]['value'];
-			$tds[4] = $tds[3]['value'];
 			$tds[5] = $tds[4]['value'];
+			$tds[4] = $tds[3]['value'];
+			$tds[3] = $tds[2]['value'];
 			$tds[2] = '';
 		} else {
 			$tds[2] = $tds[2]['value'];
 			$tds[3] = $tds[3]['value'];
 			$tds[4] = $tds[4]['value'];
+			$tds[5] = $tds[5]['value'];
 		}
+		return $tds;
 	}
 /**
  * Run an explain query for a slow query.
@@ -596,7 +597,7 @@ class sqlLogPanel extends DebugPanel {
 				foreach ($results as $postgreValue) {
 					$queryPlan[] = $postgreValue[0]['QUERY PLAN'];
 				}
-				$results[0][0]['QUERY PLAN'] = $queryPlan;
+				$results[0][0] = array('Query Plan' => implode("<br />", $queryPlan));
 			}
 			$results = $results[0][0];
 			$results['query'] =  $queryString;

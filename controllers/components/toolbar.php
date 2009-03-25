@@ -546,7 +546,10 @@ class sqlLogPanel extends DebugPanel {
 				foreach ($sqlLog['Table']['Tbody']['Tr'] as $query) {
 					$tds = $this->_restructureCells($query['Td']);
 					$queries[] = $tds;
-					$isSlow = (($tds[4] / $tds[5]) >= ($this->rowCount / $this->threshold));
+					$isSlow = ($tds[5] >= $this->threshold &&
+						$tds[5] > 0 &&
+						$tds[4] / $tds[5] <= $this->rowCount / $this->threshold
+					);
 					if ($isSlow && preg_match('/^SELECT /', $tds[1])) {
 						$explain = $this->_explainQuery($db, $tds[1]);
 						if (!empty($explain)) {

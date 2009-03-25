@@ -35,6 +35,11 @@
 		<?php
 			$headers = array('Nr', 'Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)');
 			echo $toolbar->table($queryLog['queries'], $headers);
+			
+			if (!empty($queryLog['explains'])):
+				$headers = array_keys($queryLog['explains'][0]);
+				echo $toolbar->table($queryLog['explains'], $headers);
+			endif;
 		?>
 	</div>
 	<?php endforeach; ?>

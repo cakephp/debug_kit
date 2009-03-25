@@ -531,17 +531,20 @@ class sqlLogPanel extends DebugPanel {
 
 				$Xml =& new Xml($htmlBlob);
 				$sqlLog = $Xml->toArray();
-				$logArray = array();
+				$queries = $explained = array();
 				foreach ($sqlLog['Table']['Tbody']['Tr'] as $query) {
 					$tds = $query['Td'];
 					$this->_restructureCells($tds);
-					$logArray[] = $tds;
+					$queries[] = $tds;
 					if (preg_match('/^SELECT /', $tds[1]) && $tds[5] >= $this->threshold) {
-						$this->_explainQuery($db, $logArray, $tds[1]);
+						$explain = $this->_explainQuery($db, $tds[1]);
+						if (!empty($explain)) {
+							$explained[] = $explain;
+						}
 					}
-					
 				}
-				$queryLogs[$configName]['queries'] = $logArray;
+				$queryLogs[$configName]['queries'] = $queries;
+				$queryLogs[$configName]['explains'] = $explained;
 			}
 		}
 		return $queryLogs;
@@ -566,14 +569,28 @@ class sqlLogPanel extends DebugPanel {
 /**
  * Run an explain query for a slow query.
  *
- * @param object $db 
- * @param array $resultArray 
- * @param array $td 
+ * @param object $db Dbo instance
+ * @param string $queryString The Query to explain
  * @access public
  * @return void
  **/
-	function _explainQuery(&$db, &$resultArray, $queryString) {
-		
+	function _explainQuery(&$db, $queryString) {
+		$driver = $db->config['driver'];
+		$results = null;
+		if ($driver === 'myslqi' || $driver === 'mysql' || $driver === 'postgres') {
+			$results = $db->query('EXPLAIN ' . $queryString);
+			if ($driver === 'postgres') {
+				//merge QUERY PLAN value
+				$queryPlan = array();
+				foreach ($results as $postgreValue) {
+					$queryPlan[] = $postgreValue[0]['QUERY PLAN'];
+				}
+				$results[0][0]['QUERY PLAN'] = $queryPlan;
+			}
+			$results = $results[0][0];
+			$results['query'] =  $queryString;
+		}
+		return $results;
 	}
 }
 

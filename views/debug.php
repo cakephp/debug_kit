@@ -84,11 +84,11 @@ class DebugView extends DoppelGangerView {
 		if (isset($this->loaded['toolbar'])) {
 			$this->loaded['toolbar']->postRender();
 		}
-		//Temporary work around to hide the SQL dump at page bottom
-		Configure::write('debug', 0);
 		if (empty($this->output)) {
 			return $out;
 		}
+		//Temporary work around to hide the SQL dump at page bottom
+		Configure::write('debug', 0);
 		return $this->output;
 	}
 

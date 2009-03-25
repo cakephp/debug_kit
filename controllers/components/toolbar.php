@@ -506,11 +506,18 @@ class TimerPanel extends DebugPanel {
 class sqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
 /**
- * The minimum number of milliseconds a query must take before an EXPLAIN is run.
+ * The minimum number of milliseconds returning rowLevels must take
+ * before a query is explained.
  *
  * @var int
  **/	
 	var $threshold = 10;
+/**
+ * Number of rows that must be returned per threshold before a query is explained
+ *
+ * @var int
+ **/
+	var $rowCount = 50;
 /**
  * Get Sql Logs for each DB config
  *
@@ -540,7 +547,8 @@ class sqlLogPanel extends DebugPanel {
 					$tds = $query['Td'];
 					$this->_restructureCells($tds);
 					$queries[] = $tds;
-					if (preg_match('/^SELECT /', $tds[1]) && $tds[5] >= $this->threshold) {
+					$isSlow = (($tds[4] / $tds[5]) >= ($this->rowCount / $this->threshold));
+					if ($isSlow && preg_match('/^SELECT /', $tds[1])) {
 						$explain = $this->_explainQuery($db, $tds[1]);
 						if (!empty($explain)) {
 							$explained[] = $explain;

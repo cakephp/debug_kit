@@ -505,6 +505,8 @@ class TimerPanel extends DebugPanel {
  **/
 class sqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+	
+	var $threshold = 0;
 /**
  * Get Sql Logs for each DB config
  *
@@ -513,20 +515,65 @@ class sqlLogPanel extends DebugPanel {
  * @return void
  */
 	function beforeRender(&$controller) {
-		$queryLogs = array();
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
+		App::import('Core', 'Xml');
+		$queryLogs = array();
+
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
 			if ($db->isInterfaceSupported('showLog')) {
 				ob_start();
 				$db->showLog();
-				$queryLogs[$configName] = ob_get_clean();
+				$htmlBlob = ob_get_clean();
+
+				$Xml =& new Xml($htmlBlob);
+				$sqlLog = $Xml->toArray();
+				$logArray = array();
+				foreach ($sqlLog['Table']['Tbody']['Tr'] as $query) {
+					$tds = $query['Td'];
+					$this->_restructureCells($tds);
+					$logArray[] = $tds;
+					if (preg_match('/^SELECT /', $tds[1]) && $tds[5] >= $this->threshold) {
+						$this->_explainQuery($db, $logArray, $tds[1]);
+					}
+					
+				}
+				$queryLogs[$configName]['queries'] = $logArray;
 			}
 		}
 		return $queryLogs;
+	}
+/**
+ * Restructure a row if error cell is empty
+ *
+ * @return void
+ **/
+	function _restructureCells(&$tds) {
+		if (count($tds) == 5) {
+			$tds[3] = $tds[2]['value'];
+			$tds[4] = $tds[3]['value'];
+			$tds[5] = $tds[4]['value'];
+			$tds[2] = '';
+		} else {
+			$tds[2] = $tds[2]['value'];
+			$tds[3] = $tds[3]['value'];
+			$tds[4] = $tds[4]['value'];
+		}
+	}
+/**
+ * Run an explain query for a slow query.
+ *
+ * @param object $db 
+ * @param array $resultArray 
+ * @param array $td 
+ * @access public
+ * @return void
+ **/
+	function _explainQuery(&$db, &$resultArray, $queryString) {
+		
 	}
 }
 
@@ -629,7 +676,7 @@ class sqlExplainPanel extends DebugPanel {
 				$db->showLog();
 				$queryLogs[$configName] = ob_get_clean();
 
-				$Xml = new Xml($queryLogs[$configName]);
+				$Xml =& new Xml($queryLogs[$configName]);
 				$logs = $Xml->toArray();
 				$logs = Set::classicExtract($logs, 'Table.Tbody.Tr.{n}.Td');
 

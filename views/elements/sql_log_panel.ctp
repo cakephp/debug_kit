@@ -32,7 +32,10 @@
 	<?php foreach ($content as $dbName => $queryLog) : ?>
 	<div class="sql-log-panel-query-log">
 		<h4><?php echo $dbName ?></h4>
-		<?php echo $queryLog; ?>
+		<?php
+			$headers = array('Nr', 'Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)');
+			echo $toolbar->table($queryLog['queries'], $headers);
+		?>
 	</div>
 	<?php endforeach; ?>
 <?php else: ?>

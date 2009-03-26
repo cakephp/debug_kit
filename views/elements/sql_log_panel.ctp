@@ -34,24 +34,24 @@
 		<h4><?php echo $dbName ?></h4>
 		<?php
 			$headers = array('Nr', 'Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)');
-			echo $toolbar->table($queryLog['queries'], $headers);
-		
+			echo $toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
+
 			if (!empty($queryLog['explains'])):
 				$name = sprintf(__('toggle (%s) query explains for %s', true), count($queryLog['explains']), $dbName);
 				echo $html->link($name, '#', array('class' => 'show-slow'));
 
 				echo '<div class="slow-query-container">';
 					$headers = array_keys($queryLog['explains'][0]);
-					echo $toolbar->table($queryLog['explains'], $headers);
+					echo $toolbar->table($queryLog['explains'], $headers, array('title' => 'Slow Queries ' . $dbName));
 				echo '</div>';
-			else: ?>
-			<p class="warning"><?php __('No slow queries!, or your database does not support EXPLAIN'); ?> </p>
-		<?php endif; ?>
+			else:
+				echo $toolbar->message('Warning', __('No slow queries!, or your database does not support EXPLAIN', true));
+			endif; ?>
 	</div>
 	<?php endforeach; ?>
-<?php else: ?>
-	<p class="warning"><?php __('No active database connections'); ?></p>
-<?php endif; ?>
+<?php else:
+	echo $toolbar->message('Warning', __('No active database connections', true));
+endif; ?>
 
 <script type="text/javascript">
 DEBUGKIT.module('sqlLog');

@@ -1,4 +1,4 @@
-/* @override http://localhost/cake_debug_kit/debug_kit/css/debug_toolbar.css */
+/* @override http://localhost/mark_story/site/debug_kit/css/debug_toolbar.css */
 #debug-kit-toolbar {
 	position: fixed;
 	top: 0px;
@@ -8,7 +8,9 @@
 	overflow: visible;
 	z-index:10000;
 	font-family: helvetica, arial, sans-serif;
+	font-size: 12px;
 }
+
 /* panel tabs */
 #debug-kit-toolbar #panel-tabs {
 	float: right;
@@ -22,7 +24,6 @@
 	padding: 0;
 	list-style: none;
 }
-
 #debug-kit-toolbar .panel-tab a {
 	float: left;
 	clear: none;
@@ -48,6 +49,12 @@
 #debug-kit-toolbar .panel-tab a + .panel-content:hover {
 	display: block;
 }
+#debug-kit-toolbar .panel-tab.icon a{
+	-webkit-border-top-left-radius: 8px 8px;
+	-webkit-border-bottom-left-radius: 8px 8px;
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-bottomleft: 8px
+}
 
 /* panel content */
 #debug-kit-toolbar .panel-content {
@@ -69,7 +76,6 @@
 .panel-content {
 	display: none;
 }
-
 .panel-content p {
 	margin: 1em 0;
 }
@@ -92,10 +98,21 @@
 #debug-kit-toolbar h4,
 #debug-kit-toolbar h5,
 #debug-kit-toolbar th {
+	color: #5d1717;
 	font-family: "Trebuchet MS", trebuchet, helvetica, arial, sans-serif;
 	margin-bottom:0.6em;
 	background:none;
 }
+#debug-kit-toolbar h1 {
+	font-size: 18px;
+}
+#debug-kit-toolbar h2 {
+	font-size: 16px;
+}
+#debug-kit-toolbar h4 {
+	font-size: 14px;
+}
+
 
 /* panel tables */
 #debug-kit-toolbar table.debug-table {
@@ -110,7 +127,8 @@
 }
 #debug-kit-toolbar table.debug-table th {
 	border-bottom: 1px solid #222;
-	background: 0;;
+	background: 0;
+	color: #252525;
 }
 #debug-kit-toolbar table.debug-table tr:nth-child(2n+1) td {
 	background:#f6f6f6;
@@ -135,7 +153,6 @@
 #debug-kit-toolbar .panel-content.request {
 	display: block;
 }
-
 
 /** Neat Array styles **/
 #debug-kit-toolbar .neat-array,

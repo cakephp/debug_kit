@@ -536,6 +536,7 @@ class sqlLogPanel extends DebugPanel {
 
 				$Xml =& new Xml($htmlBlob);
 				$sqlLog = $Xml->toArray();
+
 				if (empty($sqlLog['Table']['Tbody']['Tr'])) {
 				 	continue;
 				}
@@ -568,11 +569,18 @@ class sqlLogPanel extends DebugPanel {
 			$tds[4] = $tds[3]['value'];
 			$tds[3] = $tds[2]['value'];
 			$tds[2] = '';
-		} else {
+		} elseif (count($tds) == 6) {
 			$tds[2] = $tds[2]['value'];
 			$tds[3] = $tds[3]['value'];
 			$tds[4] = $tds[4]['value'];
 			$tds[5] = $tds[5]['value'];
+		} else {
+			foreach ($tds as $i => $td) {
+				if (is_array($td) && isset($td['value'])) {
+					$tds[$i] = $td['value'];
+				}
+			}
+			$tds = array_pad($tds, 6, '0');
 		}
 		return $tds;
 	}

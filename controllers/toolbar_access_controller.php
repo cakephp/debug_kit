@@ -72,6 +72,9 @@ class ToolbarAccessController extends DebugKitAppController {
  * @return void
  **/
 	function history_state($key = null) {
+		if (Configure::read('debug') == 0) {
+			return $this->redirect($this->referer());
+		}
 		$oldState = $this->Toolbar->loadState($key);
 		$this->set('toolbarState', $oldState);
 		$this->set('debugKitInHistoryMode', true);

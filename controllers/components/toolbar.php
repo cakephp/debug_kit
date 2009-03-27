@@ -392,6 +392,9 @@ class HistoryPanel extends DebugPanel {
 		$historyStates = array();
 		if (is_array($toolbarHistory) && !empty($toolbarHistory)) {
 			foreach ($toolbarHistory as $i => $state) {
+				if (!isset($state['request']['content']['params']['url']['url'])) {
+					continue;
+				}
 				$historyStates[] = array(
 					'title' => $state['request']['content']['params']['url']['url'],
 					'url' => array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i + 1)
@@ -544,7 +547,11 @@ class sqlLogPanel extends DebugPanel {
 				foreach ($sqlLog['Table']['Tbody']['Tr'] as $query) {
 					$tds = $this->_restructureCells($query['Td']);
 					$queries[] = $tds;
-					$isSlow = ($tds[5] > 0 && $tds[4] / $tds[5] <= $this->slowRate);
+					$isSlow = (
+						$tds[5] > 0 &&
+						$tds[4] / $tds[5] != 1 && 
+						$tds[4] / $tds[5] <= $this->slowRate
+					);
 					if ($isSlow && preg_match('/^SELECT /', $tds[1])) {
 						$explain = $this->_explainQuery($db, $tds[1]);
 						if (!empty($explain)) {

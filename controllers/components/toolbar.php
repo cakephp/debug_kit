@@ -570,7 +570,8 @@ class sqlLogPanel extends DebugPanel {
 /**
  * get cell values from xml
  *
- * @return void
+ * @param array of XmlElements.
+ * @return array Array of extracted values.
  **/
 	function _getCells($rowXml) {
 		$tds = array();
@@ -580,32 +581,6 @@ class sqlLogPanel extends DebugPanel {
 			} else {
 				$tds[] = $cell->value;
 			}
-		}
-		return $tds;
-	}
-/**
- * Restructure a row if error cell is empty
- *
- * @return void
- **/
-	function _restructureCells($tds) {
-		if (count($tds) == 5) {
-			$tds[5] = $tds[4]['value'];
-			$tds[4] = $tds[3]['value'];
-			$tds[3] = $tds[2]['value'];
-			$tds[2] = '';
-		} elseif (count($tds) == 6) {
-			$tds[2] = $tds[2]['value'];
-			$tds[3] = $tds[3]['value'];
-			$tds[4] = $tds[4]['value'];
-			$tds[5] = $tds[5]['value'];
-		} else {
-			foreach ($tds as $i => $td) {
-				if (is_array($td) && isset($td['value'])) {
-					$tds[$i] = $td['value'];
-				}
-			}
-			$tds = array_pad($tds, 6, '0');
 		}
 		return $tds;
 	}

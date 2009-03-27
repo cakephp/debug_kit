@@ -49,11 +49,14 @@
 #debug-kit-toolbar .panel-tab a + .panel-content:hover {
 	display: block;
 }
-#debug-kit-toolbar .panel-tab.icon a{
+#debug-kit-toolbar .panel-tab.icon a {
 	-webkit-border-top-left-radius: 8px 8px;
 	-webkit-border-bottom-left-radius: 8px 8px;
 	-moz-border-radius-topleft: 8px;
 	-moz-border-radius-bottomleft: 8px
+}
+#debug-kit-toolbar .panel-tab.icon img {
+	display:block;
 }
 
 /* panel content */
@@ -118,6 +121,7 @@
 #debug-kit-toolbar table.debug-table {
 	width: auto;
 	border: 0;
+	clear:both;
 }
 #debug-kit-toolbar table.debug-table td,
 #debug-kit-toolbar table.debug-table th {

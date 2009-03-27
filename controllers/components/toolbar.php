@@ -538,14 +538,16 @@ class sqlLogPanel extends DebugPanel {
 				$htmlBlob = ob_get_clean();
 
 				$Xml =& new Xml($htmlBlob);
-				$sqlLog = $Xml->toArray();
-
-				if (empty($sqlLog['Table']['Tbody']['Tr'])) {
+				
+				$table = $Xml->children[0];
+				$tbody = $table->children('tbody');
+				$rows = $tbody[0]->children;
+				if (empty($rows) || empty($rows[0]->children)) {
 				 	continue;
 				}
 				$queries = $explained = array();
-				foreach ($sqlLog['Table']['Tbody']['Tr'] as $query) {
-					$tds = $this->_restructureCells($query['Td']);
+				foreach ($rows as $row) {
+					$tds = $this->_getCells($row);
 					$queries[] = $tds;
 					$isSlow = (
 						$tds[5] > 0 &&
@@ -564,6 +566,22 @@ class sqlLogPanel extends DebugPanel {
 			}
 		}
 		return $queryLogs;
+	}
+/**
+ * get cell values from xml
+ *
+ * @return void
+ **/
+	function _getCells($rowXml) {
+		$tds = array();
+		foreach ($rowXml->children as $cell) {
+			if ($cell->hasChildren()) {
+				$tds[] = $cell->children[0]->value;
+			} else {
+				$tds[] = $cell->value;
+			}
+		}
+		return $tds;
 	}
 /**
  * Restructure a row if error cell is empty

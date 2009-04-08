@@ -28,4 +28,5 @@
  */
 ?>
 <h2> <?php __('View Variables'); ?></h2>
+<?php $content['$this->validationErrors'] = $this->validationErrors; ?>
 <?php echo $toolbar->makeNeatArray($content); ?>

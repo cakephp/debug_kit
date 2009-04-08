@@ -316,7 +316,7 @@ DEBUGKIT.toolbar = function () {
 	// Events are bound to depth-0 UL elements.
 	// Use event delegation to find original target.
 	function _delegateNeatArray (event) {
-		var clickedEl = event.originalTarget;
+		var clickedEl = event.target;
 		while (clickedEl.nodeName.toUpperCase() !== 'LI') {
 			clickedEl = clickedEl.parentNode;
 		}
@@ -329,8 +329,8 @@ DEBUGKIT.toolbar = function () {
 			Element.show(subUl);
 			Element.swapClass(clickedEl, 'collapsed', 'expanded');
 		}
-		if (event.cancelBubble !== undefined) {
-			event.cancelBubble = true;
+		if (event.stopPropagation !== undefined) {
+			event.stopPropagation();
 		}
 	}
 

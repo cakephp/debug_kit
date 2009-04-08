@@ -369,14 +369,14 @@ DEBUGKIT.toolbar = function () {
 		/**
 		 * Add a panel to the toolbar
 		 */
-		addPanel : function (tab, callback) {
+		addPanel : function (tab) {
 			if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
 				throw ('Toolbar not found, make sure you loaded it.');
 			}
 			var panel = {
 				id : false,
 				element : tab,
-				callback : callback,
+				callback : undefined,
 				button : undefined,
 				content : undefined,
 				active : false
@@ -395,20 +395,13 @@ DEBUGKIT.toolbar = function () {
 				return false;
 			}
 
-			if (panel.callback !== undefined) {
-				Event.addEvent(panel.button, 'click', function(event) {
-					event = event || window.event;
-					event.preventDefault();
-					return panel.callback();
-				});
-			} else {
-				var self = this;
-				Event.addEvent(panel.button, 'click', function(event) {
-					event = event || window.event;
-					event.preventDefault();
-					return self.togglePanel(panel.id);
-				});
-			}
+			var self = this;
+			Event.addEvent(panel.button, 'click', function(event) {
+				event = event || window.event;
+				event.preventDefault();
+				return self.togglePanel(panel.id);
+			});
+
 			this.panels[panel.id] = panel;
 			return panel.id;
 		},

@@ -95,7 +95,11 @@ DEBUGKIT.Util.Element = {
 	},
 	
 	toggle : function (element) {
-		element.style.display == 'none' ? this.show(element) : this.hide(element);
+		if (element.style.display == 'none') {
+			this.show(element);
+			return;
+		}
+		this.hide(element);
 	}
 };
 
@@ -315,31 +319,21 @@ DEBUGKIT.toolbar = function () {
 	/**
 	 * Add neat array functionality.
 	 */
-	function neatArray (list) {
-		if (!list.className.match(/depth-0/)) {
-			var item = list.parentNode;
-			Element.hide(list);
-			Element.addClass(item, 'expandable collapsed');
-			Event.addEvent(item, 'click', function (event) {
-				var element = this,
-					event = event || window.event,
-					act = Boolean(item === element),
-					hide = Boolean(list.style.display === 'block');
-				if (act && hide) {
-					Element.hide(list);
-					Element.swapClass(item, 'expanded', 'collapsed');
-				} else if (act) {
-					Element.show(list);
-					Element.swapClass(item, 'collapsed', 'expanded');
-				}
-
-				if (event.cancelBubble !== undefined) {
-					event.cancelBubble = true;
-				}
-				return false;
-			});
+	function _showNeatArray (event) {
+		event = event || window.event;
+		var propList = this.lastChild,
+			hide = Boolean(propList.style.display === 'block');
+		if (hide) {
+			Element.hide(propList);
+			Element.swapClass(this, 'expanded', 'collapsed');
+		} else {
+			Element.show(propList);
+			Element.swapClass(this, 'collapsed', 'expanded');
 		}
-	};
+		if (event.cancelBubble !== undefined) {
+			event.cancelBubble = true;
+		}
+	}
 
 	return {
 		elements : {},
@@ -473,8 +467,11 @@ DEBUGKIT.toolbar = function () {
 			var i = 0;
 			while (lists[i] !== undefined) {
 				var element = lists[i];
-				if (Element.hasClass(element, 'neat-array')) {
-					neatArray(element);
+				if (Element.hasClass(element, 'neat-array') && !element.className.match(/depth-0/)) {
+					var item = element.parentNode;
+					Element.hide(element);
+					Element.addClass(item, 'expandable collapsed');
+					Event.addEvent(item, 'click', _showNeatArray);
 				}
 				++i;
 			}

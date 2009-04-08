@@ -150,23 +150,22 @@ DEBUGKIT.Util.Event = {
 //Cookie utility
 DEBUGKIT.Util.Cookie = function() {
 	var cookieLife = 60;
+
+//public methods
 	return {
-		/**
-		 * Write to cookie
-		 * @param [string] name Name of cookie to write.
-		 * @param [mixed] value Value to write to cookie.
-		 */
-			write : function (name, value) {
-				var date = new Date();
-				date.setTime(date.getTime() + (cookieLife * 24 * 60 * 60 * 1000));
-				var expires = "; expires=" + date.toGMTString();
-				document.cookie = name + "=" + value + expires + "; path=/";
-				return true;
-			},
-		/**
-		 * Read from the cookie
-		 * @param [string] name Name of cookie to read.
-		 */
+		 // Write to cookie
+		 // @param [string] name Name of cookie to write.
+		 // @param [mixed] value Value to write to cookie.
+		write : function (name, value) {
+			var date = new Date();
+			date.setTime(date.getTime() + (cookieLife * 24 * 60 * 60 * 1000));
+			var expires = "; expires=" + date.toGMTString();
+			document.cookie = name + "=" + value + expires + "; path=/";
+			return true;
+		},
+			
+		// Read from the cookie
+		// @param [string] name Name of cookie to read.
 		read : function (name) {
 			name = name + '=';
 			var cookieJar = document.cookie.split(';');
@@ -194,11 +193,10 @@ DEBUGKIT.Util.Cookie = function() {
 	};
 }();
 
-/**
- * Object merge takes any number of arguments and glues them together
- * @param [Object] one first object
- * @return object 
- */
+
+// Object merge takes any number of arguments and glues them together
+// @param [Object] one first object
+// @return object 
 DEBUGKIT.Util.merge = function() {
 	var out = {};
 	for (var i = 0; i < arguments.length; i++) {
@@ -213,9 +211,7 @@ DEBUGKIT.Util.merge = function() {
 };
 
 
-/**
- * Simple wrapper for XmlHttpRequest objects.
- */
+// Simple wrapper for XmlHttpRequest objects.
 DEBUGKIT.Util.Request = function (options) {
 	var _defaults = {
 		onComplete : function (){},
@@ -284,9 +280,8 @@ DEBUGKIT.Util.Request.prototype.onReadyStateChange = function (){
 		}
 	}
 };
-/**
- * Creates cross-broswer XHR object used for requests
- */
+
+// Creates cross-broswer XHR object used for requests
 DEBUGKIT.Util.Request.prototype.createObj = function(){
 	var request = null;
 	try {
@@ -316,9 +311,10 @@ DEBUGKIT.toolbar = function () {
 		Event = DEBUGKIT.Util.Event,
 		toolbarHidden = false;
 
-	/**
-	 * Add neat array functionality.
-	 */
+	
+	// Add neat array functionality.
+	// Events are bound to depth-0 UL elements.
+	// Use event delegation to find original target.
 	function _delegateNeatArray (event) {
 		var clickedEl = event.originalTarget;
 		while (clickedEl.nodeName.toUpperCase() !== 'LI') {
@@ -369,9 +365,8 @@ DEBUGKIT.toolbar = function () {
 
 			this.deactivatePanel(true);
 		},
-		/**
-		 * Add a panel to the toolbar
-		 */
+		
+		// Add a panel to the toolbar
 		addPanel : function (tab) {
 			if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
 				throw ('Toolbar not found, make sure you loaded it.');
@@ -408,9 +403,7 @@ DEBUGKIT.toolbar = function () {
 			return panel.id;
 		},
 
-	/**
-	 * Toggle a panel
-	 */
+		// Toggle a panel
 		togglePanel : function (id) {
 			if (this.panels[id] && this.panels[id].active) {
 				this.deactivatePanel(true);
@@ -420,9 +413,7 @@ DEBUGKIT.toolbar = function () {
 			}
 		},
 
-	/**
-	 * Make a panel active.
-	 */
+		// Make a panel active.
 		activatePanel : function (id, unique) {
 			if (this.panels[id] !== undefined && !this.panels[id].active) {
 				var panel = this.panels[id];
@@ -436,9 +427,7 @@ DEBUGKIT.toolbar = function () {
 			return false;
 		},
 
-	/**
-	 * Deactivate a panel.  use true to hide all panels.
-	 */
+		// Deactivate a panel.  use true to hide all panels.
 		deactivatePanel : function (id) {
 			if (id === true) {
 				for (var i in this.panels) {
@@ -458,6 +447,7 @@ DEBUGKIT.toolbar = function () {
 			return false;
 		},
 
+		// Bind events for all the collapsible arrays.
 		makeNeatArray : function (lists) {
 			var i = 0;
 			while (lists[i] !== undefined) {

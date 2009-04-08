@@ -63,6 +63,7 @@ DEBUGKIT.sqlLog = function () {
 		init : function () {
 			var sqlPanel = document.getElementById('sql_log-tab');
 			var buttons = sqlPanel.getElementsByTagName('A');
+
 			for (var i in buttons) {
 				var button = buttons[i];
 				if (Element.hasClass(button, 'show-slow')) {
@@ -74,6 +75,7 @@ DEBUGKIT.sqlLog = function () {
 					Element.hide(nextDiv);
 				}
 			}
+
 		}
 	};
 }();

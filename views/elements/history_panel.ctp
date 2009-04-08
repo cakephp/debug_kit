@@ -52,10 +52,8 @@ DEBUGKIT.historyPanel = function () {
 		Request = DEBUGKIT.Util.Request,
 		historyLinks = [];
 
-	/**
-	 * Private methods to handle JSON response and insertion of 
-	 * new content.
-	 */
+	// Private methods to handle JSON response and insertion of 
+	// new content.
 	var switchHistory = function (response) {
 		try {
 			var responseJson = eval( '(' + response.response.text + ')');
@@ -93,10 +91,8 @@ DEBUGKIT.historyPanel = function () {
 			}
 		}
 	};
-	
-	/**
-	 * Private method to handle restoration to current request.
-	 */
+
+	// Private method to handle restoration to current request.
 	var restoreCurrentState = function () {
 		var id, i, panelContent, tag;
 		

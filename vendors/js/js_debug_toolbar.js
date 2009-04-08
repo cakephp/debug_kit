@@ -319,16 +319,19 @@ DEBUGKIT.toolbar = function () {
 	/**
 	 * Add neat array functionality.
 	 */
-	function _showNeatArray (event) {
-		event = event || window.event;
-		var propList = this.lastChild,
-			hide = Boolean(propList.style.display === 'block');
+	function _delegateNeatArray (event) {
+		var clickedEl = event.originalTarget;
+		while (clickedEl.nodeName.toUpperCase() !== 'LI') {
+			clickedEl = clickedEl.parentNode;
+		}
+		var subUl = clickedEl.lastChild;
+		var hide = Boolean(subUl.style.display === 'block');
 		if (hide) {
-			Element.hide(propList);
-			Element.swapClass(this, 'expanded', 'collapsed');
+			Element.hide(subUl);
+			Element.swapClass(clickedEl, 'expanded', 'collapsed');
 		} else {
-			Element.show(propList);
-			Element.swapClass(this, 'collapsed', 'expanded');
+			Element.show(subUl);
+			Element.swapClass(clickedEl, 'collapsed', 'expanded');
 		}
 		if (event.cancelBubble !== undefined) {
 			event.cancelBubble = true;
@@ -376,7 +379,6 @@ DEBUGKIT.toolbar = function () {
 			var panel = {
 				id : false,
 				element : tab,
-				callback : undefined,
 				button : undefined,
 				content : undefined,
 				active : false
@@ -460,11 +462,13 @@ DEBUGKIT.toolbar = function () {
 			var i = 0;
 			while (lists[i] !== undefined) {
 				var element = lists[i];
-				if (Element.hasClass(element, 'neat-array') && !element.className.match(/depth-0/)) {
-					var item = element.parentNode;
-					Element.hide(element);
-					Element.addClass(item, 'expandable collapsed');
-					Event.addEvent(item, 'click', _showNeatArray);
+				if (Element.hasClass(element, 'neat-array') && element.className.match(/depth-0/)) {
+					var childLists = element.getElementsByTagName('UL');
+					for (var j = 0, childEl; childEl = childLists[j]; j++) {
+						Element.hide(childEl);
+						Element.addClass(childEl.parentNode, 'expandable collapsed');
+					}
+					Event.addEvent(element, 'click', _delegateNeatArray);
 				}
 				++i;
 			}

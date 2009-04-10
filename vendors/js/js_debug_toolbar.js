@@ -62,7 +62,7 @@ DEBUGKIT.Util.Element = {
 		if (!element.className) {
 			return false;
 		}
-		return element.className.match(new RegExp(className));
+		return element.className.indexOf(className) > -1;
 	},
 
 	addClass : function (element, className) {

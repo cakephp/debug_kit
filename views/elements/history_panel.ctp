@@ -81,7 +81,12 @@ DEBUGKIT.historyPanel = function () {
 					var panelId = panelContent.id.replace('-history', '');
 					if (responseJson[panelId]) {
 						panelContent.innerHTML = responseJson[panelId];
-						var lists = panelContent.getElementsByTagName('UL');
+						var lists;
+						if (panelContent.getElementsByClassName) {
+							lists = panelContent.getElementsByClassName('depth-0');
+						} else {
+							lists = panelContent.getElementsByTagName('UL');
+						}
 						toolbar.makeNeatArray(lists);
 					}
 					Element.show(panelContent);

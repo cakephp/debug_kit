@@ -48,8 +48,8 @@ DEBUGKIT.loader = function () {
 		},
 
 		init : function () {
-			for (var i = 0; i < this._startup.length; i++) {
-				this._startup[i].init();
+			for (var i = 0, callback; callback = this._startup[i]; i++) {
+				callback.init();
 			}
 		}
 	};

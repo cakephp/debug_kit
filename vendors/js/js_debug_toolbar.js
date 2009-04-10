@@ -360,7 +360,11 @@ DEBUGKIT.toolbar = function () {
 					this.addPanel(element);
 				}
 			}
-			lists = document.getElementsByTagName('ul');
+			if (document.getElementsByClassName) {
+				lists = this.elements.toolbar.getElementsByClassName('depth-0');
+			} else {
+				lists = this.elements.toolbar.getElementsByTagName('ul');
+			}
 			this.makeNeatArray(lists);
 
 			this.deactivatePanel(true);
@@ -449,9 +453,7 @@ DEBUGKIT.toolbar = function () {
 
 		// Bind events for all the collapsible arrays.
 		makeNeatArray : function (lists) {
-			var i = 0;
-			while (lists[i] !== undefined) {
-				var element = lists[i];
+			for (var i = 0, element; element = lists[i]; i++) {
 				if (Element.hasClass(element, 'neat-array') && element.className.match(/depth-0/)) {
 					var childLists = element.getElementsByTagName('UL');
 					for (var j = 0, childEl; childEl = childLists[j]; j++) {
@@ -460,7 +462,6 @@ DEBUGKIT.toolbar = function () {
 					}
 					Event.addEvent(element, 'click', _delegateNeatArray);
 				}
-				++i;
 			}
 		}
 	};

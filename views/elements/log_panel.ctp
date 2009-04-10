@@ -37,7 +37,7 @@
 			$rows = array();
 			for ($i = 0; $i < $len; $i += 2):
 				$rows[] = array(
-					$logs[$i], $logs[$i + 1]
+					$logs[$i], h($logs[$i + 1])
 				);
 			endfor;
 			echo $toolbar->table($rows, $headers, array('title' => $logName));

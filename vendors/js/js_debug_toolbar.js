@@ -67,7 +67,8 @@ DEBUGKIT.Util.Element = {
 
 	addClass : function (element, className) {
 		if (!element.className) {
-			element.className = '';
+			element.className = className;
+			return;
 		}
 		element.className = element.className.replace(/^(.*)$/, '$1 ' + className);
 	},
@@ -481,6 +482,7 @@ DEBUGKIT.toolbarToggle = function () {
 				self = this;
 
 			Event.addEvent(button, 'click', function (event) {
+				event = event || window.event
 				event.preventDefault();
 				self.toggleToolbar();
 			});

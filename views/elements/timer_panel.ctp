@@ -59,13 +59,14 @@ foreach ($timers as $timerName => $timeInfo):
 	$maxTime += $timeInfo['time'];
 endforeach;
 
+$headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
+
 foreach ($timers as $timerName => $timeInfo):
 	$rows[] = array(
 		$timeInfo['message'],
 		$number->precision($timeInfo['time'], 6),
 		$simpleGraph->bar($number->precision($timeInfo['time'], 6), array('max' => $maxTime))
 	);
-	$headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
 endforeach;
 
 echo $toolbar->table($rows, $headers, array('title' => 'Timers')); 

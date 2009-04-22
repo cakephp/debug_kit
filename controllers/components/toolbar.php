@@ -391,13 +391,21 @@ class HistoryPanel extends DebugPanel {
 		$toolbarHistory = Cache::read($cacheKey, 'debug_kit');
 		$historyStates = array();
 		if (is_array($toolbarHistory) && !empty($toolbarHistory)) {
+			$prefix = array();
+			if (!empty($controller->params['prefix'])) {
+				$prefix[$controller->params['prefix']] = false;
+			}
 			foreach ($toolbarHistory as $i => $state) {
 				if (!isset($state['request']['content']['params']['url']['url'])) {
 					continue;
 				}
 				$historyStates[] = array(
 					'title' => $state['request']['content']['params']['url']['url'],
-					'url' => array('plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state', $i + 1)
+					'url' => array_merge($prefix, array(
+						'plugin' => 'debug_kit', 
+						'controller' => 'toolbar_access', 
+						'action' => 'history_state', 
+						$i + 1))
 				);
 			}
 		}

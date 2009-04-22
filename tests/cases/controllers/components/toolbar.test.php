@@ -45,12 +45,14 @@ class DebugToolbarTestCase extends CakeTestCase {
 	
 	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-		$this->Controller =& ClassRegistry::init('Controller');
+		$this->Controller =& new Controller();
 		$this->Controller->params = Router::parse('/');
 		$this->Controller->params['url']['url'] = '/';
-		$this->Controller->Component =& ClassRegistry::init('Component');
-		$this->Controller->Toolbar =& ClassRegistry::init('TestToolBarComponent', 'Component');
-		
+		$this->Controller->uses = array();
+		$this->Controller->components = array('TestToolBar');
+		$this->Controller->constructClasses();
+		$this->Controller->Toolbar =& $this->Controller->TestToolBar;
+
 		$this->_server = $_SERVER;
 		$this->_paths = array();
 		$this->_paths['plugin'] = Configure::read('pluginPaths');
@@ -363,6 +365,36 @@ class DebugToolbarTestCase extends CakeTestCase {
 		
 		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
 		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
+	}
+/**
+ * Test that history state urls set prefix = null and admin = null so generated urls do not 
+ * adopt these params.
+ *
+ * @return void
+ **/
+	function testHistoryUrlGenerationWithPrefixes() {
+		$configName = 'debug_kit';
+		$this->Controller->params = array(
+			'controller' => 'posts',
+			'action' => 'edit',
+			'admin' => 1,
+			'prefix' => 'admin',
+			'plugin' => 'cms',
+			'url' => array(
+				'url' => '/admin/cms/posts/edit/'
+			)
+		);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Toolbar->cacheKey = 'url_test';
+		$this->Controller->Component->beforeRender($this->Controller);
+		
+		$result = $this->Controller->Toolbar->panels['history']->beforeRender($this->Controller);
+		$expected = array(
+			'plugin' => 'debug_kit', 'controller' => 'toolbar_access', 'action' => 'history_state',
+			0 => 1, 'admin' => false
+		);
+		$this->assertEqual($result[0]['url'], $expected);
+		Cache::delete('url_test', $configName);
 	}
 /**
  * Test that the FireCake toolbar is used on AJAX requests

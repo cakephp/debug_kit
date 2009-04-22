@@ -36,12 +36,14 @@
 	line-height: 16px;
 	margin: 0;
 	display: block;
+	text-decoration:none;
 }
 #debug-kit-toolbar .panel-tab .active {
 	background: #fff;
 }
 #debug-kit-toolbar .panel-tab a:hover {
-	background: #f4f4f4;
+	background: #f6f6f6;
+	text-decoration:underline;
 }
 #debug-kit-toolbar .panel-tab.icon a {
 	padding: 4px;
@@ -190,6 +192,7 @@
 }
 .neat-array li strong {
 	padding: 0 8px;
+	font-weight: bold;
 }
 
 /* expandable sections */
@@ -225,7 +228,9 @@
 #debug-kit-toolbar .debug-kit-graph-bar-value {
 	background-color: #CE9E23;
 }
-
+#sql_log-tab td {
+	font-family: Monaco, 'Corsiva', "Courier New", Courier, monospaced;
+}
 /* previous panels */
 #debug-kit-toolbar .panel-content-history {
 	display: none;

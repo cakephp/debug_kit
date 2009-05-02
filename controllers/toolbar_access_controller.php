@@ -16,7 +16,7 @@
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.controllers
- * @since         DebugKit 1.0
+ * @since         DebugKit 1.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class ToolbarAccessController extends DebugKitAppController {

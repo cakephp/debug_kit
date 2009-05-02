@@ -1,5 +1,4 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * Abstract Toolbar helper.  Provides Base methods for content
  * specific debug toolbar helpers.  Acts as a facade for other toolbars helpers as well.

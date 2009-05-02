@@ -1,5 +1,4 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * DebugKit Debugger class. Extends and enhances core
  * debugger. Adds benchmarking and timing functionality.

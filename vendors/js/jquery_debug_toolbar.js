@@ -1,4 +1,3 @@
-/* SVN FILE: $Id$ */
 /**
  * Debug Toolbar Javascript.  jQuery 1.2.x compatible.
  *

@@ -1,4 +1,3 @@
-/* SVN FILE: $Id$ */
 /**
  * Debug Toolbar Javascript.
  *
@@ -6,23 +5,20 @@
  * and enhancing the Html toolbar.  Includes library agnostic Event, Element,
  * Cookie and Request wrappers.
  *
- * PHP versions 4 and 5
- *
- * CakePHP :  Rapid Development Framework <http://www.cakephp.org/>
- * Copyright 2006-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
+ * 
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @filesource
- * @copyright     Copyright 2006-2008, Cake Software Foundation, Inc.
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP Project
- * @package       debugkit
- * @subpackage    debugkit.vendors.js
- * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
- */
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org
+ * @package       debug_kit
+ * @subpackage    debug_kit.views.helpers
+ * @since         DebugKit 0.1
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ **/
 var DEBUGKIT = function () {
 	var undef;
 	return {

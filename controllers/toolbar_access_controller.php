@@ -53,12 +53,14 @@ class ToolbarAccessController extends DebugKitAppController {
  * @return void
  **/
 	function beforeFilter() {
+		parent::beforeFilter();
 		if (isset($this->Toolbar)) {
 			$this->Toolbar->enabled = false;
 		}
 		$this->helpers['DebugKit.Toolbar']['cacheKey'] = $this->Toolbar->cacheKey;
 		$this->helpers['DebugKit.Toolbar']['cacheConfig'] = 'debug_kit';
 	}
+
 /**
  * Get a stored history state from the toolbar cache.
  *

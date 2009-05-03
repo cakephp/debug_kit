@@ -594,7 +594,7 @@ class sqlLogPanel extends DebugPanel {
 	function _explainQuery(&$db, $queryString) {
 		$driver = $db->config['driver'];
 		$results = null;
-		if ($driver === 'myslqi' || $driver === 'mysql' || $driver === 'postgres') {
+		if ($driver === 'mysqli' || $driver === 'mysql' || $driver === 'postgres') {
 			$results = $db->query('EXPLAIN ' . $queryString);
 			if ($driver === 'postgres') {
 				$queryPlan = array();

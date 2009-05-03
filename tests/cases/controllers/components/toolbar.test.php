@@ -125,6 +125,21 @@ class DebugToolbarTestCase extends CakeTestCase {
 	}
 	
 /**
+ * ensure that enabled = false when debug == 0 on initialize
+ *
+ * @return void
+ **/
+	function testDebugDisableOnInitialize() {
+		$_debug = Configure::read('debug');
+		Configure::write('debug', 0);
+		$this->Controller->components = array('DebugKit.Toolbar');
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->assertFalse($this->Controller->Toolbar->enabled);
+
+		Configure::write('debug', $_debug);
+	}
+/**
  * test startup
  *
  * @return void
@@ -212,126 +227,6 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual($expected, $vars['session']);
 	}
 
-/**
- * test alternate javascript library use
- *
- * @return void
- **/
-	function testAlternateJavascript() {
-		$this->Controller->components = array(
-			'DebugKit.Toolbar'
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => '/debug_kit/js/js_debug_toolbar',
-		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-		
-		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array(
-				'javascript' => 'jquery',
-			),
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => '/debug_kit/js/jquery_debug_toolbar.js',
-		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-
-
-		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array(
-				'javascript' => false
-			)
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array();
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-		
-
-		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array(
-				'javascript' => array('my_library'),
-			),
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => 'my_library_debug_toolbar'
-		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-
-		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array(
-				'javascript' => array('/my/path/to/file')
-			),
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => '/my/path/to/file',
-		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-
-		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array(
-				'javascript' => '/js/custom_behavior',
-			),
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => '/js/custom_behavior',
-		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-	}
-/**
- * Test alternate javascript existing in the plugin.
- *
- * @return void
- **/
-	function testExistingAlterateJavascript() {
-		$filename = APP . 'plugins' . DS . 'debug_kit' . DS . 'vendors' . DS . 'js' . DS . 'test_alternate_debug_toolbar.js';
-		$this->skipIf(!is_writable(dirname($filename)), 'Skipping existing javascript test, debug_kit/vendors/js must be writable');
-		
-		@touch($filename);
-		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array(
-				'javascript' => 'test_alternate',
-			),
-		);
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarJavascript']));
-		$expected = array(
-			'behavior' => '/debug_kit/js/test_alternate_debug_toolbar.js',
-		);
-		$this->assertEqual($this->Controller->viewVars['debugToolbarJavascript'], $expected);
-		@unlink($filename);
-	}
 /**
  * test the Log panel log reading.
  *

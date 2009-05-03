@@ -44,31 +44,28 @@ class ToolbarComponent extends Object {
  */
 	var $panels = array();
 /**
- * fallback for javascript settings
+ * javascript files component will be using
  *
  * @var array
  **/
-	var $_defaultJavascript = array(
+	var $javascript = array(
 		'behavior' => '/debug_kit/js/js_debug_toolbar'
 	);
-/**
- * javascript files component will be using.
- *
- * @var array
- **/
-	var $javascript = array();
+
 /**
  * CacheKey used for the cache file.
  *
  * @var string
  **/
 	var $cacheKey = 'toolbar_cache';
+
 /**
  * Duration of the debug kit history cache
  *
  * @var string
  **/
 	var $cacheDuration = '+4 hours';
+
 /**
  * initialize
  *
@@ -96,11 +93,6 @@ class ToolbarComponent extends Object {
 			$this->_createCacheConfig();
 		}
 
-		if (isset($settings['javascript'])) {
-			$settings['javascript'] = $this->_setJavascript($settings['javascript']);
-		} else {
-			$settings['javascript'] = $this->_defaultJavascript;
-		}
 		$this->_loadPanels($panels, $settings);
 
 		$this->_set($settings);
@@ -139,6 +131,7 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::stopTimer('componentInit');
 		DebugKitDebugger::startTimer('controllerAction', __('Controller Action', true));
 	}
+
 /**
  * beforeRedirect callback
  *
@@ -149,6 +142,7 @@ class ToolbarComponent extends Object {
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 	}
+
 /**
  * beforeRender callback
  *
@@ -164,6 +158,7 @@ class ToolbarComponent extends Object {
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
 	}
+
 /**
  * Load a toolbar state from cache
  *
@@ -177,6 +172,7 @@ class ToolbarComponent extends Object {
 		}
 		return array();
 	}
+
 /**
  * Create the cache config for the history
  *
@@ -188,6 +184,7 @@ class ToolbarComponent extends Object {
 			Cache::config('debug_kit', array('duration' => $this->cacheDuration, 'engine' => 'File'));
 		}
 	}
+
 /**
  * collects the panel contents
  *
@@ -212,6 +209,7 @@ class ToolbarComponent extends Object {
 		}
 		return $vars;
 	}
+
 /**
  * Load Panels used in the debug toolbar
  *
@@ -232,43 +230,6 @@ class ToolbarComponent extends Object {
 		}
 	}
 
-/**
- * Set the javascript to user scripts.
- *
- * Set either script key to false to exclude it from the rendered layout.
- *
- * @param array $scripts Javascript config information
- * @return array
- * @access protected
- **/
-	function _setJavascript($scripts) {
-		$behavior = false;
-		if (!is_array($scripts)) {
-			$scripts = (array)$scripts;
-		}
-		if (isset($scripts[0])) {
-			$behavior = $scripts[0];
-		}
-		if (isset($scripts['behavior'])) {
-			$behavior = $scripts['behavior'];
-		}
-		if (!$behavior) {
-			return array();
-		} elseif ($behavior === true) {
-			$behavior = 'js';
-		}
-		if (strpos($behavior, '/') !== 0) {
-			$behavior .= '_debug_toolbar';
-		}
-		$paths = Configure::read('pluginPaths');
-		foreach ($paths as $path) {
-			$jsFile = $path . 'debug_kit' . DS . 'vendors' . DS . 'js' . DS . $behavior . '.js';
-			if (file_exists($jsFile)) {
-				$behavior = '/debug_kit/js/' . $behavior . '.js';
-			}
-		}
-		return compact('behavior');
-	}
 /**
  * Makes the DoppleGangerView class if it doesn't already exist.
  * This allows DebugView to be compatible with all view classes.
@@ -499,13 +460,13 @@ class TimerPanel extends DebugPanel {
 }
 
 /**
- * sqlLog Panel
+ * SqlLog Panel
  *
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
  *
  * @package       cake.debug_kit.panels
  **/
-class sqlLogPanel extends DebugPanel {
+class SqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
 /**
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain

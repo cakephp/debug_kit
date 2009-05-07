@@ -228,6 +228,49 @@ class DebugToolbarTestCase extends CakeTestCase {
 	}
 
 /**
+ * test that vars are gathered and state is saved on beforeRedirect
+ *
+ * @return void
+ **/
+	function testBeforeRedirect() {
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'panels' => array('MockDebug', 'session', 'history')
+			)
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+
+		$configName = 'debug_kit';
+		$this->Controller->Toolbar->cacheKey = 'toolbar_history';
+		Cache::delete('toolbar_history', $configName);
+
+		DebugKitDebugger::startTimer('controllerAction', 'testing beforeRedirect');
+		$this->Controller->Toolbar->panels['MockDebug']->expectOnce('beforeRender');
+		$this->Controller->Toolbar->beforeRedirect($this->Controller);
+
+		$result = Cache::read('toolbar_history', $configName);
+		$this->assertTrue(isset($result[0]['session']));
+		$this->assertTrue(isset($result[0]['mock_debug']));
+		
+		$timers = DebugKitDebugger::getTimers();
+		$this->assertTrue(isset($timers['controllerAction']));
+	}
+/**
+ * test that loading state (accessing cache) works.
+ *
+ * @return void
+ **/
+	function testLoadState() {
+		$this->Controller->Toolbar->cacheKey = 'toolbar_history';
+
+		$data = array(0 => array('my data'));
+		Cache::write('toolbar_history', $data, 'debug_kit');
+		$result = $this->Controller->Toolbar->loadState(0);
+		$this->assertEqual($result, $data[0]);
+		
+	}
+/**
  * test the Log panel log reading.
  *
  * @return void

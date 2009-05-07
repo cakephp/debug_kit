@@ -32,7 +32,6 @@ var DEBUGKIT = function () {
 	};
 }() ;
 
-DEBUGKIT.module('loader');
 DEBUGKIT.loader = function () {
 	return {
 		//list of methods to run on startup.
@@ -299,7 +298,6 @@ DEBUGKIT.Util.Request.prototype.createObj = function(){
 
 
 //Basic toolbar module.
-DEBUGKIT.module('toolbar');
 DEBUGKIT.toolbar = function () {
 	//shortcuts
 	var Request = DEBUGKIT.Request,

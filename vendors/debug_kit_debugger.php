@@ -32,13 +32,21 @@ class DebugKitDebugger extends Debugger {
 
 /**
  * Start an benchmarking timer.
- * 
+ *
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
  * @return bool true
  * @static
  **/
-	function startTimer($name = 'default', $message = '') {
+	function startTimer($name = null, $message = null) {
+		if (!$name) {
+			$calledFrom = debug_backtrace();
+			$name = substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1) . ' line ' .
+				$calledFrom[0]['line'];
+		}
+		if (!$message) {
+			$message = $name;
+		}
 		$now = getMicrotime();
 		$_this = DebugKitDebugger::getInstance();
 		$_this->__benchmarks[$name] = array(
@@ -58,9 +66,12 @@ class DebugKitDebugger extends Debugger {
  * @return boolean true if timer was ended, false if timer was not started.
  * @static
  */
-	function stopTimer($name = 'default') {
+	function stopTimer($name = null) {
 		$now = getMicrotime();
 		$_this = DebugKitDebugger::getInstance();
+		if (!$name) {
+			$name = array_pop(array_keys($_this->__benchmarks));
+		}
 		if (!isset($_this->__benchmarks[$name])) {
 			return false;
 		}
@@ -129,7 +140,7 @@ class DebugKitDebugger extends Debugger {
  * @access public
  * @return float time of request start
  * @static
- */	
+ */
 	function requestStartTime() {
 		if (defined('TIME_START')) {
 			$startTime = TIME_START;

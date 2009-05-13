@@ -18,6 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class ToolbarComponent extends Object {
+	var $settings = array();
 /**
  * Controller instance reference
  *
@@ -75,7 +76,8 @@ class ToolbarComponent extends Object {
  * @return bool
  **/
 	function initialize(&$controller, $settings) {
-		if (Configure::read('debug') == 0) {
+		$this->settings = am($this->settings, $settings);
+		if (!Configure::read('debug') && empty($this->settings['forceEnable'])) {
 			$this->enabled = false;
 			return false;
 		}
@@ -123,6 +125,7 @@ class ToolbarComponent extends Object {
 			'output' => sprintf('DebugKit.%sToolbar', $format),
 			'cacheKey' => $this->cacheKey,
 			'cacheConfig' => 'debug_kit',
+			'enabled' => isset($this->settings['forceEnable'])?true:null,
 		);
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
@@ -354,9 +357,9 @@ class HistoryPanel extends DebugPanel {
 				$historyStates[] = array(
 					'title' => $state['request']['content']['params']['url']['url'],
 					'url' => array_merge($prefix, array(
-						'plugin' => 'debug_kit', 
-						'controller' => 'toolbar_access', 
-						'action' => 'history_state', 
+						'plugin' => 'debug_kit',
+						'controller' => 'toolbar_access',
+						'action' => 'history_state',
 						$i + 1))
 				);
 			}
@@ -473,7 +476,7 @@ class SqlLogPanel extends DebugPanel {
  * is done.
  *
  * @var int
- **/	
+ **/
 	var $slowRate = 20;
 /**
  * Get Sql Logs for each DB config
@@ -498,7 +501,7 @@ class SqlLogPanel extends DebugPanel {
 				$htmlBlob = ob_get_clean();
 
 				$Xml =& new Xml($htmlBlob);
-				
+
 				$table = $Xml->children[0];
 				$tbody = $table->children('tbody');
 				$rows = $tbody[0]->children;
@@ -511,7 +514,7 @@ class SqlLogPanel extends DebugPanel {
 					$queries[] = $tds;
 					$isSlow = (
 						$tds[5] > 0 &&
-						$tds[4] / $tds[5] != 1 && 
+						$tds[4] / $tds[5] != 1 &&
 						$tds[4] / $tds[5] <= $this->slowRate
 					);
 					if ($isSlow && preg_match('/^SELECT /', $tds[1])) {

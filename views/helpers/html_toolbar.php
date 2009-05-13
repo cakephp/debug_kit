@@ -122,7 +122,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @access protected
  */
 	function _send() {
-		if (Configure::read('debug') == 0) {
+		if (!$this->settings['enabled'] && Configure::read('debug') == 0) {
 			return;
 		}
 		$view =& ClassRegistry::getObject('view');

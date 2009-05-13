@@ -39,15 +39,18 @@ class ToolbarHelper extends AppHelper {
 /**
  * Construct the helper and make the backend helper.
  *
- * @param string $options 
+ * @param string $options
  * @access public
  * @return void
  */
 	function __construct($options = array()) {
 		$this->_myName = strtolower(get_class($this));
+		$this->settings = am($this->settings, $options);
+
 		if ($this->_myName !== 'toolbarhelper') {
 			return;
 		}
+
 		if (!isset($options['output'])) {
 			$options['output'] = 'DebugKit.HtmlToolbar';
 		}
@@ -57,7 +60,7 @@ class ToolbarHelper extends AppHelper {
 			list($plugin, $className) = explode('.', $options['output']);
 		}
 		$this->_backEndClassName =  $className;
-		$this->helpers = array($options['output']);
+		$this->helpers[$options['output']] = $options;
 		if (isset($options['cacheKey']) && isset($options['cacheConfig'])) {
 			$this->_cacheKey = $options['cacheKey'];
 			$this->_cacheConfig = $options['cacheConfig'];
@@ -79,11 +82,11 @@ class ToolbarHelper extends AppHelper {
  *
  * Allows method calls on backend helper
  *
- * @param string $method 
- * @param mixed $params 
+ * @param string $method
+ * @param mixed $params
  * @access public
  * @return void
- */	
+ */
 	function call__($method, $params) {
 		if (method_exists($this->{$this->_backEndClassName}, $method)) {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
@@ -91,7 +94,7 @@ class ToolbarHelper extends AppHelper {
 	}
 /**
  * Allows for writing to panel cache from view.
- * Some panels generate all variables in the view by 
+ * Some panels generate all variables in the view by
  * necessity ie. Timer.  Using this method, will allow you to replace in full
  * the content for a panel.
  *

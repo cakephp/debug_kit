@@ -39,19 +39,28 @@ class DebugKitDebugger extends Debugger {
  * @static
  **/
 	function startTimer($name = null, $message = null) {
+		$start = getMicrotime();
 		if (!$name) {
+			$named = false;
 			$calledFrom = debug_backtrace();
-			$name = substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1) . ' line ' .
-				$calledFrom[0]['line'];
+			$_name = $name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
+			$_this = DebugKitDebugger::getInstance();
+			$i = 0;
+			while (isset($_this->__benchmarks[$name])) {
+				$i++;
+				$name = $_name . '#' . $i;
+			}
+		} else {
+			$named = true;
 		}
 		if (!$message) {
 			$message = $name;
 		}
-		$now = getMicrotime();
 		$_this = DebugKitDebugger::getInstance();
 		$_this->__benchmarks[$name] = array(
-			'start' => $now,
+			'start' => $start,
 			'message' => $message,
+			'named' => $named
 		);
 		return true;
 	}
@@ -67,15 +76,26 @@ class DebugKitDebugger extends Debugger {
  * @static
  */
 	function stopTimer($name = null) {
-		$now = getMicrotime();
+		$end = getMicrotime();
 		$_this = DebugKitDebugger::getInstance();
 		if (!$name) {
-			$name = array_pop(array_keys($_this->__benchmarks));
+			$names = array_reverse(array_keys($_this->__benchmarks));
+			foreach($names as $name) {
+				if (!empty($_this->__benchmarks[$name]['end'])) {
+					continue;
+				}
+				if (empty($_this->__benchmarks[$name]['named'])) {
+					break;
+				}
+			}
+			if (!empty($_this->__benchmarks[$name]['named'])) {
+				$name = null;
+			}
 		}
 		if (!isset($_this->__benchmarks[$name])) {
 			return false;
 		}
-		$_this->__benchmarks[$name]['end'] = $now;
+		$_this->__benchmarks[$name]['end'] = $end;
 		return true;
 	}
 

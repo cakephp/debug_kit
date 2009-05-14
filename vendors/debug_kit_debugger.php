@@ -20,6 +20,7 @@
  **/
 App::import('Core', 'Debugger');
 App::import('Vendor', 'DebugKit.FireCake');
+
 /**
  * Debug Kit Temporary Debugger Class
  *
@@ -40,23 +41,31 @@ class DebugKitDebugger extends Debugger {
  **/
 	function startTimer($name = null, $message = null) {
 		$start = getMicrotime();
+		$_this = DebugKitDebugger::getInstance();
+
 		if (!$name) {
 			$named = false;
 			$calledFrom = debug_backtrace();
 			$_name = $name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
-			$_this = DebugKitDebugger::getInstance();
-			$i = 0;
-			while (isset($_this->__benchmarks[$name])) {
-				$i++;
-				$name = $_name . '#' . $i;
-			}
 		} else {
 			$named = true;
 		}
+
 		if (!$message) {
 			$message = $name;
 		}
-		$_this = DebugKitDebugger::getInstance();
+
+		$_name = $name;
+		$i = 1;
+		while (isset($_this->__benchmarks[$name])) {
+			$i++;
+			$name = $_name . ' #' . $i;
+		}
+
+		if ($i > 1) {
+			$message .= ' #' . $i;
+		}
+
 		$_this->__benchmarks[$name] = array(
 			'start' => $start,
 			'message' => $message,
@@ -90,6 +99,16 @@ class DebugKitDebugger extends Debugger {
 			}
 			if (!empty($_this->__benchmarks[$name]['named'])) {
 				$name = null;
+			}
+		} else {
+			$i = 1;
+			$_name = $name;
+			while (isset($_this->__benchmarks[$name])) {
+				if (empty($_this->__benchmarks[$name]['end'])) {
+					break;
+				}
+				$i++;
+				$name = $_name . ' #' . $i;
 			}
 		}
 		if (!isset($_this->__benchmarks[$name])) {
@@ -154,6 +173,7 @@ class DebugKitDebugger extends Debugger {
 		$now = getMicroTime();
 		return ($now - $start);
 	}
+
 /**
  * get the time the current request started.
  *
@@ -219,6 +239,7 @@ class DebugKitDebugger extends Debugger {
 			echo parent::_output($level, $error, $code, $helpCode, $description, $file, $line, $kontext);
 		}
 	}
+
 /**
  * Create a FirePHP error message
  *

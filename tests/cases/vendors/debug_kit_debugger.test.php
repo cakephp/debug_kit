@@ -144,6 +144,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$this->assertEqual($timers['my timer']['message'], 'This is the first call');
 		$this->assertEqual($timers['my timer #2']['message'], 'This is the second call #2');
 	}
+
 /**
  * testRequestTime
  *

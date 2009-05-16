@@ -97,9 +97,6 @@ class DebugKitDebugger extends Debugger {
 					break;
 				}
 			}
-			if (!empty($_this->__benchmarks[$name]['named'])) {
-				$name = null;
-			}
 		} else {
 			$i = 1;
 			$_name = $name;

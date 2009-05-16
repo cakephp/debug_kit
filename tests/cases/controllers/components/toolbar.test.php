@@ -156,6 +156,21 @@ class DebugToolbarTestCase extends CakeTestCase {
 	}
 
 /**
+ * test that passing in forceEnable will enable the toolbar even if debug = 0
+ *
+ * @return void
+ **/
+	function testForceEnable() {
+		$_debug = Configure::read('debug');
+		Configure::write('debug', 0);
+		$this->Controller->components = array('DebugKit.Toolbar' => array('forceEnable' => true));
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->assertTrue($this->Controller->Toolbar->enabled);
+
+		Configure::write('debug', $_debug);
+	}
+/**
  * test startup
  *
  * @return void

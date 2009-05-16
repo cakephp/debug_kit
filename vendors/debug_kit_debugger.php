@@ -127,8 +127,11 @@ class DebugKitDebugger extends Debugger {
 	function getTimers() {
 		$_this =& DebugKitDebugger::getInstance();
 		$times = array();
+		$first = current($_this->__benchmarks);
+		$start = $first['start'];
 		foreach ($_this->__benchmarks as $name => $timer) {
 			$times[$name]['time'] = DebugKitDebugger::elapsedTime($name);
+			$times[$name]['offset'] = DebugKitDebugger::offsetTime($name);
 			$times[$name]['message'] = $timer['message'];
 		}
 		return $times;
@@ -159,6 +162,23 @@ class DebugKitDebugger extends Debugger {
 			return 0;
 		}
 		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);
+	}
+
+/**
+ * offsetTime method
+ *
+ * @param string $name 'default'
+ * @param int $precision 5
+ * @return void
+ * @access public
+ */
+	function offsetTime($name = 'default', $precision = 5) {
+		$_this =& DebugKitDebugger::getInstance();
+		if (!isset($_this->__benchmarks[$name]['start'])) {
+			return 0;
+		}
+		$start = DebugKitDebugger::requestStartTime();
+		return round($_this->__benchmarks[$name]['start'] - $start, $precision);
 	}
 
 /**

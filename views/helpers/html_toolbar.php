@@ -36,7 +36,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @var array
  * @access public
  */
-	var $settings = array('format' => 'html');
+	var $settings = array('format' => 'html', 'forceEnable' => false);
 /**
  * Recursively goes through an array and makes neat HTML out of it.
  *
@@ -111,7 +111,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (!empty($headers)) {
 			$out .= $this->Html->tableHeaders($headers);
 		}
-		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'));
+		$out .= $this->Html->tableCells($rows, array('class' => 'even'), array('class' => 'odd'));
 		$out .= '</table>';
 		return $out;
 	}
@@ -122,7 +122,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @access protected
  */
 	function _send() {
-		if (!$this->settings['enabled'] && Configure::read('debug') == 0) {
+		if (!$this->settings['forceEnable'] && Configure::read('debug') == 0) {
 			return;
 		}
 		$view =& ClassRegistry::getObject('view');

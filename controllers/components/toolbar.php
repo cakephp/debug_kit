@@ -125,7 +125,7 @@ class ToolbarComponent extends Object {
 			'output' => sprintf('DebugKit.%sToolbar', $format),
 			'cacheKey' => $this->cacheKey,
 			'cacheConfig' => 'debug_kit',
-			'enabled' => isset($this->settings['forceEnable'])? true : null,
+			'forceEnable' => isset($this->settings['forceEnable'])? true : null,
 		);
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {

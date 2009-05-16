@@ -19,10 +19,17 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('helper', 'DebugKit.Toolbar');
+App::import('Helper', 'DebugKit.Toolbar');
 App::import('Vendor', 'DebugKit.FireCake');
 
 class FirePhpToolbarHelper extends ToolbarHelper {
+/**
+ * settings property
+ *
+ * @var array
+ * @access public
+ */
+	var $settings = array('format' => 'firePHP', 'forceEnable' => false);
 /**
  * send method
  *

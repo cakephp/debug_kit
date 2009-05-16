@@ -21,7 +21,7 @@ if (!isset($debugKitInHistoryMode)):
 	$timers = DebugKitDebugger::getTimers();
 	$currentMemory = DebugKitDebugger::getMemoryUse();
 	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
-	$requestTime = DebugKitDebugger::requestTime();	
+	$requestTime = DebugKitDebugger::requestTime();
 else:
 	$content = $toolbar->readCache('timer', $this->params['pass'][0]);
 	if (is_array($content)):
@@ -45,22 +45,22 @@ endif;
 </div>
 
 <?php
-$maxTime = 0;
-foreach ($timers as $timerName => $timeInfo):
-	$maxTime += $timeInfo['time'];
-endforeach;
+$end = end($timers);
+$maxTime = $end['offset'] + $end['time'];
 
 $headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
-
 foreach ($timers as $timerName => $timeInfo):
 	$rows[] = array(
 		$timeInfo['message'],
 		$number->precision($timeInfo['time'], 6),
-		$simpleGraph->bar($number->precision($timeInfo['time'], 6), array('max' => $maxTime))
+		$simpleGraph->bar($number->precision($timeInfo['time'], 6), $number->precision($timeInfo['offset'], 6), array(
+			'max' => $maxTime,
+			'requestTime' => $requestTime,
+		))
 	);
 endforeach;
 
-echo $toolbar->table($rows, $headers, array('title' => 'Timers')); 
+echo $toolbar->table($rows, $headers, array('title' => 'Timers'));
 
 if (!isset($debugKitInHistoryMode)):
 	$toolbar->writeCache('timer', compact('timers', 'currentMemory', 'peakMemory', 'requestTime'));

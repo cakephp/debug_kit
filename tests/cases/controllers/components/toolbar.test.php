@@ -37,7 +37,18 @@ if (!class_exists('AppController')) {
 * DebugToolbar Test case
 */
 class DebugToolbarTestCase extends CakeTestCase {
-	
+/**
+ * fixtures.
+ *
+ * @var array
+ **/
+	var $fixtures = array('core.article');
+/**
+ * Start test callback
+ *
+ * @access public
+ * @return void
+ **/
 	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		$this->Controller =& new Controller();
@@ -54,7 +65,9 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->_paths['view'] = Configure::read('viewPaths');
 		$this->_paths['vendor'] = Configure::read('vendorPaths');
 		$this->_paths['controller'] = Configure::read('controllerPaths');
+		Configure::write('Cache.disable', false);
 	}
+
 /**
  * endTest
  *
@@ -66,12 +79,14 @@ class DebugToolbarTestCase extends CakeTestCase {
 		Configure::write('viewPaths', $this->_paths['view']);
 		Configure::write('vendorPaths', $this->_paths['vendor']);
 		Configure::write('controllerPaths', $this->_paths['controller']);
+		Configure::write('Cache.disable', true);
 
 		unset($this->Controller);
 		if (class_exists('DebugKitDebugger')) {
 			DebugKitDebugger::clearTimers();
 		}
 	}
+
 /**
  * test Loading of panel classes
  *
@@ -85,7 +100,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->expectError();
 		$this->Controller->Toolbar->loadPanels(array('randomNonExisting', 'request'));
 	}
-	
+
 /**
  * test loading of vendor panels from test_app folder
  *
@@ -123,7 +138,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['componentInit']));
 	}
-	
+
 /**
  * ensure that enabled = false when debug == 0 on initialize
  *
@@ -139,6 +154,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		Configure::write('debug', $_debug);
 	}
+
 /**
  * test startup
  *
@@ -166,6 +182,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
 	}
+
 /**
  * Test that cache config generation works.
  *
@@ -180,6 +197,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$results = Cache::config('debug_kit');
 		$this->assertTrue(is_array($results));
 	}
+
 /**
  * test state saving of toolbar
  *
@@ -200,6 +218,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual($result[0]['variables']['content']['test'], 'testing');
 		Cache::delete('toolbar_history', $configName);
 	}
+
 /**
  * Test Before Render callback
  *
@@ -257,6 +276,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
 	}
+
 /**
  * test that loading state (accessing cache) works.
  *
@@ -269,8 +289,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 		Cache::write('toolbar_history', $data, 'debug_kit');
 		$result = $this->Controller->Toolbar->loadState(0);
 		$this->assertEqual($result, $data[0]);
-		
 	}
+
 /**
  * test the Log panel log reading.
  *
@@ -300,6 +320,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
 		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
 	}
+
 /**
  * Test that history state urls set prefix = null and admin = null so generated urls do not 
  * adopt these params.
@@ -330,6 +351,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual($result[0]['url'], $expected);
 		Cache::delete('url_test', $configName);
 	}
+
 /**
  * Test that the FireCake toolbar is used on AJAX requests
  *
@@ -343,6 +365,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->startup($this->Controller);
 		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
 	}
+
 /**
  * Test that the toolbar does not interfere with requestAction
  *
@@ -367,5 +390,36 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertEqual($result, 'I have been rendered.');
 	}
 
+/**
+ * test the sqlLog panel parsing of db->showLog
+ *
+ * @return void
+ **/
+	function testSqlLogPanel() {
+		App::import('Core', 'Model');
+		$Article = new Model(array('ds' => 'test_suite', 'name' => 'Article'));
+		$Article->find('first', array('conditions' => array('Article.id' => 1)));
+		
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array(
+				'panels' => array('SqlLog')
+			)
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->Component->startup($this->Controller);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$result = $this->Controller->viewVars['debugToolbarPanels']['sql_log'];
+		
+		$this->assertTrue(isset($result['content']['test_suite']['queries']));
+		$this->assertTrue(isset($result['content']['test_suite']['explains']));
+		$query = array_pop($result['content']['test_suite']['queries']);
+		
+		$this->assertPattern('/\d/', $query[0], 'index not found. %s');
+		$this->assertPattern('/SELECT `Article/', $query[1], 'query not found. %s');
+		$this->assertEqual(count($query), 6, 'There are not 6 columns, something is wonky. %s');
+		$this->assertEqual($query[3], 1);
+		$this->assertEqual($query[4], 1);
+	}
 }
 ?>

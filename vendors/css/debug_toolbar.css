@@ -124,7 +124,7 @@
 
 /* panel tables */
 #debug-kit-toolbar table.debug-table {
-	width: auto;
+	width: 100%;
 	border: 0;
 	clear:both;
 }
@@ -231,6 +231,7 @@
 #sql_log-tab td {
 	font-family: Monaco, 'Corsiva', "Courier New", Courier, monospaced;
 }
+
 /* previous panels */
 #debug-kit-toolbar .panel-content-history {
 	display: none;
@@ -245,4 +246,9 @@
 #debug-kit-toolbar #history-tab a.loading:after {
 	content : ' Loading...';
 	font-style:italic;
+}
+
+div.debug-info {
+	float:left;
+	width: 30%;
 }

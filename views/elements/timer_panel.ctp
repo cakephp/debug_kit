@@ -29,19 +29,22 @@ else:
 	endif;
 endif;
 ?>
-<h2><?php __('Memory'); ?></h2>
-<div class="current-mem-use">
-	<?php echo $toolbar->message(__('Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
+<div class="debug-info">
+	<h2><?php __('Memory'); ?></h2>
+	<div class="current-mem-use">
+		<?php echo $toolbar->message(__('Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
+	</div>
+	<div class="peak-mem-use">
+	<?php
+		echo $toolbar->message(__('Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
+	</div>
 </div>
-<div class="peak-mem-use">
-<?php
-	echo $toolbar->message(__('Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
-</div>
-
-<h2><?php __('Timers'); ?></h2>
-<div class="request-time">
-	<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision($requestTime, 6)); ?>
-	<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
+<div class="debug-info">
+	<h2><?php __('Timers'); ?></h2>
+	<div class="request-time">
+		<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision($requestTime, 6)); ?>
+		<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
+	</div>
 </div>
 
 <?php

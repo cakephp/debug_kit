@@ -29,6 +29,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function startTest() {
+		Configure::write('Cache.disable', false);
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 		
@@ -59,6 +60,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		));
 		$this->_debug = Configure::read('debug');
 	}
+
 /**
  * test cache writing for views.
  *
@@ -68,6 +70,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result);
 	}
+
 /**
  * Ensure that the cache writing only affects the 
  * top most level of the history stack. As this is where the current request is stored.
@@ -79,7 +82,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 			array('test' => array('content' => array('first', 'values'))),
 			array('test' => array('content' => array('second', 'values'))),
 		);
-		Cache::write('debug_kit_toolbar_test_case', $values);
+		Cache::write('debug_kit_toolbar_test_case', $values, 'default');
 		$this->Toolbar->writeCache('test', array('new', 'values'));
 
 		$result = $this->Toolbar->readCache('test');
@@ -88,6 +91,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->readCache('test', 1);
 		$this->assertEqual($result, array('second', 'values'));
 	}
+
 /**
  * test cache reading for views
  *
@@ -106,6 +110,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->readCache('test');
 		$this->assertEqual($result, array('new', 'stuff'), 'Cache value is wrong %s');
 	}
+
 /**
  * Test that reading/writing doesn't work with no cache config.
  *
@@ -120,6 +125,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->readCache('test');
 		$this->assertFalse($result, 'Reading cache succeeded with no cache config %s');
 	}
+
 /**
  * reset the view paths
  *
@@ -129,13 +135,14 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		Configure::write('viewPaths', $this->_viewPaths);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
 	}
+
 /**
- * tearDown
+ * endTest
  *
  * @access public
  * @return void
  */
-	function tearDown() {
+	function endTest() {
 		unset($this->Toolbar, $this->Controller);
 		ClassRegistry::removeObject('view');
 		ClassRegistry::flush();

@@ -96,7 +96,10 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->loadPanels(array('session', 'request'));
 		$this->assertTrue(is_a($this->Controller->Toolbar->panels['session'], 'SessionPanel'));
 		$this->assertTrue(is_a($this->Controller->Toolbar->panels['request'], 'RequestPanel'));
-
+		
+		$this->Controller->Toolbar->loadPanels(array('history'), array('history' => 10));
+		$this->assertEqual($this->Controller->Toolbar->panels['history']->history, 10);
+		
 		$this->expectError();
 		$this->Controller->Toolbar->loadPanels(array('randomNonExisting', 'request'));
 	}

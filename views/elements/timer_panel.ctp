@@ -49,15 +49,25 @@ $end = end($timers);
 $maxTime = $end['offset'] + $end['time'];
 
 $headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
+$i = 0;
+$values = array_values($timers);
 foreach ($timers as $timerName => $timeInfo):
+	$indent = 0;
+	for ($j = 0; $j < $i; $j++) {
+		if (($values[$j]['time'] + $values[$j]['offset']) > ($timeInfo['time'] + $timeInfo['offset'])) {
+			$indent++;
+		}
+	}
+	$indent = str_repeat(' » ', $indent);
 	$rows[] = array(
-		$timeInfo['message'],
+		$indent . $timeInfo['message'],
 		$number->precision($timeInfo['time'], 6),
 		$simpleGraph->bar($number->precision($timeInfo['time'], 6), $number->precision($timeInfo['offset'], 6), array(
 			'max' => $maxTime,
 			'requestTime' => $requestTime,
 		))
 	);
+	$i++;
 endforeach;
 
 echo $toolbar->table($rows, $headers, array('title' => 'Timers'));

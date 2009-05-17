@@ -259,34 +259,6 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	}
 
 /**
- * test Injection of user defined javascript
- *
- * @return void
- **/
-	function testCustomJavascriptInjection() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->uses = null;
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => '/',
-			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Javascript', 'Html');
-		$this->Controller->components = array('DebugKit.Toolbar' => array('javascript' => array('my_custom')));
-		$this->Controller->layout = 'default';
-		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
-		$result = $this->Controller->render();
-		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="js/my_custom_debug_toolbar.js"\s*>\s?</script>#', $result);
-	}
-/**
  * test message creation
  *
  * @return void

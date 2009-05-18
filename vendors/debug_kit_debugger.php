@@ -54,17 +54,17 @@ class DebugKitDebugger extends Debugger {
 		foreach ($timers as $timer) {
 			$indent = 0;
 			for ($j = 0; $j < $i; $j++) {
-				if (($timers[$j]['time'] + $timers[$j]['offset']) > ($timer['time'] + $timer['offset'])) {
+				if (($timers[$j]['end']) > ($timer['start']) && ($timers[$j]['end']) > ($timer['end'])) {
 					$indent++;
 				}
 			}
 			$indent = str_repeat(' » ', $indent);
 
 			extract($timer);
-			$offset = $offset * 1000;
-			$time = $time * 1000;
-			$end = $offset + $time;
-			echo "<tr><td>{$indent}$message</td><td>$offset</td><td>$end</td><td>$time</td></tr>";
+			$start = round($start * 1000, 0);
+			$end = round($end * 1000, 0);
+			$time = round($time * 1000, 0);
+			echo "<tr><td>{$indent}$message</td><td>$start</td><td>$end</td><td>$time</td></tr>";
 			$i++;
 		}
 		echo '</tbody></table>';
@@ -164,13 +164,19 @@ class DebugKitDebugger extends Debugger {
  **/
 	function getTimers($clear = false) {
 		$_this =& DebugKitDebugger::getInstance();
+		$start = DebugKitDebugger::requestStartTime();
+		$now = getMicrotime();
+
 		$times = array();
-		$first = current($_this->__benchmarks);
-		$start = $first['start'];
-		foreach ($_this->__benchmarks as $name => $timer) {
-			$times[$name]['time'] = DebugKitDebugger::elapsedTime($name);
-			$times[$name]['offset'] = DebugKitDebugger::offsetTime($name);
-			$times[$name]['message'] = $timer['message'];
+		foreach ($_this->__benchmarks as $name => &$timer) {
+			if (!isset($timer['end'])) {
+				$timer['end'] = $now;
+			}
+			$times[$name] = array_merge($timer, array(
+				'start' => $timer['start'] - $start,
+				'end' => $timer['end'] - $start,
+				'time' => DebugKitDebugger::elapsedTime($name)
+			));
 		}
 		if ($clear) {
 			$_this->__benchmarks = array();
@@ -202,27 +208,7 @@ class DebugKitDebugger extends Debugger {
 		if (!isset($_this->__benchmarks[$name]['start'])) {
 			return 0;
 		}
- 		if (!isset($_this->__benchmarks[$name]['end'])) {
-			$_this->__benchmarks[$name]['end'] = getMicrotime();
-		}
 		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);
-	}
-
-/**
- * offsetTime method
- *
- * @param string $name 'default'
- * @param int $precision 5
- * @return void
- * @access public
- */
-	function offsetTime($name = 'default', $precision = 6) {
-		$_this =& DebugKitDebugger::getInstance();
-		if (!isset($_this->__benchmarks[$name]['start'])) {
-			return 0;
-		}
-		$start = DebugKitDebugger::requestStartTime();
-		return round($_this->__benchmarks[$name]['start'] - $start, $precision);
 	}
 
 /**

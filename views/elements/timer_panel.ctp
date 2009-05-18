@@ -49,7 +49,7 @@ endif;
 
 <?php
 $end = end($timers);
-$maxTime = $end['offset'] + $end['time'];
+$maxTime = $end['end'];
 
 $headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
 $i = 0;
@@ -57,7 +57,7 @@ $values = array_values($timers);
 foreach ($timers as $timerName => $timeInfo):
 	$indent = 0;
 	for ($j = 0; $j < $i; $j++) {
-		if (($values[$j]['time'] + $values[$j]['offset']) > ($timeInfo['time'] + $timeInfo['offset'])) {
+		if (($values[$j]['end'] > $timeInfo['start']) && ($values[$j]['end']) > ($timeInfo['end'])) {
 			$indent++;
 		}
 	}
@@ -65,10 +65,13 @@ foreach ($timers as $timerName => $timeInfo):
 	$rows[] = array(
 		$indent . $timeInfo['message'],
 		$number->precision($timeInfo['time'], 6),
-		$simpleGraph->bar($number->precision($timeInfo['time'], 6), $number->precision($timeInfo['offset'], 6), array(
-			'max' => $maxTime,
-			'requestTime' => $requestTime,
-		))
+		$simpleGraph->bar(
+			$number->precision($timeInfo['time'], 6),
+			$number->precision($timeInfo['start'], 6), array(
+				'max' => $maxTime,
+				'requestTime' => $requestTime,
+			)
+		)
 	);
 	$i++;
 endforeach;

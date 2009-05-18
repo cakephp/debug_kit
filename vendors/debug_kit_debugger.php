@@ -32,6 +32,45 @@ App::import('Vendor', 'DebugKit.FireCake');
 class DebugKitDebugger extends Debugger {
 
 /**
+ * destruct method
+ *
+ * Allow timer info to be displayed if the code dies or is being debugged before rendering the view
+ * Cheat and use the debug log class for formatting
+ *
+ * @return void
+ * @access private
+ */
+	function __destruct() {
+		$_this =& DebugKitDebugger::getInstance();
+		if (!$_this->__benchmarks) {
+			return;
+		}
+		$timers = array_values(DebugKitDebugger::getTimers());
+		$end = end($timers);
+		echo '<table class="cake-sql-log"><tbody>';
+		echo '<caption>Debug timer info</caption>';
+		echo '<tr><th>Message</th><th>Start Time (ms)</th><th>End Time (ms)</th><th>Duration (ms)</th></tr>';
+		$i = 0;
+		foreach ($timers as $timer) {
+			$indent = 0;
+			for ($j = 0; $j < $i; $j++) {
+				if (($timers[$j]['time'] + $timers[$j]['offset']) > ($timer['time'] + $timer['offset'])) {
+					$indent++;
+				}
+			}
+			$indent = str_repeat(' » ', $indent);
+
+			extract($timer);
+			$offset = $offset * 1000;
+			$time = $time * 1000;
+			$end = $offset + $time;
+			echo "<tr><td>{$indent}$message</td><td>$offset</td><td>$end</td><td>$time</td></tr>";
+			$i++;
+		}
+		echo '</tbody></table>';
+	}
+
+/**
  * Start an benchmarking timer.
  *
  * @param string $name The name of the timer to start.
@@ -131,6 +170,7 @@ class DebugKitDebugger extends Debugger {
 			$times[$name]['offset'] = DebugKitDebugger::offsetTime($name);
 			$times[$name]['message'] = $timer['message'];
 		}
+		$_this->__benchmarks = array();
 		return $times;
 	}
 
@@ -155,8 +195,11 @@ class DebugKitDebugger extends Debugger {
  **/
 	function elapsedTime($name = 'default', $precision = 5) {
 		$_this =& DebugKitDebugger::getInstance();
-		if (!isset($_this->__benchmarks[$name]['start']) || !isset($_this->__benchmarks[$name]['end'])) {
+		if (!isset($_this->__benchmarks[$name]['start'])) {
 			return 0;
+		}
+ 		if (!isset($_this->__benchmarks[$name]['end'])) {
+			$_this->__benchmarks[$name]['end'] = getMicrotime();
 		}
 		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);
 	}
@@ -169,7 +212,7 @@ class DebugKitDebugger extends Debugger {
  * @return void
  * @access public
  */
-	function offsetTime($name = 'default', $precision = 5) {
+	function offsetTime($name = 'default', $precision = 6) {
 		$_this =& DebugKitDebugger::getInstance();
 		if (!isset($_this->__benchmarks[$name]['start'])) {
 			return 0;

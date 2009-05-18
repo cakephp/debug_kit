@@ -18,7 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 if (!isset($debugKitInHistoryMode)):
-	$timers = DebugKitDebugger::getTimers();
+	$timers = DebugKitDebugger::getTimers(true);
 	$currentMemory = DebugKitDebugger::getMemoryUse();
 	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
 	$requestTime = DebugKitDebugger::requestTime();

@@ -42,7 +42,7 @@ class DebugKitDebugger extends Debugger {
  */
 	function __destruct() {
 		$_this =& DebugKitDebugger::getInstance();
-		if (!$_this->__benchmarks) {
+		if (!Configure::Read() || !$_this->__benchmarks) {
 			return;
 		}
 		$timers = array_values(DebugKitDebugger::getTimers());
@@ -156,11 +156,13 @@ class DebugKitDebugger extends Debugger {
 
 /**
  * Get all timers that have been started and stopped.
- * Calculates elapsed time for each timer.
+ * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
+ * @param bool $clear false
  * @return array
+ * @access public
  **/
-	function getTimers() {
+	function getTimers($clear = false) {
 		$_this =& DebugKitDebugger::getInstance();
 		$times = array();
 		$first = current($_this->__benchmarks);
@@ -170,7 +172,9 @@ class DebugKitDebugger extends Debugger {
 			$times[$name]['offset'] = DebugKitDebugger::offsetTime($name);
 			$times[$name]['message'] = $timer['message'];
 		}
-		$_this->__benchmarks = array();
+		if ($clear) {
+			$_this->__benchmarks = array();
+		}
 		return $times;
 	}
 

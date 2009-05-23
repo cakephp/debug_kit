@@ -124,7 +124,7 @@
 
 /* panel tables */
 #debug-kit-toolbar table.debug-table {
-	width: auto;
+	width: 100%;
 	border: 0;
 	clear:both;
 }

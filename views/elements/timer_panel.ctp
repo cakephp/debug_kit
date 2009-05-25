@@ -51,7 +51,7 @@ endif;
 $end = end($timers);
 $maxTime = $end['end'];
 
-$headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
+$headers = array(__('Message', true), __('Time in ms', true), __('Graph', true));
 $i = 0;
 $values = array_values($timers);
 foreach ($timers as $timerName => $timeInfo):
@@ -64,18 +64,17 @@ foreach ($timers as $timerName => $timeInfo):
 	$indent = str_repeat(' » ', $indent);
 	$rows[] = array(
 		$indent . $timeInfo['message'],
-		$number->precision($timeInfo['time'], 6),
+		$number->precision($timeInfo['time'] * 1000, 0),
 		$simpleGraph->bar(
-			$number->precision($timeInfo['time'], 6),
-			$number->precision($timeInfo['start'], 6), array(
-				'max' => $maxTime,
-				'requestTime' => $requestTime,
+			$number->precision($timeInfo['time'] * 1000, 2),
+			$number->precision($timeInfo['start'] * 1000, 2), array(
+				'max' => $maxTime * 1000,
+				'requestTime' => $requestTime * 1000,
 			)
 		)
 	);
 	$i++;
 endforeach;
-
 echo $toolbar->table($rows, $headers, array('title' => 'Timers'));
 
 if (!isset($debugKitInHistoryMode)):

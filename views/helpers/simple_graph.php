@@ -69,7 +69,6 @@ class SimpleGraphHelper extends AppHelper {
 			$_offset = ($offset / $max) * $width;
 			$_offset = round($_offset);
 		}
-
 		return $this->Html->div(
 			'debug-kit-graph-bar',
 				$this->Html->div(
@@ -77,7 +76,7 @@ class SimpleGraphHelper extends AppHelper {
 					' ',
 					array(
 						'style' => "margin-left: {$_offset}px; width: {$_value}px",
-						'title' => "Starting {$offset}s into the request, taking {$value}s",
+						'title' => sprintf(__("Starting %sms into the request, taking %sms", true), $offset, $value),
 					)
 				),
 			array('style' => "width: {$width}px;"),

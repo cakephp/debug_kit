@@ -168,6 +168,19 @@ class DebugKitDebugger extends Debugger {
 		$now = getMicrotime();
 
 		$times = array();
+		if (!empty($_this->__benchmarks)) {
+			$firstTimer = current($_this->__benchmarks);
+			$_end = $firstTimer['start'];
+		} else {
+			$_end = $now;
+		}
+		$times['Core Processing (Derived)'] = array(
+			'message' => __('Core Processing (Derived)', true),
+			'start' => 0,
+			'end' => $_end - $start,
+			'time' => round($_end - $start, 6),
+			'named' => null
+		);
 		foreach ($_this->__benchmarks as $name => &$timer) {
 			if (!isset($timer['end'])) {
 				$timer['end'] = $now;

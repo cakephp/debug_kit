@@ -42,7 +42,7 @@ endif;
 <div class="debug-info">
 	<h2><?php __('Timers'); ?></h2>
 	<div class="request-time">
-		<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision($requestTime, 6)); ?>
+		<?php $totalTime = sprintf(__('%s (ms)', true), $number->precision($requestTime * 1000, 0)); ?>
 		<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
 	</div>
 </div>

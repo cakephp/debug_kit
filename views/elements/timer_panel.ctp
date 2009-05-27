@@ -30,20 +30,20 @@ else:
 endif;
 ?>
 <div class="debug-info">
-	<h2><?php __('Memory'); ?></h2>
+	<h2><?php __d('debug_kit', 'Memory'); ?></h2>
 	<div class="current-mem-use">
-		<?php echo $toolbar->message(__('Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
+		<?php echo $toolbar->message(__d('debug_kit', 'Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
 	</div>
 	<div class="peak-mem-use">
 	<?php
-		echo $toolbar->message(__('Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
+		echo $toolbar->message(__d('debug_kit', 'Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
 	</div>
 </div>
 <div class="debug-info">
-	<h2><?php __('Timers'); ?></h2>
+	<h2><?php __d('debug_kit', 'Timers'); ?></h2>
 	<div class="request-time">
-		<?php $totalTime = sprintf(__('%s (ms)', true), $number->precision($requestTime * 1000, 0)); ?>
-		<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
+		<?php $totalTime = sprintf(__d('debug_kit', '%s (ms)', true), $number->precision($requestTime * 1000, 0)); ?>
+		<?php echo $toolbar->message(__d('debug_kit', 'Total Request Time:', true), $totalTime)?>
 	</div>
 </div>
 
@@ -51,7 +51,7 @@ endif;
 $end = end($timers);
 $maxTime = $end['end'];
 
-$headers = array(__('Message', true), __('Time in ms', true), __('Graph', true));
+$headers = array(__d('debug_kit', 'Message', true), __d('debug_kit', 'Time in ms', true), __d('debug_kit', 'Graph', true));
 $i = 0;
 $values = array_values($timers);
 foreach ($timers as $timerName => $timeInfo):

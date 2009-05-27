@@ -2,7 +2,7 @@
 /**
  * Benchmark Shell.
  *
- * Provides basic benchmarking of application requests 
+ * Provides basic benchmarking of application requests
  * functionally similar to Apache AB
  *
  * PHP versions 4 and 5
@@ -31,7 +31,7 @@
  * @todo Make calculated results round to leading significant digit position of std dev.
  */
 class BenchmarkShell extends Shell {
-	
+
 	/**
 	 * Main execution of shell
 	 *
@@ -47,25 +47,25 @@ class BenchmarkShell extends Shell {
 		$defaults = array('t' => 100, 'n' => 10);
 		$options  = array_merge($defaults, $this->params);
 		$times = array();
-		
-		$this->out(String::insert(__('-> Testing :url', true), compact('url')));
+
+		$this->out(String::insert(__d('debug_kit', '-> Testing :url', true), compact('url')));
 		$this->out("");
 		for ($i = 0; $i < $options['n']; $i++) {
 			if (floor($options['t'] - array_sum($times)) <= 0 || $options['n'] <= 1) {
 				break;
 			}
-			
+
 			$start = microtime(true);
 			file_get_contents($url);
 			$stop = microtime(true);
-			
+
 			$times[] = $stop - $start;
 		}
-		
+
 		$this->_results($times);
 	}
-	
-	
+
+
 	/**
 	 * Prints calculated results
 	 *
@@ -76,43 +76,43 @@ class BenchmarkShell extends Shell {
 	function _results($times) {
 		$duration = array_sum($times);
 		$requests = count($times);
-		
-		$this->out(String::insert(__('Total Requests made: :requests', true), compact('requests')));
-		$this->out(String::insert(__('Total Time elapsed: :duration (seconds)', true), compact('duration')));
-		
+
+		$this->out(String::insert(__d('debug_kit', 'Total Requests made: :requests', true), compact('requests')));
+		$this->out(String::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)', true), compact('duration')));
+
 		$this->out("");
-		
-		$this->out(String::insert(__('Requests/Second: :rps req/sec', true), array(
+
+		$this->out(String::insert(__d('debug_kit', 'Requests/Second: :rps req/sec', true), array(
 				'rps' => round($requests / $duration, 3)
 		)));
-		
-		$this->out(String::insert(__('Average request time: :average-time seconds', true), array(
+
+		$this->out(String::insert(__d('debug_kit', 'Average request time: :average-time seconds', true), array(
 				'average-time' => round($duration / $requests, 3)
 		)));
-		
-		$this->out(String::insert(__('Standard deviation of average request time: :std-dev', true), array(
+
+		$this->out(String::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev', true), array(
 				'std-dev' => round($this->_deviation($times, true), 3)
 		)));
-		
-		$this->out(String::insert(__('Longest/shortest request: :longest sec/:shortest sec', true), array(
+
+		$this->out(String::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec', true), array(
 				'longest' => round(max($times), 3),
 				'shortest' => round(min($times), 3)
 		)));
-		
+
 		$this->out("");
-		
+
 	}
-	
+
 
 	/**
 	 * One-pass, numerically stable calculation of population variance.
 	 *
-	 * Donald E. Knuth (1998). 
-	 * The Art of Computer Programming, volume 2: Seminumerical Algorithms, 3rd edn., 
+	 * Donald E. Knuth (1998).
+	 * The Art of Computer Programming, volume 2: Seminumerical Algorithms, 3rd edn.,
 	 * p. 232. Boston: Addison-Wesley.
 	 *
 	 * @param array $times Array of values
-	 * @param boolean $sample If true, calculates an unbiased estimate of the population 
+	 * @param boolean $sample If true, calculates an unbiased estimate of the population
 	 * 						  variance from a finite sample.
 	 * @return float Variance
 	 * @access protected
@@ -126,12 +126,12 @@ class BenchmarkShell extends Shell {
 			$mean = $mean + $delta/$n;
 			$M2 = $M2 + $delta*($time - $mean);
 		}
-		
+
 		if ($sample) $n -= 1;
-		
+
 		return $M2/$n;
 	}
-	
+
 	/**
 	 * Calculate the standard deviation.
 	 *
@@ -142,7 +142,7 @@ class BenchmarkShell extends Shell {
 	function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
-		
+
 	/**
 	 * Help for Benchmark shell
 	 *
@@ -150,23 +150,23 @@ class BenchmarkShell extends Shell {
 	 * @access public
 	 */
 	function help() {
-		$this->out(__("DebugKit Benchmark Shell", true));
+		$this->out(__d('debug_kit', "DebugKit Benchmark Shell", true));
 		$this->out("");
-		$this->out(__("\tAllows you to obtain some rough benchmarking statistics \n\tabout a fully qualified URL.", true));
+		$this->out(__d('debug_kit', "\tAllows you to obtain some rough benchmarking statistics \n\tabout a fully qualified URL.", true));
 		$this->out("");
-		$this->out(__("\tUse:", true));
-		$this->out(__("\t\tcake benchmark [-n iterations] [-t timeout] url", true));
+		$this->out(__d('debug_kit', "\tUse:", true));
+		$this->out(__d('debug_kit', "\t\tcake benchmark [-n iterations] [-t timeout] url", true));
 		$this->out("");
-		$this->out(__("\tParams:", true));
-		$this->out(__("\t\t-n Number of iterations to perform. Defaults to 10. \n\t\t   Must be an integer.", true));
-		$this->out(__("\t\t-t Maximum total time for all iterations, in seconds. \n\t\t   Defaults to 100. Must be an integer.", true));
+		$this->out(__d('debug_kit', "\tParams:", true));
+		$this->out(__d('debug_kit', "\t\t-n Number of iterations to perform. Defaults to 10. \n\t\t   Must be an integer.", true));
+		$this->out(__d('debug_kit', "\t\t-t Maximum total time for all iterations, in seconds. \n\t\t   Defaults to 100. Must be an integer.", true));
 		$this->out("");
-		$this->out(__("\tIf a single iteration takes more than the \n\ttimeout specified, only one request will be made.", true));
+		$this->out(__d('debug_kit', "\tIf a single iteration takes more than the \n\ttimeout specified, only one request will be made.", true));
 		$this->out("");
-		$this->out(__("\tExample Use:", true));
-		$this->out(__("\t\tcake benchmark -n 10 -t 100 http://localhost/testsite", true));
+		$this->out(__d('debug_kit', "\tExample Use:", true));
+		$this->out(__d('debug_kit', "\t\tcake benchmark -n 10 -t 100 http://localhost/testsite", true));
 		$this->out("");
-		$this->out(__("\tNote that this benchmark does not include browser render time", true));
+		$this->out(__d('debug_kit', "\tNote that this benchmark does not include browser render time", true));
 		$this->out("");
 		$this->hr();
 		$this->out("");

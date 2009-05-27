@@ -175,7 +175,7 @@ class DebugKitDebugger extends Debugger {
 			$_end = $now;
 		}
 		$times['Core Processing (Derived)'] = array(
-			'message' => __('Core Processing (Derived)', true),
+			'message' => __d('debug_kit', 'Core Processing (Derived)', true),
 			'start' => 0,
 			'end' => $_end - $start,
 			'time' => round($_end - $start, 6),

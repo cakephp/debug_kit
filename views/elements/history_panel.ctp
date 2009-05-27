@@ -18,13 +18,13 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 ?>
-<h2> <?php __('Request History'); ?></h2>
+<h2> <?php __d('debug_kit', 'Request History'); ?></h2>
 <?php if (empty($content)): ?>
-  <p class="warning"><?php __('No previous requests logged.'); ?></p>
+  <p class="warning"><?php __d('debug_kit', 'No previous requests logged.'); ?></p>
 <?php else: ?>
-	<?php echo count($content); ?> <?php __('previous requests available') ?>
+	<?php echo count($content); ?> <?php __d('debug_kit', 'previous requests available') ?>
 	<ul class="history-list">
-		<li><?php echo $html->link(__('Restore to current request', true), 
+		<li><?php echo $html->link(__d('debug_kit', 'Restore to current request', true),
 			'#', array('class' => 'history-link', 'id' => 'history-restore-current')); ?>
 		</li>
 		<?php foreach ($content as $previous): ?>
@@ -43,7 +43,7 @@ DEBUGKIT.historyPanel = function () {
 		Request = DEBUGKIT.Util.Request,
 		historyLinks = [];
 
-	// Private methods to handle JSON response and insertion of 
+	// Private methods to handle JSON response and insertion of
 	// new content.
 	var switchHistory = function (response) {
 		try {
@@ -91,7 +91,7 @@ DEBUGKIT.historyPanel = function () {
 	// Private method to handle restoration to current request.
 	var restoreCurrentState = function () {
 		var id, i, panelContent, tag;
-		
+
 		for (i in historyLinks) {
 			Element.removeClass(historyLinks[i], 'loading');
 		}
@@ -113,7 +113,7 @@ DEBUGKIT.historyPanel = function () {
 			}
 		}
 	};
-	
+
 	function handleHistoryLink (event) {
 		event.preventDefault();
 
@@ -142,7 +142,7 @@ DEBUGKIT.historyPanel = function () {
 				console.log('bailing on history');
 				return;
 			}
-		
+
 			var anchors = toolbar.panels['history'].content.getElementsByTagName('A');
 
 			for (i in anchors) {

@@ -18,7 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 ?>
-<h2> <?php __('Request'); ?></h2>
+<h2> <?php __d('debug_kit', 'Request'); ?></h2>
 <h4>Cake Params</h4>
 <?php echo $toolbar->makeNeatArray($content['params']); ?>
 
@@ -32,5 +32,5 @@
 	<p class="warning">To view Cookies, add CookieComponent to Controller</p>
 <?php endif; ?>
 
-<h4><?php __('Current Route') ?></h4>
+<h4><?php __d('debug_kit', 'Current Route') ?></h4>
 <?php echo $toolbar->makeNeatArray($content['currentRoute']); ?>

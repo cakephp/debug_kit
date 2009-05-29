@@ -20,18 +20,21 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class ToolbarAccessController extends DebugKitAppController {
+
 /**
  * name
  *
  * @var string
  */
 	var $name = 'ToolbarAccess';
+
 /**
  * uses array
  *
  * @var array
  **/
 	var $uses = array();
+
 /**
  * Helpers
  *
@@ -41,12 +44,14 @@ class ToolbarAccessController extends DebugKitAppController {
 		'DebugKit.Toolbar' => array('output' => 'DebugKit.HtmlToolbar'),
 		'Javascript', 'Number', 'DebugKit.SimpleGraph'
 	);
+
 /**
  * components
  *
  * @var array
  **/
 	var $components = array('RequestHandler');
+
 /**
  * beforeFilter callback
  *

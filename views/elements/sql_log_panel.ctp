@@ -18,7 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 ?>
-<h2><?php __('Sql Logs')?></h2>
+<h2><?php __d('debug_kit', 'Sql Logs')?></h2>
 <?php if (!empty($content)) : ?>
 	<?php foreach ($content as $dbName => $queryLog) : ?>
 	<div class="sql-log-panel-query-log">
@@ -28,7 +28,7 @@
 			echo $toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
 
 			if (!empty($queryLog['explains'])):
-				$name = sprintf(__('toggle (%s) query explains for %s', true), count($queryLog['explains']), $dbName);
+				$name = sprintf(__d('debug_kit', 'toggle (%s) query explains for %s', true), count($queryLog['explains']), $dbName);
 				echo $html->link($name, '#', array('class' => 'show-slow'));
 
 				echo '<div class="slow-query-container">';
@@ -36,12 +36,12 @@
 					echo $toolbar->table($queryLog['explains'], $headers, array('title' => 'Slow Queries ' . $dbName));
 				echo '</div>';
 			else:
-				echo $toolbar->message('Warning', __('No slow queries!, or your database does not support EXPLAIN', true));
+				echo $toolbar->message('Warning', __d('debug_kit', 'No slow queries!, or your database does not support EXPLAIN', true));
 			endif; ?>
 	</div>
 	<?php endforeach; ?>
 <?php else:
-	echo $toolbar->message('Warning', __('No active database connections', true));
+	echo $toolbar->message('Warning', __d('debug_kit', 'No active database connections', true));
 endif; ?>
 
 <script type="text/javascript">

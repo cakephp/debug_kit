@@ -22,7 +22,7 @@
 ?>
 <div id="debug-kit-toolbar">
 	<?php if (empty($debugToolbarPanels)) :?>
-		<p class="warning"><?php __('There are no active panels. You must enable a panel to see its output.'); ?></p>
+		<p class="warning"><?php __d('debug_kit', 'There are no active panels. You must enable a panel to see its output.'); ?></p>
 	<?php else: ?>
 		<ul id="panel-tabs">
 			<li class="panel-tab icon">
@@ -34,7 +34,7 @@
 			<?php $panelUnderscore = Inflector::underscore($panelName);?>
 			<li class="panel-tab">
 				<a href="#<?php echo $panelUnderscore; ?>">
-					<?php echo Inflector::humanize($panelUnderscore); ?>
+					<?php __d('debug_kit', Inflector::humanize($panelUnderscore)); ?>
 				</a>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
 					<div class="panel-content-data">

@@ -32,6 +32,45 @@ App::import('Vendor', 'DebugKit.FireCake');
 class DebugKitDebugger extends Debugger {
 
 /**
+ * destruct method
+ *
+ * Allow timer info to be displayed if the code dies or is being debugged before rendering the view
+ * Cheat and use the debug log class for formatting
+ *
+ * @return void
+ * @access private
+ */
+	function __destruct() {
+		$_this =& DebugKitDebugger::getInstance();
+		if (!Configure::Read() || !$_this->__benchmarks) {
+			return;
+		}
+		$timers = array_values(DebugKitDebugger::getTimers());
+		$end = end($timers);
+		echo '<table class="cake-sql-log"><tbody>';
+		echo '<caption>Debug timer info</caption>';
+		echo '<tr><th>Message</th><th>Start Time (ms)</th><th>End Time (ms)</th><th>Duration (ms)</th></tr>';
+		$i = 0;
+		foreach ($timers as $timer) {
+			$indent = 0;
+			for ($j = 0; $j < $i; $j++) {
+				if (($timers[$j]['end']) > ($timer['start']) && ($timers[$j]['end']) > ($timer['end'])) {
+					$indent++;
+				}
+			}
+			$indent = str_repeat(' » ', $indent);
+
+			extract($timer);
+			$start = round($start * 1000, 0);
+			$end = round($end * 1000, 0);
+			$time = round($time * 1000, 0);
+			echo "<tr><td>{$indent}$message</td><td>$start</td><td>$end</td><td>$time</td></tr>";
+			$i++;
+		}
+		echo '</tbody></table>';
+	}
+
+/**
  * Start an benchmarking timer.
  *
  * @param string $name The name of the timer to start.
@@ -117,16 +156,43 @@ class DebugKitDebugger extends Debugger {
 
 /**
  * Get all timers that have been started and stopped.
- * Calculates elapsed time for each timer.
+ * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
+ * @param bool $clear false
  * @return array
+ * @access public
  **/
-	function getTimers() {
+	function getTimers($clear = false) {
 		$_this =& DebugKitDebugger::getInstance();
+		$start = DebugKitDebugger::requestStartTime();
+		$now = getMicrotime();
+
 		$times = array();
-		foreach ($_this->__benchmarks as $name => $timer) {
-			$times[$name]['time'] = DebugKitDebugger::elapsedTime($name);
-			$times[$name]['message'] = $timer['message'];
+		if (!empty($_this->__benchmarks)) {
+			$firstTimer = current($_this->__benchmarks);
+			$_end = $firstTimer['start'];
+		} else {
+			$_end = $now;
+		}
+		$times['Core Processing (Derived)'] = array(
+			'message' => __d('debug_kit', 'Core Processing (Derived)', true),
+			'start' => 0,
+			'end' => $_end - $start,
+			'time' => round($_end - $start, 6),
+			'named' => null
+		);
+		foreach ($_this->__benchmarks as $name => &$timer) {
+			if (!isset($timer['end'])) {
+				$timer['end'] = $now;
+			}
+			$times[$name] = array_merge($timer, array(
+				'start' => $timer['start'] - $start,
+				'end' => $timer['end'] - $start,
+				'time' => DebugKitDebugger::elapsedTime($name)
+			));
+		}
+		if ($clear) {
+			$_this->__benchmarks = array();
 		}
 		return $times;
 	}
@@ -152,7 +218,7 @@ class DebugKitDebugger extends Debugger {
  **/
 	function elapsedTime($name = 'default', $precision = 5) {
 		$_this =& DebugKitDebugger::getInstance();
-		if (!isset($_this->__benchmarks[$name]['start']) || !isset($_this->__benchmarks[$name]['end'])) {
+		if (!isset($_this->__benchmarks[$name]['start'])) {
 			return 0;
 		}
 		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);

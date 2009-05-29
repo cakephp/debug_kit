@@ -18,10 +18,10 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 if (!isset($debugKitInHistoryMode)):
-	$timers = DebugKitDebugger::getTimers();
+	$timers = DebugKitDebugger::getTimers(true);
 	$currentMemory = DebugKitDebugger::getMemoryUse();
 	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
-	$requestTime = DebugKitDebugger::requestTime();	
+	$requestTime = DebugKitDebugger::requestTime();
 else:
 	$content = $toolbar->readCache('timer', $this->params['pass'][0]);
 	if (is_array($content)):
@@ -29,38 +29,53 @@ else:
 	endif;
 endif;
 ?>
-<h2><?php __('Memory'); ?></h2>
-<div class="current-mem-use">
-	<?php echo $toolbar->message(__('Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
+<div class="debug-info">
+	<h2><?php __d('debug_kit', 'Memory'); ?></h2>
+	<div class="current-mem-use">
+		<?php echo $toolbar->message(__d('debug_kit', 'Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
+	</div>
+	<div class="peak-mem-use">
+	<?php
+		echo $toolbar->message(__d('debug_kit', 'Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
+	</div>
 </div>
-<div class="peak-mem-use">
+<div class="debug-info">
+	<h2><?php __d('debug_kit', 'Timers'); ?></h2>
+	<div class="request-time">
+		<?php $totalTime = sprintf(__d('debug_kit', '%s (ms)', true), $number->precision($requestTime * 1000, 0)); ?>
+		<?php echo $toolbar->message(__d('debug_kit', 'Total Request Time:', true), $totalTime)?>
+	</div>
+</div>
+
 <?php
-	echo $toolbar->message(__('Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
-</div>
+$end = end($timers);
+$maxTime = $end['end'];
 
-<h2><?php __('Timers'); ?></h2>
-<div class="request-time">
-	<?php $totalTime = sprintf(__('%s (seconds)', true), $number->precision($requestTime, 6)); ?>
-	<?php echo $toolbar->message(__('Total Request Time:', true), $totalTime)?>
-</div>
-
-<?php
-$maxTime = 0;
+$headers = array(__d('debug_kit', 'Message', true), __d('debug_kit', 'Time in ms', true), __d('debug_kit', 'Graph', true));
+$i = 0;
+$values = array_values($timers);
 foreach ($timers as $timerName => $timeInfo):
-	$maxTime += $timeInfo['time'];
-endforeach;
-
-$headers = array(__('Message', true), __('Time in seconds', true), __('Graph', true));
-
-foreach ($timers as $timerName => $timeInfo):
+	$indent = 0;
+	for ($j = 0; $j < $i; $j++) {
+		if (($values[$j]['end'] > $timeInfo['start']) && ($values[$j]['end']) > ($timeInfo['end'])) {
+			$indent++;
+		}
+	}
+	$indent = str_repeat(' » ', $indent);
 	$rows[] = array(
-		$timeInfo['message'],
-		$number->precision($timeInfo['time'], 6),
-		$simpleGraph->bar($number->precision($timeInfo['time'], 6), array('max' => $maxTime))
+		$indent . $timeInfo['message'],
+		$number->precision($timeInfo['time'] * 1000, 0),
+		$simpleGraph->bar(
+			$number->precision($timeInfo['time'] * 1000, 2),
+			$number->precision($timeInfo['start'] * 1000, 2), array(
+				'max' => $maxTime * 1000,
+				'requestTime' => $requestTime * 1000,
+			)
+		)
 	);
+	$i++;
 endforeach;
-
-echo $toolbar->table($rows, $headers, array('title' => 'Timers')); 
+echo $toolbar->table($rows, $headers, array('title' => 'Timers'));
 
 if (!isset($debugKitInHistoryMode)):
 	$toolbar->writeCache('timer', compact('timers', 'currentMemory', 'peakMemory', 'requestTime'));

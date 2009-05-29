@@ -18,14 +18,14 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 ?>
-<h2><?php __('Logs') ?></h2>
+<h2><?php __d('debug_kit', 'Logs') ?></h2>
 <div class="code-table">
 <?php foreach ($content as $logName => $logs): ?>
 	<h3><?php echo $logName ?></h3>
-	<?php 
+	<?php
 		$len = count($logs);
 		if ($len > 0):
-			$headers = array(__('Time', true), __('Message', true));
+			$headers = array(__d('debug_kit', 'Time', true), __d('debug_kit', 'Message', true));
 			$rows = array();
 			for ($i = 0; $i < $len; $i += 2):
 				$rows[] = array(
@@ -34,7 +34,7 @@
 			endfor;
 			echo $toolbar->table($rows, $headers, array('title' => $logName));
 		else: ?>
-		<p class="info"><?php __('There were no log entries made this request'); ?></p>
+		<p class="info"><?php __d('debug_kit', 'There were no log entries made this request'); ?></p>
 	<?php endif; ?>
 <?php endforeach; ?>
 </div>

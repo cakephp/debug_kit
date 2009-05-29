@@ -22,53 +22,66 @@
 App::import('Helper', 'Html');
 
 class SimpleGraphHelper extends AppHelper {
+
 /**
  * Helpers
- * 
+ *
  * @var array
  */
 	var $helpers = array('Html');
+
 /**
  * Default settings to be applied to each Simple Graph
- * 
+ *
  * Allowed options:
  *   max => int
  *   width => int
  *   valueType => string (value, percentage)
  *   style => array
- * 
+ *
  * @var array
  */
 	var $__defaultSettings = array(
 		'max' => 100,
-		'width' => 150,
+		'width' => 250,
 		'valueType' => 'value',
 	);
+
 /**
- * 
+ * bar method
+ *
  * @param $value Value to be graphed
+ * @param $offset how much indentation
  * @param $options Graph options
  * @return string Html graph
+ * @access public
  */
-	function bar($value, $options = array()) {
+	function bar($value, $offset, $options = array()) {
 		$settings = array_merge($this->__defaultSettings, $options);
 		extract($settings);
-		
+
+		$_value = ($value / $max) * $width;
+		$_value = max(round($_value), 1);
+
 		if ($valueType == 'percentage') {
-			$value = $value / $width;
+			$_offset = 0;
 		} else {
-			$value = $value / $max * $width;
+			$_offset = ($offset / $max) * $width;
+			$_offset = round($_offset);
 		}
-		$value = round($value);
-		
 		return $this->Html->div(
 			'debug-kit-graph-bar',
-			$this->Html->div(
-				'debug-kit-graph-bar-value',
-				' ',
-				array('style' => "width: {$value}px")),
+				$this->Html->div(
+					'debug-kit-graph-bar-value',
+					' ',
+					array(
+						'style' => "margin-left: {$_offset}px; width: {$_value}px",
+						'title' => sprintf(__("Starting %sms into the request, taking %sms", true), $offset, $value),
+					)
+				),
 			array('style' => "width: {$width}px;"),
-			false);
+			false
+		);
 	}
 }
 ?>

@@ -19,18 +19,21 @@
  **/
 class ToolbarComponent extends Object {
 	var $settings = array();
+
 /**
  * Controller instance reference
  *
  * @var object
  */
 	var $controller;
+
 /**
  * Components used by DebugToolbar
  *
  * @var array
  */
 	var $components = array('RequestHandler');
+
 /**
  * The default panels the toolbar uses.
  * which panels are used can be configured when attaching the component
@@ -38,12 +41,14 @@ class ToolbarComponent extends Object {
  * @var array
  */
 	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
+
 /**
  * Loaded panel objects.
  *
  * @var array
  */
 	var $panels = array();
+
 /**
  * javascript files component will be using
  *
@@ -83,7 +88,7 @@ class ToolbarComponent extends Object {
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
-		DebugKitDebugger::startTimer('componentInit', __('Component initialization and startup', true));
+		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
 
 		$panels = $this->_defaultPanels;
 		if (isset($settings['panels'])) {
@@ -132,7 +137,7 @@ class ToolbarComponent extends Object {
 			$this->panels[$panelName]->startup($controller);
 		}
 		DebugKitDebugger::stopTimer('componentInit');
-		DebugKitDebugger::startTimer('controllerAction', __('Controller Action', true));
+		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller Action', true));
 	}
 
 /**
@@ -159,7 +164,7 @@ class ToolbarComponent extends Object {
 		$this->_saveState($controller, $vars);
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugKitDebugger::startTimer('controllerRender', __('Render Controller Action', true));
+		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action', true));
 	}
 
 /**
@@ -223,7 +228,7 @@ class ToolbarComponent extends Object {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
 			if (!class_exists($className) && !App::import('Vendor',  $className)) {
-				trigger_error(sprintf(__('Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
+				trigger_error(sprintf(__d('debug_kit', 'Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
 				continue;
 			}
 			$panelObj =& new $className($settings);
@@ -251,6 +256,7 @@ class ToolbarComponent extends Object {
 			eval($class);
 		}
 	}
+
 /**
  * Save the current state of the toolbar varibles to the cache file.
  *
@@ -285,12 +291,14 @@ class ToolbarComponent extends Object {
  * @package       cake.debug_kit
  */
 class DebugPanel extends Object {
+
 /**
  * Defines which plugin this panel is from so the element can be located.
  *
  * @var string
  */
 	var $plugin = null;
+
 /**
  * startup the panel
  *
@@ -319,12 +327,14 @@ class DebugPanel extends Object {
  **/
 class HistoryPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * Number of history elements to keep
  *
  * @var string
  **/
 	var $history = 5;
+
 /**
  * Constructor
  *
@@ -336,6 +346,7 @@ class HistoryPanel extends DebugPanel {
 			$this->history = $settings['history'];
 		}
 	}
+
 /**
  * beforeRender callback function
  *
@@ -380,6 +391,7 @@ class HistoryPanel extends DebugPanel {
  **/
 class VariablesPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * beforeRender callback
  *
@@ -399,6 +411,7 @@ class VariablesPanel extends DebugPanel {
  **/
 class SessionPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * beforeRender callback
  *
@@ -421,6 +434,7 @@ class SessionPanel extends DebugPanel {
  **/
 class RequestPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * beforeRender callback - grabs request params
  *
@@ -447,6 +461,7 @@ class RequestPanel extends DebugPanel {
  **/
 class TimerPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * startup - add in necessary helpers
  *
@@ -471,6 +486,7 @@ class TimerPanel extends DebugPanel {
  **/
 class SqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
  * is done.
@@ -478,6 +494,7 @@ class SqlLogPanel extends DebugPanel {
  * @var int
  **/
 	var $slowRate = 20;
+
 /**
  * Get Sql Logs for each DB config
  *
@@ -530,6 +547,7 @@ class SqlLogPanel extends DebugPanel {
 		}
 		return $queryLogs;
 	}
+
 /**
  * get cell values from xml
  *
@@ -547,6 +565,7 @@ class SqlLogPanel extends DebugPanel {
 		}
 		return $tds;
 	}
+
 /**
  * Run an explain query for a slow query.
  *
@@ -581,12 +600,14 @@ class SqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
  * Log files to scan
  *
  * @var array
  */
 	var $logFiles = array('error.log', 'debug.log');
+
 /**
  * startup
  *
@@ -597,6 +618,7 @@ class LogPanel extends DebugPanel {
 			App::import('Core', 'Log');
 		}
 	}
+
 /**
  * beforeRender Callback
  *
@@ -615,6 +637,7 @@ class LogPanel extends DebugPanel {
 		}
 		return $out;
 	}
+
 /**
  * parse a log file and find the relevant entries
  *

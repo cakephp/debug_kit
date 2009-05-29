@@ -30,7 +30,12 @@ App::import('Vendor', 'DebugKit.FireCake');
  * @todo merge these changes with core Debugger
  */
 class DebugKitDebugger extends Debugger {
-
+/**
+ * Internal benchmarks array
+ *
+ * @var array
+ **/
+	var $__benchmarks = array();
 /**
  * destruct method
  *
@@ -218,7 +223,7 @@ class DebugKitDebugger extends Debugger {
  **/
 	function elapsedTime($name = 'default', $precision = 5) {
 		$_this =& DebugKitDebugger::getInstance();
-		if (!isset($_this->__benchmarks[$name]['start'])) {
+		if (!isset($_this->__benchmarks[$name]['start']) || !isset($_this->__benchmarks[$name]['end'])) {
 			return 0;
 		}
 		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);

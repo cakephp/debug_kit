@@ -78,10 +78,11 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		usleep(2000);
 		$this->assertTrue(DebugKitDebugger::stopTimer());
 		$timers = DebugKitDebugger::getTimers();
-		
-		$this->assertEqual(count($timers), 1);
+
+		$this->assertEqual(count($timers), 2);
+		end($timers);
 		$key = key($timers);
-		$lineNo = __LINE__ - 7;
+		$lineNo = __LINE__ - 8;
 
 		$file = Debugger::trimPath(__FILE__);
 		$expected = $file . ' line ' . $lineNo;
@@ -104,16 +105,16 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		usleep(100);
 		$this->assertTrue(DebugKitDebugger::stopTimer());
 		$this->assertTrue(DebugKitDebugger::stopTimer());
-		
+
 		$timers = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($timers), 2, 'incorrect number of timers %s');
+		$this->assertEqual(count($timers), 3, 'incorrect number of timers %s');
 		$firstTimerLine = __LINE__ -9;
 		$secondTimerLine = __LINE__ -8;
 		$file = Debugger::trimPath(__FILE__);
-		
+
 		$this->assertTrue(isset($timers[$file . ' line ' . $firstTimerLine]), 'first timer is not set %s');
 		$this->assertTrue(isset($timers[$file . ' line ' . $secondTimerLine]), 'second timer is not set %s');
-		
+
 		$firstTimer = $timers[$file . ' line ' . $firstTimerLine];
 		$secondTimer = $timers[$file . ' line ' . $secondTimerLine];
 		$this->assertTrue($firstTimer['time'] > $secondTimer['time']);
@@ -130,16 +131,16 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		usleep(100);
 		DebugKitDebugger::startTimer('my timer', 'This is the second call');
 		usleep(100);
-		
+
 		DebugKitDebugger::stopTimer('my timer');
 		DebugKitDebugger::stopTimer('my timer');
-		
+
 		$timers = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($timers), 2, 'wrong timer count %s');
-		
+		$this->assertEqual(count($timers), 3, 'wrong timer count %s');
+
 		$this->assertTrue(isset($timers['my timer']));
 		$this->assertTrue(isset($timers['my timer #2']));
-		
+
 		$this->assertTrue($timers['my timer']['time'] > $timers['my timer #2']['time'], 'timer 2 is longer? %s');
 		$this->assertEqual($timers['my timer']['message'], 'This is the first call');
 		$this->assertEqual($timers['my timer #2']['message'], 'This is the second call #2');
@@ -171,12 +172,12 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		DebugKitDebugger::stopTimer('test2');
 		$timers = DebugKitDebugger::getTimers();
 
-		$this->assertEqual(count($timers), 2);
+		$this->assertEqual(count($timers), 3);
 		$this->assertTrue(is_float($timers['test1']['time']));
 		$this->assertTrue(isset($timers['test1']['message']));
 		$this->assertTrue(isset($timers['test2']['message']));
 	}
-	
+
 /**
  * test memory usage
  *
@@ -185,7 +186,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 	function testMemoryUsage() {
 		$result = DebugKitDebugger::getMemoryUse();
 		$this->assertTrue(is_int($result));
-		
+
 		$result = DebugKitDebugger::getPeakMemoryUse();
 		$this->assertTrue(is_int($result));
 	}
@@ -200,11 +201,11 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		Debugger::output('fb');
 		$foo .= '';
 		$result = $firecake->sentHeaders;
-		
+
 		$this->assertPattern('/GROUP_START/', $result['X-Wf-1-1-1-1']);
 		$this->assertPattern('/ERROR/', $result['X-Wf-1-1-1-2']);
 		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-5']);
-		
+
 		Debugger::invoke(Debugger::getInstance('Debugger'));
 		Debugger::output();
 	}

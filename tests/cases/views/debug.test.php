@@ -113,7 +113,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$View->render('index');
 		
 		$result = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($result), 3);
+		$this->assertEqual(count($result), 4);
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));

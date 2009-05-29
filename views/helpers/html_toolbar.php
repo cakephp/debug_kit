@@ -111,7 +111,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (!empty($headers)) {
 			$out .= $this->Html->tableHeaders($headers);
 		}
-		$out .= $this->Html->tableCells($rows, array('class' => 'even'), array('class' => 'odd'));
+		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'), false, false);
 		$out .= '</table>';
 		return $out;
 	}

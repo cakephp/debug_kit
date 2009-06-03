@@ -213,6 +213,7 @@ class ToolbarComponent extends Object {
 			}
 			$vars[$panelName]['elementName'] = $elementName;
 			$vars[$panelName]['plugin'] = $panel->plugin;
+			$vars[$panelName]['title'] = $panel->title;
 			$vars[$panelName]['disableTimer'] = true;
 		}
 		return $vars;
@@ -303,6 +304,13 @@ class DebugPanel extends Object {
  */
 	var $plugin = null;
 
+/**
+ * Defines the title for displaying on the toolbar.
+ *
+ * @var string
+ */
+	var $title = null;
+  
 /**
  * startup the panel
  *

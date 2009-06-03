@@ -34,7 +34,15 @@
 			<?php $panelUnderscore = Inflector::underscore($panelName);?>
 			<li class="panel-tab">
 				<a href="#<?php echo $panelUnderscore; ?>">
-					<?php __d('debug_kit', Inflector::humanize($panelUnderscore)); ?>
+          <?php
+            if(!empty($panelInfo['title'])) {
+              $title = $panelInfo['title'];
+            } else {
+              $title = Inflector::humanize($panelUnderscore);
+            }
+            
+					  __d('debug_kit', $title);
+          ?>
 				</a>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
 					<div class="panel-content-data">

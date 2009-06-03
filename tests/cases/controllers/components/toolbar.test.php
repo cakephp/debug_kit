@@ -33,6 +33,10 @@ if (!class_exists('AppController')) {
 	}
 }
 
+class TestPanel extends DebugPanel {
+
+}
+
 /**
 * DebugToolbar Test case
 */
@@ -105,14 +109,25 @@ class DebugToolbarTestCase extends CakeTestCase {
 	}
 
 /**
+ * test Loading of panel classes from a plugin
+ *
+ * @return void
+ **/
+	function testLoadPluginPanels() {
+		$this->Controller->Toolbar->loadPanels(array('plugin.test'));
+		$this->assertTrue(is_a($this->Controller->Toolbar->panels['plugin.test'], 'TestPanel'));
+	}
+  
+/**
  * test loading of vendor panels from test_app folder
  *
  * @access public
  * @return void
  */
 	function testVendorPanels() {
-	    $f = Configure::read('pluginPaths');
-		Configure::write('vendorPaths', array($f[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
+	  $f = Configure::read('pluginPaths');
+
+		Configure::write('vendorPaths', array($f[0] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'panels' => array('test'),
@@ -391,13 +406,13 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testNoRequestActionInterference() {
 		$f = Configure::read('pluginPaths');
-		$testapp = $f[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'controllers' . DS;
+		$testapp = $f[0] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'controllers' . DS;
 		array_unshift($f, $testapp);
 		Configure::write('controllerPaths', $f);
 
 		$plugins = Configure::read('pluginPaths');
 		$views = Configure::read('viewPaths');
-		$testapp = $plugins[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
+		$testapp = $plugins[0] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
 		array_unshift($views, $testapp);
 		Configure::write('viewPaths', $views);
 

@@ -232,10 +232,9 @@ class ToolbarComponent extends Object {
 				trigger_error(sprintf(__d('debug_kit', 'Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
 				continue;
 			}
-      
-      if (strpos($className, '.') !== false) {
-        list($plugin, $className) = explode('.', $className);
-      }
+			if (strpos($className, '.') !== false) {
+			  list($plugin, $className) = explode('.', $className);
+			}
 			$panelObj =& new $className($settings);
 			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
 				$this->panels[$panel] =& $panelObj;

@@ -92,9 +92,24 @@ class ToolbarComponent extends Object {
 
 		$panels = $this->_defaultPanels;
 		if (isset($settings['panels'])) {
-			$panels = $settings['panels'];
+			$defaults = true;
+			if(isset($settings['panels']['default'])) {
+				if ($settings['panels']['default'] == false) {
+					$defaults = false;
+				}
+				
+				unset($settings['panels']['default']);
+			}
+			
+			if($defaults) {
+				$panels = am($panels, $settings['panels']);
+			} else {
+				$panels = $settings['panels'];
+			}
+			
 			unset($settings['panels']);
 		}
+		
 		$this->cacheKey .= $controller->Session->read('Config.userAgent');
 		if (!isset($settings['history']) || (isset($settings['history']) && $settings['history'] !== false)) {
 			$this->_createCacheConfig();

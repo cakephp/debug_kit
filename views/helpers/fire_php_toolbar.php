@@ -39,7 +39,6 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 	function _send() {
 		$view =& ClassRegistry::getObject('view');
 		$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
-		Configure::write('debug', 1);
 	}
 /**
  * makeNeatArray.

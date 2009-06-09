@@ -181,26 +181,13 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @access public
  **/
 	function testInitializeCustomPanelsWithDefaults() {
-		$this->Controller->components = array('DebugKit.Toolbar' => array('panels' => array('test')));
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array('panels' => array('default' => true, 'test'))
+		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
 
-		$expected = array ('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'test');
-		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
-	}
-
-/**
- * test initialize w/ custom panels and no defaults
- *
- * @return void
- * @access public
- **/
-	function testInitializeCustomPanelsWithoutDefaults() {
-		$this->Controller->components = array('DebugKit.Toolbar' => array('panels' => array('default' => false, 'test')));
-		$this->Controller->Component->init($this->Controller);
-		$this->Controller->Component->initialize($this->Controller);
-
-		$expected = array ('test');
+		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'test');
 		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 

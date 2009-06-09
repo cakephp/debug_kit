@@ -182,12 +182,28 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testInitializeCustomPanelsWithDefaults() {
 		$this->Controller->components = array(
-			'DebugKit.Toolbar' => array('panels' => array('default' => true, 'test'))
+			'DebugKit.Toolbar' => array('panels' => array('test'))
 		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
 
 		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'test');
+		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
+	}
+
+/**
+ * test syntax for removing panels
+ *
+ * @return void
+ **/
+	function testInitializeRemovingPanels() {
+		$this->Controller->components = array(
+			'DebugKit.Toolbar' => array('panels' => array('session' => false, 'history' => false, 'test'))
+		);
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+
+		$expected = array('request', 'sqlLog', 'timer', 'log', 'variables', 'test');
 		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 
@@ -238,7 +254,6 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->panels['MockDebug']->expectOnce('startup');
 		$this->Controller->Toolbar->startup($this->Controller);
 
-		$this->assertEqual(count($this->Controller->Toolbar->panels), 1);
 		$this->assertEqual($this->Controller->view, 'DebugKit.Debug');
 		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
 

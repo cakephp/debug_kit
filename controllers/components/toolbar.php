@@ -92,16 +92,7 @@ class ToolbarComponent extends Object {
 
 		$panels = $this->_defaultPanels;
 		if (isset($settings['panels'])) {
-			$defaults = false;
-			if (isset($settings['panels']['default'])) {
-				$defaults = true;
-				unset($settings['panels']['default']);
-			}
-			if ($defaults) {
-				$panels = am($panels, $settings['panels']);
-			} else {
-				$panels = $settings['panels'];
-			}
+			$panels = $this->_makePanelList($settings['panels']);
 			unset($settings['panels']);
 		}
 
@@ -115,6 +106,28 @@ class ToolbarComponent extends Object {
 		$this->_set($settings);
 		$this->controller =& $controller;
 		return false;
+	}
+
+/**
+ * Go through user panels and remove default panels as indicated.
+ *
+ * @param array $userPanels The list of panels ther user has added removed.
+ * @return array Array of panels to use.
+ **/
+	function _makePanelList($userPanels) {
+		$panels = $this->_defaultPanels;
+		foreach ($userPanels as $key => $value) {
+			if (is_numeric($key)) {
+				$panels[] = $value;
+			}
+			if (is_string($key) && $value == false) {
+				$index = array_search($key, $panels);
+				if ($index !== false) {
+					unset($panels[$index]);
+				}
+			}
+		}
+		return $panels;
 	}
 
 /**

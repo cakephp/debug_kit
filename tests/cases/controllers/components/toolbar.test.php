@@ -20,8 +20,19 @@
 App::import('Component', 'DebugKit.Toolbar');
 
 class TestToolbarComponent extends ToolbarComponent {
+	var $evalTest = false;
+	var $evalCode = '';
+
 	function loadPanels($panels, $settings = array()) {
 		$this->_loadPanels($panels, $settings);
+	}
+
+	function _eval($code) {
+		if ($this->evalTest) {
+			$this->evalCode = $code;
+			return;
+		}
+		eval($code);
 	}
 }
 
@@ -129,6 +140,19 @@ class DebugToolbarTestCase extends CakeTestCase {
 	function testLoadPluginPanels() {
 		$this->Controller->Toolbar->loadPanels(array('plugin.test'));
 		$this->assertTrue(is_a($this->Controller->Toolbar->panels['plugin.test'], 'TestPanel'));
+	}
+
+/**
+ * test generating a DoppelGangerView with a pluginView.
+ *
+ * @return void
+ **/
+	function testPluginViewParsing() {
+		App::import('Vendor', 'DebugKit.DebugKitDebugger');
+		$this->Controller->Toolbar->evalTest = true;
+		$this->Controller->view = 'Plugin.OtherView';
+		$this->Controller->Toolbar->startup($this->Controller);
+		$this->assertPattern('/class DoppelGangerView extends OtherView/', $this->Controller->Toolbar->evalCode);
 	}
 
 /**

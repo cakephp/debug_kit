@@ -279,12 +279,24 @@ class ToolbarComponent extends Object {
 	function _makeViewClass($baseClassName) {
 		if (!class_exists('DoppelGangerView')) {
 			App::import('View', $baseClassName);
-			if (strpos('View', $baseClassName) === false) {
+			if (strpos($baseClassName, '.') !== false) {
+				list($plugin, $baseClassName) = explode('.', $baseClassName);
+			}
+			if (strpos($baseClassName, 'View') === false) {
 				$baseClassName .= 'View';
 			}
 			$class = "class DoppelGangerView extends $baseClassName {}";
-			eval($class);
+			$this->_eval($class);
 		}
+	}
+
+/**
+ * Method wrapper for eval() for testing uses.
+ *
+ * @return void
+ **/
+	function _eval($code) {
+		eval($code);
 	}
 
 /**

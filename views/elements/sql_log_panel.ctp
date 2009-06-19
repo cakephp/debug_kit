@@ -32,8 +32,14 @@
 				echo $html->link($name, '#', array('class' => 'show-slow'));
 
 				echo '<div class="slow-query-container">';
-					$headers = array_keys($queryLog['explains'][0]);
-					echo $toolbar->table($queryLog['explains'], $headers, array('title' => 'Slow Queries ' . $dbName));
+                    $cells = array();
+                    foreach ($queryLog['explains'] as $explain) {
+                        $headers = $explain['explain'][0];
+                        array_shift($explain['explain']);
+                        $cells[] = array($toolbar->table($explain['explain'], $headers), $explain['query']);
+                    }
+					$headers = array(__d('debug_kit', 'Plan', true), __d('debug_kit', 'Query', true));
+					echo $toolbar->table($cells, $headers, array('title' => 'Slow Queries ' . $dbName));
 				echo '</div>';
 			else:
 				echo $toolbar->message('Warning', __d('debug_kit', 'No slow queries!, or your database does not support EXPLAIN', true));

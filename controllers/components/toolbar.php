@@ -631,14 +631,20 @@ class SqlLogPanel extends DebugPanel {
 			if ($driver === 'postgres') {
 				$queryPlan = array();
 				foreach ($results as $postgreValue) {
-					$queryPlan[] = $postgreValue[0]['QUERY PLAN'];
+					$queryPlan[] = array($postgreValue[0]['QUERY PLAN']);
 				}
-				$results[0][0] = array('Query Plan' => implode("<br />", $queryPlan));
-			}
-			$results = $results[0][0];
-			$results['query'] =  $queryString;
+				$results = array_merge(array('Query Plan'), $queryPlan);
+			} else {
+                $keys = array_keys($results[0][0]);
+                foreach ($results as $mysqlValue) {
+                    $queryPlan[] = array_values($mysqlValue[0]);
+                }
+                $results = array_merge(array($keys), $queryPlan);
+            }
+			$return['explain'] = $results;
+			$return['query'] =  $queryString;
 		}
-		return $results;
+		return $return;
 	}
 }
 

@@ -38,7 +38,7 @@
                         array_shift($explain['explain']);
                         $cells[] = array($toolbar->table($explain['explain'], $headers), $explain['query']);
                     }
-					$headers = array(__d('debug_kit', 'Plan', true), __d('debug_kit', 'Query', true));
+					$headers = array(__d('debug_kit', 'Query plan', true), __d('debug_kit', 'Query', true));
 					echo $toolbar->table($cells, $headers, array('title' => 'Slow Queries ' . $dbName));
 				echo '</div>';
 			else:

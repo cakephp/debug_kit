@@ -625,7 +625,7 @@ class SqlLogPanel extends DebugPanel {
  **/
 	function _explainQuery(&$db, $queryString) {
 		$driver = $db->config['driver'];
-		$results = null;
+		$return = null;
 		if ($driver === 'mysqli' || $driver === 'mysql' || $driver === 'postgres') {
 			$results = $db->query('EXPLAIN ' . $queryString);
 			if ($driver === 'postgres') {
@@ -633,7 +633,7 @@ class SqlLogPanel extends DebugPanel {
 				foreach ($results as $postgreValue) {
 					$queryPlan[] = array($postgreValue[0]['QUERY PLAN']);
 				}
-				$results = array_merge(array('Query Plan'), $queryPlan);
+				$results = array_merge(array(array('')), $queryPlan);
 			} else {
                 $keys = array_keys($results[0][0]);
                 foreach ($results as $mysqlValue) {

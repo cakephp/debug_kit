@@ -34,8 +34,7 @@
 				echo '<div class="slow-query-container">';
                     $cells = array();
                     foreach ($queryLog['explains'] as $explain) {
-                        $headers = $explain['explain'][0];
-                        array_shift($explain['explain']);
+                        $headers = array_shift($explain['explain']);
                         $cells[] = array($toolbar->table($explain['explain'], $headers), $explain['query']);
                     }
 					$headers = array(__d('debug_kit', 'Query plan', true), __d('debug_kit', 'Query', true));

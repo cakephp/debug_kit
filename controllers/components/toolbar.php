@@ -635,12 +635,12 @@ class SqlLogPanel extends DebugPanel {
 				}
 				$results = array_merge(array(array('')), $queryPlan);
 			} else {
-                $keys = array_keys($results[0][0]);
-                foreach ($results as $mysqlValue) {
-                    $queryPlan[] = array_values($mysqlValue[0]);
-                }
-                $results = array_merge(array($keys), $queryPlan);
-            }
+				$keys = array_keys($results[0][0]);
+				foreach ($results as $mysqlValue) {
+					$queryPlan[] = array_values($mysqlValue[0]);
+				}
+				$results = array_merge(array($keys), $queryPlan);
+			}
 			$return['explain'] = $results;
 			$return['query'] =  $queryString;
 		}

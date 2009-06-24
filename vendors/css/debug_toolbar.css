@@ -48,7 +48,10 @@
 #debug-kit-toolbar .panel-tab.icon a {
 	padding: 4px;
 }
-
+#debug-kit-toolbar .panel-tab a.edit-value {
+    float: none;
+    display: inline;
+}
 /* Hovering over link shows tab, useful for no js  */
 #debug-kit-toolbar .panel-tab a:hover + .panel-content,
 #debug-kit-toolbar .panel-tab a + .panel-content:hover {
@@ -146,7 +149,6 @@
 	background:#f7f7f7;
 }
 
-
 /** code tables **/
 #debug-kit-toolbar .code-table td {
 	white-space: pre;
@@ -194,6 +196,7 @@
 	padding: 0 8px;
 	font-weight: bold;
 }
+
 
 /* expandable sections */
 .neat-array li.expandable {

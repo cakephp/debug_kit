@@ -29,7 +29,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function setUp() {
+	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
@@ -94,7 +94,26 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->assertNoPattern('/debug-toolbar/', $result);
 		$result = $this->firecake->sentHeaders;
 		$this->assertTrue(is_array($result));
-		
+	}
+/**
+ * test starting a panel
+ *
+ * @return void
+ **/
+	function testPanelStart() {
+		$this->Toolbar->panelStart('My Panel', 'my_panel');
+		$result = $this->firecake->sentHeaders;
+		$this->assertPattern('/GROUP_START.+My Panel/', $result['X-Wf-1-1-1-1']);
+	}
+/**
+ * test ending a panel
+ *
+ * @return void
+ **/
+	function testPanelEnd() {
+		$this->Toolbar->panelEnd();
+		$result = $this->firecake->sentHeaders;
+		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);	
 	}
 /**
  * endTest()

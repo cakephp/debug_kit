@@ -299,6 +299,29 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTags($result, $expected);
 	}
 /**
+ * test starting a panel
+ *
+ * @return void
+ **/
+	function testStartPanel() {
+		$result = $this->Toolbar->panelStart('My Panel', 'my_panel');
+		$expected = array(
+			'a' => array('href' => '#my_panel'),
+			'My Panel',
+			'/a'
+		);
+		$this->assertTags($result, $expected);
+	}
+/**
+ * test ending a panel
+ *
+ * @return void
+ **/
+	function testPanelEnd() {
+		$result = $this->Toolbar->panelEnd();
+		$this->assertNull($result);
+	}
+/**
  * reset the view paths
  *
  * @return void

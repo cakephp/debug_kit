@@ -100,6 +100,15 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
 	}
 /**
+ * Start a panel.
+ * make a link and anchor.
+ *
+ * @return void
+ **/
+	function panelStart($title, $anchor) {
+		return $this->Html->link($title, '#' . $anchor);
+	}
+/**
  * Create a table.
  *
  * @param array $rows Rows to make.

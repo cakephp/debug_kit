@@ -77,5 +77,21 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		array_unshift($rows, $headers);
 		FireCake::table($title, $rows);
 	}
+/**
+ * Start a panel which is a 'Group' in FirePHP
+ *
+ * @return void
+ **/
+	function panelStart($title, $anchor) {
+		FireCake::group($title);
+	}
+/**
+ * End a panel (Group)
+ *
+ * @return void
+ **/
+	function panelEnd() {
+		FireCake::groupEnd();
+	}
 }
 ?>

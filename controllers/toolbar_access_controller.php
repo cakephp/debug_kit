@@ -79,9 +79,4 @@ class ToolbarAccessController extends DebugKitAppController {
 		$this->set('toolbarState', $oldState);
 		$this->set('debugKitInHistoryMode', true);
 	}
-
-    function session_value($key, $value) {
-        $this->autoRender = false;
-        $this->Session->write($key, $value);
-    }
 }

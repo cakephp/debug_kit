@@ -33,11 +33,10 @@
 		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
 			<?php $panelUnderscore = Inflector::underscore($panelName);?>
 			<li class="panel-tab">
-				<a href="#<?php echo $panelUnderscore; ?>">
 			<?php
-				echo (empty($panelInfo['title'])) ? Inflector::humanize($panelUnderscore) : $panelInfo['title'];
+				$title = (empty($panelInfo['title'])) ? Inflector::humanize($panelUnderscore) : $panelInfo['title'];
+				echo $toolbar->panelStart($title, $panelUnderscore);
 			?>
-				</a>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
 					<div class="panel-content-data">
 						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
@@ -46,6 +45,7 @@
 						<!-- content here -->
 					</div>
 				</div>
+			<?php $toolbar->panelEnd(); ?>
 			</li>
 		<?php endforeach ?>
 		</ul>

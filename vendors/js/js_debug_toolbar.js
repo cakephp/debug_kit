@@ -316,6 +316,9 @@ DEBUGKIT.toolbar = function () {
 			clickedEl = clickedEl.parentNode;
 		}
 		var subUl = clickedEl.lastChild;
+		if (subUl.nodeName.toUpperCase() != 'UL') {
+			return;
+		}
 		var hide = Boolean(subUl.style.display === 'block');
 		if (hide) {
 			Element.hide(subUl);

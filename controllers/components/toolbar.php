@@ -259,7 +259,7 @@ class ToolbarComponent extends Object {
 				continue;
 			}
 			if (strpos($className, '.') !== false) {
-			  list($plugin, $className) = explode('.', $className);
+				list($plugin, $className) = explode('.', $className);
 			}
 			$panelObj =& new $className($settings);
 			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
@@ -603,7 +603,7 @@ class SqlLogPanel extends DebugPanel {
  * @param array of XmlElements.
  * @return array Array of extracted values.
  **/
-	function _getCells($rowXml) {
+	function _getCells(&$rowXml) {
 		$tds = array();
 		foreach ($rowXml->children as $cell) {
 			if ($cell->hasChildren()) {

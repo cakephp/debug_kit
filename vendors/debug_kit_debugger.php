@@ -252,8 +252,8 @@ class DebugKitDebugger extends Debugger {
 	function requestStartTime() {
 		if (defined('TIME_START')) {
 			$startTime = TIME_START;
-		} else if (isset($_GLOBALS['TIME_START'])) {
-			$startTime = $_GLOBALS['TIME_START'];
+		} else if (isset($GLOBALS['TIME_START'])) {
+			$startTime = $GLOBALS['TIME_START'];
 		} else {
 			$startTime = env('REQUEST_TIME');
 		}

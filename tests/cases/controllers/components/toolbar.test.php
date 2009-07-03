@@ -411,7 +411,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
-				'panels' => array('log', 'session')
+				'panels' => array('log', 'session', 'history' => false, 'variables' => false, 'sqlLog' => false,
+					'timer' => false)
 			)
 		);
 		$this->Controller->Component->init($this->Controller);

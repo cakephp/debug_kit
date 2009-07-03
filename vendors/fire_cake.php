@@ -114,12 +114,12 @@ class FireCake extends Object {
 		static $instance = array();
 		if (!empty($class)) {
 			if (!$instance || strtolower($class) != strtolower(get_class($instance[0]))) {
-				$instance[0] = new $class();
+				$instance[0] =& new $class();
 				$instance[0]->setOptions();
 			}
 		}
 		if (!isset($instance[0]) || !$instance[0]) {
-			$instance[0] = new FireCake();
+			$instance[0] =& new FireCake();
 			$instance[0]->setOptions();
 		}
 		return $instance[0];
@@ -134,7 +134,7 @@ class FireCake extends Object {
  * @return void
  */
 	function setOptions($options = array()) {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		if (empty($_this->options)) {
 			$_this->options = array_merge($_this->_defaultOptions, $options);
 		} else {
@@ -174,7 +174,7 @@ class FireCake extends Object {
  * @return void
  **/
 	function disable() {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		$_this->_enabled = false;
 	}
 
@@ -184,7 +184,7 @@ class FireCake extends Object {
  * @return void
  **/
 	function enable() {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		$_this->_enabled = true;
 	}
 
@@ -314,7 +314,7 @@ class FireCake extends Object {
  * @return void
  **/
 	function fb($message) {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 
 		if (headers_sent($filename, $linenum)) {
 			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.', true), $filename, $linenum), E_USER_WARNING);
@@ -363,7 +363,10 @@ class FireCake extends Object {
 				$trace = debug_backtrace();
 				for ($i = 0, $len = count($trace); $i < $len ; $i++) {
 					$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
-					$selfCall = ($keySet && $trace[$i]['class'] == 'FireCake' && in_array($trace[$i]['function'], $_this->_methodIndex));
+					$selfCall = ($keySet && 
+						strtolower($trace[$i]['class']) == 'firecake' &&
+						in_array($trace[$i]['function'], $_this->_methodIndex)
+					);
 					if ($selfCall) {
 						$meta['File'] = isset($trace[$i]['file']) ? Debugger::trimPath($trace[$i]['file']) : '';
 						$meta['Line'] = isset($trace[$i]['line']) ? $trace[$i]['line'] : '';
@@ -396,6 +399,7 @@ class FireCake extends Object {
 		}
 
 		$lines = explode("\n", chunk_split($msg, 5000, "\n"));
+
 		foreach ($lines as $i => $line) {
 			if (empty($line)) {
 				continue;
@@ -478,7 +482,7 @@ class FireCake extends Object {
  * @return void
  **/
 	function stringEncode($object, $objectDepth = 1, $arrayDepth = 1) {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		$return = array();
 		if (is_resource($object)) {
 			return '** ' . (string)$object . '**';
@@ -492,10 +496,10 @@ class FireCake extends Object {
 					return '** Recursion (' . get_class($object) . ') **';
 				}
 			}
-			$_this->_encodedObjects[] =  $object;
+			$_this->_encodedObjects[] =& $object;
 
 			$return['__className'] = $class = get_class($object);
-			$properties = (array) $object;
+			$properties = (array)$object;
 			foreach ($properties as $name => $property) {
 				$return[$name] = FireCake::stringEncode($property, 1, $objectDepth + 1);
 			}
@@ -525,7 +529,7 @@ class FireCake extends Object {
  * @return string
  **/
 	function jsonEncode($object, $skipEncode = false) {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		if (!$skipEncode) {
 			$object = FireCake::stringEncode($object);
 		}
@@ -549,8 +553,11 @@ class FireCake extends Object {
 		if (!class_exists('JavascriptHelper')) {
 			App::import('Helper', 'Javascript');
 		}
-		$javascript = new JavascriptHelper();
+		$javascript =& new JavascriptHelper();
 		$javascript->useNative = false;
+		if (is_string($object)) {
+			return '"' . $javascript->escapeString($object) . '"';
+		}
 		return $javascript->object($object);
 	}
 

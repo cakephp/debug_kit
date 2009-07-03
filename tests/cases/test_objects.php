@@ -26,7 +26,7 @@ class TestFireCake extends FireCake {
 	var $sentHeaders = array();
 
 	function _sendHeader($name, $value) {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		$_this->sentHeaders[$name] = $value;
 	}
 /**
@@ -44,7 +44,7 @@ class TestFireCake extends FireCake {
  * @return void
  **/
 	function reset() {
-		$_this = FireCake::getInstance();
+		$_this =& FireCake::getInstance();
 		$_this->sentHeaders = array();
 		$_this->_messageIndex = 1;
 	}

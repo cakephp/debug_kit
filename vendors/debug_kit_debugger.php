@@ -85,7 +85,7 @@ class DebugKitDebugger extends Debugger {
  **/
 	function startTimer($name = null, $message = null) {
 		$start = getMicrotime();
-		$_this = DebugKitDebugger::getInstance();
+		$_this =& DebugKitDebugger::getInstance();
 
 		if (!$name) {
 			$named = false;
@@ -130,7 +130,7 @@ class DebugKitDebugger extends Debugger {
  */
 	function stopTimer($name = null) {
 		$end = getMicrotime();
-		$_this = DebugKitDebugger::getInstance();
+		$_this =& DebugKitDebugger::getInstance();
 		if (!$name) {
 			$names = array_reverse(array_keys($_this->__benchmarks));
 			foreach($names as $name) {
@@ -186,7 +186,7 @@ class DebugKitDebugger extends Debugger {
 			'time' => round($_end - $start, 6),
 			'named' => null
 		);
-		foreach ($_this->__benchmarks as $name => &$timer) {
+		foreach ($_this->__benchmarks as $name => $timer) {
 			if (!isset($timer['end'])) {
 				$timer['end'] = $now;
 			}

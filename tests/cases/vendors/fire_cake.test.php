@@ -36,7 +36,7 @@ class FireCakeTestCase extends CakeTestCase {
  */
 	function setUp() {
 		$this->firecake =& FireCake::getInstance('TestFireCake');
-	}	
+	}
 /**
  * test getInstance cheat.
  *
@@ -162,16 +162,24 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  **/
 	function testStringEncode() {
-		$result = $this->firecake->stringEncode(array(1,2,3));
+		$vars = array(1,2,3);
+		$result = $this->firecake->stringEncode($vars);
 		$this->assertEqual($result, array(1,2,3));
 
 		$this->firecake->setOptions(array('maxArrayDepth' => 3));
 		$deep = array(1 => array(2 => array(3)));
 		$result = $this->firecake->stringEncode($deep);
 		$this->assertEqual($result, array(1 => array(2 => '** Max Array Depth (3) **')));
-
+	}
+/**
+ * test object encoding
+ *
+ * @return void
+ **/
+	function testStringEncodeObjects() {
 		$obj =& FireCake::getInstance();
 		$result = $this->firecake->stringEncode($obj);
+
 		$this->assertTrue(is_array($result));
 		$this->assertEqual($result['_defaultOptions']['useNativeJsonEncode'], true);
 		$this->assertEqual($result['_log'], null);
@@ -205,6 +213,7 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::trace('myTrace');
 		$this->assertFalse(empty($this->firecake->sentHeaders));
 	}
+
 /**
  * test correct line continuation markers on multi line headers.
  *
@@ -212,7 +221,12 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */	
 	function testMultiLineOutput() {
+		$skip = $this->skipIf(!PHP5, 'Output is not long enough with PHP4');
+		if ($skip) {
+			return;
+		}
 		FireCake::trace('myTrace');
+
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
 		$this->assertEqual(substr($header, -2), '|\\');
@@ -223,7 +237,6 @@ class FireCakeTestCase extends CakeTestCase {
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-3'];
 		$this->assertEqual(substr($header, -1), '|');
 	}
-	
 /**
  * test inclusion of line numbers
  *

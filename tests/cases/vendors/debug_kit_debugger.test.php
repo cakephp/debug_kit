@@ -44,7 +44,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 			}
 		}
 	}
-
 /**
  * Start Timer test
  *
@@ -67,7 +66,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$this->assertFalse(DebugKitDebugger::elapsedTime('test3'));
 		$this->assertFalse(DebugKitDebugger::stopTimer('wrong'));
 	}
-
 /**
  * test timers with no names.
  *

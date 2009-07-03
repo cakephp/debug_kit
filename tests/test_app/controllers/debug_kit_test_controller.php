@@ -18,7 +18,10 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class DebugKitTestController extends Controller {
+	var $name = 'DebugKitTest';
+
 	var $uses = array();
+
 	var $components = array('DebugKit.Toolbar');
 
 	function request_action_return() {

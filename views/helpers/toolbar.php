@@ -59,7 +59,7 @@ class ToolbarHelper extends AppHelper {
 		if (strpos($options['output'], '.') !== false) {
 			list($plugin, $className) = explode('.', $options['output']);
 		}
-		$this->_backEndClassName =  $className;
+		$this->_backEndClassName = $className;
 		$this->helpers[$options['output']] = $options;
 		if (isset($options['cacheKey']) && isset($options['cacheConfig'])) {
 			$this->_cacheKey = $options['cacheKey'];
@@ -92,6 +92,7 @@ class ToolbarHelper extends AppHelper {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}
 	}
+
 /**
  * Allows for writing to panel cache from view.
  * Some panels generate all variables in the view by
@@ -126,16 +127,5 @@ class ToolbarHelper extends AppHelper {
 		}
 		return $existing[$index][$name]['content'];
 	}
-/**
- * postRender method
- *
- * Custom Callback defined in DebugView to allow helpers to modify
- * View output after all rendering is complete.
- *
- * @return void
- * @access public
- */
-	function postRender() {
-		$this->_send();
-	}
+
 }

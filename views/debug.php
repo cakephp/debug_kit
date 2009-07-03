@@ -78,7 +78,8 @@ class DebugView extends DoppelGangerView {
 		DebugKitDebugger::stopTimer('controllerRender');
 
 		if (isset($this->loaded['toolbar'])) {
-			$this->loaded['toolbar']->postRender();
+			$backend = $this->loaded['toolbar']->getName();
+			$this->loaded['toolbar']->{$backend}->send();
 		}
 		if (empty($this->output)) {
 			return $out;

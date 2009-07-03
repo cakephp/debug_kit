@@ -106,7 +106,8 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @return void
  **/
 	function panelStart($title, $anchor) {
-		return $this->Html->link($title, '#' . $anchor);
+		$link = $this->Html->link($title, '#' . $anchor);
+		return $link;
 	}
 /**
  * Create a table.
@@ -128,9 +129,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * send method
  *
  * @return void
- * @access protected
+ * @access public
  */
-	function _send() {
+	function send() {
 		if (!$this->settings['forceEnable'] && Configure::read('debug') == 0) {
 			return;
 		}

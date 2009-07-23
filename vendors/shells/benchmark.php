@@ -31,13 +31,12 @@
  * @todo Make calculated results round to leading significant digit position of std dev.
  */
 class BenchmarkShell extends Shell {
-
-	/**
-	 * Main execution of shell
-	 *
-	 * @return void
-	 * @access public
-	 */
+/**
+ * Main execution of shell
+ *
+ * @return void
+ * @access public
+ */
 	function main() {
 		if (empty($this->args) || count($this->args) > 1) {
 			return $this->help();
@@ -61,18 +60,15 @@ class BenchmarkShell extends Shell {
 
 			$times[] = $stop - $start;
 		}
-
 		$this->_results($times);
 	}
-
-
-	/**
-	 * Prints calculated results
-	 *
-	 * @param array $times Array of time values
-	 * @return void
-	 * @access protected
-	 */
+/**
+ * Prints calculated results
+ *
+ * @param array $times Array of time values
+ * @return void
+ * @access protected
+ */
 	function _results($times) {
 		$duration = array_sum($times);
 		$requests = count($times);
@@ -102,21 +98,19 @@ class BenchmarkShell extends Shell {
 		$this->out("");
 
 	}
-
-
-	/**
-	 * One-pass, numerically stable calculation of population variance.
-	 *
-	 * Donald E. Knuth (1998).
-	 * The Art of Computer Programming, volume 2: Seminumerical Algorithms, 3rd edn.,
-	 * p. 232. Boston: Addison-Wesley.
-	 *
-	 * @param array $times Array of values
-	 * @param boolean $sample If true, calculates an unbiased estimate of the population
-	 * 						  variance from a finite sample.
-	 * @return float Variance
-	 * @access protected
-	 */
+/**
+ * One-pass, numerically stable calculation of population variance.
+ *
+ * Donald E. Knuth (1998).
+ * The Art of Computer Programming, volume 2: Seminumerical Algorithms, 3rd edn.,
+ * p. 232. Boston: Addison-Wesley.
+ *
+ * @param array $times Array of values
+ * @param boolean $sample If true, calculates an unbiased estimate of the population
+ * 						  variance from a finite sample.
+ * @return float Variance
+ * @access protected
+ */
 	function _variance($times, $sample = true) {
 		$n = $mean = $M2 = 0;
 
@@ -131,24 +125,22 @@ class BenchmarkShell extends Shell {
 
 		return $M2/$n;
 	}
-
-	/**
-	 * Calculate the standard deviation.
-	 *
-	 * @param array $times Array of values
-	 * @return float Standard deviation
-	 * @access protected
-	 */
+/**
+ * Calculate the standard deviation.
+ *
+ * @param array $times Array of values
+ * @return float Standard deviation
+ * @access protected
+ */
 	function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
-
-	/**
-	 * Help for Benchmark shell
-	 *
-	 * @return void
-	 * @access public
-	 */
+/**
+ * Help for Benchmark shell
+ *
+ * @return void
+ * @access public
+ */
 	function help() {
 		$this->out(__d('debug_kit', "DebugKit Benchmark Shell", true));
 		$this->out("");

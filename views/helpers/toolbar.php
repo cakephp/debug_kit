@@ -67,7 +67,6 @@ class ToolbarHelper extends AppHelper {
 			$this->_cacheEnabled = true;
 		}
 	}
-
 /**
  * Get the name of the backend Helper
  * used to conditionally trigger toolbar output
@@ -92,7 +91,6 @@ class ToolbarHelper extends AppHelper {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}
 	}
-
 /**
  * Allows for writing to panel cache from view.
  * Some panels generate all variables in the view by

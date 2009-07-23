@@ -63,7 +63,6 @@ class DebugViewTestCase extends CakeTestCase {
 		DebugKitDebugger::clearTimers();
 		Configure::write('debug', $this->_debug);
 	}
-	
 /**
  * start Case - switch view paths
  *
@@ -73,11 +72,10 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->_viewPaths = Configure::read('viewPaths');
 		Configure::write('viewPaths', array(
 			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
-			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
+			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS,
 			ROOT . DS . LIBS . 'view' . DS
 		));
 	}
-	
 /**
  * test that element timers are working
  *
@@ -90,7 +88,6 @@ class DebugViewTestCase extends CakeTestCase {
 		$result = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($result['render_test_element.ctp']));
 	}
-
 /**
  * test rendering and ensure that timers are being set.
  *
@@ -111,14 +108,13 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->Controller->layout = 'default';
 		$View =& new DebugView($this->Controller, false);
 		$View->render('index');
-		
+
 		$result = DebugKitDebugger::getTimers();
 		$this->assertEqual(count($result), 4);
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));
 	}
-	
 /**
  * Test for correct loading of helpers into custom view
  *
@@ -143,7 +139,7 @@ class DebugViewTestCase extends CakeTestCase {
 		$testapp = $plugins[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
 		array_unshift($views, $testapp);
 		Configure::write('viewPaths', $views);
-		
+
 		$this->View->set('test', 'I have been rendered.');
 		$this->View->viewPath = 'debug_kit_test';
 		$this->View->layout = false;

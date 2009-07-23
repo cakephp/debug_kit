@@ -90,7 +90,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$this->assertTrue($timer['time'] > 0.0020);
 		$this->assertEqual($timers[$expected]['message'], $expected);
 	}
-
 /**
  * Assert that nested anonymous timers don't get mixed up.
  *
@@ -117,7 +116,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$secondTimer = $timers[$file . ' line ' . $secondTimerLine];
 		$this->assertTrue($firstTimer['time'] > $secondTimer['time']);
 	}
-
 /**
  * test that calling startTimer with the same name does not overwrite previous timers
  * and instead adds new ones.
@@ -143,7 +141,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$this->assertEqual($timers['my timer']['message'], 'This is the first call');
 		$this->assertEqual($timers['my timer #2']['message'], 'This is the second call #2');
 	}
-
 /**
  * testRequestTime
  *
@@ -156,7 +153,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$result2 = DebugKitDebugger::requestTime();
 		$this->assertTrue($result1 < $result2);
 	}
-
 /**
  * test getting all the set timers.
  *
@@ -175,7 +171,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$this->assertTrue(isset($timers['test1']['message']));
 		$this->assertTrue(isset($timers['test2']['message']));
 	}
-
 /**
  * test memory usage
  *
@@ -207,7 +202,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		Debugger::invoke(Debugger::getInstance('Debugger'));
 		Debugger::output();
 	}
-
 /**
  * tearDown method
  *

@@ -20,21 +20,18 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class ToolbarAccessController extends DebugKitAppController {
-
 /**
  * name
  *
  * @var string
  */
 	var $name = 'ToolbarAccess';
-
 /**
  * uses array
  *
  * @var array
  **/
 	var $uses = array();
-
 /**
  * Helpers
  *
@@ -44,14 +41,12 @@ class ToolbarAccessController extends DebugKitAppController {
 		'DebugKit.Toolbar' => array('output' => 'DebugKit.HtmlToolbar'),
 		'Javascript', 'Number', 'DebugKit.SimpleGraph'
 	);
-
 /**
  * components
  *
  * @var array
  **/
-	var $components = array('RequestHandler');
-
+	var $components = array('RequestHandler', 'DebugKit.Toolbar');
 /**
  * beforeFilter callback
  *
@@ -65,7 +60,6 @@ class ToolbarAccessController extends DebugKitAppController {
 		$this->helpers['DebugKit.Toolbar']['cacheKey'] = $this->Toolbar->cacheKey;
 		$this->helpers['DebugKit.Toolbar']['cacheConfig'] = 'debug_kit';
 	}
-
 /**
  * Get a stored history state from the toolbar cache.
  *

@@ -45,7 +45,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 			Configure::write('debug', $this->_debug);
 		}
 	}
-
 /**
  * start Case - switch view paths
  *
@@ -60,7 +59,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		));
 		$this->_debug = Configure::read('debug');
 	}
-
 /**
  * test cache writing for views.
  *
@@ -70,7 +68,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result);
 	}
-
 /**
  * Ensure that the cache writing only affects the 
  * top most level of the history stack. As this is where the current request is stored.
@@ -91,7 +88,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->readCache('test', 1);
 		$this->assertEqual($result, array('second', 'values'));
 	}
-
 /**
  * test cache reading for views
  *
@@ -110,7 +106,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->readCache('test');
 		$this->assertEqual($result, array('new', 'stuff'), 'Cache value is wrong %s');
 	}
-
 /**
  * Test that reading/writing doesn't work with no cache config.
  *
@@ -125,7 +120,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->readCache('test');
 		$this->assertFalse($result, 'Reading cache succeeded with no cache config %s');
 	}
-
 /**
  * reset the view paths
  *
@@ -134,8 +128,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 	function endCase() {
 		Configure::write('viewPaths', $this->_viewPaths);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
-	}
-
+	}<p></p>
 /**
  * endTest
  *

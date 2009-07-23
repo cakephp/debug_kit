@@ -29,14 +29,12 @@ App::import('Component', 'DebugKit.Toolbar');
  * @todo Remove workarounds.
  */
 class DebugView extends DoppelGangerView {
-
 /**
  * The old extension of the current template.
  *
  * @var string
  */
 	var $_oldExtension = null;
-
 /**
  * Overload _render to capture filenames and time actual rendering of each view file
  *
@@ -60,7 +58,6 @@ class DebugView extends DoppelGangerView {
 		}
 		return $out;
 	}
-
 /**
  * Renders view for given action and layout. If $file is given, that is used
  * for a view filename (e.g. customFunkyView.ctp).
@@ -88,7 +85,6 @@ class DebugView extends DoppelGangerView {
 		Configure::write('debug', 0);
 		return $this->output;
 	}
-
 /**
  * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
  * Creates temporary extension to trick View::render() & View::renderLayout()
@@ -100,7 +96,6 @@ class DebugView extends DoppelGangerView {
 		$filename = parent::_getViewFileName($name);
 		return $this->_replaceExtension($filename);
 	}
-
 /**
  * Workaround _render() limitation in core. Which forces View::_render() for .ctp and .thtml templates
  * Creates temporary extension to trick View::render() & View::renderLayout()
@@ -112,7 +107,6 @@ class DebugView extends DoppelGangerView {
 		$filename = parent::_getLayoutFileName($name);
 		return $this->_replaceExtension($filename);
 	}
-
 /**
  * replace the Extension on a filename and set the temporary workaround extension.
  *

@@ -131,7 +131,6 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	function endCase() {
 		Configure::write('viewPaths', $this->_viewPaths);
 	}
-
 /**
  * tearDown
  *

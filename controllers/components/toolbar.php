@@ -19,21 +19,18 @@
  **/
 class ToolbarComponent extends Object {
 	var $settings = array();
-
 /**
  * Controller instance reference
  *
  * @var object
  */
 	var $controller;
-
 /**
  * Components used by DebugToolbar
  *
  * @var array
  */
 	var $components = array('RequestHandler');
-
 /**
  * The default panels the toolbar uses.
  * which panels are used can be configured when attaching the component
@@ -41,14 +38,12 @@ class ToolbarComponent extends Object {
  * @var array
  */
 	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
-
 /**
  * Loaded panel objects.
  *
  * @var array
  */
 	var $panels = array();
-
 /**
  * javascript files component will be using
  *
@@ -57,21 +52,18 @@ class ToolbarComponent extends Object {
 	var $javascript = array(
 		'behavior' => '/debug_kit/js/js_debug_toolbar'
 	);
-
 /**
  * CacheKey used for the cache file.
  *
  * @var string
  **/
 	var $cacheKey = 'toolbar_cache';
-
 /**
  * Duration of the debug kit history cache
  *
  * @var string
  **/
 	var $cacheDuration = '+4 hours';
-
 /**
  * initialize
  *
@@ -107,7 +99,6 @@ class ToolbarComponent extends Object {
 		$this->controller =& $controller;
 		return false;
 	}
-
 /**
  * Go through user panels and remove default panels as indicated.
  *
@@ -129,7 +120,6 @@ class ToolbarComponent extends Object {
 		}
 		return $panels;
 	}
-
 /**
  * Component Startup
  *
@@ -162,7 +152,6 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::stopTimer('componentInit');
 		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller Action', true));
 	}
-
 /**
  * beforeRedirect callback
  *
@@ -176,7 +165,6 @@ class ToolbarComponent extends Object {
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 	}
-
 /**
  * beforeRender callback
  *
@@ -192,7 +180,6 @@ class ToolbarComponent extends Object {
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action', true));
 	}
-
 /**
  * Load a toolbar state from cache
  *
@@ -206,7 +193,6 @@ class ToolbarComponent extends Object {
 		}
 		return array();
 	}
-
 /**
  * Create the cache config for the history
  *
@@ -218,7 +204,6 @@ class ToolbarComponent extends Object {
 			Cache::config('debug_kit', array('duration' => $this->cacheDuration, 'engine' => 'File'));
 		}
 	}
-
 /**
  * collects the panel contents
  *
@@ -244,7 +229,6 @@ class ToolbarComponent extends Object {
 		}
 		return $vars;
 	}
-
 /**
  * Load Panels used in the debug toolbar
  *
@@ -267,7 +251,6 @@ class ToolbarComponent extends Object {
 			}
 		}
 	}
-
 /**
  * Makes the DoppleGangerView class if it doesn't already exist.
  * This allows DebugView to be compatible with all view classes.
@@ -289,7 +272,6 @@ class ToolbarComponent extends Object {
 			$this->_eval($class);
 		}
 	}
-
 /**
  * Method wrapper for eval() for testing uses.
  *
@@ -298,7 +280,6 @@ class ToolbarComponent extends Object {
 	function _eval($code) {
 		eval($code);
 	}
-
 /**
  * Save the current state of the toolbar varibles to the cache file.
  *
@@ -333,21 +314,18 @@ class ToolbarComponent extends Object {
  * @package       cake.debug_kit
  */
 class DebugPanel extends Object {
-
 /**
  * Defines which plugin this panel is from so the element can be located.
  *
  * @var string
  */
 	var $plugin = null;
-
 /**
  * Defines the title for displaying on the toolbar.
  *
  * @var string
  */
 	var $title = null;
-  
 /**
  * startup the panel
  *
@@ -357,7 +335,6 @@ class DebugPanel extends Object {
  * @return void
  **/
 	function startup(&$controller) { }
-
 /**
  * Prepare output vars before Controller Rendering.
  *
@@ -376,14 +353,12 @@ class DebugPanel extends Object {
  **/
 class HistoryPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * Number of history elements to keep
  *
  * @var string
  **/
 	var $history = 5;
-
 /**
  * Constructor
  *
@@ -395,7 +370,6 @@ class HistoryPanel extends DebugPanel {
 			$this->history = $settings['history'];
 		}
 	}
-
 /**
  * beforeRender callback function
  *
@@ -440,7 +414,6 @@ class HistoryPanel extends DebugPanel {
  **/
 class VariablesPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * beforeRender callback
  *
@@ -460,7 +433,6 @@ class VariablesPanel extends DebugPanel {
  **/
 class SessionPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * beforeRender callback
  *
@@ -483,7 +455,6 @@ class SessionPanel extends DebugPanel {
  **/
 class RequestPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * beforeRender callback - grabs request params
  *
@@ -510,7 +481,6 @@ class RequestPanel extends DebugPanel {
  **/
 class TimerPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * startup - add in necessary helpers
  *
@@ -535,7 +505,6 @@ class TimerPanel extends DebugPanel {
  **/
 class SqlLogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
  * is done.
@@ -543,7 +512,6 @@ class SqlLogPanel extends DebugPanel {
  * @var int
  **/
 	var $slowRate = 20;
-
 /**
  * Get Sql Logs for each DB config
  *
@@ -596,7 +564,6 @@ class SqlLogPanel extends DebugPanel {
 		}
 		return $queryLogs;
 	}
-
 /**
  * get cell values from xml
  *
@@ -614,7 +581,6 @@ class SqlLogPanel extends DebugPanel {
 		}
 		return $tds;
 	}
-
 /**
  * Run an explain query for a slow query.
  *
@@ -655,14 +621,12 @@ class SqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
-
 /**
  * Log files to scan
  *
  * @var array
  */
 	var $logFiles = array('error.log', 'debug.log');
-
 /**
  * startup
  *
@@ -673,7 +637,6 @@ class LogPanel extends DebugPanel {
 			App::import('Core', 'Log');
 		}
 	}
-
 /**
  * beforeRender Callback
  *
@@ -692,7 +655,6 @@ class LogPanel extends DebugPanel {
 		}
 		return $out;
 	}
-
 /**
  * parse a log file and find the relevant entries
  *

@@ -74,7 +74,6 @@ class DebugKitDebugger extends Debugger {
 		}
 		echo '</tbody></table>';
 	}
-
 /**
  * Start an benchmarking timer.
  *
@@ -117,7 +116,6 @@ class DebugKitDebugger extends Debugger {
 		);
 		return true;
 	}
-
 /**
  * Stop a benchmarking timer.
  *
@@ -158,7 +156,6 @@ class DebugKitDebugger extends Debugger {
 		$_this->__benchmarks[$name]['end'] = $end;
 		return true;
 	}
-
 /**
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
@@ -201,7 +198,6 @@ class DebugKitDebugger extends Debugger {
 		}
 		return $times;
 	}
-
 /**
  * Clear all existing timers
  *
@@ -212,7 +208,6 @@ class DebugKitDebugger extends Debugger {
 		$_this->__benchmarks = array();
 		return true;
 	}
-
 /**
  * Get the difference in time between the timer start and timer end.
  *
@@ -228,7 +223,6 @@ class DebugKitDebugger extends Debugger {
 		}
 		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);
 	}
-
 /**
  * Get the total execution time until this point
  *
@@ -241,7 +235,6 @@ class DebugKitDebugger extends Debugger {
 		$now = getMicroTime();
 		return ($now - $start);
 	}
-
 /**
  * get the time the current request started.
  *
@@ -259,7 +252,6 @@ class DebugKitDebugger extends Debugger {
 		}
 		return $startTime;
 	}
-
 /**
  * get current memory usage
  *
@@ -272,7 +264,6 @@ class DebugKitDebugger extends Debugger {
 		}
 		return memory_get_usage();
 	}
-
 /**
  * Get peak memory use
  *
@@ -285,7 +276,6 @@ class DebugKitDebugger extends Debugger {
 		}
 		return memory_get_peak_usage();
 	}
-
 /**
  * Handles object conversion to debug string.
  *
@@ -307,7 +297,6 @@ class DebugKitDebugger extends Debugger {
 			echo parent::_output($level, $error, $code, $helpCode, $description, $file, $line, $kontext);
 		}
 	}
-
 /**
  * Create a FirePHP error message
  *

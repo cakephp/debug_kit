@@ -31,7 +31,6 @@ if (!function_exists('firecake')) {
 }
 
 class FireCake extends Object {
-
 /**
  * Options for FireCake.
  *
@@ -39,7 +38,6 @@ class FireCake extends Object {
  * @var string
  */
 	var	$options = array();
-
 /**
  * Default Options used in CakeFirePhp
  *
@@ -52,7 +50,6 @@ class FireCake extends Object {
 	    'useNativeJsonEncode' => true,
 	    'includeLineNumbers' => true,
 	);
-
 /**
  * Message Levels for messages sent via FirePHP
  *
@@ -72,7 +69,6 @@ class FireCake extends Object {
 	);
 
 	var $_version = '0.2.1';
-
 /**
  * internal messageIndex counter
  *
@@ -80,28 +76,24 @@ class FireCake extends Object {
  * @access protected
  */
 	var $_messageIndex = 1;
-
 /**
  * stack of objects encoded by stringEncode()
  *
  * @var array
  **/
 	var $_encodedObjects = array();
-
 /**
  * methodIndex to include in tracebacks when using includeLineNumbers
  *
  * @var array
  **/
 	var $_methodIndex = array('info', 'log', 'warn', 'error', 'table', 'trace');
-
 /**
  * FireCake output status
  *
  * @var bool
  **/
 	var $_enabled = true;
-
 /**
  * get Instance of the singleton
  *
@@ -124,7 +116,6 @@ class FireCake extends Object {
 		}
 		return $instance[0];
 	}
-
 /**
  * setOptions
  *
@@ -141,7 +132,6 @@ class FireCake extends Object {
 			$_this->options = array_merge($_this->options, $options);
 		}
 	}
-
 /**
  * Return boolean based on presence of FirePHP extension
  *
@@ -155,7 +145,6 @@ class FireCake extends Object {
 		}
 		return true;
 	}
-
 /**
  * Get the Current UserAgent
  *
@@ -166,7 +155,6 @@ class FireCake extends Object {
 	function getUserAgent() {
 		return env('HTTP_USER_AGENT');
 	}
-
 /**
  * Disable FireCake output
  * All subsequent output calls will not be run.
@@ -177,7 +165,6 @@ class FireCake extends Object {
 		$_this =& FireCake::getInstance();
 		$_this->_enabled = false;
 	}
-
 /**
  * Enable FireCake output
  *
@@ -187,7 +174,6 @@ class FireCake extends Object {
 		$_this =& FireCake::getInstance();
 		$_this->_enabled = true;
 	}
-
 /**
  * Convenience wrapper for LOG messages
  *
@@ -200,7 +186,6 @@ class FireCake extends Object {
 	function log($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
-
 /**
  * Convenience wrapper for WARN messages
  *
@@ -213,7 +198,6 @@ class FireCake extends Object {
 	function warn($message, $label = null) {
 		FireCake::fb($message, $label, 'warn');
 	}
-
 /**
  * Convenience wrapper for INFO messages
  *
@@ -226,7 +210,6 @@ class FireCake extends Object {
 	function info($message, $label = null) {
 		FireCake::fb($message, $label, 'info');
 	}
-
 /**
  * Convenience wrapper for ERROR messages
  *
@@ -239,7 +222,6 @@ class FireCake extends Object {
 	function error($message, $label = null) {
 		FireCake::fb($message, $label, 'error');
 	}
-
 /**
  * Convenience wrapper for TABLE messages
  *
@@ -252,7 +234,6 @@ class FireCake extends Object {
 	function table($label, $message) {
 		FireCake::fb($message, $label, 'table');
 	}
-
 /**
  * Convenience wrapper for DUMP messages
  *
@@ -265,7 +246,6 @@ class FireCake extends Object {
 	function dump($label, $message) {
 		FireCake::fb($message, $label, 'dump');
 	}
-
 /**
  * Convenience wrapper for TRACE messages
  *
@@ -276,7 +256,6 @@ class FireCake extends Object {
 	function trace($label)  {
 		FireCake::fb($label, 'trace');
 	}
-
 /**
  * Convenience wrapper for GROUP messages
  * Messages following the group call will be nested in a group block
@@ -288,7 +267,6 @@ class FireCake extends Object {
 	function group($label)  {
 		FireCake::fb(null, $label, 'groupStart');
 	}
-
 /**
  * Convenience wrapper for GROUPEND messages
  * Closes a group block
@@ -300,7 +278,6 @@ class FireCake extends Object {
 	function groupEnd()  {
 		FireCake::fb(null, null, 'groupEnd');
 	}
-
 /**
  * fb - Send messages with FireCake to FirePHP
  *
@@ -421,7 +398,6 @@ class FireCake extends Object {
 		$_this->_sendHeader('X-Wf-1-Index', $_this->_messageIndex - 1);
 		return true;
 	}
-
 /**
  * Parse a debug backtrace
  *
@@ -450,7 +426,6 @@ class FireCake extends Object {
 		}
 		return $message;
 	}
-
 /**
  * Fix a trace for use in output
  *
@@ -470,7 +445,6 @@ class FireCake extends Object {
 		}
 		return $trace;
 	}
-
 /**
  * Encode non string objects to string.
  * Filter out recursion, so no errors are raised by json_encode or $javascript->object()
@@ -518,7 +492,6 @@ class FireCake extends Object {
 		}
 		return $return;
 	}
-
 /**
  * Encode an object into JSON
  *
@@ -540,7 +513,6 @@ class FireCake extends Object {
 			return FireCake::_jsonEncode($object);
 		}
 	}
-
 /**
  * jsonEncode Helper method for PHP4 compatibility
  *
@@ -560,7 +532,6 @@ class FireCake extends Object {
 		}
 		return $javascript->object($object);
 	}
-
 /**
  * Send Headers - write headers.
  *

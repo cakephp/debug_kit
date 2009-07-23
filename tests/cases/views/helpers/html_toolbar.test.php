@@ -40,7 +40,6 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 			Configure::write('debug', $this->_debug);
 		}
 	}
-
 /**
  * start Case - switch view paths
  *
@@ -55,7 +54,6 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		));
 		$this->_debug = Configure::read('debug');
 	}
-
 /**
  * test Neat Array formatting
  *

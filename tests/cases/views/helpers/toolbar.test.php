@@ -128,7 +128,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 	function endCase() {
 		Configure::write('viewPaths', $this->_viewPaths);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
-	}<p></p>
+	}
 /**
  * endTest
  *

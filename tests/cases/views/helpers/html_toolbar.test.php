@@ -87,6 +87,15 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		);
 		$this->assertTags($result, $expected);
 
+		$in = array();
+		$result = $this->Toolbar->makeNeatArray($in);
+		$expected = array(
+			'ul' => array('class' => 'neat-array depth-0'),
+			'<li', '<strong', '0' , '/strong', '(empty)', '/li',
+			'/ul'
+		);
+		$this->assertTags($result, $expected);
+
 		$in = array('key' => 'value');
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(

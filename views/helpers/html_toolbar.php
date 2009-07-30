@@ -60,6 +60,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				$values = array(null);
 			}
 		}
+		if (empty($values)) {
+			$values[] = '(empty)';
+		}
 		foreach ($values as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
 			if ($value === null) {

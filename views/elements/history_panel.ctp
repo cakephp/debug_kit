@@ -34,6 +34,7 @@
 <?php endif; ?>
 
 <script type="text/javascript">
+//<![CDATA[
 DEBUGKIT.module('historyPanel');
 DEBUGKIT.historyPanel = function () {
 	var toolbar = DEBUGKIT.toolbar,
@@ -157,4 +158,5 @@ DEBUGKIT.historyPanel = function () {
 }();
 
 DEBUGKIT.loader.register(DEBUGKIT.historyPanel);
+//]]>
 </script>

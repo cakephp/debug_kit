@@ -48,6 +48,7 @@
 endif; ?>
 
 <script type="text/javascript">
+//<![CDATA[
 DEBUGKIT.module('sqlLog');
 DEBUGKIT.sqlLog = function () {
 	var Element = DEBUGKIT.Util.Element,
@@ -74,4 +75,5 @@ DEBUGKIT.sqlLog = function () {
 	};
 }();
 DEBUGKIT.loader.register(DEBUGKIT.sqlLog);
+//]]>
 </script>

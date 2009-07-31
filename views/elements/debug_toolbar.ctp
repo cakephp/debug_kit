@@ -44,6 +44,7 @@
 					<div class="panel-content-data panel-content-history" id="<?php echo $panelUnderscore; ?>-history">
 						<!-- content here -->
 					</div>
+					<div class="panel-resize-handle">====</div>
 				</div>
 			<?php $toolbar->panelEnd(); ?>
 			</li>

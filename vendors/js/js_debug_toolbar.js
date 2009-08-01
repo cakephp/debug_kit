@@ -53,13 +53,14 @@ DEBUGKIT.loader = function () {
 //Util module and Element utility class.
 DEBUGKIT.module('Util');
 DEBUGKIT.Util.Element = {
+	//return a boolean if the element has the classname
 	hasClass : function (element, className) {
 		if (!element.className) {
 			return false;
 		}
 		return element.className.indexOf(className) > -1;
 	},
-
+	
 	addClass : function (element, className) {
 		if (!element.className) {
 			element.className = className;
@@ -67,7 +68,7 @@ DEBUGKIT.Util.Element = {
 		}
 		element.className = element.className.replace(/^(.*)$/, '$1 ' + className);
 	},
-
+	
 	removeClass : function (element, className) {
 		if (!element.className) {
 			return false;
@@ -90,12 +91,35 @@ DEBUGKIT.Util.Element = {
 		element.style.display = 'none';
 	},
 
+	//go between hide() and show() depending on element.style.display
 	toggle : function (element) {
 		if (element.style.display == 'none') {
 			this.show(element);
 			return;
 		}
 		this.hide(element);
+	},
+
+	//get or set an element's height, omit value to get, add value (integer) to set.
+	height: function (element, value) {
+		//get value
+		if (value === undefined) {
+			return parseInt(Element.getStyle(element, 'height'));
+		}
+		element.style.height = value + 'px';
+	},
+
+	//gets the style in css format for property
+	getStyle: function (element, property) {
+		if (element.currentStyle) {
+			property = property.replace(/-[a-z]/g, function (match) {
+				return match.charAt(1).toUpperCase();
+			});
+			return element.currentStyle[property];
+		}
+		if (window.getComputedStyle) {
+			return document.defaultView.getComputedStyle(element, null).getPropertyValue(property);
+		}
 	}
 };
 
@@ -122,13 +146,14 @@ DEBUGKIT.Util.Event = {
 
 		if (document.all && !window.opera) {
 			//Define a "blank" external JavaScript tag
-			document.write('<script type="text/javascript" id="domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
-			var contentloadtag = document.getElementById("domreadywatcher");
+			document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
+			var contentloadtag = document.getElementById("__domreadywatcher");
 			contentloadtag.onreadystatechange = function (){
 				if (this.readyState == "complete") {
 					callback();
 				}
-			};
+			}
+			contentloadtag = null;
 			return;
 		}
 
@@ -177,9 +202,8 @@ DEBUGKIT.Util.Cookie = function() {
 			}
 			return false;
 		},
-		/**
-		 * Delete a cookie by name.
-		 */
+		// Delete a cookie by name.
+		// @param [string] name of cookie to delete.
 		del : function (name) {
 			var date = new Date();
 			date.setFullYear(2000,0,1);
@@ -210,9 +234,9 @@ DEBUGKIT.Util.merge = function() {
 // Simple wrapper for XmlHttpRequest objects.
 DEBUGKIT.Util.Request = function (options) {
 	var _defaults = {
-		onComplete : function (){},
-		onRequest : function (){},
-		onFail : function (){},
+		onComplete : function () {},
+		onRequest : function () {},
+		onFail : function () {},
 		method : 'GET',
 		async : true,
 		headers : {
@@ -364,7 +388,6 @@ DEBUGKIT.toolbar = function () {
 				lists = this.elements.toolbar.getElementsByTagName('ul');
 			}
 			this.makeNeatArray(lists);
-
 			this.deactivatePanel(true);
 		},
 
@@ -393,6 +416,7 @@ DEBUGKIT.toolbar = function () {
 			if (!panel.id || !panel.content) {
 				return false;
 			}
+			this.makePanelDraggable(panel);
 
 			var self = this;
 			Event.addEvent(panel.button, 'click', function(event) {
@@ -400,9 +424,36 @@ DEBUGKIT.toolbar = function () {
 				event.preventDefault();
 				return self.togglePanel(panel.id);
 			});
-
 			this.panels[panel.id] = panel;
 			return panel.id;
+		},
+		
+		// find the handle element and make the panel drag resizable.
+		makePanelDraggable: function (panel) {
+			for (var i in panel.content.childNodes) {
+				var element = panel.content.childNodes[i],
+					tag = element.nodeName ? element.nodeName.toUpperCase() : false;
+				if (tag === 'DIV' && Element.hasClass(element, 'panel-resize-handle')) {
+					Event.addEvent(element, 'mousedown', function (event) {
+						event.preventDefault();
+						this.active = true;
+						var currentHeight = Element.height(this.parentNode);
+						console.log(currentHeight);
+					});
+					Event.addEvent(element, 'mousemove', function (event) {
+						event.preventDefault();
+						if (!this.active) {
+							return;
+						}
+						console.log('mousemove');
+					});
+					Event.addEvent(element, 'mouseup', function (event) {
+						event.preventDefault();
+						this.active = false;
+						console.log('mouseup');
+					});
+				}
+			}
 		},
 
 		// Toggle a panel

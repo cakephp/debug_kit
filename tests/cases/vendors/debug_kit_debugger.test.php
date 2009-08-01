@@ -22,10 +22,10 @@ App::import('Vendor', 'DebugKit.DebugKitDebugger');
 App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
 
 /**
- * Short description for class.
+ * Test case for the DebugKitDebugger
  *
- * @package       cake.tests
- * @subpackage    cake.tests.cases.libs
+ * @package       debug_kit.tests
+ * @subpackage    debug_kit.tests.cases.vendors
  */
 class DebugKitDebuggerTest extends CakeTestCase {
 /**
@@ -43,6 +43,16 @@ class DebugKitDebuggerTest extends CakeTestCase {
 				define('SIMPLETESTVENDORPATH', 'CORE' . DS . 'vendors');
 			}
 		}
+	}
+/**
+ * tearDown method
+ *
+ * @access public
+ * @return void
+ */
+	function tearDown() {
+		Configure::write('log', true);
+		DebugKitDebugger::clearTimers();
 	}
 /**
  * Start Timer test
@@ -203,14 +213,28 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		Debugger::output();
 	}
 /**
- * tearDown method
+ * test making memory use markers.
  *
- * @access public
  * @return void
- */
-	function tearDown() {
-		Configure::write('log', true);
-		DebugKitDebugger::clearTimers();
+ **/
+	function testMemorySettingAndGetting() {
+		$result = DebugKitDebugger::setMemoryPoint('test marker');
+		$this->assertTrue($result);
+
+		$result = DebugKitDebugger::getMemoryPoints(true);
+		$this->assertEqual(count($result), 1);
+		$this->assertTrue(isset($result['test marker']));
+		$this->assertTrue(is_numeric($result['test marker']));
+
+		$result = DebugKitDebugger::getMemoryPoints();
+		$this->assertTrue(empty($result));
+
+		
+		DebugKitDebugger::setMemoryPoint('test marker');
+		DebugKitDebugger::setMemoryPoint('test marker');
+		$result = DebugKitDebugger::getMemoryPoints();
+		$this->assertEqual(count($result), 2);
+		
 	}
 
 }

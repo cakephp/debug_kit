@@ -37,6 +37,12 @@ class DebugKitDebugger extends Debugger {
  **/
 	var $__benchmarks = array();
 /**
+ * Internal memory markers array
+ *
+ * @var array
+ **/
+	var $__memoryMarks = array();
+/**
  * destruct method
  *
  * Allow timer info to be displayed if the code dies or is being debugged before rendering the view
@@ -275,6 +281,48 @@ class DebugKitDebugger extends Debugger {
 			return 0;
 		}
 		return memory_get_peak_usage();
+	}
+/**
+ * Stores a memory point in the internal tracker.
+ * Takes a optional message name which can be used to identify the memory point.
+ * If no message is supplied a debug_backtrace will be done to identifty the memory point.
+ * If you don't have memory_get_xx methods this will not work.
+ *
+ * @param string $message Message to identify this memory point.
+ * @return boolean 
+ **/
+	function setMemoryPoint($message = null) {
+		$memoryUse = DebugKitDebugger::getMemoryUse();
+		if (!$message) {
+			$named = false;
+			$trace = debug_backtrace();
+			$message = Debugger::trimpath($trace[0]['file']) . ' line ' . $trace[0]['line'];
+		}
+		$self =& DebugKitDebugger::getInstance();
+		if (isset($self->__memoryMarks[$message])) {
+			$originalMessage = $message;
+			$i = 1;
+			while (isset($self->__memoryMarks[$message])) {
+				$i++;
+				$message = $originalMessage . ' #' . $i;
+			}
+		}
+		$self->__memoryMarks[$message] = $memoryUse;
+		return true;
+	}
+/**
+ * Get all the stored memory points
+ *
+ * @param boolean $clear Whether you want to clear the memory points as well. Defaults to false.
+ * @return array Array of memory marks stored so far.
+ **/
+	function getMemoryPoints($clear = false) {
+		$self =& DebugKitDebugger::getInstance();
+		$marks = $self->__memoryMarks;
+		if ($clear) {
+			$self->__memoryMarks = array();
+		}
+		return $marks;
 	}
 /**
  * Handles object conversion to debug string.

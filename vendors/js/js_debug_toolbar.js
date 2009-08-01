@@ -1,11 +1,11 @@
 /**
  * Debug Toolbar Javascript.
  *
- * Creates the DEBUGKIT namespace and provides methods for extending 
+ * Creates the DEBUGKIT namespace and provides methods for extending
  * and enhancing the Html toolbar.  Includes library agnostic Event, Element,
  * Cookie and Request wrappers.
  *
- * 
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -36,7 +36,7 @@ DEBUGKIT.loader = function () {
 	return {
 		//list of methods to run on startup.
 		_startup : [],
-	
+
 		//register a new method to be run on dom ready.
 		register : function (method) {
 			this._startup.push(method);
@@ -71,10 +71,10 @@ DEBUGKIT.Util.Element = {
 	removeClass : function (element, className) {
 		if (!element.className) {
 			return false;
-		} 
+		}
 		element.className = element.className.replace(new RegExp(' ?(' + className +') ?'), '');
 	},
-	
+
 	swapClass : function (element, removeClass, addClass) {
 		if (!element.className) {
 			return false;
@@ -89,7 +89,7 @@ DEBUGKIT.Util.Element = {
 	hide : function (element) {
 		element.style.display = 'none';
 	},
-	
+
 	toggle : function (element) {
 		if (element.style.display == 'none') {
 			this.show(element);
@@ -114,13 +114,13 @@ DEBUGKIT.Util.Event = {
 			element[type] = handler;
 		}
 	},
-	
+
 	domready : function(callback) {
 		if (document.addEventListener) {
 			return document.addEventListener("DOMContentLoaded", callback, false);
 		}
 
-		if (document.all && !window.opera) { 
+		if (document.all && !window.opera) {
 			//Define a "blank" external JavaScript tag
 			document.write('<script type="text/javascript" id="domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
 			var contentloadtag = document.getElementById("domreadywatcher");
@@ -159,7 +159,7 @@ DEBUGKIT.Util.Cookie = function() {
 			document.cookie = name + "=" + value + expires + "; path=/";
 			return true;
 		},
-			
+
 		// Read from the cookie
 		// @param [string] name Name of cookie to read.
 		read : function (name) {
@@ -192,7 +192,7 @@ DEBUGKIT.Util.Cookie = function() {
 
 // Object merge takes any number of arguments and glues them together
 // @param [Object] one first object
-// @return object 
+// @return object
 DEBUGKIT.Util.merge = function() {
 	var out = {};
 	for (var i = 0; i < arguments.length; i++) {
@@ -258,11 +258,11 @@ DEBUGKIT.Util.Request.prototype.onReadyStateChange = function (){
 		return;
 	}
 	if (this.transport.status == 200 || this.transport.status > 300 && this.transport.status < 400 ) {
-		this.response = { 
+		this.response = {
 			xml: this.transport.responseXML,
 			text: this.transport.responseText
 		};
-		
+
 		if (typeof this.onComplete == 'function') {
 			this.onComplete.apply(this, [this, this.response]);
 		} else {
@@ -306,7 +306,7 @@ DEBUGKIT.toolbar = function () {
 		Event = DEBUGKIT.Util.Event,
 		toolbarHidden = false;
 
-	
+
 	// Add neat array functionality.
 	// Events are bound to depth-0 UL elements.
 	// Use event delegation to find original target.
@@ -343,7 +343,7 @@ DEBUGKIT.toolbar = function () {
 			if (this.elements.toolbar === undefined) {
 				throw('Toolbar not found, make sure you loaded it.');
 			}
-			
+
 			for (i in this.elements.toolbar.childNodes) {
 				element = this.elements.toolbar.childNodes[i];
 				if (element.nodeName && element.id === 'panel-tabs') {
@@ -367,7 +367,7 @@ DEBUGKIT.toolbar = function () {
 
 			this.deactivatePanel(true);
 		},
-		
+
 		// Add a panel to the toolbar
 		addPanel : function (tab) {
 			if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {

@@ -287,8 +287,3 @@
 	content : ' Loading...';
 	font-style:italic;
 }
-
-div.debug-info {
-	float:left;
-	width: 30%;
-}

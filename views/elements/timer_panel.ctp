@@ -31,25 +31,24 @@ endif;
 ?>
 <div class="debug-info">
 	<h2><?php __d('debug_kit', 'Memory'); ?></h2>
+	<div class="peak-mem-use">
 	<?php
-	$headers = array(__d('debug_kit', 'Key name', true), __d('debug_kit', 'Memory use', true));
+		echo $toolbar->message(__d('debug_kit', 'Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
+	</div>
+
+	<?php
+	$headers = array(__d('debug_kit', 'Message', true), __d('debug_kit', 'Memory use', true));
 	$memoryPoints = DebugKitDebugger::getMemoryPoints();
+
 	$rows = array();
 	foreach($memoryPoints as $key => $value):
 		$rows[] = array($key, $number->toReadableSize($value));
 	endforeach;
 
 	echo $toolbar->table($rows, $headers);
-
 	?>
-	<div class="current-mem-use">
-		<?php echo $toolbar->message(__d('debug_kit', 'Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
-	</div>
-	<div class="peak-mem-use">
-	<?php
-		echo $toolbar->message(__d('debug_kit', 'Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
-	</div>
 </div>
+
 <div class="debug-info">
 	<h2><?php __d('debug_kit', 'Timers'); ?></h2>
 	<div class="request-time">
@@ -63,7 +62,12 @@ $rows = array();
 $end = end($timers);
 $maxTime = $end['end'];
 
-$headers = array(__d('debug_kit', 'Message', true), __d('debug_kit', 'Time in ms', true), __d('debug_kit', 'Graph', true));
+$headers = array(
+	__d('debug_kit', 'Message', true), 
+	__d('debug_kit', 'Time in ms', true), 
+	__d('debug_kit', 'Graph', true)
+);
+
 $i = 0;
 $values = array_values($timers);
 foreach ($timers as $timerName => $timeInfo):
@@ -87,6 +91,7 @@ foreach ($timers as $timerName => $timeInfo):
 	);
 	$i++;
 endforeach;
+
 echo $toolbar->table($rows, $headers, array('title' => 'Timers'));
 
 if (!isset($debugKitInHistoryMode)):

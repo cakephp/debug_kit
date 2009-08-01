@@ -344,7 +344,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 			'title' => ''
 		);
 		$this->assertEqual($expected, $vars['session']);
-		
+
 		$memory = DebugKitDebugger::getMemoryPoints();
 		$this->assertTrue(isset($memory['Controller render start']));
 	}

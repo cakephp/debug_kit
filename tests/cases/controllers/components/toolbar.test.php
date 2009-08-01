@@ -98,6 +98,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		unset($this->Controller);
 		if (class_exists('DebugKitDebugger')) {
 			DebugKitDebugger::clearTimers();
+			DebugKitDebugger::clearMemoryPoints();
 		}
 	}
 /**
@@ -190,6 +191,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['componentInit']));
+		$memory = DebugKitDebugger::getMemoryPoints();
+		$this->assertTrue(isset($memory['Component intitailization']));
 	}
 /**
  * test initialize w/ custom panels and defaults
@@ -277,6 +280,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['controllerAction']));
+		$memory = DebugKitDebugger::getMemoryPoints();
+		$this->assertTrue(isset($memory['Controller action start']));
 	}
 /**
  * Test that cache config generation works.
@@ -339,6 +344,9 @@ class DebugToolbarTestCase extends CakeTestCase {
 			'title' => ''
 		);
 		$this->assertEqual($expected, $vars['session']);
+		
+		$memory = DebugKitDebugger::getMemoryPoints();
+		$this->assertTrue(isset($memory['Controller render start']));
 	}
 /**
  * test that vars are gathered and state is saved on beforeRedirect

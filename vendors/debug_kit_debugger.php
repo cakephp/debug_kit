@@ -37,11 +37,11 @@ class DebugKitDebugger extends Debugger {
  **/
 	var $__benchmarks = array();
 /**
- * Internal memory markers array
+ * Internal memory points array
  *
  * @var array
  **/
-	var $__memoryMarks = array();
+	var $__memoryPoints = array();
 /**
  * destruct method
  *
@@ -299,15 +299,15 @@ class DebugKitDebugger extends Debugger {
 			$message = Debugger::trimpath($trace[0]['file']) . ' line ' . $trace[0]['line'];
 		}
 		$self =& DebugKitDebugger::getInstance();
-		if (isset($self->__memoryMarks[$message])) {
+		if (isset($self->__memoryPoints[$message])) {
 			$originalMessage = $message;
 			$i = 1;
-			while (isset($self->__memoryMarks[$message])) {
+			while (isset($self->__memoryPoints[$message])) {
 				$i++;
 				$message = $originalMessage . ' #' . $i;
 			}
 		}
-		$self->__memoryMarks[$message] = $memoryUse;
+		$self->__memoryPoints[$message] = $memoryUse;
 		return true;
 	}
 /**
@@ -318,11 +318,20 @@ class DebugKitDebugger extends Debugger {
  **/
 	function getMemoryPoints($clear = false) {
 		$self =& DebugKitDebugger::getInstance();
-		$marks = $self->__memoryMarks;
+		$marks = $self->__memoryPoints;
 		if ($clear) {
-			$self->__memoryMarks = array();
+			$self->__memoryPoints = array();
 		}
 		return $marks;
+	}
+/**
+ * Clear out any existing memory points
+ *
+ * @return void
+ **/
+	function clearMemoryPoints() {
+		$self =& DebugKitDebugger::getInstance();
+		$self->__memoryPoints = array();
 	}
 /**
  * Handles object conversion to debug string.

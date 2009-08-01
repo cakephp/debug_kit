@@ -18,6 +18,11 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class ToolbarComponent extends Object {
+/**
+ * Settings for the Component
+ *
+ * @var array
+ **/
 	var $settings = array();
 /**
  * Controller instance reference
@@ -79,7 +84,8 @@ class ToolbarComponent extends Object {
 			return false;
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
-
+		
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component intitailization', true));
 		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
 
 		$panels = $this->_defaultPanels;
@@ -150,7 +156,8 @@ class ToolbarComponent extends Object {
 			$this->panels[$panelName]->startup($controller);
 		}
 		DebugKitDebugger::stopTimer('componentInit');
-		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller Action', true));
+		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller action', true));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller action start', true));
 	}
 /**
  * beforeRedirect callback
@@ -179,6 +186,7 @@ class ToolbarComponent extends Object {
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action', true));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start', true));
 	}
 /**
  * Load a toolbar state from cache

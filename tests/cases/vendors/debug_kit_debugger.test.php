@@ -229,12 +229,12 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$result = DebugKitDebugger::getMemoryPoints();
 		$this->assertTrue(empty($result));
 
-		
 		DebugKitDebugger::setMemoryPoint('test marker');
 		DebugKitDebugger::setMemoryPoint('test marker');
 		$result = DebugKitDebugger::getMemoryPoints();
 		$this->assertEqual(count($result), 2);
-		
+		$this->assertTrue(isset($result['test marker']));
+		$this->assertTrue(isset($result['test marker #2']));
 	}
 
 }

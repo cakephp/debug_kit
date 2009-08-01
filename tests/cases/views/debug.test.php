@@ -114,6 +114,9 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));
+		
+		$result = DebugKitDebugger::getMemoryPoints();
+		$this->assertTrue(isset($result['View render complete']));
 	}
 /**
  * Test for correct loading of helpers into custom view

@@ -31,6 +31,17 @@ endif;
 ?>
 <div class="debug-info">
 	<h2><?php __d('debug_kit', 'Memory'); ?></h2>
+	<?php
+	$headers = array(__d('debug_kit', 'Key name', true), __d('debug_kit', 'Memory use', true));
+	$memoryPoints = DebugKitDebugger::getMemoryPoints();
+	$rows = array();
+	foreach($memoryPoints as $key => $value):
+		$rows[] = array($key, $number->toReadableSize($value));
+	endforeach;
+
+	echo $toolbar->table($rows, $headers);
+
+	?>
 	<div class="current-mem-use">
 		<?php echo $toolbar->message(__d('debug_kit', 'Current Memory Use',true), $number->toReadableSize($currentMemory)); ?>
 	</div>
@@ -48,6 +59,7 @@ endif;
 </div>
 
 <?php
+$rows = array();
 $end = end($timers);
 $maxTime = $end['end'];
 

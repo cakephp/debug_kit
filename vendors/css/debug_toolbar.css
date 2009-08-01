@@ -83,8 +83,17 @@
 	border-bottom: 3px solid #333;
 }
 
+#debug-kit-toolbar .panel-resize-handle {
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	width:100%;
+	background:#ccc;
+	text-align:center;
+}
+
 /* Hide panel content by default */
-.panel-content {
+#debug-kit-toolbar .panel-content {
 	display: none;
 }
 .panel-content p {

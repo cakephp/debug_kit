@@ -104,7 +104,7 @@ DEBUGKIT.Util.Element = {
 	height: function (element, value) {
 		//get value
 		if (value === undefined) {
-			return parseInt(Element.getStyle(element, 'height'));
+			return parseInt(this.getStyle(element, 'height'));
 		}
 		element.style.height = value + 'px';
 	},
@@ -434,23 +434,26 @@ DEBUGKIT.toolbar = function () {
 				var element = panel.content.childNodes[i],
 					tag = element.nodeName ? element.nodeName.toUpperCase() : false;
 				if (tag === 'DIV' && Element.hasClass(element, 'panel-resize-handle')) {
+
 					Event.addEvent(element, 'mousedown', function (event) {
 						event.preventDefault();
-						this.active = true;
-						var currentHeight = Element.height(this.parentNode);
-						console.log(currentHeight);
+						this._active = true;
+						this._startY = event.pageY;
+						this._startHeight = parseInt(Element.height(this.parentNode));
 					});
+
 					Event.addEvent(element, 'mousemove', function (event) {
-						event.preventDefault();
-						if (!this.active) {
+						if (!this._active) {
 							return;
 						}
-						console.log('mousemove');
+						var newHeight = this._startHeight + (event.pageY - this._startY);
+						Element.height(this.parentNode, newHeight);
+						event.preventDefault();
 					});
+
 					Event.addEvent(element, 'mouseup', function (event) {
 						event.preventDefault();
-						this.active = false;
-						console.log('mouseup');
+						this._active = false;
 					});
 				}
 			}

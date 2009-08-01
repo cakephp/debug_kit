@@ -60,7 +60,7 @@ DEBUGKIT.Util.Element = {
 		}
 		return element.className.indexOf(className) > -1;
 	},
-	
+
 	addClass : function (element, className) {
 		if (!element.className) {
 			element.className = className;
@@ -68,7 +68,7 @@ DEBUGKIT.Util.Element = {
 		}
 		element.className = element.className.replace(/^(.*)$/, '$1 ' + className);
 	},
-	
+
 	removeClass : function (element, className) {
 		if (!element.className) {
 			return false;
@@ -126,6 +126,10 @@ DEBUGKIT.Util.Element = {
 
 //Event binding
 DEBUGKIT.Util.Event = {
+	_listeners: {},
+	_eventId: 0,
+
+	// bind an event listener of type to element, handler is your method.
 	addEvent :function(element, type, handler, capture) {
 		capture = (capture === undefined) ? false : capture;
 		if (element.addEventListener) {
@@ -137,8 +141,24 @@ DEBUGKIT.Util.Event = {
 			type = 'on' + type;
 			element[type] = handler;
 		}
+		this._listeners[++this._eventId] = {element: element, type: type, handler: handler};
 	},
 
+	// destroy an event listener. requires the exact same function as was used for attaching
+	// the event.
+	removeEvent: function (element, type, handler) {
+		if (element.removeEventListener) {
+			element.removeEventListener(type, handler, false);
+		} else if (element.detachEvent) {
+			type = 'on' + type;
+			element.detachEvent(type, handler);
+		} else {
+			type = 'on' + type;
+			element[type] = null;
+		}
+	},
+	
+	// bind an event to the DOMContentLoaded or other similar event.
 	domready : function(callback) {
 		if (document.addEventListener) {
 			return document.addEventListener("DOMContentLoaded", callback, false);
@@ -165,6 +185,19 @@ DEBUGKIT.Util.Event = {
 				}
 			}, 10);
 		}
+	},
+	
+	// unload all the events attached by DebugKit. Fix any memory leaks.
+	unload: function () {
+		var listener;
+		for (var i in this._listeners) {
+			listener = this._listeners[i];
+			try {
+				this.removeEvent(listener.element, listener.type, listener.handler);
+			} catch (e) {}
+			delete this._listeners[i];
+		}
+		delete this._listeners;
 	}
 };
 
@@ -427,9 +460,29 @@ DEBUGKIT.toolbar = function () {
 			this.panels[panel.id] = panel;
 			return panel.id;
 		},
-		
+
 		// find the handle element and make the panel drag resizable.
 		makePanelDraggable: function (panel) {
+
+			//create a varible in the enclosing scope, for scope tricks.
+			var currentElement = null;
+
+			// Use the elements startHeight stored Event.pageY and current Event.pageY to
+			// resize the panel
+			var mouseMoveHandler = function (event) {
+				event.preventDefault();
+				var newHeight = currentElement._startHeight + (event.pageY - currentElement._startY);
+				Element.height(currentElement.parentNode, newHeight);
+			}
+
+			// handle the mouseup event, remove the other listeners so the panel
+			// doesn't continue to resize
+			var mouseUpHandler = function (event) {
+				currentElement = null;
+				Event.removeEvent(document, 'mousemove', mouseMoveHandler);
+				Event.removeEvent(document, 'mouseup', mouseUpHandler);
+			}
+
 			for (var i in panel.content.childNodes) {
 				var element = panel.content.childNodes[i],
 					tag = element.nodeName ? element.nodeName.toUpperCase() : false;
@@ -437,23 +490,13 @@ DEBUGKIT.toolbar = function () {
 
 					Event.addEvent(element, 'mousedown', function (event) {
 						event.preventDefault();
-						this._active = true;
+						currentElement = this;
 						this._startY = event.pageY;
 						this._startHeight = parseInt(Element.height(this.parentNode));
-					});
 
-					Event.addEvent(element, 'mousemove', function (event) {
-						if (!this._active) {
-							return;
-						}
-						var newHeight = this._startHeight + (event.pageY - this._startY);
-						Element.height(this.parentNode, newHeight);
-						event.preventDefault();
-					});
-
-					Event.addEvent(element, 'mouseup', function (event) {
-						event.preventDefault();
-						this._active = false;
+						// attach to document so mouse doesn't have to stay precisely on the 'handle'
+						Event.addEvent(document, 'mousemove', mouseMoveHandler);
+						Event.addEvent(document, 'mouseup', mouseUpHandler);
 					});
 				}
 			}
@@ -562,4 +605,5 @@ DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
 
 DEBUGKIT.Util.Event.domready(function () {
 	DEBUGKIT.loader.init();
+	DEBUGKIT.Util.Event.addEvent(window, 'unload', DEBUGKIT.Util.Event.unload);
 });

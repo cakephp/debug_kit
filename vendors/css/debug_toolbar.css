@@ -84,17 +84,18 @@
 	right:0px;
 	background: #fff;
 	color: #000;
-	width:96%;
-	padding:20px 2%;
-	max-height: 550px;
-	overflow:auto;
+	width:100%;
 	box-shadow:0px 5px 6px #ccc;
 }
 
+#debug-kit-toolbar .panel-resize-region {
+	overflow:auto;
+	height:99%;
+	max-height: 550px;
+	padding:15px;
+}
+
 #debug-kit-toolbar .panel-resize-handle {
-	position:absolute;
-	bottom:0px;
-	left:0px;
 	width:100%;
 	background:#ccc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#d6d6d6), to(#c2c2c2));
@@ -106,6 +107,7 @@
 	text-shadow:1px 1px #eee;
 	-webkit-text-shadow:1px 1px #eee;
 	-moz-text-shadow:1px 1px #eee;
+	height:14px;
 }
 
 /* Hide panel content by default */
@@ -273,7 +275,7 @@
 }
 
 /* previous panels */
-#debug-kit-toolbar .panel-content-history {
+#debug-kit-toolbar .panel-history {
 	display: none;
 	background:#eeffff;
 }

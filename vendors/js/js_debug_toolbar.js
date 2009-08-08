@@ -53,6 +53,7 @@ DEBUGKIT.loader = function () {
 //Util module and Element utility class.
 DEBUGKIT.module('Util');
 DEBUGKIT.Util.Element = {
+
 	//return a boolean if the element has the classname
 	hasClass : function (element, className) {
 		if (!element.className) {
@@ -98,6 +99,25 @@ DEBUGKIT.Util.Element = {
 			return;
 		}
 		this.hide(element);
+	},
+
+	_walk: function (element, walk) {
+		var sibling = element[walk];
+		while (true) {
+			if (sibling.nodeType == 1) {
+				break;
+			}
+			sibling = sibling[walk];
+		}
+		return sibling;
+	},
+
+	getNext: function (element) {
+		return this._walk(element, 'nextSibling');
+	},
+
+	getPrevious: function (element) {
+		return this._walk(element, 'previousSibling');
 	},
 
 	//get or set an element's height, omit value to get, add value (integer) to set.
@@ -157,7 +177,7 @@ DEBUGKIT.Util.Event = {
 			element[type] = null;
 		}
 	},
-	
+
 	// bind an event to the DOMContentLoaded or other similar event.
 	domready : function(callback) {
 		if (document.addEventListener) {
@@ -186,7 +206,7 @@ DEBUGKIT.Util.Event = {
 			}, 10);
 		}
 	},
-	
+
 	// unload all the events attached by DebugKit. Fix any memory leaks.
 	unload: function () {
 		var listener;
@@ -472,7 +492,7 @@ DEBUGKIT.toolbar = function () {
 			var mouseMoveHandler = function (event) {
 				event.preventDefault();
 				var newHeight = currentElement._startHeight + (event.pageY - currentElement._startY);
-				Element.height(currentElement.parentNode, newHeight);
+				Element.height(Element.getPrevious(currentElement), newHeight);
 			}
 
 			// handle the mouseup event, remove the other listeners so the panel
@@ -492,7 +512,7 @@ DEBUGKIT.toolbar = function () {
 						event.preventDefault();
 						currentElement = this;
 						this._startY = event.pageY;
-						this._startHeight = parseInt(Element.height(this.parentNode));
+						this._startHeight = parseInt(Element.height(Element.getPrevious(currentElement)));
 
 						// attach to document so mouse doesn't have to stay precisely on the 'handle'
 						Event.addEvent(document, 'mousemove', mouseMoveHandler);

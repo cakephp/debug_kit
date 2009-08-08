@@ -38,11 +38,13 @@
 				echo $toolbar->panelStart($title, $panelUnderscore);
 			?>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
-					<div class="panel-content-data">
-						<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
-					</div>
-					<div class="panel-content-data panel-content-history" id="<?php echo $panelUnderscore; ?>-history">
-						<!-- content here -->
+					<div class="panel-resize-region">
+						<div class="panel-content-data">
+							<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+						</div>
+						<div class="panel-content-data panel-history" id="<?php echo $panelUnderscore; ?>-history">
+							<!-- content here -->
+						</div>
 					</div>
 					<div class="panel-resize-handle">====</div>
 				</div>

@@ -53,7 +53,7 @@ class DebugKitDebugger extends Debugger {
  */
 	function __destruct() {
 		$_this =& DebugKitDebugger::getInstance();
-		if (Configure::read('debug') > 1 || !$_this->__benchmarks) {
+		if (Configure::read('debug') < 2 || !$_this->__benchmarks) {
 			return;
 		}
 		$timers = array_values(DebugKitDebugger::getTimers());

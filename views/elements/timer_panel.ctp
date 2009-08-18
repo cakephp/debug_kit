@@ -92,6 +92,13 @@ foreach ($timers as $timerName => $timeInfo):
 	$i++;
 endforeach;
 
+if (strtolower($toolbar->getName()) == 'firephptoolbar'):
+	for ($i = 0, $len = count($rows); $i < $len; $i++):
+		unset($rows[$i][2]);
+	endfor;
+	unset($headers[2]);
+endif;
+
 echo $toolbar->table($rows, $headers, array('title' => 'Timers'));
 
 if (!isset($debugKitInHistoryMode)):

@@ -175,6 +175,10 @@
 #debug-kit-toolbar table.debug-table tr.even td {
 	background:#f7f7f7;
 }
+#debug-kit-toolbar .debug-timers .debug-table td:nth-child(2),
+#debug-kit-toolbar .debug-timers .debug-table th:nth-child(2) {
+	text-align:right;
+}
 
 /** code tables **/
 #debug-kit-toolbar .code-table td {

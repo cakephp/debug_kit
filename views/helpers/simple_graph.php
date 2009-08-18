@@ -42,7 +42,7 @@ class SimpleGraphHelper extends AppHelper {
  */
 	var $__defaultSettings = array(
 		'max' => 100,
-		'width' => 400,
+		'width' => 350,
 		'valueType' => 'value',
 	);
 /**

@@ -49,22 +49,20 @@ endif;
 	?>
 </div>
 
-<div class="debug-info">
+<div class="debug-info debug-timers">
 	<h2><?php __d('debug_kit', 'Timers'); ?></h2>
 	<div class="request-time">
 		<?php $totalTime = sprintf(__d('debug_kit', '%s (ms)', true), $number->precision($requestTime * 1000, 0)); ?>
 		<?php echo $toolbar->message(__d('debug_kit', 'Total Request Time:', true), $totalTime)?>
 	</div>
-</div>
-
 <?php
 $rows = array();
 $end = end($timers);
 $maxTime = $end['end'];
 
 $headers = array(
-	__d('debug_kit', 'Message', true), 
-	__d('debug_kit', 'Time in ms', true), 
+	__d('debug_kit', 'Message', true),
+	__d('debug_kit', 'Time in ms', true),
 	__d('debug_kit', 'Graph', true)
 );
 
@@ -81,10 +79,10 @@ foreach ($timers as $timerName => $timeInfo):
 	$indent = str_repeat(' » ', $indent);
 	$rows[] = array(
 		$indent . $timeInfo['message'],
-		$number->precision($timeInfo['time'] * 1000, 0),
+		$number->precision($timeInfo['time'] * 1000, 2),
 		$simpleGraph->bar(
 			$number->precision($timeInfo['time'] * 1000, 2),
-			$number->precision($timeInfo['start'] * 1000, 2), 
+			$number->precision($timeInfo['start'] * 1000, 2),
 			array(
 				'max' => $maxTime * 1000,
 				'requestTime' => $requestTime * 1000,
@@ -100,3 +98,4 @@ if (!isset($debugKitInHistoryMode)):
 	$toolbar->writeCache('timer', compact('timers', 'currentMemory', 'peakMemory', 'requestTime'));
 endif;
 ?>
+</div>

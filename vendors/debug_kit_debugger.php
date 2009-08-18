@@ -339,7 +339,22 @@ class DebugKitDebugger extends Debugger {
  * @param string $var Object to convert
  * @access protected
  */
-	function _output($level, $error, $code, $helpCode, $description, $file, $line, $kontext) {
+	function _output($level, $error = null, $code = null, $helpCode = null, $description = null, $file = null, $line = null, $kontext = null) {
+		if (is_array($level)) {
+			$error = $level['error'];
+			$code = $level['code'];
+			if (isset($helpID)) {
+				$helpCode = $level['helpID'];
+			} else {
+				$helpCode = '';
+			}
+			$description = $level['description'];
+			$file = $level['file'];
+			$line = $level['line'];
+			$kontext = $level['context'];
+			$level = $level['level'];
+			$compact = true;
+		}
 		$files = $this->trace(array('start' => 2, 'format' => 'points'));
 		$listing = $this->excerpt($files[0]['file'], $files[0]['line'] - 1, 1);
 		$trace = $this->trace(array('start' => 2, 'depth' => '20'));
@@ -351,7 +366,14 @@ class DebugKitDebugger extends Debugger {
 		if ($this->_outputFormat == 'fb') {
 			$this->_fireError($error, $code, $description, $file, $line, $trace, $context);
 		} else {
-			echo parent::_output($level, $error, $code, $helpCode, $description, $file, $line, $kontext);
+			if (!empty($compact)) {
+				$result = compact('level', 'error', 'code', 'description', 'file', 'line');
+				$result['helpID'] = $helpCode;
+				$result['context'] = $kontext;
+				echo parent::_output($result);
+			} else {
+				echo parent::_output($level, $error, $code, $helpCode, $description, $file, $line, $kontext);
+			}
 		}
 	}
 /**

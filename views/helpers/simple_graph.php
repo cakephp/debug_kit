@@ -32,16 +32,17 @@ class SimpleGraphHelper extends AppHelper {
  * Default settings to be applied to each Simple Graph
  *
  * Allowed options:
- *   max => int
- *   width => int
- *   valueType => string (value, percentage)
- *   style => array
+ *
+ * - max => (int) Maximum value in the graphs
+ * - width => (int) 
+ * - valueType => string (value, percentage)
+ * - style => array
  *
  * @var array
  */
 	var $__defaultSettings = array(
 		'max' => 100,
-		'width' => 250,
+		'width' => 400,
 		'valueType' => 'value',
 	);
 /**
@@ -57,14 +58,14 @@ class SimpleGraphHelper extends AppHelper {
 		$settings = array_merge($this->__defaultSettings, $options);
 		extract($settings);
 
-		$_value = ($value / $max) * $width;
-		$_value = max(round($_value), 1);
+		$graphValue = ($value / $max) * $width;
+		$graphValue = max(round($graphValue), 1);
 
 		if ($valueType == 'percentage') {
-			$_offset = 0;
+			$graphOffset = 0;
 		} else {
-			$_offset = ($offset / $max) * $width;
-			$_offset = round($_offset);
+			$graphOffset = ($offset / $max) * $width;
+			$graphOffset = round($graphOffset);
 		}
 		return $this->Html->div(
 			'debug-kit-graph-bar',
@@ -72,7 +73,7 @@ class SimpleGraphHelper extends AppHelper {
 					'debug-kit-graph-bar-value',
 					' ',
 					array(
-						'style' => "margin-left: {$_offset}px; width: {$_value}px",
+						'style' => "margin-left: {$graphOffset}px; width: {$graphValue}px",
 						'title' => sprintf(__("Starting %sms into the request, taking %sms", true), $offset, $value),
 					)
 				),

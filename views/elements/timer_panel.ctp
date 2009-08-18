@@ -70,6 +70,7 @@ $headers = array(
 
 $i = 0;
 $values = array_values($timers);
+
 foreach ($timers as $timerName => $timeInfo):
 	$indent = 0;
 	for ($j = 0; $j < $i; $j++) {
@@ -83,7 +84,8 @@ foreach ($timers as $timerName => $timeInfo):
 		$number->precision($timeInfo['time'] * 1000, 0),
 		$simpleGraph->bar(
 			$number->precision($timeInfo['time'] * 1000, 2),
-			$number->precision($timeInfo['start'] * 1000, 2), array(
+			$number->precision($timeInfo['start'] * 1000, 2), 
+			array(
 				'max' => $maxTime * 1000,
 				'requestTime' => $requestTime * 1000,
 			)

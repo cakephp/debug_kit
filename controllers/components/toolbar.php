@@ -21,9 +21,16 @@ class ToolbarComponent extends Object {
 /**
  * Settings for the Component
  *
+ * - forceEnable - Force the toolbar to display even if debug == 0. Default = false
+ * - autoRun - Automatically display the toolbar. If set to false, toolbar display can be triggered by adding
+ *    `?debug=true` to your URL.
+ *
  * @var array
  **/
-	var $settings = array();
+	var $settings = array(
+		'forceEnable' => false,
+		'autoRun' => true
+	);
 /**
  * Controller instance reference
  *
@@ -80,6 +87,10 @@ class ToolbarComponent extends Object {
 	function initialize(&$controller, $settings) {
 		$this->settings = am($this->settings, $settings);
 		if (!Configure::read('debug') && empty($this->settings['forceEnable'])) {
+			$this->enabled = false;
+			return false;
+		}
+		if ($this->settings['autoRun'] == false && !isset($controller->params['url']['debug'])) {
 			$this->enabled = false;
 			return false;
 		}

@@ -256,6 +256,29 @@ class DebugToolbarTestCase extends CakeTestCase {
 		Configure::write('debug', $_debug);
 	}
 /**
+ * Test disabling autoRunning of toolbar
+ *
+ * @return void
+ **/
+	function testAutoRunSettingFalse() {
+		$this->Controller->components = array('DebugKit.Toolbar' => array('autoRun' => false));
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->assertFalse($this->Controller->Toolbar->enabled);
+	}
+/**
+ * test autorun = false with query string param
+ *
+ * @return void
+ **/
+	function testAutoRunSettingWithQueryString() {
+		$this->Controller->params['url']['debug'] = true;
+		$this->Controller->components = array('DebugKit.Toolbar' => array('autoRun' => false));
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->assertTrue($this->Controller->Toolbar->enabled);
+	}
+/**
  * test startup
  *
  * @return void

@@ -484,7 +484,7 @@ DEBUGKIT.toolbar = function () {
 		// find the handle element and make the panel drag resizable.
 		makePanelDraggable: function (panel) {
 
-			//create a varible in the enclosing scope, for scope tricks.
+			//create a variable in the enclosing scope, for scope tricks.
 			var currentElement = null;
 
 			// Use the elements startHeight stored Event.pageY and current Event.pageY to

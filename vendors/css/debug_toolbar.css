@@ -9,6 +9,7 @@
 	z-index:10000;
 	font-family: helvetica, arial, sans-serif;
 	font-size: 12px;
+	direction: ltr;
 }
 
 /* panel tabs */

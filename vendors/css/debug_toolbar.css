@@ -11,6 +11,10 @@
 	font-size: 12px;
 	direction: ltr;
 }
+#debug-kit-toolbar img {
+	border:0;
+	outline:0;
+}
 
 /* panel tabs */
 #debug-kit-toolbar #panel-tabs {

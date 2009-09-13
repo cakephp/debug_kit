@@ -9,6 +9,11 @@
 	z-index:10000;
 	font-family: helvetica, arial, sans-serif;
 	font-size: 12px;
+	direction: ltr;
+}
+#debug-kit-toolbar img {
+	border:0;
+	outline:0;
 }
 
 /* panel tabs */

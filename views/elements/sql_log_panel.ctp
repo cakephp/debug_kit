@@ -62,12 +62,11 @@ DEBUGKIT.sqlLog = function () {
 			for (var i in buttons) {
 				var button = buttons[i];
 				if (Element.hasClass(button, 'show-slow')) {
-					var nextDiv = button.nextSibling;
 					Event.addEvent(button, 'click', function (event) {
 						event.preventDefault();
-						Element.toggle(nextDiv);
+						Element.toggle(this.nextSibling);
 					});
-					Element.hide(nextDiv);
+					Element.hide(button.nextSibling);
 				}
 			}
 

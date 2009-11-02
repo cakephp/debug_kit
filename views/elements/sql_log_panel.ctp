@@ -25,7 +25,7 @@
 		<h4><?php echo $dbName ?></h4>
 		<?php
 			$headers = array('Nr', 'Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)');
-			echo $toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
+			echo $toolbar->table(h($queryLog['queries']), $headers, array('title' => 'SQL Log ' . $dbName));
 
 			if (!empty($queryLog['explains'])):
 				$name = sprintf(__d('debug_kit', 'toggle (%s) query explains for %s', true), count($queryLog['explains']), $dbName);
@@ -35,7 +35,7 @@
 					foreach ($queryLog['explains'] as $explain):
 						echo $toolbar->message(__d('debug_kit', 'Query:', true), $explain['query']);
 						$headers = array_shift($explain['explain']);
-						echo $toolbar->table($explain['explain'], $headers);
+						echo $toolbar->table(h($explain['explain']), $headers);
 					endforeach;
 				echo '</div>';
 			else:

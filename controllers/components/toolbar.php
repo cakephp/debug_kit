@@ -686,16 +686,34 @@ class LogPanel extends DebugPanel {
  * @return array
  */
 	function _parseFile($filename) {
-		$file =& new File($filename);
-		$contents = $file->read();
-		$timePattern = '/(\d{4}-\d{2}\-\d{2}\s\d{1,2}\:\d{1,2}\:\d{1,2})/';
-		$chunks = preg_split($timePattern, $contents, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-		for ($i = 0, $len = count($chunks); $i < $len; $i += 2) {
-			if (strtotime($chunks[$i]) < $this->startTime) {
-				unset($chunks[$i], $chunks[$i + 1]);
+		$fh = fopen($filename, 'r');
+		$timePattern = '/^(\d{4}-\d{2}\-\d{2}\s\d{1,2}\:\d{1,2}\:\d{1,2})\s(.*)/';
+
+		$out = array();
+		$entry = '';
+		$done = false;
+
+		while (!feof($fh)) {
+			$line = fgets($fh);
+			if (preg_match($timePattern, $line, $matches)) {
+				if (strtotime($matches[1]) < $this->startTime) {
+					continue;
+				}
+				$out[] = $matches[1];
+				$out[] = $matches[2];
+			} elseif (count($out) - 1 > 0) {
+				$currentIndex = count($out) - 1;
+				while (!feof($fh)) {
+					$line = fgets($fh);
+					if (preg_match($timePattern, $line)) {
+						break;
+					}
+					$out[$currentIndex] .= $line;
+				}
 			}
 		}
-		return array_values($chunks);
+		fclose($fh);
+		return $out;
 	}
 }
 

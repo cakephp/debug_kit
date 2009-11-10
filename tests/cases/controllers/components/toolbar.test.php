@@ -419,7 +419,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testLogPanel() {
-		usleep(20);
+		sleep(1);
 		$this->Controller->log('This is a log I made this request');
 		$this->Controller->log('This is the second  log I made this request');
 		$this->Controller->log('This time in the debug log!', LOG_DEBUG);
@@ -442,6 +442,23 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
 		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
+
+		$data = array(
+			'Post' => array(
+				'id' => 1,
+				'title' => 'post!',
+				'body' => 'some text here',
+				'created' => '2009-11-07 23:23:23'
+			),
+			'Comment' => array(
+				'id' => 23
+			)
+		);
+		$this->Controller->log($data);
+		$this->Controller->Component->beforeRender($this->Controller);
+		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
+		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error.log'][5]);
+		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error.log'][5]);
 	}
 /**
  * Test that history state urls set prefix = null and admin = null so generated urls do not

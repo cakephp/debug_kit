@@ -363,7 +363,9 @@ class FireCake extends Object {
 
 		$_this->_sendHeader('X-Wf-Protocol-1', 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2');
 		$_this->_sendHeader('X-Wf-1-Plugin-1', 'http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'. $_this->_version);
-
+		if ($type == $_this->_levels['groupStart']) {
+			$meta['Collapsed'] = 'true';
+		}
 		if ($type == $_this->_levels['dump']) {
 			$dump = $_this->jsonEncode($message);
 			$msg = '{"' . $label .'":' . $dump .'}';

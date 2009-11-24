@@ -54,6 +54,11 @@ DEBUGKIT.loader = function () {
 DEBUGKIT.module('Util');
 DEBUGKIT.Util.Element = {
 
+	//test if an element is a name node.
+	nodeName: function (element, name) {
+		return element.nodeName && element.nodeName.toLowerCase() == name.toLowerCase();
+	},
+
 	//return a boolean if the element has the classname
 	hasClass : function (element, className) {
 		if (!element.className) {
@@ -389,11 +394,11 @@ DEBUGKIT.toolbar = function () {
 	// Use event delegation to find original target.
 	function _delegateNeatArray (event) {
 		var clickedEl = event.target;
-		while (clickedEl.nodeName.toUpperCase() !== 'LI') {
+		while (!Element.nodeName(clickedEl, 'LI')) {
 			clickedEl = clickedEl.parentNode;
 		}
 		var subUl = clickedEl.lastChild;
-		if (subUl.nodeName.toUpperCase() != 'UL') {
+		if (!Element.nodeName(subUl, 'ul')) {
 			return;
 		}
 		var hide = Boolean(subUl.style.display === 'block');
@@ -446,7 +451,7 @@ DEBUGKIT.toolbar = function () {
 
 		// Add a panel to the toolbar
 		addPanel : function (tab) {
-			if (!tab.nodeName || tab.nodeName.toUpperCase() !== 'LI') {
+			if (!Element.nodeName(tab, 'li')) {
 				throw ('Toolbar not found, make sure you loaded it.');
 			}
 			var panel = {
@@ -457,12 +462,11 @@ DEBUGKIT.toolbar = function () {
 				active : false
 			};
 			for (var i in tab.childNodes) {
-				var element = tab.childNodes[i],
-					tag = element.nodeName ? element.nodeName.toUpperCase() : false;
-				if (tag === 'A') {
+				var element = tab.childNodes[i];
+				if (Element.nodeName(element, 'A')) {
 					panel.id = element.hash.replace(/^#/, '');
 					panel.button = element;
-				} else if (tag === 'DIV') {
+				} else if (Element.nodeName(element, 'DIV')) {
 					panel.content = element;
 				}
 			}
@@ -504,9 +508,8 @@ DEBUGKIT.toolbar = function () {
 			}
 
 			for (var i in panel.content.childNodes) {
-				var element = panel.content.childNodes[i],
-					tag = element.nodeName ? element.nodeName.toUpperCase() : false;
-				if (tag === 'DIV' && Element.hasClass(element, 'panel-resize-handle')) {
+				var element = panel.content.childNodes[i];
+				if (Element.nodeName(element, 'DIV') && Element.hasClass(element, 'panel-resize-handle')) {
 
 					Event.addEvent(element, 'mousedown', function (event) {
 						event.preventDefault();

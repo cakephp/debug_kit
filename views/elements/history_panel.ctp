@@ -76,8 +76,7 @@ DEBUGKIT.historyPanel = function () {
 					continue;
 				}
 				if (
-					panelRegion.nodeName && 
-					panelRegion.nodeName.toUpperCase() == 'DIV' && 
+					Element.nodeName(panelRegion, 'DIV') &&
 					Element.hasClass(panelRegion, 'panel-resize-region')
 				) {
 					regionDiv = panelRegion;
@@ -91,10 +90,8 @@ DEBUGKIT.historyPanel = function () {
 			
 			while (i--) {
 				//toggle history element, hide current request one.
-				var panelContent = regionDivs[i],
-					tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
-
-				if (tag === 'DIV' && Element.hasClass(panelContent, 'panel-history')) {
+				var panelContent = regionDivs[i];
+				if (Element.nodeName(panelContent, 'DIV') && Element.hasClass(panelContent, 'panel-history')) {
 					var panelId = panelContent.id.replace('-history', '');
 					if (responseJson[panelId]) {
 						panelContent.innerHTML = responseJson[panelId];
@@ -107,7 +104,7 @@ DEBUGKIT.historyPanel = function () {
 						toolbar.makeNeatArray(lists);
 					}
 					Element.show(panelContent);
-				} else if (tag === 'DIV') {
+				} else if (Element.nodeName(panelContent, 'DIV')) {
 					Element.hide(panelContent);
 				}
 			}
@@ -138,8 +135,7 @@ DEBUGKIT.historyPanel = function () {
 					continue;
 				}
 				if (
-					panelRegion.nodeName && 
-					panelRegion.nodeName.toUpperCase() == 'DIV' && 
+					Element.nodeName(panelRegion, 'DIV') &&
 					Element.hasClass(panelRegion, 'panel-resize-region')
 				) {
 					regionDiv = panelRegion;
@@ -153,10 +149,9 @@ DEBUGKIT.historyPanel = function () {
 
 			while (i--) {
 				panelContent = regionDivs[i];
-				tag = panelContent.nodeName ? panelContent.nodeName.toUpperCase() : false;
-				if (tag === 'DIV' && Element.hasClass(panelContent, 'panel-history')) {
+				if (Element.nodeName(panelContent, 'DIV') && Element.hasClass(panelContent, 'panel-history')) {
 					Element.hide(panelContent);
-				} else if (tag === 'DIV') {
+				} else if (Element.nodeName(panelContent, 'DIV')) {
 					Element.show(panelContent);
 				}
 			}

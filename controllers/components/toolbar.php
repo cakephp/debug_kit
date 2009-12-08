@@ -128,7 +128,7 @@ class ToolbarComponent extends Object {
 			if (is_numeric($key)) {
 				$panels[] = $value;
 			}
-			if (is_string($key) && $value == false) {
+			if (is_string($key) && $value === false) {
 				$index = array_search($key, $panels);
 				if ($index !== false) {
 					unset($panels[$index]);

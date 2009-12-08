@@ -259,7 +259,7 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::group('test');
 		FireCake::info('my info');
 		FireCake::groupEnd();
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '44|[{"Type":"GROUP_START","Label":"test"},null]|');
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '63|[{"Collapsed":"true","Type":"GROUP_START","Label":"test"},null]|');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '27|[{"Type":"GROUP_END"},null]|');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
 	}

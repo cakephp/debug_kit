@@ -1,5 +1,18 @@
-# Installation
-* Copy the files in this directory into `app/plugins/debug_kit`
+# CakePHP DebugKit
+
+DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP applications.
+
+## Installation
+
+* Clone/Copy the files in this directory into `app/plugins/debug_kit`
 * Include the toolbar component in your `app_controller.php`:
    * `var $components = array('DebugKit.Toolbar');`
 * Set debug mode to at least 1.
+
+## Reporting issues
+
+If you have an issues with DebugKit please open a ticket on lighthouse http://cakephp.lighthouseapp.com/projects/42880-debug-kit/overview
+
+## Contributing
+
+If you'd like to contribute to DebugKit, check out the [Roadmap](http://cakephp.lighthouseapp.com/projects/42880/roadmap) for any planned features.  You can fork the project add features and send pull requests, or open tickets on lighthouse.

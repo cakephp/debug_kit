@@ -9,6 +9,10 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
    * `var $components = array('DebugKit.Toolbar');`
 * Set debug mode to at least 1.
 
+## Documentation
+
+Further documentation including additional configuration and ways of extending DebugKit can be found in the [Lighthouse wiki](http://cakephp.lighthouseapp.com/projects/42880-debug-kit/overview)
+
 ## Reporting issues
 
 If you have an issues with DebugKit please open a ticket on lighthouse http://cakephp.lighthouseapp.com/projects/42880-debug-kit/overview

@@ -289,7 +289,7 @@ class DebugKitDebugger extends Debugger {
  * If you don't have memory_get_xx methods this will not work.
  *
  * @param string $message Message to identify this memory point.
- * @return boolean 
+ * @return boolean
  **/
 	function setMemoryPoint($message = null) {
 		$memoryUse = DebugKitDebugger::getMemoryUse();
@@ -339,19 +339,37 @@ class DebugKitDebugger extends Debugger {
  * @param string $var Object to convert
  * @access protected
  */
-	function _output($level, $error, $code, $helpCode, $description, $file, $line, $kontext) {
+	function _output($data = array()) {
+		extract($data);
+		if (is_array($level)) {
+			$error = $level['error'];
+			$code = $level['code'];
+			if (isset($level['helpID'])) {
+				$helpID = $level['helpID'];
+			} else {
+				$helpID = '';
+			}
+			$description = $level['description'];
+			$file = $level['file'];
+			$line = $level['line'];
+			$context = $level['context'];
+			$level = $level['level'];
+		}
 		$files = $this->trace(array('start' => 2, 'format' => 'points'));
 		$listing = $this->excerpt($files[0]['file'], $files[0]['line'] - 1, 1);
 		$trace = $this->trace(array('start' => 2, 'depth' => '20'));
-		$context = array();
 
-		foreach ((array)$kontext as $var => $value) {
-			$context[] = "\${$var}\t=\t" . $this->exportVar($value, 1);
-		}
 		if ($this->_outputFormat == 'fb') {
-			$this->_fireError($error, $code, $description, $file, $line, $trace, $context);
+			$kontext = array();
+			foreach ((array)$context as $var => $value) {
+				$kontext[] = "\${$var}\t=\t" . $this->exportVar($value, 1);
+			}
+			$this->_fireError($error, $code, $description, $file, $line, $trace, $kontext);
 		} else {
-			echo parent::_output($level, $error, $code, $helpCode, $description, $file, $line, $kontext);
+			$data = compact(
+				'level', 'error', 'code', 'helpID', 'description', 'file', 'path', 'line', 'context'
+			);
+			echo parent::_output($data);
 		}
 	}
 /**

@@ -1,0 +1,5 @@
+# Installation
+* Copy the files in this directory into `app/plugins/debug_kit`
+* Include the toolbar component in your `app_controller.php`:
+   * `var $components = array('DebugKit.Toolbar');`
+* Set debug mode to at least 1.

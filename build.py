@@ -99,12 +99,19 @@ def zip_recursive(destination, source_dir, rootfiles):
     are to be included.  Any top level files not in rootfiles will be omitted
     from the zip file.
     """
-    zipped = zipfile.ZipFile(destination, 'w')
+    zipped = zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED)
 
     for root, dirs, files in os.walk(source_dir):
         inRoot = False
         if root == source_dir:
             inRoot = True
+        
+        if inRoot:
+            for d in dirs:
+                try:
+                    rootfiles.index(d)
+                except ValueError:
+                    dirs.remove(d)
 
         for f in files[:]:
             if inRoot:
@@ -112,7 +119,7 @@ def zip_recursive(destination, source_dir, rootfiles):
                     rootfiles.index(f)
                 except ValueError:
                     continue
-
+            
             fullpath = os.path.join(root, f)
             zipped.write(fullpath)
     zipped.close()

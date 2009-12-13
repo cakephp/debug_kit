@@ -40,7 +40,7 @@ class DebugViewTestCase extends CakeTestCase {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 		$this->Controller =& ClassRegistry::init('Controller');
-		$this->View  =& new DebugView($this->Controller, false);
+		$this->View =& new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');
 		$this->_paths = array();
 		$this->_paths['plugins'] = App::path('plugins');

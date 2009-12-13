@@ -76,10 +76,10 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		$this->_server = $_SERVER;
 		$this->_paths = array();
-		$this->_paths['plugin'] = Configure::read('pluginPaths');
-		$this->_paths['view'] = Configure::read('viewPaths');
-		$this->_paths['vendor'] = Configure::read('vendorPaths');
-		$this->_paths['controller'] = Configure::read('controllerPaths');
+		$this->_paths['plugins'] = App::path('plugins');
+		$this->_paths['views'] = App::path('views');
+		$this->_paths['vendors'] = App::path('vendors');
+		$this->_paths['controllers'] = App::path('controllers');
 		Configure::write('Cache.disable', false);
 	}
 /**
@@ -89,29 +89,18 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function endTest() {
 		$_SERVER = $this->_server;
-		Configure::write('pluginPaths', $this->_paths['plugin']);
-		Configure::write('viewPaths', $this->_paths['view']);
-		Configure::write('vendorPaths', $this->_paths['vendor']);
-		Configure::write('controllerPaths', $this->_paths['controller']);
+		App::build(array(
+			'plugins' => $this->_paths['plugins'],
+			'views' => $this->_paths['views'],
+			'controllers' => $this->_paths['controllers'],
+			'vendors' => $this->_paths['vendors']
+		), true);
 		Configure::write('Cache.disable', true);
 
 		unset($this->Controller);
 		if (class_exists('DebugKitDebugger')) {
 			DebugKitDebugger::clearTimers();
 			DebugKitDebugger::clearMemoryPoints();
-		}
-	}
-/**
- * find the debug_kit path
- *
- * @return void
- **/
-	function _findPlugin() {
-		$paths = Configure::read('pluginPaths');
-		foreach ($paths as $path) {
-			if (is_dir($path . 'debug_kit')) {
-				return $path . 'debug_kit' . DS;
-			}
 		}
 	}
 /**
@@ -158,13 +147,16 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  */
 	function testVendorPanels() {
-		$debugKitPath = $this->_findPlugin();
-		$skip = $this->skipIf(empty($debugKitPath), 'Could not find debug_kit in plugin paths, skipping %s');
+		$debugKitPath = App::pluginPath('DebugKit');
+		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
+		$skip = $this->skipIf($noDir, 'Could not find debug_kit in plugin paths, skipping %s');
 		if ($skip) {
 			return;
 		}
 
-		Configure::write('vendorPaths', array($debugKitPath . 'tests' . DS . 'test_app' . DS . 'vendors' . DS));
+		App::build(array(
+			'vendors' => array($debugKitPath . 'tests' . DS . 'test_app' . DS . 'vendors' . DS)
+		));
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'panels' => array('test'),
@@ -509,21 +501,22 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testNoRequestActionInterference() {
-		$debugKitPath = $this->_findPlugin();
-		$skip = $this->skipIf(empty($debugKitPath), 'Could not find debug_kit in plugin paths, skipping %s');
+		$debugKitPath = App::pluginPath('DebugKit');
+		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
+		$skip = $this->skipIf($noDir, 'Could not find debug_kit in plugin paths, skipping %s');
 		if ($skip) {
 			return;
 		}
 
-		$controllers = Configure::read('controllerPaths');
-		$testapp = $debugKitPath . 'tests' . DS . 'test_app' . DS . 'controllers' . DS;
-		array_unshift($controllers, $testapp);
-		Configure::write('controllerPaths', $controllers);
-
-		$views = Configure::read('viewPaths');
-		$testapp = $debugKitPath . 'tests' . DS . 'test_app' . DS . 'views' . DS;
-		array_unshift($views, $testapp);
-		Configure::write('viewPaths', $views);
+		App::build(array(
+			'controllers' => $debugKitPath . 'tests' . DS . 'test_app' . DS . 'controllers' . DS,
+			'views' => array(
+				$debugKitPath . 'tests' . DS . 'test_app' . DS . 'views' . DS,
+				CAKE_CORE_INCLUDE_PATH . DS . 'cake' . DS . 'libs' . DS . 'view' . DS
+			),
+			'plugins' => $this->_paths['plugins']
+		));
+		Router::reload();
 
 		$result = $this->Controller->requestAction('/debug_kit_test/request_action_return', array('return'));
 		$this->assertEqual($result, 'I am some value from requestAction.');

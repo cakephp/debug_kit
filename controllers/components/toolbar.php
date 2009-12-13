@@ -95,7 +95,7 @@ class ToolbarComponent extends Object {
 			return false;
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
-		
+
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component intitailization', true));
 		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
 

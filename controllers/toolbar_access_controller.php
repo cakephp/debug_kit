@@ -73,4 +73,32 @@ class ToolbarAccessController extends DebugKitAppController {
 		$this->set('toolbarState', $oldState);
 		$this->set('debugKitInHistoryMode', true);
 	}
+/**
+ * Run SQL explain/profiling on queries.
+ *
+ * @return void
+ */
+	function sql_explain() {
+		if (
+			empty($this->params['named']['sql']) || 
+			empty($this->params['named']['ds']) ||
+			empty($this->params['named']['hash']) ||
+			Configure::read('debug') == 0
+		) {
+			$this->cakeError('error404', array(array(
+				'message' => 'Invalid parameters'
+			)));
+		}
+		App::import('Core', 'Security');
+		$hash = Security::hash($this->params['named']['sql'] . $this->params['named']['ds'], null, true);
+		if ($hash !== $this->params['named']['hash']) {
+			$this->cakeError('error404', array(array(
+				'message' => 'Invalid parameters'
+			)));
+		}
+		App::import('Model', 'ConnectionManager');
+		$ds =& ConnectionManager::getDataSource($this->params['named']['ds']);
+		$result = $ds->query('EXPLAIN ' . $this->params['named']['sql']);
+		$this->set(compact('result'));
+	}
 }

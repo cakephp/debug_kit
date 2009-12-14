@@ -155,5 +155,27 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
 		}
 	}
+/**
+ * Generates a SQL explain link for a given query
+ *
+ * @param string $sql SQL query string you want an explain link for.
+ * @return string Rendered Html link or '' if the query is not a select/describe
+ */
+	function explainLink($sql, $connection) {
+		if (!preg_match('/^(SELECT)/i', $sql)) {
+			return '';
+		}
+		App::import('Core', 'Security');
+		$hash = Security::hash($sql . $connection, null, true);
+		$url = array(
+			'plugin' => 'debug_kit',
+			'controller' => 'toolbar_access',
+			'action' => 'sql_explain',
+			'ds' => $connection,
+			'sql' => $sql,
+			'hash' => $hash
+		);
+		return $this->Html->link(__d('debug_kit', 'Explain', true), $url, array('class' => 'sql-explain-link'));
+	}
 }
 ?>

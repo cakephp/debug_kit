@@ -125,5 +125,4 @@ class ToolbarHelper extends AppHelper {
 		}
 		return $existing[$index][$name]['content'];
 	}
-
 }

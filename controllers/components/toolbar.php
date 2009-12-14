@@ -552,57 +552,23 @@ class SqlLogPanel extends DebugPanel {
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
-			if ($db->isInterfaceSupported('showLog')) {
-				ob_start();
-				$db->showLog();
-				$htmlBlob = ob_get_clean();
-
-				$Xml =& new Xml($htmlBlob);
-
-				$table = $Xml->children[0];
-				$tbody = $table->children('tbody');
-				$rows = $tbody[0]->children;
-				if (empty($rows) || empty($rows[0]->children)) {
-				 	continue;
-				}
-				$queries = $explained = array();
-				foreach ($rows as $row) {
-					$tds = $this->_getCells($row);
-					$queries[] = $tds;
+			if ($db->isInterfaceSupported('getLog')) {
+				$log = $db->getLog();
+				foreach ($log as $i => $query) {
 					$isSlow = (
-						$tds[5] > 0 &&
-						$tds[4] / $tds[5] != 1 &&
-						$tds[4] / $tds[5] <= $this->slowRate
+						$query['took'] > 0 &&
+						$query['numRows'] / $query['took'] != 1 &&
+						$query['numRows'] / $query['took'] <= $this->slowRate
 					);
-					if ($isSlow && preg_match('/^SELECT /', $tds[1])) {
-						$explain = $this->_explainQuery($db, $tds[1]);
-						if (!empty($explain)) {
-							$explained[] = $explain;
-						}
+					$log[$i]['actions'] = '';
+					if ($isSlow) {
+						$log[$i]['actions'] = '*';
 					}
 				}
-				$queryLogs[$configName]['queries'] = $queries;
-				$queryLogs[$configName]['explains'] = $explained;
+				$queryLogs[$configName]['queries'] = $log;
 			}
 		}
 		return $queryLogs;
-	}
-/**
- * get cell values from xml
- *
- * @param array of XmlElements.
- * @return array Array of extracted values.
- **/
-	function _getCells(&$rowXml) {
-		$tds = array();
-		foreach ($rowXml->children as $cell) {
-			if ($cell->hasChildren()) {
-				$tds[] = $cell->children[0]->value;
-			} else {
-				$tds[] = $cell->value;
-			}
-		}
-		return $tds;
 	}
 /**
  * Run an explain query for a slow query.

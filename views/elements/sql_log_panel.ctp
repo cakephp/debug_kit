@@ -24,23 +24,21 @@
 	<div class="sql-log-panel-query-log">
 		<h4><?php echo $dbName ?></h4>
 		<?php
-			$headers = array('Nr', 'Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)');
-			echo $toolbar->table(h($queryLog['queries']), $headers, array('title' => 'SQL Log ' . $dbName));
-
-			if (!empty($queryLog['explains'])):
-				$name = sprintf(__d('debug_kit', 'toggle (%s) query explains for %s', true), count($queryLog['explains']), $dbName);
-				echo $html->link($name, '#', array('class' => 'show-slow'));
-
-				echo '<div class="slow-query-container">';
-					foreach ($queryLog['explains'] as $explain):
-						echo $toolbar->message(__d('debug_kit', 'Query:', true), $explain['query']);
-						$headers = array_shift($explain['explain']);
-						echo $toolbar->table(h($explain['explain']), $headers);
-					endforeach;
-				echo '</div>';
-			else:
-				echo $toolbar->message('Warning', __d('debug_kit', 'No slow queries!, or your database does not support EXPLAIN', true));
-			endif; ?>
+			$headers = array('Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
+			if ($toolbar->getName() == 'HtmlToolbar'):
+				foreach ($queryLog['queries'] as $i => $row):
+					if (!empty($row['actions'])):
+						$queryLog['queries'][$i]['actions'] = sprintf(
+							'<span class="slow-query">%s</span>',
+							__d('debug_kit', 'possibly slow', true)
+						);
+					endif;
+					$queryLog['queries'][$i]['actions'] .= $toolbar->explainLink($row['query'], $dbName);
+					$queryLog['queries'][$i]['query'] = h($row['query']);
+				endforeach;
+			endif;
+			echo $toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
+		 ?>
 	</div>
 	<?php endforeach; ?>
 <?php else:

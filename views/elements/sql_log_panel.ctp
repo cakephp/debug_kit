@@ -30,7 +30,7 @@
 					if (!empty($row['actions'])):
 						$queryLog['queries'][$i]['actions'] = sprintf(
 							'<span class="slow-query">%s</span>',
-							__d('debug_kit', 'possibly slow', true)
+							__d('debug_kit', 'maybe slow', true)
 						);
 					endif;
 					$queryLog['queries'][$i]['actions'] .= $toolbar->explainLink($row['query'], $dbName);

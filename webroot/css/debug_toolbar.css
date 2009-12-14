@@ -267,6 +267,7 @@
 #debug-kit-toolbar .debug-kit-graph-bar-value {
 	background-color: #CE9E23;
 }
+
 /* Sql Log */
 #sql_log-tab td,
 #sql_log-tab .slow-query-container p {
@@ -281,6 +282,17 @@
 	display:block;
 	clear:both;
 	margin: 20px 0 5px;
+}
+#debug-kit-toolbar #sql_log-tab a {
+	background: none;
+	border:none;
+}
+#sql_log-tab .slow-query {
+	background:#e79302;
+	font-size:9px;
+	color:#fff;
+	padding: 2px;
+	white-space:nowrap;
 }
 
 /* previous panels */

@@ -62,21 +62,25 @@ DEBUGKIT.sqlLog = function () {
 		init : function () {
 			var sqlPanel = document.getElementById('sql_log-tab');
 			var buttons = sqlPanel.getElementsByTagName('A');
+
+			// Button handling code for explain links.
+			// performs XHR request to get explain query.
+			var handleButton = function (event) {
+				event.preventDefault();
+				var fetch = new Request({
+					onComplete : function (response) {
+						var targetEl = document.getElementById('sql-log-explain-query');
+						targetEl.innerHTML = response.response.text;
+					},
+					onFail : function () {
+						alert('Could not fetch EXPLAIN for query.');
+					}
+				}).send(this.href);
+			};
+	
 			Collection.apply(buttons, function (button, i) {
-				console.log(button);
 				if (Element.hasClass(button, 'sql-explain-link')) {
-					Event.addEvent(button, 'click', function (event) {
-						event.preventDefault();
-						var fetch = new Request({
-							onComplete : function (response) {
-								var targetEl = document.getElementById('sql-log-explain-query');
-								targetEl.innerHTML = response.response.text;
-							},
-							onFail : function () {
-								alert('Could not fetch EXPLAIN for query.');
-							}
-						}).send(button.href);
-					});
+					Event.addEvent(button, 'click', handleButton);
 				}
 			});
 		}

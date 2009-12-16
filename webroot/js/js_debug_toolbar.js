@@ -18,7 +18,7 @@
  * @subpackage    debug_kit.views.helpers
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
+ */
 var DEBUGKIT = function () {
 	var undef;
 	return {
@@ -204,7 +204,7 @@ DEBUGKIT.Util.Event = {
 
 		if (document.all && !window.opera) {
 			//Define a "blank" external JavaScript tag
-			document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
+			document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="://"><\/script>');
 			var contentloadtag = document.getElementById("__domreadywatcher");
 			contentloadtag.onreadystatechange = function (){
 				if (this.readyState == "complete") {
@@ -245,9 +245,11 @@ DEBUGKIT.Util.Cookie = function() {
 
 //public methods
 	return {
-		 // Write to cookie
-		 // @param [string] name Name of cookie to write.
-		 // @param [mixed] value Value to write to cookie.
+		/*
+		 Write to cookie
+		 @param [string] name Name of cookie to write.
+		 @param [mixed] value Value to write to cookie.
+		*/
 		write : function (name, value) {
 			var date = new Date();
 			date.setTime(date.getTime() + (cookieLife * 24 * 60 * 60 * 1000));
@@ -256,8 +258,10 @@ DEBUGKIT.Util.Cookie = function() {
 			return true;
 		},
 
-		// Read from the cookie
-		// @param [string] name Name of cookie to read.
+		/*
+		 Read from the cookie
+		 @param [string] name Name of cookie to read.
+		*/
 		read : function (name) {
 			name = name + '=';
 			var cookieJar = document.cookie.split(';');
@@ -273,8 +277,10 @@ DEBUGKIT.Util.Cookie = function() {
 			}
 			return false;
 		},
-		// Delete a cookie by name.
-		// @param [string] name of cookie to delete.
+		/*
+		 Delete a cookie by name.
+		 @param [string] name of cookie to delete.
+		*/
 		del : function (name) {
 			var date = new Date();
 			date.setFullYear(2000,0,1);
@@ -285,9 +291,11 @@ DEBUGKIT.Util.Cookie = function() {
 }();
 
 
-// Object merge takes any number of arguments and glues them together
-// @param [Object] one first object
-// @return object
+/*
+ Object merge takes any number of arguments and glues them together
+ @param [Object] one first object
+ @return object
+*/
 DEBUGKIT.Util.merge = function() {
 	var out = {};
 	for (var i = 0; i < arguments.length; i++) {
@@ -372,7 +380,10 @@ DEBUGKIT.Util.Request.prototype.onReadyStateChange = function (){
 	}
 };
 
-// Creates cross-broswer XHR object used for requests
+/*
+ Creates cross-broswer XHR object used for requests
+ Tries using the standard XmlHttpRequest, then IE's wacky ActiveX Objects
+*/
 DEBUGKIT.Util.Request.prototype.createObj = function(){
 	var request = null;
 	try {
@@ -402,9 +413,11 @@ DEBUGKIT.toolbar = function () {
 		toolbarHidden = false;
 
 
-	// Add neat array functionality.
-	// Events are bound to depth-0 UL elements.
-	// Use event delegation to find original target.
+	/*
+	 Add neat array functionality.
+	 Events are bound to depth-0 UL elements.
+	 Use event delegation to find original target.
+	*/
 	function _delegateNeatArray (event) {
 		var clickedEl = event.target;
 		while (!Element.nodeName(clickedEl, 'LI')) {

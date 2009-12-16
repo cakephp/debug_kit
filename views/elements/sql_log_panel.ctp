@@ -16,7 +16,7 @@
  * @subpackage    debug_kit.views.elements
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
+ */
 ?>
 <h2><?php __d('debug_kit', 'Sql Logs')?></h2>
 <?php if (!empty($content)) : ?>

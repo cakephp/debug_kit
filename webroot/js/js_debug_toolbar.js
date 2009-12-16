@@ -148,6 +148,19 @@ DEBUGKIT.Util.Element = {
 	}
 };
 
+DEBUGKIT.Util.Collection = {
+	/*
+	 Apply the passed function to each item in the collection.
+	 The current element in the collection will be `this` in the callback
+	 The callback is also passed the element and the index as arguments.
+	*/
+	apply: function (collection, callback) {
+		for (var i = 0, len = collection.length; i < len; i++) {
+			callback.apply(collection[i], [collection[i], i]);
+		}
+	}
+}
+
 
 //Event binding
 DEBUGKIT.Util.Event = {

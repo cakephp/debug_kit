@@ -39,6 +39,10 @@
 			endif;
 			echo $toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
+		<h4><?php __d('debug_kit', 'Query Explain:'); ?></h4>
+		<div id="sql-log-explain-query">
+			<p><?php __d('debug_kit', 'Click an "Explain" link above, to see the query explaination.'); ?></p>
+		</div>
 	</div>
 	<?php endforeach; ?>
 <?php else:
@@ -50,24 +54,31 @@ endif; ?>
 DEBUGKIT.module('sqlLog');
 DEBUGKIT.sqlLog = function () {
 	var Element = DEBUGKIT.Util.Element,
-		Event = DEBUGKIT.Util.Event;
+		Request = DEBUGKIT.Util.Request,
+		Event = DEBUGKIT.Util.Event,
+		Collection = DEBUGKIT.Util.Collection;
 
 	return {
 		init : function () {
 			var sqlPanel = document.getElementById('sql_log-tab');
 			var buttons = sqlPanel.getElementsByTagName('A');
-
-			for (var i in buttons) {
-				var button = buttons[i];
-				if (Element.hasClass(button, 'show-slow')) {
+			Collection.apply(buttons, function (button, i) {
+				console.log(button);
+				if (Element.hasClass(button, 'sql-explain-link')) {
 					Event.addEvent(button, 'click', function (event) {
 						event.preventDefault();
-						Element.toggle(this.nextSibling);
+						var fetch = new Request({
+							onComplete : function (response) {
+								var targetEl = document.getElementById('sql-log-explain-query');
+								targetEl.innerHTML = response.response.text;
+							},
+							onFail : function () {
+								alert('Could not fetch EXPLAIN for query.');
+							}
+						}).send(button.href);
 					});
-					Element.hide(button.nextSibling);
 				}
-			}
-
+			});
 		}
 	};
 }();

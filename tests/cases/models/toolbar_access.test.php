@@ -49,5 +49,18 @@ class ToolbarAccessTestCase extends CakeTestCase {
 		unset($this->Model);
 	}
 
+/**
+ * test that explain query returns arrays of query information.
+ *
+ * @return void
+ */
+	function testExplainQuery() {
+		$db =& ConnectionManager::getDataSource('test_suite');
+		$sql = 'SELECT * FROM ' . $db->fullTableName('posts') . ';';
+		$result = $this->Model->explainQuery('test_suite', $sql);
+
+		$this->assertTrue(is_array($result));
+		$this->assertFalse(empty($result));
+	}
 }
 ?>

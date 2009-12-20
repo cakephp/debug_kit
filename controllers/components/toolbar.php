@@ -536,7 +536,7 @@ class SqlLogPanel extends DebugPanel {
  **/
 	var $slowRate = 20;
 /**
- * Get Sql Logs for each DB config
+ * Gets the connection names that should have logs + dumps generated.
  *
  * @param string $controller
  * @access public
@@ -546,28 +546,20 @@ class SqlLogPanel extends DebugPanel {
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
-		$queryLogs = array();
+		$connections = array();
 
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
-			if ($db->isInterfaceSupported('getLog')) {
-				$log = $db->getLog();
-				foreach ($log as $i => $query) {
-					$isSlow = (
-						$query['took'] > 0 &&
-						$query['numRows'] / $query['took'] != 1 &&
-						$query['numRows'] / $query['took'] <= $this->slowRate
-					);
-					$log[$i]['actions'] = '';
-					if ($isSlow) {
-						$log[$i]['actions'] = '*';
-					}
-				}
-				$queryLogs[$configName]['queries'] = $log;
+			$driver = $db->config['driver'];
+			$explain = false;
+			$isExplainable = ($driver === 'mysql' || $driver === 'mysqli' || $driver === 'postgres');
+			if ($isExplainable && $db->isInterfaceSupported('getLog')) {
+				$explain = true;
 			}
+			$connections[$configName] = $explain;
 		}
-		return $queryLogs;
+		return array('connections' => $connections, 'threshold' => $this->slowRate);
 	}
 }
 

@@ -123,4 +123,51 @@ class ToolbarHelper extends AppHelper {
 		}
 		return $existing[$index][$name]['content'];
 	}
+/**
+ * Gets the query logs for the given connection names.
+ *
+ * ### Options
+ *
+ * - explain - Whether explain links should be generated for this connection.
+ * - cache - Whether the toolbar_state Cache should be updated.
+ * - threshold - The threshold at which a visual 'maybe slow' flag should be added.
+ *   results with rows/ms lower than $threshold will be marked.
+ *
+ * @param string $connection Connection name to get logs for.
+ * @param array $options Options for the query log retrieval.
+ * @return array Array of data to be converted into a table.
+ */
+	function getQueryLogs($connection, $options = array()) {
+		$options += array('explain' => false, 'cache' => true, 'threshold' => 20);
+		App::import('Model', 'ConnectionManager');
+		$db =& ConnectionManager::getDataSource($connection);
+		
+		$out = array();
+		$log = $db->getLog();
+		foreach ($log as $i => $query) {
+			$isSlow = (
+				$query['took'] > 0 &&
+				$query['numRows'] / $query['took'] != 1 &&
+				$query['numRows'] / $query['took'] <= $options['threshold']
+			);
+			$query['actions'] = '';
+			$isHtml = ($this->getName() == 'HtmlToolbar');
+			if ($isSlow && $isHtml) {
+				$query['actions'] = sprintf(
+					'<span class="slow-query">%s</span>',
+					__d('debug_kit', 'maybe slow', true)
+				);
+			} elseif ($isSlow) {
+				$query['actions'] = '*';
+			}
+			if ($options['explain'] && $isHtml) {
+				$query['actions'] .= $this->explainLink($query['query'], $connection);
+			}
+			if ($isHtml) {
+				$query['query'] = h($query['query']);
+			}
+			$out[] = $query;
+		}
+		return $out;
+	}
 }

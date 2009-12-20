@@ -17,31 +17,23 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+$headers = array('Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
 ?>
 <h2><?php __d('debug_kit', 'Sql Logs')?></h2>
 <?php if (!empty($content)) : ?>
-	<?php foreach ($content as $dbName => $queryLog) : ?>
+	<?php foreach ($content['connections'] as $dbName => $explain): ?>
 	<div class="sql-log-panel-query-log">
 		<h4><?php echo $dbName ?></h4>
 		<?php
-			$headers = array('Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
-			if ($toolbar->getName() == 'HtmlToolbar'):
-				foreach ($queryLog['queries'] as $i => $row):
-					if (!empty($row['actions'])):
-						$queryLog['queries'][$i]['actions'] = sprintf(
-							'<span class="slow-query">%s</span>',
-							__d('debug_kit', 'maybe slow', true)
-						);
-					endif;
-					$queryLog['queries'][$i]['actions'] .= $toolbar->explainLink($row['query'], $dbName);
-					$queryLog['queries'][$i]['query'] = h($row['query']);
-				endforeach;
-			endif;
-			echo $toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
+			$queryLog = $toolbar->getQueryLogs($dbName, array(
+				'explain' => $explain, 'threshold' => $content['threshold']
+			));
+			echo $toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
 		<h4><?php __d('debug_kit', 'Query Explain:'); ?></h4>
 		<div id="sql-log-explain-query">
-			<p><?php __d('debug_kit', 'Click an "Explain" link above, to see the query explaination.'); ?></p>
+			<a id="debug-kit-explain-<?php echo $dbName ?>"> </a>
+			<p><?php __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
 		</div>
 	</div>
 	<?php endforeach; ?>
@@ -78,7 +70,7 @@ DEBUGKIT.sqlLog = function () {
 				}).send(this.href);
 			};
 	
-			Collection.apply(buttons, function (button, i) {
+			Collection.apply(buttons, function (button) {
 				if (Element.hasClass(button, 'sql-explain-link')) {
 					Event.addEvent(button, 'click', handleButton);
 				}

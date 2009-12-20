@@ -57,10 +57,9 @@ DEBUGKIT.historyPanel = function () {
 
 		Element.removeClass(historyLinks, 'loading');
 
-		for (var id in toolbar.panels) {
-			var panel = toolbar.panels[id];
+		Collection.apply(toolbar.panels, function (panel, id) {
 			if (panel.content === undefined || responseJson[id] === undefined) {
-				continue;
+				return;
 			}
 
 			var panelDivs = panel.content.childNodes,
@@ -84,7 +83,7 @@ DEBUGKIT.historyPanel = function () {
 
 			var regionDivs = regionDiv.childNodes,
 				i = regionDivs.length;
-			
+
 			while (i--) {
 				//toggle history element, hide current request one.
 				var panelContent = regionDivs[i];
@@ -105,7 +104,7 @@ DEBUGKIT.historyPanel = function () {
 					Element.hide(panelContent);
 				}
 			}
-		}
+		});
 	};
 
 	// Private method to handle restoration to current request.

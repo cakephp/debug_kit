@@ -184,16 +184,22 @@ DEBUGKIT.Util.Event = {
 	// bind an event listener of type to element, handler is your method.
 	addEvent :function(element, type, handler, capture) {
 		capture = (capture === undefined) ? false : capture;
+
+		var callback = function (event) {
+			event = event || window.event;
+			handler.apply(this, [event]);
+		};
+
 		if (element.addEventListener) {
-			element.addEventListener(type, handler, capture);
+			element.addEventListener(type, callback, capture);
 		} else if (element.attachEvent) {
 			type = 'on' + type;
-			element.attachEvent(type, handler);
+			element.attachEvent(type, callback);
 		} else {
 			type = 'on' + type;
-			element[type] = handler;
+			element[type] = callback;
 		}
-		this._listeners[++this._eventId] = {element: element, type: type, handler: handler};
+		this._listeners[++this._eventId] = {element: element, type: type, handler: callback};
 	},
 
 	// destroy an event listener. requires the exact same function as was used for attaching
@@ -524,8 +530,7 @@ DEBUGKIT.toolbar = function () {
 			this.makePanelDraggable(panel);
 
 			var self = this;
-			Event.addEvent(panel.button, 'click', function(event) {
-				event = event || window.event;
+			Event.addEvent(panel.button, 'click', function (event) {
 				event.preventDefault();
 				return self.togglePanel(panel.id);
 			});
@@ -649,7 +654,6 @@ DEBUGKIT.toolbarToggle = function () {
 				self = this;
 
 			Event.addEvent(button, 'click', function (event) {
-				event = event || window.event
 				event.preventDefault();
 				self.toggleToolbar();
 			});

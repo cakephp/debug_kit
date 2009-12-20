@@ -42,6 +42,7 @@ DEBUGKIT.historyPanel = function () {
 		Cookie = DEBUGKIT.Util.Cookie,
 		Event = DEBUGKIT.Util.Event,
 		Request = DEBUGKIT.Util.Request,
+		Collection = DEBUGKIT.Util.Collection,
 		historyLinks = [];
 
 	// Private methods to handle JSON response and insertion of
@@ -53,12 +54,8 @@ DEBUGKIT.historyPanel = function () {
 			alert('Could not convert JSON response');
 			return false;
 		}
-		
-		var i = historyLinks.length;
-		while (i--) {
-			Element.removeClass(historyLinks[i], 'loading');
-		}
 
+		Element.removeClass(historyLinks, 'loading');
 
 		for (var id in toolbar.panels) {
 			var panel = toolbar.panels[id];
@@ -115,9 +112,7 @@ DEBUGKIT.historyPanel = function () {
 	var restoreCurrentState = function () {
 		var id, i, panelContent, tag;
 
-		for (i in historyLinks) {
-			Element.removeClass(historyLinks[i], 'loading');
-		}
+		Element.removeClass(historyLinks, 'loading');
 
 		for (id in toolbar.panels) {
 			panel = toolbar.panels[id];
@@ -161,9 +156,7 @@ DEBUGKIT.historyPanel = function () {
 	function handleHistoryLink (event) {
 		event.preventDefault();
 
-		for (i in historyLinks) {
-			Element.removeClass(historyLinks[i], 'active');
-		}
+		Element.removeClass(historyLinks, 'active');
 		Element.addClass(this, 'active loading');
 
 		if (this.id === 'history-restore-current') {
@@ -188,14 +181,12 @@ DEBUGKIT.historyPanel = function () {
 			}
 
 			var anchors = toolbar.panels['history'].content.getElementsByTagName('A');
-
-			for (i in anchors) {
-				button = anchors[i];
+			Collection.apply(anchors, function (button) {
 				if (Element.hasClass(button, 'history-link')) {
 					historyLinks.push(button);
 					Event.addEvent(button, 'click', handleHistoryLink);
 				}
-			}
+			});
 		}
 	};
 }();

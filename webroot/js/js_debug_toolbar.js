@@ -76,6 +76,11 @@ DEBUGKIT.Util.Element = {
 	},
 
 	removeClass : function (element, className) {
+		if (DEBUGKIT.Util.isArray(element)) {
+			DEBUGKIT.Util.Collection.apply(element, function (element) {
+				Element.removeClass(element, className);
+			});
+		}
 		if (!element.className) {
 			return false;
 		}
@@ -153,10 +158,19 @@ DEBUGKIT.Util.Collection = {
 	 Apply the passed function to each item in the collection.
 	 The current element in the collection will be `this` in the callback
 	 The callback is also passed the element and the index as arguments.
+	 Optionally you can supply a binding parameter to change `this` in the callback.
 	*/
-	apply: function (collection, callback) {
-		for (var i = 0, len = collection.length; i < len; i++) {
-			callback.apply(collection[i], [collection[i], i]);
+	apply: function (collection, callback, binding) {
+		//for (var i = 0, len = collection.length; i < len; i++) {
+		for (var i in collection) {
+			if (!collection.hasOwnProperty(i)) {
+				continue;
+			}
+			var thisVar = collection[i];
+			if (binding !== undefined) {
+				thisVar = binding;
+			}
+			callback.apply(thisVar, [collection[i], i]);
 		}
 	}
 }
@@ -308,6 +322,12 @@ DEBUGKIT.Util.merge = function() {
 	}
 	return out;
 };
+/*
+ Check if the given object is an array.
+*/
+DEBUGKIT.Util.isArray = function (test) {
+	return Object.prototype.toString.call(test) === '[object Array]';
+}
 
 
 // Simple wrapper for XmlHttpRequest objects.
@@ -375,7 +395,7 @@ DEBUGKIT.Util.Request.prototype.onReadyStateChange = function (){
 		if (typeof this.onFail == 'function') {
 			this.onFail.apply(this, []);
 		} else {
-			console.error('request failed');
+			console.error('Request failed');
 		}
 	}
 };
@@ -410,6 +430,7 @@ DEBUGKIT.toolbar = function () {
 		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
 		Event = DEBUGKIT.Util.Event,
+		Collection = DEBUGKIT.Util.Collection,
 		toolbarHidden = false;
 
 
@@ -460,12 +481,12 @@ DEBUGKIT.toolbar = function () {
 				}
 			}
 
-			for (i in this.elements.panel.childNodes) {
-				element = this.elements.panel.childNodes[i];
+			Collection.apply(this.elements.panel.childNodes, function (element) {
 				if (Element.hasClass(element, 'panel-tab')) {
 					this.addPanel(element);
 				}
-			}
+			}, this);
+
 			if (document.getElementsByClassName) {
 				lists = this.elements.toolbar.getElementsByClassName('depth-0');
 			} else {
@@ -487,15 +508,16 @@ DEBUGKIT.toolbar = function () {
 				content : undefined,
 				active : false
 			};
-			for (var i in tab.childNodes) {
-				var element = tab.childNodes[i];
+
+			Collection.apply(tab.childNodes, function (element) {
 				if (Element.nodeName(element, 'A')) {
 					panel.id = element.hash.replace(/^#/, '');
 					panel.button = element;
 				} else if (Element.nodeName(element, 'DIV')) {
 					panel.content = element;
 				}
-			}
+			});
+	
 			if (!panel.id || !panel.content) {
 				return false;
 			}
@@ -533,22 +555,22 @@ DEBUGKIT.toolbar = function () {
 				Event.removeEvent(document, 'mouseup', mouseUpHandler);
 			}
 
-			for (var i in panel.content.childNodes) {
-				var element = panel.content.childNodes[i];
-				if (Element.nodeName(element, 'DIV') && Element.hasClass(element, 'panel-resize-handle')) {
+			var mouseDownHandler = function (event) {
+				event.preventDefault();
+				currentElement = this;
+				this._startY = event.pageY;
+				this._startHeight = parseInt(Element.height(Element.getPrevious(currentElement)));
 
-					Event.addEvent(element, 'mousedown', function (event) {
-						event.preventDefault();
-						currentElement = this;
-						this._startY = event.pageY;
-						this._startHeight = parseInt(Element.height(Element.getPrevious(currentElement)));
-
-						// attach to document so mouse doesn't have to stay precisely on the 'handle'
-						Event.addEvent(document, 'mousemove', mouseMoveHandler);
-						Event.addEvent(document, 'mouseup', mouseUpHandler);
-					});
-				}
+				// attach to document so mouse doesn't have to stay precisely on the 'handle'
+				Event.addEvent(document, 'mousemove', mouseMoveHandler);
+				Event.addEvent(document, 'mouseup', mouseUpHandler);
 			}
+
+			Collection.apply(panel.content.childNodes, function (element) {
+				if (Element.nodeName(element, 'DIV') && Element.hasClass(element, 'panel-resize-handle')) {
+					Event.addEvent(element, 'mousedown', mouseDownHandler);
+				}
+			});
 		},
 
 		// Toggle a panel
@@ -615,7 +637,9 @@ DEBUGKIT.loader.register(DEBUGKIT.toolbar);
 //Add events + behaviors for toolbar collapser.
 DEBUGKIT.toolbarToggle = function () {
 	var toolbar = DEBUGKIT.toolbar,
+		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
+		Collection = DEBUGKIT.Util.Collection,
 		Event = DEBUGKIT.Util.Event,
 		toolbarHidden = false;
 
@@ -631,19 +655,18 @@ DEBUGKIT.toolbarToggle = function () {
 			});
 
 			var toolbarState = Cookie.read('toolbarDisplay');
-			if (toolbarState != 'block') {
+			if (toolbarState != 'show') {
 				toolbarHidden = false;
 				this.toggleToolbar();
 			}
 		},
 
 		toggleToolbar : function () {
-			var display = toolbarHidden ? 'block' : 'none';
-			for (var i in toolbar.panels) {
-				var panel = toolbar.panels[i];
-				panel.element.style.display = display;
+			var display = toolbarHidden ? 'show' : 'hide';
+			Collection.apply(toolbar.panels, function (panel) {
+				Element[display](panel.element);
 				Cookie.write('toolbarDisplay', display);
-			}
+			});
 			toolbarHidden = !toolbarHidden;
 			return false;
 		}

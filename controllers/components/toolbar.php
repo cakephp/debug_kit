@@ -569,37 +569,6 @@ class SqlLogPanel extends DebugPanel {
 		}
 		return $queryLogs;
 	}
-/**
- * Run an explain query for a slow query.
- *
- * @param object $db Dbo instance
- * @param string $queryString The Query to explain
- * @access public
- * @return void
- **/
-	function _explainQuery(&$db, $queryString) {
-		$driver = $db->config['driver'];
-		$return = null;
-		if ($driver === 'mysqli' || $driver === 'mysql' || $driver === 'postgres') {
-			$results = $db->query('EXPLAIN ' . $queryString);
-			if ($driver === 'postgres') {
-				$queryPlan = array();
-				foreach ($results as $postgreValue) {
-					$queryPlan[] = array($postgreValue[0]['QUERY PLAN']);
-				}
-				$results = array_merge(array(array('')), $queryPlan);
-			} else {
-				$keys = array_keys($results[0][0]);
-				foreach ($results as $mysqlValue) {
-					$queryPlan[] = array_values($mysqlValue[0]);
-				}
-				$results = array_merge(array($keys), $queryPlan);
-			}
-			$return['explain'] = $results;
-			$return['query'] =  $queryString;
-		}
-		return $return;
-	}
 }
 
 /**

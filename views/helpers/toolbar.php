@@ -3,8 +3,6 @@
  * Abstract Toolbar helper.  Provides Base methods for content
  * specific debug toolbar helpers.  Acts as a facade for other toolbars helpers as well.
  *
- * helps with development.
- *
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)

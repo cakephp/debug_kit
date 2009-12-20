@@ -23,6 +23,8 @@ App::import('Core', array('View', 'Controller'));
 Mock::generate('Helper', 'MockBackendHelper', array('testMethod'));
 
 class ToolbarHelperTestCase extends CakeTestCase {
+
+	var $fixtures = array('core.post');
 /**
  * setUp
  *
@@ -113,12 +115,36 @@ class ToolbarHelperTestCase extends CakeTestCase {
  **/
 	function testNoCacheConfigPresent() {
 		$this->Toolbar = new ToolbarHelper(array('output' => 'MockBackendHelper'));
-		
+
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertFalse($result, 'Writing to cache succeeded with no cache config %s');
-			
+
 		$result = $this->Toolbar->readCache('test');
 		$this->assertFalse($result, 'Reading cache succeeded with no cache config %s');
+	}
+/**
+ * ensure that getQueryLogs works and writes to the cache so the history panel will 
+ * work.
+ *
+ * @return void
+ */
+	function testGetQueryLogs() {
+		$model =& new Model(array('ds' => 'test_suite', 'table' => 'posts'));
+		$model->find('all');
+		$model->find('first');
+
+		$result = $this->Toolbar->getQueryLogs('test_suite', array('cache' => false));
+		$this->assertTrue(is_array($result));
+		$this->assertTrue(count($result) >= 2, 'Should be more than 2 queries in the log %s');
+		$this->assertTrue(isset($result[0]['actions']));
+		
+		Cache::delete('debug_kit_toolbar_test_case', 'default');
+		$this->Toolbar->getQueryLogs('test_suite', array('cache' => true));
+
+		$cached = $this->Toolbar->readCache('sql_log');
+		$this->assertTrue(isset($cached['test_suite']));
+		$this->assertEqual($cached['test_suite'][0], $result[0]);
+		
 	}
 /**
  * reset the view paths

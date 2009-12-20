@@ -22,7 +22,7 @@
 var DEBUGKIT = function () {
 	var undef;
 	return {
-		module : function (newmodule) {
+		module: function (newmodule) {
 			if (this[newmodule] === undef) {
 				this[newmodule] = {};
 				return this[newmodule];
@@ -35,14 +35,14 @@ var DEBUGKIT = function () {
 DEBUGKIT.loader = function () {
 	return {
 		//list of methods to run on startup.
-		_startup : [],
+		_startup: [],
 
 		//register a new method to be run on dom ready.
-		register : function (method) {
+		register: function (method) {
 			this._startup.push(method);
 		},
 
-		init : function () {
+		init: function () {
 			for (var i = 0, callback; callback = this._startup[i]; i++) {
 				callback.init();
 			}
@@ -60,14 +60,14 @@ DEBUGKIT.Util.Element = {
 	},
 
 	//return a boolean if the element has the classname
-	hasClass : function (element, className) {
+	hasClass: function (element, className) {
 		if (!element.className) {
 			return false;
 		}
 		return element.className.indexOf(className) > -1;
 	},
 
-	addClass : function (element, className) {
+	addClass: function (element, className) {
 		if (!element.className) {
 			element.className = className;
 			return;
@@ -75,7 +75,7 @@ DEBUGKIT.Util.Element = {
 		element.className = element.className.replace(/^(.*)$/, '$1 ' + className);
 	},
 
-	removeClass : function (element, className) {
+	removeClass: function (element, className) {
 		if (DEBUGKIT.Util.isArray(element)) {
 			DEBUGKIT.Util.Collection.apply(element, function (element) {
 				Element.removeClass(element, className);
@@ -87,23 +87,23 @@ DEBUGKIT.Util.Element = {
 		element.className = element.className.replace(new RegExp(' ?(' + className +') ?'), '');
 	},
 
-	swapClass : function (element, removeClass, addClass) {
+	swapClass: function (element, removeClass, addClass) {
 		if (!element.className) {
 			return false;
 		}
 		element.className = element.className.replace(removeClass, addClass);
 	},
 
-	show : function (element) {
+	show: function (element) {
 		element.style.display = 'block';
 	},
 
-	hide : function (element) {
+	hide: function (element) {
 		element.style.display = 'none';
 	},
 
 	//go between hide() and show() depending on element.style.display
-	toggle : function (element) {
+	toggle: function (element) {
 		if (element.style.display == 'none') {
 			this.show(element);
 			return;
@@ -177,87 +177,104 @@ DEBUGKIT.Util.Collection = {
 
 
 //Event binding
-DEBUGKIT.Util.Event = {
-	_listeners: {},
-	_eventId: 0,
+DEBUGKIT.Util.Event = function () {
+	var _listeners = {},
+		_eventId = 0;
 
-	// bind an event listener of type to element, handler is your method.
-	addEvent :function(element, type, handler, capture) {
-		capture = (capture === undefined) ? false : capture;
-
-		var callback = function (event) {
-			event = event || window.event;
-			handler.apply(this, [event]);
-		};
-
-		if (element.addEventListener) {
-			element.addEventListener(type, callback, capture);
-		} else if (element.attachEvent) {
-			type = 'on' + type;
-			element.attachEvent(type, callback);
-		} else {
-			type = 'on' + type;
-			element[type] = callback;
-		}
-		this._listeners[++this._eventId] = {element: element, type: type, handler: callback};
-	},
-
-	// destroy an event listener. requires the exact same function as was used for attaching
-	// the event.
-	removeEvent: function (element, type, handler) {
-		if (element.removeEventListener) {
-			element.removeEventListener(type, handler, false);
-		} else if (element.detachEvent) {
-			type = 'on' + type;
-			element.detachEvent(type, handler);
-		} else {
-			type = 'on' + type;
-			element[type] = null;
-		}
-	},
-
-	// bind an event to the DOMContentLoaded or other similar event.
-	domready : function(callback) {
-		if (document.addEventListener) {
-			return document.addEventListener("DOMContentLoaded", callback, false);
-		}
-
-		if (document.all && !window.opera) {
-			//Define a "blank" external JavaScript tag
-			document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="://"><\/script>');
-			var contentloadtag = document.getElementById("__domreadywatcher");
-			contentloadtag.onreadystatechange = function (){
-				if (this.readyState == "complete") {
-					callback();
-				}
-			}
-			contentloadtag = null;
-			return;
-		}
-
-		if (/Webkit/i.test(navigator.userAgent)){
-			var _timer = setInterval(function (){
-				if (/loaded|complete/.test(document.readyState)) {
-					clearInterval(_timer);
-					callback();
-				}
-			}, 10);
-		}
-	},
-
-	// unload all the events attached by DebugKit. Fix any memory leaks.
-	unload: function () {
-		var listener;
-		for (var i in this._listeners) {
-			listener = this._listeners[i];
-			try {
-				this.removeEvent(listener.element, listener.type, listener.handler);
-			} catch (e) {}
-			delete this._listeners[i];
-		}
-		delete this._listeners;
+	var preventDefault = function () {
+		this.returnValue = false;
 	}
-};
+	
+	var stopPropagation = function () {
+		this.cancelBubble = true;
+	}
+	
+	// Fixes IE's broken event object, adds in common methods + properties.
+	var fixEvent = function (event) {
+		event.preventDefault = event.preventDefault || preventDefault;
+		event.stopPropagation = event.stopPropagation || stopPropagation;
+		return event;
+	}
+	
+	return {
+		// bind an event listener of type to element, handler is your method.
+		addEvent: function(element, type, handler, capture) {
+			capture = (capture === undefined) ? false : capture;
+
+			var callback = function (event) {
+				event = fixEvent(event || window.event);
+				handler.apply(this, [event]);
+			};
+
+			if (element.addEventListener) {
+				element.addEventListener(type, callback, capture);
+			} else if (element.attachEvent) {
+				type = 'on' + type;
+				element.attachEvent(type, callback);
+			} else {
+				type = 'on' + type;
+				element[type] = callback;
+			}
+			_listeners[++_eventId] = {element: element, type: type, handler: callback};
+		},
+
+		// destroy an event listener. requires the exact same function as was used for attaching
+		// the event.
+		removeEvent: function (element, type, handler) {
+			if (element.removeEventListener) {
+				element.removeEventListener(type, handler, false);
+			} else if (element.detachEvent) {
+				type = 'on' + type;
+				element.detachEvent(type, handler);
+			} else {
+				type = 'on' + type;
+				element[type] = null;
+			}
+		},
+
+		// bind an event to the DOMContentLoaded or other similar event.
+		domready: function(callback) {
+			if (document.addEventListener) {
+				return document.addEventListener("DOMContentLoaded", callback, false);
+			}
+
+			if (document.all && !window.opera) {
+				//Define a "blank" external JavaScript tag
+				document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="://"><\/script>');
+				var contentloadtag = document.getElementById("__domreadywatcher");
+				contentloadtag.onreadystatechange = function (){
+					if (this.readyState == "complete") {
+						callback();
+					}
+				}
+				contentloadtag = null;
+				return;
+			}
+
+			if (/Webkit/i.test(navigator.userAgent)){
+				var _timer = setInterval(function (){
+					if (/loaded|complete/.test(document.readyState)) {
+						clearInterval(_timer);
+						callback();
+					}
+				}, 10);
+			}
+		},
+
+		// unload all the events attached by DebugKit. Fix any memory leaks.
+		unload: function () {
+			var listener;
+			for (var i in _listeners) {
+				listener = _listeners[i];
+				try {
+					this.removeEvent(listener.element, listener.type, listener.handler);
+				} catch (e) {}
+				delete _listeners[i];
+			}
+			delete _listeners;
+		}
+	};
+}();
 
 //Cookie utility
 DEBUGKIT.Util.Cookie = function() {
@@ -270,7 +287,7 @@ DEBUGKIT.Util.Cookie = function() {
 		 @param [string] name Name of cookie to write.
 		 @param [mixed] value Value to write to cookie.
 		*/
-		write : function (name, value) {
+		write: function (name, value) {
 			var date = new Date();
 			date.setTime(date.getTime() + (cookieLife * 24 * 60 * 60 * 1000));
 			var expires = "; expires=" + date.toGMTString();
@@ -282,7 +299,7 @@ DEBUGKIT.Util.Cookie = function() {
 		 Read from the cookie
 		 @param [string] name Name of cookie to read.
 		*/
-		read : function (name) {
+		read: function (name) {
 			name = name + '=';
 			var cookieJar = document.cookie.split(';');
 			for (var i = 0; i < cookieJar.length; i++) {
@@ -301,7 +318,7 @@ DEBUGKIT.Util.Cookie = function() {
 		 Delete a cookie by name.
 		 @param [string] name of cookie to delete.
 		*/
-		del : function (name) {
+		del: function (name) {
 			var date = new Date();
 			date.setFullYear(2000,0,1);
 			var expires = " ; expires=" + date.toGMTString();
@@ -462,16 +479,14 @@ DEBUGKIT.toolbar = function () {
 			Element.show(subUl);
 			Element.swapClass(clickedEl, 'collapsed', 'expanded');
 		}
-		if (event.stopPropagation !== undefined) {
-			event.stopPropagation();
-		}
+		event.stopPropagation();
 	}
 
 	return {
-		elements : {},
-		panels : {},
+		elements: {},
+		panels: {},
 
-		init : function () {
+		init: function () {
 			var i, element, lists, index;
 			this.elements.toolbar = document.getElementById('debug-kit-toolbar');
 
@@ -503,7 +518,7 @@ DEBUGKIT.toolbar = function () {
 		},
 
 		// Add a panel to the toolbar
-		addPanel : function (tab) {
+		addPanel: function (tab) {
 			if (!Element.nodeName(tab, 'li')) {
 				throw ('Toolbar not found, make sure you loaded it.');
 			}
@@ -579,7 +594,7 @@ DEBUGKIT.toolbar = function () {
 		},
 
 		// Toggle a panel
-		togglePanel : function (id) {
+		togglePanel: function (id) {
 			if (this.panels[id] && this.panels[id].active) {
 				this.deactivatePanel(true);
 			} else {
@@ -589,7 +604,7 @@ DEBUGKIT.toolbar = function () {
 		},
 
 		// Make a panel active.
-		activatePanel : function (id, unique) {
+		activatePanel: function (id, unique) {
 			if (this.panels[id] !== undefined && !this.panels[id].active) {
 				var panel = this.panels[id];
 				if (panel.content !== undefined) {
@@ -603,7 +618,7 @@ DEBUGKIT.toolbar = function () {
 		},
 
 		// Deactivate a panel.  use true to hide all panels.
-		deactivatePanel : function (id) {
+		deactivatePanel: function (id) {
 			if (id === true) {
 				for (var i in this.panels) {
 					this.deactivatePanel(i);
@@ -623,7 +638,7 @@ DEBUGKIT.toolbar = function () {
 		},
 
 		// Bind events for all the collapsible arrays.
-		makeNeatArray : function (lists) {
+		makeNeatArray: function (lists) {
 			for (var i = 0, element; element = lists[i]; i++) {
 				if (Element.hasClass(element, 'neat-array') && element.className.match(/depth-0/)) {
 					var childLists = element.getElementsByTagName('UL');
@@ -649,7 +664,7 @@ DEBUGKIT.toolbarToggle = function () {
 		toolbarHidden = false;
 
 	return {
-		init : function () {
+		init: function () {
 			var button = document.getElementById('hide-toolbar'),
 				self = this;
 
@@ -665,7 +680,7 @@ DEBUGKIT.toolbarToggle = function () {
 			}
 		},
 
-		toggleToolbar : function () {
+		toggleToolbar: function () {
 			var display = toolbarHidden ? 'show' : 'hide';
 			Collection.apply(toolbar.panels, function (panel) {
 				Element[display](panel.element);

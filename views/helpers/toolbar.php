@@ -168,6 +168,11 @@ class ToolbarHelper extends AppHelper {
 			}
 			$out[] = $query;
 		}
+		if ($options['cache']) {
+			$existing = $this->readCache('sql_log');
+			$existing[$connection] = $out;
+			$this->writeCache('sql_log', $existing);
+		}
 		return $out;
 	}
 }

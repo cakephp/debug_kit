@@ -18,6 +18,9 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 $headers = array('Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
+if (isset($debugKitInHistoryMode)) {
+	$content = $toolbar->readCache('sql_log', $this->params['pass'][0]);
+}
 ?>
 <h2><?php __d('debug_kit', 'Sql Logs')?></h2>
 <?php if (!empty($content)) : ?>
@@ -25,9 +28,13 @@ $headers = array('Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)', 'Action
 	<div class="sql-log-panel-query-log">
 		<h4><?php echo $dbName ?></h4>
 		<?php
-			$queryLog = $toolbar->getQueryLogs($dbName, array(
-				'explain' => $explain, 'threshold' => $content['threshold']
-			));
+			if (!isset($debugKitInHistoryMode)):
+				$queryLog = $toolbar->getQueryLogs($dbName, array(
+					'explain' => $explain, 'threshold' => $content['threshold']
+				));
+			else:
+				$queryLog = $content[$dbName];
+			endif;
 			echo $toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
 		<h4><?php __d('debug_kit', 'Query Explain:'); ?></h4>

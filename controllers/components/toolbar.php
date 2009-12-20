@@ -546,7 +546,6 @@ class SqlLogPanel extends DebugPanel {
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
-		App::import('Core', 'Xml');
 		$queryLogs = array();
 
 		$dbConfigs = ConnectionManager::sourceList();

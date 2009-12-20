@@ -591,7 +591,7 @@ class LogPanel extends DebugPanel {
  **/
 	function startup(&$controller) {
 		if (!class_exists('CakeLog')) {
-			App::import('Core', 'Log');
+			App::import('Core', 'CakeLog');
 		}
 	}
 /**

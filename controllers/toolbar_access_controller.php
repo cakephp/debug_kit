@@ -36,12 +36,14 @@ class ToolbarAccessController extends DebugKitAppController {
 		'DebugKit.Toolbar' => array('output' => 'DebugKit.HtmlToolbar'),
 		'Javascript', 'Number', 'DebugKit.SimpleGraph'
 	);
+
 /**
  * Components
  *
  * @var array
  **/
 	var $components = array('RequestHandler', 'DebugKit.Toolbar');
+
 /**
  * beforeFilter callback
  *
@@ -55,6 +57,7 @@ class ToolbarAccessController extends DebugKitAppController {
 		$this->helpers['DebugKit.Toolbar']['cacheKey'] = $this->Toolbar->cacheKey;
 		$this->helpers['DebugKit.Toolbar']['cacheConfig'] = 'debug_kit';
 	}
+
 /**
  * Get a stored history state from the toolbar cache.
  *
@@ -68,8 +71,11 @@ class ToolbarAccessController extends DebugKitAppController {
 		$this->set('toolbarState', $oldState);
 		$this->set('debugKitInHistoryMode', true);
 	}
+
 /**
- * Run SQL explain/profiling on queries.
+ * Run SQL explain/profiling on queries. Checks the hash + the hashed queries, 
+ * if there is mismatch a 404 will be rendered.  If debug == 0 a 404 will also be
+ * rendered.  No explain will be run if a 404 is made.
  *
  * @return void
  */

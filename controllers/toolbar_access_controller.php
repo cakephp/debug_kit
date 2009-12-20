@@ -26,12 +26,7 @@ class ToolbarAccessController extends DebugKitAppController {
  * @var string
  */
 	var $name = 'ToolbarAccess';
-/**
- * uses array
- *
- * @var array
- **/
-	var $uses = array();
+
 /**
  * Helpers
  *
@@ -42,7 +37,7 @@ class ToolbarAccessController extends DebugKitAppController {
 		'Javascript', 'Number', 'DebugKit.SimpleGraph'
 	);
 /**
- * components
+ * Components
  *
  * @var array
  **/
@@ -96,9 +91,7 @@ class ToolbarAccessController extends DebugKitAppController {
 				'message' => 'Invalid parameters'
 			)));
 		}
-		App::import('Model', 'ConnectionManager');
-		$ds =& ConnectionManager::getDataSource($this->params['named']['ds']);
-		$result = $ds->query('EXPLAIN ' . $this->params['named']['sql']);
+		$result = $this->ToolbarAccess->explainQuery($this->params['named']['ds'], $this->params['named']['sql']);
 		$this->set(compact('result'));
 	}
 }

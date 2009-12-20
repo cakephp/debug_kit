@@ -27,7 +27,6 @@ App::import('Vendor', 'DebugKit.FireCake');
  * Provides the future features that are planned. Yet not implemented in the 1.2 code base
  *
  * This file will not be needed in future version of CakePHP.
- * @todo merge these changes with core Debugger
  */
 class DebugKitDebugger extends Debugger {
 /**

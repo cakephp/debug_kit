@@ -115,9 +115,8 @@ DEBUGKIT.historyPanel = function () {
 
 		//for (id in toolbar.panels) {
 		Collection.apply(toolbar.panels, function (panel, id) {
-			panel = toolbar.panels[id];
 			if (panel.content === undefined) {
-				continue;
+				return;
 			}
 
 			var panelDivs = panel.content.childNodes,

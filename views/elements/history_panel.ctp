@@ -79,7 +79,7 @@ DEBUGKIT.historyPanel = function () {
 					break;
 				}
 			}
-			if (!regionDiv) continue;
+			if (!regionDiv) return;
 
 			var regionDivs = regionDiv.childNodes,
 				i = regionDivs.length;
@@ -113,7 +113,8 @@ DEBUGKIT.historyPanel = function () {
 
 		Element.removeClass(historyLinks, 'loading');
 
-		for (id in toolbar.panels) {
+		//for (id in toolbar.panels) {
+		Collection.apply(toolbar.panels, function (panel, id) {
 			panel = toolbar.panels[id];
 			if (panel.content === undefined) {
 				continue;
@@ -136,7 +137,7 @@ DEBUGKIT.historyPanel = function () {
 					break;
 				}
 			}
-			if (!regionDiv) continue;
+			if (!regionDiv) return;
 
 			var regionDivs = regionDiv.childNodes,
 				i = regionDivs.length;
@@ -149,7 +150,7 @@ DEBUGKIT.historyPanel = function () {
 					Element.show(panelContent);
 				}
 			}
-		}
+		});
 	};
 
 	function handleHistoryLink (event) {

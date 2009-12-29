@@ -144,7 +144,7 @@ class ToolbarHelper extends AppHelper {
 		
 		$out = array();
 		$log = $db->getLog();
-		foreach ($log as $i => $query) {
+		foreach ($log['log'] as $i => $query) {
 			$isSlow = (
 				$query['took'] > 0 &&
 				$query['numRows'] / $query['took'] != 1 &&

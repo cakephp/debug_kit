@@ -74,8 +74,6 @@ class DebugView extends DoppelGangerView {
 		if (empty($this->output)) {
 			return $out;
 		}
-		//Temporary work around to hide the SQL dump at page bottom
-		Configure::write('debug', 0);
 		return $this->output;
 	}
 }

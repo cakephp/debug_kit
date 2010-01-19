@@ -175,6 +175,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			'sql' => $sql,
 			'hash' => $hash
 		);
+		foreach (Router::prefixes() as $prefix) {
+			$url[$prefix] = false;
+		}
 		return $this->Html->link(__d('debug_kit', 'Explain', true), $url, array('class' => 'sql-explain-link'));
 	}
 }

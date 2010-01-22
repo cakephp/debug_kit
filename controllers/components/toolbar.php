@@ -106,7 +106,7 @@ class ToolbarComponent extends Object {
 		}
 
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
-		if (!isset($settings['history']) || (isset($settings['history']) && $settings['history'] !== false)) {
+		if (in_array('history', $panels) || (isset($settings['history']) && $settings['history'] !== false)) {
 			$this->_createCacheConfig();
 		}
 
@@ -225,6 +225,7 @@ class ToolbarComponent extends Object {
 				'engine' => 'File',
 				'path' => CACHE
 			));
+			Cache::config('default');
 		}
 	}
 /**

@@ -554,7 +554,7 @@ class SqlLogPanel extends DebugPanel {
 			if (!isset($db->config['driver'])) {
 				return false;
 			}
-                        $driver = $db->config['driver'];
+			$driver = $db->config['driver'];
 			$explain = false;
 			$isExplainable = ($driver === 'mysql' || $driver === 'mysqli' || $driver === 'postgres');
 			if ($isExplainable && $db->isInterfaceSupported('getLog')) {

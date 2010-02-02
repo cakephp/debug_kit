@@ -54,12 +54,22 @@ class TimedBehavior extends ModelBehavior {
 	}
 
 	function beforeFind(&$Model, $queryData){
-		DebugKitDebugger::startTimer('beforeFind' . $Model->alias, $Model->alias . '->find()');
+		DebugKitDebugger::startTimer($Model->alias . '_find', $Model->alias . '->find()');
 		return true;
 	}
 
-	function afterFind(&$Model, $created){
-		DebugKitDebugger::stopTimer('beforeFind' . $Model->alias);
+	function afterFind(&$Model, $results){
+		DebugKitDebugger::stopTimer($Model->alias . '_find');
+		return true;
+	}
+
+	function beforeSave(&$Model){
+		DebugKitDebugger::startTimer($Model->alias . '_save', $Model->alias . '->save()');
+		return true;
+	}
+
+	function afterSave(&$Model, $created) {
+		DebugKitDebugger::stopTimer($Model->alias . '_save');
 		return true;
 	}
  }

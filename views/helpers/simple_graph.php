@@ -34,7 +34,7 @@ class SimpleGraphHelper extends AppHelper {
  * Allowed options:
  *
  * - max => (int) Maximum value in the graphs
- * - width => (int) 
+ * - width => (int)
  * - valueType => string (value, percentage)
  * - style => array
  *
@@ -74,7 +74,7 @@ class SimpleGraphHelper extends AppHelper {
 					' ',
 					array(
 						'style' => "margin-left: {$graphOffset}px; width: {$graphValue}px",
-						'title' => sprintf(__("Starting %sms into the request, taking %sms", true), $offset, $value),
+						'title' => sprintf(__d('debug_kit', "Starting %sms into the request, taking %sms", true), $offset, $value),
 					)
 				),
 			array('style' => "width: {$width}px;"),

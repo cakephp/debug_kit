@@ -18,7 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::import('Vendor', 'DebugKit.FireCake');
-App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
+require_once App::pluginPath('DebugKit') . 'tests' . DS . 'cases' . DS . 'test_objects.php';
 
 /**
  * Test Case For FireCake
@@ -182,7 +182,6 @@ class FireCakeTestCase extends CakeTestCase {
 
 		$this->assertTrue(is_array($result));
 		$this->assertEqual($result['_defaultOptions']['useNativeJsonEncode'], true);
-		$this->assertEqual($result['_log'], null);
 		$this->assertEqual($result['_encodedObjects'][0], '** Recursion (TestFireCake) **');
 	}
 /**
@@ -226,15 +225,17 @@ class FireCakeTestCase extends CakeTestCase {
 			return;
 		}
 		FireCake::trace('myTrace');
-
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
+		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 4);
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
 		$this->assertEqual(substr($header, -2), '|\\');
-		
+
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-2'];
 		$this->assertEqual(substr($header, -2), '|\\');
-		
+
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-3'];
+		$this->assertEqual(substr($header, -2), '|\\');
+
+		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-4'];
 		$this->assertEqual(substr($header, -1), '|');
 	}
 /**

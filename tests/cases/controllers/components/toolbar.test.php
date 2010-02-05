@@ -531,7 +531,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testSqlLogPanel() {
 		App::import('Core', 'Model');
-		$Article = new Model(array('ds' => 'test_suite', 'name' => 'Article'));
+		$Article =& new Model(array('ds' => 'test_suite', 'name' => 'Article'));
 		$Article->find('first', array('conditions' => array('Article.id' => 1)));
 
 		$this->Controller->components = array(
@@ -545,15 +545,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->viewVars['debugToolbarPanels']['sql_log'];
 
-		$this->assertTrue(isset($result['content']['test_suite']['queries']));
-		$this->assertTrue(isset($result['content']['test_suite']['explains']));
-		$query = array_pop($result['content']['test_suite']['queries']);
-
-		$this->assertPattern('/\d/', $query[0], 'index not found. %s');
-		$this->assertPattern('/SELECT `Article/', $query[1], 'query not found. %s');
-		$this->assertEqual(count($query), 6, 'There are not 6 columns, something is wonky. %s');
-		$this->assertEqual($query[3], 1);
-		$this->assertEqual($query[4], 1);
+		$this->assertTrue(isset($result['content']['connections']['test_suite']));
+		$this->assertTrue(isset($result['content']['threshold']));
 	}
 }
 ?>

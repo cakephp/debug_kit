@@ -354,7 +354,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$expected = array(
 			'plugin' => 'debug_kit',
 			'elementName' => 'session_panel',
-			'content' => $this->Controller->Session->read(),
+			'content' => $this->Controller->Toolbar->Session->read(),
 			'disableTimer' => true,
 			'title' => ''
 		);

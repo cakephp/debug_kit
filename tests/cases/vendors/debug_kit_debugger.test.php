@@ -17,9 +17,8 @@
  * @since         debug_kit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('Core', 'Debugger');
 App::import('Vendor', 'DebugKit.DebugKitDebugger');
-App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
+require_once App::pluginPath('DebugKit') . 'tests' . DS . 'cases' . DS . 'test_objects.php';
 
 /**
  * Test case for the DebugKitDebugger
@@ -36,13 +35,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
  */
 	function setUp() {
 		Configure::write('log', false);
-		if (!defined('SIMPLETESTVENDORPATH')) {
-			if (file_exists(APP . DS . 'vendors' . DS . 'simpletest' . DS . 'reporter.php')) {
-				define('SIMPLETESTVENDORPATH', 'APP' . DS . 'vendors');
-			} else {
-				define('SIMPLETESTVENDORPATH', 'CORE' . DS . 'vendors');
-			}
-		}
 	}
 /**
  * tearDown method

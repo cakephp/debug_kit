@@ -197,6 +197,11 @@ DEBUGKIT.Util.Event = function () {
 		event.preventDefault = event.preventDefault || preventDefault;
 		event.stopPropagation = event.stopPropagation || stopPropagation;
 		event.target = event.target || event.srcElement;
+		if (event.pageX == null && event.clientX != null) {
+			var doc = document.body;
+			event.pageX = event.clientX + (doc.scrollLeft || 0) - (doc.clientLeft || 0);
+			event.pageY = event.clientY + (doc.scrollTop || 0) - (doc.clientTop || 0);
+		}
 		return event;
 	}
 	
@@ -207,7 +212,7 @@ DEBUGKIT.Util.Event = function () {
 
 			var callback = function (event) {
 				event = fixEvent(event || window.event);
-				handler.apply(this, [event]);
+				handler.apply(element, [event]);
 			};
 
 			if (element.addEventListener) {
@@ -567,6 +572,9 @@ DEBUGKIT.toolbar = function () {
 			// resize the panel
 			var mouseMoveHandler = function (event) {
 				event.preventDefault();
+				if (!currentElement) {
+					return;
+				}
 				var newHeight = currentElement._startHeight + (event.pageY - currentElement._startY);
 				Element.height(Element.getPrevious(currentElement), newHeight);
 			}

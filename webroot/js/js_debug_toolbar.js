@@ -161,10 +161,9 @@ DEBUGKIT.Util.Collection = {
 	 Optionally you can supply a binding parameter to change `this` in the callback.
 	*/
 	apply: function (collection, callback, binding) {
-		//for (var i = 0, len = collection.length; i < len; i++) {
 		var name, thisVar, i = 0, len = collection.length;
 		
-		if (length === undefined) {
+		if (len === undefined) {
 			for (name in collection) {
 				thisVar = (binding === undefined) ? collection[name] : binding;
 				callback.apply(thisVar, [collection[name], name]);

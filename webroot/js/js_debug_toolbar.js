@@ -196,6 +196,7 @@ DEBUGKIT.Util.Event = function () {
 	var fixEvent = function (event) {
 		event.preventDefault = event.preventDefault || preventDefault;
 		event.stopPropagation = event.stopPropagation || stopPropagation;
+		event.target = event.target || event.srcElement;
 		return event;
 	}
 	

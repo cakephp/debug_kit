@@ -162,15 +162,18 @@ DEBUGKIT.Util.Collection = {
 	*/
 	apply: function (collection, callback, binding) {
 		//for (var i = 0, len = collection.length; i < len; i++) {
-		for (var i in collection) {
-			if (!collection.hasOwnProperty(i)) {
-				continue;
+		var name, thisVar, i = 0, len = collection.length;
+		
+		if (length === undefined) {
+			for (name in collection) {
+				thisVar = (binding === undefined) ? collection[name] : binding;
+				callback.apply(thisVar, [collection[name], name]);
 			}
-			var thisVar = collection[i];
-			if (binding !== undefined) {
-				thisVar = binding;
+		} else {
+			for (; i < len; i++) {
+				thisVar = (binding === undefined) ? collection[i] : binding;
+				callback.apply(thisVar, [collection[i], i]);
 			}
-			callback.apply(thisVar, [collection[i], i]);
 		}
 	}
 }

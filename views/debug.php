@@ -54,9 +54,14 @@ class DebugView extends DoppelGangerView {
  * @return void
  */
 	function element($name, $params = array(), $loadHelpers = false) {
-		$out = sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Starting to render', true), $name); 
+		$out = '';
+		if (isset($this->params['ext']) && $this->params['ext'] == 'html') {
+			$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Starting to render', true), $name); 
+		}
 		$out .= parent::element($name, $params, $loadHelpers);
-		$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
+		if (isset($this->params['ext']) && $this->params['ext'] == 'html') {
+			$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
+		}
 		return $out;
 	}
 

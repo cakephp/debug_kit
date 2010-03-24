@@ -40,7 +40,6 @@ class DebugView extends DoppelGangerView {
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__d('debug_kit', 'Rendering %s', true), Debugger::trimPath($___viewFn)));
 		}
-
 		$out = parent::_render($___viewFn, $___dataForView, $loadHelpers, $cached);
 
 		if (!isset($___dataForView['disableTimer'])) {
@@ -48,6 +47,19 @@ class DebugView extends DoppelGangerView {
 		}
 		return $out;
 	}
+
+/**
+ * Element method, adds comment injection to the features View offers.
+ *
+ * @return void
+ */
+	function element($name, $params = array(), $loadHelpers = false) {
+		$out = sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Starting to render', true), $name); 
+		$out .= parent::element($name, $params, $loadHelpers);
+		$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
+		return $out;
+	}
+
 /**
  * Renders view for given action and layout. If $file is given, that is used
  * for a view filename (e.g. customFunkyView.ctp).

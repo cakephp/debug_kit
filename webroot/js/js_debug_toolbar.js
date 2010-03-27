@@ -193,9 +193,15 @@ DEBUGKIT.Util.Event = function () {
 	
 	// Fixes IE's broken event object, adds in common methods + properties.
 	var fixEvent = function (event) {
-		event.preventDefault = event.preventDefault || preventDefault;
-		event.stopPropagation = event.stopPropagation || stopPropagation;
-		event.target = event.target || event.srcElement;
+		if (!event.preventDefault) {
+			event.preventDefault = preventDefault;
+		}
+		if (!event.stopPropagation) {
+			event.stopPropagation = stopPropagation;
+		}
+		if (!event.target) {
+			event.target = event.srcElement || document;
+		}
 		if (event.pageX == null && event.clientX != null) {
 			var doc = document.body;
 			event.pageX = event.clientX + (doc.scrollLeft || 0) - (doc.clientLeft || 0);

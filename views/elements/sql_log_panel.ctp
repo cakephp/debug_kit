@@ -1,4 +1,4 @@
-=<?php
+<?php
 /**
  * SQL Log Panel Element
  *
@@ -60,13 +60,24 @@ DEBUGKIT.sqlLog = function () {
 	return {
 		init : function () {
 			var sqlPanel = document.getElementById('sql_log-tab');
-			var buttons = sqlPanel.getElementsByTagName('A');
+			var buttons = sqlPanel.getElementsByTagName('input');
 
 			// Button handling code for explain links.
 			// performs XHR request to get explain query.
 			var handleButton = function (event) {
 				event.preventDefault();
+				var data = {};
+				var inputs = this.form.getElementsByTagName('input');
+				var i = inputs.length;
+				while (i--) {
+					var input = inputs[i];
+					if (input.name) {
+						data[input.name] = input.value;
+					}
+				}
+
 				var fetch = new Request({
+					method: 'POST',
 					onComplete : function (response) {
 						var targetEl = document.getElementById('sql-log-explain-query');
 						targetEl.innerHTML = response.response.text;
@@ -74,7 +85,7 @@ DEBUGKIT.sqlLog = function () {
 					onFail : function () {
 						alert('Could not fetch EXPLAIN for query.');
 					}
-				}).send(this.href);
+				}).send(this.form.action, data);
 			};
 	
 			Collection.apply(buttons, function (button) {

@@ -191,7 +191,7 @@
 /** code tables **/
 #debug-kit-toolbar .code-table td {
 	white-space: pre;
-	font-family: monaco, corsiva, "courier new", courier, monospaced;
+	font-family: monaco, Consolas, "courier new", courier, monospaced;
 }
 #debug-kit-toolbar .code-table td:first-child {
 	width: 15%;
@@ -274,7 +274,7 @@
 /* Sql Log */
 #sql_log-tab td,
 #sql_log-tab .slow-query-container p {
-	font-family: Monaco, 'Corsiva', "Courier New", Courier, monospaced;
+	font-family: Monaco, 'Consolas', "Courier New", Courier, monospaced;
 }
 #debug-kit-toolbar #sql_log-tab a.show-slow {
 	display:block;
@@ -296,6 +296,13 @@
 	color:#fff;
 	padding: 2px;
 	white-space:nowrap;
+}
+#sql_log-tab input[type=submit] {
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	font-size: 12px;
+	font-family: Monaco, 'Consolas', "Courier New", Courier, monospaced;
 }
 
 /* previous panels */

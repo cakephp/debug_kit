@@ -408,6 +408,13 @@ DEBUGKIT.Util.Request = function (options) {
 		for (var key in this.options.headers) {
 			this.transport.setRequestHeader(key, this.options.headers[key]);
 		}
+		if (typeof data == 'object') {
+			data = this.serialize(data);
+		}
+		if (data) {
+			this.transport.setRequestHeader('Content-Length', data.length);
+			this.transport.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		}
 		this.onRequest();
 		this.transport.send(data);
 	};
@@ -457,6 +464,19 @@ DEBUGKIT.Util.Request.prototype.createObj = function(){
 		}
 	}
 	return request;
+};
+
+/*
+ Serializes an object literal into a querystring
+*/
+DEBUGKIT.Util.Request.prototype.serialize = function (data) {
+	var out = '';
+	for (var name in data) {
+		if (data.hasOwnProperty(name)) {
+			out += name + '=' + data[name] + '&';
+		}
+	}
+	return out.substring(0, out.length - 1);
 };
 
 

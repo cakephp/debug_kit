@@ -29,7 +29,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @var array
  * @access public
  */
-	var $helpers = array('Html', 'Javascript');
+	var $helpers = array('Html', 'Form');
 /**
  * settings property
  *
@@ -143,7 +143,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (isset($view->viewVars['debugToolbarJavascript'])) {
 			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {
 				if ($script) {
-					$head .= $this->Javascript->link($script);
+					$head .= $this->Html->script($script);
 				}
 			}
 		}
@@ -170,15 +170,21 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$url = array(
 			'plugin' => 'debug_kit',
 			'controller' => 'toolbar_access',
-			'action' => 'sql_explain',
-			'ds' => $connection,
-			'sql' => $sql,
-			'hash' => $hash
+			'action' => 'sql_explain'
 		);
 		foreach (Router::prefixes() as $prefix) {
 			$url[$prefix] = false;
 		}
-		return $this->Html->link(__d('debug_kit', 'Explain', true), $url, array('class' => 'sql-explain-link'));
+		$form = $this->Form->create('log', array('url' => $url));
+		$form .= $this->Form->hidden('log.ds', array('value' => $connection));
+		$form .= $this->Form->hidden('log.sql', array('value' => $sql));
+		$form .= $this->Form->hidden('log.hash', array('value' => $hash));
+		$form .= $this->Form->submit(__d('debug_kit', 'Explain', true), array(
+			'div' => false,
+			'class' => 'sql-explain-link'
+		));
+		$form .= $this->Form->end();
+		return $form;
 	}
 }
 ?>

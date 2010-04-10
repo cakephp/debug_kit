@@ -1,4 +1,4 @@
-<?php
+=<?php
 /**
  * SQL Log Panel Element
  *

@@ -17,7 +17,7 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('Helper', array('DebugKit.HtmlToolbar', 'Html', 'Javascript'));
+App::import('Helper', array('DebugKit.HtmlToolbar', 'Html', 'Form'));
 App::import('Core', array('View', 'Controller'));
 
 class HtmlToolbarHelperTestCase extends CakeTestCase {
@@ -33,7 +33,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar =& new ToolbarHelper(array('output' => 'DebugKit.HtmlToolbar'));
 		$this->Toolbar->HtmlToolbar =& new HtmlToolbarHelper();
 		$this->Toolbar->HtmlToolbar->Html =& new HtmlHelper();
-		$this->Toolbar->HtmlToolbar->Javascript =& new JavascriptHelper();
+		$this->Toolbar->HtmlToolbar->Form =& new FormHelper();
 		
 		$this->Controller =& ClassRegistry::init('Controller');
 		if (isset($this->_debug)) {

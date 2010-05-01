@@ -6,4 +6,3 @@ echo $html->tableHeaders($headers);
 echo $html->tableCells($result);
 ?>
 </table>
-<?php Configure::write('debug', 0); ?>

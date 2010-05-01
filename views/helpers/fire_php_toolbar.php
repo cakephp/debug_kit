@@ -74,6 +74,9 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		if (isset($options['title'])) {
 			$title = $options['title'];
 		}
+		foreach ($rows as $i => $row) {
+			$rows[$i] = array_values($row);
+		}
 		array_unshift($rows, $headers);
 		FireCake::table($title, $rows);
 	}

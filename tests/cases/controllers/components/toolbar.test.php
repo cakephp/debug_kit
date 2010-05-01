@@ -411,11 +411,6 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testLogPanel() {
-		sleep(1);
-		$this->Controller->log('This is a log I made this request');
-		$this->Controller->log('This is the second  log I made this request');
-		$this->Controller->log('This time in the debug log!', LOG_DEBUG);
-
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'panels' => array('log', 'session', 'history' => false, 'variables' => false, 'sqlLog' => false,
@@ -424,16 +419,22 @@ class DebugToolbarTestCase extends CakeTestCase {
 		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
+
+		sleep(1);
+		$this->Controller->log('This is a log I made this request');
+		$this->Controller->log('This is the second  log I made this request');
+		$this->Controller->log('This time in the debug log!', LOG_DEBUG);
+		
 		$this->Controller->Component->startup($this->Controller);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
 
 		$this->assertEqual(count($result['content']), 2);
-		$this->assertEqual(count($result['content']['error.log']), 4);
-		$this->assertEqual(count($result['content']['debug.log']), 2);
+		$this->assertEqual(count($result['content']['error']), 2);
+		$this->assertEqual(count($result['content']['debug']), 1);
 
-		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
-		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
+		$this->assertEqual(trim($result['content']['debug'][0][1]), 'This time in the debug log!');
+		$this->assertEqual(trim($result['content']['error'][0][1]), 'This is a log I made this request');
 
 		$data = array(
 			'Post' => array(
@@ -449,8 +450,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->log($data);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
-		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error.log'][5]);
-		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error.log'][5]);
+		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error'][2][1]);
+		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error'][2][1]);
 	}
 /**
  * Test that history state urls set prefix = null and admin = null so generated urls do not

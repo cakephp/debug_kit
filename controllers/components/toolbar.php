@@ -574,21 +574,21 @@ class SqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 	var $plugin = 'debug_kit';
+
 /**
- * Log files to scan
- *
- * @var array
- */
-	var $logFiles = array('error.log', 'debug.log');
-/**
- * startup
+ * Constructor - sets up the log listener.
  *
  * @return void
- **/
-	function startup(&$controller) {
+ */
+	function __construct($settings) {
+		parent::__construct();
 		if (!class_exists('CakeLog')) {
 			App::import('Core', 'CakeLog');
 		}
+		CakeLog::config('debug_kit_log_panel', array(
+			'engine' => 'DebugKitLogListener',
+			'panel' => $this
+		));
 	}
 /**
  * beforeRender Callback
@@ -596,54 +596,37 @@ class LogPanel extends DebugPanel {
  * @return array
  **/
 	function beforeRender(&$controller) {
-		$this->startTime = DebugKitDebugger::requestStartTime();
-		$this->currentTime = DebugKitDebugger::requestTime();
-		$out = array();
-		foreach ($this->logFiles as $log) {
-			$file = LOGS . $log;
-			if (!file_exists($file)) {
-				continue;
-			}
-			$out[$log] = $this->_parseFile($file);
-		}
-		return $out;
+		$logs = $this->logger->logs;
+		return $logs;
+	}
+}
+
+/**
+ * A CakeLog listener which saves having to munge files or other configured loggers.
+ *
+ * @package debug_kit.components
+ */
+class DebugKitLogListener {
+
+	var $logs = array();
+/**
+ * Makes the reverse link needed to get the logs later.
+ *
+ * @return void
+ */
+	function DebugKitLogListener($options) {
+		$options['panel']->logger =& $this;
 	}
 /**
- * parse a log file and find the relevant entries
+ * Captures log messages in memory
  *
- * @param string $filename Name of file to read
- * @access protected
- * @return array
+ * @return void
  */
-	function _parseFile($filename) {
-		$fh = fopen($filename, 'r');
-		$timePattern = '/^(\d{4}-\d{2}\-\d{2}\s\d{1,2}\:\d{1,2}\:\d{1,2})\s(.*)/';
-
-		$out = array();
-		$entry = '';
-		$done = false;
-
-		while (!feof($fh)) {
-			$line = fgets($fh);
-			if (preg_match($timePattern, $line, $matches)) {
-				if (strtotime($matches[1]) < $this->startTime) {
-					continue;
-				}
-				$out[] = $matches[1];
-				$out[] = $matches[2];
-			} elseif (count($out) - 1 > 0) {
-				$currentIndex = count($out) - 1;
-				while (!feof($fh)) {
-					$line = fgets($fh);
-					if (preg_match($timePattern, $line)) {
-						break;
-					}
-					$out[$currentIndex] .= $line;
-				}
-			}
+	function write($type, $message) {
+		if (!isset($this->logs[$type])) {
+			$this->logs[$type] = array();
 		}
-		fclose($fh);
-		return $out;
+		$this->logs[$type][] = array(date('Y-m-d H:i:s'), $message);
 	}
 }
 

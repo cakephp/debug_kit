@@ -45,6 +45,13 @@ class ToolbarAccessController extends DebugKitAppController {
 	var $components = array('RequestHandler', 'DebugKit.Toolbar');
 
 /**
+ * Uses
+ *
+ * @var array
+ **/
+	var $uses = array('DebugKit.ToolbarAccess');
+
+/**
  * beforeFilter callback
  *
  * @return void

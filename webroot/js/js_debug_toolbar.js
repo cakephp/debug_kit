@@ -78,7 +78,7 @@ DEBUGKIT.Util.Element = {
 	removeClass: function (element, className) {
 		if (DEBUGKIT.Util.isArray(element)) {
 			DEBUGKIT.Util.Collection.apply(element, function (element) {
-				Element.removeClass(element, className);
+				DEBUGKIT.Util.Element.removeClass(element, className);
 			});
 		}
 		if (!element.className) {

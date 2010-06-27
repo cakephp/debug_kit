@@ -398,4 +398,3 @@ class DebugKitDebugger extends Debugger {
 
 Debugger::invoke(DebugKitDebugger::getInstance('DebugKitDebugger'));
 Debugger::getInstance('DebugKitDebugger');
-?>

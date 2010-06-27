@@ -349,4 +349,3 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

@@ -187,4 +187,3 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		return $form;
 	}
 }
-?>

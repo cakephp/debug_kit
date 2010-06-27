@@ -42,4 +42,3 @@ class DebugKitViewGroupTest extends GroupTest {
 		TestManager::addTestCasesFromDirectory($this, $testDir . DS . 'cases' . DS . 'views');
 	}
 }
-?>

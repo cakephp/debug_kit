@@ -230,4 +230,3 @@ class DebugKitDebuggerTest extends CakeTestCase {
 	}
 
 }
-?>

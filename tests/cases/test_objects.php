@@ -50,4 +50,4 @@ class TestFireCake extends FireCake {
 	}
 }
 
-?>
+

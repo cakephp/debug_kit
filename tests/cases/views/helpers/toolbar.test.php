@@ -167,4 +167,3 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

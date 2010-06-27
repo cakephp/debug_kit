@@ -97,4 +97,3 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		FireCake::groupEnd();
 	}
 }
-?>

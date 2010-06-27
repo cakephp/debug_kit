@@ -103,4 +103,3 @@ class TimedBehavior extends ModelBehavior {
 	}
  }
 
-?>

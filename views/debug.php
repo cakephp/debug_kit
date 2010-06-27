@@ -98,4 +98,3 @@ class DebugView extends DoppelGangerView {
 		return $this->output;
 	}
 }
-?>

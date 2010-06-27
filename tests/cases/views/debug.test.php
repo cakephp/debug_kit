@@ -154,4 +154,3 @@ class DebugViewTestCase extends CakeTestCase {
 		$this->assertEqual($result, 'I have been rendered.');
 	}
 }
-?>

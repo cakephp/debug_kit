@@ -67,4 +67,3 @@ class WhitespaceShell extends Shell {
         }
 	}
 }
-?>

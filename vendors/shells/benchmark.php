@@ -165,4 +165,3 @@ class BenchmarkShell extends Shell {
 	}
 }
 
-?>

@@ -22,4 +22,3 @@ class TestPanel extends DebugPanel {
 		$controller->testPanel = true;
 	}
 }
-?>

@@ -544,4 +544,3 @@ class FireCake extends Object {
 		header($name . ': ' . $value);
 	}
 }
-?>

@@ -338,4 +338,3 @@ class FireCakeTestCase extends CakeTestCase {
 		TestFireCake::reset();
 	}
 }
-?>

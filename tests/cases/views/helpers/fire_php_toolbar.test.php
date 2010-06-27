@@ -144,4 +144,3 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		Router::reload();
 	}
 }
-?>

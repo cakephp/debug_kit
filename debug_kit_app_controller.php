@@ -20,4 +20,3 @@
 class DebugKitAppController extends AppController {
 	
 }
-?>

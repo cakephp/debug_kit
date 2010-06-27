@@ -453,6 +453,24 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error'][2][1]);
 		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error'][2][1]);
 	}
+
+/**
+ * test that creating the log panel creates the default file logger if none
+ * are configured.  This stops DebugKit from mucking with the default auto-magic log config
+ *
+ * @return void
+ */
+	function testLogPanelConstructCreatingDefaultLogConfiguration() {
+		CakeLog::drop('default');
+		CakeLog::drop('debug_kit_log_panel');
+
+		$panel =& new LogPanel(array());
+		$configured = CakeLog::configured();
+
+		$this->assertTrue(in_array('default', $configured));
+		$this->assertTrue(in_array('debug_kit_log_panel', $configured));
+	}
+
 /**
  * Test that history state urls set prefix = null and admin = null so generated urls do not
  * adopt these params.
@@ -550,4 +568,3 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertTrue(isset($result['content']['threshold']));
 	}
 }
-?>

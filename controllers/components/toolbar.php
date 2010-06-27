@@ -585,6 +585,12 @@ class LogPanel extends DebugPanel {
 		if (!class_exists('CakeLog')) {
 			App::import('Core', 'CakeLog');
 		}
+		$existing = CakeLog::configured();
+		if (empty($existing)) {
+			CakeLog::config('default', array(
+				'engine' => 'FileLog'
+			));
+		}
 		CakeLog::config('debug_kit_log_panel', array(
 			'engine' => 'DebugKitLogListener',
 			'panel' => $this

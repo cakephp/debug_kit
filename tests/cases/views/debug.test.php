@@ -39,7 +39,7 @@ class DebugViewTestCase extends CakeTestCase {
 	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		$this->Controller =& ClassRegistry::init('Controller');
+		$this->Controller =& new Controller();
 		$this->View =& new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');
 		$this->_paths = array();
@@ -86,7 +86,13 @@ class DebugViewTestCase extends CakeTestCase {
  **/
 	function testElementTimers() {
 		$result = $this->View->element('test_element');
-		$this->assertPattern('/^this is the test element$/', $result);
+		$expected = <<<TEXT
+<!-- Starting to render - test_element -->
+this is the test element
+<!-- Finished - test_element -->
+
+TEXT;
+		$this->assertEqual($result, $expected);
 
 		$result = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($result['render_test_element.ctp']));
@@ -140,13 +146,12 @@ class DebugViewTestCase extends CakeTestCase {
  * @return void
  **/
 	function testProperReturnUnderRequestAction() {
-		$plugins = App::path('plugins');
-		$views = App::path('views');
-		$testapp = $plugins[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
-		array_unshift($views, $testapp);
-		App::build(array('views' => $views), true);
+		$testapp = App::pluginPath('DebugKit') . 'tests' . DS . 'test_app' . DS . 'views' . DS;
+		App::build(array('views' => array($testapp)));
 
 		$this->View->set('test', 'I have been rendered.');
+		$this->View->action = 'request_action_render';
+		$this->View->name = 'DebugKitTest';
 		$this->View->viewPath = 'debug_kit_test';
 		$this->View->layout = false;
 		$result = $this->View->render('request_action_render');

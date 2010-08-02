@@ -64,7 +64,7 @@ class DebugView extends DoppelGangerView {
 		}
 		$out .= parent::element($name, $params, $loadHelpers);
 		if ($isHtml) {
-			$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
+			$out .= sprintf("\n<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
 		}
 		return $out;
 	}

@@ -53,12 +53,13 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function startCase() {
-		$this->_viewPaths = Configure::read('viewPaths');
-		Configure::write('viewPaths', array(
-			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
-			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
-			ROOT . DS . LIBS . 'view' . DS
-		));
+		$this->_viewPaths = App::path('views');
+		App::build(array(
+			'views' => array(
+				TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
+				APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
+				ROOT . DS . LIBS . 'view' . DS
+		)), true);
 		$this->_debug = Configure::read('debug');
 	}
 /**
@@ -129,7 +130,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	function testGetQueryLogs() {
-		$model =& new Model(array('ds' => 'test_suite', 'table' => 'posts'));
+		$model =& new Model(array('ds' => 'test_suite', 'table' => 'posts', 'name' => 'Post'));
 		$model->find('all');
 		$model->find('first');
 
@@ -137,14 +138,14 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTrue(is_array($result));
 		$this->assertTrue(count($result) >= 2, 'Should be more than 2 queries in the log %s');
 		$this->assertTrue(isset($result[0]['actions']));
-		
+
+		$model->find('first');
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
-		$this->Toolbar->getQueryLogs('test_suite', array('cache' => true));
+		$result = $this->Toolbar->getQueryLogs('test_suite', array('cache' => true));
 
 		$cached = $this->Toolbar->readCache('sql_log');
 		$this->assertTrue(isset($cached['test_suite']));
 		$this->assertEqual($cached['test_suite'][0], $result[0]);
-		
 	}
 /**
  * reset the view paths
@@ -152,7 +153,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function endCase() {
-		Configure::write('viewPaths', $this->_viewPaths);
+		App::build(array('views' => $this->_viewPaths), true);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
 	}
 /**

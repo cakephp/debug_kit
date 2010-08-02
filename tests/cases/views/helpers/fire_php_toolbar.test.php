@@ -17,9 +17,11 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+$path = App::pluginPath('DebugKit');
+
 App::import('Helper', 'DebugKit.FirePhpToolbar');
 App::import('Core', array('View', 'Controller'));
-App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
+require_once $path . 'tests' . DS . 'cases' . DS . 'test_objects.php';
 
 FireCake::getInstance('TestFireCake');
 

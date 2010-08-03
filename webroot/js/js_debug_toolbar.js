@@ -412,7 +412,6 @@ DEBUGKIT.Util.Request = function (options) {
 			data = this.serialize(data);
 		}
 		if (data) {
-			this.transport.setRequestHeader('Content-Length', data.length);
 			this.transport.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		}
 		this.onRequest();

@@ -600,7 +600,7 @@ DEBUGKIT.toolbar = function () {
 					return;
 				}
 				var newHeight = currentElement._startHeight + (event.pageY - currentElement._startY);
-				Element.height(Element.getPrevious(currentElement), newHeight);
+				Element.height(currentElement.parentNode, newHeight);
 			}
 
 			// handle the mouseup event, remove the other listeners so the panel
@@ -615,7 +615,7 @@ DEBUGKIT.toolbar = function () {
 				event.preventDefault();
 				currentElement = this;
 				this._startY = event.pageY;
-				this._startHeight = parseInt(Element.height(Element.getPrevious(currentElement)));
+				this._startHeight = parseInt(Element.height(currentElement.parentNode));
 
 				// attach to document so mouse doesn't have to stay precisely on the 'handle'
 				Event.addEvent(document, 'mousemove', mouseMoveHandler);

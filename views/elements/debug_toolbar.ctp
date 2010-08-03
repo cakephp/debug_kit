@@ -38,6 +38,8 @@
 				echo $toolbar->panelStart($title, $panelUnderscore);
 			?>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
+					<a href="#" class="panel-maximize">[+]</a>
+					<a href="#" class="panel-minimize">[-]</a>
 					<div class="panel-resize-region">
 						<div class="panel-content-data">
 							<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>

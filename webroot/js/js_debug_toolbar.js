@@ -576,6 +576,7 @@ DEBUGKIT.toolbar = function () {
 				return false;
 			}
 			this.makePanelDraggable(panel);
+			this.makePanelMinMax(panel);
 
 			var self = this;
 			Event.addEvent(panel.button, 'click', function (event) {
@@ -625,6 +626,37 @@ DEBUGKIT.toolbar = function () {
 			Collection.apply(panel.content.childNodes, function (element) {
 				if (Element.nodeName(element, 'DIV') && Element.hasClass(element, 'panel-resize-handle')) {
 					Event.addEvent(element, 'mousedown', mouseDownHandler);
+				}
+			});
+		},
+		
+		// make the maximize button work on the panels.
+		makePanelMinMax: function (panel) {
+			var _oldHeight;
+	
+			var maximize = function (event) {
+				event.preventDefault();
+				if (!_oldHeight) {
+					_oldHeight = this.parentNode.offsetHeight;
+				}
+				var windowHeight = window.innerHeight;
+				var panelHeight = windowHeight - this.parentNode.offsetTop;
+				Element.height(this.parentNode, panelHeight);
+			};
+			
+			var minimize = function (event) {
+				event.preventDefault();
+				console.log(_oldHeight);
+				Element.height(this.parentNode, _oldHeight);
+				_oldHeight = null;
+			};
+
+			Collection.apply(panel.content.getElementsByTagName('A'), function (element) {
+				if (Element.hasClass(element, 'panel-maximize')) {
+					Event.addEvent(element, 'click', maximize);
+				}
+				if (Element.hasClass(element, 'panel-minimize')) {
+					Event.addEvent(element, 'click', minimize);
 				}
 			});
 		},

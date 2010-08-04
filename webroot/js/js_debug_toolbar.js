@@ -646,7 +646,6 @@ DEBUGKIT.toolbar = function () {
 			
 			var minimize = function (event) {
 				event.preventDefault();
-				console.log(_oldHeight);
 				Element.height(this.parentNode, _oldHeight);
 				_oldHeight = null;
 			};

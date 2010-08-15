@@ -107,23 +107,47 @@
 	overflow: auto;
 }
 
-#debug-kit-toolbar .panel-resize-handle {
+#debug-kit-toolbar .ui-control {
 	background:#ccc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#d6d6d6), to(#c2c2c2));
 	background: -moz-linear-gradient(top, #d6d6d6, #c2c2c2);
 	text-align:center;
-	cursor: row-resize;
 	border-top:1px solid #afafaf;
 	border-bottom:1px solid #7c7c7c;
 	color:#666;
-	text-shadow:1px 1px #eee;
-	-webkit-text-shadow:1px 1px #eee;
-	-moz-text-shadow:1px 1px #eee;
+	text-shadow: 1px 1px #eee;
+	-webkit-text-shadow: 1px 1px #eee;
+	-moz-text-shadow: 1px 1px #eee;
+}
+#debug-kit-toolbar .ui-button {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#debug-kit-toolbar .ui-button:hover {
+	text-decoration: none;
+	background:#ccc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#c2c2c2), to(#d6d6d6));
+	background: -moz-linear-gradient(top, #c2c2c2, #d6d6d6);
+}
+#debug-kit-toolbar .panel-resize-handle {
+	cursor: row-resize;
 	height:14px;
+	line-height: 14px;
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
+}
+#debug-kit-toolbar .panel-maximize,
+#debug-kit-toolbar .panel-minimize {
+	float: right;
+	display: block;
+	width: 12px;
+	height: 12px;
+	line-height: 12px;
+	border-left: 1px solid #afafaf;
+	border-right: 1px solid #7c7c7c;
 }
 #debug-kit-toolbar .panel-maximize {
 	float: right;
@@ -307,7 +331,7 @@
 	clear:both;
 	margin: 20px 0 5px;
 }
-#debug-kit-toolbar #sql_log-tab a {
+#debug-kit-toolbar #sql_log-tab .panel-content-data a {
 	background: none;
 	border:none;
 }
@@ -340,7 +364,7 @@
 #debug-kit-toolbar #history-tab li {
 	margin: 0 0 5px 0;
 }
-#debug-kit-toolbar #history-tab a {
+#debug-kit-toolbar #history-tab .panel-content-data a {
 	float: none;
 	display:block;
 }

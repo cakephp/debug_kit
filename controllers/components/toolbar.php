@@ -552,16 +552,12 @@ class SqlLogPanel extends DebugPanel {
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
 			$db =& ConnectionManager::getDataSource($configName);
-			if (!isset($db->config['driver'])) {
+			if (!isset($db->config['driver']) || !$db->isInterfaceSupported('getLog')) {
 				return false;
 			}
 			$driver = $db->config['driver'];
-			$explain = false;
 			$isExplainable = ($driver === 'mysql' || $driver === 'mysqli' || $driver === 'postgres');
-			if ($isExplainable && $db->isInterfaceSupported('getLog')) {
-				$explain = true;
-			}
-			$connections[$configName] = $explain;
+			$connections[$configName] = $isExplainable;
 		}
 		return array('connections' => $connections, 'threshold' => $this->slowRate);
 	}

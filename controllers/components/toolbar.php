@@ -96,7 +96,7 @@ class ToolbarComponent extends Object {
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component intitailization', true));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization', true));
 		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
 
 		$panels = $this->_defaultPanels;

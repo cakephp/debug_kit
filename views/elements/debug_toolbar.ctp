@@ -22,12 +22,12 @@
 ?>
 <div id="debug-kit-toolbar">
 	<?php if (empty($debugToolbarPanels)) :?>
-		<p class="warning"><?php __d('debug_kit', 'There are no active panels. You must enable a panel to see its output.'); ?></p>
+		<p class="warning"><?php echo __d('debug_kit', 'There are no active panels. You must enable a panel to see its output.'); ?></p>
 	<?php else: ?>
 		<ul id="panel-tabs">
 			<li class="panel-tab icon">
 				<a href="#hide" id="hide-toolbar">
-					<?php echo $html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP')); ?>
+					<?php echo $this->Html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP')); ?>
 				</a>
 			</li>
 		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
@@ -35,7 +35,7 @@
 			<li class="panel-tab">
 			<?php
 				$title = (empty($panelInfo['title'])) ? Inflector::humanize($panelUnderscore) : $panelInfo['title'];
-				echo $toolbar->panelStart($title, $panelUnderscore);
+				echo $this->Toolbar->panelStart($title, $panelUnderscore);
 			?>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
 					<a href="#" class="panel-maximize ui-control ui-button">+</a>
@@ -50,7 +50,7 @@
 					</div>
 					<div class="panel-resize-handle ui-control">====</div>
 				</div>
-			<?php $toolbar->panelEnd(); ?>
+			<?php $this->Toolbar->panelEnd(); ?>
 			</li>
 		<?php endforeach ?>
 		</ul>

@@ -19,33 +19,33 @@
  */
 $headers = array('Query', 'Error', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
 if (isset($debugKitInHistoryMode)) {
-	$content = $toolbar->readCache('sql_log', $this->params['pass'][0]);
+	$content = $this->Toolbar->readCache('sql_log', $this->params['pass'][0]);
 }
 ?>
-<h2><?php __d('debug_kit', 'Sql Logs')?></h2>
+<h2><?php echo __d('debug_kit', 'Sql Logs')?></h2>
 <?php if (!empty($content)) : ?>
 	<?php foreach ($content['connections'] as $dbName => $explain): ?>
 	<div class="sql-log-panel-query-log">
 		<h4><?php echo $dbName ?></h4>
 		<?php
 			if (!isset($debugKitInHistoryMode)):
-				$queryLog = $toolbar->getQueryLogs($dbName, array(
+				$queryLog = $this->Toolbar->getQueryLogs($dbName, array(
 					'explain' => $explain, 'threshold' => $content['threshold']
 				));
 			else:
 				$queryLog = $content[$dbName];
 			endif;
-			echo $toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
+			echo $this->Toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
-		<h4><?php __d('debug_kit', 'Query Explain:'); ?></h4>
+		<h4><?php echo __d('debug_kit', 'Query Explain:'); ?></h4>
 		<div id="sql-log-explain-<?php echo $dbName ?>">
 			<a id="debug-kit-explain-<?php echo $dbName ?>"> </a>
-			<p><?php __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
+			<p><?php echo __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
 		</div>
 	</div>
 	<?php endforeach; ?>
 <?php else:
-	echo $toolbar->message('Warning', __d('debug_kit', 'No active database connections', true));
+	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
 endif; ?>
 
 <script type="text/javascript">

@@ -41,11 +41,13 @@ class ToolbarHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function __construct($options = array()) {
+	function __construct($View, $options = array()) {
+
 		$this->_myName = strtolower(get_class($this));
-		$this->settings = am($this->settings, $options);
+		$this->settings = array_merge($this->settings, $options);
 
 		if ($this->_myName !== 'toolbarhelper') {
+			parent::__construct($View, $options);
 			return;
 		}
 
@@ -64,6 +66,9 @@ class ToolbarHelper extends AppHelper {
 			$this->_cacheConfig = $options['cacheConfig'];
 			$this->_cacheEnabled = true;
 		}
+
+		parent::__construct($View, $options);
+
 	}
 /**
  * Get the name of the backend Helper
@@ -84,7 +89,7 @@ class ToolbarHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function call__($method, $params) {
+	function __call($method, $params) {
 		if (method_exists($this->{$this->_backEndClassName}, $method)) {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}

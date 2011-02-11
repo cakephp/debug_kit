@@ -23,37 +23,37 @@ if (!isset($debugKitInHistoryMode)):
 	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
 	$requestTime = DebugKitDebugger::requestTime();
 else:
-	$content = $toolbar->readCache('timer', $this->params['pass'][0]);
+	$content = $this->Toolbar->readCache('timer', $this->params['pass'][0]);
 	if (is_array($content)):
 		extract($content);
 	endif;
 endif;
 ?>
 <div class="debug-info">
-	<h2><?php __d('debug_kit', 'Memory'); ?></h2>
+	<h2><?php echo __d('debug_kit', 'Memory'); ?></h2>
 	<div class="peak-mem-use">
 	<?php
-		echo $toolbar->message(__d('debug_kit', 'Peak Memory Use', true), $number->toReadableSize($peakMemory)); ?>
+		echo $this->Toolbar->message(__d('debug_kit', 'Peak Memory Use'), $this->Number->toReadableSize($peakMemory)); ?>
 	</div>
 
 	<?php
-	$headers = array(__d('debug_kit', 'Message', true), __d('debug_kit', 'Memory use', true));
+	$headers = array(__d('debug_kit', 'Message'), __d('debug_kit', 'Memory use'));
 	$memoryPoints = DebugKitDebugger::getMemoryPoints();
 
 	$rows = array();
 	foreach($memoryPoints as $key => $value):
-		$rows[] = array($key, $number->toReadableSize($value));
+		$rows[] = array($key, $this->Number->toReadableSize($value));
 	endforeach;
 
-	echo $toolbar->table($rows, $headers);
+	echo $this->Toolbar->table($rows, $headers);
 	?>
 </div>
 
 <div class="debug-info debug-timers">
-	<h2><?php __d('debug_kit', 'Timers'); ?></h2>
+	<h2><?php echo __d('debug_kit', 'Timers'); ?></h2>
 	<div class="request-time">
-		<?php $totalTime = sprintf(__d('debug_kit', '%s (ms)', true), $number->precision($requestTime * 1000, 0)); ?>
-		<?php echo $toolbar->message(__d('debug_kit', 'Total Request Time:', true), $totalTime)?>
+		<?php $totalTime = __d('debug_kit', '%s (ms)', $this->Number->precision($requestTime * 1000, 0)); ?>
+		<?php echo $this->Toolbar->message(__d('debug_kit', 'Total Request Time:'), $totalTime)?>
 	</div>
 <?php
 $rows = array();
@@ -61,9 +61,9 @@ $end = end($timers);
 $maxTime = $end['end'];
 
 $headers = array(
-	__d('debug_kit', 'Message', true),
-	__d('debug_kit', 'Time in ms', true),
-	__d('debug_kit', 'Graph', true)
+	__d('debug_kit', 'Message'),
+	__d('debug_kit', 'Time in ms'),
+	__d('debug_kit', 'Graph')
 );
 
 $i = 0;
@@ -79,10 +79,10 @@ foreach ($timers as $timerName => $timeInfo):
 	$indent = str_repeat(' » ', $indent);
 	$rows[] = array(
 		$indent . $timeInfo['message'],
-		$number->precision($timeInfo['time'] * 1000, 2),
-		$simpleGraph->bar(
-			$number->precision($timeInfo['time'] * 1000, 2),
-			$number->precision($timeInfo['start'] * 1000, 2),
+		$this->Number->precision($timeInfo['time'] * 1000, 2),
+		$this->SimpleGraph->bar(
+			$this->Number->precision($timeInfo['time'] * 1000, 2),
+			$this->Number->precision($timeInfo['start'] * 1000, 2),
 			array(
 				'max' => $maxTime * 1000,
 				'requestTime' => $requestTime * 1000,
@@ -92,17 +92,17 @@ foreach ($timers as $timerName => $timeInfo):
 	$i++;
 endforeach;
 
-if (strtolower($toolbar->getName()) == 'firephptoolbar'):
+if (strtolower($this->Toolbar->getName()) == 'firephptoolbar'):
 	for ($i = 0, $len = count($rows); $i < $len; $i++):
 		unset($rows[$i][2]);
 	endfor;
 	unset($headers[2]);
 endif;
 
-echo $toolbar->table($rows, $headers, array('title' => 'Timers'));
+echo $this->Toolbar->table($rows, $headers, array('title' => 'Timers'));
 
 if (!isset($debugKitInHistoryMode)):
-	$toolbar->writeCache('timer', compact('timers', 'currentMemory', 'peakMemory', 'requestTime'));
+	$this->Toolbar->writeCache('timer', compact('timers', 'currentMemory', 'peakMemory', 'requestTime'));
 endif;
 ?>
 </div>

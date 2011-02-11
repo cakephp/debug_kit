@@ -138,7 +138,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (!$this->settings['forceEnable'] && Configure::read('debug') == 0) {
 			return;
 		}
-		$view =& ClassRegistry::getObject('view');
+		$view = $this->_View;
 		$head = $this->Html->css('/debug_kit/css/debug_toolbar');
 		if (isset($view->viewVars['debugToolbarJavascript'])) {
 			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {

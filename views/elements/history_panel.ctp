@@ -18,17 +18,17 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 ?>
-<h2> <?php __d('debug_kit', 'Request History'); ?></h2>
+<h2> <?php echo __d('debug_kit', 'Request History'); ?></h2>
 <?php if (empty($content)): ?>
-  <p class="warning"><?php __d('debug_kit', 'No previous requests logged.'); ?></p>
+  <p class="warning"><?php echo __d('debug_kit', 'No previous requests logged.'); ?></p>
 <?php else: ?>
-	<?php echo count($content); ?> <?php __d('debug_kit', 'previous requests available') ?>
+	<?php echo count($content); ?> <?php echo __d('debug_kit', 'previous requests available') ?>
 	<ul class="history-list">
-		<li><?php echo $html->link(__d('debug_kit', 'Restore to current request', true),
+		<li><?php echo $this->Html->link(__d('debug_kit', 'Restore to current request'),
 			'#', array('class' => 'history-link', 'id' => 'history-restore-current')); ?>
 		</li>
 		<?php foreach ($content as $previous): ?>
-			<li><?php echo $html->link($previous['title'], $previous['url'], array('class' => 'history-link')); ?></li>
+			<li><?php echo $this->Html->link($previous['title'], $previous['url'], array('class' => 'history-link')); ?></li>
 		<?php endforeach; ?>
 	</ul>
 <?php endif; ?>

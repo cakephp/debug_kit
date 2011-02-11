@@ -1,4 +1,7 @@
 <?php
+
+App::import('Core', 'CakeLog');
+
 /**
  * DebugKit DebugToolbar Component
  *
@@ -17,7 +20,7 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-class ToolbarComponent extends Object {
+class ToolbarComponent extends Component {
 /**
  * Settings for the Component
  *
@@ -77,15 +80,24 @@ class ToolbarComponent extends Object {
  **/
 	var $cacheDuration = '+4 hours';
 /**
- * initialize
+ * Constructor
  *
  * If debug is off the component will be disabled and not do any further time tracking
  * or load the toolbar helper.
  *
  * @return bool
  **/
-	function initialize(&$controller, $settings) {
-		$this->settings = am($this->settings, $settings);
+	function __construct(ComponentCollection $collection, $settings = array()) {
+
+		$panels = $this->_defaultPanels;
+		if (isset($settings['panels'])) {
+			$panels = $this->_makePanelList($settings['panels']);
+			unset($settings['panels']);
+		}
+		$this->controller = $collection->getController();
+
+		parent::__construct($collection, array_merge($this->settings, (array)$settings));
+
 		if (!Configure::read('debug') && empty($this->settings['forceEnable'])) {
 			$this->enabled = false;
 			return false;
@@ -99,12 +111,6 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization', true));
 		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
 
-		$panels = $this->_defaultPanels;
-		if (isset($settings['panels'])) {
-			$panels = $this->_makePanelList($settings['panels']);
-			unset($settings['panels']);
-		}
-
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
 		if (in_array('history', $panels) || (isset($settings['history']) && $settings['history'] !== false)) {
 			$this->_createCacheConfig();
@@ -112,8 +118,6 @@ class ToolbarComponent extends Object {
 
 		$this->_loadPanels($panels, $settings);
 
-		$this->_set($settings);
-		$this->controller =& $controller;
 		return false;
 	}
 /**
@@ -142,7 +146,7 @@ class ToolbarComponent extends Object {
  *
  * @return bool
  **/
-	function startup(&$controller) {
+	function startup($controller) {
 		$currentViewClass = $controller->view;
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
@@ -151,7 +155,7 @@ class ToolbarComponent extends Object {
 			(isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')
 		);
 
-		if (!$this->RequestHandler->isAjax() && $isHtml) {
+		if (!$controller->request->is('ajax') && $isHtml) {
 			$format = 'Html';
 		} else {
 			$format = 'FirePhp';
@@ -622,7 +626,7 @@ class LogPanel extends DebugPanel {
  *
  * @package debug_kit.components
  */
-class DebugKitLogListener {
+class DebugKitLogListener implements CakeLogInterface {
 
 	var $logs = array();
 /**

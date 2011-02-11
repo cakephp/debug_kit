@@ -88,7 +88,7 @@ class DebugKitDebugger extends Debugger {
  * @static
  **/
 	function startTimer($name = null, $message = null) {
-		$start = getMicrotime();
+		$start = microtime(true);
 		$_this =& DebugKitDebugger::getInstance();
 
 		if (!$name) {
@@ -132,7 +132,7 @@ class DebugKitDebugger extends Debugger {
  * @static
  */
 	function stopTimer($name = null) {
-		$end = getMicrotime();
+		$end = microtime(true);
 		$_this =& DebugKitDebugger::getInstance();
 		if (!$name) {
 			$names = array_reverse(array_keys($_this->__benchmarks));
@@ -172,7 +172,7 @@ class DebugKitDebugger extends Debugger {
 	function getTimers($clear = false) {
 		$_this =& DebugKitDebugger::getInstance();
 		$start = DebugKitDebugger::requestStartTime();
-		$now = getMicrotime();
+		$now = microtime(true);
 
 		$times = array();
 		if (!empty($_this->__benchmarks)) {
@@ -237,7 +237,7 @@ class DebugKitDebugger extends Debugger {
  */
 	function requestTime() {
 		$start = DebugKitDebugger::requestStartTime();
-		$now = getMicroTime();
+		$now = microtime(true);
 		return ($now - $start);
 	}
 /**
@@ -338,7 +338,7 @@ class DebugKitDebugger extends Debugger {
  * @param string $var Object to convert
  * @access protected
  */
-	function _output($data = array()) {
+	function output($data = array()) {
 		extract($data);
 		if (is_array($level)) {
 			$error = $level['error'];
@@ -368,7 +368,7 @@ class DebugKitDebugger extends Debugger {
 			$data = compact(
 				'level', 'error', 'code', 'helpID', 'description', 'file', 'path', 'line', 'context'
 			);
-			echo parent::_output($data);
+			echo parent::output($data);
 		}
 	}
 /**
@@ -396,5 +396,4 @@ class DebugKitDebugger extends Debugger {
 }
 
 
-Debugger::invoke(DebugKitDebugger::getInstance('DebugKitDebugger'));
-Debugger::getInstance('DebugKitDebugger');
+DebugKitDebugger::getInstance('DebugKitDebugger');

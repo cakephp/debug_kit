@@ -36,11 +36,11 @@ class DebugView extends DoppelGangerView {
  * @return string Rendered output
  * @access protected
  */
-	function _render($___viewFn, $___dataForView, $loadHelpers = true, $cached = false) {
+	function _render($___viewFn, $___dataForView = array()) {
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__d('debug_kit', 'Rendering %s', true), Debugger::trimPath($___viewFn)));
 		}
-		$out = parent::_render($___viewFn, $___dataForView, $loadHelpers, $cached);
+		$out = parent::_render($___viewFn, $___dataForView);
 
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::stopTimer('render_' . basename($___viewFn));
@@ -88,9 +88,9 @@ class DebugView extends DoppelGangerView {
 		DebugKitDebugger::stopTimer('controllerRender');
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'View render complete', true));
 
-		if (empty($this->params['requested']) && isset($this->loaded['toolbar'])) {
-			$backend = $this->loaded['toolbar']->getName();
-			$this->loaded['toolbar']->{$backend}->send();
+		if (empty($this->params['requested']) && $this->Helpers->attached('Toolbar')) {
+			$backend = $this->Helpers->Toolbar->getName();
+			$this->Helpers->Toolbar->{$backend}->send();
 		}
 		if (empty($this->output)) {
 			return $out;

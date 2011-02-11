@@ -74,7 +74,7 @@ class SimpleGraphHelper extends AppHelper {
 					' ',
 					array(
 						'style' => "margin-left: {$graphOffset}px; width: {$graphValue}px",
-						'title' => sprintf(__d('debug_kit', "Starting %sms into the request, taking %sms", true), $offset, $value),
+						'title' => __d('debug_kit', "Starting %sms into the request, taking %sms", $offset, $value),
 					)
 				),
 			array('style' => "width: {$width}px;"),

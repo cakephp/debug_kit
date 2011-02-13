@@ -338,7 +338,7 @@ class DebugKitDebugger extends Debugger {
  * @param string $var Object to convert
  * @access protected
  */
-	function output($data = array()) {
+	function outputError($data = array()) {
 		extract($data);
 		if (is_array($level)) {
 			$error = $level['error'];

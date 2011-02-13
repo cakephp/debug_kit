@@ -62,10 +62,11 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		sleep(1);
 		$this->assertTrue(DebugKitDebugger::stopTimer('test2'));
 		$elapsed = DebugKitDebugger::elapsedTime('test2');
-		$this->assertTrue($elapsed > 1);
+		$expected = strpos(PHP_OS, 'WIN') === false ? 1 : 0.95; // Windows timer's precision is bad
+		$this->assertTrue($elapsed > $expected);
 
 		DebugKitDebugger::startTimer('test3');
-		$this->assertFalse(DebugKitDebugger::elapsedTime('test3'));
+		$this->assertIdentical(DebugKitDebugger::elapsedTime('test3'), 0);
 		$this->assertFalse(DebugKitDebugger::stopTimer('wrong'));
 	}
 /**
@@ -191,17 +192,22 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @return void
  */
 	function testOutput() {
-		$firecake =& FireCake::getInstance('TestFireCake');
-		Debugger::invoke(DebugKitDebugger::getInstance('DebugKitDebugger'));
+
+		$firecake = FireCake::getInstance('TestFireCake');
+		Debugger::getInstance('DebugKitDebugger');
 		Debugger::output('fb');
+
+		set_error_handler('ErrorHandler::handleError');
 		$foo .= '';
+		restore_error_handler();
+
 		$result = $firecake->sentHeaders;
 
 		$this->assertPattern('/GROUP_START/', $result['X-Wf-1-1-1-1']);
 		$this->assertPattern('/ERROR/', $result['X-Wf-1-1-1-2']);
 		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-5']);
 
-		Debugger::invoke(Debugger::getInstance('Debugger'));
+		Debugger::getInstance('Debugger');
 		Debugger::output();
 	}
 /**

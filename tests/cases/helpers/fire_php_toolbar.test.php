@@ -31,24 +31,25 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
-		$this->Toolbar =& new ToolbarHelper(array('output' => 'DebugKit.FirePhpToolbar'));
-		$this->Toolbar->FirePhpToolbar =& new FirePhpToolbarHelper();
+		$this->Controller = new Controller();
+		$this->View = new View($this->Controller);
+		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.FirePhpToolbar'));
+		$this->Toolbar->FirePhpToolbar = new FirePhpToolbarHelper($this->View);
 
-		$this->Controller =& new Controller();
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
 	}
 /**
- * start Case - switch view paths
+ * start test - switch view paths
  *
  * @return void
  **/
-	function startCase() {
+	function startTest() {
 		$this->_viewPaths = App::build('views');
 		App::build(array(
 			'views' => array(
@@ -77,22 +78,20 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  */
 	function testAfterLayout(){
 		$this->Controller->viewPath = 'posts';
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index', 'ext' => 'xml'),
-			'base' => null,
+		$request = new CakeRequest('/posts/index');
+		$request->addParams(Router::parse($request->url));
+		$request->addPaths(array(
+			'webroot' => '/',
+			'base' => '/',
 			'here' => '/posts/index',
-		);
+		));
+		$this->Controller->setRequest($request);
 		$this->Controller->layout = 'default';
 		$this->Controller->uses = null;
 		$this->Controller->components = array('DebugKit.Toolbar');
 		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
+		$this->Controller->Components->trigger('startup', array($this->Controller));
+		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
 		$this->assertNoPattern('/debug-toolbar/', $result);
 		$result = $this->firecake->sentHeaders;
@@ -124,15 +123,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	function endTest() {
-		TestFireCake::reset();
-	}
-/**
- * reset the view paths
- *
- * @return void
- **/
-	function endCase() {
 		Configure::write('viewPaths', $this->_viewPaths);
+		TestFireCake::reset();
 	}
 /**
  * tearDown
@@ -142,7 +134,6 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  */
 	function tearDown() {
 		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::removeObject('view');
 		ClassRegistry::flush();
 		Router::reload();
 	}

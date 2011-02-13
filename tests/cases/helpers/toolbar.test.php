@@ -20,7 +20,8 @@
 App::import('Helper', array('DebugKit.Toolbar'));
 App::import('Core', array('View', 'Controller'));
 
-Mock::generate('Helper', 'MockBackendHelper', array('testMethod'));
+class MockBackendHelper extends Helper {
+}
 
 class ToolbarHelperTestCase extends CakeTestCase {
 
@@ -30,19 +31,20 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	function setUp() {
 		Configure::write('Cache.disable', false);
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		
-		$this->Toolbar =& new ToolbarHelper(array(
+
+		$this->Controller = new Controller(null);
+		$this->View = new View($this->Controller);
+		$this->Toolbar = new ToolbarHelper($this->View, array(
 			'output' => 'MockBackendHelper',
 			'cacheKey' => 'debug_kit_toolbar_test_case',
 			'cacheConfig' => 'default'
 		));
-		$this->Toolbar->MockBackend = new MockBackendHelper();
-		
-		$this->Controller =& ClassRegistry::init('Controller');
+		$this->Toolbar->MockBackend = $this->getMock('Helper', array('testMethod'), array($this->View));
+
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
@@ -52,7 +54,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startCase() {
+	function startTest() {
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'views' => array(
@@ -115,7 +117,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function testNoCacheConfigPresent() {
-		$this->Toolbar = new ToolbarHelper(array('output' => 'MockBackendHelper'));
+		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'MockBackendHelper'));
 
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertFalse($result, 'Writing to cache succeeded with no cache config %s');
@@ -130,39 +132,39 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	function testGetQueryLogs() {
-		$model =& new Model(array('ds' => 'test_suite', 'table' => 'posts', 'name' => 'Post'));
+		$model = ClassRegistry::init('Post');
 		$model->find('all');
 		$model->find('first');
 
-		$result = $this->Toolbar->getQueryLogs('test_suite', array('cache' => false));
+		$result = $this->Toolbar->getQueryLogs($model->useDbConfig, array('cache' => false));
 		$this->assertTrue(is_array($result));
 		$this->assertTrue(count($result) >= 2, 'Should be more than 2 queries in the log %s');
 		$this->assertTrue(isset($result[0]['actions']));
 
 		$model->find('first');
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
-		$result = $this->Toolbar->getQueryLogs('test_suite', array('cache' => true));
+		$result = $this->Toolbar->getQueryLogs($model->useDbConfig, array('cache' => true));
 
 		$cached = $this->Toolbar->readCache('sql_log');
-		$this->assertTrue(isset($cached['test_suite']));
-		$this->assertEqual($cached['test_suite'][0], $result[0]);
+		$this->assertTrue(isset($cached[$model->useDbConfig]));
+		$this->assertEqual($cached[$model->useDbConfig][0], $result[0]);
 	}
 /**
  * reset the view paths
  *
  * @return void
  **/
-	function endCase() {
+	function endTest() {
 		App::build(array('views' => $this->_viewPaths), true);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
 	}
 /**
- * endTest
+ * tearDown
  *
  * @access public
  * @return void
  */
-	function endTest() {
+	function tearDown() {
 		unset($this->Toolbar, $this->Controller);
 		ClassRegistry::removeObject('view');
 		ClassRegistry::flush();

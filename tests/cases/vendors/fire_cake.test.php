@@ -220,12 +220,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */	
 	function testMultiLineOutput() {
-		$skip = $this->skipIf(!PHP5, 'Output is not long enough with PHP4');
-		if ($skip) {
-			return;
-		}
 		FireCake::trace('myTrace');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 4);
+		$this->assertGreaterThan(4, $this->firecake->sentHeaders['X-Wf-1-Index']);
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
 		$this->assertEqual(substr($header, -2), '|\\');
 
@@ -235,7 +231,8 @@ class FireCakeTestCase extends CakeTestCase {
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-3'];
 		$this->assertEqual(substr($header, -2), '|\\');
 
-		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-4'];
+		$endIndex = $this->firecake->sentHeaders['X-Wf-1-Index'];
+		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-' . $endIndex];
 		$this->assertEqual(substr($header, -1), '|');
 	}
 /**

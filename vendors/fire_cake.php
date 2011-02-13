@@ -524,13 +524,12 @@ class FireCake extends Object {
  * @return string
  **/
 	function _jsonEncode($object) {
-		if (!class_exists('JavascriptHelper')) {
-			App::import('Helper', 'Javascript');
+		if (!class_exists('Js')) {
+			App::import('Helper', 'Js');
 		}
-		$javascript =& new JavascriptHelper();
-		$javascript->useNative = false;
+		$javascript = new JsHelper(new View(null));
 		if (is_string($object)) {
-			return '"' . $javascript->escapeString($object) . '"';
+			return '"' . $javascript->escape($object) . '"';
 		}
 		return $javascript->object($object);
 	}

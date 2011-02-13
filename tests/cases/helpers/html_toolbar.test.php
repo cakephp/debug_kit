@@ -29,13 +29,14 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		
-		$this->Toolbar =& new ToolbarHelper(array('output' => 'DebugKit.HtmlToolbar'));
-		$this->Toolbar->HtmlToolbar =& new HtmlToolbarHelper();
-		$this->Toolbar->HtmlToolbar->Html =& new HtmlHelper();
-		$this->Toolbar->HtmlToolbar->Form =& new FormHelper();
-		
-		$this->Controller =& new Controller();
+
+		$this->Controller = new Controller(null);
+		$this->View = new View($this->Controller);
+		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.HtmlToolbar'));
+		$this->Toolbar->HtmlToolbar = new HtmlToolbarHelper($this->View);
+		$this->Toolbar->HtmlToolbar->Html = new HtmlHelper($this->View);
+		$this->Toolbar->HtmlToolbar->Form = new FormHelper($this->View);
+
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
@@ -45,7 +46,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startCase() {
+	function startTest() {
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'views' => array(
@@ -215,23 +216,21 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  **/
 	function testInjectToolbar() {
 		$this->Controller->viewPath = 'posts';
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => null,
+		$request = new CakeRequest('/posts/index');
+		$request->addParams(Router::parse($request->url));
+		$request->addPaths(array(
+			'webroot' => '/',
+			'base' => '/',
 			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Html', 'Javascript', 'Session', 'DebugKit.Toolbar');
+		));
+		$this->Controller->setRequest($request);
+		$this->Controller->helpers = array('Html', 'Js', 'Session', 'DebugKit.Toolbar');
 		$this->Controller->layout = 'default';
 		$this->Controller->uses = null;
 		$this->Controller->components = array('DebugKit.Toolbar');
 		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
+		$this->Controller->Components->trigger('startup', array($this->Controller));
+		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
 		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div>.*</body>#', $result);
@@ -245,22 +244,20 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	function testJavascriptInjection() {
 		$this->Controller->viewPath = 'posts';
 		$this->Controller->uses = null;
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
+		$request = new CakeRequest('/posts/index');
+		$request->addParams(Router::parse($request->url));
+		$request->addPaths(array(
+			'webroot' => '/',
 			'base' => '/',
 			'here' => '/posts/index',
-		);
-		$this->Controller->helpers = array('Javascript', 'Html', 'Session');
+		));
+		$this->Controller->setRequest($request);
+		$this->Controller->helpers = array('Js', 'Html', 'Session');
 		$this->Controller->components = array('DebugKit.Toolbar');
 		$this->Controller->layout = 'default';
 		$this->Controller->constructClasses();
-		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->Component->startup($this->Controller);
-		$this->Controller->Component->beforeRender($this->Controller);
+		$this->Controller->Components->trigger('startup', array($this->Controller));
+		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
 		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js"\s*>\s?</script>#', $result);
@@ -334,7 +331,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function endCase() {
+	function endTest() {
 		App::build();
 	}
 	
@@ -346,7 +343,6 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  */
 	function tearDown() {
 		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::removeObject('view');
 		ClassRegistry::flush();
 	}
 }

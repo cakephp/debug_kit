@@ -1,4 +1,7 @@
 <?php
+
+require_once App::pluginPath('DebugKit') . 'tests' . DS . 'lib' . DS . 'debug_kit_group_test.php';
+
 /**
  * View Group Test for debugkit
  *
@@ -21,24 +24,20 @@
  * DebugKitViewTestSuite class
  *
  * @package       cake
- * @subpackage    cake.tests.groups
+ * @subpackage    cake.tests.cases
  */
-class DebugKitViewTestSuite extends TestSuite {
+
+class AllDebugKitWithoutViewTest extends DebugkitGroupTest {
 /**
- * label property
  *
- * @var string 'All core helpers'
- * @access public
- */
-	var $label = 'All View layer tests for DebugKit';
-/**
- * AllCoreHelpersGroupTest method
  *
  * @access public
  * @return void
  */
-	function DebugKitViewTestSuite() {
-		$testDir = dirname(dirname(__FILE__));
-		TestManager::addTestCasesFromDirectory($this, $testDir . DS . 'cases' . DS . 'views');
+	public static function suite() {
+		$suite = self::_getSuite();
+		$suite->addTestFiles(self::_testFiles(null, array('views', 'helpers')));
+
+		return $suite;
 	}
 }

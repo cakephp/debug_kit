@@ -168,8 +168,8 @@ class ToolbarComponent extends Component {
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
 		$isHtml = (
-			!isset($controller->params['url']['ext']) ||
-			(isset($controller->params['url']['ext']) && $controller->params['url']['ext'] == 'html')
+			!isset($controller->request->params['url']['ext']) ||
+			(isset($controller->request->params['url']['ext']) && $controller->request->params['url']['ext'] == 'html')
 		);
 
 		if (!$controller->request->is('ajax') && $isHtml) {
@@ -250,7 +250,7 @@ class ToolbarComponent extends Component {
 				'engine' => 'File',
 				'path' => CACHE
 			));
-			Cache::config('default');
+			// Cache::config('default'); /* forces last configed cache was disabled on 2.0 */
 		}
 	}
 
@@ -265,7 +265,7 @@ class ToolbarComponent extends Component {
 		$panels = array_keys($this->panels);
 
 		foreach ($panels as $panelName) {
-			$panel =& $this->panels[$panelName];
+			$panel = $this->panels[$panelName];
 			$panelName = Inflector::underscore($panelName);
 			$vars[$panelName]['content'] = $panel->beforeRender($controller);
 			$elementName = Inflector::underscore($panelName) . '_panel';
@@ -449,15 +449,15 @@ class HistoryPanel extends DebugPanel {
 		$historyStates = array();
 		if (is_array($toolbarHistory) && !empty($toolbarHistory)) {
 			$prefix = array();
-			if (!empty($controller->params['prefix'])) {
-				$prefix[$controller->params['prefix']] = false;
+			if (!empty($controller->request->params['prefix'])) {
+				$prefix[$controller->request->params['prefix']] = false;
 			}
 			foreach ($toolbarHistory as $i => $state) {
-				if (!isset($state['request']['content']['params']['url']['url'])) {
+				if (!isset($state['request']['content']['url']['url'])) {
 					continue;
 				}
 				$historyStates[] = array(
-					'title' => $state['request']['content']['params']['url']['url'],
+					'title' => $state['request']['content']['url']['url'],
 					'url' => array_merge($prefix, array(
 						'plugin' => 'debug_kit',
 						'controller' => 'toolbar_access',
@@ -536,7 +536,8 @@ class RequestPanel extends DebugPanel {
  **/
 	function beforeRender(&$controller) {
 		$out = array();
-		$out['params'] = $controller->params;
+		$out['params'] = $controller->request->params;
+		$out['url'] = $controller->request->url;
 		if (isset($controller->Cookie)) {
 			$out['cookie'] = $controller->Cookie->read();
 		}

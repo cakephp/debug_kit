@@ -37,7 +37,7 @@ class ToolbarAccessTestCase extends CakeTestCase {
  * @return void
  */
 	function startTest() {
-		$this->Model =& new ToolbarAccess();
+		$this->Model = new ToolbarAccess();
 	}
 
 /**
@@ -55,9 +55,10 @@ class ToolbarAccessTestCase extends CakeTestCase {
  * @return void
  */
 	function testExplainQuery() {
-		$db =& ConnectionManager::getDataSource('test_suite');
+		$Post = ClassRegistry::init('Post');
+		$db = $Post->getDataSource();
 		$sql = 'SELECT * FROM ' . $db->fullTableName('posts') . ';';
-		$result = $this->Model->explainQuery('test_suite', $sql);
+		$result = $this->Model->explainQuery($Post->useDbConfig, $sql);
 
 		$this->assertTrue(is_array($result));
 		$this->assertFalse(empty($result));

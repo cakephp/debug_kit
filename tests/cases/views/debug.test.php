@@ -36,11 +36,11 @@ class DebugViewTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		$this->Controller =& new Controller();
-		$this->View =& new DebugView($this->Controller, false);
+		$this->Controller = new Controller();
+		$this->View = new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');
 		$this->_paths = array();
 		$this->_paths['plugins'] = App::path('plugins');
@@ -66,11 +66,11 @@ class DebugViewTestCase extends CakeTestCase {
 		Configure::write('debug', $this->_debug);
 	}
 /**
- * start Case - switch view paths
+ * start Test - switch view paths
  *
  * @return void
  **/
-	function startCase() {
+	function startTest() {
 		App::build(array(
 			'views' => array(
 				TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
@@ -104,18 +104,17 @@ TEXT;
  * @return void
  */
 	function testRenderTimers() {
-		$this->Controller->viewPath = 'posts';
-		$this->Controller->action = 'index';
-		$this->Controller->params = array(
-			'action' => 'index',
-			'controller' => 'posts',
-			'plugin' => null,
-			'url' => array('url' => 'posts/index'),
-			'base' => null,
+		$request = new CakeRequest('/posts/index');
+		$request->addParams(Router::parse($request->url));
+		$request->addPaths(array(
+			'webroot' => '/',
+			'base' => '/',
 			'here' => '/posts/index',
-		);
+		));
+		$this->Controller->setRequest($request);
+		$this->Controller->viewPath = 'posts';
 		$this->Controller->layout = 'default';
-		$View =& new DebugView($this->Controller, false);
+		$View = new DebugView($this->Controller, false);
 		$View->render('index');
 
 		$result = DebugKitDebugger::getTimers();
@@ -133,11 +132,11 @@ TEXT;
  * @return void
  */
 	function testLoadHelpers() {
-		$loaded = array();
-		$result = $this->View->_loadHelpers($loaded, array('Html', 'Javascript', 'Number'));
-		$this->assertTrue(is_object($result['Html']));
-		$this->assertTrue(is_object($result['Javascript']));
-		$this->assertTrue(is_object($result['Number']));
+		$this->View->helpers = array('Html', 'Js', 'Number');
+		$this->View->loadHelpers();
+		$this->assertInstanceOf('HtmlHelper', $this->View->Html);
+		$this->assertInstanceOf('JsHelper', $this->View->Js);
+		$this->assertInstanceOf('NumberHelper', $this->View->Number);
 	}
 /**
  * test that $out is returned when a layout is rendered instead of the empty

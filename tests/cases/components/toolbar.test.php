@@ -72,6 +72,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 	public function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		$this->_server = $_SERVER;
+		$this->_get = $_GET;
 		$this->_paths = array();
 		$this->_paths['plugins'] = App::path('plugins');
 		$this->_paths['views'] = App::path('views');
@@ -89,6 +90,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	public function endTest() {
 		$_SERVER = $this->_server;
+		$_GET = $this->_get;
 		App::build(array(
 			'plugins' => $this->_paths['plugins'],
 			'views' => $this->_paths['views'],
@@ -111,7 +113,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return Controller
  **/
 	protected function _loadController($settings = array()) {
-		$request = new CakeRequest($this->url, false);
+		$request = new CakeRequest($this->url);
 		$request->addParams(Router::parse($this->url));
 		$this->Controller = new Controller($request);
 		$this->Controller->uses = null;
@@ -299,6 +301,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	public function testAutoRunSettingWithQueryString() {
 		$this->url = '/?debug=1';
+		$_GET['debug'] = 1;
 		$this->_loadController(array(
 			'autoRun' => false,
 		));

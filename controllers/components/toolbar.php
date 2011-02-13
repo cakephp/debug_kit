@@ -117,7 +117,7 @@ class ToolbarComponent extends Component {
 			$this->enabled = false;
 			return false;
 		}
-		if ($this->settings['autoRun'] == false && !isset($this->controller->request->url['debug'])) {
+		if ($this->settings['autoRun'] == false && !isset($this->controller->request->query['debug'])) {
 			$this->enabled = false;
 			return false;
 		}
@@ -453,11 +453,23 @@ class HistoryPanel extends DebugPanel {
 				$prefix[$controller->request->params['prefix']] = false;
 			}
 			foreach ($toolbarHistory as $i => $state) {
-				if (!isset($state['request']['content']['url']['url'])) {
+				if (!isset($state['request']['content']['url'])) {
 					continue;
 				}
+				$title = $state['request']['content']['url'];
+				$query = @$state['request']['content']['query'];
+				if (isset($query['url'])) {
+					unset($query['url']);
+				}
+				if (!empty($query)) {
+					$title .= '?';
+					foreach ($query as $key => $value) {
+						$query[$key] = $key . '=' . urlencode($value);
+					}
+					$title .= implode('&', $query);
+				}
 				$historyStates[] = array(
-					'title' => $state['request']['content']['url']['url'],
+					'title' => $title,
 					'url' => array_merge($prefix, array(
 						'plugin' => 'debug_kit',
 						'controller' => 'toolbar_access',
@@ -538,6 +550,7 @@ class RequestPanel extends DebugPanel {
 		$out = array();
 		$out['params'] = $controller->request->params;
 		$out['url'] = $controller->request->url;
+		$out['query'] = $controller->request->query;
 		if (isset($controller->Cookie)) {
 			$out['cookie'] = $controller->Cookie->read();
 		}

@@ -29,9 +29,9 @@ class ToolbarAccess extends Object {
  * @param string $query SQL query to explain / find query plan for.
  * @return array Array of explain information or empty array if connection is unsupported.
  */
-	function explainQuery($connection, $query) {
+	public function explainQuery($connection, $query) {
 		App::import('Model', 'ConnectionManager');
-		$db =& ConnectionManager::getDataSource($connection);
+		$db = ConnectionManager::getDataSource($connection);
 		$driver = $db->config['driver'];
 
 		$return = array();

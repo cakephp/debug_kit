@@ -33,7 +33,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
+	public function setUp() {
 		Configure::write('log', false);
 	}
 /**
@@ -42,7 +42,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		Configure::write('log', true);
 		DebugKitDebugger::clearTimers();
 	}
@@ -51,7 +51,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testTimers() {
+	public function testTimers() {
 		$this->assertTrue(DebugKitDebugger::startTimer('test1', 'this is my first test'));
 		usleep(5000);
 		$this->assertTrue(DebugKitDebugger::stopTimer('test1'));
@@ -74,7 +74,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testAnonymousTimers() {
+	public function testAnonymousTimers() {
 		$this->assertTrue(DebugKitDebugger::startTimer());
 		usleep(2000);
 		$this->assertTrue(DebugKitDebugger::stopTimer());
@@ -98,7 +98,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testNestedAnonymousTimers() {
+	public function testNestedAnonymousTimers() {
 		$this->assertTrue(DebugKitDebugger::startTimer());
 		usleep(100);
 		$this->assertTrue(DebugKitDebugger::startTimer());
@@ -125,7 +125,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testRepeatTimers() {
+	public function testRepeatTimers() {
 		DebugKitDebugger::startTimer('my timer', 'This is the first call');
 		usleep(100);
 		DebugKitDebugger::startTimer('my timer', 'This is the second call');
@@ -150,7 +150,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @access public
  * @return void
  */
-	function testRequestTime() {
+	public function testRequestTime() {
 		$result1 = DebugKitDebugger::requestTime();
 		usleep(50);
 		$result2 = DebugKitDebugger::requestTime();
@@ -161,7 +161,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testGetTimers() {
+	public function testGetTimers() {
 		DebugKitDebugger::startTimer('test1', 'this is my first test');
 		DebugKitDebugger::stopTimer('test1');
 		usleep(50);
@@ -179,7 +179,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testMemoryUsage() {
+	public function testMemoryUsage() {
 		$result = DebugKitDebugger::getMemoryUse();
 		$this->assertTrue(is_int($result));
 
@@ -187,11 +187,11 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		$this->assertTrue(is_int($result));
 	}
 /**
- * test _output switch to firePHP
+ * test output switch to firePHP
  *
  * @return void
  */
-	function testOutput() {
+	public function testOutput() {
 
 		$firecake = FireCake::getInstance('TestFireCake');
 		Debugger::getInstance('DebugKitDebugger');
@@ -215,7 +215,8 @@ class DebugKitDebuggerTest extends CakeTestCase {
  *
  * @return void
  **/
-	function testMemorySettingAndGetting() {
+	public function testMemorySettingAndGetting() {
+		DebugKitDebugger::clearMemoryPoints();
 		$result = DebugKitDebugger::setMemoryPoint('test marker');
 		$this->assertTrue($result);
 

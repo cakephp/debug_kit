@@ -36,7 +36,7 @@ class DebugViewTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function setUp() {
+	public function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 		$this->Controller = new Controller();
@@ -53,7 +53,7 @@ class DebugViewTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function endTest() {
+	public function endTest() {
 		App::build(array(
 			'plugins' => $this->_paths['plugins'],
 			'views' => $this->_paths['views'],
@@ -70,7 +70,7 @@ class DebugViewTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	public function startTest() {
 		App::build(array(
 			'views' => array(
 				TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
@@ -84,7 +84,7 @@ class DebugViewTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testElementTimers() {
+	public function testElementTimers() {
 		$result = $this->View->element('test_element');
 		$expected = <<<TEXT
 <!-- Starting to render - test_element -->
@@ -103,7 +103,7 @@ TEXT;
  * @access public
  * @return void
  */
-	function testRenderTimers() {
+	public function testRenderTimers() {
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
 		$request->addPaths(array(
@@ -131,7 +131,7 @@ TEXT;
  *
  * @return void
  */
-	function testLoadHelpers() {
+	public function testLoadHelpers() {
 		$this->View->helpers = array('Html', 'Js', 'Number');
 		$this->View->loadHelpers();
 		$this->assertInstanceOf('HtmlHelper', $this->View->Html);
@@ -144,7 +144,7 @@ TEXT;
  *
  * @return void
  **/
-	function testProperReturnUnderRequestAction() {
+	public function testProperReturnUnderRequestAction() {
 		$testapp = App::pluginPath('DebugKit') . 'tests' . DS . 'test_app' . DS . 'views' . DS;
 		App::build(array('views' => array($testapp)));
 

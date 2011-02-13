@@ -37,7 +37,7 @@ class BenchmarkShell extends Shell {
  * @return void
  * @access public
  */
-	function main() {
+	public function main() {
 		if (empty($this->args) || count($this->args) > 1) {
 			return $this->help();
 		}
@@ -69,7 +69,7 @@ class BenchmarkShell extends Shell {
  * @return void
  * @access protected
  */
-	function _results($times) {
+	protected function _results($times) {
 		$duration = array_sum($times);
 		$requests = count($times);
 
@@ -111,7 +111,7 @@ class BenchmarkShell extends Shell {
  * @return float Variance
  * @access protected
  */
-	function _variance($times, $sample = true) {
+	protected function _variance($times, $sample = true) {
 		$n = $mean = $M2 = 0;
 
 		foreach($times as $time){
@@ -132,7 +132,7 @@ class BenchmarkShell extends Shell {
  * @return float Standard deviation
  * @access protected
  */
-	function _deviation($times, $sample = true) {
+	protected function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
 /**
@@ -141,7 +141,7 @@ class BenchmarkShell extends Shell {
  * @return void
  * @access public
  */
-	function help() {
+	public function help() {
 		$this->out(__d('debug_kit', "DebugKit Benchmark Shell", true));
 		$this->out("");
 		$this->out(__d('debug_kit', "\tAllows you to obtain some rough benchmarking statistics \n\tabout a fully qualified URL.", true));

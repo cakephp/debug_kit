@@ -36,7 +36,7 @@ class AllDebugKitWithoutViewTest extends DebugkitGroupTest {
  */
 	public static function suite() {
 		$suite = self::_getSuite();
-		$suite->addTestFiles(self::_testFiles(null, array('views', 'helpers')));
+		$suite->addTestFiles(self::_testFiles(null, 'views'));
 
 		return $suite;
 	}

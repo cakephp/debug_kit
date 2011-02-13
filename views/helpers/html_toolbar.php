@@ -29,14 +29,14 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @var array
  * @access public
  */
-	var $helpers = array('Html', 'Form');
+	public $helpers = array('Html', 'Form');
 /**
  * settings property
  *
  * @var array
  * @access public
  */
-	var $settings = array('format' => 'html', 'forceEnable' => false);
+	public $settings = array('format' => 'html', 'forceEnable' => false);
 /**
  * Recursively goes through an array and makes neat HTML out of it.
  *
@@ -45,7 +45,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param int $currentDepth current depth.
  * @return string
  **/
-	function makeNeatArray($values, $openDepth = 0, $currentDepth = 0) {
+	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0) {
 		$className ="neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {
 			$className .= ' expanded';
@@ -99,7 +99,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param string $message message content
  * @return string
  */
-	function message($label, $message) {
+	public function message($label, $message) {
 		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
 	}
 /**
@@ -108,7 +108,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  *
  * @return void
  **/
-	function panelStart($title, $anchor) {
+	public function panelStart($title, $anchor) {
 		$link = $this->Html->link($title, '#' . $anchor);
 		return $link;
 	}
@@ -119,7 +119,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param array $headers Optional header row.
  * @return string
  */
-	function table($rows, $headers = array()) {
+	public function table($rows, $headers = array()) {
 		$out = '<table class="debug-table">';
 		if (!empty($headers)) {
 			$out .= $this->Html->tableHeaders($headers);
@@ -134,7 +134,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @return void
  * @access public
  */
-	function send() {
+	public function send() {
 		if (!$this->settings['forceEnable'] && Configure::read('debug') == 0) {
 			return;
 		}
@@ -161,7 +161,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param string $sql SQL query string you want an explain link for.
  * @return string Rendered Html link or '' if the query is not a select/describe
  */
-	function explainLink($sql, $connection) {
+	public function explainLink($sql, $connection) {
 		if (!preg_match('/^(SELECT)/i', $sql)) {
 			return '';
 		}

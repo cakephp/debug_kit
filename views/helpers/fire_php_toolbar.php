@@ -29,14 +29,14 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  * @var array
  * @access public
  */
-	var $settings = array('format' => 'firePHP', 'forceEnable' => false);
+	public $settings = array('format' => 'firePHP', 'forceEnable' => false);
 /**
  * send method
  *
  * @return void
  * @access protected
  */
-	function send() {
+	public function send() {
 		$view = $this->_View;
 		$view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 	}
@@ -48,7 +48,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  * @param string $values 
  * @return void
  */	
-	function makeNeatArray($values) {
+	public function makeNeatArray($values) {
 		FireCake::info($values);
 	}
 /**
@@ -58,7 +58,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  * @param string $message Message content
  * @return void
  */
-	function message($label, $message) {
+	public function message($label, $message) {
 		FireCake::log($message, $label);
 	}
 /**
@@ -69,7 +69,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  * @param array $options Additional options and params
  * @return void
  */
-	function table($rows, $headers, $options = array()) {
+	public function table($rows, $headers, $options = array()) {
 		$title = $headers[0];
 		if (isset($options['title'])) {
 			$title = $options['title'];
@@ -85,7 +85,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  *
  * @return void
  **/
-	function panelStart($title, $anchor) {
+	public function panelStart($title, $anchor) {
 		FireCake::group($title);
 	}
 /**
@@ -93,7 +93,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  *
  * @return void
  **/
-	function panelEnd() {
+	public function panelEnd() {
 		FireCake::groupEnd();
 	}
 }

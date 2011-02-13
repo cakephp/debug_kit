@@ -31,7 +31,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function setUp() {
+	public function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
@@ -49,7 +49,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	public function startTest() {
 		$this->_viewPaths = App::build('views');
 		App::build(array(
 			'views' => array(
@@ -58,14 +58,14 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 			ROOT . DS . LIBS . 'view' . DS
 		)), true);
 		$this->_debug = Configure::read('debug');
-		$this->firecake =& FireCake::getInstance();
+		$this->firecake = FireCake::getInstance();
 	}
 /**
  * test neat array (dump)creation
  *
  * @return void
  */
-	function testMakeNeatArray() {
+	public function testMakeNeatArray() {
 		$this->Toolbar->makeNeatArray(array(1,2,3));
 		$result = $this->firecake->sentHeaders;
 		$this->assertTrue(isset($result['X-Wf-1-1-1-1']));
@@ -76,7 +76,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  */
-	function testAfterLayout(){
+	public function testAfterLayout(){
 		$this->Controller->viewPath = 'posts';
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
@@ -102,7 +102,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testPanelStart() {
+	public function testPanelStart() {
 		$this->Toolbar->panelStart('My Panel', 'my_panel');
 		$result = $this->firecake->sentHeaders;
 		$this->assertPattern('/GROUP_START.+My Panel/', $result['X-Wf-1-1-1-1']);
@@ -112,7 +112,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testPanelEnd() {
+	public function testPanelEnd() {
 		$this->Toolbar->panelEnd();
 		$result = $this->firecake->sentHeaders;
 		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);	
@@ -122,7 +122,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  */
-	function endTest() {
+	public function endTest() {
 		Configure::write('viewPaths', $this->_viewPaths);
 		TestFireCake::reset();
 	}
@@ -132,7 +132,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		unset($this->Toolbar, $this->Controller);
 		ClassRegistry::flush();
 		Router::reload();

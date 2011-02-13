@@ -36,7 +36,7 @@ class DebugView extends DoppelGangerView {
  * @return string Rendered output
  * @access protected
  */
-	function _render($___viewFn, $___dataForView = array()) {
+	protected function _render($___viewFn, $___dataForView = array()) {
 		if (!isset($___dataForView['disableTimer'])) {
 			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__d('debug_kit', 'Rendering %s', true), Debugger::trimPath($___viewFn)));
 		}
@@ -53,7 +53,7 @@ class DebugView extends DoppelGangerView {
  *
  * @return void
  */
-	function element($name, $params = array(), $loadHelpers = false) {
+	public function element($name, $params = array(), $loadHelpers = false) {
 		$out = '';
 		$isHtml = (
 			(isset($this->params['url']['ext']) && $this->params['url']['ext'] === 'html') ||
@@ -79,7 +79,7 @@ class DebugView extends DoppelGangerView {
  * @param string $file Custom filename for view
  * @return string Rendered Element
  */
-	function render($action = null, $layout = null, $file = null) {
+	public function render($action = null, $layout = null, $file = null) {
 		DebugKitDebugger::startTimer('viewRender', __d('debug_kit', 'Rendering View', true));
 
 		$out = parent::render($action, $layout, $file);

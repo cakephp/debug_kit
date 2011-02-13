@@ -26,7 +26,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function setUp() {
+	public function setUp() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
@@ -46,7 +46,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	public function startTest() {
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'views' => array(
@@ -61,7 +61,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testMakeNeatArray() {
+	public function testMakeNeatArray() {
 		$in = false;
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
@@ -214,7 +214,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testInjectToolbar() {
+	public function testInjectToolbar() {
 		$this->Controller->viewPath = 'posts';
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
@@ -241,7 +241,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testJavascriptInjection() {
+	public function testJavascriptInjection() {
 		$this->Controller->viewPath = 'posts';
 		$this->Controller->uses = null;
 		$request = new CakeRequest('/posts/index');
@@ -268,7 +268,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  */
-	function testMessage() {
+	public function testMessage() {
 		$result = $this->Toolbar->message('test', 'one, two');
 		$expected = array(
 			'<p',
@@ -283,7 +283,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  */
-	function testTable() {
+	public function testTable() {
 		$rows = array(
 			array(1,2),
 			array(3,4),
@@ -308,7 +308,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testStartPanel() {
+	public function testStartPanel() {
 		$result = $this->Toolbar->panelStart('My Panel', 'my_panel');
 		$expected = array(
 			'a' => array('href' => '#my_panel'),
@@ -322,7 +322,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testPanelEnd() {
+	public function testPanelEnd() {
 		$result = $this->Toolbar->panelEnd();
 		$this->assertNull($result);
 	}
@@ -331,7 +331,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function endTest() {
+	public function endTest() {
 		App::build();
 	}
 	
@@ -341,7 +341,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		unset($this->Toolbar, $this->Controller);
 		ClassRegistry::flush();
 	}

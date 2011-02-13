@@ -29,7 +29,7 @@ class WhitespaceShell extends Shell {
  *
  * @return void
  */
-	function main() {
+	public function main() {
 		$siteRoot = new Folder(ROOT);
 
 		$r = $siteRoot->findRecursive('.*\.php');
@@ -51,7 +51,7 @@ class WhitespaceShell extends Shell {
  *
  * @return void
  */
-	function trim() {
+	public function trim() {
 		$siteRoot = new Folder(ROOT);
 
 		$r = $siteRoot->findRecursive('.*\.php');

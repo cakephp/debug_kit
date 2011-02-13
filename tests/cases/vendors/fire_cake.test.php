@@ -34,8 +34,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  */
-	function setUp() {
-		$this->firecake =& FireCake::getInstance('TestFireCake');
+	public function setUp() {
+		$this->firecake = FireCake::getInstance('TestFireCake');
 	}
 /**
  * test getInstance cheat.
@@ -44,9 +44,9 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testGetInstanceOverride() {
-		$instance =& FireCake::getInstance();
-		$instance2 =& FireCake::getInstance();
+	public function testGetInstanceOverride() {
+		$instance = FireCake::getInstance();
+		$instance2 = FireCake::getInstance();
 		$this->assertReference($instance, $instance2);
 		$this->assertIsA($instance, 'FireCake');
 		$this->assertIsA($instance, 'TestFireCake', 'Stored instance is not a copy of TestFireCake, test case is broken.');
@@ -56,7 +56,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testSetOptions() {
+	public function testSetOptions() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		$this->assertEqual($this->firecake->options['includeLineNumbers'], false);
 	}
@@ -66,7 +66,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  */	
-	function testLog() {
+	public function testLog() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::log('Testing');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -84,7 +84,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  */	
-	function testInfo() {
+	public function testInfo() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::info('I have information');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -102,7 +102,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  */	
-	function testWarn() {
+	public function testWarn() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::warn('A Warning');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -120,7 +120,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  **/
-	function testError() {
+	public function testError() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::error('An error');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -137,7 +137,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testDump() {
+	public function testDump() {
 		FireCake::dump('mydump', array('one' => 1, 'two' => 2));
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-2-1-1'], '28|{"mydump":{"one":1,"two":2}}|');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-2']));
@@ -147,7 +147,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testTable() {
+	public function testTable() {
 		$table[] = array('Col 1 Heading','Col 2 Heading');
 		$table[] = array('Row 1 Col 1','Row 1 Col 2');
 		$table[] = array('Row 2 Col 1','Row 2 Col 2');
@@ -161,7 +161,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testStringEncode() {
+	public function testStringEncode() {
 		$vars = array(1,2,3);
 		$result = $this->firecake->stringEncode($vars);
 		$this->assertEqual($result, array(1,2,3));
@@ -176,8 +176,8 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testStringEncodeObjects() {
-		$obj =& FireCake::getInstance();
+	public function testStringEncodeObjects() {
+		$obj = FireCake::getInstance();
 		$result = $this->firecake->stringEncode($obj);
 
 		$this->assertTrue(is_array($result));
@@ -189,7 +189,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testTrace() {
+	public function testTrace() {
 		FireCake::trace('myTrace');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
@@ -203,11 +203,11 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testEnableDisable() {
+	public function testEnableDisable() {
 		FireCake::disable();
 		FireCake::trace('myTrace');
 		$this->assertTrue(empty($this->firecake->sentHeaders));
-		
+
 		FireCake::enable();
 		FireCake::trace('myTrace');
 		$this->assertFalse(empty($this->firecake->sentHeaders));
@@ -219,16 +219,10 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  */	
-	function testMultiLineOutput() {
+	public function testMultiLineOutput() {
 		FireCake::trace('myTrace');
-		$this->assertGreaterThan(4, $this->firecake->sentHeaders['X-Wf-1-Index']);
+		$this->assertGreaterThan(1, $this->firecake->sentHeaders['X-Wf-1-Index']);
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
-		$this->assertEqual(substr($header, -2), '|\\');
-
-		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-2'];
-		$this->assertEqual(substr($header, -2), '|\\');
-
-		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-3'];
 		$this->assertEqual(substr($header, -2), '|\\');
 
 		$endIndex = $this->firecake->sentHeaders['X-Wf-1-Index'];
@@ -240,7 +234,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testIncludeLineNumbers() {
+	public function testIncludeLineNumbers() {
 		FireCake::setOptions(array('includeLineNumbers' => true));
 		FireCake::info('Testing');
 		$result = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
@@ -252,7 +246,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testGroup() {
+	public function testGroup() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::group('test');
 		FireCake::info('my info');
@@ -266,7 +260,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testFbParameterParsing() {
+	public function testFbParameterParsing() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Test');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '23|[{"Type":"LOG"},"Test"]|');
@@ -287,7 +281,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testIncorrectMessageType() {
+	public function testIncorrectMessageType() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Hello World', 'foobared');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '30|[{"Type":"LOG"},"Hello World"]|');
@@ -297,7 +291,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testDetectClientExtension() {
+	public function testDetectClientExtension() {
 		$back = env('HTTP_USER_AGENT');
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4 FirePHP/0.2.1';
 		$this->assertTrue(FireCake::detectClientExtension());
@@ -314,7 +308,7 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testNonNativeEncoding() {
+	public function testNonNativeEncoding() {
 		FireCake::setOptions(array('useNativeJsonEncode' => false));
 		$json = FireCake::jsonEncode(array('one' => 1, 'two' => 2));
 		$this->assertEqual($json, '{"one":1,"two":2}');
@@ -331,7 +325,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		TestFireCake::reset();
 	}
 }

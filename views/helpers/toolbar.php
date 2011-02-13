@@ -27,13 +27,13 @@ class ToolbarHelper extends AppHelper {
  * @var array
  * @access public
  */
-	var $settings = array();
+	public $settings = array();
 /**
  * flag for whether or not cache is enabled.
  *
  * @var boolean
  **/
-	var $_cacheEnabled = false;
+	protected $_cacheEnabled = false;
 /**
  * Construct the helper and make the backend helper.
  *
@@ -41,7 +41,7 @@ class ToolbarHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function __construct($View, $options = array()) {
+	public function __construct($View, $options = array()) {
 
 		$this->_myName = strtolower(get_class($this));
 		$this->settings = array_merge($this->settings, $options);
@@ -76,7 +76,7 @@ class ToolbarHelper extends AppHelper {
  *
  * @return string
  **/
-	function getName() {
+	public function getName() {
 		return $this->_backEndClassName;
 	}
 /**
@@ -89,7 +89,7 @@ class ToolbarHelper extends AppHelper {
  * @access public
  * @return void
  */
-	function __call($method, $params) {
+	public function __call($method, $params) {
 		if (method_exists($this->{$this->_backEndClassName}, $method)) {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}
@@ -104,7 +104,7 @@ class ToolbarHelper extends AppHelper {
  * @param string $content Content to write to the panel.
  * @return boolean Sucess of write.
  **/
-	function writeCache($name, $content) {
+	public function writeCache($name, $content) {
 		if (!$this->_cacheEnabled) {
 			return false;
 		}
@@ -118,7 +118,7 @@ class ToolbarHelper extends AppHelper {
  * @param string $name Name of the panel you want cached data for
  * @return mixed Boolean false on failure, array of data otherwise.
  **/
-	function readCache($name, $index = 0) {
+	public function readCache($name, $index = 0) {
 		if (!$this->_cacheEnabled) {
 			return false;
 		}
@@ -142,10 +142,10 @@ class ToolbarHelper extends AppHelper {
  * @param array $options Options for the query log retrieval.
  * @return array Array of data to be converted into a table.
  */
-	function getQueryLogs($connection, $options = array()) {
+	public function getQueryLogs($connection, $options = array()) {
 		$options += array('explain' => false, 'cache' => true, 'threshold' => 20);
 		App::import('Model', 'ConnectionManager');
-		$db =& ConnectionManager::getDataSource($connection);
+		$db = ConnectionManager::getDataSource($connection);
 		
 		$out = array();
 		$log = $db->getLog();

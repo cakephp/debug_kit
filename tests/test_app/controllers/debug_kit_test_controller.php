@@ -18,18 +18,18 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class DebugKitTestController extends Controller {
-	var $name = 'DebugKitTest';
+	public $name = 'DebugKitTest';
 
-	var $uses = array();
+	public $uses = array();
 
-	var $components = array('DebugKit.Toolbar');
+	public $components = array('DebugKit.Toolbar');
 
-	function request_action_return() {
+	public function request_action_return() {
 		$this->autoRender = false;
 		return 'I am some value from requestAction.';
 	}
 	
-	function request_action_render() {
+	public function request_action_render() {
 		$this->set('test', 'I have been rendered.');
 	}
 	

@@ -25,13 +25,13 @@ class MockBackendHelper extends Helper {
 
 class ToolbarHelperTestCase extends CakeTestCase {
 
-	var $fixtures = array('core.post');
+	public $fixtures = array('core.post');
 /**
  * setUp
  *
  * @return void
  **/
-	function setUp() {
+	public function setUp() {
 		Configure::write('Cache.disable', false);
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
@@ -54,7 +54,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function startTest() {
+	public function startTest() {
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'views' => array(
@@ -69,7 +69,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testCacheWrite() {
+	public function testCacheWrite() {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result);
 	}
@@ -79,7 +79,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testOnlyWritingToFirstElement() {
+	public function testOnlyWritingToFirstElement() {
 		$values = array(
 			array('test' => array('content' => array('first', 'values'))),
 			array('test' => array('content' => array('second', 'values'))),
@@ -98,7 +98,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testCacheRead() {
+	public function testCacheRead() {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result, 'Cache write failed %s');
 		
@@ -116,7 +116,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function testNoCacheConfigPresent() {
+	public function testNoCacheConfigPresent() {
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'MockBackendHelper'));
 
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
@@ -131,7 +131,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  */
-	function testGetQueryLogs() {
+	public function testGetQueryLogs() {
 		$model = ClassRegistry::init('Post');
 		$model->find('all');
 		$model->find('first');
@@ -154,7 +154,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	function endTest() {
+	public function endTest() {
 		App::build(array('views' => $this->_viewPaths), true);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
 	}
@@ -164,7 +164,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @access public
  * @return void
  */
-	function tearDown() {
+	public function tearDown() {
 		unset($this->Toolbar, $this->Controller);
 		ClassRegistry::removeObject('view');
 		ClassRegistry::flush();

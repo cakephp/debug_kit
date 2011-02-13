@@ -18,7 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 class TestPanel extends DebugPanel {
-	function startup(&$controller) {
+	public function startup(&$controller) {
 		$controller->testPanel = true;
 	}
 }

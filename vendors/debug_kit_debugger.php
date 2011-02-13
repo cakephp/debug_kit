@@ -34,13 +34,13 @@ class DebugKitDebugger extends Debugger {
  *
  * @var array
  **/
-	var $__benchmarks = array();
+	private $__benchmarks = array();
 /**
  * Internal memory points array
  *
  * @var array
  **/
-	var $__memoryPoints = array();
+	private $__memoryPoints = array();
 /**
  * destruct method
  *
@@ -50,8 +50,8 @@ class DebugKitDebugger extends Debugger {
  * @return void
  * @access private
  */
-	function __destruct() {
-		$_this =& DebugKitDebugger::getInstance();
+	public function __destruct() {
+		$_this = DebugKitDebugger::getInstance();
 		if (Configure::read('debug') < 2 || !$_this->__benchmarks) {
 			return;
 		}
@@ -87,9 +87,9 @@ class DebugKitDebugger extends Debugger {
  * @return bool true
  * @static
  **/
-	function startTimer($name = null, $message = null) {
+	public static function startTimer($name = null, $message = null) {
 		$start = microtime(true);
-		$_this =& DebugKitDebugger::getInstance();
+		$_this = DebugKitDebugger::getInstance();
 
 		if (!$name) {
 			$named = false;
@@ -131,9 +131,9 @@ class DebugKitDebugger extends Debugger {
  * @return boolean true if timer was ended, false if timer was not started.
  * @static
  */
-	function stopTimer($name = null) {
+	public static function stopTimer($name = null) {
 		$end = microtime(true);
-		$_this =& DebugKitDebugger::getInstance();
+		$_this = DebugKitDebugger::getInstance();
 		if (!$name) {
 			$names = array_reverse(array_keys($_this->__benchmarks));
 			foreach($names as $name) {
@@ -169,8 +169,8 @@ class DebugKitDebugger extends Debugger {
  * @return array
  * @access public
  **/
-	function getTimers($clear = false) {
-		$_this =& DebugKitDebugger::getInstance();
+	public static function getTimers($clear = false) {
+		$_this = DebugKitDebugger::getInstance();
 		$start = DebugKitDebugger::requestStartTime();
 		$now = microtime(true);
 
@@ -206,10 +206,11 @@ class DebugKitDebugger extends Debugger {
 /**
  * Clear all existing timers
  *
+ * @static
  * @return bool true
  **/
-	function clearTimers() {
-		$_this =& DebugKitDebugger::getInstance();
+	public static function clearTimers() {
+		$_this = DebugKitDebugger::getInstance();
 		$_this->__benchmarks = array();
 		return true;
 	}
@@ -221,8 +222,8 @@ class DebugKitDebugger extends Debugger {
  * @return float number of seconds elapsed for timer name, 0 on missing key
  * @static
  **/
-	function elapsedTime($name = 'default', $precision = 5) {
-		$_this =& DebugKitDebugger::getInstance();
+	public static function elapsedTime($name = 'default', $precision = 5) {
+		$_this = DebugKitDebugger::getInstance();
 		if (!isset($_this->__benchmarks[$name]['start']) || !isset($_this->__benchmarks[$name]['end'])) {
 			return 0;
 		}
@@ -235,7 +236,7 @@ class DebugKitDebugger extends Debugger {
  * @return float elapsed time in seconds since script start.
  * @static
  */
-	function requestTime() {
+	public static function requestTime() {
 		$start = DebugKitDebugger::requestStartTime();
 		$now = microtime(true);
 		return ($now - $start);
@@ -247,7 +248,7 @@ class DebugKitDebugger extends Debugger {
  * @return float time of request start
  * @static
  */
-	function requestStartTime() {
+	public static function requestStartTime() {
 		if (defined('TIME_START')) {
 			$startTime = TIME_START;
 		} else if (isset($GLOBALS['TIME_START'])) {
@@ -263,7 +264,7 @@ class DebugKitDebugger extends Debugger {
  * @return integer number of bytes ram currently in use. 0 if memory_get_usage() is not available.
  * @static
  **/
-	function getMemoryUse() {
+	public static function getMemoryUse() {
 		if (!function_exists('memory_get_usage')) {
 			return 0;
 		}
@@ -275,7 +276,7 @@ class DebugKitDebugger extends Debugger {
  * @return integer peak memory use (in bytes).  Returns 0 if memory_get_peak_usage() is not available
  * @static
  **/
-	function getPeakMemoryUse() {
+	public static function getPeakMemoryUse() {
 		if (!function_exists('memory_get_peak_usage')) {
 			return 0;
 		}
@@ -288,16 +289,17 @@ class DebugKitDebugger extends Debugger {
  * If you don't have memory_get_xx methods this will not work.
  *
  * @param string $message Message to identify this memory point.
+ * @static
  * @return boolean
  **/
-	function setMemoryPoint($message = null) {
+	public static function setMemoryPoint($message = null) {
 		$memoryUse = DebugKitDebugger::getMemoryUse();
 		if (!$message) {
 			$named = false;
 			$trace = debug_backtrace();
 			$message = Debugger::trimpath($trace[0]['file']) . ' line ' . $trace[0]['line'];
 		}
-		$self =& DebugKitDebugger::getInstance();
+		$self = DebugKitDebugger::getInstance();
 		if (isset($self->__memoryPoints[$message])) {
 			$originalMessage = $message;
 			$i = 1;
@@ -313,10 +315,11 @@ class DebugKitDebugger extends Debugger {
  * Get all the stored memory points
  *
  * @param boolean $clear Whether you want to clear the memory points as well. Defaults to false.
+ * @static
  * @return array Array of memory marks stored so far.
  **/
-	function getMemoryPoints($clear = false) {
-		$self =& DebugKitDebugger::getInstance();
+	public static function getMemoryPoints($clear = false) {
+		$self = DebugKitDebugger::getInstance();
 		$marks = $self->__memoryPoints;
 		if ($clear) {
 			$self->__memoryPoints = array();
@@ -326,10 +329,11 @@ class DebugKitDebugger extends Debugger {
 /**
  * Clear out any existing memory points
  *
+ * @static
  * @return void
  **/
-	function clearMemoryPoints() {
-		$self =& DebugKitDebugger::getInstance();
+	public static function clearMemoryPoints() {
+		$self = DebugKitDebugger::getInstance();
 		$self->__memoryPoints = array();
 	}
 /**
@@ -338,7 +342,7 @@ class DebugKitDebugger extends Debugger {
  * @param string $var Object to convert
  * @access protected
  */
-	function outputError($data = array()) {
+	public function outputError($data = array()) {
 		extract($data);
 		if (is_array($level)) {
 			$error = $level['error'];
@@ -384,7 +388,7 @@ class DebugKitDebugger extends Debugger {
  * @return void
  * @access protected
  */
-	function _fireError($error, $code, $description, $file, $line, $trace, $context) {
+	protected function _fireError($error, $code, $description, $file, $line, $trace, $context) {
 		$name = $error . ' - ' . $description;
 		$message = "$error $code $description on line: $line in file: $file";
 		FireCake::group($name);

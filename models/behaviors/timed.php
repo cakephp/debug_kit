@@ -26,7 +26,7 @@ class TimedBehavior extends ModelBehavior {
  * @access public
  * @var array
  */
-	var $settings = array();
+	public $settings = array();
 
 /**
  * Default setting values
@@ -34,7 +34,7 @@ class TimedBehavior extends ModelBehavior {
  * @access private
  * @var array
  */
-	var $_defaults = array();
+	protected $_defaults = array();
 
 /**
  * Setup the behavior and import required classes.
@@ -44,7 +44,7 @@ class TimedBehavior extends ModelBehavior {
  * @access public
  * @return void
  */
-	function setup(&$Model, $settings = null) {
+	public function setup($Model, $settings = null) {
 		if (!class_exists('DebugKitDebugger')){
 			App::import('Vendor', 'DebugKit.DebugKitDebugger');
 		}
@@ -62,7 +62,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $queryData Array of query data (not modified)
  * @return boolean true
  */
-	function beforeFind(&$Model, $queryData){
+	public function beforeFind($Model, $queryData){
 		DebugKitDebugger::startTimer($Model->alias . '_find', $Model->alias . '->find()');
 		return true;
 	}
@@ -74,7 +74,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $results Array of results
  * @return boolean true.
  */
-	function afterFind(&$Model, $results){
+	public function afterFind($Model, $results){
 		DebugKitDebugger::stopTimer($Model->alias . '_find');
 		return true;
 	}
@@ -85,7 +85,7 @@ class TimedBehavior extends ModelBehavior {
  * @param Model $Model
  * @return boolean true
  */
-	function beforeSave(&$Model){
+	public function beforeSave($Model){
 		DebugKitDebugger::startTimer($Model->alias . '_save', $Model->alias . '->save()');
 		return true;
 	}
@@ -97,7 +97,7 @@ class TimedBehavior extends ModelBehavior {
  * @param string $created
  * @return void
  */
-	function afterSave(&$Model, $created) {
+	public function afterSave($Model, $created) {
 		DebugKitDebugger::stopTimer($Model->alias . '_save');
 		return true;
 	}

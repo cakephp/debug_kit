@@ -23,9 +23,9 @@
  * @package debug_kit.tests.
  */
 class TestFireCake extends FireCake {
-	var $sentHeaders = array();
+	public $sentHeaders = array();
 
-	function _sendHeader($name, $value) {
+	protected function _sendHeader($name, $value) {
 		$_this = FireCake::getInstance();
 		$_this->sentHeaders[$name] = $value;
 	}
@@ -35,7 +35,7 @@ class TestFireCake extends FireCake {
  * @access public
  * @return void
  */	
-	function detectClientExtension() {
+	public function detectClientExtension() {
 		return true;
 	}
 /**
@@ -43,7 +43,7 @@ class TestFireCake extends FireCake {
  *
  * @return void
  **/
-	function reset() {
+	public function reset() {
 		$_this = FireCake::getInstance();
 		$_this->sentHeaders = array();
 		$_this->_messageIndex = 1;

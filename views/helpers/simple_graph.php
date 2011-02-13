@@ -27,7 +27,7 @@ class SimpleGraphHelper extends AppHelper {
  *
  * @var array
  */
-	var $helpers = array('Html');
+	public $helpers = array('Html');
 /**
  * Default settings to be applied to each Simple Graph
  *
@@ -40,7 +40,7 @@ class SimpleGraphHelper extends AppHelper {
  *
  * @var array
  */
-	var $__defaultSettings = array(
+	private $__defaultSettings = array(
 		'max' => 100,
 		'width' => 350,
 		'valueType' => 'value',
@@ -54,7 +54,7 @@ class SimpleGraphHelper extends AppHelper {
  * @return string Html graph
  * @access public
  */
-	function bar($value, $offset, $options = array()) {
+	public function bar($value, $offset, $options = array()) {
 		$settings = array_merge($this->__defaultSettings, $options);
 		extract($settings);
 

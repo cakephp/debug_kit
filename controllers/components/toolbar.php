@@ -30,7 +30,7 @@ class ToolbarComponent extends Component {
  *
  * @var array
  **/
-	var $settings = array(
+	public $settings = array(
 		'forceEnable' => false,
 		'autoRun' => true
 	);
@@ -40,14 +40,14 @@ class ToolbarComponent extends Component {
  *
  * @var object
  */
-	var $controller;
+	public $controller;
 
 /**
  * Components used by DebugToolbar
  *
  * @var array
  */
-	var $components = array('RequestHandler', 'Session');
+	public $components = array('RequestHandler', 'Session');
 
 /**
  * The default panels the toolbar uses.
@@ -55,21 +55,21 @@ class ToolbarComponent extends Component {
  *
  * @var array
  */
-	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
+	protected $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
 
 /**
  * Loaded panel objects.
  *
  * @var array
  */
-	var $panels = array();
+	public $panels = array();
 
 /**
  * javascript files component will be using
  *
  * @var array
  **/
-	var $javascript = array(
+	public $javascript = array(
 		'behavior' => '/debug_kit/js/js_debug_toolbar'
 	);
 
@@ -78,21 +78,21 @@ class ToolbarComponent extends Component {
  *
  * @var string
  **/
-	var $cacheKey = 'toolbar_cache';
+	public $cacheKey = 'toolbar_cache';
 
 /**
  * Duration of the debug kit history cache
  *
  * @var string
  **/
-	var $cacheDuration = '+4 hours';
+	public $cacheDuration = '+4 hours';
 
 /**
  * Status whether component is enable or disable
  *
  * @var boolean
  **/
-	var $enabled = true;
+	public $enabled = true;
 
 /**
  * Constructor
@@ -102,7 +102,7 @@ class ToolbarComponent extends Component {
  *
  * @return bool
  **/
-	function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentCollection $collection, $settings = array()) {
 
 		$panels = $this->_defaultPanels;
 		if (isset($settings['panels'])) {
@@ -142,7 +142,7 @@ class ToolbarComponent extends Component {
  * @param array $userPanels The list of panels ther user has added removed.
  * @return array Array of panels to use.
  **/
-	function _makePanelList($userPanels) {
+	protected function _makePanelList($userPanels) {
 		$panels = $this->_defaultPanels;
 		foreach ($userPanels as $key => $value) {
 			if (is_numeric($key)) {
@@ -163,7 +163,7 @@ class ToolbarComponent extends Component {
  *
  * @return bool
  **/
-	function startup($controller) {
+	public function startup($controller) {
 		$currentViewClass = $controller->view;
 		$this->_makeViewClass($currentViewClass);
 		$controller->view = 'DebugKit.Debug';
@@ -197,7 +197,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	function beforeRedirect(&$controller) {
+	public function beforeRedirect($controller) {
 		if (!class_exists('DebugKitDebugger')) {
 			return null;
 		}
@@ -213,7 +213,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	function beforeRender($controller) {
+	public function beforeRender($controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
@@ -229,7 +229,7 @@ class ToolbarComponent extends Component {
  * @param int $key
  * @return array
  **/
-	function loadState($key) {
+	public function loadState($key) {
 		$history = Cache::read($this->cacheKey, 'debug_kit');
 		if (isset($history[$key])) {
 			return $history[$key];
@@ -243,7 +243,7 @@ class ToolbarComponent extends Component {
  * @return void
  * @access protected
  **/
-	function _createCacheConfig() {
+	protected function _createCacheConfig() {
 		if (Configure::read('Cache.disable') !== true) {
 			Cache::config('debug_kit', array(
 				'duration' => $this->cacheDuration,
@@ -260,7 +260,7 @@ class ToolbarComponent extends Component {
  * @return array Array of all panel beforeRender()
  * @access protected
  **/
-	function _gatherVars(&$controller) {
+	protected function _gatherVars($controller) {
 		$vars = array();
 		$panels = array_keys($this->panels);
 
@@ -286,7 +286,7 @@ class ToolbarComponent extends Component {
  * @return 	void
  * @access protected
  **/
-	function _loadPanels($panels, $settings) {
+	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
 			if (!class_exists($className) && !App::import('Vendor',  $className)) {
@@ -309,7 +309,7 @@ class ToolbarComponent extends Component {
  * @access protected
  * @return void
  */
-	function _makeViewClass($baseClassName) {
+	protected function _makeViewClass($baseClassName) {
 		if (!class_exists('DoppelGangerView')) {
 			App::import('View', $baseClassName);
 			if (strpos($baseClassName, '.') !== false) {
@@ -328,7 +328,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	function _eval($code) {
+	protected function _eval($code) {
 		eval($code);
 	}
 
@@ -340,7 +340,7 @@ class ToolbarComponent extends Component {
  * @access protected
  * @return void
  **/
-	function _saveState(&$controller, $vars) {
+	protected function _saveState($controller, $vars) {
 		$config = Cache::config('debug_kit');
 		if (empty($config) || !isset($this->panels['history'])) {
 			return;
@@ -371,7 +371,7 @@ class DebugPanel extends Object {
  *
  * @var string
  */
-	var $plugin = null;
+	public $plugin = null;
 
 /**
  * Defines the title for displaying on the toolbar. If null, the class name will be used.
@@ -379,7 +379,7 @@ class DebugPanel extends Object {
  *
  * @var string
  */
-	var $title = null;
+	public $title = null;
 
 /**
  * Provide a custom element name for this panel.  If null, the underscored version of the class
@@ -387,7 +387,7 @@ class DebugPanel extends Object {
  *
  * @var string
  */
-	var $elementName = null;
+	public $elementName = null;
 
 /**
  * startup the panel
@@ -397,7 +397,7 @@ class DebugPanel extends Object {
  * @param object $controller Controller reference.
  * @return void
  **/
-	function startup(&$controller) { }
+	public function startup($controller) { }
 
 /**
  * Prepare output vars before Controller Rendering.
@@ -405,7 +405,7 @@ class DebugPanel extends Object {
  * @param object $controller Controller reference.
  * @return void
  **/
-	function beforeRender(&$controller) { }
+	public function beforeRender($controller) { }
 }
 
 /**
@@ -417,14 +417,14 @@ class DebugPanel extends Object {
  **/
 class HistoryPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 
 /**
  * Number of history elements to keep
  *
  * @var string
  **/
-	var $history = 5;
+	public $history = 5;
 
 /**
  * Constructor
@@ -432,7 +432,7 @@ class HistoryPanel extends DebugPanel {
  * @param array $settings Array of settings.
  * @return void
  **/
-	function __construct($settings) {
+	public function __construct($settings) {
 		if (isset($settings['history'])) {
 			$this->history = $settings['history'];
 		}
@@ -443,7 +443,7 @@ class HistoryPanel extends DebugPanel {
  *
  * @return array contents for panel
  **/
-	function beforeRender(&$controller) {
+	public function beforeRender($controller) {
 		$cacheKey = $controller->Toolbar->cacheKey;
 		$toolbarHistory = Cache::read($cacheKey, 'debug_kit');
 		$historyStates = array();
@@ -482,15 +482,15 @@ class HistoryPanel extends DebugPanel {
  **/
 class VariablesPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 
 /**
  * beforeRender callback
  *
  * @return array
  **/
-	function beforeRender(&$controller) {
-		return array_merge($controller->viewVars, array('$this->data' => $controller->data));
+	public function beforeRender($controller) {
+		return array_merge($controller->viewVars, array('$this->data' => $controller->request->data));
 	}
 }
 
@@ -503,7 +503,7 @@ class VariablesPanel extends DebugPanel {
  **/
 class SessionPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 
 /**
  * beforeRender callback
@@ -512,7 +512,7 @@ class SessionPanel extends DebugPanel {
  * @access public
  * @return array
  */
-	function beforeRender(&$controller) {
+	public function beforeRender($controller) {
 		$sessions = $controller->Toolbar->Session->read();
 		return $sessions;
 	}
@@ -527,14 +527,14 @@ class SessionPanel extends DebugPanel {
  **/
 class RequestPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 
 /**
  * beforeRender callback - grabs request params
  *
  * @return array
  **/
-	function beforeRender(&$controller) {
+	public function beforeRender($controller) {
 		$out = array();
 		$out['params'] = $controller->request->params;
 		$out['url'] = $controller->request->url;
@@ -556,14 +556,14 @@ class RequestPanel extends DebugPanel {
  **/
 class TimerPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 	
 /**
  * startup - add in necessary helpers
  *
  * @return void
  **/
-	function startup(&$controller) {
+	public function startup($controller) {
 		if (!in_array('Number', $controller->helpers)) {
 			$controller->helpers[] = 'Number';
 		}
@@ -582,7 +582,7 @@ class TimerPanel extends DebugPanel {
  **/
 class SqlLogPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 
 /**
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
@@ -590,7 +590,7 @@ class SqlLogPanel extends DebugPanel {
  *
  * @var int
  **/
-	var $slowRate = 20;
+	public $slowRate = 20;
 
 /**
  * Gets the connection names that should have logs + dumps generated.
@@ -599,7 +599,7 @@ class SqlLogPanel extends DebugPanel {
  * @access public
  * @return void
  */
-	function beforeRender(&$controller) {
+	public function beforeRender($controller) {
 		if (!class_exists('ConnectionManager')) {
 			return array();
 		}
@@ -608,7 +608,7 @@ class SqlLogPanel extends DebugPanel {
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
 			$driver = null;
-			$db =& ConnectionManager::getDataSource($configName);
+			$db = ConnectionManager::getDataSource($configName);
 			if (
 				(empty($db->config['driver']) && empty($db->config['datasource'])) ||
 				!$db->isInterfaceSupported('getLog')
@@ -640,14 +640,14 @@ class SqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 
-	var $plugin = 'debug_kit';
+	public $plugin = 'debug_kit';
 
 /**
  * Constructor - sets up the log listener.
  *
  * @return void
  */
-	function __construct($settings) {
+	public function __construct($settings) {
 		parent::__construct();
 		if (!class_exists('CakeLog')) {
 			App::import('Core', 'CakeLog');
@@ -669,7 +669,7 @@ class LogPanel extends DebugPanel {
  *
  * @return array
  **/
-	function beforeRender(&$controller) {
+	public function beforeRender($controller) {
 		$logs = $this->logger->logs;
 		return $logs;
 	}
@@ -682,15 +682,15 @@ class LogPanel extends DebugPanel {
  */
 class DebugKitLogListener implements CakeLogInterface {
 
-	var $logs = array();
+	public $logs = array();
 
 /**
  * Makes the reverse link needed to get the logs later.
  *
  * @return void
  */
-	function DebugKitLogListener($options) {
-		$options['panel']->logger =& $this;
+	public function DebugKitLogListener($options) {
+		$options['panel']->logger = $this;
 	}
 
 /**
@@ -698,7 +698,7 @@ class DebugKitLogListener implements CakeLogInterface {
  *
  * @return void
  */
-	function write($type, $message) {
+	public function write($type, $message) {
 		if (!isset($this->logs[$type])) {
 			$this->logs[$type] = array();
 		}

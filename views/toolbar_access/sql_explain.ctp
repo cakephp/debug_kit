@@ -1,9 +1,10 @@
 <table class="sql-log-query-explain debug-table">
 <?php
+$this->log('view', 'debgug_kit');
 $headers = array_shift($result);
 
-echo $html->tableHeaders($headers);
-echo $html->tableCells($result);
+echo $this->Html->tableHeaders($headers);
+echo $this->Html->tableCells($result);
 ?>
 </table>
 <?php

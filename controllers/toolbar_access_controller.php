@@ -34,7 +34,7 @@ class ToolbarAccessController extends DebugKitAppController {
  **/
 	var $helpers = array(
 		'DebugKit.Toolbar' => array('output' => 'DebugKit.HtmlToolbar'),
-		'Javascript', 'Number', 'DebugKit.SimpleGraph'
+		'Js', 'Number', 'DebugKit.SimpleGraph'
 	);
 
 /**
@@ -88,24 +88,20 @@ class ToolbarAccessController extends DebugKitAppController {
  */
 	function sql_explain() {
 		if (
-			!$this->RequestHandler->isPost() ||
-			empty($this->data['log']['sql']) || 
-			empty($this->data['log']['ds']) ||
-			empty($this->data['log']['hash']) ||
+			!$this->request->is('post') ||
+			empty($this->request->data['log']['sql']) || 
+			empty($this->request->data['log']['ds']) ||
+			empty($this->request->data['log']['hash']) ||
 			Configure::read('debug') == 0
 		) {
-			$this->cakeError('error404', array(array(
-				'message' => 'Invalid parameters'
-			)));
+			throw new BadRequestException('Invalid parameters');
 		}
 		App::import('Core', 'Security');
-		$hash = Security::hash($this->data['log']['sql'] . $this->data['log']['ds'], null, true);
-		if ($hash !== $this->data['log']['hash']) {
-			$this->cakeError('error404', array(array(
-				'message' => 'Invalid parameters'
-			)));
+		$hash = Security::hash($this->request->data['log']['sql'] . $this->request->data['log']['ds'], null, true);
+		if ($hash !== $this->request->data['log']['hash']) {
+			throw new BadRequestException('Invalid parameters');
 		}
-		$result = $this->ToolbarAccess->explainQuery($this->data['log']['ds'], $this->data['log']['sql']);
+		$result = $this->ToolbarAccess->explainQuery($this->request->data['log']['ds'], $this->request->data['log']['sql']);
 		$this->set(compact('result'));
 	}
 }

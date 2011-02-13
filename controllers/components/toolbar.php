@@ -88,6 +88,13 @@ class ToolbarComponent extends Component {
 	var $cacheDuration = '+4 hours';
 
 /**
+ * Status whether component is enable or disable
+ *
+ * @var boolean
+ **/
+	var $enabled = true;
+
+/**
  * Constructor
  *
  * If debug is off the component will be disabled and not do any further time tracking
@@ -110,14 +117,14 @@ class ToolbarComponent extends Component {
 			$this->enabled = false;
 			return false;
 		}
-		if ($this->settings['autoRun'] == false && !isset($controller->params['url']['debug'])) {
+		if ($this->settings['autoRun'] == false && !isset($this->controller->request->url['debug'])) {
 			$this->enabled = false;
 			return false;
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization', true));
-		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization'));
+		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup'));
 
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
 		if (in_array('history', $panels) || (isset($settings['history']) && $settings['history'] !== false)) {
@@ -206,7 +213,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	function beforeRender(&$controller) {
+	function beforeRender($controller) {
 		DebugKitDebugger::stopTimer('controllerAction');
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
@@ -287,10 +294,10 @@ class ToolbarComponent extends Component {
 				continue;
 			}
 			list($plugin, $className) = pluginSplit($className);
-			$panelObj =& new $className($settings);
+			$panelObj = new $className($settings);
 			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
 				list(, $panel) = pluginSplit($panel);
-				$this->panels[$panel] =& $panelObj;
+				$this->panels[$panel] = $panelObj;
 			}
 		}
 	}

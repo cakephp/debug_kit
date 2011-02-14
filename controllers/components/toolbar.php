@@ -137,6 +137,18 @@ class ToolbarComponent extends Component {
 	}
 
 /**
+ * Initialize callback.
+ * If automatically disabled, tell component collection about the state.
+ *
+ * @return bool
+ **/
+	public function initialize($controller) {
+		if (!$this->enabled) {
+			$this->_Collection->disable('Toolbar');
+		}
+	}
+
+/**
  * Go through user panels and remove default panels as indicated.
  *
  * @param array $userPanels The list of panels ther user has added removed.
@@ -188,8 +200,8 @@ class ToolbarComponent extends Component {
 			$this->panels[$panelName]->startup($controller);
 		}
 		DebugKitDebugger::stopTimer('componentInit');
-		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller action', true));
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller action start', true));
+		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller action'));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller action start'));
 	}
 
 /**
@@ -219,8 +231,8 @@ class ToolbarComponent extends Component {
 		$this->_saveState($controller, $vars);
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action', true));
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start', true));
+		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action'));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start'));
 	}
 
 /**
@@ -290,7 +302,7 @@ class ToolbarComponent extends Component {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
 			if (!class_exists($className) && !App::import('Vendor',  $className)) {
-				trigger_error(sprintf(__d('debug_kit', 'Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
+				trigger_error(__d('debug_kit', 'Could not load DebugToolbar panel %s', $panel), E_USER_WARNING);
 				continue;
 			}
 			list($plugin, $className) = pluginSplit($className);
@@ -502,7 +514,7 @@ class VariablesPanel extends DebugPanel {
  * @return array
  **/
 	public function beforeRender($controller) {
-		return array_merge($controller->viewVars, array('$this->data' => $controller->request->data));
+		return array_merge($controller->viewVars, array('$request->data' => $controller->request->data));
 	}
 }
 

@@ -51,6 +51,7 @@ DEBUGKIT.historyPanel = function () {
 		try {
 			var responseJson = eval( '(' + response.response.text + ')');
 		} catch (e) {
+			console.log(response.response.text);
 			alert('Could not convert JSON response');
 			return false;
 		}
@@ -90,6 +91,7 @@ DEBUGKIT.historyPanel = function () {
 				if (Element.nodeName(panelContent, 'DIV') && Element.hasClass(panelContent, 'panel-history')) {
 					var panelId = panelContent.id.replace('-history', '');
 					if (responseJson[panelId]) {
+						console.log(responseJson[panelId]);
 						panelContent.innerHTML = responseJson[panelId];
 						var lists;
 						if (panelContent.getElementsByClassName) {

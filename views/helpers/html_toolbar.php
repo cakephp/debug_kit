@@ -181,7 +181,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$form .= $this->Form->hidden('log.ds', array('id' => "logDs{$uid}", 'value' => $connection));
 		$form .= $this->Form->hidden('log.sql', array('id' => "logSql{$uid}", 'value' => $sql));
 		$form .= $this->Form->hidden('log.hash', array('id' => "logHash{$uid}", 'value' => $hash));
-		$form .= $this->Form->submit(__d('debug_kit', 'Explain', true), array(
+		$form .= $this->Form->submit(__d('debug_kit', 'Explain'), array(
 			'div' => false,
 			'class' => 'sql-explain-link'
 		));

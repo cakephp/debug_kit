@@ -160,7 +160,7 @@ class ToolbarHelper extends AppHelper {
 			if ($isSlow && $isHtml) {
 				$query['actions'] = sprintf(
 					'<span class="slow-query">%s</span>',
-					__d('debug_kit', 'maybe slow', true)
+					__d('debug_kit', 'maybe slow')
 				);
 			} elseif ($isSlow) {
 				$query['actions'] = '*';

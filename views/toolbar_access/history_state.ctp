@@ -23,6 +23,7 @@ foreach ($toolbarState as $panelName => $panel) {
 		'content' => $panel['content'], 
 		'plugin' => $panel['plugin']
 	));
+	$this->log($panels[$panelName], 'content');
 }
 echo json_encode($panels);
 Configure::write('debug', 0);

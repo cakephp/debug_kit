@@ -38,7 +38,7 @@ class DebugView extends DoppelGangerView {
  */
 	protected function _render($___viewFn, $___dataForView = array()) {
 		if (!isset($___dataForView['disableTimer'])) {
-			DebugKitDebugger::startTimer('render_' . basename($___viewFn), sprintf(__d('debug_kit', 'Rendering %s', true), Debugger::trimPath($___viewFn)));
+			DebugKitDebugger::startTimer('render_' . basename($___viewFn), __d('debug_kit', 'Rendering %s', Debugger::trimPath($___viewFn)));
 		}
 		$out = parent::_render($___viewFn, $___dataForView);
 
@@ -53,18 +53,20 @@ class DebugView extends DoppelGangerView {
  *
  * @return void
  */
-	public function element($name, $params = array(), $loadHelpers = false) {
+	public function element($name, $params = array(), $callbacks = false) {
 		$out = '';
 		$isHtml = (
 			(isset($this->params['url']['ext']) && $this->params['url']['ext'] === 'html') ||
 			!isset($this->params['url']['ext'])
 		);
 		if ($isHtml) {
-			$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Starting to render', true), $name); 
+			$out .= sprintf("<!-- %s - %s -->\n", __d('debug_kit', 'Starting to render'), $name); 
 		}
-		$out .= parent::element($name, $params, $loadHelpers);
+
+		$out .= parent::element($name, $params, $callbacks);
+
 		if ($isHtml) {
-			$out .= sprintf("\n<!-- %s - %s -->\n", __d('debug_kit', 'Finished', true), $name);
+			$out .= sprintf("\n<!-- %s - %s -->\n", __d('debug_kit', 'Finished'), $name);
 		}
 		return $out;
 	}
@@ -86,7 +88,7 @@ class DebugView extends DoppelGangerView {
 
 		DebugKitDebugger::stopTimer('viewRender');
 		DebugKitDebugger::stopTimer('controllerRender');
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'View render complete', true));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'View render complete'));
 
 		if (empty($this->params['requested']) && $this->Helpers->attached('Toolbar')) {
 			$backend = $this->Helpers->Toolbar->getName();

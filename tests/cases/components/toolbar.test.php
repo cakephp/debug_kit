@@ -119,6 +119,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->uses = null;
 		$this->Controller->components = array('Toolbar' => $settings + array('className' => 'TestToolbar'));
 		$this->Controller->constructClasses();
+		$this->Controller->Components->trigger('initialize', array($this->Controller));
 		return $this->Controller;
 	}
 
@@ -253,7 +254,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 	}
 
 /**
- * ensure that enabled = false when debug == 0 on initialize
+ * ensure that Toolbar is not enabled when debug == 0 on initialize
  *
  * @return void
  **/
@@ -263,7 +264,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->_loadController();
 		Configure::write('debug', $_debug);
 
-		$this->assertFalse($this->Controller->Toolbar->enabled);
+		$this->assertFalse($this->Controller->Components->enabled('Toolbar'));
 	}
 
 /**
@@ -279,7 +280,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		));
 		Configure::write('debug', $_debug);
 
-		$this->assertTrue($this->Controller->Toolbar->enabled);
+		$this->assertTrue($this->Controller->Components->enabled('Toolbar'));
 	}
 
 /**
@@ -291,7 +292,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->_loadController(array(
 			'autoRun' => false,
 		));
-		$this->assertFalse($this->Controller->Toolbar->enabled);
+		$this->assertFalse($this->Controller->Components->enabled('Toolbar'));
 	}
 
 /**
@@ -305,7 +306,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->_loadController(array(
 			'autoRun' => false,
 		));
-		$this->assertTrue($this->Controller->Toolbar->enabled);
+		$this->assertTrue($this->Controller->Components->enabled('Toolbar'));
 	}
 
 /**

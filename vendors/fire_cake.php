@@ -299,7 +299,7 @@ class FireCake {
 		$_this = FireCake::getInstance();
 
 		if (headers_sent($filename, $linenum)) {
-			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.', true), $filename, $linenum), E_USER_WARNING);
+			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.'), $filename, $linenum), E_USER_WARNING);
 			return false;
 		}
 		if (!$_this->_enabled || !$_this->detectClientExtension()) {
@@ -320,7 +320,7 @@ class FireCake {
 				$label = $args[1];
 				break;
 			default:
-				trigger_error(__d('debug_kit', 'Incorrect parameter count for FireCake::fb()', true), E_USER_WARNING);
+				trigger_error(__d('debug_kit', 'Incorrect parameter count for FireCake::fb()'), E_USER_WARNING);
 				return false;
 		}
 		if (isset($_this->_levels[$type])) {
@@ -399,7 +399,7 @@ class FireCake {
 			}
 			$_this->_messageIndex++;
 			if ($_this->_messageIndex > 99999) {
-				trigger_error(__d('debug_kit', 'Maximum number (99,999) of messages reached!', true), E_USER_WARNING);
+				trigger_error(__d('debug_kit', 'Maximum number (99,999) of messages reached!'), E_USER_WARNING);
 			}
 		}
 		$_this->_sendHeader('X-Wf-1-Index', $_this->_messageIndex - 1);

@@ -300,7 +300,8 @@ class ToolbarComponent extends Object {
  */
 	function _makeViewClass($baseClassName) {
 		if (!class_exists('DoppelGangerView')) {
-			App::import('View', $baseClassName);
+			$parent = strtolower($baseClassName) === 'view' ? false : true;
+			App::import('View', $baseClassName, $parent);
 			if (strpos($baseClassName, '.') !== false) {
 				list($plugin, $baseClassName) = explode('.', $baseClassName);
 			}

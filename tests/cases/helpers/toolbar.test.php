@@ -132,7 +132,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function testGetQueryLogs() {
-		$model = ClassRegistry::init('Post');
+		$model = new CakeTestModel(array('table' => 'posts', 'alias' => 'Post'));
 		$model->find('all');
 		$model->find('first');
 
@@ -157,6 +157,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 	public function endTest() {
 		App::build(array('views' => $this->_viewPaths), true);
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
+		ClassRegistry::flush();
 	}
 /**
  * tearDown
@@ -166,7 +167,5 @@ class ToolbarHelperTestCase extends CakeTestCase {
  */
 	public function tearDown() {
 		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::removeObject('view');
-		ClassRegistry::flush();
 	}
 }

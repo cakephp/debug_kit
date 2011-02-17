@@ -172,7 +172,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 		$this->Controller->Toolbar->evalTest = true;
-		$this->Controller->view = 'Plugin.OtherView';
+		$this->Controller->viewClass = 'Plugin.OtherView';
 		$this->Controller->Toolbar->startup($this->Controller);
 		$this->assertPattern('/class DoppelGangerView extends OtherView/', $this->Controller->Toolbar->evalCode);
 	}
@@ -323,7 +323,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->panels['test'] = $MockPanel;
 
 		$this->Controller->Toolbar->startup($this->Controller);
-		$this->assertEqual($this->Controller->view, 'DebugKit.Debug');
+		$this->assertEqual($this->Controller->viewClass, 'DebugKit.Debug');
 		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
 
 		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.HtmlToolbar');

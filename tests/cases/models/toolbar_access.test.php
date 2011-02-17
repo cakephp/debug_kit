@@ -55,7 +55,7 @@ class ToolbarAccessTestCase extends CakeTestCase {
  * @return void
  */
 	public function testExplainQuery() {
-		$Post = ClassRegistry::init('Post');
+		$Post = new CakeTestModel(array('table' => 'posts', 'alias' => 'Post'));
 		$db = $Post->getDataSource();
 		$sql = 'SELECT * FROM ' . $db->fullTableName('posts') . ';';
 		$result = $this->Model->explainQuery($Post->useDbConfig, $sql);

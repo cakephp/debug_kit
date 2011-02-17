@@ -176,9 +176,9 @@ class ToolbarComponent extends Component {
  * @return bool
  **/
 	public function startup($controller) {
-		$currentViewClass = $controller->view;
+		$currentViewClass = $controller->viewClass;
 		$this->_makeViewClass($currentViewClass);
-		$controller->view = 'DebugKit.Debug';
+		$controller->viewClass = 'DebugKit.Debug';
 		$isHtml = (
 			!isset($controller->request->params['url']['ext']) ||
 			(isset($controller->request->params['url']['ext']) && $controller->request->params['url']['ext'] == 'html')

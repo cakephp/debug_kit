@@ -32,6 +32,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	public function setUp() {
+		parent::setUp();
+
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
@@ -40,26 +42,44 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.FirePhpToolbar'));
 		$this->Toolbar->FirePhpToolbar = new FirePhpToolbarHelper($this->View);
 
-		if (isset($this->_debug)) {
-			Configure::write('debug', $this->_debug);
-		}
+		$this->firecake = FireCake::getInstance();
 	}
 /**
  * start test - switch view paths
  *
  * @return void
  **/
-	public function startTest() {
-		$this->_viewPaths = App::build('views');
+	public static function setupBeforeClass() {
 		App::build(array(
 			'views' => array(
 			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
 			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
 			ROOT . DS . LIBS . 'view' . DS
 		)), true);
-		$this->_debug = Configure::read('debug');
-		$this->firecake = FireCake::getInstance();
 	}
+
+/**
+ * endTest()
+ *
+ * @return void
+ */
+	public static function tearDownAfterClass() {
+		App::build();
+	}
+
+/**
+ * tearDown
+ *
+ * @access public
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->Toolbar, $this->Controller);
+		ClassRegistry::flush();
+		Router::reload();
+		TestFireCake::reset();
+	}
+
 /**
  * test neat array (dump)creation
  *
@@ -117,24 +137,5 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->firecake->sentHeaders;
 		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);	
 	}
-/**
- * endTest()
- *
- * @return void
- */
-	public function endTest() {
-		Configure::write('viewPaths', $this->_viewPaths);
-		TestFireCake::reset();
-	}
-/**
- * tearDown
- *
- * @access public
- * @return void
- */
-	public function tearDown() {
-		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::flush();
-		Router::reload();
-	}
+
 }

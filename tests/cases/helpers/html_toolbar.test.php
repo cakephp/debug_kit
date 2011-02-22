@@ -21,12 +21,29 @@ App::import('Helper', array('DebugKit.HtmlToolbar', 'Html', 'Form'));
 App::import('Core', array('View', 'Controller'));
 
 class HtmlToolbarHelperTestCase extends CakeTestCase {
+
+	public static function setupBeforeClass() {
+		App::build(array(
+			'views' => array(
+				TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
+				APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
+				ROOT . DS . LIBS . 'view' . DS
+			)
+		), true);
+	}
+	
+	public static function tearDownAfterClass() {
+		App::build();
+	}
+
 /**
  * setUp
  *
  * @return void
  **/
 	public function setUp() {
+		parent::setUp();
+
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
@@ -36,26 +53,19 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar->HtmlToolbar = new HtmlToolbarHelper($this->View);
 		$this->Toolbar->HtmlToolbar->Html = new HtmlHelper($this->View);
 		$this->Toolbar->HtmlToolbar->Form = new FormHelper($this->View);
+	}
 
-		if (isset($this->_debug)) {
-			Configure::write('debug', $this->_debug);
-		}
-	}
 /**
- * start Case - switch view paths
+ * tearDown
  *
+ * @access public
  * @return void
- **/
-	public function startTest() {
-		$this->_viewPaths = App::path('views');
-		App::build(array(
-			'views' => array(
-			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
-			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
-			ROOT . DS . LIBS . 'view' . DS
-		)), true);
-		$this->_debug = Configure::read('debug');
+ */
+	public function tearDown() {
+		unset($this->Toolbar, $this->Controller);
+		ClassRegistry::flush();
 	}
+
 /**
  * test Neat Array formatting
  *
@@ -325,24 +335,5 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	public function testPanelEnd() {
 		$result = $this->Toolbar->panelEnd();
 		$this->assertNull($result);
-	}
-/**
- * reset the view paths
- *
- * @return void
- **/
-	public function endTest() {
-		App::build();
-	}
-	
-/**
- * tearDown
- *
- * @access public
- * @return void
- */
-	public function tearDown() {
-		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::flush();
 	}
 }

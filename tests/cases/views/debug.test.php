@@ -31,46 +31,22 @@ App::import('Vendor', 'DebugKit.DebugKitDebugger');
  * @package       debug_kit.tests
  */
 class DebugViewTestCase extends CakeTestCase {
-/**
- * set Up test case
- *
- * @return void
- **/
-	public function setUp() {
-		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-		Router::parse('/');
-		$this->Controller = new Controller();
-		$this->View = new DebugView($this->Controller, false);
-		$this->_debug = Configure::read('debug');
-		$this->_paths = array();
-		$this->_paths['plugins'] = App::path('plugins');
-		$this->_paths['views'] = App::path('views');
-		$this->_paths['vendors'] = App::path('vendors');
-		$this->_paths['controllers'] = App::path('controllers');
-	}
-/**
- * tear down function
- *
- * @return void
- **/
-	public function endTest() {
-		App::build(array(
-			'plugins' => $this->_paths['plugins'],
-			'views' => $this->_paths['views'],
-			'vendors' => $this->_paths['vendors'],
-			'controllers' => $this->_paths['controllers']
-		));
 
-		unset($this->View, $this->Controller);
-		DebugKitDebugger::clearTimers();
-		Configure::write('debug', $this->_debug);
-	}
+	public static $paths = array();
+
 /**
- * start Test - switch view paths
+ * setup paths for the case.
  *
  * @return void
- **/
-	public function startTest() {
+ */
+	public static function setUpBeforeClass() {
+		self::$paths = array(
+			'plugins' => App::path('plugins'),
+			'views' => App::path('views'),
+			'vendors' => App::path('vendors'),
+			'controllers' => App::path('controllers'),
+		);
+
 		App::build(array(
 			'views' => array(
 				TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
@@ -79,6 +55,45 @@ class DebugViewTestCase extends CakeTestCase {
 			)
 		), true);
 	}
+
+/**
+ * restore paths.
+ *
+ * @return void
+ */
+	public static function tearDownAfterClass() {
+		App::build(array(
+			'plugins' => self::$paths['plugins'],
+			'views' => self::$paths['views'],
+			'vendors' => self::$paths['vendors'],
+			'controllers' => self::$paths['controllers'],
+		));
+	}
+
+/**
+ * set Up test case
+ *
+ * @return void
+ **/
+	public function setUp() {
+		parent::setUp();
+
+		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+		Router::parse('/');
+		$this->Controller = new Controller();
+		$this->View = new DebugView($this->Controller, false);	
+	}
+
+/**
+ * tear down function
+ *
+ * @return void
+ **/
+	public function tearDown() {
+		unset($this->View, $this->Controller);
+		DebugKitDebugger::clearTimers();
+	}
+
 /**
  * test that element timers are working
  *

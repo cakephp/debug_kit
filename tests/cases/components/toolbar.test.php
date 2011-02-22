@@ -69,7 +69,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @access public
  * @return void
  **/
-	public function startTest() {
+	public function setUp() {
+		parent::setUp();
+
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		$this->_server = $_SERVER;
 		$this->_get = $_GET;
@@ -88,7 +90,9 @@ class DebugToolbarTestCase extends CakeTestCase {
  *
  * @return void
  **/
-	public function endTest() {
+	public function tearDown() {
+		parent::tearDown();
+
 		$_SERVER = $this->_server;
 		$_GET = $this->_get;
 		App::build(array(
@@ -150,9 +154,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 	public function testLoadPluginPanels() {
 		$debugKitPath = App::pluginPath('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
-		$skip = $this->skipIf($noDir, 'Could not find debug_kit in plugin paths, skipping %s');
-		if ($skip) {
-			return;
+		if ($noDir) {
+			$this->markTestAsSkipped('Could not find debug_kit in plugin paths');
 		}
 
 		App::build(array('plugins' => array($debugKitPath . 'tests' . DS . 'test_app' . DS . 'plugins' . DS)));
@@ -186,9 +189,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 	public function testVendorPanels() {
 		$debugKitPath = App::pluginPath('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
-		$skip = $this->skipIf($noDir, 'Could not find debug_kit in plugin paths, skipping %s');
-		if ($skip) {
-			return;
+		if ($noDir) {
+			$this->markTestAsSkipped('Could not find debug_kit in plugin paths');
 		}
 
 		App::build(array(
@@ -565,9 +567,8 @@ class DebugToolbarTestCase extends CakeTestCase {
 	public function testNoRequestActionInterference() {
 		$debugKitPath = App::pluginPath('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
-		$skip = $this->skipIf($noDir, 'Could not find debug_kit in plugin paths, skipping %s');
-		if ($skip) {
-			return;
+		if ($noDir) {
+			$this->markTestAsSkipped('Could not find debug_kit in plugin paths');
 		}
 
 		App::build(array(

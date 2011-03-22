@@ -263,7 +263,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js"\s*>\s?</script>#', $result);
+		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js(:?\?\d*?)?"\s*>\s?</script>#', $result);
 	}
 
 /**

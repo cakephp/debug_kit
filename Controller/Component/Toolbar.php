@@ -1,6 +1,7 @@
 <?php
 
-App::import('Core', 'CakeLog');
+App::uses('CakeLog', 'Log');
+App::uses('CakeLogInterface', 'Log');
 
 /**
  * DebugKit DebugToolbar Component
@@ -706,6 +707,7 @@ class LogPanel extends DebugPanel {
  *
  * @package debug_kit.components
  */
+
 class DebugKitLogListener implements CakeLogInterface {
 
 	public $logs = array();

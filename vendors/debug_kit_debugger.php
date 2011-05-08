@@ -18,7 +18,7 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('Core', 'Debugger');
+App::uses('Debugger', 'Utility');
 App::import('Vendor', 'DebugKit.FireCake');
 
 /**

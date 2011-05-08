@@ -18,7 +18,8 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('Vendor', 'DebugKit.DebugKitDebugger');
+App::uses('DebugKit.DebugKitDebugger', 'Vendor');
+App::uses('AppHelper', 'View/Helper');
 
 class ToolbarHelper extends AppHelper {
 /**

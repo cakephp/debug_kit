@@ -150,7 +150,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (preg_match('#</head>#', $view->output)) {
 			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
 		}
-		$toolbar = $view->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
+		$toolbar = $this->_View->element('debug_toolbar', array('plugin' => 'debug_kit', 'disableTimer' => true));
 		if (preg_match('#</body>#', $view->output)) {
 			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
 		}

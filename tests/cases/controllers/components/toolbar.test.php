@@ -131,9 +131,16 @@ class DebugToolbarTestCase extends CakeTestCase {
 /**
  * test generating a DoppelGangerView with a pluginView.
  *
+ * If $this->Controller->Toolbar->startup() has been previously called,
+ * DoppelGangerView class has already been defined.
+ *
  * @return void
  **/
 	function testPluginViewParsing() {
+		if (class_exists('DoppelGangerView')) {
+			$this->skipIf(true, 'Class DoppelGangerView already defined, skipping %s');
+			return;
+		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 		$this->Controller->Toolbar->evalTest = true;
 		$this->Controller->view = 'Plugin.OtherView';

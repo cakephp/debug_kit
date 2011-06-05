@@ -148,6 +148,10 @@ class ToolbarHelper extends AppHelper {
 		$options += array('explain' => false, 'cache' => true, 'threshold' => 20);
 		$db = ConnectionManager::getDataSource($connection);
 		
+		if (!method_exists($db, 'getLog')) {
+			return array();
+		}
+
 		$out = array();
 		$log = $db->getLog();
 		foreach ($log['log'] as $i => $query) {

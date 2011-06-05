@@ -52,7 +52,7 @@
 				</div>
 			<?php $this->Toolbar->panelEnd(); ?>
 			</li>
-		<?php endforeach ?>
+		<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>
 </div>

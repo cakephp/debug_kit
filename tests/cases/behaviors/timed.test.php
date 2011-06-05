@@ -28,7 +28,7 @@ class TimedBehaviorTestCase extends CakeTestCase {
  * @return void
  */
 	function startTest() {
-		$this->Article =& new Model(array('ds' => 'test_suite', 'table' => 'Articles', 'name' => 'Article'));
+		$this->Article =& new Model(array('ds' => 'test_suite', 'table' => 'articles', 'name' => 'Article'));
 		$this->Article->Behaviors->attach('DebugKit.Timed');
 	}
 

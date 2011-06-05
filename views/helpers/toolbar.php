@@ -142,6 +142,10 @@ class ToolbarHelper extends AppHelper {
 		App::import('Model', 'ConnectionManager');
 		$db =& ConnectionManager::getDataSource($connection);
 		
+		if (!$db->isInterfaceSupported('getLog')) {
+			return array();
+		}
+
 		$out = array();
 		$log = $db->getLog();
 		foreach ($log['log'] as $i => $query) {

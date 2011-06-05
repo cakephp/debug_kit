@@ -203,6 +203,9 @@ class ToolbarComponent extends Object {
  * @return void
  **/
 	function beforeRender(&$controller) {
+		if (!class_exists('DebugKitDebugger')) {
+			return null;
+		}
 		DebugKitDebugger::stopTimer('controllerAction');
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);

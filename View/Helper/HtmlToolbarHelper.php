@@ -20,7 +20,8 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('helper', 'DebugKit.Toolbar');
+App::uses('ToolbarHelper', 'DebugKit.View/Helper');
+App::uses('Security', 'Utility');
 
 class HtmlToolbarHelper extends ToolbarHelper {
 /**
@@ -150,7 +151,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (preg_match('#</head>#', $view->output)) {
 			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
 		}
-		$toolbar = $view->element('debug_toolbar', array(), array('plugin' => 'debug_kit', 'disableTimer' => true));
+		$toolbar = $view->element('debug_toolbar', array(), array('plugin' => 'DebugKit', 'disableTimer' => true));
 		if (preg_match('#</body>#', $view->output)) {
 			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
 		}
@@ -165,10 +166,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (!preg_match('/^(SELECT)/i', $sql)) {
 			return '';
 		}
-		App::import('Core', 'Security');
 		$hash = Security::hash($sql . $connection, null, true);
 		$url = array(
-			'plugin' => 'debug_kit',
+			'plugin' => 'DebugKit',
 			'controller' => 'toolbar_access',
 			'action' => 'sql_explain'
 		);

@@ -19,6 +19,8 @@
  * @since         DebugKit 1.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+App::uses('Security', 'Utility');
+
 class ToolbarAccessController extends DebugKitAppController {
 /**
  * name
@@ -96,7 +98,6 @@ class ToolbarAccessController extends DebugKitAppController {
 		) {
 			throw new BadRequestException('Invalid parameters');
 		}
-		App::import('Core', 'Security');
 		$hash = Security::hash($this->request->data['log']['sql'] . $this->request->data['log']['ds'], null, true);
 		if ($hash !== $this->request->data['log']['hash']) {
 			throw new BadRequestException('Invalid parameters');

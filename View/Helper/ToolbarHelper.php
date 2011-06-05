@@ -20,6 +20,7 @@
  **/
 App::uses('DebugKit.DebugKitDebugger', 'Vendor');
 App::uses('AppHelper', 'View/Helper');
+App::uses('ConnectionManager', 'Model');
 
 class ToolbarHelper extends AppHelper {
 /**
@@ -145,7 +146,6 @@ class ToolbarHelper extends AppHelper {
  */
 	public function getQueryLogs($connection, $options = array()) {
 		$options += array('explain' => false, 'cache' => true, 'threshold' => 20);
-		App::import('Model', 'ConnectionManager');
 		$db = ConnectionManager::getDataSource($connection);
 		
 		$out = array();

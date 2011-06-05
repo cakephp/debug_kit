@@ -19,7 +19,8 @@
  * @since         DebugKit 1.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::import('Helper', 'Html');
+App::uses('AppHelper', 'View/Helper');
+App::uses('HtmlHelper', 'View/Helper');
 
 class SimpleGraphHelper extends AppHelper {
 /**

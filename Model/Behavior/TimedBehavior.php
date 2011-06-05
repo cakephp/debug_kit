@@ -17,6 +17,7 @@
  * @since         DebugKit 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('DebugKitDebugger', 'DebugKit.vendors');
 
 class TimedBehavior extends ModelBehavior {
 
@@ -45,9 +46,6 @@ class TimedBehavior extends ModelBehavior {
  * @return void
  */
 	public function setup($Model, $settings = null) {
-		if (!class_exists('DebugKitDebugger')){
-			App::import('Vendor', 'DebugKit.DebugKitDebugger');
-		}
 		if (is_array($settings)) {
 			$this->settings[$Model->alias] = array_merge($this->_defaults, $settings);
 		} else {

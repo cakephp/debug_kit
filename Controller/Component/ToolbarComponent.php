@@ -647,7 +647,7 @@ class SqlLogPanel extends DebugPanel {
 			$db = ConnectionManager::getDataSource($configName);
 			if (
 				(empty($db->config['driver']) && empty($db->config['datasource'])) ||
-				!$db->getLog()
+				!method_exists($db, 'getLog')
 			) {
 				continue;
 			}

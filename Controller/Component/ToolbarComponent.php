@@ -654,11 +654,7 @@ class SqlLogPanel extends DebugPanel {
 			) {
 				continue;
 			}
-
-			if (isset($db->config['driver'])) {
-				$driver = $db->config['driver'];
-			}
-			if (empty($driver) && isset($db->config['datasource'])) {
+			if (isset($db->config['datasource'])) {
 				$driver = $db->config['datasource'];
 			}
 			$explain = false;

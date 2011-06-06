@@ -168,7 +168,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		}
 		$hash = Security::hash($sql . $connection, null, true);
 		$url = array(
-			'plugin' => 'DebugKit',
+			'plugin' => 'debug_kit',
 			'controller' => 'toolbar_access',
 			'action' => 'sql_explain'
 		);

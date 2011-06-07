@@ -159,6 +159,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 
 		App::build(array('plugins' => array($debugKitPath . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)));
 
+		CakePlugin::load('DebugkitTestPlugin');
 		$this->_loadController();
 		$this->Controller->Toolbar->loadPanels(array('DebugkitTestPlugin.PluginTest'));
 		$this->assertTrue(is_a($this->Controller->Toolbar->panels['PluginTest'], 'PluginTestPanel'));

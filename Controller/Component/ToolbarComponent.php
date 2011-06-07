@@ -305,14 +305,7 @@ class ToolbarComponent extends Component {
 	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
-			list($plugin, $className) = pluginSplit($className);
-
-			if ($plugin) {
-				if (!CakePlugin::loaded($plugin)) {
-					CakePlugin::load($plugin, $settings);
-				}
-				$plugin .= '.';
-			}
+			list($plugin, $className) = pluginSplit($className, true);
 
 			App::uses($className, $plugin . 'vendors');
 			if (!class_exists($className)) {

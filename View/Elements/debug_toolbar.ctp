@@ -42,7 +42,11 @@
 					<a href="#" class="panel-minimize ui-control ui-button">–</a>
 					<div class="panel-resize-region">
 						<div class="panel-content-data">
-							<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+							<?php
+								echo $this->element($panelInfo['elementName'], $panelInfo, array(
+									'plugin' => Inflector::camelize($panelInfo['plugin'])
+								)); 
+							?>
 						</div>
 						<div class="panel-content-data panel-history" id="<?php echo $panelUnderscore; ?>-history">
 							<!-- content here -->

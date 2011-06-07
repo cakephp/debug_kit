@@ -20,8 +20,9 @@
 $panels = array();
 foreach ($toolbarState as $panelName => $panel) {
 	$panels[$panelName] = $this->element($panel['elementName'], array(
-		'content' => $panel['content'], 
-		'plugin' => $panel['plugin']
+		'content' => $panel['content']
+	), array(
+		'plugin' => Inflector::camelize($panel['plugin'])
 	));
 }
 echo json_encode($panels);

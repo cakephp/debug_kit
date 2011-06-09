@@ -4,7 +4,7 @@
  *
  * Injects the toolbar elements into non-HTML layouts via FireCake.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -27,14 +27,12 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  * settings property
  *
  * @var array
- * @access public
  */
 	public $settings = array('format' => 'firePHP', 'forceEnable' => false);
 /**
  * send method
  *
  * @return void
- * @access protected
  */
 	public function send() {
 		$view = $this->_View;

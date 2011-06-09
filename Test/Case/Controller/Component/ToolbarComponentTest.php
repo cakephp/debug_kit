@@ -3,7 +3,7 @@
 /**
  * DebugToolbar Test
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -65,7 +65,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 /**
  * Start test callback
  *
- * @access public
  * @return void
  **/
 	public function setUp() {
@@ -190,7 +189,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 /**
  * test loading of vendor panels from test_app folder
  *
- * @access public
  * @return void
  */
 	public function testVendorPanels() {
@@ -215,7 +213,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  * test construct
  *
  * @return void
- * @access public
  **/
 	public function testConstruct() {
 		$this->_loadController();
@@ -232,7 +229,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  * test initialize w/ custom panels and defaults
  *
  * @return void
- * @access public
  **/
 	public function testInitializeCustomPanelsWithDefaults() {
 		$this->_loadController(array(

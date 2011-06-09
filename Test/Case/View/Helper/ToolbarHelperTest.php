@@ -2,7 +2,7 @@
 /**
  * Toolbar facade tests.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -164,7 +164,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 /**
  * tearDown
  *
- * @access public
  * @return void
  */
 	public function tearDown() {

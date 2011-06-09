@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
 /**
  * View Group Test for debugkit
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)

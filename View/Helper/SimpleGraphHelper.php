@@ -4,7 +4,7 @@
  *
  * Allows creation and display of extremely simple graphing elements
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -53,7 +53,6 @@ class SimpleGraphHelper extends AppHelper {
  * @param $offset how much indentation
  * @param $options Graph options
  * @return string Html graph
- * @access public
  */
 	public function bar($value, $offset, $options = array()) {
 		$settings = array_merge($this->__defaultSettings, $options);

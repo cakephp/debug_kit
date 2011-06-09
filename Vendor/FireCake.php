@@ -7,7 +7,7 @@
  *
  * For more information see: http://www.firephp.org/
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -43,7 +43,6 @@ class FireCake {
  * Default Options used in CakeFirePhp
  *
  * @var string
- * @access protected
  */
 	protected $_defaultOptions = array(
 		'maxObjectDepth' => 10,
@@ -74,7 +73,6 @@ class FireCake {
  * internal messageIndex counter
  *
  * @var int
- * @access protected
  */
 	protected $_messageIndex = 1;
 /**
@@ -99,7 +97,6 @@ class FireCake {
  * get Instance of the singleton
  *
  * @param string $class Class instance to store in the singleton. Used with subclasses and Tests.
- * @access public
  * @static
  * @return void
  */
@@ -121,7 +118,6 @@ class FireCake {
  * setOptions
  *
  * @param array $options Array of options to set.
- * @access public
  * @static
  * @return void
  */
@@ -136,7 +132,6 @@ class FireCake {
 /**
  * Return boolean based on presence of FirePHP extension
  *
- * @access public
  * @return boolean
  **/
 	public function detectClientExtension() {
@@ -149,7 +144,6 @@ class FireCake {
 /**
  * Get the Current UserAgent
  *
- * @access public
  * @static
  * @return string UserAgent string of active client connection
  **/
@@ -182,7 +176,6 @@ class FireCake {
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @access public
  * @static
  * @return void
  */
@@ -194,7 +187,6 @@ class FireCake {
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @access public
  * @static
  * @return void
  */
@@ -206,7 +198,6 @@ class FireCake {
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @access public
  * @static
  * @return void
  */
@@ -218,7 +209,6 @@ class FireCake {
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @access public
  * @static
  * @return void
  */
@@ -230,7 +220,6 @@ class FireCake {
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @access public
  * @static
  * @return void
  */
@@ -242,7 +231,6 @@ class FireCake {
  *
  * @param string $message Message to log
  * @param string $label Unique label for message
- * @access public
  * @static
  * @return void
  */
@@ -253,7 +241,6 @@ class FireCake {
  * Convenience wrapper for TRACE messages
  *
  * @param string $label Label for message (optional)
- * @access public
  * @static
  * @return void
  */
@@ -265,7 +252,6 @@ class FireCake {
  * Messages following the group call will be nested in a group block
  *
  * @param string $label Label for group (optional)
- * @access public
  * @static
  * @return void
  */
@@ -277,7 +263,6 @@ class FireCake {
  * Closes a group block
  *
  * @param string $label Label for group (optional)
- * @access public
  * @static
  * @return void
  */
@@ -410,7 +395,6 @@ class FireCake {
  * Parse a debug backtrace
  *
  * @param array $trace Debug backtrace output
- * @access protected
  * @static
  * @return array
  **/
@@ -439,7 +423,6 @@ class FireCake {
  * Fix a trace for use in output
  *
  * @param mixed $trace Trace to fix
- * @access protected
  * @static
  * @return string
  **/
@@ -506,7 +489,6 @@ class FireCake {
  *
  * @param mixed $object Object or array to json encode
  * @param boolean $doIt
- * @access public
  * @static
  * @return string
  **/
@@ -526,7 +508,6 @@ class FireCake {
  * jsonEncode Helper method for PHP4 compatibility
  *
  * @param mixed $object Something to encode
- * @access protected
  * @static
  * @return string
  **/
@@ -543,7 +524,6 @@ class FireCake {
 /**
  * Send Headers - write headers.
  *
- * @access protected
  * @return void
  **/
 	protected function _sendHeader($name, $value) {

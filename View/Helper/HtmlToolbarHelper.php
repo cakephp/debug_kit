@@ -5,7 +5,7 @@
  * Injects the toolbar elements into HTML layouts.
  * Contains helper methods for
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -28,14 +28,12 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * helpers property
  *
  * @var array
- * @access public
  */
 	public $helpers = array('Html', 'Form');
 /**
  * settings property
  *
  * @var array
- * @access public
  */
 	public $settings = array('format' => 'html', 'forceEnable' => false);
 /**
@@ -133,7 +131,6 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * send method
  *
  * @return void
- * @access public
  */
 	public function send() {
 		if (!$this->settings['forceEnable'] && Configure::read('debug') == 0) {

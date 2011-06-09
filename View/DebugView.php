@@ -4,7 +4,7 @@
  *
  * Custom Debug View class, helps with development.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -34,7 +34,6 @@ class DebugView extends DoppelGangerView {
  * @param string $___viewFn Filename of the view
  * @param array $___dataForView Data to include in rendered view
  * @return string Rendered output
- * @access protected
  */
 	protected function _render($___viewFn, $___dataForView = array()) {
 		if (!isset($___dataForView['disableTimer'])) {

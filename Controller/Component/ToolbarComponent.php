@@ -56,7 +56,7 @@ class ToolbarComponent extends Component {
  *
  * @var array
  */
-	protected $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
+	protected $_defaultPanels = array('DebugKit.history', 'DebugKit.session', 'DebugKit.request', 'DebugKit.sqlLog', 'DebugKit.timer', 'DebugKit.log', 'DebugKit.variables');
 
 /**
  * Loaded panel objects.
@@ -443,7 +443,7 @@ class DebugPanel extends Object {
  **/
 class HistoryPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 
 /**
  * Number of history elements to keep
@@ -497,7 +497,7 @@ class HistoryPanel extends DebugPanel {
 				$historyStates[] = array(
 					'title' => $title,
 					'url' => array_merge($prefix, array(
-						'plugin' => 'debug_kit',
+						'plugin' => 'DebugKit',
 						'controller' => 'toolbar_access',
 						'action' => 'history_state',
 						$i + 1))
@@ -520,7 +520,7 @@ class HistoryPanel extends DebugPanel {
  **/
 class VariablesPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 
 /**
  * beforeRender callback
@@ -541,7 +541,7 @@ class VariablesPanel extends DebugPanel {
  **/
 class SessionPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 
 /**
  * beforeRender callback
@@ -565,7 +565,7 @@ class SessionPanel extends DebugPanel {
  **/
 class RequestPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 
 /**
  * beforeRender callback - grabs request params
@@ -595,7 +595,7 @@ class RequestPanel extends DebugPanel {
  **/
 class TimerPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 	
 /**
  * startup - add in necessary helpers
@@ -621,7 +621,7 @@ class TimerPanel extends DebugPanel {
  **/
 class SqlLogPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 
 /**
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
@@ -675,7 +675,7 @@ class SqlLogPanel extends DebugPanel {
  */
 class LogPanel extends DebugPanel {
 
-	public $plugin = 'debug_kit';
+	public $plugin = 'DebugKit';
 
 /**
  * Constructor - sets up the log listener.
@@ -738,4 +738,3 @@ class DebugKitLogListener implements CakeLogInterface {
 		$this->logs[$type][] = array(date('Y-m-d H:i:s'), $message);
 	}
 }
-

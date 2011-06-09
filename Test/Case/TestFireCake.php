@@ -23,7 +23,7 @@
  * @package debug_kit.tests.
  */
 
-App::uses('FireCake', 'DebugKit.vendors');
+App::uses('FireCake', 'DebugKit.Lib');
 
 class TestFireCake extends FireCake {
 	public $sentHeaders = array();

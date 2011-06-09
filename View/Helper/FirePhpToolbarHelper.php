@@ -20,7 +20,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('FireCake', 'DebugKit.vendors');
+App::uses('FireCake', 'DebugKit.Lib');
 
 class FirePhpToolbarHelper extends ToolbarHelper {
 /**

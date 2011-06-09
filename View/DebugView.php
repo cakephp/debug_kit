@@ -20,7 +20,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('ToolbarComponent', 'DebugKit.Controller/Component');
-App::uses('DebugKitDebugger', 'DebugKit.vendors');
+App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
 /**
  * DebugView used by DebugKit

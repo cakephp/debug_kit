@@ -3,7 +3,7 @@
  * DebugKit Debugger class. Extends and enhances core
  * debugger. Adds benchmarking and timing functionality.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -48,7 +48,6 @@ class DebugKitDebugger extends Debugger {
  * Cheat and use the debug log class for formatting
  *
  * @return void
- * @access private
  */
 	public function __destruct() {
 		$_this = DebugKitDebugger::getInstance();
@@ -127,7 +126,6 @@ class DebugKitDebugger extends Debugger {
  * $name should be the same as the $name used in startTimer().
  *
  * @param string $name The name of the timer to end.
- * @access public
  * @return boolean true if timer was ended, false if timer was not started.
  * @static
  */
@@ -167,7 +165,6 @@ class DebugKitDebugger extends Debugger {
  *
  * @param bool $clear false
  * @return array
- * @access public
  **/
 	public static function getTimers($clear = false) {
 		$_this = DebugKitDebugger::getInstance();
@@ -232,7 +229,6 @@ class DebugKitDebugger extends Debugger {
 /**
  * Get the total execution time until this point
  *
- * @access public
  * @return float elapsed time in seconds since script start.
  * @static
  */
@@ -244,7 +240,6 @@ class DebugKitDebugger extends Debugger {
 /**
  * get the time the current request started.
  *
- * @access public
  * @return float time of request start
  * @static
  */
@@ -340,7 +335,6 @@ class DebugKitDebugger extends Debugger {
  * Handles object conversion to debug string.
  *
  * @param string $var Object to convert
- * @access protected
  */
 	public function outputError($data = array()) {
 		extract($data);
@@ -386,7 +380,6 @@ class DebugKitDebugger extends Debugger {
  * @param string $trace Stack trace at time of error
  * @param string $context context of error
  * @return void
- * @access protected
  */
 	protected function _fireError($error, $code, $description, $file, $line, $trace, $context) {
 		$name = $error . ' - ' . $description;

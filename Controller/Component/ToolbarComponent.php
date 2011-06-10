@@ -6,7 +6,7 @@ App::uses('CakeLogInterface', 'Log');
 /**
  * DebugKit DebugToolbar Component
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -257,7 +257,6 @@ class ToolbarComponent extends Component {
  * Create the cache config for the history
  *
  * @return void
- * @access protected
  **/
 	protected function _createCacheConfig() {
 		if (Configure::read('Cache.disable') !== true) {
@@ -274,7 +273,6 @@ class ToolbarComponent extends Component {
  * collects the panel contents
  *
  * @return array Array of all panel beforeRender()
- * @access protected
  **/
 	protected function _gatherVars($controller) {
 		$vars = array();
@@ -300,19 +298,11 @@ class ToolbarComponent extends Component {
  * Load Panels used in the debug toolbar
  *
  * @return 	void
- * @access protected
  **/
 	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
 			$className = $panel . 'Panel';
-			list($plugin, $className) = pluginSplit($className);
-
-			if ($plugin) {
-				if (!CakePlugin::loaded($plugin)) {
-					CakePlugin::load($plugin, $settings);
-				}
-				$plugin .= '.';
-			}
+			list($plugin, $className) = pluginSplit($className, true);
 
 			App::uses($className, $plugin . 'vendors');
 			if (!class_exists($className)) {
@@ -331,7 +321,6 @@ class ToolbarComponent extends Component {
  * This allows DebugView to be compatible with all view classes.
  *
  * @param string $baseClassName
- * @access protected
  * @return void
  */
 	protected function _makeViewClass($baseClassName) {
@@ -363,7 +352,6 @@ class ToolbarComponent extends Component {
  *
  * @param object $controller Controller instance
  * @param array $vars Vars to save.
- * @access protected
  * @return void
  **/
 	protected function _saveState($controller, $vars) {
@@ -547,7 +535,6 @@ class SessionPanel extends DebugPanel {
  * beforeRender callback
  *
  * @param object $controller
- * @access public
  * @return array
  */
 	public function beforeRender($controller) {
@@ -635,7 +622,6 @@ class SqlLogPanel extends DebugPanel {
  * Gets the connection names that should have logs + dumps generated.
  *
  * @param string $controller
- * @access public
  * @return void
  */
 	public function beforeRender($controller) {

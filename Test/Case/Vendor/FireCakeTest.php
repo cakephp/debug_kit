@@ -2,7 +2,7 @@
 /**
  * CakeFirePHP test case
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -31,7 +31,6 @@ class FireCakeTestCase extends CakeTestCase {
  *
  * Fill FireCake with TestFireCake instance.
  *
- * @access public
  * @return void
  */
 	public function setUp() {
@@ -63,7 +62,6 @@ class FireCakeTestCase extends CakeTestCase {
 /**
  * test Log()
  *
- * @access public
  * @return void
  */	
 	public function testLog() {
@@ -81,7 +79,6 @@ class FireCakeTestCase extends CakeTestCase {
 /**
  * test info()
  *
- * @access public
  * @return void
  */	
 	public function testInfo() {
@@ -99,7 +96,6 @@ class FireCakeTestCase extends CakeTestCase {
 /**
  * test info()
  *
- * @access public
  * @return void
  */	
 	public function testWarn() {
@@ -117,7 +113,6 @@ class FireCakeTestCase extends CakeTestCase {
 /**
  * test error()
  *
- * @access public
  * @return void
  **/
 	public function testError() {
@@ -216,7 +211,6 @@ class FireCakeTestCase extends CakeTestCase {
 /**
  * test correct line continuation markers on multi line headers.
  *
- * @access public
  * @return void
  */	
 	public function testMultiLineOutput() {
@@ -322,7 +316,6 @@ class FireCakeTestCase extends CakeTestCase {
 /**
  * reset the FireCake counters and headers.
  *
- * @access public
  * @return void
  */
 	public function tearDown() {

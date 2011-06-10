@@ -2,7 +2,7 @@
 /**
  * Toolbar history state view.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -20,8 +20,9 @@
 $panels = array();
 foreach ($toolbarState as $panelName => $panel) {
 	$panels[$panelName] = $this->element($panel['elementName'], array(
-		'content' => $panel['content'], 
-		'plugin' => $panel['plugin']
+		'content' => $panel['content']
+	), array(
+		'plugin' => Inflector::camelize($panel['plugin'])
 	));
 }
 echo json_encode($panels);

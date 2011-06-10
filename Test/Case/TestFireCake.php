@@ -2,7 +2,7 @@
 /**
  * Common test objects used in DebugKit tests
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -35,7 +35,6 @@ class TestFireCake extends FireCake {
 /**
  * skip client detection as headers are not being sent.
  *
- * @access public
  * @return void
  */	
 	public function detectClientExtension() {

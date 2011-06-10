@@ -2,7 +2,7 @@
 /**
  * DebugKit TimedBehavior
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +24,6 @@ class TimedBehavior extends ModelBehavior {
 /**
  * Behavior settings
  *
- * @access public
  * @var array
  */
 	public $settings = array();
@@ -32,7 +31,6 @@ class TimedBehavior extends ModelBehavior {
 /**
  * Default setting values
  *
- * @access private
  * @var array
  */
 	protected $_defaults = array();
@@ -42,7 +40,6 @@ class TimedBehavior extends ModelBehavior {
  *
  * @param object $Model Model using the behavior
  * @param array $settings Settings to override for model.
- * @access public
  * @return void
  */
 	public function setup($Model, $settings = null) {

@@ -4,7 +4,7 @@
  *
  * Renders all of the other panel elements.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -42,7 +42,11 @@
 					<a href="#" class="panel-minimize ui-control ui-button">–</a>
 					<div class="panel-resize-region">
 						<div class="panel-content-data">
-							<?php echo $this->element($panelInfo['elementName'], $panelInfo); ?>
+							<?php
+								echo $this->element($panelInfo['elementName'], $panelInfo, array(
+									'plugin' => Inflector::camelize($panelInfo['plugin'])
+								)); 
+							?>
 						</div>
 						<div class="panel-content-data panel-history" id="<?php echo $panelUnderscore; ?>-history">
 							<!-- content here -->

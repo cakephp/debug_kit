@@ -3,7 +3,7 @@
  * Abstract Toolbar helper.  Provides Base methods for content
  * specific debug toolbar helpers.  Acts as a facade for other toolbars helpers as well.
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -27,7 +27,6 @@ class ToolbarHelper extends AppHelper {
  * settings property to be overloaded.  Subclasses should specify a format
  *
  * @var array
- * @access public
  */
 	public $settings = array();
 /**
@@ -40,7 +39,6 @@ class ToolbarHelper extends AppHelper {
  * Construct the helper and make the backend helper.
  *
  * @param string $options
- * @access public
  * @return void
  */
 	public function __construct($View, $options = array()) {
@@ -88,7 +86,6 @@ class ToolbarHelper extends AppHelper {
  *
  * @param string $method
  * @param mixed $params
- * @access public
  * @return void
  */
 	public function __call($method, $params) {

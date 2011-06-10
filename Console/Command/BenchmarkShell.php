@@ -5,7 +5,7 @@
  * Provides basic benchmarking of application requests
  * functionally similar to Apache AB
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -35,7 +35,6 @@ class BenchmarkShell extends Shell {
  * Main execution of shell
  *
  * @return void
- * @access public
  */
 	public function main() {
 		if (empty($this->args) || count($this->args) > 1) {
@@ -67,7 +66,6 @@ class BenchmarkShell extends Shell {
  *
  * @param array $times Array of time values
  * @return void
- * @access protected
  */
 	protected function _results($times) {
 		$duration = array_sum($times);
@@ -109,7 +107,6 @@ class BenchmarkShell extends Shell {
  * @param boolean $sample If true, calculates an unbiased estimate of the population
  * 						  variance from a finite sample.
  * @return float Variance
- * @access protected
  */
 	protected function _variance($times, $sample = true) {
 		$n = $mean = $M2 = 0;
@@ -130,7 +127,6 @@ class BenchmarkShell extends Shell {
  *
  * @param array $times Array of values
  * @return float Standard deviation
- * @access protected
  */
 	protected function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
@@ -139,7 +135,6 @@ class BenchmarkShell extends Shell {
  * Help for Benchmark shell
  *
  * @return void
- * @access public
  */
 	public function help() {
 		$this->out(__d('debug_kit', "DebugKit Benchmark Shell"));

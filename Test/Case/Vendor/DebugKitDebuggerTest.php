@@ -2,7 +2,7 @@
 /**
  * DebugKit Debugger Test Case File
  *
- * PHP versions 4 and 5
+ * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -30,7 +30,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 /**
  * setUp method
  *
- * @access public
  * @return void
  */
 	public function setUp() {
@@ -39,7 +38,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 /**
  * tearDown method
  *
- * @access public
  * @return void
  */
 	public function tearDown() {
@@ -147,7 +145,6 @@ class DebugKitDebuggerTest extends CakeTestCase {
 /**
  * testRequestTime
  *
- * @access public
  * @return void
  */
 	public function testRequestTime() {

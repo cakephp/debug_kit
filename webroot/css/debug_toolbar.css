@@ -148,6 +148,7 @@
 	line-height: 12px;
 	border-left: 1px solid #afafaf;
 	border-right: 1px solid #7c7c7c;
+	text-decoration: none;
 }
 #debug-kit-toolbar .panel-maximize {
 	float: right;
@@ -189,7 +190,7 @@
 #debug-kit-toolbar h5,
 #debug-kit-toolbar th {
 	color: #5d1717;
-	font-family: "Trebuchet MS", trebuchet, helvetica, arial, sans-serif;
+	font-family: Arial, sans-serif;
 	margin-bottom:0.6em;
 	background:none;
 }
@@ -205,28 +206,32 @@
 
 
 /* panel tables */
-#debug-kit-toolbar table.debug-table {
+#debug-kit-toolbar .debug-table {
 	width: 100%;
-	border: 0;
+	border: 1px solid #eee;
+	border-left: 0;
 	clear:both;
 	margin-bottom: 20px;
+	border-spacing: 0;
 }
-#debug-kit-toolbar table.debug-table td,
-#debug-kit-toolbar table.debug-table th {
+#debug-kit-toolbar .debug-table td,
+#debug-kit-toolbar .debug-table th {
 	text-align: left;
 	border: 0;
+	border-left: 1px solid #eee;
 	padding: 3px;
+	margin: 0;
 }
 #debug-kit-toolbar table.debug-table th {
-	border-bottom: 1px solid #222;
-	background: 0;
-	color: #252525;
+	border-bottom: 1px solid #bbb;
+	border-left: 1px solid #bbb;
+	background: -webkit-linear-gradient(top, #d4d4d4, #c1c1c1);
+	background: -moz-linear-gradient(top, #d4d4d4, #c1c1c1);
+	color: #222;
+	font-weight: bold;
 }
-#debug-kit-toolbar table.debug-table tr:nth-child(2n+1) td {
-	background:#f6f6f6;
-}
-#debug-kit-toolbar table.debug-table tr.even td {
-	background:#f7f7f7;
+#debug-kit-toolbar .debug-table tr:nth-child(2n) td {
+	background: #f6f6f6;
 }
 #debug-kit-toolbar .debug-timers .debug-table td:nth-child(2),
 #debug-kit-toolbar .debug-timers .debug-table th:nth-child(2) {
@@ -244,7 +249,6 @@
 #debug-kit-toolbar .code-table td:last-child {
 	width: 80%;
 }
-
 #debug-kit-toolbar .panel-content.request {
 	display: block;
 }
@@ -263,7 +267,7 @@
 }
 .neat-array .neat-array {
 	padding: 0 0 0 20px;
-	margin:0;
+	margin: 0;
 	border-top:1px solid #CE9E23;
 }
 .neat-array li {
@@ -309,11 +313,16 @@
 	height: 10px;
 }
 #debug-kit-toolbar .debug-kit-graph-bar {
-	background-color: #ddd;
-	padding:2px;
+	background: #ddd;
+	padding: 2px;
+	border-radius: 2px;
+	height: 12px;
 }
 #debug-kit-toolbar .debug-kit-graph-bar-value {
-	background-color: #CE9E23;
+	background: -webkit-linear-gradient(top, #77D124, #4B9406);
+	background: -moz-linear-gradient(top, #77D124, #4B9406);
+	border-radius: 3px;
+	border: 1px solid #4B9406;
 }
 
 /* Sql Log */

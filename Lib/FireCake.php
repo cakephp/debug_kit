@@ -23,7 +23,6 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('Debugger', 'Utility');
-App::uses('View', 'View');
 
 if (!function_exists('firecake')) {
 	function firecake($message, $label = null) {
@@ -39,6 +38,7 @@ class FireCake {
  * @var string
  */
 	public $options = array();
+
 /**
  * Default Options used in CakeFirePhp
  *
@@ -46,10 +46,11 @@ class FireCake {
  */
 	protected $_defaultOptions = array(
 		'maxObjectDepth' => 10,
-	    'maxArrayDepth' => 20,
-	    'useNativeJsonEncode' => true,
-	    'includeLineNumbers' => true,
+		'maxArrayDepth' => 20,
+		'useNativeJsonEncode' => true,
+		'includeLineNumbers' => true,
 	);
+
 /**
  * Message Levels for messages sent via FirePHP
  *
@@ -69,35 +70,39 @@ class FireCake {
 	);
 
 	protected $_version = '0.2.1';
+
 /**
  * internal messageIndex counter
  *
  * @var int
  */
 	protected $_messageIndex = 1;
+
 /**
  * stack of objects encoded by stringEncode()
  *
  * @var array
- **/
+ */
 	protected $_encodedObjects = array();
+
 /**
  * methodIndex to include in tracebacks when using includeLineNumbers
  *
  * @var array
- **/
+ */
 	protected $_methodIndex = array('info', 'log', 'warn', 'error', 'table', 'trace');
+
 /**
  * FireCake output status
  *
  * @var bool
  **/
 	protected $_enabled = true;
+
 /**
  * get Instance of the singleton
  *
  * @param string $class Class instance to store in the singleton. Used with subclasses and Tests.
- * @static
  * @return void
  */
 	public static function getInstance($class = null) {
@@ -114,11 +119,11 @@ class FireCake {
 		}
 		return $instance[0];
 	}
+
 /**
  * setOptions
  *
  * @param array $options Array of options to set.
- * @static
  * @return void
  */
 	public static function setOptions($options = array()) {
@@ -129,11 +134,12 @@ class FireCake {
 			$_this->options = array_merge($_this->options, $options);
 		}
 	}
+
 /**
  * Return boolean based on presence of FirePHP extension
  *
  * @return boolean
- **/
+ */
 	public function detectClientExtension() {
 		$ua = FireCake::getUserAgent();
 		if (!preg_match('/\sFirePHP\/([\.|\d]*)\s?/si', $ua, $match) || !version_compare($match[1], '0.0.6', '>=')) {
@@ -141,134 +147,135 @@ class FireCake {
 		}
 		return true;
 	}
+
 /**
  * Get the Current UserAgent
  *
- * @static
  * @return string UserAgent string of active client connection
- **/
+ */
 	public static function getUserAgent() {
 		return env('HTTP_USER_AGENT');
 	}
+
 /**
  * Disable FireCake output
  * All subsequent output calls will not be run.
  *
- * @static
  * @return void
- **/
+ */
 	public static function disable() {
 		$_this = FireCake::getInstance();
 		$_this->_enabled = false;
 	}
+
 /**
  * Enable FireCake output
  *
- * @static
  * @return void
- **/
+ */
 	public static function enable() {
 		$_this = FireCake::getInstance();
 		$_this->_enabled = true;
 	}
+
 /**
  * Convenience wrapper for LOG messages
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @static
  * @return void
  */
 	public static function log($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
+
 /**
  * Convenience wrapper for WARN messages
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @static
  * @return void
  */
 	public static function warn($message, $label = null) {
 		FireCake::fb($message, $label, 'warn');
 	}
+
 /**
  * Convenience wrapper for INFO messages
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @static
  * @return void
  */
 	public static function info($message, $label = null) {
 		FireCake::fb($message, $label, 'info');
 	}
+
 /**
  * Convenience wrapper for ERROR messages
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @static
  * @return void
  */
 	public static function error($message, $label = null) {
 		FireCake::fb($message, $label, 'error');
 	}
+
 /**
  * Convenience wrapper for TABLE messages
  *
  * @param string $message Message to log
  * @param string $label Label for message (optional)
- * @static
  * @return void
  */
 	public static function table($label, $message) {
 		FireCake::fb($message, $label, 'table');
 	}
+
 /**
  * Convenience wrapper for DUMP messages
  *
  * @param string $message Message to log
  * @param string $label Unique label for message
- * @static
  * @return void
  */
 	public static function dump($label, $message) {
 		FireCake::fb($message, $label, 'dump');
 	}
+
 /**
  * Convenience wrapper for TRACE messages
  *
  * @param string $label Label for message (optional)
- * @static
  * @return void
  */
 	public static function trace($label)  {
 		FireCake::fb($label, 'trace');
 	}
+
 /**
  * Convenience wrapper for GROUP messages
  * Messages following the group call will be nested in a group block
  *
  * @param string $label Label for group (optional)
- * @static
  * @return void
  */
 	public static function group($label)  {
 		FireCake::fb(null, $label, 'groupStart');
 	}
+
 /**
  * Convenience wrapper for GROUPEND messages
  * Closes a group block
  *
  * @param string $label Label for group (optional)
- * @static
  * @return void
  */
 	public static function groupEnd()  {
 		FireCake::fb(null, null, 'groupEnd');
 	}
+
 /**
  * fb - Send messages with FireCake to FirePHP
  *
@@ -278,9 +285,8 @@ class FireCake {
  * fb($message, $label, $type) - Send a message with a custom label and type.
  *
  * @param mixed $message Message to output. For other parameters see usage above.
- * @static
  * @return void
- **/
+ */
 	public static function fb($message) {
 		$_this = FireCake::getInstance();
 
@@ -391,13 +397,13 @@ class FireCake {
 		$_this->_sendHeader('X-Wf-1-Index', $_this->_messageIndex - 1);
 		return true;
 	}
+
 /**
  * Parse a debug backtrace
  *
  * @param array $trace Debug backtrace output
- * @static
  * @return array
- **/
+ */
 	protected static function _parseTrace($trace, $messageName) {
 		$message = array();
 		for ($i = 0, $len = count($trace); $i < $len ; $i++) {
@@ -419,13 +425,13 @@ class FireCake {
 		}
 		return $message;
 	}
+
 /**
  * Fix a trace for use in output
  *
  * @param mixed $trace Trace to fix
- * @static
  * @return string
- **/
+ */
 	protected static function _escapeTrace($trace) {
 		for ($i = 0, $len = count($trace); $i < $len; $i++) {
 			if (isset($trace[$i]['file'])) {
@@ -437,6 +443,7 @@ class FireCake {
 		}
 		return $trace;
 	}
+
 /**
  * Encode non string objects to string.
  * Filter out recursion, so no errors are raised by json_encode or $javascript->object()
@@ -444,9 +451,8 @@ class FireCake {
  * @param mixed $object Object or variable to encode to string.
  * @param int $objectDepth Current Depth in object chains.
  * @param int $arrayDepth Current Depth in array chains.
- * @static
  * @return void
- **/
+ */
 	public static function stringEncode($object, $objectDepth = 1, $arrayDepth = 1) {
 		$_this = FireCake::getInstance();
 		$return = array();
@@ -484,6 +490,7 @@ class FireCake {
 		}
 		return $return;
 	}
+
 /**
  * Encode an object into JSON
  *
@@ -491,36 +498,15 @@ class FireCake {
  * @param boolean $doIt
  * @static
  * @return string
- **/
+ */
 	public static function jsonEncode($object, $skipEncode = false) {
 		$_this = FireCake::getInstance();
 		if (!$skipEncode) {
 			$object = FireCake::stringEncode($object);
 		}
+		return json_encode($object);
+	}
 
-		if (function_exists('json_encode') && $_this->options['useNativeJsonEncode']) {
-			return json_encode($object);
-		} else {
-			return FireCake::_jsonEncode($object);
-		}
-	}
-/**
- * jsonEncode Helper method for PHP4 compatibility
- *
- * @param mixed $object Something to encode
- * @static
- * @return string
- **/
-	protected function _jsonEncode($object) {
-		if (!class_exists('Js')) {
-			App::uses('JsHelper', 'View/Helper');
-		}
-		$javascript = new JsHelper(new View(null));
-		if (is_string($object)) {
-			return '"' . $javascript->escape($object) . '"';
-		}
-		return $javascript->object($object);
-	}
 /**
  * Send Headers - write headers.
  *
@@ -529,4 +515,5 @@ class FireCake {
 	protected function _sendHeader($name, $value) {
 		header($name . ': ' . $value);
 	}
+
 }

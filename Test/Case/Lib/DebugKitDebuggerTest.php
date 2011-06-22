@@ -17,7 +17,7 @@
  * @since         debug_kit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::uses('DebugKitDebugger', 'DebugKit.vendors');
+App::uses('DebugKitDebugger', 'DebugKit.Lib');
 require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 
 /**

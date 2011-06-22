@@ -17,7 +17,7 @@
  * @since         DebugKit 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('DebugKitDebugger', 'DebugKit.vendors');
+App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
 class TimedBehavior extends ModelBehavior {
 

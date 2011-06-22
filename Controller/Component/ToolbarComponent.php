@@ -122,7 +122,7 @@ class ToolbarComponent extends Component {
 			$this->enabled = false;
 			return false;
 		}
-		App::uses('DebugKitDebugger', 'DebugKit.vendors');
+		App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization'));
 		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup'));

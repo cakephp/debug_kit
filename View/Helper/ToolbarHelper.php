@@ -18,7 +18,7 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-App::uses('DebugKit.DebugKitDebugger', 'Vendor');
+App::uses('DebugKitDebugger', 'DebugKit.Lib');
 App::uses('AppHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
 

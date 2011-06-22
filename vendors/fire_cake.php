@@ -22,6 +22,10 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+// Dont't allow Debugger to steal the error handler when debug = 0.
+if (Configure::read('debug') == 0 && !defined('DISABLE_DEFAULT_ERROR_HANDLING')) {
+	define('DISABLE_DEFAULT_ERROR_HANDLING', true);
+}
 App::import('Core', 'Debugger');
 
 if (!function_exists('firecake')) {

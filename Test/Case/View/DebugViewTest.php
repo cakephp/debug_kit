@@ -22,7 +22,7 @@ App::uses('Controller', 'Controller');
 App::uses('Component', 'Controller');
 
 App::uses('DebugView', 'DebugKit.View');
-App::uses('DebugKitDebugger', 'DebugKit.vendors');
+App::uses('DebugKitDebugger', 'DebugKit.Lib');
 /**
  * Debug View Test Case
  *

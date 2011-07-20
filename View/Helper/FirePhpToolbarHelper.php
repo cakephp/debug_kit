@@ -20,7 +20,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('FireCake', 'DebugKit.vendors');
+App::uses('FireCake', 'DebugKit.Lib');
 
 class FirePhpToolbarHelper extends ToolbarHelper {
 /**
@@ -36,7 +36,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
  */
 	public function send() {
 		$view = $this->_View;
-		$view->element('debug_toolbar', array(), array('plugin' => 'debug_kit', 'disableTimer' => true));
+		$view->element('debug_toolbar', array('disableTimer' => true), array('plugin' => 'DebugKit'));
 	}
 /**
  * makeNeatArray.

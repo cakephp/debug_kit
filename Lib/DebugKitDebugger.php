@@ -19,7 +19,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('Debugger', 'Utility');
-App::uses('FireCake', 'DebugKit.vendors');
+App::uses('FireCake', 'DebugKit.Lib');
 
 /**
  * Debug Kit Temporary Debugger Class

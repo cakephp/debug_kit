@@ -179,7 +179,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		}
 		$this->_loadController();
 
-		App::uses('DebugKitDebugger', 'DebugKit.vendors');
+		App::uses('DebugKitDebugger', 'DebugKit.Lib');
 		$this->Controller->Toolbar->evalTest = true;
 		$this->Controller->viewClass = 'Plugin.OtherView';
 		$this->Controller->Toolbar->startup($this->Controller);

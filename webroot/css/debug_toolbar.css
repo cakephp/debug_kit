@@ -77,6 +77,8 @@
 	-webkit-border-bottom-left-radius: 8px 8px;
 	-moz-border-radius-topleft: 8px;
 	-moz-border-radius-bottomleft: 8px
+	border-radius-topleft: 8px;
+	border-radius-bottomleft: 8px
 }
 #debug-kit-toolbar .panel-tab.icon img {
 	display:block;

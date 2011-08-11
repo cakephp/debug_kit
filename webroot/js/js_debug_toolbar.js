@@ -254,7 +254,7 @@ DEBUGKIT.Util.Event = function () {
 
 			if (document.all && !window.opera) {
 				//Define a "blank" external JavaScript tag
-				document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="://"><\/script>');
+				document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
 				var contentloadtag = document.getElementById("__domreadywatcher");
 				contentloadtag.onreadystatechange = function (){
 					if (this.readyState == "complete") {

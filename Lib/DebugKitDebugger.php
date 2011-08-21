@@ -20,6 +20,7 @@
  **/
 App::uses('Debugger', 'Utility');
 App::uses('FireCake', 'DebugKit.Lib');
+App::uses('DebugTimer', 'DebugKit.Lib');
 
 /**
  * Debug Kit Temporary Debugger Class
@@ -84,42 +85,12 @@ class DebugKitDebugger extends Debugger {
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
  * @return bool true
- * @static
- **/
+ * @deprecated use DebugTimer::start()
+ */
 	public static function startTimer($name = null, $message = null) {
-		$start = microtime(true);
-		$_this = DebugKitDebugger::getInstance();
-
-		if (!$name) {
-			$named = false;
-			$calledFrom = debug_backtrace();
-			$_name = $name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
-		} else {
-			$named = true;
-		}
-
-		if (!$message) {
-			$message = $name;
-		}
-
-		$_name = $name;
-		$i = 1;
-		while (isset($_this->__benchmarks[$name])) {
-			$i++;
-			$name = $_name . ' #' . $i;
-		}
-
-		if ($i > 1) {
-			$message .= ' #' . $i;
-		}
-
-		$_this->__benchmarks[$name] = array(
-			'start' => $start,
-			'message' => $message,
-			'named' => $named
-		);
-		return true;
+		return DebugTimer::start($name, $message);
 	}
+
 /**
  * Stop a benchmarking timer.
  *
@@ -127,132 +98,66 @@ class DebugKitDebugger extends Debugger {
  *
  * @param string $name The name of the timer to end.
  * @return boolean true if timer was ended, false if timer was not started.
- * @static
+ * @deprecated use DebugTimer::stop()
  */
 	public static function stopTimer($name = null) {
-		$end = microtime(true);
-		$_this = DebugKitDebugger::getInstance();
-		if (!$name) {
-			$names = array_reverse(array_keys($_this->__benchmarks));
-			foreach($names as $name) {
-				if (!empty($_this->__benchmarks[$name]['end'])) {
-					continue;
-				}
-				if (empty($_this->__benchmarks[$name]['named'])) {
-					break;
-				}
-			}
-		} else {
-			$i = 1;
-			$_name = $name;
-			while (isset($_this->__benchmarks[$name])) {
-				if (empty($_this->__benchmarks[$name]['end'])) {
-					break;
-				}
-				$i++;
-				$name = $_name . ' #' . $i;
-			}
-		}
-		if (!isset($_this->__benchmarks[$name])) {
-			return false;
-		}
-		$_this->__benchmarks[$name]['end'] = $end;
-		return true;
+		return DebugTimer::stop($name);
 	}
+
 /**
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
  * @param bool $clear false
  * @return array
- **/
+ * @deprecated use DebugTimer::getAll()
+ */
 	public static function getTimers($clear = false) {
-		$_this = DebugKitDebugger::getInstance();
-		$start = DebugKitDebugger::requestStartTime();
-		$now = microtime(true);
-
-		$times = array();
-		if (!empty($_this->__benchmarks)) {
-			$firstTimer = current($_this->__benchmarks);
-			$_end = $firstTimer['start'];
-		} else {
-			$_end = $now;
-		}
-		$times['Core Processing (Derived from $_SERVER["REQUEST_TIME"])'] = array(
-			'message' => __d('debug_kit', 'Core Processing (Derived from $_SERVER["REQUEST_TIME"])'),
-			'start' => 0,
-			'end' => $_end - $start,
-			'time' => round($_end - $start, 6),
-			'named' => null
-		);
-		foreach ($_this->__benchmarks as $name => $timer) {
-			if (!isset($timer['end'])) {
-				$timer['end'] = $now;
-			}
-			$times[$name] = array_merge($timer, array(
-				'start' => $timer['start'] - $start,
-				'end' => $timer['end'] - $start,
-				'time' => DebugKitDebugger::elapsedTime($name)
-			));
-		}
-		if ($clear) {
-			$_this->__benchmarks = array();
-		}
-		return $times;
+		return DebugTimer::getAll($clear);
 	}
+
 /**
  * Clear all existing timers
  *
- * @static
  * @return bool true
- **/
+ * @deprecated use DebugTimer::clear()
+ */
 	public static function clearTimers() {
-		$_this = DebugKitDebugger::getInstance();
-		$_this->__benchmarks = array();
-		return true;
+		return DebugTimer::clear();
 	}
+
 /**
  * Get the difference in time between the timer start and timer end.
  *
  * @param $name string the name of the timer you want elapsed time for.
  * @param $precision int the number of decimal places to return, defaults to 5.
  * @return float number of seconds elapsed for timer name, 0 on missing key
- * @static
- **/
+ * @deprecated use DebugTimer::elapsedTime()
+ */
 	public static function elapsedTime($name = 'default', $precision = 5) {
-		$_this = DebugKitDebugger::getInstance();
-		if (!isset($_this->__benchmarks[$name]['start']) || !isset($_this->__benchmarks[$name]['end'])) {
-			return 0;
-		}
-		return round($_this->__benchmarks[$name]['end'] - $_this->__benchmarks[$name]['start'], $precision);
+		return DebugTimer::elapsedTime($name, $precision);
 	}
+
 /**
  * Get the total execution time until this point
  *
  * @return float elapsed time in seconds since script start.
- * @static
+ * @deprecated use DebugTimer::requestTime()
  */
 	public static function requestTime() {
-		$start = DebugKitDebugger::requestStartTime();
-		$now = microtime(true);
-		return ($now - $start);
+		return DebugTimer::requestTime();
 	}
+
 /**
  * get the time the current request started.
  *
  * @return float time of request start
- * @static
+ * @deprecated use DebugTimer::requestStartTime()
  */
 	public static function requestStartTime() {
-		if (defined('TIME_START')) {
-			$startTime = TIME_START;
-		} else if (isset($GLOBALS['TIME_START'])) {
-			$startTime = $GLOBALS['TIME_START'];
-		} else {
-			$startTime = env('REQUEST_TIME');
-		}
-		return $startTime;
+		return DebugTimer::requestStartTime();
 	}
+
 /**
  * get current memory usage
  *

@@ -21,7 +21,7 @@
  **/
 App::uses('ToolbarComponent', 'DebugKit.Controller/Component');
 App::uses('DebugTimer', 'DebugKit.Lib');
-App::uses('DebugKitDebugger', 'DebugKit.Lib');
+App::uses('DebugMemory', 'DebugKit.Lib');
 
 /**
  * DebugView used by DebugKit
@@ -86,7 +86,7 @@ class DebugView extends DoppelGangerView {
 
 		DebugTimer::stop('viewRender');
 		DebugTimer::stop('controllerRender');
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'View render complete'));
+		DebugMemory::record(__d('debug_kit', 'View render complete'));
 
 		if (empty($this->request->params['requested']) && $this->Helpers->attached('Toolbar')) {
 			$backend = $this->Helpers->Toolbar->getName();

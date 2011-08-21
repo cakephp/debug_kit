@@ -3,7 +3,7 @@
 App::uses('CakeLog', 'Log');
 App::uses('CakeLogInterface', 'Log');
 App::uses('DebugTimer', 'DebugKit.Lib');
-App::uses('DebugKitDebugger', 'DebugKit.Lib');
+App::uses('DebugMemory', 'DebugKit.Lib');
 
 /**
  * DebugKit DebugToolbar Component
@@ -125,7 +125,7 @@ class ToolbarComponent extends Component {
 			return false;
 		}
 
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization'));
+		DebugMemory::record(__d('debug_kit', 'Component initialization'));
 		DebugTimer::start('componentInit', __d('debug_kit', 'Component initialization and startup'));
 
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
@@ -203,7 +203,7 @@ class ToolbarComponent extends Component {
 		}
 		DebugTimer::stop('componentInit');
 		DebugTimer::start('controllerAction', __d('debug_kit', 'Controller action'));
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller action start'));
+		DebugMemory::record(__d('debug_kit', 'Controller action start'));
 	}
 
 /**
@@ -237,7 +237,7 @@ class ToolbarComponent extends Component {
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
 		DebugTimer::start('controllerRender', __d('debug_kit', 'Render Controller Action'));
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start'));
+		DebugMemory::record(__d('debug_kit', 'Controller render start'));
 	}
 
 /**

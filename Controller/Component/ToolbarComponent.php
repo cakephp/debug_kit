@@ -265,7 +265,6 @@ class ToolbarComponent extends Component {
 				'engine' => 'File',
 				'path' => CACHE
 			));
-			// Cache::config('default'); /* forces last configed cache was disabled on 2.0 */
 		}
 	}
 

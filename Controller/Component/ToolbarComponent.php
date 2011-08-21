@@ -2,6 +2,8 @@
 
 App::uses('CakeLog', 'Log');
 App::uses('CakeLogInterface', 'Log');
+App::uses('DebugTimer', 'DebugKit.Lib');
+App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
 /**
  * DebugKit DebugToolbar Component
@@ -122,10 +124,9 @@ class ToolbarComponent extends Component {
 			$this->enabled = false;
 			return false;
 		}
-		App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization'));
-		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup'));
+		DebugTimer::start('componentInit', __d('debug_kit', 'Component initialization and startup'));
 
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
 		if (in_array('history', $panels) || (isset($settings['history']) && $settings['history'] !== false)) {
@@ -200,8 +201,8 @@ class ToolbarComponent extends Component {
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
 		}
-		DebugKitDebugger::stopTimer('componentInit');
-		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller action'));
+		DebugTimer::stop('componentInit');
+		DebugTimer::start('controllerAction', __d('debug_kit', 'Controller action'));
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller action start'));
 	}
 
@@ -211,10 +212,10 @@ class ToolbarComponent extends Component {
  * @return void
  **/
 	public function beforeRedirect($controller) {
-		if (!class_exists('DebugKitDebugger')) {
+		if (!class_exists('DebugTimer')) {
 			return null;
 		}
-		DebugKitDebugger::stopTimer('controllerAction');
+		DebugTimer::stop('controllerAction');
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 	}
@@ -227,15 +228,15 @@ class ToolbarComponent extends Component {
  * @return void
  **/
 	public function beforeRender($controller) {
-		if (!class_exists('DebugKitDebugger')) {
+		if (!class_exists('DebugTimer')) {
 			return null;
 		}
-		DebugKitDebugger::stopTimer('controllerAction');
+		DebugTimer::stop('controllerAction');
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 
 		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action'));
+		DebugTimer::start('controllerRender', __d('debug_kit', 'Render Controller Action'));
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start'));
 	}
 

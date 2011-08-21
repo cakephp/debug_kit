@@ -20,6 +20,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('ToolbarComponent', 'DebugKit.Controller/Component');
+App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
 /**
@@ -37,12 +38,12 @@ class DebugView extends DoppelGangerView {
  */
 	protected function _render($___viewFn, $___dataForView = array()) {
 		if (!isset($___dataForView['disableTimer'])) {
-			DebugKitDebugger::startTimer('render_' . basename($___viewFn), __d('debug_kit', 'Rendering %s', Debugger::trimPath($___viewFn)));
+			DebugTimer::start('render_' . basename($___viewFn), __d('debug_kit', 'Rendering %s', Debugger::trimPath($___viewFn)));
 		}
 		$out = parent::_render($___viewFn, $___dataForView);
 
 		if (!isset($___dataForView['disableTimer'])) {
-			DebugKitDebugger::stopTimer('render_' . basename($___viewFn));
+			DebugTimer::stop('render_' . basename($___viewFn));
 		}
 		return $out;
 	}
@@ -79,12 +80,12 @@ class DebugView extends DoppelGangerView {
  * @return string Rendered Element
  */
 	public function render($action = null, $layout = null) {
-		DebugKitDebugger::startTimer('viewRender', __d('debug_kit', 'Rendering View'));
+		DebugTimer::start('viewRender', __d('debug_kit', 'Rendering View'));
 
 		$out = parent::render($action, $layout);
 
-		DebugKitDebugger::stopTimer('viewRender');
-		DebugKitDebugger::stopTimer('controllerRender');
+		DebugTimer::stop('viewRender');
+		DebugTimer::stop('controllerRender');
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'View render complete'));
 
 		if (empty($this->request->params['requested']) && $this->Helpers->attached('Toolbar')) {

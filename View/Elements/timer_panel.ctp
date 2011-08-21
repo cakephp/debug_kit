@@ -18,10 +18,10 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 if (!isset($debugKitInHistoryMode)):
-	$timers = DebugKitDebugger::getTimers(true);
+	$timers = DebugTimer::getAll(true);
 	$currentMemory = DebugKitDebugger::getMemoryUse();
 	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
-	$requestTime = DebugKitDebugger::requestTime();
+	$requestTime = DebugTimer::requestTime();
 else:
 	$content = $this->Toolbar->readCache('timer', $this->request->params['pass'][0]);
 	if (is_array($content)):

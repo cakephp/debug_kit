@@ -21,6 +21,7 @@
 App::uses('Debugger', 'Utility');
 App::uses('FireCake', 'DebugKit.Lib');
 App::uses('DebugTimer', 'DebugKit.Lib');
+App::uses('DebugMemory', 'DebugKit.Lib');
 
 /**
  * Debug Kit Temporary Debugger Class
@@ -30,18 +31,6 @@ App::uses('DebugTimer', 'DebugKit.Lib');
  * This file will not be needed in future version of CakePHP.
  */
 class DebugKitDebugger extends Debugger {
-/**
- * Internal benchmarks array
- *
- * @var array
- **/
-	private $__benchmarks = array();
-/**
- * Internal memory points array
- *
- * @var array
- **/
-	private $__memoryPoints = array();
 /**
  * destruct method
  *
@@ -162,26 +151,22 @@ class DebugKitDebugger extends Debugger {
  * get current memory usage
  *
  * @return integer number of bytes ram currently in use. 0 if memory_get_usage() is not available.
- * @static
+ * @deprecated Use DebugMemory::getCurrent() instead.
  **/
 	public static function getMemoryUse() {
-		if (!function_exists('memory_get_usage')) {
-			return 0;
-		}
-		return memory_get_usage();
+		return DebugMemory::getCurrent();
 	}
+
 /**
  * Get peak memory use
  *
  * @return integer peak memory use (in bytes).  Returns 0 if memory_get_peak_usage() is not available
- * @static
- **/
+ * @deprecated Use DebugMemory::getPeak() instead.
+ */
 	public static function getPeakMemoryUse() {
-		if (!function_exists('memory_get_peak_usage')) {
-			return 0;
-		}
-		return memory_get_peak_usage();
+		return DebugMemory::getPeak();
 	}
+
 /**
  * Stores a memory point in the internal tracker.
  * Takes a optional message name which can be used to identify the memory point.
@@ -189,53 +174,34 @@ class DebugKitDebugger extends Debugger {
  * If you don't have memory_get_xx methods this will not work.
  *
  * @param string $message Message to identify this memory point.
- * @static
  * @return boolean
- **/
+ * @deprecated Use DebugMemory::getAll() instead.
+ */
 	public static function setMemoryPoint($message = null) {
-		$memoryUse = DebugKitDebugger::getMemoryUse();
-		if (!$message) {
-			$named = false;
-			$trace = debug_backtrace();
-			$message = Debugger::trimpath($trace[0]['file']) . ' line ' . $trace[0]['line'];
-		}
-		$self = DebugKitDebugger::getInstance();
-		if (isset($self->__memoryPoints[$message])) {
-			$originalMessage = $message;
-			$i = 1;
-			while (isset($self->__memoryPoints[$message])) {
-				$i++;
-				$message = $originalMessage . ' #' . $i;
-			}
-		}
-		$self->__memoryPoints[$message] = $memoryUse;
-		return true;
+		return DebugMemory::record($message);
 	}
+
 /**
  * Get all the stored memory points
  *
  * @param boolean $clear Whether you want to clear the memory points as well. Defaults to false.
- * @static
  * @return array Array of memory marks stored so far.
- **/
+ * @deprecated Use DebugMemory::getAll() instead.
+ */
 	public static function getMemoryPoints($clear = false) {
-		$self = DebugKitDebugger::getInstance();
-		$marks = $self->__memoryPoints;
-		if ($clear) {
-			$self->__memoryPoints = array();
-		}
-		return $marks;
+		return DebugMemory::getAll($clear);
 	}
+
 /**
  * Clear out any existing memory points
  *
- * @static
  * @return void
- **/
+ * @deprecated Use DebugMemory::clear() instead.
+ */
 	public static function clearMemoryPoints() {
-		$self = DebugKitDebugger::getInstance();
-		$self->__memoryPoints = array();
+		return DebugMemory::clear();
 	}
+
 /**
  * Handles object conversion to debug string.
  *

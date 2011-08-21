@@ -114,7 +114,7 @@ class DebugTimer {
  * @param bool $clear false
  * @return array
  */
-	public static function getTimers($clear = false) {
+	public static function getAll($clear = false) {
 		$start = self::requestStartTime();
 		$now = microtime(true);
 
@@ -153,7 +153,7 @@ class DebugTimer {
  *
  * @return bool true
  */
-	public static function clearTimers() {
+	public static function clear() {
 		self::$__timers = array();
 		return true;
 	}
@@ -170,5 +170,32 @@ class DebugTimer {
 			return 0;
 		}
 		return round(self::$__timers[$name]['end'] - self::$__timers[$name]['start'], $precision);
+	}
+
+/**
+ * Get the total execution time until this point
+ *
+ * @return float elapsed time in seconds since script start.
+ */
+	public static function requestTime() {
+		$start = self::requestStartTime();
+		$now = microtime(true);
+		return ($now - $start);
+	}
+
+/**
+ * get the time the current request started.
+ *
+ * @return float time of request start
+ */
+	public static function requestStartTime() {
+		if (defined('TIME_START')) {
+			$startTime = TIME_START;
+		} else if (isset($GLOBALS['TIME_START'])) {
+			$startTime = $GLOBALS['TIME_START'];
+		} else {
+			$startTime = env('REQUEST_TIME');
+		}
+		return $startTime;
 	}
 }

@@ -564,6 +564,7 @@ class RequestPanel extends DebugPanel {
 		$out['params'] = $controller->request->params;
 		$out['url'] = $controller->request->url;
 		$out['query'] = $controller->request->query;
+		$out['data'] = $controller->request->data;
 		if (isset($controller->Cookie)) {
 			$out['cookie'] = $controller->Cookie->read();
 		}

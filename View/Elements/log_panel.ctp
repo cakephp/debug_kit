@@ -20,21 +20,23 @@
 ?>
 <h2><?php echo __d('debug_kit', 'Logs') ?></h2>
 <div class="code-table">
-<?php foreach ($content as $logName => $logs): ?>
-	<h3><?php echo $logName ?></h3>
-	<?php
-		$len = count($logs);
-		if ($len > 0):
-			$headers = array(__d('debug_kit', 'Time'), __d('debug_kit', 'Message'));
-			$rows = array();
-			for ($i = 0; $i < $len; $i += 2):
-				$rows[] = array(
-					$logs[$i][0], h($logs[$i][1])
-				);
-			endfor;
-			echo $this->Toolbar->table($rows, $headers, array('title' => $logName));
-		else: ?>
-		<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
-	<?php endif; ?>
-<?php endforeach; ?>
+<?php if ($content instanceof DebugKitLogListener): ?>
+	<?php foreach ($content->logs as $logName => $logs): ?>
+		<h3><?php echo $logName ?></h3>
+		<?php
+			$len = count($logs);
+			if ($len > 0):
+				$headers = array(__d('debug_kit', 'Time'), __d('debug_kit', 'Message'));
+				$rows = array();
+				for ($i = 0; $i < $len; $i += 2):
+					$rows[] = array(
+						$logs[$i][0], h($logs[$i][1])
+					);
+				endfor;
+				echo $this->Toolbar->table($rows, $headers, array('title' => $logName));
+			else: ?>
+			<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
+		<?php endif; ?>
+	<?php endforeach; ?>
+<?php endif; ?>
 </div>

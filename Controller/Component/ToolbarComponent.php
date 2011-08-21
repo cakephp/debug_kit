@@ -686,10 +686,10 @@ class LogPanel extends DebugPanel {
  * beforeRender Callback
  *
  * @return array
- **/
+ */
 	public function beforeRender($controller) {
-		$logs = $this->logger->logs;
-		return $logs;
+		$logger = $this->logger;
+		return $logger;
 	}
 }
 
@@ -708,7 +708,7 @@ class DebugKitLogListener implements CakeLogInterface {
  *
  * @return void
  */
-	public function DebugKitLogListener($options) {
+	public function __construct($options) {
 		$options['panel']->logger = $this;
 	}
 

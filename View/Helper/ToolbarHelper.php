@@ -149,8 +149,13 @@ class ToolbarHelper extends AppHelper {
 			return array();
 		}
 
-		$out = array();
 		$log = $db->getLog();
+		
+		$out = array(
+			'queries' => array(),
+			'count' => $log['count'],
+			'time' => $log['time']
+		);
 		foreach ($log['log'] as $i => $query) {
 			$isSlow = (
 				$query['took'] > 0 &&
@@ -173,7 +178,7 @@ class ToolbarHelper extends AppHelper {
 			if ($isHtml) {
 				$query['query'] = h($query['query']);
 			}
-			$out[] = $query;
+			$out['queries'][] = $query;
 		}
 		if ($options['cache']) {
 			$existing = $this->readCache('sql_log');

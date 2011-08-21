@@ -34,9 +34,10 @@
 					);
 				endfor;
 				echo $this->Toolbar->table($rows, $headers, array('title' => $logName));
-			else: ?>
-			<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
-		<?php endif; ?>
+			endif; ?>
 	<?php endforeach; ?>
+	<?php if (empty($content->logs)): ?>
+		<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
+	<?php endif; ?>
 <?php endif; ?>
 </div>

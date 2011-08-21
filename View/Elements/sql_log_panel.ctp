@@ -35,7 +35,15 @@ if (isset($debugKitInHistoryMode)) {
 			else:
 				$queryLog = $content[$dbName];
 			endif;
-			echo $this->Toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
+			echo '<h5>';
+			echo __d(
+				'debug_kit', 
+				'Total Time: %s ms <br />Total Queries: %s queries', 
+				$queryLog['time'],
+				$queryLog['count']
+			);
+			echo '</h5>';
+			echo $this->Toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
 		<h4><?php echo __d('debug_kit', 'Query Explain:'); ?></h4>
 		<div id="sql-log-explain-<?php echo $dbName ?>">

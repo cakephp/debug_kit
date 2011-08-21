@@ -21,6 +21,7 @@ $path = CakePlugin::path('DebugKit');
 
 App::uses('View', 'View');
 App::uses('Controller', 'Controller');
+App::uses('CakeResponse', 'Network');
 App::uses('Router', 'Routing');
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('FirePhpToolbar', 'DebugKit.View/Helper');
@@ -37,10 +38,11 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		Router::connect('/:controller/:action');
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
-		$this->Controller = new Controller();
+		$this->Controller = new Controller($this->getMock('CakeRequest'), new CakeResponse());
 		$this->View = new View($this->Controller);
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.FirePhpToolbar'));
 		$this->Toolbar->FirePhpToolbar = new FirePhpToolbarHelper($this->View);
@@ -115,7 +117,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Components->trigger('startup', array($this->Controller));
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
-		$this->assertNoPattern('/debug-toolbar/', $result);
+		$this->assertNotRegExp('/debug-toolbar/', (string) $result);
 		$result = $this->firecake->sentHeaders;
 		$this->assertTrue(is_array($result));
 	}

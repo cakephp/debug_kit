@@ -20,6 +20,7 @@
 App::uses('View', 'View');
 App::uses('Controller', 'Controller');
 App::uses('Router', 'Routing');
+App::uses('CakeResponse', 'Network');
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('HtmlToolbarHelper', 'DebugKit.View/Helper');
 App::uses('HtmlHelper', 'View/Helper');
@@ -49,10 +50,12 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-		Router::parse('/');
+		Router::connect('/:controller/:action');
 
-		$this->Controller = new Controller(null);
+		$request = new CakeRequest();
+		$request->addParams(array('controller' => 'pages', 'action' => 'display'));
+
+		$this->Controller = new Controller($request, new CakeResponse());
 		$this->View = new View($this->Controller);
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.HtmlToolbar'));
 		$this->Toolbar->HtmlToolbar = new HtmlToolbarHelper($this->View);

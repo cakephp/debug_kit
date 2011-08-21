@@ -24,6 +24,8 @@ App::uses('AppController', 'Controller');
 App::uses('Component', 'Controller');
 App::uses('Model', 'Model');
 App::uses('ToolbarComponent', 'DebugKit.Controller/Component');
+App::uses('DebugMemory', 'DebugKit.Lib');
+App::uses('DebugTimer', 'DebugKit.Lib');
 
 class TestToolbarComponent extends ToolbarComponent {
 	public $evalTest = false;
@@ -103,9 +105,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 
 		unset($this->Controller);
 		ClassRegistry::flush();
-		if (class_exists('DebugKitDebugger')) {
-			DebugKitDebugger::clearTimers();
-			DebugKitDebugger::clearMemoryPoints();
+		if (class_exists('DebugMemory')) {
+			DebugMemory::clear();
+		}
+		if (class_exists('DebugTimer')) {
+			DebugTimer::clear();
 		}
 		Router::reload();
 	}
@@ -179,7 +183,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		}
 		$this->_loadController();
 
-		App::uses('DebugKitDebugger', 'DebugKit.Lib');
 		$this->Controller->Toolbar->evalTest = true;
 		$this->Controller->viewClass = 'Plugin.OtherView';
 		$this->Controller->Toolbar->startup($this->Controller);
@@ -219,9 +222,9 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 
 		$this->assertFalse(empty($this->Controller->Toolbar->panels));
 
-		$timers = DebugKitDebugger::getTimers();
+		$timers = DebugTimer::getAll();
 		$this->assertTrue(isset($timers['componentInit']));
-		$memory = DebugKitDebugger::getMemoryPoints();
+		$memory = DebugMemory::getAll();
 		$this->assertTrue(isset($memory['Component initialization']));
 	}
 
@@ -335,9 +338,9 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['cacheConfig'], 'debug_kit');
 		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']['cacheKey']));
 
-		$timers = DebugKitDebugger::getTimers();
+		$timers = DebugTimer::getAll();
 		$this->assertTrue(isset($timers['controllerAction']));
-		$memory = DebugKitDebugger::getMemoryPoints();
+		$memory = DebugMemory::getAll();
 		$this->assertTrue(isset($memory['Controller action start']));
 	}
 
@@ -399,7 +402,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		);
 		$this->assertEqual($expected, $vars['session']);
 
-		$memory = DebugKitDebugger::getMemoryPoints();
+		$memory = DebugMemory::getAll();
 		$this->assertTrue(isset($memory['Controller render start']));
 	}
 
@@ -417,7 +420,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->cacheKey = 'toolbar_history';
 		Cache::delete('toolbar_history', $configName);
 
-		DebugKitDebugger::startTimer('controllerAction', 'testing beforeRedirect');
+		DebugTimer::start('controllerAction', 'testing beforeRedirect');
 		$MockPanel = $this->getMock('DebugPanel');
 		$MockPanel->expects($this->once())->method('beforeRender');
 		$this->Controller->Toolbar->panels['test'] = $MockPanel;
@@ -427,7 +430,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->assertTrue(isset($result[0]['session']));
 		$this->assertTrue(isset($result[0]['test']));
 
-		$timers = DebugKitDebugger::getTimers();
+		$timers = DebugTimer::getAll();
 		$this->assertTrue(isset($timers['controllerAction']));
 	}
 

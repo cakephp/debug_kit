@@ -40,11 +40,11 @@ class DebugKitDebugger extends Debugger {
  * @return void
  */
 	public function __destruct() {
-		$_this = DebugKitDebugger::getInstance();
-		if (Configure::read('debug') < 2 || !$_this->__benchmarks) {
+		$timers = DebugTimer::getAll();
+		if (Configure::read('debug') < 2 || count($timers) > 0) {
 			return;
 		}
-		$timers = array_values(DebugKitDebugger::getTimers());
+		$timers = array_values($timers);
 		$end = end($timers);
 		echo '<table class="cake-sql-log"><tbody>';
 		echo '<caption>Debug timer info</caption>';

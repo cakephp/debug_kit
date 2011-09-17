@@ -175,10 +175,12 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		foreach (Router::prefixes() as $prefix) {
 			$url[$prefix] = false;
 		}
-		$form = $this->Form->create('log', array('url' => $url));
-		$form .= $this->Form->hidden('log.ds', array('value' => $connection));
-		$form .= $this->Form->hidden('log.sql', array('value' => $sql));
-		$form .= $this->Form->hidden('log.hash', array('value' => $hash));
+		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0); 
+		$uid = $this->explainLinkUid . '_' . rand(0, 10000);
+		$form = $this->Form->create('log', array('url' => $url, 'id' => "logForm{$uid}"));
+		$form .= $this->Form->hidden('log.ds', array('id' => "logDs{$uid}", 'value' => $connection));
+		$form .= $this->Form->hidden('log.sql', array('id' => "logSql{$uid}", 'value' => $sql));
+		$form .= $this->Form->hidden('log.hash', array('id' => "logHash{$uid}", 'value' => $hash));
 		$form .= $this->Form->submit(__d('debug_kit', 'Explain', true), array(
 			'div' => false,
 			'class' => 'sql-explain-link'

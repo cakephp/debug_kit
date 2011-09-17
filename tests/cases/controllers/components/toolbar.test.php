@@ -126,14 +126,21 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testLoadPluginPanels() {
 		$this->Controller->Toolbar->loadPanels(array('plugin.test'));
-		$this->assertTrue(is_a($this->Controller->Toolbar->panels['plugin.test'], 'TestPanel'));
+		$this->assertTrue(is_a($this->Controller->Toolbar->panels['test'], 'TestPanel'));
 	}
 /**
  * test generating a DoppelGangerView with a pluginView.
  *
+ * If $this->Controller->Toolbar->startup() has been previously called,
+ * DoppelGangerView class has already been defined.
+ *
  * @return void
  **/
 	function testPluginViewParsing() {
+		if (class_exists('DoppelGangerView')) {
+			$this->skipIf(true, 'Class DoppelGangerView already defined, skipping %s');
+			return;
+		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 		$this->Controller->Toolbar->evalTest = true;
 		$this->Controller->view = 'Plugin.OtherView';
@@ -184,7 +191,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['componentInit']));
 		$memory = DebugKitDebugger::getMemoryPoints();
-		$this->assertTrue(isset($memory['Component intitailization']));
+		$this->assertTrue(isset($memory['Component initialization']));
 	}
 /**
  * test initialize w/ custom panels and defaults
@@ -202,12 +209,14 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'test');
 		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
 	}
+
 /**
  * test syntax for removing panels
  *
  * @return void
  **/
 	function testInitializeRemovingPanels() {
+		unset($this->Controller->Toolbar);
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array('panels' => array('session' => false, 'history' => false, 'test'))
 		);
@@ -238,6 +247,7 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testForceEnable() {
+		unset($this->Controller->Toolbar);
 		$_debug = Configure::read('debug');
 		Configure::write('debug', 0);
 		$this->Controller->components = array('DebugKit.Toolbar' => array('forceEnable' => true));

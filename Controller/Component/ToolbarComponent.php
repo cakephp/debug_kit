@@ -327,7 +327,7 @@ class ToolbarComponent extends Component {
 		if (!class_exists('DoppelGangerView')) {
 			$plugin = false;
 			if (strpos($baseClassName, '.') !== false) {
-				list($plugin, $baseClassName) = explode('.', $baseClassName);
+				list($plugin, $baseClassName) = pluginSplit($baseClassName, true);
 			}
 			if (strpos($baseClassName, 'View') === false) {
 				$baseClassName .= 'View';

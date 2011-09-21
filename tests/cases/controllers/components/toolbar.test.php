@@ -545,7 +545,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 			),
 			'plugins' => $this->_paths['plugins']
 		));
-		Router::reload();
+		//Router::reload();
 
 		$result = $this->Controller->requestAction('/debug_kit_test/request_action_return', array('return'));
 		$this->assertEqual($result, 'I am some value from requestAction.');

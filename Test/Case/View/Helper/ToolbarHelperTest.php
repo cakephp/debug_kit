@@ -141,7 +141,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->getQueryLogs($model->useDbConfig, array('cache' => false));
 		$this->assertTrue(is_array($result));
 		$this->assertTrue(count($result) >= 2, 'Should be more than 2 queries in the log %s');
-		$this->assertTrue(isset($result[0]['actions']));
+		$this->assertTrue(isset($result['queries'][0]['actions']));
 
 		$model->find('first');
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
@@ -149,7 +149,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 
 		$cached = $this->Toolbar->readCache('sql_log');
 		$this->assertTrue(isset($cached[$model->useDbConfig]));
-		$this->assertEqual($cached[$model->useDbConfig][0], $result[0]);
+		$this->assertEqual($cached[$model->useDbConfig]['queries'][0], $result['queries'][0]);
 	}
 /**
  * reset the view paths

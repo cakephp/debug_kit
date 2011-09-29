@@ -33,6 +33,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		Configure::write('log', false);
 	}
 /**
@@ -41,6 +42,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		Configure::write('log', true);
 		DebugKitDebugger::clearTimers();
 	}
@@ -53,6 +55,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 
 		$firecake = FireCake::getInstance('TestFireCake');
 		Debugger::getInstance('DebugKitDebugger');
+		Debugger::addFormat('fb', array('callback' => 'DebugKitDebugger::fireError'));
 		Debugger::output('fb');
 
 		set_error_handler('ErrorHandler::handleError');
@@ -63,7 +66,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 
 		$this->assertPattern('/GROUP_START/', $result['X-Wf-1-1-1-1']);
 		$this->assertPattern('/ERROR/', $result['X-Wf-1-1-1-2']);
-		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-5']);
+		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-4']);
 
 		Debugger::getInstance('Debugger');
 		Debugger::output();

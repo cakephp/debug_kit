@@ -46,8 +46,8 @@ class DebugTimerTest extends CakeTestCase {
 		sleep(1);
 		$this->assertTrue(DebugTimer::stop('test2'));
 		$elapsed = DebugTimer::elapsedTime('test2');
-		$expected = strpos(PHP_OS, 'WIN') === false ? 0.9999: 0.95; // Windows timer's precision is bad
-		$this->assertTrue($elapsed > $expected);
+		$expected = strpos(PHP_OS, 'WIN') === false ? 0.999: 0.95; // Windows timer's precision is bad
+		$this->assertTrue($elapsed >= $expected);
 
 		DebugTimer::start('test3');
 		$this->assertIdentical(DebugTimer::elapsedTime('test3'), 0);

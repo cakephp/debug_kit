@@ -203,65 +203,27 @@ class DebugKitDebugger extends Debugger {
 	}
 
 /**
- * Handles object conversion to debug string.
- *
- * @param string $var Object to convert
- */
-	public function outputError($data = array()) {
-		extract($data);
-		if (is_array($level)) {
-			$error = $level['error'];
-			$code = $level['code'];
-			if (isset($level['helpID'])) {
-				$helpID = $level['helpID'];
-			} else {
-				$helpID = '';
-			}
-			$description = $level['description'];
-			$file = $level['file'];
-			$line = $level['line'];
-			$context = $level['context'];
-			$level = $level['level'];
-		}
-		$files = $this->trace(array('start' => 2, 'format' => 'points'));
-		$listing = $this->excerpt($files[0]['file'], $files[0]['line'] - 1, 1);
-		$trace = $this->trace(array('start' => 2, 'depth' => '20'));
-
-		if ($this->_outputFormat == 'fb') {
-			$kontext = array();
-			foreach ((array)$context as $var => $value) {
-				$kontext[] = "\${$var}\t=\t" . $this->exportVar($value, 1);
-			}
-			$this->_fireError($error, $code, $description, $file, $line, $trace, $kontext);
-		} else {
-			$data = compact(
-				'level', 'error', 'code', 'helpID', 'description', 'file', 'path', 'line', 'context'
-			);
-			echo parent::output($data);
-		}
-	}
-/**
  * Create a FirePHP error message
  *
- * @param string $error Name of error
- * @param string $code  Code of error
- * @param string $description Description of error
- * @param string $file File error occured in
- * @param string $line Line error occured on
- * @param string $trace Stack trace at time of error
- * @param string $context context of error
+ * @param array $data Data of the error
+ * @param array $links  Links for the error
  * @return void
  */
-	protected function _fireError($error, $code, $description, $file, $line, $trace, $context) {
-		$name = $error . ' - ' . $description;
-		$message = "$error $code $description on line: $line in file: $file";
+	public function fireError($data, $links) {
+		$name = $data['error'] . ' - ' . $data['description'];
+		$message = "{$data['error']} {$data['code']} {$data['description']} on line: {$data['line']} in file: {$data['file']}";
 		FireCake::group($name);
 		FireCake::error($message, $name);
-		FireCake::log($context, 'Context');
-		FireCake::log($trace, 'Trace');
+		if (isset($data['context'])) {
+			FireCake::log($data['context'], 'Context');
+		}
+		if (isset($data['trace'])) {
+			FireCake::log($data['trace'], 'Trace');
+		}
 		FireCake::groupEnd();
 	}
 }
 
 
 DebugKitDebugger::getInstance('DebugKitDebugger');
+Debugger::addFormat('fb', array('callback' => 'DebugKitDebugger::fireError'));

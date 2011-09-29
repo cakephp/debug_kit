@@ -238,7 +238,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			'panels' => array('test'),
 		));
 
-		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'test');
+		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'include', 'test');
 		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 
@@ -257,7 +257,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			)
 		));
 
-		$expected = array('request', 'sqlLog', 'timer', 'log', 'variables', 'test');
+		$expected = array('request', 'sqlLog', 'timer', 'log', 'variables', 'include', 'test');
 		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 
@@ -475,12 +475,12 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
 
-		$this->assertEqual(count($result['content']), 2);
-		$this->assertEqual(count($result['content']['error']), 2);
-		$this->assertEqual(count($result['content']['debug']), 1);
+		$this->assertEqual(count($result['content']->logs), 2);
+		$this->assertEqual(count($result['content']->logs['error']), 2);
+		$this->assertEqual(count($result['content']->logs['debug']), 1);
 
-		$this->assertEqual(trim($result['content']['debug'][0][1]), 'This time in the debug log!');
-		$this->assertEqual(trim($result['content']['error'][0][1]), 'This is a log I made this request');
+		$this->assertEqual(trim($result['content']->logs['debug'][0][1]), 'This time in the debug log!');
+		$this->assertEqual(trim($result['content']->logs['error'][0][1]), 'This is a log I made this request');
 
 		$data = array(
 			'Post' => array(
@@ -496,8 +496,8 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->log($data);
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
-		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error'][2][1]);
-		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error'][2][1]);
+		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']->logs['error'][2][1]);
+		$this->assertPattern('/\[Comment\] => Array/', $result['content']->logs['error'][2][1]);
 	}
 
 

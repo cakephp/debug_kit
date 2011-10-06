@@ -30,10 +30,16 @@ class WhitespaceShell extends Shell {
  * @return void
  */
 	public function main() {
-		$siteRoot = new Folder(ROOT);
+		$path = APP;
+		if (!empty($this->params['path']) && strpos($this->params['path'], '/') === 0) {
+			$path = $this->params['path'];
+		} elseif (!empty($this->params['path'])) {
+			$path .= $this->params['path'];
+		}
+		$folder = new Folder($path);
 
-		$r = $siteRoot->findRecursive('.*\.php');
-		$this->out("Checking *.php in ".ROOT);
+		$r = $folder->findRecursive('.*\.php');
+		$this->out("Checking *.php in ".$path);
 		foreach($r as $file) {
 			$c = file_get_contents($file);
 			if (preg_match('/^[\n\r|\n\r|\n|\r|\s]+\<\?php/',$c)) {
@@ -46,16 +52,22 @@ class WhitespaceShell extends Shell {
 	}
 
 /**
- * Much like main() except files are modified.  Be sure to have 
+ * Much like main() except files are modified.  Be sure to have
  * backups or use version control.
  *
  * @return void
  */
 	public function trim() {
-		$siteRoot = new Folder(ROOT);
+		$path = APP;
+		if (!empty($this->params['path']) && strpos($this->params['path'], '/') === 0) {
+			$path = $this->params['path'];
+		} elseif (!empty($this->params['path'])) {
+			$path .= $this->params['path'];
+		}
+		$folder = new Folder($path);
 
-		$r = $siteRoot->findRecursive('.*\.php');
-		$this->out("Checking *.php in ".ROOT);
+		$r = $folder->findRecursive('.*\.php');
+		$this->out("Checking *.php in ".$path);
 		foreach($r as $file) {
 			$c = file_get_contents($file);
 			if (preg_match('/^[\n\r|\n\r|\n|\r|\s]+\<\?php/', $c) || preg_match('/\?\>[\n\r|\n\r|\n|\r|\s]+$/', $c)) {
@@ -65,5 +77,15 @@ class WhitespaceShell extends Shell {
 				file_put_contents($file, $c);
 			}
         }
+	}
+
+/**
+ * get the option parser
+ *
+ * @return void
+ */
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		return $parser->addOption('path', array('short' => 'p', 'help' => __d('cake_console', 'Absolute path or relative to APP.')));
 	}
 }

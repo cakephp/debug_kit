@@ -20,6 +20,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 App::uses('Security', 'Utility');
+App::uses('DebugKitAppController', 'DebugKit.Controller');
 
 class ToolbarAccessController extends DebugKitAppController {
 /**

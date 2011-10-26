@@ -181,10 +181,7 @@ class ToolbarComponent extends Component {
 		$currentViewClass = $controller->viewClass;
 		$this->_makeViewClass($currentViewClass);
 		$controller->viewClass = 'DebugKit.Debug';
-		$isHtml = (
-			!isset($controller->request->params['url']['ext']) ||
-			(isset($controller->request->params['url']['ext']) && $controller->request->params['url']['ext'] == 'html')
-		);
+		$isHtml = (!isset($controller->request->params['ext']) || $controller->request->params['ext'] === 'html');
 
 		if (!$controller->request->is('ajax') && $isHtml) {
 			$format = 'Html';

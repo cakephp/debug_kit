@@ -27,7 +27,7 @@
 		if ($len > 0):
 			$headers = array(__d('debug_kit', 'Time', true), __d('debug_kit', 'Message', true));
 			$rows = array();
-			for ($i = 0; $i < $len; $i += 2):
+			for ($i = 0; $i < $len; $i++):
 				$rows[] = array(
 					$logs[$i][0], h($logs[$i][1])
 				);

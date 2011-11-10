@@ -38,6 +38,7 @@
 DEBUGKIT.module('historyPanel');
 DEBUGKIT.historyPanel = function () {
 	var toolbar = DEBUGKIT.toolbar,
+		$ = DEBUGKIT.$,
 		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
 		Event = DEBUGKIT.Util.Event,
@@ -175,12 +176,12 @@ DEBUGKIT.historyPanel = function () {
 	return {
 		init : function () {
 			if (toolbar.panels['history'] === undefined) {
-				console.log('bailing on history');
+				console.error('Bailing on history');
 				return;
 			}
 
-			var anchors = toolbar.panels['history'].content.getElementsByTagName('A');
-			Collection.apply(anchors, function (button) {
+			var anchors = toolbar.panels['history'].content.find('a');
+			anchors.each(function (button) {
 				if (Element.hasClass(button, 'history-link')) {
 					historyLinks.push(button);
 					Event.addEvent(button, 'click', handleHistoryLink);

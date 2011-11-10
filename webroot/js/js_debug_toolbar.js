@@ -32,6 +32,8 @@ var DEBUGKIT = function () {
 	};
 }() ;
 
+DEBUGKIT.$ = jQuery.noConflict(true);
+
 DEBUGKIT.loader = function () {
 	return {
 		//list of methods to run on startup.
@@ -50,6 +52,9 @@ DEBUGKIT.loader = function () {
 	};
 }();
 
+//
+// NOTE DEBUGKIT.Util.Element is Deprecated.
+// 
 //Util module and Element utility class.
 DEBUGKIT.module('Util');
 DEBUGKIT.Util.Element = {
@@ -153,6 +158,9 @@ DEBUGKIT.Util.Element = {
 	}
 };
 
+//
+// NOTE DEBUGKIT.Util.Collection is Deprecated.
+// 
 DEBUGKIT.Util.Collection = {
 	/*
 	 Apply the passed function to each item in the collection.
@@ -178,6 +186,9 @@ DEBUGKIT.Util.Collection = {
 }
 
 
+//
+// NOTE DEBUGKIT.Util.Event is Deprecated.
+// 
 //Event binding
 DEBUGKIT.Util.Event = function () {
 	var _listeners = {},
@@ -342,6 +353,9 @@ DEBUGKIT.Util.Cookie = function() {
 }();
 
 
+//
+// NOTE DEBUGKIT.Util.merge is Deprecated.
+// 
 /*
  Object merge takes any number of arguments and glues them together
  @param [Object] one first object
@@ -359,6 +373,9 @@ DEBUGKIT.Util.merge = function() {
 	}
 	return out;
 };
+//
+// NOTE DEBUGKIT.Util.isArray is Deprecated.
+// 
 /*
  Check if the given object is an array.
 */
@@ -366,7 +383,9 @@ DEBUGKIT.Util.isArray = function (test) {
 	return Object.prototype.toString.call(test) === '[object Array]';
 }
 
-
+//
+// NOTE DEBUGKIT.Util.Request is Deprecated.
+//
 // Simple wrapper for XmlHttpRequest objects.
 DEBUGKIT.Util.Request = function (options) {
 	var _defaults = {
@@ -482,79 +501,37 @@ DEBUGKIT.Util.Request.prototype.serialize = function (data) {
 //Basic toolbar module.
 DEBUGKIT.toolbar = function () {
 	//shortcuts
-	var Request = DEBUGKIT.Request,
-		Element = DEBUGKIT.Util.Element,
-		Cookie = DEBUGKIT.Util.Cookie,
-		Event = DEBUGKIT.Util.Event,
-		Collection = DEBUGKIT.Util.Collection,
+	var Cookie = DEBUGKIT.Util.Cookie,
+		$ = DEBUGKIT.$,
 		toolbarHidden = false;
-
-
-	/*
-	 Add neat array functionality.
-	 Events are bound to depth-0 UL elements.
-	 Use event delegation to find original target.
-	*/
-	function _delegateNeatArray (event) {
-		var clickedEl = event.target;
-		while (!Element.nodeName(clickedEl, 'LI')) {
-			clickedEl = clickedEl.parentNode;
-		}
-		var subUl = clickedEl.lastChild;
-		if (!Element.nodeName(subUl, 'ul')) {
-			return;
-		}
-		var hide = Boolean(subUl.style.display === 'block');
-		if (hide) {
-			Element.hide(subUl);
-			Element.swapClass(clickedEl, 'expanded', 'collapsed');
-		} else {
-			Element.show(subUl);
-			Element.swapClass(clickedEl, 'collapsed', 'expanded');
-		}
-		event.stopPropagation();
-	}
 
 	return {
 		elements: {},
 		panels: {},
 
 		init: function () {
-			var i, element, lists, index;
-			this.elements.toolbar = document.getElementById('debug-kit-toolbar');
+			var i, element, lists, index, _this = this;
+	
+			this.elements.toolbar = $('#debug-kit-toolbar');
 
-			if (this.elements.toolbar === undefined) {
-				throw('Toolbar not found, make sure you loaded it.');
+			if (this.elements.toolbar.length === 0) {
+				throw new Error('Toolbar not found, make sure you loaded it.');
 			}
 
-			for (i in this.elements.toolbar.childNodes) {
-				element = this.elements.toolbar.childNodes[i];
-				if (element.nodeName && element.id === 'panel-tabs') {
-					this.elements.panel = element;
-					break;
-				}
-			}
+			this.elements.panel = $('#panel-tabs');
+			this.elements.panel.find('.panel-tab').each(function (i, panel) {
+				_this.addPanel(panel);
+			});
 
-			Collection.apply(this.elements.panel.childNodes, function (element) {
-				if (Element.hasClass(element, 'panel-tab')) {
-					this.addPanel(element);
-				}
-			}, this);
+			lists = this.elements.toolbar.find('.depth-0');
 
-			if (document.getElementsByClassName) {
-				lists = this.elements.toolbar.getElementsByClassName('depth-0');
-			} else {
-				lists = this.elements.toolbar.getElementsByTagName('ul');
-			}
 			this.makeNeatArray(lists);
 			this.deactivatePanel(true);
 		},
 
 		// Add a panel to the toolbar
 		addPanel: function (tab) {
-			if (!Element.nodeName(tab, 'li')) {
-				throw ('Toolbar not found, make sure you loaded it.');
-			}
+			var button, content, _this = this;
 			var panel = {
 				id : false,
 				element : tab,
@@ -562,27 +539,24 @@ DEBUGKIT.toolbar = function () {
 				content : undefined,
 				active : false
 			};
+			tab = $(tab);
+			button = tab.children('a');
 
-			Collection.apply(tab.childNodes, function (element) {
-				if (Element.nodeName(element, 'A')) {
-					panel.id = element.hash.replace(/^#/, '');
-					panel.button = element;
-				} else if (Element.nodeName(element, 'DIV')) {
-					panel.content = element;
-				}
-			});
+			panel.id = button.attr('href').replace(/^#/, '');
+			panel.button = button;
+			panel.content = tab.find('.panel-content');
 	
-			if (!panel.id || !panel.content) {
+			if (!panel.id || panel.content.length === 0) {
 				return false;
 			}
 			this.makePanelDraggable(panel);
-			this.makePanelMinMax(panel);
+			// this.makePanelMinMax(panel);
 
-			var self = this;
-			Event.addEvent(panel.button, 'click', function (event) {
+			button.on('click', function (event) {
 				event.preventDefault();
-				return self.togglePanel(panel.id);
+				_this.togglePanel(panel.id);
 			});
+
 			this.panels[panel.id] = panel;
 			return panel.id;
 		},
@@ -600,34 +574,30 @@ DEBUGKIT.toolbar = function () {
 				if (!currentElement) {
 					return;
 				}
-				var newHeight = currentElement._startHeight + (event.pageY - currentElement._startY);
-				Element.height(currentElement.parentNode, newHeight);
+				var newHeight = currentElement.data('startHeight') + (event.pageY - currentElement.data('startY'));
+				currentElement.parent().height(newHeight);
 			}
 
 			// handle the mouseup event, remove the other listeners so the panel
 			// doesn't continue to resize
 			var mouseUpHandler = function (event) {
 				currentElement = null;
-				Event.removeEvent(document, 'mousemove', mouseMoveHandler);
-				Event.removeEvent(document, 'mouseup', mouseUpHandler);
+				$(document).off('mousemove', mouseMoveHandler).off('mouseup', mouseUpHandler);
 			}
 
 			var mouseDownHandler = function (event) {
 				event.preventDefault();
-				currentElement = this;
-				this._startY = event.pageY;
-				this._startHeight = parseInt(Element.height(currentElement.parentNode));
+
+				currentElement = $(this);
+				currentElement.data('startY', event.pageY);
+				currentElement.data('startHeight', currentElement.parent().height());
 
 				// attach to document so mouse doesn't have to stay precisely on the 'handle'
-				Event.addEvent(document, 'mousemove', mouseMoveHandler);
-				Event.addEvent(document, 'mouseup', mouseUpHandler);
+				$(document).on('mousemove', mouseMoveHandler)
+					.on('mouseup', mouseUpHandler);
 			}
 
-			Collection.apply(panel.content.childNodes, function (element) {
-				if (Element.nodeName(element, 'DIV') && Element.hasClass(element, 'panel-resize-handle')) {
-					Event.addEvent(element, 'mousedown', mouseDownHandler);
-				}
-			});
+			panel.content.find('.panel-resize-handle').on('mousedown', mouseDownHandler);
 		},
 		
 		// make the maximize button work on the panels.
@@ -674,10 +644,10 @@ DEBUGKIT.toolbar = function () {
 		activatePanel: function (id, unique) {
 			if (this.panels[id] !== undefined && !this.panels[id].active) {
 				var panel = this.panels[id];
-				if (panel.content !== undefined) {
-					Element.show(panel.content);
+				if (panel.content.length > 0) {
+					panel.content.css('display', 'block');
 				}
-				Element.addClass(panel.button, 'active');
+				panel.button.addClass('active');
 				panel.active = true;
 				return true;
 			}
@@ -695,9 +665,9 @@ DEBUGKIT.toolbar = function () {
 			if (this.panels[id] !== undefined) {
 				var panel = this.panels[id];
 				if (panel.content !== undefined) {
-					Element.hide(panel.content);
+					panel.content.hide();
 				}
-				Element.removeClass(panel.button, 'active');
+				panel.button.removeClass('active');
 				panel.active = false;
 				return true;
 			}
@@ -706,16 +676,13 @@ DEBUGKIT.toolbar = function () {
 
 		// Bind events for all the collapsible arrays.
 		makeNeatArray: function (lists) {
-			for (var i = 0, element; element = lists[i]; i++) {
-				if (Element.hasClass(element, 'neat-array') && element.className.match(/depth-0/)) {
-					var childLists = element.getElementsByTagName('UL');
-					for (var j = 0, childEl; childEl = childLists[j]; j++) {
-						Element.hide(childEl);
-						Element.addClass(childEl.parentNode, 'expandable collapsed');
-					}
-					Event.addEvent(element, 'click', _delegateNeatArray);
-				}
-			}
+			lists.find('ul').hide()
+				.parent().addClass('expandable collapsed');
+
+			lists.on('click', 'li', function (event) {
+				event.stopPropagation();
+				$(this).children('ul').toggle().toggleClass('expanded collapsed');
+			});
 		}
 	};
 }();
@@ -724,6 +691,7 @@ DEBUGKIT.loader.register(DEBUGKIT.toolbar);
 //Add events + behaviors for toolbar collapser.
 DEBUGKIT.toolbarToggle = function () {
 	var toolbar = DEBUGKIT.toolbar,
+		$ = DEBUGKIT.$,
 		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
 		Collection = DEBUGKIT.Util.Collection,
@@ -732,10 +700,10 @@ DEBUGKIT.toolbarToggle = function () {
 
 	return {
 		init: function () {
-			var button = document.getElementById('hide-toolbar'),
+			var button = $('#hide-toolbar'),
 				self = this;
 
-			Event.addEvent(button, 'click', function (event) {
+			button.on('click', function (event) {
 				event.preventDefault();
 				self.toggleToolbar();
 			});
@@ -749,8 +717,8 @@ DEBUGKIT.toolbarToggle = function () {
 
 		toggleToolbar: function () {
 			var display = toolbarHidden ? 'show' : 'hide';
-			Collection.apply(toolbar.panels, function (panel) {
-				Element[display](panel.element);
+			$.each(toolbar.panels, function (i, panel) {
+				$(panel.element)[display]();
 				Cookie.write('toolbarDisplay', display);
 			});
 			toolbarHidden = !toolbarHidden;

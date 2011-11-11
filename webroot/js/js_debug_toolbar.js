@@ -550,7 +550,7 @@ DEBUGKIT.toolbar = function () {
 				return false;
 			}
 			this.makePanelDraggable(panel);
-			// this.makePanelMinMax(panel);
+			this.makePanelMinMax(panel);
 
 			button.on('click', function (event) {
 				event.preventDefault();
@@ -611,23 +611,19 @@ DEBUGKIT.toolbar = function () {
 				}
 				var windowHeight = window.innerHeight;
 				var panelHeight = windowHeight - this.parentNode.offsetTop;
-				Element.height(this.parentNode, panelHeight);
+				$(this.parentNode).height(panelHeight);
 			};
 			
 			var minimize = function (event) {
 				event.preventDefault();
-				Element.height(this.parentNode, _oldHeight);
+				$(this.parentNode).height(_oldHeight);
 				_oldHeight = null;
 			};
 
-			Collection.apply(panel.content.getElementsByTagName('A'), function (element) {
-				if (Element.hasClass(element, 'panel-maximize')) {
-					Event.addEvent(element, 'click', maximize);
-				}
-				if (Element.hasClass(element, 'panel-minimize')) {
-					Event.addEvent(element, 'click', minimize);
-				}
-			});
+			panel.content
+				.find('.panel-maximize').on('click', maximize)
+				.end()
+				.find('.panel-minimize').on('click', minimize);
 		},
 
 		// Toggle a panel
@@ -692,10 +688,7 @@ DEBUGKIT.loader.register(DEBUGKIT.toolbar);
 DEBUGKIT.toolbarToggle = function () {
 	var toolbar = DEBUGKIT.toolbar,
 		$ = DEBUGKIT.$,
-		Element = DEBUGKIT.Util.Element,
 		Cookie = DEBUGKIT.Util.Cookie,
-		Collection = DEBUGKIT.Util.Collection,
-		Event = DEBUGKIT.Util.Event,
 		toolbarHidden = false;
 
 	return {
@@ -728,8 +721,6 @@ DEBUGKIT.toolbarToggle = function () {
 }();
 DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
 
-
-DEBUGKIT.Util.Event.domready(function () {
+DEBUGKIT.$(document).ready(function () {
 	DEBUGKIT.loader.init();
-	DEBUGKIT.Util.Event.addEvent(window, 'unload', DEBUGKIT.Util.Event.unload);
 });

@@ -60,51 +60,35 @@ endif; ?>
 //<![CDATA[
 DEBUGKIT.module('sqlLog');
 DEBUGKIT.sqlLog = function () {
-	var Element = DEBUGKIT.Util.Element,
-		Request = DEBUGKIT.Util.Request,
-		Event = DEBUGKIT.Util.Event,
-		Collection = DEBUGKIT.Util.Collection;
+	var $ = DEBUGKIT.$;
 
 	return {
 		init : function () {
-			var sqlPanel = document.getElementById('sql_log-tab');
-			var buttons = sqlPanel.getElementsByTagName('input');
+			var sqlPanel = $('#sql_log-tab');
+			var buttons = sqlPanel.find('input');
 
 			// Button handling code for explain links.
 			// performs XHR request to get explain query.
 			var handleButton = function (event) {
 				event.preventDefault();
-				var data = {};
-				var dbName = 'default';
-				var inputs = this.form.getElementsByTagName('input');
-				var i = inputs.length;
-				while (i--) {
-					var input = inputs[i];
-					if (input.name) {
-						data[input.name] = input.value;
-						if (input.name.indexOf('[ds]') != -1) {
-							dbName = input.value;
-						}
-					}
-				}
+				var form = $(this.form),
+					data = form.serialize(),
+					dbName = form.find('input[name*=ds]').val() || 'default';
 
-				var fetch = new Request({
-					method: 'POST',
-					onComplete : function (response) {
-						var targetEl = document.getElementById('sql-log-explain-' + dbName);
-						targetEl.innerHTML = response.response.text;
+				var fetch = $.ajax({
+					url: this.form.action,
+					data: data,
+					type: 'POST',
+					success : function (response) {
+						$('#sql-log-explain-' + dbName).html(response);
 					},
-					onFail : function () {
+					error : function () {
 						alert('Could not fetch EXPLAIN for query.');
 					}
-				}).send(this.form.action, data);
+				});
 			};
 	
-			Collection.apply(buttons, function (button) {
-				if (Element.hasClass(button, 'sql-explain-link')) {
-					Event.addEvent(button, 'click', handleButton);
-				}
-			});
+			buttons.filter('.sql-explain-link').on('click', handleButton);
 		}
 	};
 }();

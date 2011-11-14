@@ -208,7 +208,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	public function beforeRedirect($controller) {
+	public function beforeRedirect($controller, $url, $status = null, $exit = true) {
 		if (!class_exists('DebugTimer')) {
 			return null;
 		}

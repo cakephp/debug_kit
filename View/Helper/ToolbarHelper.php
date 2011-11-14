@@ -42,7 +42,6 @@ class ToolbarHelper extends AppHelper {
  * @return void
  */
 	public function __construct($View, $options = array()) {
-
 		$this->_myName = strtolower(get_class($this));
 		$this->settings = array_merge($this->settings, $options);
 
@@ -54,7 +53,6 @@ class ToolbarHelper extends AppHelper {
 		if (!isset($options['output'])) {
 			$options['output'] = 'DebugKit.HtmlToolbar';
 		}
-		App::import('Helper', $options['output']);
 		$className = $options['output'];
 		if (strpos($options['output'], '.') !== false) {
 			list($plugin, $className) = explode('.', $options['output']);

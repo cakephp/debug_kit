@@ -122,7 +122,7 @@ DEBUGKIT.historyPanel = function () {
 				return;
 			}
 
-			historyLinks = toolbar.panels['history'].content.find('.history-link');
+			historyLinks = toolbar.panels.history.content.find('.history-link');
 			historyLinks.on('click', handleHistoryLink);
 		}
 	};

@@ -85,7 +85,7 @@ class DebugView extends DoppelGangerView {
 		DebugTimer::stop('controllerRender');
 		DebugMemory::record(__d('debug_kit', 'View render complete'));
 
-		if (empty($this->request->params['requested']) && $this->Helpers->attached('Toolbar')) {
+		if (empty($this->request->params['requested']) && $this->Helpers && $this->Helpers->attached('Toolbar')) {
 			$backend = $this->Helpers->Toolbar->getName();
 			$this->Helpers->Toolbar->{$backend}->send();
 		}

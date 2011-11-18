@@ -604,26 +604,35 @@ DEBUGKIT.toolbar = function () {
 		makePanelMinMax: function (panel) {
 			var _oldHeight;
 	
-			var maximize = function (event) {
-				event.preventDefault();
+			var maximize = function () {
 				if (!_oldHeight) {
 					_oldHeight = this.parentNode.offsetHeight;
 				}
 				var windowHeight = window.innerHeight;
 				var panelHeight = windowHeight - this.parentNode.offsetTop;
 				$(this.parentNode).height(panelHeight);
+				$(this).text('-');
 			};
 			
-			var minimize = function (event) {
-				event.preventDefault();
+			var minimize = function () {
 				$(this.parentNode).height(_oldHeight);
+				$(this).text('+');
 				_oldHeight = null;
 			};
 
-			panel.content
-				.find('.panel-maximize').on('click', maximize)
-				.end()
-				.find('.panel-minimize').on('click', minimize);
+			var state = 1;
+			var toggle = function (event) {
+				event.preventDefault();
+				if (state === 1) {
+					maximize.call(this);
+					state = 0;
+				} else {
+					state = 1;
+					minimize.call(this);
+				}
+			};
+
+			panel.content.find('.panel-toggle').on('click', toggle);
 		},
 
 		// Toggle a panel

@@ -289,12 +289,12 @@ class FireCake {
  */
 	public static function fb($message) {
 		$_this = FireCake::getInstance();
-
-		if (headers_sent($filename, $linenum)) {
-			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.'), $filename, $linenum), E_USER_WARNING);
+		
+		if (!$_this->_enabled || !$_this->detectClientExtension()) {
 			return false;
 		}
-		if (!$_this->_enabled || !$_this->detectClientExtension()) {
+		if (headers_sent($filename, $linenum)) {
+			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.'), $filename, $linenum), E_USER_WARNING);
 			return false;
 		}
 

@@ -4,9 +4,9 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
 
 ## Installation
 
-* Clone/Copy the files in this directory into `app/plugins/debug_kit`
-* Include the toolbar component in your `app_controller.php`:
-   * `var $components = array('DebugKit.Toolbar');`
+* Clone/Copy the files in this directory into `app/Plugin/DebugKit`
+* Include the toolbar component in your `AppController.php`:
+   * `public $components = array('DebugKit.Toolbar');`
 * Set debug mode to at least 1.
 * Make sure to remove the 'sql_dump' element from your layout if you want to experience the awesome that is the debug kit SQL log.
 
@@ -28,4 +28,4 @@ DebugKit has several versions, they are compatible with different release of Cak
 
 * `1.0 -> 1.2` are compatible with CakePHP 1.2.x.  These releases of DebugKit will not work with CakePHP 1.3.
 * `1.3` is compatible with CakePHP 1.3.x only.  It will not work with CakePHP 1.2.
-
+* `2.0` is compatible with CakePHP 2.0.x only.  It will not work with previous CakePHP versions.

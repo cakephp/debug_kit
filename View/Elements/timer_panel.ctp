@@ -76,7 +76,7 @@ foreach ($timers as $timerName => $timeInfo):
 			$indent++;
 		}
 	}
-	$indent = str_repeat(' » ', $indent);
+	$indent = str_repeat(' &raquo; ', $indent);
 	$rows[] = array(
 		$indent . $timeInfo['message'],
 		$this->Number->precision($timeInfo['time'] * 1000, 2),

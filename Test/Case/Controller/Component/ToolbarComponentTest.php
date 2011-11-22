@@ -424,7 +424,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$MockPanel = $this->getMock('DebugPanel');
 		$MockPanel->expects($this->once())->method('beforeRender');
 		$this->Controller->Toolbar->panels['test'] = $MockPanel;
-		$this->Controller->Toolbar->beforeRedirect($this->Controller);
+		$this->Controller->Toolbar->beforeRedirect($this->Controller, '/another/url');
 
 		$result = Cache::read('toolbar_history', $configName);
 		$this->assertTrue(isset($result[0]['session']));

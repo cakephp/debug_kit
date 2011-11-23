@@ -4,6 +4,7 @@ App::uses('CakeLog', 'Log');
 App::uses('CakeLogInterface', 'Log');
 App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugMemory', 'DebugKit.Lib');
+App::uses('HelperCollection', 'View');
 
 /**
  * DebugKit DebugToolbar Component
@@ -589,10 +590,10 @@ class TimerPanel extends DebugPanel {
  * @return void
  **/
 	public function startup($controller) {
-		if (!in_array('Number', $controller->helpers)) {
+		if (!in_array('Number', array_keys(HelperCollection::normalizeObjectArray($controller->helpers)))) {
 			$controller->helpers[] = 'Number';
 		}
-		if (!in_array('SimpleGraph', $controller->helpers)) {
+		if (!in_array('SimpleGraph', array_keys(HelperCollection::normalizeObjectArray($controller->helpers)))) {
 			$controller->helpers[] = 'DebugKit.SimpleGraph';
 		}
 	}

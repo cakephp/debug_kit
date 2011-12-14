@@ -30,6 +30,8 @@
  * @todo Export/graphing of data to .dot format for graphviz visualization
  * @todo Make calculated results round to leading significant digit position of std dev.
  */
+App::uses('String','Utility');
+
 class BenchmarkShell extends Shell {
 /**
  * Main execution of shell
@@ -43,7 +45,7 @@ class BenchmarkShell extends Shell {
 
 		$url = $this->args[0];
 		$defaults = array('t' => 100, 'n' => 10);
-		$options  = array_merge($defaults, $this->request->params);
+		$options  = array_merge($defaults, $this->params);
 		$times = array();
 
 		$this->out(String::insert(__d('debug_kit', '-> Testing :url'), compact('url')));

@@ -331,7 +331,7 @@ class ToolbarComponent extends Component {
 			if (strpos($baseClassName, 'View') === false) {
 				$baseClassName .= 'View';
 			}
-			App::uses($baseClassName, $plugin . '.View');
+			App::uses($baseClassName, $plugin . 'View');
 			$class = "class DoppelGangerView extends $baseClassName {}";
 			$this->_eval($class);
 		}

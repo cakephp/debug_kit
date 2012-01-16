@@ -477,7 +477,15 @@ class HistoryPanel extends DebugPanel {
 				if (!empty($query)) {
 					$title .= '?';
 					foreach ($query as $key => $value) {
-						$query[$key] = $key . '=' . urlencode($value);
+						if(is_array($value)) {
+							foreach ($value as $index => $actualValue) {
+								$actualKey = urlencode($key . '[' . $index . ']');
+								$query[$actualKey] = $actualKey . '=' . urlencode($actualValue);
+							}
+							unset($query[$key]);
+						} else {
+							$query[$key] = $key . '=' . urlencode($value);
+						}
 					}
 					$title .= implode('&', $query);
 				}

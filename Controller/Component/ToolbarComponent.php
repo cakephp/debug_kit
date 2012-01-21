@@ -475,11 +475,7 @@ class HistoryPanel extends DebugPanel {
 					unset($query['url']);
 				}
 				if (!empty($query)) {
-					$title .= '?';
-					foreach ($query as $key => $value) {
-						$query[$key] = $key . '=' . urlencode($value);
-					}
-					$title .= implode('&', $query);
+					$title .= '?' . urldecode(http_build_query($query));
 				}
 				$historyStates[] = array(
 					'title' => $title,

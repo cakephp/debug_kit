@@ -291,7 +291,7 @@ class FireCake {
 		$_this = FireCake::getInstance();
 
 		if (headers_sent($filename, $linenum)) {
-			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.'), $filename, $linenum), E_USER_WARNING);
+			trigger_error(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.', $filename, $linenum), E_USER_WARNING);
 			return false;
 		}
 		if (!$_this->_enabled || !$_this->detectClientExtension()) {

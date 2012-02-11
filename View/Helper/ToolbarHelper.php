@@ -176,6 +176,7 @@ class ToolbarHelper extends AppHelper {
 			if ($isHtml) {
 				$query['query'] = h($query['query']);
 			}
+			unset($query['params']);
 			$out['queries'][] = $query;
 		}
 		if ($options['cache']) {

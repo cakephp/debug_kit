@@ -32,8 +32,6 @@ var DEBUGKIT = function () {
 	};
 }() ;
 
-DEBUGKIT.$ = jQuery.noConflict(true);
-
 DEBUGKIT.loader = function () {
 	return {
 		//list of methods to run on startup.
@@ -538,7 +536,6 @@ DEBUGKIT.Util.Request.prototype.serialize = function (data) {
 DEBUGKIT.toolbar = function () {
 	//shortcuts
 	var Cookie = DEBUGKIT.Util.Cookie,
-		$ = DEBUGKIT.$,
 		toolbarHidden = false;
 
 	return {
@@ -832,7 +829,6 @@ DEBUGKIT.loader.register(DEBUGKIT.historyPanel);
 //Add events + behaviors for toolbar collapser.
 DEBUGKIT.toolbarToggle = function () {
 	var toolbar = DEBUGKIT.toolbar,
-		$ = DEBUGKIT.$,
 		Cookie = DEBUGKIT.Util.Cookie,
 		toolbarHidden = false;
 
@@ -866,6 +862,6 @@ DEBUGKIT.toolbarToggle = function () {
 }();
 DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
 
-DEBUGKIT.$(document).ready(function () {
+$(document).ready(function () {
 	DEBUGKIT.loader.init();
 });

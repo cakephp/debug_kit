@@ -20,7 +20,7 @@
 	 * Redistributions of files must retain the above copyright notice.
 	 */
 
-	final class DebugKitEvents extends AppEvents{
+	final class DebugKitEvents extends AppEvents {
 		public function onAttachBehaviors($event){
 			if(is_subclass_of($event->Handler, 'Model')){
 				$event->Handler->Behaviors->attach('DebugKit.Timed');
@@ -41,9 +41,5 @@
 			return array(
 				'DebugKit.js_debug_toolbar'
 			);
-		}
-
-		public function onSetupConfig(){
-			return Configure::load('DebugKit.config');
 		}
 	}

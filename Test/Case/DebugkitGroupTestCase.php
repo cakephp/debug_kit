@@ -1,13 +1,6 @@
 <?php
 
-abstract class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
-
-/**
- * Suite define the tests for this suite
- *
- * @return PHPUnit_Framework_TestSuite the instance of PHPUnit_Framework_TestSuite
- */
-	abstract public static function suite();
+class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
 
 	public function __construct() {
 		$label = Inflector::humanize(Inflector::underscore(get_class($this)));

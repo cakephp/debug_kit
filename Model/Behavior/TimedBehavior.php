@@ -42,7 +42,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $settings Settings to override for model.
  * @return void
  */
-	public function setup($Model, $settings = null) {
+	public function setup(Model $Model, $settings = null) {
 		if (is_array($settings)) {
 			$this->settings[$Model->alias] = array_merge($this->_defaults, $settings);
 		} else {
@@ -57,7 +57,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $queryData Array of query data (not modified)
  * @return boolean true
  */
-	public function beforeFind($Model, $queryData){
+	public function beforeFind(Model $Model, $queryData){
 		DebugKitDebugger::startTimer($Model->alias . '_find', $Model->alias . '->find()');
 		return true;
 	}
@@ -69,7 +69,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $results Array of results
  * @return boolean true.
  */
-	public function afterFind($Model, $results){
+	public function afterFind(Model $Model, $results, $primary){
 		DebugKitDebugger::stopTimer($Model->alias . '_find');
 		return true;
 	}
@@ -78,9 +78,10 @@ class TimedBehavior extends ModelBehavior {
  * beforeSave, starts a time before a save is initiated.
  *
  * @param Model $Model
+ * @param array $options
  * @return boolean true
  */
-	public function beforeSave($Model){
+	public function beforeSave(Model $Model, $options = array()){
 		DebugKitDebugger::startTimer($Model->alias . '_save', $Model->alias . '->save()');
 		return true;
 	}
@@ -92,7 +93,7 @@ class TimedBehavior extends ModelBehavior {
  * @param string $created
  * @return void
  */
-	public function afterSave($Model, $created) {
+	public function afterSave(Model $Model, $created) {
 		DebugKitDebugger::stopTimer($Model->alias . '_save');
 		return true;
 	}

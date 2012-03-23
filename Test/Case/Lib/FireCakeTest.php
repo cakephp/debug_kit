@@ -280,7 +280,7 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::fb('Test', 'Custom label', 'warn');
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '47|[{"Type":"WARN","Label":"Custom label"},"Test"]|');
 
-		$this->expectError();
+		$this->expectError('PHPUnit_Framework_Error');
 		$this->assertFalse(FireCake::fb('Test', 'Custom label', 'warn', 'more parameters'));
 
 		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);

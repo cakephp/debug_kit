@@ -16,9 +16,11 @@
  * @subpackage    debug_kit.tests.test_app
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
+ */
 class TestPanel extends DebugPanel {
-	public function startup(&$controller) {
+
+	public function startup($controller) {
 		$controller->testPanel = true;
 	}
+
 }

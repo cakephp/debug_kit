@@ -22,12 +22,14 @@ App::uses('DebugKitDebugger', 'DebugKit.Lib');
 class TimedBehaviorTestCase extends CakeTestCase {
 
 	public $fixtures = array('core.article');
+
 /**
  * startTest callback
  *
  * @return void
  */
-	public function startTest() {
+	public function setUp() {
+		parent::setUp();
 		$this->Article = ClassRegistry::init('Article');
 		$this->Article->Behaviors->attach('DebugKit.Timed');
 	}
@@ -37,7 +39,8 @@ class TimedBehaviorTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function endTest() {
+	public function tearDown() {
+		parent::tearDown();
 		unset($this->Article);
 		ClassRegistry::flush();
 		DebugKitDebugger::clearTimers();

@@ -28,6 +28,7 @@ class MockBackendHelper extends Helper {
 class ToolbarHelperTestCase extends CakeTestCase {
 
 	public $fixtures = array('core.post');
+
 /**
  * setUp
  *
@@ -50,13 +51,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
-	}
-/**
- * start Case - switch view paths
- *
- * @return void
- **/
-	public function startTest() {
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'View' => array(
@@ -66,6 +60,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		)), true);
 		$this->_debug = Configure::read('debug');
 	}
+
 /**
  * test cache writing for views.
  *
@@ -151,22 +146,15 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTrue(isset($cached[$model->useDbConfig]));
 		$this->assertEqual($cached[$model->useDbConfig]['queries'][0], $result['queries'][0]);
 	}
-/**
- * reset the view paths
- *
- * @return void
- **/
-	public function endTest() {
-		App::build(array('views' => $this->_viewPaths), true);
-		Cache::delete('debug_kit_toolbar_test_case', 'default');
-		ClassRegistry::flush();
-	}
+
 /**
  * tearDown
  *
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
+		Cache::delete('debug_kit_toolbar_test_case', 'default');
 		unset($this->Toolbar, $this->Controller);
 	}
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * DebugToolbar Test
  *
@@ -28,7 +27,9 @@ App::uses('DebugMemory', 'DebugKit.Lib');
 App::uses('DebugTimer', 'DebugKit.Lib');
 
 class TestToolbarComponent extends ToolbarComponent {
+
 	public $evalTest = false;
+
 	public $evalCode = '';
 
 	public function loadPanels($panels, $settings = array()) {
@@ -42,6 +43,7 @@ class TestToolbarComponent extends ToolbarComponent {
 		}
 		eval($code);
 	}
+
 }
 
 
@@ -144,7 +146,15 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->loadPanels(array('history'), array('history' => 10));
 		$this->assertEqual($this->Controller->Toolbar->panels['history']->history, 10);
 
-		$this->expectError();
+	}
+
+/**
+ * Test exceptions on bad panel names
+ *
+ * @expectedException PHPUnit_Framework_Error
+ * @return void
+ */
+	public function testLoadPanelsError() {
 		$this->Controller->Toolbar->loadPanels(array('randomNonExisting', 'request'));
 	}
 

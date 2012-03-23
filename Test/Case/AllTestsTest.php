@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
 
 /**
- * View Group Test for debugkit
+ * AllTestsTest For DebugKit
  *
  * PHP versions 5
  *
@@ -21,15 +21,14 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 /**
- * DebugKitViewTestSuite class
+ * AllTestsTest class
  *
  * @package       cake
  * @subpackage    cake.tests.cases
  */
 
-class AllDebugKitTest extends DebugkitGroupTestCase {
+class AllTestsTest extends DebugkitGroupTestCase {
 /**
- *
  *
  * @return PHPUnit_Framework_TestSuite the instance of PHPUnit_Framework_TestSuite
  */

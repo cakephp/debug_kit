@@ -37,7 +37,7 @@ class TestFireCake extends FireCake {
  *
  * @return void
  */	
-	public function detectClientExtension() {
+	public static function detectClientExtension() {
 		return true;
 	}
 /**
@@ -45,7 +45,7 @@ class TestFireCake extends FireCake {
  *
  * @return void
  **/
-	public function reset() {
+	public static function reset() {
 		$_this = FireCake::getInstance();
 		$_this->sentHeaders = array();
 		$_this->_messageIndex = 1;

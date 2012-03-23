@@ -209,7 +209,7 @@ class DebugKitDebugger extends Debugger {
  * @param array $links  Links for the error
  * @return void
  */
-	public function fireError($data, $links) {
+	public static function fireError($data, $links) {
 		$name = $data['error'] . ' - ' . $data['description'];
 		$message = "{$data['error']} {$data['code']} {$data['description']} on line: {$data['line']} in file: {$data['file']}";
 		FireCake::group($name);

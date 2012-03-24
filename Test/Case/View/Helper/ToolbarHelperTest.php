@@ -36,7 +36,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  **/
 	public function setUp() {
 		Configure::write('Cache.disable', false);
-		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+		InfinitasRouter::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
 		$this->Controller = new Controller(null);

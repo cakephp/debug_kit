@@ -39,8 +39,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		Router::connect('/:controller/:action');
-		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+		InfinitasRouter::connect('/:controller/:action');
+		InfinitasRouter::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
 		$this->Controller = new Controller($this->getMock('CakeRequest'), new CakeResponse());

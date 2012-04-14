@@ -44,7 +44,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param int $currentDepth current depth.
  * @return string
  **/
-	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0) {
+	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
 		$className ="neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {
 			$className .= ' expanded';
@@ -82,9 +82,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			}
 
 			if (is_array($value) && !empty($value)) {
-				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth);
+				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
 			} else {
-				$out .= h($value);
+				$out .= h($value, $doubleEncode);
 			}
 			$out .= '</li>';
 		}

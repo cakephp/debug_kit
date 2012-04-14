@@ -108,7 +108,7 @@ class ToolbarComponent extends Component {
  * @return bool
  **/
 	public function __construct(ComponentCollection $collection, $settings = array()) {
-
+		$settings = array_merge((array)Configure::read('DebugKit'), $settings);
 		$panels = $this->_defaultPanels;
 		if (isset($settings['panels'])) {
 			$panels = $this->_makePanelList($settings['panels']);

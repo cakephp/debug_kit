@@ -128,7 +128,7 @@ TEXT;
 			'here' => '/posts/index',
 		));
 		$this->Controller->setRequest($request);
-		$this->Controller->viewPath = 'posts';
+		$this->Controller->viewPath = 'Posts';
 		$this->Controller->layout = 'default';
 		$View = new DebugView($this->Controller, false);
 		$View->render('index');

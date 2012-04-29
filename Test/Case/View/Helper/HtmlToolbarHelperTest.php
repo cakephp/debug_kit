@@ -232,7 +232,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	public function testInjectToolbar() {
-		$this->Controller->viewPath = 'posts';
+		$this->Controller->viewPath = 'Posts';
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
 		$request->addPaths(array(
@@ -259,7 +259,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	public function testJavascriptInjection() {
-		$this->Controller->viewPath = 'posts';
+		$this->Controller->viewPath = 'Posts';
 		$this->Controller->uses = null;
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));

@@ -21,23 +21,39 @@
 	 */
 
 	final class DebugKitEvents extends AppEvents {
-		public function onAttachBehaviors($event){
+		public function onAttachBehaviors($event) {
+			if(!Configure::read('debug')) {
+				return array();
+			}
+			
 			if(is_subclass_of($event->Handler, 'Model')){
 				$event->Handler->Behaviors->attach('DebugKit.Timed');
 			}
 		}
 
-		public function onRequireComponentsToLoad(){
+		public function onRequireComponentsToLoad() {
+			if(!Configure::read('debug')) {
+				return array();
+			}
+			
 			return 'DebugKit.Toolbar';
 		}
 
 		public function onRequireCssToLoad($event, $data = null) {
+			if(!Configure::read('debug')) {
+				return array();
+			}
+			
 			return array(
 				'DebugKit.debug_toolbar'
 			);
 		}
 
 		public function onRequireJavascriptToLoad($event, $data = null) {
+			if(!Configure::read('debug')) {
+				return array();
+			}
+			
 			return array(
 				'DebugKit.js_debug_toolbar'
 			);

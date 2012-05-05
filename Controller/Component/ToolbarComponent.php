@@ -124,25 +124,36 @@ class ToolbarComponent extends Component {
 
 		parent::__construct($collection, array_merge($this->settings, (array)$settings));
 
-		if (!Configure::read('debug') && empty($this->settings['forceEnable'])) {
+		if (
+			!Configure::read('debug') &&
+			empty($this->settings['forceEnable'])
+		) {
 			$this->enabled = false;
 			return false;
 		}
-		if ($this->settings['autoRun'] == false && !isset($this->controller->request->query['debug'])) {
+		if (
+			$this->settings['autoRun'] == false &&
+			!isset($this->controller->request->query['debug'])
+		) {
 			$this->enabled = false;
 			return false;
 		}
 
 		DebugMemory::record(__d('debug_kit', 'Component initialization'));
-		DebugTimer::start('componentInit', __d('debug_kit', 'Component initialization and startup'));
+		DebugTimer::start(
+			'componentInit',
+			__d('debug_kit', 'Component initialization and startup')
+		);
 
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
-		if (in_array('history', $panels) || (isset($settings['history']) && $settings['history'] !== false)) {
+		if (
+			in_array('DebugKit.History', $panels) ||
+			(isset($settings['history']) && $settings['history'] !== false)
+		) {
 			$this->_createCacheConfig();
 		}
 
 		$this->_loadPanels($panels, $settings);
-
 		return false;
 	}
 
@@ -175,6 +186,13 @@ class ToolbarComponent extends Component {
 				if ($index !== false) {
 					unset($panels[$index]);
 				}
+				// Compatibility for when panels were not
+				// required to have a plugin prefix.
+				$alternate = 'DebugKit.' . ucfirst($key);
+				$index = array_search($alternate, $panels);
+				if ($index !== false) {
+					unset($panels[$index]);
+				}
 			}
 		}
 		return $panels;
@@ -189,7 +207,10 @@ class ToolbarComponent extends Component {
 		$currentViewClass = $controller->viewClass;
 		$this->_makeViewClass($currentViewClass);
 		$controller->viewClass = 'DebugKit.Debug';
-		$isHtml = (!isset($controller->request->params['ext']) || $controller->request->params['ext'] === 'html');
+		$isHtml = (
+			!isset($controller->request->params['ext']) ||
+			$controller->request->params['ext'] === 'html'
+		);
 
 		if (!$controller->request->is('ajax') && $isHtml) {
 			$format = 'Html';
@@ -207,8 +228,13 @@ class ToolbarComponent extends Component {
 			$this->panels[$panelName]->startup($controller);
 		}
 		DebugTimer::stop('componentInit');
-		DebugTimer::start('controllerAction', __d('debug_kit', 'Controller action'));
-		DebugMemory::record(__d('debug_kit', 'Controller action start'));
+		DebugTimer::start(
+			'controllerAction',
+			__d('debug_kit', 'Controller action')
+		);
+		DebugMemory::record(
+			__d('debug_kit', 'Controller action start')
+		);
 	}
 
 /**
@@ -240,8 +266,14 @@ class ToolbarComponent extends Component {
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 
-		$controller->set(array('debugToolbarPanels' => $vars, 'debugToolbarJavascript' => $this->javascript));
-		DebugTimer::start('controllerRender', __d('debug_kit', 'Render Controller Action'));
+		$controller->set(array(
+			'debugToolbarPanels' => $vars,
+			'debugToolbarJavascript' => $this->javascript
+		));
+		DebugTimer::start(
+			'controllerRender',
+			__d('debug_kit', 'Render Controller Action')
+		);
 		DebugMemory::record(__d('debug_kit', 'Controller render start'));
 	}
 
@@ -302,7 +334,7 @@ class ToolbarComponent extends Component {
 /**
  * Load Panels used in the debug toolbar
  *
- * @return 	void
+ * @return void
  */
 	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
@@ -315,9 +347,9 @@ class ToolbarComponent extends Component {
 				continue;
 			}
 			$panelObj = new $className($settings);
-			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
+			if ($panelObj instanceof DebugPanel) {
 				list(, $panel) = pluginSplit($panel);
-				$this->panels[$panel] = $panelObj;
+				$this->panels[strtolower($panel)] = $panelObj;
 			}
 		}
 	}

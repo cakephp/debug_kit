@@ -169,12 +169,17 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			$this->markTestAsSkipped('Could not find DebugKit in plugin paths');
 		}
 
-		App::build(array('plugins' => array($debugKitPath . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)));
+		App::build(array(
+			'Plugin' => array($debugKitPath . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
+		));
 
 		CakePlugin::load('DebugkitTestPlugin');
 		$this->_loadController();
 		$this->Controller->Toolbar->loadPanels(array('DebugkitTestPlugin.PluginTest'));
-		$this->assertTrue(is_a($this->Controller->Toolbar->panels['PluginTest'], 'PluginTestPanel'));
+		$this->assertInstanceOf(
+			'PluginTestPanel',
+			$this->Controller->Toolbar->panels['plugintest']
+		);
 	}
 
 /**
@@ -203,7 +208,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function testVendorPanels() {
+	public function testLibPanels() {
 		$debugKitPath = App::pluginPath('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
 		if ($noDir) {
@@ -211,14 +216,14 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		}
 
 		App::build(array(
-			'vendors' => array($debugKitPath . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS)
+			'Lib' => array($debugKitPath . 'Test' . DS . 'test_app' . DS . 'Lib' . DS)
 		));
 		$this->_loadController(array(
 			'panels' => array('test'),
-			'className' => 'DebguKit.Toolbar',
+			'className' => 'DebugKit.Toolbar',
 		));
 		$this->assertTrue(isset($this->Controller->Toolbar->panels['test']));
-		$this->assertTrue(is_a($this->Controller->Toolbar->panels['test'], 'TestPanel'));
+		$this->assertInstanceOf('TestPanel', $this->Controller->Toolbar->panels['test']);
 	}
 
 /**
@@ -247,8 +252,8 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			'panels' => array('test'),
 		));
 
-		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'include', 'test');
-		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
+		$expected = array('history', 'session', 'request', 'sqllog', 'timer', 'log', 'variables', 'include', 'test');
+		$this->assertEquals($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 
 
@@ -262,12 +267,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			'panels' => array(
 				'session' => false,
 				'history' => false,
-				'test'
 			)
 		));
 
-		$expected = array('request', 'sqlLog', 'timer', 'log', 'variables', 'include', 'test');
-		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
+		$expected = array('request', 'sqllog', 'timer', 'log', 'variables', 'include');
+		$this->assertEquals($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 
 /**
@@ -333,11 +337,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  */
 	public function testStartup() {
 		$this->_loadController(array(
-			'panels' => array('test'),
+			'panels' => array('timer'),
 		));
 		$MockPanel = $this->getMock('DebugPanel');
 		$MockPanel->expects($this->once())->method('startup');
-		$this->Controller->Toolbar->panels['test'] = $MockPanel;
+		$this->Controller->Toolbar->panels['timer'] = $MockPanel;
 
 		$this->Controller->Toolbar->startup($this->Controller);
 		$this->assertEqual($this->Controller->viewClass, 'DebugKit.Debug');
@@ -392,24 +396,24 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  */
 	public function testBeforeRender() {
 		$this->_loadController(array(
-			'panels' => array('test', 'session'),
+			'panels' => array('timer', 'session'),
 		));
 		$MockPanel = $this->getMock('DebugPanel');
 		$MockPanel->expects($this->once())->method('beforeRender');
-		$this->Controller->Toolbar->panels['test'] = $MockPanel;
+		$this->Controller->Toolbar->panels['timer'] = $MockPanel;
 		$this->Controller->Toolbar->beforeRender($this->Controller);
 
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarPanels']));
 		$vars = $this->Controller->viewVars['debugToolbarPanels'];
 
 		$expected = array(
-			'plugin' => 'debug_kit',
+			'plugin' => 'DebugKit',
 			'elementName' => 'session_panel',
 			'content' => $this->Controller->Toolbar->Session->read(),
 			'disableTimer' => true,
 			'title' => ''
 		);
-		$this->assertEqual($expected, $vars['session']);
+		$this->assertEquals($expected, $vars['session']);
 
 		$memory = DebugMemory::getAll();
 		$this->assertTrue(isset($memory['Controller render start']));
@@ -422,7 +426,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  */
 	public function testBeforeRedirect() {
 		$this->_loadController(array(
-			'panels' => array('test', 'session', 'history'),
+			'panels' => array('session', 'history'),
 		));
 
 		$configName = 'debug_kit';
@@ -432,12 +436,12 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		DebugTimer::start('controllerAction', 'testing beforeRedirect');
 		$MockPanel = $this->getMock('DebugPanel');
 		$MockPanel->expects($this->once())->method('beforeRender');
-		$this->Controller->Toolbar->panels['test'] = $MockPanel;
+		$this->Controller->Toolbar->panels['session'] = $MockPanel;
 		$this->Controller->Toolbar->beforeRedirect($this->Controller, '/another/url');
 
 		$result = Cache::read('toolbar_history', $configName);
 		$this->assertTrue(isset($result[0]['session']));
-		$this->assertTrue(isset($result[0]['test']));
+		$this->assertFalse(isset($result[0]['history']));
 
 		$timers = DebugTimer::getAll();
 		$this->assertTrue(isset($timers['controllerAction']));

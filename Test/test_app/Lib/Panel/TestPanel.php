@@ -19,7 +19,7 @@
  */
 class TestPanel extends DebugPanel {
 
-	public function startup($controller) {
+	public function startup(Controller $controller) {
 		$controller->testPanel = true;
 	}
 

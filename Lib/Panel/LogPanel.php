@@ -13,7 +13,8 @@ class LogPanel extends DebugPanel {
  *
  * @return void
  */
-	public function __construct($settings) {
+	public function __construct() {
+		parent::__construct();
 		$existing = CakeLog::configured();
 		if (empty($existing)) {
 			CakeLog::config('default', array(

@@ -5,23 +5,22 @@
  * PHP versions 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.tests.controllers.components
- * @since         DebugKit 0.1
+ * @since         DebugKit 2.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('Router', 'Routing');
 App::uses('Controller', 'Controller');
 App::uses('AppController', 'Controller');
 App::uses('Component', 'Controller');
-App::uses('Model', 'Model');
 App::uses('ToolbarComponent', 'DebugKit.Controller/Component');
 App::uses('DebugMemory', 'DebugKit.Lib');
 App::uses('DebugTimer', 'DebugKit.Lib');
@@ -533,23 +532,4 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->assertEqual($result, 'I have been rendered.');
 	}
 
-/**
- * test the sqlLog panel parsing of db->showLog
- *
- * @return void
- */
-	public function testSqlLogPanel() {
-		$Article = ClassRegistry::init('Article');
-		$Article->find('first', array('conditions' => array('Article.id' => 1)));
-
-		$this->_loadController(array(
-			'panels' => array('SqlLog'),
-		));
-		$this->Controller->Components->trigger('startup', array($this->Controller));
-		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
-		$result = $this->Controller->viewVars['debugToolbarPanels']['sql_log'];
-
-		$this->assertTrue(isset($result['content']['connections'][$Article->useDbConfig]));
-		$this->assertTrue(isset($result['content']['threshold']));
-	}
 }

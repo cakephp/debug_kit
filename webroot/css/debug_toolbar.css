@@ -320,39 +320,39 @@
 }
 
 /* Sql Log */
-#sql_log-tab td,
-#sql_log-tab .slow-query-container p {
+#sqllog-tab td,
+#sqllog-tab .slow-query-container p {
 	font-family: Monaco, 'Consolas', "Courier New", Courier, monospaced;
 }
-#debug-kit-toolbar #sql_log-tab a.show-slow {
+#debug-kit-toolbar #sqllog-tab a.show-slow {
 	display:block;
 	margin: 3px;
 	float:none;
 }
-#sql_log-tab .slow-query-container p {
+#sqllog-tab .slow-query-container p {
 	display:block;
 	clear:both;
 	margin: 20px 0 5px;
 }
-#debug-kit-toolbar #sql_log-tab .panel-content-data a {
+#debug-kit-toolbar #sqllog-tab .panel-content-data a {
 	background: none;
 	border:none;
 }
-#sql_log-tab .slow-query {
+#sqllog-tab .slow-query {
 	background:#e79302;
 	font-size:9px;
 	color:#fff;
 	padding: 2px;
 	white-space:nowrap;
 }
-#sql_log-tab input[type=submit] {
+#sqllog-tab input[type=submit] {
 	border: 0;
 	background: transparent;
 	cursor: pointer;
 	font-size: 12px;
 	font-family: Monaco, 'Consolas', "Courier New", Courier, monospaced;
 }
-#sql_log-tab input[type=submit]:hover {
+#sqllog-tab input[type=submit]:hover {
 	color: darkred;
 }
 

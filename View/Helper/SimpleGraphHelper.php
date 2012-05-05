@@ -41,7 +41,7 @@ class SimpleGraphHelper extends AppHelper {
  *
  * @var array
  */
-	private $__defaultSettings = array(
+	protected $_defaultSettings = array(
 		'max' => 100,
 		'width' => 350,
 		'valueType' => 'value',
@@ -55,7 +55,7 @@ class SimpleGraphHelper extends AppHelper {
  * @return string Html graph
  */
 	public function bar($value, $offset, $options = array()) {
-		$settings = array_merge($this->__defaultSettings, $options);
+		$settings = array_merge($this->_defaultSettings, $options);
 		extract($settings);
 
 		$graphValue = ($value / $max) * $width;

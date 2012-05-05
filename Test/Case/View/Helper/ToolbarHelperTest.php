@@ -85,10 +85,10 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar->writeCache('test', array('new', 'values'));
 
 		$result = $this->Toolbar->readCache('test');
-		$this->assertEqual($result, array('new', 'values'));
+		$this->assertEquals($result, array('new', 'values'));
 
 		$result = $this->Toolbar->readCache('test', 1);
-		$this->assertEqual($result, array('second', 'values'));
+		$this->assertEquals($result, array('second', 'values'));
 	}
 /**
  * test cache reading for views
@@ -100,13 +100,13 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTrue($result, 'Cache write failed %s');
 		
 		$result = $this->Toolbar->readCache('test');
-		$this->assertEqual($result, array('stuff', 'to', 'cache'), 'Cache value is wrong %s');
+		$this->assertEquals($result, array('stuff', 'to', 'cache'), 'Cache value is wrong %s');
 		
 		$result = $this->Toolbar->writeCache('test', array('new', 'stuff'));
 		$this->assertTrue($result, 'Cache write failed %s');
 		
 		$result = $this->Toolbar->readCache('test');
-		$this->assertEqual($result, array('new', 'stuff'), 'Cache value is wrong %s');
+		$this->assertEquals($result, array('new', 'stuff'), 'Cache value is wrong %s');
 	}
 /**
  * Test that reading/writing doesn't work with no cache config.
@@ -144,7 +144,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 
 		$cached = $this->Toolbar->readCache('sql_log');
 		$this->assertTrue(isset($cached[$model->useDbConfig]));
-		$this->assertEqual($cached[$model->useDbConfig]['queries'][0], $result['queries'][0]);
+		$this->assertEquals($cached[$model->useDbConfig]['queries'][0], $result['queries'][0]);
 	}
 
 /**

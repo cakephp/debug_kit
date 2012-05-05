@@ -27,7 +27,7 @@ class DebugMemoryTest extends CakeTestCase {
 		$this->assertTrue($result);
 
 		$result = DebugMemory::getAll(true);
-		$this->assertEqual(count($result), 1);
+		$this->assertEquals(count($result), 1);
 		$this->assertTrue(isset($result['test marker']));
 		$this->assertTrue(is_numeric($result['test marker']));
 
@@ -38,7 +38,7 @@ class DebugMemoryTest extends CakeTestCase {
 		DebugMemory::record('test marker');
 		$result = DebugMemory::getAll();
 
-		$this->assertEqual(count($result), 2);
+		$this->assertEquals(count($result), 2);
 		$this->assertTrue(isset($result['test marker']));
 		$this->assertTrue(isset($result['test marker #2']));
 	}

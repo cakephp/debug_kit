@@ -139,11 +139,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->_loadController();
 
 		$this->Controller->Toolbar->loadPanels(array('session', 'request'));
-		$this->assertTrue(is_a($this->Controller->Toolbar->panels['session'], 'SessionPanel'));
-		$this->assertTrue(is_a($this->Controller->Toolbar->panels['request'], 'RequestPanel'));
+		$this->assertInstanceOf('SessionPanel', $this->Controller->Toolbar->panels['session']);
+		$this->assertInstanceOf('RequestPanel', $this->Controller->Toolbar->panels['request']);
 
 		$this->Controller->Toolbar->loadPanels(array('history'), array('history' => 10));
-		$this->assertEqual($this->Controller->Toolbar->panels['history']->history, 10);
+		$this->assertEquals($this->Controller->Toolbar->panels['history']->history, 10);
 
 	}
 
@@ -344,11 +344,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->panels['timer'] = $MockPanel;
 
 		$this->Controller->Toolbar->startup($this->Controller);
-		$this->assertEqual($this->Controller->viewClass, 'DebugKit.Debug');
+		$this->assertEquals($this->Controller->viewClass, 'DebugKit.Debug');
 		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
 
-		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.HtmlToolbar');
-		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['cacheConfig'], 'debug_kit');
+		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.HtmlToolbar');
+		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['cacheConfig'], 'debug_kit');
 		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']['cacheKey']));
 
 		$timers = DebugTimer::getAll();
@@ -385,7 +385,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 
 		$result = Cache::read('toolbar_history', $configName);
-		$this->assertEqual($result[0]['variables']['content']['test'], 'testing');
+		$this->assertEquals($result[0]['variables']['content']['test'], 'testing');
 		Cache::delete('toolbar_history', $configName);
 	}
 
@@ -459,7 +459,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$data = array(0 => array('my data'));
 		Cache::write('toolbar_history', $data, 'debug_kit');
 		$result = $this->Controller->Toolbar->loadState(0);
-		$this->assertEqual($result, $data[0]);
+		$this->assertEquals($result, $data[0]);
 	}
 
 /**
@@ -490,7 +490,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			0 => 1,
 			'admin' => false,
 		);
-		$this->assertEqual($result[0]['url'], $expected);
+		$this->assertEquals($result[0]['url'], $expected);
 		Cache::delete('url_test', 'debug_kit');
 	}
 
@@ -503,7 +503,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 		$this->_loadController();
 		$this->Controller->Components->trigger('startup', array($this->Controller));
-		$this->assertEqual($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
+		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
 	}
 
 /**
@@ -530,10 +530,10 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->_loadController();
 
 		$result = $this->Controller->requestAction('/debug_kit_test/request_action_return', array('return'));
-		$this->assertEqual($result, 'I am some value from requestAction.');
+		$this->assertEquals($result, 'I am some value from requestAction.');
 
 		$result = $this->Controller->requestAction('/debug_kit_test/request_action_render', array('return'));
-		$this->assertEqual($result, 'I have been rendered.');
+		$this->assertEquals($result, 'I have been rendered.');
 	}
 
 }

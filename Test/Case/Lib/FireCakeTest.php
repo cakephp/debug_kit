@@ -59,7 +59,7 @@ class FireCakeTestCase extends CakeTestCase {
  */
 	public function testSetOptions() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
-		$this->assertEqual($this->firecake->options['includeLineNumbers'], false);
+		$this->assertEquals($this->firecake->options['includeLineNumbers'], false);
 	}
 
 /**
@@ -73,11 +73,11 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '26|[{"Type":"LOG"},"Testing"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '26|[{"Type":"LOG"},"Testing"]|');
 		
 		FireCake::log('Testing', 'log-info');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"LOG","Label":"log-info"},"Testing"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"LOG","Label":"log-info"},"Testing"]|');
 	}
 
 /**
@@ -91,11 +91,11 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '38|[{"Type":"INFO"},"I have information"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '38|[{"Type":"INFO"},"I have information"]|');
 
 		FireCake::info('I have information', 'info-label');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '59|[{"Type":"INFO","Label":"info-label"},"I have information"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '59|[{"Type":"INFO","Label":"info-label"},"I have information"]|');
 	}
 
 /**
@@ -109,11 +109,11 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"WARN"},"A Warning"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"WARN"},"A Warning"]|');
 
 		FireCake::warn('A Warning', 'Bzzz');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '44|[{"Type":"WARN","Label":"Bzzz"},"A Warning"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '44|[{"Type":"WARN","Label":"Bzzz"},"A Warning"]|');
 	}
 
 /**
@@ -127,11 +127,11 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"ERROR"},"An error"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"ERROR"},"An error"]|');
 		
 		FireCake::error('An error', 'wonky');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"ERROR","Label":"wonky"},"An error"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"ERROR","Label":"wonky"},"An error"]|');
 	}
 
 /**
@@ -141,7 +141,7 @@ class FireCakeTestCase extends CakeTestCase {
  */
 	public function testDump() {
 		FireCake::dump('mydump', array('one' => 1, 'two' => 2));
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-2-1-1'], '28|{"mydump":{"one":1,"two":2}}|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-2-1-1'], '28|{"mydump":{"one":1,"two":2}}|');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-2']));
 	}
 
@@ -157,7 +157,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$table[] = array('Row 3 Col 1','Row 3 Col 2');
 		FireCake::table('myTrace', $table);
 		$expected = '162|[{"Type":"TABLE","Label":"myTrace"},[["Col 1 Heading","Col 2 Heading"],["Row 1 Col 1","Row 1 Col 2"],["Row 2 Col 1","Row 2 Col 2"],["Row 3 Col 1","Row 3 Col 2"]]]|';
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], $expected);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], $expected);
 	}
 
 /**
@@ -168,12 +168,12 @@ class FireCakeTestCase extends CakeTestCase {
 	public function testStringEncode() {
 		$vars = array(1,2,3);
 		$result = $this->firecake->stringEncode($vars);
-		$this->assertEqual($result, array(1,2,3));
+		$this->assertEquals($result, array(1,2,3));
 
 		$this->firecake->setOptions(array('maxArrayDepth' => 3));
 		$deep = array(1 => array(2 => array(3)));
 		$result = $this->firecake->stringEncode($deep);
-		$this->assertEqual($result, array(1 => array(2 => '** Max Array Depth (3) **')));
+		$this->assertEquals($result, array(1 => array(2 => '** Max Array Depth (3) **')));
 	}
 
 /**
@@ -186,8 +186,8 @@ class FireCakeTestCase extends CakeTestCase {
 		$result = $this->firecake->stringEncode($obj);
 
 		$this->assertTrue(is_array($result));
-		$this->assertEqual($result['_defaultOptions']['useNativeJsonEncode'], true);
-		$this->assertEqual($result['_encodedObjects'][0], '** Recursion (TestFireCake) **');
+		$this->assertEquals($result['_defaultOptions']['useNativeJsonEncode'], true);
+		$this->assertEquals($result['_encodedObjects'][0], '** Recursion (TestFireCake) **');
 	}
 
 /**
@@ -229,11 +229,11 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::trace('myTrace');
 		$this->assertGreaterThan(1, $this->firecake->sentHeaders['X-Wf-1-Index']);
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
-		$this->assertEqual(substr($header, -2), '|\\');
+		$this->assertEquals(substr($header, -2), '|\\');
 
 		$endIndex = $this->firecake->sentHeaders['X-Wf-1-Index'];
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-' . $endIndex];
-		$this->assertEqual(substr($header, -1), '|');
+		$this->assertEquals(substr($header, -1), '|');
 	}
 
 /**
@@ -259,9 +259,9 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::group('test');
 		FireCake::info('my info');
 		FireCake::groupEnd();
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '63|[{"Collapsed":"true","Type":"GROUP_START","Label":"test"},null]|');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '27|[{"Type":"GROUP_END"},null]|');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '63|[{"Collapsed":"true","Type":"GROUP_START","Label":"test"},null]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '27|[{"Type":"GROUP_END"},null]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
 	}
 
 /**
@@ -272,18 +272,18 @@ class FireCakeTestCase extends CakeTestCase {
 	public function testFbParameterParsing() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Test');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '23|[{"Type":"LOG"},"Test"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '23|[{"Type":"LOG"},"Test"]|');
 
 		FireCake::fb('Test', 'warn');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '24|[{"Type":"WARN"},"Test"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '24|[{"Type":"WARN"},"Test"]|');
 
 		FireCake::fb('Test', 'Custom label', 'warn');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '47|[{"Type":"WARN","Label":"Custom label"},"Test"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '47|[{"Type":"WARN","Label":"Custom label"},"Test"]|');
 
 		$this->expectError('PHPUnit_Framework_Error');
 		$this->assertFalse(FireCake::fb('Test', 'Custom label', 'warn', 'more parameters'));
 
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
 	}
 
 /**
@@ -294,7 +294,7 @@ class FireCakeTestCase extends CakeTestCase {
 	public function testIncorrectMessageType() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Hello World', 'foobared');
-		$this->assertEqual($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '30|[{"Type":"LOG"},"Hello World"]|');
+		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '30|[{"Type":"LOG"},"Hello World"]|');
 	}
 
 /**
@@ -323,10 +323,10 @@ class FireCakeTestCase extends CakeTestCase {
 	public function testNonNativeEncoding() {
 		FireCake::setOptions(array('useNativeJsonEncode' => false));
 		$json = FireCake::jsonEncode(array('one' => 1, 'two' => 2));
-		$this->assertEqual($json, '{"one":1,"two":2}');
+		$this->assertEquals($json, '{"one":1,"two":2}');
 
 		$json = FireCake::jsonEncode(array(1,2,3));
-		$this->assertEqual($json, '[1,2,3]');
+		$this->assertEquals($json, '[1,2,3]');
 
 		$json = FireCake::jsonEncode(FireCake::getInstance());
 		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:\d*,/', $json);

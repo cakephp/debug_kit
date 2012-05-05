@@ -109,7 +109,7 @@ this is the test element
 <!-- Finished - test_element -->
 
 TEXT;
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 
 		$result = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($result['render_test_element.ctp']));
@@ -134,7 +134,7 @@ TEXT;
 		$View->render('index');
 
 		$result = DebugKitDebugger::getTimers();
-		$this->assertEqual(count($result), 4);
+		$this->assertEquals(count($result), 4);
 		$this->assertTrue(isset($result['viewRender']));
 		$this->assertTrue(isset($result['render_default.ctp']));
 		$this->assertTrue(isset($result['render_index.ctp']));
@@ -171,6 +171,6 @@ TEXT;
 		$this->View->layout = false;
 		$result = $this->View->render('request_action_render');
 
-		$this->assertEqual($result, 'I have been rendered.');
+		$this->assertEquals($result, 'I have been rendered.');
 	}
 }

@@ -1,11 +1,13 @@
 <?php
+App::uses('DebugPanel', 'DebugKit.Lib');
+
 /**
  * SqlLog Panel
  *
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
  *
  * @package       cake.debug_kit.panels
- **/
+ */
 class SqlLogPanel extends DebugPanel {
 
 /**
@@ -13,7 +15,7 @@ class SqlLogPanel extends DebugPanel {
  * is done.
  *
  * @var int
- **/
+ */
 	public $slowRate = 20;
 
 /**

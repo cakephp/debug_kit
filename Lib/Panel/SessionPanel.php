@@ -1,11 +1,13 @@
 <?php
+App::uses('DebugPanel', 'DebugKit.Lib');
+
 /**
  * Session Panel
  *
  * Provides debug information on the Session contents.
  *
  * @package       cake.debug_kit.panels
- **/
+ */
 class SessionPanel extends DebugPanel {
 
 /**

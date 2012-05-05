@@ -1,6 +1,5 @@
 <?php
-App::uses('DebugKitLogListener', 'DebugKit.Log/Engine');
-class_exists('DebugKitLogListener');
+App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Log Panel - Reads log entries made this request.
@@ -15,7 +14,6 @@ class LogPanel extends DebugPanel {
  * @return void
  */
 	public function __construct($settings) {
-		parent::__construct();
 		$existing = CakeLog::configured();
 		if (empty($existing)) {
 			CakeLog::config('default', array(
@@ -23,7 +21,7 @@ class LogPanel extends DebugPanel {
 			));
 		}
 		CakeLog::config('debug_kit_log_panel', array(
-			'engine' => 'DebugKitLogListener',
+			'engine' => 'DebugKit.DebugKitLogListener',
 			'panel' => $this
 		));
 	}
@@ -37,4 +35,5 @@ class LogPanel extends DebugPanel {
 		$logger = $this->logger;
 		return $logger;
 	}
+
 }

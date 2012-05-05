@@ -1,4 +1,5 @@
 <?php
+App::uses('DebugPanel', 'DebugKit.Lib');
 /**
  * History Panel
  *

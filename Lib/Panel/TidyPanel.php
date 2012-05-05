@@ -1,4 +1,6 @@
 <?php
+App::uses('DebugPanel', 'DebugKit.Lib');
+
 /**
  * Show (x)html validation errors in a tidy panel
  *

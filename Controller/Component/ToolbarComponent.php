@@ -9,9 +9,6 @@ App::uses('HelperCollection', 'View');
 /**
  * DebugKit DebugToolbar Component
  *
- * PHP versions 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -23,7 +20,7 @@ App::uses('HelperCollection', 'View');
  * @subpackage    debug_kit.controllers.components
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
+ */
 class ToolbarComponent extends Component {
 /**
  * Settings for the Component
@@ -33,7 +30,7 @@ class ToolbarComponent extends Component {
  *    `?debug=true` to your URL.
  *
  * @var array
- **/
+ */
 	public $settings = array(
 		'forceEnable' => false,
 		'autoRun' => true
@@ -59,7 +56,16 @@ class ToolbarComponent extends Component {
  *
  * @var array
  */
-	protected $_defaultPanels = array('DebugKit.History', 'DebugKit.Session', 'DebugKit.Request', 'DebugKit.SqlLog', 'DebugKit.Timer', 'DebugKit.Log', 'DebugKit.Variables', 'DebugKit.Include');
+	protected $_defaultPanels = array(
+		'DebugKit.History',
+		'DebugKit.Session',
+		'DebugKit.Request',
+		'DebugKit.SqlLog',
+		'DebugKit.Timer',
+		'DebugKit.Log',
+		'DebugKit.Variables',
+		'DebugKit.Include'
+	);
 
 /**
  * Loaded panel objects.
@@ -72,7 +78,7 @@ class ToolbarComponent extends Component {
  * javascript files component will be using
  *
  * @var array
- **/
+ */
 	public $javascript = array(
 		'jquery' => '/debug_kit/js/jquery',
 		'libs' => '/debug_kit/js/js_debug_toolbar'
@@ -82,21 +88,21 @@ class ToolbarComponent extends Component {
  * CacheKey used for the cache file.
  *
  * @var string
- **/
+ */
 	public $cacheKey = 'toolbar_cache';
 
 /**
  * Duration of the debug kit history cache
  *
  * @var string
- **/
+ */
 	public $cacheDuration = '+4 hours';
 
 /**
  * Status whether component is enable or disable
  *
  * @var boolean
- **/
+ */
 	public $enabled = true;
 
 /**
@@ -106,7 +112,7 @@ class ToolbarComponent extends Component {
  * or load the toolbar helper.
  *
  * @return bool
- **/
+ */
 	public function __construct(ComponentCollection $collection, $settings = array()) {
 		$settings = array_merge((array)Configure::read('DebugKit'), $settings);
 		$panels = $this->_defaultPanels;
@@ -145,7 +151,7 @@ class ToolbarComponent extends Component {
  * If automatically disabled, tell component collection about the state.
  *
  * @return bool
- **/
+ */
 	public function initialize(Controller $controller) {
 		if (!$this->enabled) {
 			$this->_Collection->disable('Toolbar');
@@ -157,7 +163,7 @@ class ToolbarComponent extends Component {
  *
  * @param array $userPanels The list of panels ther user has added removed.
  * @return array Array of panels to use.
- **/
+ */
 	protected function _makePanelList($userPanels) {
 		$panels = $this->_defaultPanels;
 		foreach ($userPanels as $key => $value) {
@@ -178,7 +184,7 @@ class ToolbarComponent extends Component {
  * Component Startup
  *
  * @return bool
- **/
+ */
 	public function startup(Controller $controller) {
 		$currentViewClass = $controller->viewClass;
 		$this->_makeViewClass($currentViewClass);
@@ -209,7 +215,7 @@ class ToolbarComponent extends Component {
  * beforeRedirect callback
  *
  * @return void
- **/
+ */
 	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
 		if (!class_exists('DebugTimer')) {
 			return null;
@@ -225,7 +231,7 @@ class ToolbarComponent extends Component {
  * Calls beforeRender on all the panels and set the aggregate to the controller.
  *
  * @return void
- **/
+ */
 	public function beforeRender(Controller $controller) {
 		if (!class_exists('DebugTimer')) {
 			return null;
@@ -244,7 +250,7 @@ class ToolbarComponent extends Component {
  *
  * @param int $key
  * @return array
- **/
+ */
 	public function loadState($key) {
 		$history = Cache::read($this->cacheKey, 'debug_kit');
 		if (isset($history[$key])) {
@@ -257,7 +263,7 @@ class ToolbarComponent extends Component {
  * Create the cache config for the history
  *
  * @return void
- **/
+ */
 	protected function _createCacheConfig() {
 		if (Configure::read('Cache.disable') !== true) {
 			Cache::config('debug_kit', array(
@@ -272,7 +278,7 @@ class ToolbarComponent extends Component {
  * collects the panel contents
  *
  * @return array Array of all panel beforeRender()
- **/
+ */
 	protected function _gatherVars(Controller $controller) {
 		$vars = array();
 		$panels = array_keys($this->panels);
@@ -297,7 +303,7 @@ class ToolbarComponent extends Component {
  * Load Panels used in the debug toolbar
  *
  * @return 	void
- **/
+ */
 	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
 			$className = ucfirst($panel) . 'Panel';
@@ -341,7 +347,7 @@ class ToolbarComponent extends Component {
  * Method wrapper for eval() for testing uses.
  *
  * @return void
- **/
+ */
 	protected function _eval($code) {
 		eval($code);
 	}
@@ -352,7 +358,7 @@ class ToolbarComponent extends Component {
  * @param object $controller Controller instance
  * @param array $vars Vars to save.
  * @return void
- **/
+ */
 	protected function _saveState(Controller $controller, $vars) {
 		$config = Cache::config('debug_kit');
 		if (empty($config) || !isset($this->panels['history'])) {
@@ -369,55 +375,4 @@ class ToolbarComponent extends Component {
 		array_unshift($history, $vars);
 		Cache::write($this->cacheKey, $history, 'debug_kit');
 	}
-}
-
-/**
- * Debug Panel
- *
- * Abstract class for debug panels.
- *
- * @package       cake.debug_kit
- */
-class DebugPanel extends Object {
-/**
- * Defines which plugin this panel is from so the element can be located.
- *
- * @var string
- */
-	public $plugin = 'DebugKit';
-
-/**
- * Defines the title for displaying on the toolbar. If null, the class name will be used.
- * Overriding this allows you to define a custom name in the toolbar.
- *
- * @var string
- */
-	public $title = null;
-
-/**
- * Provide a custom element name for this panel.  If null, the underscored version of the class
- * name will be used.
- *
- * @var string
- */
-	public $elementName = null;
-
-/**
- * startup the panel
- *
- * Pull information from the controller / request
- *
- * @param object $controller Controller reference.
- * @return void
- **/
-	public function startup(Controller $controller) { }
-
-/**
- * Prepare output vars before Controller Rendering.
- *
- * @param object $controller Controller reference.
- * @return void
- **/
-	public function beforeRender(Controller $controller) { }
-	
 }

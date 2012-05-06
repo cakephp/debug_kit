@@ -204,25 +204,6 @@ class ToolbarComponent extends Component {
  * @return bool
  */
 	public function startup(Controller $controller) {
-		$currentViewClass = $controller->viewClass;
-		$this->_makeViewClass($currentViewClass);
-		$controller->viewClass = 'DebugKit.Debug';
-		$isHtml = (
-			!isset($controller->request->params['ext']) ||
-			$controller->request->params['ext'] === 'html'
-		);
-
-		if (!$controller->request->is('ajax') && $isHtml) {
-			$format = 'Html';
-		} else {
-			$format = 'FirePhp';
-		}
-		$controller->helpers['DebugKit.Toolbar'] = array(
-			'output' => sprintf('DebugKit.%sToolbar', $format),
-			'cacheKey' => $this->cacheKey,
-			'cacheConfig' => 'debug_kit',
-			'forceEnable' => $this->settings['forceEnable'],
-		);
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
@@ -247,8 +228,13 @@ class ToolbarComponent extends Component {
 			return null;
 		}
 		DebugTimer::stop('controllerAction');
+		DebugTimer::start(
+			'processToolbar',
+			__d('debug_kit', 'Processing toolbar state')
+		);
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
+		DebugTimer::stop('processToolbar');
 	}
 
 /**
@@ -263,6 +249,11 @@ class ToolbarComponent extends Component {
 			return null;
 		}
 		DebugTimer::stop('controllerAction');
+
+		DebugTimer::start(
+			'processToolbar',
+			__d('debug_kit', 'Collecting toolbar data')
+		);
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 
@@ -270,6 +261,27 @@ class ToolbarComponent extends Component {
 			'debugToolbarPanels' => $vars,
 			'debugToolbarJavascript' => $this->javascript
 		));
+
+		$isHtml = (
+			!isset($controller->request->params['ext']) ||
+			$controller->request->params['ext'] === 'html'
+		);
+
+		if (!$controller->request->is('ajax') && $isHtml) {
+			$format = 'Html';
+		} else {
+			$format = 'FirePhp';
+		}
+
+		$controller->helpers[] = 'DebugKit.DebugTimer';
+		$controller->helpers['DebugKit.Toolbar'] = array(
+			'output' => sprintf('DebugKit.%sToolbar', $format),
+			'cacheKey' => $this->cacheKey,
+			'cacheConfig' => 'debug_kit',
+			'forceEnable' => $this->settings['forceEnable'],
+		);
+
+		DebugTimer::stop('processToolbar');
 		DebugTimer::start(
 			'controllerRender',
 			__d('debug_kit', 'Render Controller Action')
@@ -352,36 +364,6 @@ class ToolbarComponent extends Component {
 				$this->panels[strtolower($panel)] = $panelObj;
 			}
 		}
-	}
-/**
- * Makes the DoppleGangerView class if it doesn't already exist.
- * This allows DebugView to be compatible with all view classes.
- *
- * @param string $baseClassName
- * @return void
- */
-	protected function _makeViewClass($baseClassName) {
-		if (!class_exists('DoppelGangerView')) {
-			$plugin = false;
-			if (strpos($baseClassName, '.') !== false) {
-				list($plugin, $baseClassName) = pluginSplit($baseClassName, true);
-			}
-			if (strpos($baseClassName, 'View') === false) {
-				$baseClassName .= 'View';
-			}
-			App::uses($baseClassName, $plugin . 'View');
-			$class = "class DoppelGangerView extends $baseClassName {}";
-			$this->_eval($class);
-		}
-	}
-
-/**
- * Method wrapper for eval() for testing uses.
- *
- * @return void
- */
-	protected function _eval($code) {
-		eval($code);
 	}
 
 /**

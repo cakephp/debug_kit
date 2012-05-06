@@ -27,20 +27,8 @@ App::uses('DebugTimer', 'DebugKit.Lib');
 
 class TestToolbarComponent extends ToolbarComponent {
 
-	public $evalTest = false;
-
-	public $evalCode = '';
-
 	public function loadPanels($panels, $settings = array()) {
 		$this->_loadPanels($panels, $settings);
-	}
-
-	protected function _eval($code) {
-		if ($this->evalTest) {
-			$this->evalCode = $code;
-			return;
-		}
-		eval($code);
 	}
 
 }
@@ -180,27 +168,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			'PluginTestPanel',
 			$this->Controller->Toolbar->panels['plugintest']
 		);
-	}
-
-/**
- * test generating a DoppelGangerView with a pluginView.
- *
- * If $this->Controller->Toolbar->startup() has been previously called,
- * DoppelGangerView class has already been defined.
- *
- * @return void
- */
-	public function testPluginViewParsing() {
-		if (class_exists('DoppelGangerView')) {
-			$this->skipIf(true, 'Class DoppelGangerView already defined, skipping %s');
-			return;
-		}
-		$this->_loadController();
-
-		$this->Controller->Toolbar->evalTest = true;
-		$this->Controller->viewClass = 'Plugin.OtherView';
-		$this->Controller->Toolbar->startup($this->Controller);
-		$this->assertPattern('/class DoppelGangerView extends OtherView/', $this->Controller->Toolbar->evalCode);
 	}
 
 /**
@@ -344,12 +311,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->panels['timer'] = $MockPanel;
 
 		$this->Controller->Toolbar->startup($this->Controller);
-		$this->assertEquals($this->Controller->viewClass, 'DebugKit.Debug');
-		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
-
-		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.HtmlToolbar');
-		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['cacheConfig'], 'debug_kit');
-		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']['cacheKey']));
 
 		$timers = DebugTimer::getAll();
 		$this->assertTrue(isset($timers['controllerAction']));
@@ -402,6 +363,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$MockPanel->expects($this->once())->method('beforeRender');
 		$this->Controller->Toolbar->panels['timer'] = $MockPanel;
 		$this->Controller->Toolbar->beforeRender($this->Controller);
+
+		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']));
+		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.HtmlToolbar');
+		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['cacheConfig'], 'debug_kit');
+		$this->assertTrue(isset($this->Controller->helpers['DebugKit.Toolbar']['cacheKey']));
 
 		$this->assertTrue(isset($this->Controller->viewVars['debugToolbarPanels']));
 		$vars = $this->Controller->viewVars['debugToolbarPanels'];
@@ -503,6 +469,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 		$this->_loadController();
 		$this->Controller->Components->trigger('startup', array($this->Controller));
+		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$this->assertEquals($this->Controller->helpers['DebugKit.Toolbar']['output'], 'DebugKit.FirePhpToolbar');
 	}
 

@@ -47,61 +47,6 @@ There are several built-in panels. They are
  * **Log** Display any entries made to the log files this request.
  * **Variables** Display View variables set in controller.
 
-## Creating your own Panels
-
-You can create your own panels as well to provide custom debugging information for your application.  Custom panels need to subclass the `DebugPanel` class. Panel objects have 2 callbacks that allow them to hook into and introspect on the current request.
-
-    startup(Controller $controller)
-
-Each panel's `startup()` method is called during component `startup()` process.  `$controller` is a reference to the current controller object.
-
-    beforeRender(Controller $controller)
-
-Much like `startup()` `beforeRender()` is callled during the Component beforeRender() process. Again `$controller` is a reference to the current controller.  Normally at this point you could do additional introspection on the controller. The return of a panels `beforeRender()` is automatically passed to the View by the Toolbar Component.  Therefore, under normal use you do not need to explicitly set variables to the controller.
-
-
-### File location and naming convention
-
-Panel Classes simply need to be placed in`Panel` directory inside a Lib path.  The filename should match the classname. So the class `MyCustomPanel` would be expected to have a filename of `app/Lib/Panel/MyCustomPanel.php`.
-
-## Example of beforeRender callback
-
-	/**
-	 * beforeRender callback - grabs request params
-	 *
-	 * @return array
-	 **/
-		function beforeRender(Controller $controller) {
-			return $controller->params;
-		}
-
-This would return cake's internal params array.  The return of a panel's `beforeRender()` is available in you Panel element as `$content`
-
-### Using panels from plugins
-
-Panels provided by plugins work almost entirely the same as other plugins, with one minor difference.  You must set `var $plugin` to be the plugin name directory.  This must be done so that the element can be located at rendering time.
-
-To use a plugin panel, use the common CakePHP dot notation for plugins. 
-
-
-	public $components = array('DebugKit.Toolbar' => array(
-	    'panels' => 'MyPlugin.Custom'
-	));
-
-
-The above would load all the default panels as well as the custom panel from MyPlugin.
-
-### Panel Elements 
-
-Each Panel is expected to have a view element that renders the content from the panel.  The element name must be the underscored inflection of the class name.  For example `SessionPanel` has an element named `session_panel.ctp`, and sqllogPanel has an element named `sqllog_panel.ctp`.  These elements should be located in the root of your `views/elements` directory.  If you are creating panels as part of your plugin see above for *Using panels from plugins*.
-
-### Custom titles and elements
-
-Panels are usually use conventions for defining their title and element name.  However, if you need to choose a custom element name or title, there are properties to allow that configuration.
-
-- `$title` - Set a custom title for use in the toolbar.  This title will be used as the panels button.
-- `$elementName` - Set a custom element name to be used to render the panel.
-
 ## Configuration
 
 The toolbar has a few configuration settings. Settings are passed in the component declaration like normal component configuration.
@@ -122,7 +67,7 @@ You can customize the toolbar to show your custom panels or hide any built-in pa
 
 Would display your custom panel and all built-in panels except the 'Timer' panel.
 
-#### panels
+#### Controlling Panels
 
 Using the panels key you can specify which panels you want to load, as well as the order in which you want the panels loaded.
 
@@ -152,3 +97,71 @@ autoRun is a new configuration setting for DebugKit 1.2.  It allows you to contr
 
 When visiting a page you can add `?debug=true` to the url and the toolbar will be visible.  Otherwise it will stay hidden and not execute.
 
+
+## Developing your own panels
+
+You can create your own custom panels for DebugKit to help in debugging your applications.
+
+### Panel Classes
+
+Panel Classes simply need to be placed in`Panel` directory inside a `Lib` path.  The filename should match the classname, so the class `MyCustomPanel` would be expected to have a filename of `app/Lib/Panel/MyCustomPanel.php`.
+
+	class MyCustomPanel extends DebugPanel {
+		...
+	}
+
+Notice that custom panels are required to subclass the `DebugPanel` class. 
+
+### Callbacks
+
+Panel objects have 2 callbacks, that allow them to hook into and introspect on the current request.
+
+    startup(Controller $controller)
+
+Each panel's `startup()` method is called during component `startup()` process.  `$controller` is a reference to the current controller object.
+
+    beforeRender(Controller $controller)
+
+Much like `startup()` `beforeRender()` is called during the Component beforeRender() process. Again `$controller` is a reference to the current controller.  Normally at this point you could do additional introspection on the controller. The return of a panels `beforeRender()` is automatically passed to the View by the Toolbar Component.  Therefore, under normal use you do not need to explicitly set variables to the controller.
+
+#### Example of beforeRender callback
+
+	/**
+	 * beforeRender callback - grabs request params
+	 *
+	 * @return array
+	 **/
+		function beforeRender(Controller $controller) {
+			return $controller->params;
+		}
+
+This would return cake's internal params array.  The return of a panel's `beforeRender()` is available in you Panel element as `$content`
+
+### Panel Elements 
+
+Each Panel is expected to have a view element that renders the content from the panel.  The element name must be the underscored inflection of the class name.  For example `SessionPanel` has an element named `session_panel.ctp`, and sqllogPanel has an element named `sqllog_panel.ctp`.  These elements should be located in the root of your `View/Elements` directory.
+
+#### Custom titles and elements
+
+Panels should pick up their title and element name by convention. However, if you need to choose a custom element name or title, there are properties to allow that configuration.
+
+- `$title` - Set a custom title for use in the toolbar.  This title will be used as the panels button.
+- `$elementName` - Set a custom element name to be used to render the panel.
+
+### Panels as Cake Plugins
+
+Panels provided by [Cake Plugins](http://book.cakephp.org/2.0/en/plugins.html) work almost entirely the same as other plugins, with one minor difference:  You must set `var $plugin` to be the name of the plugin directory, so that the panel's Elements can be located at render time.
+
+	class MyCustomPanel extends DebugPanel {
+	    var $plugin = 'MyPlugin';
+		...
+	}
+
+To use a plugin panel, use the common CakePHP dot notation for plugins. 
+
+	public $components = array('DebugKit.Toolbar' => array(
+	    'panels' => array('MyPlugin.MyCustom')
+	));
+
+
+The above would load all the default panels as well as the custom panel from `MyPlugin`. 

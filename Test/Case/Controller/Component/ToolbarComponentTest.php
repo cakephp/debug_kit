@@ -203,10 +203,18 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 
 		$this->assertFalse(empty($this->Controller->Toolbar->panels));
 
-		$timers = DebugTimer::getAll();
-		$this->assertTrue(isset($timers['componentInit']));
 		$memory = DebugMemory::getAll();
 		$this->assertTrue(isset($memory['Component initialization']));
+
+		$events = $this->Controller->getEventManager();
+		$this->assertNotEmpty($events->listeners('Controller.initialize'));
+		$this->assertNotEmpty($events->listeners('Controller.startup'));
+		$this->assertNotEmpty($events->listeners('Controller.beforeRender'));
+		$this->assertNotEmpty($events->listeners('Controller.shutdown'));
+		$this->assertNotEmpty($events->listeners('View.beforeRender'));
+		$this->assertNotEmpty($events->listeners('View.afterRender'));
+		$this->assertNotEmpty($events->listeners('View.beforeLayout'));
+		$this->assertNotEmpty($events->listeners('View.afterLayout'));
 	}
 
 /**

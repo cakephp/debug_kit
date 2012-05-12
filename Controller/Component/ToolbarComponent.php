@@ -1,10 +1,11 @@
 <?php
-
 App::uses('CakeLog', 'Log');
 App::uses('CakeLogInterface', 'Log');
 App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugMemory', 'DebugKit.Lib');
 App::uses('HelperCollection', 'View');
+App::uses('CakeEventManager', 'Event');
+App::uses('CakeEventListener', 'Event');
 
 /**
  * DebugKit DebugToolbar Component
@@ -21,7 +22,7 @@ App::uses('HelperCollection', 'View');
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-class ToolbarComponent extends Component {
+class ToolbarComponent extends Component implements CakeEventListener {
 /**
  * Settings for the Component
  *
@@ -139,11 +140,9 @@ class ToolbarComponent extends Component {
 			return false;
 		}
 
+		$this->controller->getEventManager()->attach($this);
+
 		DebugMemory::record(__d('debug_kit', 'Component initialization'));
-		DebugTimer::start(
-			'componentInit',
-			__d('debug_kit', 'Component initialization and startup')
-		);
 
 		$this->cacheKey .= $this->Session->read('Config.userAgent');
 		if (
@@ -155,6 +154,59 @@ class ToolbarComponent extends Component {
 
 		$this->_loadPanels($panels, $settings);
 		return false;
+	}
+
+/**
+ * Register all the timing handlers for core events.
+ *
+ * @return void
+ */
+	public function implementedEvents() {
+		$before = function ($name) {
+			return function () use ($name) {
+				DebugTimer::start($name, __d('debug_kit', $name));
+			};
+		};
+		$after = function ($name) {
+			return function () use ($name) {
+				DebugTimer::stop($name);
+			};
+		};
+
+		return array(
+			'Controller.initialize' => array(
+				array('priority' => 0, 'callable' => $before('Event: Controller.initialize')),
+				array('priority' => 999, 'callable' => $after('Event: Controller.initialize'))
+			),
+			'Controller.startup' => array(
+				array('priority' => 0, 'callable' => $before('Event: Controller.startup')),
+				array('priority' => 999, 'callable' => $after('Event: Controller.startup'))
+			),
+			'Controller.beforeRender' => array(
+				array('priority' => 0, 'callable' => $before('Event: Controller.beforeRender')),
+				array('priority' => 999, 'callable' => $after('Event: Controller.beforeRender'))
+			),
+			'Controller.shutdown' => array(
+				array('priority' => 0, 'callable' => $before('Event: Controller.shutdown')),
+				array('priority' => 999, 'callable' => $after('Event: Controller.shutdown'))
+			),
+			'View.beforeRender' => array(
+				array('priority' => 0, 'callable' => $before('Event: View.beforeRender')),
+				array('priority' => 999, 'callable' => $after('Event: View.beforeRender'))
+			),
+			'View.afterRender' => array(
+				array('priority' => 0, 'callable' => $before('Event: View.afterRender')),
+				array('priority' => 999, 'callable' => $after('Event: View.afterRender'))
+			),
+			'View.beforeLayout' => array(
+				array('priority' => 0, 'callable' => $before('Event: View.beforeLayout')),
+				array('priority' => 999, 'callable' => $after('Event: View.beforeLayout'))
+			),
+			'View.afterLayout' => array(
+				array('priority' => 0, 'callable' => $before('Event: View.afterLayout')),
+				array('priority' => 999, 'callable' => $after('Event: View.afterLayout'))
+			),
+		);
 	}
 
 /**
@@ -208,7 +260,6 @@ class ToolbarComponent extends Component {
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
 		}
-		DebugTimer::stop('componentInit');
 		DebugTimer::start(
 			'controllerAction',
 			__d('debug_kit', 'Controller action')
@@ -252,7 +303,7 @@ class ToolbarComponent extends Component {
 
 		DebugTimer::start(
 			'processToolbar',
-			__d('debug_kit', 'Collecting toolbar data')
+			__d('debug_kit', 'Processing toolbar data')
 		);
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
@@ -282,10 +333,6 @@ class ToolbarComponent extends Component {
 		);
 
 		DebugTimer::stop('processToolbar');
-		DebugTimer::start(
-			'controllerRender',
-			__d('debug_kit', 'Render Controller Action')
-		);
 		DebugMemory::record(__d('debug_kit', 'Controller render start'));
 	}
 

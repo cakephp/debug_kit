@@ -22,7 +22,7 @@ class LogPanelTest extends CakeTestCase {
 	public function testConstructor() {
 		$result = CakeLog::configured();
 		$this->assertContains('debug_kit_log_panel', $result);
-		$this->assertContains('default', $result);
+		$this->assertTrue(count($result) > 1, 'Default loggers were not added.');
 	}
 
 	public function testBeforeRender() {

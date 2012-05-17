@@ -432,6 +432,19 @@ class ToolbarComponent extends Component implements CakeEventListener {
 		if (count($history) == $this->panels['history']->history) {
 			array_pop($history);
 		}
+
+		if (isset($vars['variables'])) {
+			// Remove unserializable native objects.
+			$vars['variables'] = array_walk_recursive($vars['variables'], function (&$item) {
+				if (
+					$item instanceof Closure ||
+					$item instanceof PDO ||
+					$item instanceof SimpleXmlElement
+				) {
+					$item = 'Unserializable object - ' . get_class($item);
+				}
+			});
+		}
 		unset($vars['history']);
 		array_unshift($history, $vars);
 		Cache::write($this->cacheKey, $history, 'debug_kit');

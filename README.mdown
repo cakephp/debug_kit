@@ -2,6 +2,13 @@
 
 DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP applications.
 
+## Requirements
+
+The master branch has the following requirements:
+
+* CakePHP 2.1.0 or greater.
+* PHP 5.3.0 or greater.
+
 ## Installation
 
 * Clone/Copy the files in this directory into `app/Plugin/DebugKit`

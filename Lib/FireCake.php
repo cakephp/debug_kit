@@ -142,10 +142,13 @@ class FireCake {
  */
 	public static function detectClientExtension() {
 		$ua = FireCake::getUserAgent();
-		if (!preg_match('/\sFirePHP\/([\.|\d]*)\s?/si', $ua, $match) || !version_compare($match[1], '0.0.6', '>=')) {
-			return false;
+		if (preg_match('/\sFirePHP\/([\.|\d]*)\s?/si', $ua, $match) && version_compare($match[1], '0.0.6', '>=')) {
+			return true;
 		}
-		return true;
+		if (env('HTTP_X_FIREPHP_VERSION') && version_compare(env('HTTP_X_FIREPHP_VERSION'), '0.6', '>=')) {
+			return true;
+		}
+		return false;
 	}
 
 /**

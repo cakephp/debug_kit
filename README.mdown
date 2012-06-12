@@ -172,3 +172,14 @@ To use a plugin panel, use the common CakePHP dot notation for plugins.
 
 
 The above would load all the default panels as well as the custom panel from `MyPlugin`. 
+
+## Cache Engine
+
+By default DebugKit uses File as engine for internal cache, but if you want to use another cache engine you can customize it simply adding an cache key inside the components config array.
+
+	public $components = array('DebugKit.Toolbar' => array(
+		'cache' => array('engine' => 'Memcache', 'servers' => array('127.0.0.1:11211'))
+		)
+	);
+
+You can use any cache engine supported by CakePHP, the same you set in both core.php and bootstrap.php files with Cache::config() method.

@@ -357,11 +357,15 @@ class ToolbarComponent extends Component implements CakeEventListener {
  */
 	protected function _createCacheConfig() {
 		if (Configure::read('Cache.disable') !== true) {
-			Cache::config('debug_kit', array(
+			$cache = array(
 				'duration' => $this->cacheDuration,
 				'engine' => 'File',
 				'path' => CACHE
-			));
+			);
+			if (isset($this->settings['cache'])) {
+				$cache = array_merge($cache, $this->settings['cache']);
+			}
+			Cache::config('debug_kit', $cache);
 		}
 	}
 

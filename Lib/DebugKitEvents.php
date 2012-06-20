@@ -25,12 +25,8 @@
 			if(!Configure::read('debug')) {
 				return array();
 			}
-			
-<<<<<<< Updated upstream
-			if(is_subclass_of($event->Handler, 'Model')){
-=======
+
 			if(is_subclass_of($event->Handler, 'Model')) {
->>>>>>> Stashed changes
 				$event->Handler->Behaviors->attach('DebugKit.Timed');
 			}
 		}
@@ -39,7 +35,7 @@
 			if(!Configure::read('debug')) {
 				return array();
 			}
-			
+
 			return 'DebugKit.Toolbar';
 		}
 
@@ -47,7 +43,7 @@
 			if(!Configure::read('debug')) {
 				return array();
 			}
-			
+
 			return array(
 				'DebugKit.debug_toolbar'
 			);
@@ -57,7 +53,7 @@
 			if(!Configure::read('debug')) {
 				return array();
 			}
-			
+
 			return array(
 				'DebugKit.js_debug_toolbar'
 			);

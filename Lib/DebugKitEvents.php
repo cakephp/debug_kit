@@ -26,7 +26,11 @@
 				return array();
 			}
 			
+<<<<<<< Updated upstream
 			if(is_subclass_of($event->Handler, 'Model')){
+=======
+			if(is_subclass_of($event->Handler, 'Model')) {
+>>>>>>> Stashed changes
 				$event->Handler->Behaviors->attach('DebugKit.Timed');
 			}
 		}

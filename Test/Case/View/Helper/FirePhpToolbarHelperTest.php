@@ -102,7 +102,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function testAfterLayout() {
-		$this->Controller->viewPath = 'Posts';
+		$this->Controller->viewPath = 'posts';
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
 		$request->addPaths(array(

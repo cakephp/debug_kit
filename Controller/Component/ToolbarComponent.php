@@ -65,6 +65,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 		'DebugKit.Timer',
 		'DebugKit.Log',
 		'DebugKit.Variables',
+		'DebugKit.Environment',
 		'DebugKit.Include'
 	);
 

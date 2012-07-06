@@ -30,17 +30,10 @@ class EnvironmentPanel extends DebugPanel
 {
 
 	/**
-	 * startup - add in necessary helpers
+	 * beforeRender - Get necessary data about environment to pass back to controller
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function startup (Controller $controller)
-	{
-		if (!in_array ('Number', array_keys (HelperCollection::normalizeObjectArray ($controller->helpers))))
-		{
-			$controller->helpers[] = 'Number';
-		}
-	}
 	
 	public function beforeRender (Controller $controller)
 	{

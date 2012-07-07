@@ -1,21 +1,5 @@
 <?php
 
-/**
- * Evironment Element
- *
- * PHP versions 5
- *
- * Copyright 2012 Scott Harwell
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2012, Scott Harwell 
- * @package       debug_kit
- * @subpackage    debug_kit.views.elements
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
-
 App::uses ('DebugPanel', 'DebugKit.Lib');
 
 /**
@@ -47,9 +31,31 @@ class EnvironmentPanel extends DebugPanel
 		
 		// CakePHP Data
 		$return['cake'] = array(
-			'APP_PATH' => APP,
-			'CAKE_PATH' => CAKE,
-			'CAKE_VERSION' => Configure::version ()
+			'APP' => APP,
+			'APP_DIR' => APP_DIR,
+			'APPLIBS' => APPLIBS,
+			'CACHE' => CACHE,
+			'CAKE' => CAKE,
+			'CAKE_CORE_INCLUDE_PATH' => CAKE_CORE_INCLUDE_PATH,
+			'CORE_PATH' => CORE_PATH,
+			'CAKE_VERSION' => Configure::version (),
+			'CSS' => CSS,
+			'CSS_URL' => CSS_URL,
+			'DS' => DS,
+			'FULL_BASE_URL' => FULL_BASE_URL,
+			'IMAGES' => IMAGES,
+			'IMAGES_URL' => IMAGES_URL,
+			'JS' => JS,
+			'JS_URL' => JS_URL,
+			'LOGS' => LOGS,
+			'ROOT' => ROOT,
+			'TESTS' => TESTS,
+			'TMP' => TMP,
+			'VENDORS' => VENDORS,
+			'WEBROOT_DIR' => WEBROOT_DIR,
+			'WWW_ROOT' => WWW_ROOT
+
+
 		);
 		
 		return $return;

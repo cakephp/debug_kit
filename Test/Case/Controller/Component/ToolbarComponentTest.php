@@ -227,7 +227,10 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			'panels' => array('test'),
 		));
 
-		$expected = array('history', 'session', 'request', 'sqllog', 'timer', 'log', 'variables', 'include', 'test');
+		$expected = array(
+			'history', 'session', 'request', 'sqllog', 'timer',
+			'log', 'variables', 'environment', 'include', 'test'
+		);
 		$this->assertEquals($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 
@@ -245,7 +248,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 			)
 		));
 
-		$expected = array('request', 'sqllog', 'timer', 'log', 'variables', 'include');
+		$expected = array('request', 'sqllog', 'timer', 'log', 'variables', 'environment', 'include');
 		$this->assertEquals($expected, array_keys($this->Controller->Toolbar->panels));
 	}
 

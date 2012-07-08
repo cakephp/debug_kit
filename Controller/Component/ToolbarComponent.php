@@ -438,9 +438,9 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			array_pop($history);
 		}
 
-		if (isset($vars['variables'])) {
+		if (isset($vars['variables']['content'])) {
 			// Remove unserializable native objects.
-			$vars['variables'] = array_walk_recursive($vars['variables'], function (&$item) {
+			array_walk_recursive($vars['variables']['content'], function (&$item) {
 				if (
 					$item instanceof Closure ||
 					$item instanceof PDO ||
@@ -448,6 +448,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 				) {
 					$item = 'Unserializable object - ' . get_class($item);
 				}
+				return $item;
 			});
 		}
 		unset($vars['history']);

@@ -63,9 +63,9 @@ class DebugKitDebuggerTest extends CakeTestCase {
 
 		$result = $firecake->sentHeaders;
 
-		$this->assertPattern('/GROUP_START/', $result['X-Wf-1-1-1-1']);
-		$this->assertPattern('/ERROR/', $result['X-Wf-1-1-1-2']);
-		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-4']);
+		$this->assertRegExp('/GROUP_START/', $result['X-Wf-1-1-1-1']);
+		$this->assertRegExp('/ERROR/', $result['X-Wf-1-1-1-2']);
+		$this->assertRegExp('/GROUP_END/', $result['X-Wf-1-1-1-5']);
 
 		Debugger::getInstance('Debugger');
 		Debugger::outputAs('html');

@@ -53,6 +53,7 @@ There are several built-in panels. They are
  * **Sql Logs** Displays sql logs for each database connection.
  * **Log** Display any entries made to the log files this request.
  * **Variables** Display View variables set in controller.
+ * **Environment** Display environment variables related to PHP + CakePHP.
 
 ## Configuration
 

@@ -9,26 +9,22 @@ App::uses ('DebugPanel', 'DebugKit.Lib');
  *
  * @package       cake.debug_kit.panels
  */
+class EnvironmentPanel extends DebugPanel {
 
-class EnvironmentPanel extends DebugPanel
-{
-
-	/**
-	 * beforeRender - Get necessary data about environment to pass back to controller
-	 *
-	 * @return array
-	 */
-	
-	public function beforeRender (Controller $controller)
-	{
+/**
+ * beforeRender - Get necessary data about environment to pass back to controller
+ *
+ * @return array
+ */
+	public function beforeRender (Controller $controller) {
 		parent::beforeRender ($controller);
-		
+
 		$return = array();
-		
+
 		// PHP Data
 		$phpVer = phpversion();
 		$return['php'] = array_merge(array('PHP_VERSION' => $phpVer), $_SERVER);
-		
+
 		// CakePHP Data
 		$return['cake'] = array(
 			'APP' => APP,
@@ -54,10 +50,8 @@ class EnvironmentPanel extends DebugPanel
 			'VENDORS' => VENDORS,
 			'WEBROOT_DIR' => WEBROOT_DIR,
 			'WWW_ROOT' => WWW_ROOT
-
-
 		);
-		
 		return $return;
 	}
+
 }

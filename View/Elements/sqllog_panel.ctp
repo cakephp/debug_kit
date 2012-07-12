@@ -64,7 +64,7 @@ DEBUGKIT.sqlLog = function () {
 
 	return {
 		init : function () {
-			var sqlPanel = $('#sql_log-tab');
+			var sqlPanel = $('#sqllog-tab');
 			var buttons = sqlPanel.find('input');
 
 			// Button handling code for explain links.

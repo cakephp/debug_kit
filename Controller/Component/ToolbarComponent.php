@@ -447,9 +447,15 @@ class ToolbarComponent extends Component implements CakeEventListener {
 					$item instanceof SimpleXmlElement
 				) {
 					$item = 'Unserializable object - ' . get_class($item);
-				}
-				if ($item instanceof Exception) {
-					$item = sprintf('Unserializable object - %s. Error: %s in %s, line %s',get_class($item),$item,$item->getMessage(),$item->getFile(),$item->getLine());
+				} elseif ($item instanceof Exception) {
+					$item = sprintf(
+						'Unserializable object - %s. Error: %s in %s, line %s',
+						get_class($item),
+						$item,
+						$item->getMessage(),
+						$item->getFile(),
+						$item->getLine()
+					);
 				}
 				return $item;
 			});

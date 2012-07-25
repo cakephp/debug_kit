@@ -43,7 +43,7 @@
 						<div class="panel-content-data">
 							<?php
 								echo $this->element($panelInfo['elementName'], $panelInfo, array(
-									'plugin' => Inflector::camelize($panelInfo['plugin'])
+									'plugin' => (empty($panelInfo['plugin'])) ? null : Inflector::camelize($panelInfo['plugin'])
 								)); 
 							?>
 						</div>

@@ -23,8 +23,8 @@ class EnvironmentPanel extends DebugPanel {
 
 		// PHP Data
 		$phpVer = phpversion();
-		unset($return['php']['argv']);
 		$return['php'] = array_merge(array('PHP_VERSION' => $phpVer), $_SERVER);
+		unset($return['php']['argv']);
 
 		// CakePHP Data
 		$return['cake'] = array(

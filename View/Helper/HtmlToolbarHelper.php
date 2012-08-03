@@ -76,7 +76,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if (empty($value) && $value != 0) {
 				$value = '(empty)';
 			}
-
+			if ($value instanceof Closure) {
+				$value = 'function';
+			}
 			if (is_object($value)) {
 				$value = Set::reverse($value, true);
 			}

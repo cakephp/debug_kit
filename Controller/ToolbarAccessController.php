@@ -64,6 +64,9 @@ class ToolbarAccessController extends DebugKitAppController {
 		if (isset($this->Toolbar)) {
 			$this->Components->disable('Toolbar');
 		}
+		if (isset($this->Auth)) {
+			$this->Auth->allow('sql_explain');
+		}
 		$this->helpers['DebugKit.Toolbar']['cacheKey'] = $this->Toolbar->cacheKey;
 		$this->helpers['DebugKit.Toolbar']['cacheConfig'] = 'debug_kit';
 	}

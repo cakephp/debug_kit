@@ -126,9 +126,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	public function table($rows, $headers = array()) {
 		$out = '<table class="debug-table">';
 		if (!empty($headers)) {
-			$out .= $this->Html->tableHeaders($headers);
+			$out .= sprintf('<thead>%s</thead>', $this->Html->tableHeaders($headers));
 		}
-		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'), false, false);
+		$out .= sprintf('<tbody>%s</tbody>', $this->Html->tableCells($rows, array('class' => 'odd sortable-row'), array('class' => 'even sortable-row'), false, false));
 		$out .= '</table>';
 		return $out;
 	}

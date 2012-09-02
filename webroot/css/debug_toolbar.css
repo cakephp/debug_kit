@@ -74,12 +74,8 @@
 	display: block;
 }
 #debug-kit-toolbar .panel-tab.icon a {
-	-webkit-border-top-left-radius: 8px 8px;
-	-webkit-border-bottom-left-radius: 8px 8px;
-	-moz-border-radius-topleft: 8px;
-	-moz-border-radius-bottomleft: 8px;
-	border-radius-topleft: 8px;
-	border-radius-bottomleft: 8px;
+	border-radius-top-left: 8px;
+	border-radius-bottom-left: 8px;
 }
 #debug-kit-toolbar .panel-tab.icon img {
 	display:block;
@@ -123,8 +119,6 @@
 	-moz-text-shadow: 1px 1px #eee;
 }
 #debug-kit-toolbar .ui-button {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
 #debug-kit-toolbar .ui-button:hover {

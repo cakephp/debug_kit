@@ -74,8 +74,7 @@
 	display: block;
 }
 #debug-kit-toolbar .panel-tab.icon a {
-	border-radius-top-left: 8px;
-	border-radius-bottom-left: 8px;
+	border-radius: 8px 0 0 8px;
 }
 #debug-kit-toolbar .panel-tab.icon img {
 	display:block;

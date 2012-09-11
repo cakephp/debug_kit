@@ -79,9 +79,6 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if ($value instanceof Closure) {
 				$value = 'function';
 			}
-			if (is_object($value)) {
-				$value = Set::reverse($value, true);
-			}
 
 			if (is_array($value) && !empty($value)) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);

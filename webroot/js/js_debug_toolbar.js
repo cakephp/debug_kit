@@ -54,7 +54,7 @@ DEBUGKIT.loader = function () {
 
 //
 // NOTE DEBUGKIT.Util.Element is Deprecated.
-// 
+//
 //Util module and Element utility class.
 DEBUGKIT.module('Util');
 DEBUGKIT.Util.Element = {
@@ -160,7 +160,7 @@ DEBUGKIT.Util.Element = {
 
 //
 // NOTE DEBUGKIT.Util.Collection is Deprecated.
-// 
+//
 DEBUGKIT.Util.Collection = {
 	/*
 	 Apply the passed function to each item in the collection.
@@ -170,7 +170,7 @@ DEBUGKIT.Util.Collection = {
 	*/
 	apply: function (collection, callback, binding) {
 		var name, thisVar, i = 0, len = collection.length;
-		
+
 		if (len === undefined) {
 			for (name in collection) {
 				thisVar = (binding === undefined) ? collection[name] : binding;
@@ -188,7 +188,7 @@ DEBUGKIT.Util.Collection = {
 
 //
 // NOTE DEBUGKIT.Util.Event is Deprecated.
-// 
+//
 //Event binding
 DEBUGKIT.Util.Event = function () {
 	var _listeners = {},
@@ -197,11 +197,11 @@ DEBUGKIT.Util.Event = function () {
 	var preventDefault = function () {
 		this.returnValue = false;
 	}
-	
+
 	var stopPropagation = function () {
 		this.cancelBubble = true;
 	}
-	
+
 	// Fixes IE's broken event object, adds in common methods + properties.
 	var fixEvent = function (event) {
 		if (!event.preventDefault) {
@@ -220,7 +220,7 @@ DEBUGKIT.Util.Event = function () {
 		}
 		return event;
 	}
-	
+
 	return {
 		// bind an event listener of type to element, handler is your method.
 		addEvent: function(element, type, handler, capture) {
@@ -355,7 +355,7 @@ DEBUGKIT.Util.Cookie = function() {
 
 //
 // NOTE DEBUGKIT.Util.merge is Deprecated.
-// 
+//
 /*
  Object merge takes any number of arguments and glues them together
  @param [Object] one first object
@@ -375,7 +375,7 @@ DEBUGKIT.Util.merge = function() {
 };
 //
 // NOTE DEBUGKIT.Util.isArray is Deprecated.
-// 
+//
 /*
  Check if the given object is an array.
 */
@@ -511,7 +511,7 @@ DEBUGKIT.toolbar = function () {
 
 		init: function () {
 			var i, element, lists, index, _this = this;
-	
+
 			this.elements.toolbar = $('#debug-kit-toolbar');
 
 			if (this.elements.toolbar.length === 0) {
@@ -545,7 +545,7 @@ DEBUGKIT.toolbar = function () {
 			panel.id = button.attr('href').replace(/^#/, '');
 			panel.button = button;
 			panel.content = tab.find('.panel-content');
-	
+
 			if (!panel.id || panel.content.length === 0) {
 				return false;
 			}
@@ -599,11 +599,11 @@ DEBUGKIT.toolbar = function () {
 
 			panel.content.find('.panel-resize-handle').on('mousedown', mouseDownHandler);
 		},
-		
+
 		// make the maximize button work on the panels.
 		makePanelMinMax: function (panel) {
 			var _oldHeight;
-	
+
 			var maximize = function () {
 				if (!_oldHeight) {
 					_oldHeight = this.parentNode.offsetHeight;
@@ -613,7 +613,7 @@ DEBUGKIT.toolbar = function () {
 				$(this.parentNode).height(panelHeight);
 				$(this).text('-');
 			};
-			
+
 			var minimize = function () {
 				$(this.parentNode).height(_oldHeight);
 				$(this).text('+');
@@ -652,6 +652,12 @@ DEBUGKIT.toolbar = function () {
 				if (panel.content.length > 0) {
 					panel.content.css('display', 'block');
 				}
+
+				var contentHeight = panel.content.find(".panel-content-data").height()+70;
+				if (contentHeight <= (window.innerHeight/2)) {
+					panel.content.height(contentHeight);
+				}
+
 				panel.button.addClass('active');
 				panel.active = true;
 				return true;

@@ -52,6 +52,42 @@ DEBUGKIT.loader = function () {
 	};
 }();
 
+DEBUGKIT.module('sqlLog');
+DEBUGKIT.sqlLog = function () {
+	var $ = DEBUGKIT.$;
+
+	return {
+		init : function () {
+			var sqlPanel = $('#sqllog-tab');
+			var buttons = sqlPanel.find('input');
+
+			// Button handling code for explain links.
+			// performs XHR request to get explain query.
+			var handleButton = function (event) {
+				event.preventDefault();
+				var form = $(this.form),
+					data = form.serialize(),
+					dbName = form.find('input[name*=ds]').val() || 'default';
+
+				var fetch = $.ajax({
+					url: this.form.action,
+					data: data,
+					type: 'POST',
+					success : function (response) {
+						$('#sql-log-explain-' + dbName).html(response);
+					},
+					error : function () {
+						alert('Could not fetch EXPLAIN for query.');
+					}
+				});
+			};
+
+			buttons.filter('.sql-explain-link').on('click', handleButton);
+		}
+	};
+}();
+DEBUGKIT.loader.register(DEBUGKIT.sqlLog);
+
 //
 // NOTE DEBUGKIT.Util.Element is Deprecated.
 //
@@ -139,7 +175,7 @@ DEBUGKIT.Util.Element = {
 	height: function (element, value) {
 		//get value
 		if (value === undefined) {
-			return parseInt(this.getStyle(element, 'height'));
+			return parseInt(this.getStyle(element, 'height'), 10);
 		}
 		element.style.height = value + 'px';
 	},
@@ -183,7 +219,7 @@ DEBUGKIT.Util.Collection = {
 			}
 		}
 	}
-}
+};
 
 
 //
@@ -196,11 +232,11 @@ DEBUGKIT.Util.Event = function () {
 
 	var preventDefault = function () {
 		this.returnValue = false;
-	}
+	};
 
 	var stopPropagation = function () {
 		this.cancelBubble = true;
-	}
+	};
 
 	// Fixes IE's broken event object, adds in common methods + properties.
 	var fixEvent = function (event) {
@@ -213,13 +249,13 @@ DEBUGKIT.Util.Event = function () {
 		if (!event.target) {
 			event.target = event.srcElement || document;
 		}
-		if (event.pageX == null && event.clientX != null) {
+		if (event.pageX === null && event.clientX !== null) {
 			var doc = document.body;
 			event.pageX = event.clientX + (doc.scrollLeft || 0) - (doc.clientLeft || 0);
 			event.pageY = event.clientY + (doc.scrollTop || 0) - (doc.clientTop || 0);
 		}
 		return event;
-	}
+	};
 
 	return {
 		// bind an event listener of type to element, handler is your method.
@@ -271,7 +307,7 @@ DEBUGKIT.Util.Event = function () {
 					if (this.readyState == "complete") {
 						callback();
 					}
-				}
+				};
 				contentloadtag = null;
 				return;
 			}
@@ -333,7 +369,7 @@ DEBUGKIT.Util.Cookie = function() {
 				while (chips.charAt(0) == ' ') {
 					chips = chips.substring(1, chips.length);
 				}
-				if (chips.indexOf(name) == 0) {
+				if (chips.indexOf(name) === 0) {
 					return chips.substring(name.length, chips.length);
 				}
 			}
@@ -381,7 +417,7 @@ DEBUGKIT.Util.merge = function() {
 */
 DEBUGKIT.Util.isArray = function (test) {
 	return Object.prototype.toString.call(test) === '[object Array]';
-}
+};
 
 //
 // NOTE DEBUGKIT.Util.Request is Deprecated.
@@ -576,14 +612,14 @@ DEBUGKIT.toolbar = function () {
 				}
 				var newHeight = currentElement.data('startHeight') + (event.pageY - currentElement.data('startY'));
 				currentElement.parent().height(newHeight);
-			}
+			};
 
 			// handle the mouseup event, remove the other listeners so the panel
 			// doesn't continue to resize
 			var mouseUpHandler = function (event) {
 				currentElement = null;
 				$(document).off('mousemove', mouseMoveHandler).off('mouseup', mouseUpHandler);
-			}
+			};
 
 			var mouseDownHandler = function (event) {
 				event.preventDefault();
@@ -595,7 +631,7 @@ DEBUGKIT.toolbar = function () {
 				// attach to document so mouse doesn't have to stay precisely on the 'handle'
 				$(document).on('mousemove', mouseMoveHandler)
 					.on('mouseup', mouseUpHandler);
-			}
+			};
 
 			panel.content.find('.panel-resize-handle').on('mousedown', mouseDownHandler);
 		},
@@ -698,6 +734,100 @@ DEBUGKIT.toolbar = function () {
 	};
 }();
 DEBUGKIT.loader.register(DEBUGKIT.toolbar);
+
+DEBUGKIT.module('historyPanel');
+DEBUGKIT.historyPanel = function () {
+	var toolbar = DEBUGKIT.toolbar,
+		$ = DEBUGKIT.$,
+		historyLinks;
+
+	// Private methods to handle JSON response and insertion of
+	// new content.
+	var switchHistory = function (response) {
+
+		historyLinks.removeClass('loading');
+
+		$.each(toolbar.panels, function (id, panel) {
+			if (panel.content === undefined || response[id] === undefined) {
+				return;
+			}
+
+			var regionDiv = panel.content.find('.panel-resize-region');
+			if (!regionDiv.length) {
+				return;
+			}
+
+			var regionDivs = regionDiv.children();
+
+			regionDivs.filter('div').hide();
+			regionDivs.filter('.panel-history').each(function (i, panelContent) {
+				var panelId = panelContent.id.replace('-history', '');
+				if (response[panelId]) {
+					panelContent = $(panelContent);
+					panelContent.html(response[panelId]);
+					var lists = panelContent.find('.depth-0');
+					toolbar.makeNeatArray(lists);
+				}
+				panelContent.show();
+			});
+		});
+	};
+
+	// Private method to handle restoration to current request.
+	var restoreCurrentState = function () {
+		var id, i, panelContent, tag;
+
+		historyLinks.removeClass('loading');
+
+		$.each(toolbar.panels, function (panel, id) {
+			if (panel.content === undefined) {
+				return;
+			}
+			var regionDiv = panel.content.find('.panel-resize-region');
+			if (!regionDiv.length) {
+				return;
+			}
+			var regionDivs = regionDiv.children();
+			regionDivs.filter('div').show()
+				.end()
+				.filter('.panel-history').hide();
+		});
+	};
+
+	function handleHistoryLink (event) {
+		event.preventDefault();
+
+		historyLinks.removeClass('active');
+		$(this).addClass('active loading');
+
+		if (this.id === 'history-restore-current') {
+			restoreCurrentState();
+			return false;
+		}
+
+		var xhr = $.ajax({
+			url: this.href,
+			type: 'GET',
+			dataType: 'json'
+		});
+		xhr.success(switchHistory).fail(function () {
+			alert('History retrieval failed');
+		});
+	}
+
+	return {
+		init : function () {
+			if (toolbar.panels['history'] === undefined) {
+				console.error('Bailing on history');
+				return;
+			}
+
+			historyLinks = toolbar.panels.history.content.find('.history-link');
+			historyLinks.on('click', handleHistoryLink);
+		}
+	};
+}();
+DEBUGKIT.loader.register(DEBUGKIT.historyPanel);
 
 //Add events + behaviors for toolbar collapser.
 DEBUGKIT.toolbarToggle = function () {

@@ -37,8 +37,8 @@ if (isset($debugKitInHistoryMode)) {
 			endif;
 			echo '<h5>';
 			echo __d(
-				'debug_kit', 
-				'Total Time: %s ms <br />Total Queries: %s queries', 
+				'debug_kit',
+				'Total Time: %s ms <br />Total Queries: %s queries',
 				$queryLog['time'],
 				$queryLog['count']
 			);
@@ -55,43 +55,3 @@ if (isset($debugKitInHistoryMode)) {
 <?php else:
 	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
 endif; ?>
-
-<script type="text/javascript">
-//<![CDATA[
-DEBUGKIT.module('sqlLog');
-DEBUGKIT.sqlLog = function () {
-	var $ = DEBUGKIT.$;
-
-	return {
-		init : function () {
-			var sqlPanel = $('#sqllog-tab');
-			var buttons = sqlPanel.find('input');
-
-			// Button handling code for explain links.
-			// performs XHR request to get explain query.
-			var handleButton = function (event) {
-				event.preventDefault();
-				var form = $(this.form),
-					data = form.serialize(),
-					dbName = form.find('input[name*=ds]').val() || 'default';
-
-				var fetch = $.ajax({
-					url: this.form.action,
-					data: data,
-					type: 'POST',
-					success : function (response) {
-						$('#sql-log-explain-' + dbName).html(response);
-					},
-					error : function () {
-						alert('Could not fetch EXPLAIN for query.');
-					}
-				});
-			};
-	
-			buttons.filter('.sql-explain-link').on('click', handleButton);
-		}
-	};
-}();
-DEBUGKIT.loader.register(DEBUGKIT.sqlLog);
-//]]>
-</script>

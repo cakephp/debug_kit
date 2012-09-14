@@ -28,19 +28,4 @@
 		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'CakePHP Environment Vars'));
 	} else {
 		echo "CakePHP environment unavailable.";
-	} ?>
-
-<h2><?php echo __('CakePHP Environment'); ?></h2>
-<?php
-	if (!empty($content['app'])) {
-		$cakeRows = array();
-		foreach ($content['app'] as $key => $val) {
-			$cakeRows[] = array(
-				$key,
-				$val
-			);
-		}
-		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Application Environment Vars'));
-	} else {
-		echo "No application environment unavailable.";
 	}

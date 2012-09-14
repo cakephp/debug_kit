@@ -52,14 +52,6 @@ class EnvironmentPanel extends DebugPanel {
 			'WEBROOT_DIR' => WEBROOT_DIR,
 			'WWW_ROOT' => WWW_ROOT
 		);
-
-		$var = get_defined_constants(true);
-		$return['app'] = array_slice(
-			$var['user'],
-			array_search('LOG_ERROR', array_keys($var['user'])) + 1,
-			-1
-		);
-
 		return $return;
 	}
 

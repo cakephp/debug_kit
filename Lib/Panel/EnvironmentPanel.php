@@ -53,12 +53,10 @@ class EnvironmentPanel extends DebugPanel {
 			'WWW_ROOT' => WWW_ROOT
 		);
 
+		$cakeConstants = array_fill_keys(array('DS', 'ROOT', 'FULL_BASE_URL', 'TIME_START', 'SECOND',
+			 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR', 'LOG_ERROR', 'FULL_BASE_URL'), '');
 		$var = get_defined_constants(true);
-		$return['app'] = array_slice(
-			$var['user'],
-			array_search('LOG_ERROR', array_keys($var['user'])) + 1,
-			-1
-		);
+		$return['app'] = array_diff_key($var['user'], $return['cake'], $cakeConstants);
 
 		return $return;
 	}

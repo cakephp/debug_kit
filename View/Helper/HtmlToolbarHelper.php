@@ -24,18 +24,21 @@ App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('Security', 'Utility');
 
 class HtmlToolbarHelper extends ToolbarHelper {
+
 /**
  * helpers property
  *
  * @var array
  */
 	public $helpers = array('Html', 'Form');
+
 /**
  * settings property
  *
  * @var array
  */
 	public $settings = array('format' => 'html', 'forceEnable' => false);
+
 /**
  * Recursively goes through an array and makes neat HTML out of it.
  *
@@ -43,9 +46,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @param int $openDepth Depth to add open class
  * @param int $currentDepth current depth.
  * @return string
- **/
+ */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
-		$className ="neat-array depth-$currentDepth";
+		$className = "neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {
 			$className .= ' expanded';
 		}
@@ -90,6 +93,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$out .= '</ul>';
 		return $out;
 	}
+
 /**
  * Create an HTML message
  *
@@ -100,16 +104,18 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	public function message($label, $message) {
 		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
 	}
+
 /**
  * Start a panel.
  * make a link and anchor.
  *
  * @return void
- **/
+ */
 	public function panelStart($title, $anchor) {
 		$link = $this->Html->link($title, '#' . $anchor);
 		return $link;
 	}
+
 /**
  * Create a table.
  *
@@ -126,6 +132,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$out .= '</table>';
 		return $out;
 	}
+
 /**
  * send method
  *
@@ -152,6 +159,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
 		}
 	}
+
 /**
  * Generates a SQL explain link for a given query
  *
@@ -171,7 +179,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		foreach (Router::prefixes() as $prefix) {
 			$url[$prefix] = false;
 		}
-		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0); 
+		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0);
 		$uid = $this->explainLinkUid . '_' . rand(0, 10000);
 		$form = $this->Form->create('log', array('url' => $url, 'id' => "logForm{$uid}"));
 		$form .= $this->Form->hidden('log.ds', array('id' => "logDs{$uid}", 'value' => $connection));

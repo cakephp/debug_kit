@@ -7,7 +7,7 @@ App::uses('DebugPanel', 'DebugKit.Lib');
  * @package       cake.debug_kit.panels
  */
 class LogPanel extends DebugPanel {
-	
+
 /**
  * Constructor - sets up the log listener.
  *

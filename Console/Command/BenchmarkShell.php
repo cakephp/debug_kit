@@ -33,6 +33,7 @@
 App::uses('String','Utility');
 
 class BenchmarkShell extends Shell {
+
 /**
  * Main execution of shell
  *
@@ -96,8 +97,8 @@ class BenchmarkShell extends Shell {
 		)));
 
 		$this->out("");
-
 	}
+
 /**
  * One-pass, numerically stable calculation of population variance.
  *
@@ -113,16 +114,16 @@ class BenchmarkShell extends Shell {
 	protected function _variance($times, $sample = true) {
 		$n = $mean = $M2 = 0;
 
-		foreach($times as $time){
+		foreach ($times as $time) {
 			$n += 1;
 			$delta = $time - $mean;
-			$mean = $mean + $delta/$n;
-			$M2 = $M2 + $delta*($time - $mean);
+			$mean = $mean + $delta / $n;
+			$M2 = $M2 + $delta * ($time - $mean);
 		}
 
 		if ($sample) $n -= 1;
 
-		return $M2/$n;
+		return $M2 / $n;
 	}
 /**
  * Calculate the standard deviation.

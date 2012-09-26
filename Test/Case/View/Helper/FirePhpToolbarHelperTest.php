@@ -30,6 +30,7 @@ require_once $path . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 FireCake::getInstance('TestFireCake');
 
 class FirePhpToolbarHelperTestCase extends CakeTestCase {
+
 /**
  * setUp
  *
@@ -57,8 +58,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	public static function setupBeforeClass() {
 		App::build(array(
 			'View' => array(
-				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'View'. DS,
-				APP . 'Plugin' . DS . 'DebugKit' . DS . 'View'. DS,
+				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'View' . DS,
+				APP . 'Plugin' . DS . 'DebugKit' . DS . 'View' . DS,
 				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'View' . DS
 		)), true);
 	}
@@ -100,7 +101,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function testAfterLayout(){
+	public function testAfterLayout() {
 		$this->Controller->viewPath = 'Posts';
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
@@ -117,7 +118,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Components->trigger('startup', array($this->Controller));
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
-		$this->assertNotRegExp('/debug-toolbar/', (string) $result);
+		$this->assertNotRegExp('/debug-toolbar/', (string)$result);
 		$result = $this->firecake->sentHeaders;
 		$this->assertTrue(is_array($result));
 	}
@@ -139,7 +140,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	public function testPanelEnd() {
 		$this->Toolbar->panelEnd();
 		$result = $this->firecake->sentHeaders;
-		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);	
+		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);
 	}
 
 }

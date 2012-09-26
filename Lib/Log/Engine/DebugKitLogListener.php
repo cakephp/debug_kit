@@ -29,4 +29,5 @@ class DebugKitLogListener implements CakeLogInterface {
 		}
 		$this->logs[$type][] = array(date('Y-m-d H:i:s'), $message);
 	}
+
 }

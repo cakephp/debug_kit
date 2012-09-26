@@ -3,7 +3,7 @@ App::uses('LogPanel', 'DebugKit.Lib/Panel');
 App::uses('Controller', 'Controller');
 
 class LogPanelTest extends CakeTestCase {
-	
+
 /**
  * set up
  *
@@ -25,6 +25,11 @@ class LogPanelTest extends CakeTestCase {
 		$this->assertTrue(count($result) > 1, 'Default loggers were not added.');
 	}
 
+/**
+ * testBeforeRender
+ *
+ * @return void
+ */
 	public function testBeforeRender() {
 		$controller = new Controller();
 

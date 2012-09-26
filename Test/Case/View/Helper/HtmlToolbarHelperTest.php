@@ -31,13 +31,13 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	public static function setupBeforeClass() {
 		App::build(array(
 			'View' => array(
-				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'View'. DS,
-				APP . 'Plugin' . DS . 'DebugKit' . DS . 'View'. DS,
+				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'View' . DS,
+				APP . 'Plugin' . DS . 'DebugKit' . DS . 'View' . DS,
 				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'View' . DS
 			)
 		), true);
 	}
-	
+
 	public static function tearDownAfterClass() {
 		App::build();
 	}
@@ -144,7 +144,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTags($result, $expected);
 
 		$in = array(
-			'key' => 'value', 
+			'key' => 'value',
 			'foo' => array(
 				'this' => 'deep',
 				'another' => 'value'
@@ -165,7 +165,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->assertTags($result, $expected);
 
 		$in = array(
-			'key' => 'value', 
+			'key' => 'value',
 			'foo' => array(
 				'this' => 'deep',
 				'another' => 'value'
@@ -179,13 +179,13 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$expected = array(
 			'ul' => array('class' => 'neat-array depth-0 expanded'),
 			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 
+			'<li', '<strong', 'foo', '/strong',
 				array('ul' => array('class' => 'neat-array depth-1')),
 				'<li', '<strong', 'this', '/strong', 'deep', '/li',
 				'<li', '<strong', 'another', '/strong', 'value', '/li',
 				'/ul',
 			'/li',
-			'<li', '<strong', 'lotr', '/strong', 
+			'<li', '<strong', 'lotr', '/strong',
 				array('ul' => array('class' => 'neat-array depth-1')),
 				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
 				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
@@ -199,7 +199,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$expected = array(
 			'ul' => array('class' => 'neat-array depth-0 expanded'),
 			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 
+			'<li', '<strong', 'foo', '/strong',
 				array('ul' => array('class' => 'neat-array depth-1 expanded')),
 				'<li', '<strong', 'this', '/strong', 'deep', '/li',
 				'<li', '<strong', 'another', '/strong', 'value', '/li',
@@ -307,7 +307,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		);
 		$result = $this->Toolbar->table($rows);
 		$expected = array(
-			'table' => array('class' =>'debug-table'),
+			'table' => array('class' => 'debug-table'),
 			array('tr' => array('class' => 'odd')),
 			'<td', '1', '/td',
 			'<td', '2', '/td',

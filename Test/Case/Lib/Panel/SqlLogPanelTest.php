@@ -30,7 +30,7 @@ class SqlLogPanelTest extends CakeTestCase {
 /**
  * Setup
  *
- *@return void
+ * @return void
  */
 	public function setUp() {
 		parent::setUp();

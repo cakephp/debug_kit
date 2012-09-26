@@ -23,12 +23,14 @@ App::uses('AppHelper', 'View/Helper');
 App::uses('HtmlHelper', 'View/Helper');
 
 class SimpleGraphHelper extends AppHelper {
+
 /**
  * Helpers
  *
  * @var array
  */
 	public $helpers = array('Html');
+
 /**
  * Default settings to be applied to each Simple Graph
  *
@@ -46,6 +48,7 @@ class SimpleGraphHelper extends AppHelper {
 		'width' => 350,
 		'valueType' => 'value',
 	);
+
 /**
  * bar method
  *

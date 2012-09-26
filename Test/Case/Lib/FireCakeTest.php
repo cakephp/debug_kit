@@ -26,6 +26,7 @@ require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFir
  * @package debug_kit.tests
  */
 class FireCakeTestCase extends CakeTestCase {
+
 /**
  * setup test
  *
@@ -43,7 +44,7 @@ class FireCakeTestCase extends CakeTestCase {
  * If this fails the rest of the test is going to fail too.
  *
  * @return void
- **/
+ */
 	public function testGetInstanceOverride() {
 		$instance = FireCake::getInstance();
 		$instance2 = FireCake::getInstance();
@@ -66,7 +67,7 @@ class FireCakeTestCase extends CakeTestCase {
  * test Log()
  *
  * @return void
- */	
+ */
 	public function testLog() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::log('Testing');
@@ -75,7 +76,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '26|[{"Type":"LOG"},"Testing"]|');
-		
+
 		FireCake::log('Testing', 'log-info');
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"LOG","Label":"log-info"},"Testing"]|');
 	}
@@ -102,7 +103,7 @@ class FireCakeTestCase extends CakeTestCase {
  * test info()
  *
  * @return void
- */	
+ */
 	public function testWarn() {
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::warn('A Warning');
@@ -129,7 +130,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 1);
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '29|[{"Type":"ERROR"},"An error"]|');
-		
+
 		FireCake::error('An error', 'wonky');
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-2'], '45|[{"Type":"ERROR","Label":"wonky"},"An error"]|');
 	}

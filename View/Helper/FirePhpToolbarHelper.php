@@ -23,12 +23,14 @@ App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('FireCake', 'DebugKit.Lib');
 
 class FirePhpToolbarHelper extends ToolbarHelper {
+
 /**
  * settings property
  *
  * @var array
  */
 	public $settings = array('format' => 'firePHP', 'forceEnable' => false);
+
 /**
  * send method
  *
@@ -38,17 +40,19 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		$view = $this->_View;
 		$view->element('debug_toolbar', array('disableTimer' => true), array('plugin' => 'DebugKit'));
 	}
+
 /**
  * makeNeatArray.
  *
  * wraps FireCake::dump() allowing panel elements to continue functioning
  *
- * @param string $values 
+ * @param string $values
  * @return void
- */	
+ */
 	public function makeNeatArray($values) {
 		FireCake::info($values);
 	}
+
 /**
  * Create a simple message
  *
@@ -59,6 +63,7 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 	public function message($label, $message) {
 		FireCake::log($message, $label);
 	}
+
 /**
  * Generate a table with FireCake
  *
@@ -78,19 +83,21 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		array_unshift($rows, $headers);
 		FireCake::table($title, $rows);
 	}
+
 /**
  * Start a panel which is a 'Group' in FirePHP
  *
  * @return void
- **/
+ */
 	public function panelStart($title, $anchor) {
 		FireCake::group($title);
 	}
+
 /**
  * End a panel (Group)
  *
  * @return void
- **/
+ */
 	public function panelEnd() {
 		FireCake::groupEnd();
 	}

@@ -23,18 +23,21 @@ App::uses('AppHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
 
 class ToolbarHelper extends AppHelper {
+
 /**
  * settings property to be overloaded.  Subclasses should specify a format
  *
  * @var array
  */
 	public $settings = array();
+
 /**
  * flag for whether or not cache is enabled.
  *
  * @var boolean
- **/
+ */
 	protected $_cacheEnabled = false;
+
 /**
  * Construct the helper and make the backend helper.
  *
@@ -68,6 +71,12 @@ class ToolbarHelper extends AppHelper {
 		parent::__construct($View, $options);
 	}
 
+/**
+ * afterLayout callback
+ *
+ * @param string $layoutFile
+ * @return void
+ */
 	public function afterLayout($layoutFile) {
 		if (!$this->request->is('requested')) {
 			$this->send();
@@ -79,10 +88,11 @@ class ToolbarHelper extends AppHelper {
  * used to conditionally trigger toolbar output
  *
  * @return string
- **/
+ */
 	public function getName() {
 		return $this->_backEndClassName;
 	}
+
 /**
  * call__
  *
@@ -97,6 +107,7 @@ class ToolbarHelper extends AppHelper {
 			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
 		}
 	}
+
 /**
  * Allows for writing to panel cache from view.
  * Some panels generate all variables in the view by
@@ -106,7 +117,7 @@ class ToolbarHelper extends AppHelper {
  * @param string $name Name of the panel you are replacing.
  * @param string $content Content to write to the panel.
  * @return boolean Sucess of write.
- **/
+ */
 	public function writeCache($name, $content) {
 		if (!$this->_cacheEnabled) {
 			return false;
@@ -115,12 +126,13 @@ class ToolbarHelper extends AppHelper {
 		$existing[0][$name]['content'] = $content;
 		return Cache::write($this->_cacheKey, $existing, $this->_cacheConfig);
 	}
+
 /**
  * Read the toolbar
  *
  * @param string $name Name of the panel you want cached data for
  * @return mixed Boolean false on failure, array of data otherwise.
- **/
+ */
 	public function readCache($name, $index = 0) {
 		if (!$this->_cacheEnabled) {
 			return false;
@@ -131,6 +143,7 @@ class ToolbarHelper extends AppHelper {
 		}
 		return $existing[$index][$name]['content'];
 	}
+
 /**
  * Gets the query logs for the given connection names.
  *
@@ -148,13 +161,13 @@ class ToolbarHelper extends AppHelper {
 	public function getQueryLogs($connection, $options = array()) {
 		$options += array('explain' => false, 'cache' => true, 'threshold' => 20);
 		$db = ConnectionManager::getDataSource($connection);
-		
+
 		if (!method_exists($db, 'getLog')) {
 			return array();
 		}
 
 		$log = $db->getLog();
-		
+
 		$out = array(
 			'queries' => array(),
 			'count' => $log['count'],

@@ -39,14 +39,14 @@ class WhitespaceShell extends Shell {
 		$folder = new Folder($path);
 
 		$r = $folder->findRecursive('.*\.php');
-		$this->out("Checking *.php in ".$path);
-		foreach($r as $file) {
+		$this->out("Checking *.php in " . $path);
+		foreach ($r as $file) {
 			$c = file_get_contents($file);
-			if (preg_match('/^[\n\r|\n\r|\n|\r|\s]+\<\?php/',$c)) {
-				$this->out('!!!contains leading whitespaces: '.$this->shortPath($file));
+			if (preg_match('/^[\n\r|\n\r|\n|\r|\s]+\<\?php/', $c)) {
+				$this->out('!!!contains leading whitespaces: ' . $this->shortPath($file));
 			}
-			if (preg_match('/\?\>[\n\r|\n\r|\n|\r|\s]+$/',$c)) {
-				$this->out('!!!contains trailing whitespaces: '.$this->shortPath($file));
+			if (preg_match('/\?\>[\n\r|\n\r|\n|\r|\s]+$/', $c)) {
+				$this->out('!!!contains trailing whitespaces: ' . $this->shortPath($file));
 			}
 		}
 	}
@@ -67,8 +67,8 @@ class WhitespaceShell extends Shell {
 		$folder = new Folder($path);
 
 		$r = $folder->findRecursive('.*\.php');
-		$this->out("Checking *.php in ".$path);
-		foreach($r as $file) {
+		$this->out("Checking *.php in " . $path);
+		foreach ($r as $file) {
 			$c = file_get_contents($file);
 			if (preg_match('/^[\n\r|\n\r|\n|\r|\s]+\<\?php/', $c) || preg_match('/\?\>[\n\r|\n\r|\n|\r|\s]+$/', $c)) {
 				$this->out('trimming' . $this->shortPath($file));
@@ -76,7 +76,7 @@ class WhitespaceShell extends Shell {
 				$c = preg_replace('/\?\>[\n\r|\n\r|\n|\r|\s]+$/', '?>', $c);
 				file_put_contents($file, $c);
 			}
-        }
+		}
 	}
 
 /**

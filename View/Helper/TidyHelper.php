@@ -55,8 +55,7 @@ class TidyHelper extends AppHelper {
  */
 	public function process($html = '', &$out = '') {
 		$errors = $this->tidyErrors($html, $out);
-		
-		
+
 		if (!$errors) {
 			return;
 		}
@@ -129,16 +128,16 @@ class TidyHelper extends AppHelper {
  */
 	public function tidyErrors($in = '', &$out = '') {
 		$out = preg_replace('@>\s*<@s', ">\n<", $in);
-		
+
 		// direct access? windows etc
 		if (function_exists('tidy_parse_string')) {
 			$tidy = tidy_parse_string($out, array(), 'UTF8');
 			$tidy->cleanRepair();
-			$errors = $tidy->errorBuffer. "\n";
+			$errors = $tidy->errorBuffer . "\n";
 			return $errors;
 		}
-		
-		// cli		
+
+		// cli
 		$File = new File(rtrim(TMP, DS) . DS . rand() . '.html', true);
 		$File->write($out);
 		$path = $File->pwd();

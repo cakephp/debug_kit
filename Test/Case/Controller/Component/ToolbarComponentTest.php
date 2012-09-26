@@ -132,7 +132,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 
 		$this->Controller->Toolbar->loadPanels(array('history'), array('history' => 10));
 		$this->assertEquals($this->Controller->Toolbar->panels['history']->history, 10);
-
 	}
 
 /**
@@ -233,7 +232,6 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		);
 		$this->assertEquals($expected, array_keys($this->Controller->Toolbar->panels));
 	}
-
 
 /**
  * test syntax for removing panels

@@ -26,6 +26,7 @@
 App::uses('FireCake', 'DebugKit.Lib');
 
 class TestFireCake extends FireCake {
+
 	public $sentHeaders = array();
 
 	protected function _sendHeader($name, $value) {
@@ -36,7 +37,7 @@ class TestFireCake extends FireCake {
  * skip client detection as headers are not being sent.
  *
  * @return void
- */	
+ */
 	public static function detectClientExtension() {
 		return true;
 	}

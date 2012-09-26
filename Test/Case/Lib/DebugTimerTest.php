@@ -94,8 +94,8 @@ class DebugTimerTest extends CakeTestCase {
 
 		$timers = DebugTimer::getAll();
 		$this->assertEquals(3, count($timers), 'incorrect number of timers %s');
-		$firstTimerLine = __LINE__ -9;
-		$secondTimerLine = __LINE__ -8;
+		$firstTimerLine = __LINE__ - 9;
+		$secondTimerLine = __LINE__ - 8;
 		$file = Debugger::trimPath(__FILE__);
 
 		$this->assertTrue(isset($timers[$file . ' line ' . $firstTimerLine]), 'first timer is not set %s');

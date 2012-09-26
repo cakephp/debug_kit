@@ -58,7 +58,7 @@ class TimedBehaviorTestCase extends CakeTestCase {
 		$this->Article->find('all');
 		$result = DebugKitDebugger::getTimers(false);
 		$this->assertEquals(count($result), 2);
-		
+
 		$this->Article->find('all');
 		$result = DebugKitDebugger::getTimers(false);
 		$this->assertEquals(count($result), 3);

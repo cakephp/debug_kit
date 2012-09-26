@@ -20,14 +20,15 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
  * @since         DebugKit 1.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+
 /**
  * DebugKitViewTestSuite class
  *
  * @package       cake
  * @subpackage    cake.tests.cases
  */
-
 class AllDebugKitTest extends DebugkitGroupTestCase {
+
 /**
  *
  *

@@ -57,7 +57,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $queryData Array of query data (not modified)
  * @return boolean true
  */
-	public function beforeFind(Model $Model, $queryData){
+	public function beforeFind(Model $Model, $queryData) {
 		DebugKitDebugger::startTimer($Model->alias . '_find', $Model->alias . '->find()');
 		return true;
 	}
@@ -69,7 +69,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $results Array of results
  * @return boolean true.
  */
-	public function afterFind(Model $Model, $results, $primary){
+	public function afterFind(Model $Model, $results, $primary) {
 		DebugKitDebugger::stopTimer($Model->alias . '_find');
 		return true;
 	}
@@ -81,7 +81,7 @@ class TimedBehavior extends ModelBehavior {
  * @param array $options
  * @return boolean true
  */
-	public function beforeSave(Model $Model, $options = array()){
+	public function beforeSave(Model $Model, $options = array()) {
 		DebugKitDebugger::startTimer($Model->alias . '_save', $Model->alias . '->save()');
 		return true;
 	}
@@ -97,5 +97,4 @@ class TimedBehavior extends ModelBehavior {
 		DebugKitDebugger::stopTimer($Model->alias . '_save');
 		return true;
 	}
- }
-
+}

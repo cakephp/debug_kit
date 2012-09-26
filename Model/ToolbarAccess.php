@@ -24,7 +24,7 @@ App::uses('ConnectionManager', 'Model');
 class ToolbarAccess extends Object {
 
 /**
- * Runs an explain on a query if the connection supports EXPLAIN. 
+ * Runs an explain on a query if the connection supports EXPLAIN.
  * currently only PostgreSQL and MySQL are supported.
  *
  * @param string $connection Connection name

@@ -26,7 +26,7 @@ class IncludePanel extends DebugPanel {
  * Get a list of plugins on construct for later use
  */
 	public function  __construct() {
-		foreach(CakePlugin::loaded() as $plugin) {
+		foreach (CakePlugin::loaded() as $plugin) {
 			$this->_pluginPaths[$plugin] = CakePlugin::path($plugin);
 		}
 
@@ -42,14 +42,14 @@ class IncludePanel extends DebugPanel {
 	public function beforeRender(Controller $controller) {
 		$return = array('core' => array(), 'app' => array(), 'plugins' => array());
 
-		foreach(get_included_files() as $file) {
+		foreach (get_included_files() as $file) {
 			$pluginName = $this->_isPluginFile($file);
 
-			if($pluginName) {
+			if ($pluginName) {
 				$return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, $pluginName);
-			} else if($this->_isAppFile($file)) {
+			} else if ($this->_isAppFile($file)) {
 				$return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
-			} else if($this->_isCoreFile($file)) {
+			} else if ($this->_isCoreFile($file)) {
 				$return['core'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'core');
 			}
 		}
@@ -98,8 +98,8 @@ class IncludePanel extends DebugPanel {
  * @return bool
  */
 	protected function _isPluginFile($file) {
-		foreach($this->_pluginPaths as $plugin => $path) {
-			if(strstr($file, $path)) {
+		foreach ($this->_pluginPaths as $plugin => $path) {
+			if (strstr($file, $path)) {
 				return $plugin;
 			}
 		}
@@ -135,8 +135,8 @@ class IncludePanel extends DebugPanel {
  * @return string
  */
 	protected function _getFileType($file) {
-		foreach($this->_fileTypes as $type) {
-			if(preg_match(sprintf('/%s/i', $type), $file)) {
+		foreach ($this->_fileTypes as $type) {
+			if (preg_match(sprintf('/%s/i', $type), $file)) {
 				return $type;
 			}
 		}

@@ -27,6 +27,7 @@ require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFir
  * @subpackage    debug_kit.tests.cases.vendors
  */
 class DebugKitDebuggerTest extends CakeTestCase {
+
 /**
  * setUp method
  *
@@ -36,6 +37,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		parent::setUp();
 		Configure::write('log', false);
 	}
+
 /**
  * tearDown method
  *
@@ -46,6 +48,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 		Configure::write('log', true);
 		DebugKitDebugger::clearTimers();
 	}
+
 /**
  * test output switch to firePHP
  *

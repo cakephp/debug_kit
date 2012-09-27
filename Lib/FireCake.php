@@ -25,12 +25,15 @@
 App::uses('Debugger', 'Utility');
 
 if (!function_exists('firecake')) {
+
 	function firecake($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
+
 }
 
 class FireCake {
+
 /**
  * Options for FireCake.
  *
@@ -253,7 +256,7 @@ class FireCake {
  * @param string $label Label for message (optional)
  * @return void
  */
-	public static function trace($label)  {
+	public static function trace($label) {
 		FireCake::fb($label, 'trace');
 	}
 
@@ -264,7 +267,7 @@ class FireCake {
  * @param string $label Label for group (optional)
  * @return void
  */
-	public static function group($label)  {
+	public static function group($label) {
 		FireCake::fb(null, $label, 'groupStart');
 	}
 
@@ -275,7 +278,7 @@ class FireCake {
  * @param string $label Label for group (optional)
  * @return void
  */
-	public static function groupEnd()  {
+	public static function groupEnd() {
 		FireCake::fb(null, null, 'groupEnd');
 	}
 
@@ -338,9 +341,9 @@ class FireCake {
 		if ($_this->options['includeLineNumbers']) {
 			if (!isset($meta['file']) || !isset($meta['line'])) {
 				$trace = debug_backtrace();
-				for ($i = 0, $len = count($trace); $i < $len ; $i++) {
+				for ($i = 0, $len = count($trace); $i < $len; $i++) {
 					$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
-					$selfCall = ($keySet && 
+					$selfCall = ($keySet &&
 						strtolower($trace[$i]['class']) == 'firecake' &&
 						in_array($trace[$i]['function'], $_this->_methodIndex)
 					);
@@ -362,19 +365,19 @@ class FireCake {
 		}
 
 		$_this->_sendHeader('X-Wf-Protocol-1', 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2');
-		$_this->_sendHeader('X-Wf-1-Plugin-1', 'http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/'. $_this->_version);
+		$_this->_sendHeader('X-Wf-1-Plugin-1', 'http://meta.firephp.org/Wildfire/Plugin/FirePHP/Library-FirePHPCore/' . $_this->_version);
 		if ($type == $_this->_levels['groupStart']) {
 			$meta['Collapsed'] = 'true';
 		}
 		if ($type == $_this->_levels['dump']) {
 			$dump = FireCake::jsonEncode($message);
-			$msg = '{"' . $label .'":' . $dump .'}';
+			$msg = '{"' . $label . '":' . $dump . '}';
 		} else {
 			$meta['Type'] = $type;
 			if ($label !== null) {
 				$meta['Label'] = $label;
 			}
-			$msg = '[' . $_this->jsonEncode($meta) . ',' . $_this->jsonEncode($message, $skipFinalObjectEncode).']';
+			$msg = '[' . $_this->jsonEncode($meta) . ',' . $_this->jsonEncode($message, $skipFinalObjectEncode) . ']';
 		}
 
 		$lines = explode("\n", chunk_split($msg, 5000, "\n"));
@@ -409,7 +412,7 @@ class FireCake {
  */
 	protected static function _parseTrace($trace, $messageName) {
 		$message = array();
-		for ($i = 0, $len = count($trace); $i < $len ; $i++) {
+		for ($i = 0, $len = count($trace); $i < $len; $i++) {
 			$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
 			$selfCall = ($keySet && $trace[$i]['class'] == 'FireCake');
 			if (!$selfCall) {
@@ -482,7 +485,7 @@ class FireCake {
 		}
 		if (is_array($object)) {
 			if ($arrayDepth == $_this->options['maxArrayDepth']) {
-				return '** Max Array Depth ('. $_this->options['maxArrayDepth'] . ') **';
+				return '** Max Array Depth (' . $_this->options['maxArrayDepth'] . ') **';
 			}
 			foreach ($object as $key => $value) {
 				$return[$key] = FireCake::stringEncode($value, 1, $arrayDepth + 1);

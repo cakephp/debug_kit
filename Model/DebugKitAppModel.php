@@ -19,6 +19,7 @@
  **/
 
 App::uses('AppModel', 'Model');
+
 class DebugKitAppModel extends AppModel {
-	
+
 }

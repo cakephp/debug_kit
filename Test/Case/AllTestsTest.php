@@ -28,6 +28,7 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
  */
 
 class AllTestsTest extends DebugkitGroupTestCase {
+
 /**
  *
  * @return PHPUnit_Framework_TestSuite the instance of PHPUnit_Framework_TestSuite

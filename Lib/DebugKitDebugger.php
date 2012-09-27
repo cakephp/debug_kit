@@ -31,6 +31,7 @@ App::uses('DebugMemory', 'DebugKit.Lib');
  * This file will not be needed in future version of CakePHP.
  */
 class DebugKitDebugger extends Debugger {
+
 /**
  * destruct method
  *
@@ -222,6 +223,7 @@ class DebugKitDebugger extends Debugger {
 		}
 		FireCake::groupEnd();
 	}
+
 }
 
 

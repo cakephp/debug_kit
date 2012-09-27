@@ -28,6 +28,7 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
  */
 
 class AllDebugKitWithoutViewTest extends DebugkitGroupTestCase {
+
 /**
  *
  *

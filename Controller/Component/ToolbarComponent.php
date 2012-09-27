@@ -23,6 +23,7 @@ App::uses('CakeEventListener', 'Event');
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 class ToolbarComponent extends Component implements CakeEventListener {
+
 /**
  * Settings for the Component
  *

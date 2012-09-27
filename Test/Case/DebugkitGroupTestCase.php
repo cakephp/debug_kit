@@ -8,7 +8,6 @@ class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
 	}
 
 	public static function getTestFiles($directory = null, $excludes = null) {
-
 		if (is_array($directory)) {
 			$files = array();
 			foreach ($directory as $d) {
@@ -21,10 +20,8 @@ class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
 			$excludes = self::getTestFiles((array)$excludes);
 		}
 		if ($directory === null || $directory !== realpath($directory)) {
-
 			$basePath = App::pluginPath('DebugKit') . 'Test' . DS . 'Case' . DS;
 			$directory = str_replace(DS . DS, DS, $basePath . $directory);
-
 		}
 
 		$it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
@@ -50,7 +47,6 @@ class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
 		}
 
 		return $files;
-
 	}
 
 }

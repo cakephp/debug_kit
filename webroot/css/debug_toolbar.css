@@ -154,18 +154,18 @@
 #debug-kit-toolbar .panel-content {
 	display: none;
 }
-.panel-content p {
+#debug-kit-toolbar .panel-content p {
 	margin: 1em 0;
 }
-.panel-content h2 {
+#debug-kit-toolbar .panel-content h2 {
 	padding: 0;
 	margin-top:0;
 }
-.panel-content h3 {
+#debug-kit-toolbar .panel-content h3 {
 	padding: 0;
 	margin-top: 1em;
 }
-.panel-content .info {
+#debug-kit-toolbar .panel-content .info {
 	padding: 4px;
 	border-top: 1px dashed #6c6cff;
 	border-bottom: 1px dashed #6c6cff;
@@ -246,48 +246,48 @@
 	list-style:none;
 	list-style-image:none;
 }
-.neat-array {
+#debug-kit-toolbar .neat-array {
 	padding: 1px 2px 1px 20px;
 	background: #CE9E23;
 	list-style: none;
 	margin: 0 0 1em 0;
 }
-.neat-array .neat-array {
+#debug-kit-toolbar .neat-array .neat-array {
 	padding: 0 0 0 20px;
 	margin: 0;
 	border-top:1px solid #CE9E23;
 }
-.neat-array li {
+#debug-kit-toolbar .neat-array li {
 	background: #FEF6E5;
 	border-top: 1px solid #CE9E23;
 	border-bottom: 1px solid #CE9E23;
 	margin: 0;
 	line-height: 1.5em;
 }
-.neat-array li:hover {
+#debug-kit-toolbar .neat-array li:hover {
 	background: #fff;
 }
-.neat-array li strong {
+#debug-kit-toolbar .neat-array li strong {
 	padding: 0 8px;
 	font-weight: bold;
 }
 
 
 /* expandable sections */
-.neat-array li.expandable {
+#debug-kit-toolbar .neat-array li.expandable {
 	cursor: pointer;
 }
-.neat-array .expanded {
+#debug-kit-toolbar .neat-array .expanded {
 	border-bottom:0;
 }
-.neat-array li.expandable.expanded > strong:before {
+#debug-kit-toolbar .neat-array li.expandable.expanded > strong:before {
 	content: 'v ';
 }
-.neat-array li.expandable.collapsed > strong:before,
-.neat-array li.expandable.expanded .expandable.collapsed > strong:before {
+#debug-kit-toolbar .neat-array li.expandable.collapsed > strong:before,
+#debug-kit-toolbar .neat-array li.expandable.expanded .expandable.collapsed > strong:before {
 	content: '> ';
 }
-.neat-array li {
+#debug-kit-toolbar .neat-array li {
 	cursor: default;
 }
 

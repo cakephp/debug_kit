@@ -33,6 +33,20 @@ class DebugPanel {
 	public $title = null;
 
 /**
+ * Panel's css files
+ *
+ * @var array
+ */
+	public $css = array();
+
+/**
+ * Panel's javascript files
+ *
+ * @var array
+ */
+	public $javascript = array();
+
+/**
  * Provide a custom element name for this panel.  If null, the underscored version of the class
  * name will be used.
  *

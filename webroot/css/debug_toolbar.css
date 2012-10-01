@@ -216,6 +216,7 @@
 	background: -moz-linear-gradient(top, #d4d4d4, #c1c1c1);
 	color: #222;
 	font-weight: bold;
+	line-height: 16px;
 }
 #debug-kit-toolbar .debug-table tr:nth-child(2n) td {
 	background: #f6f6f6;

@@ -30,7 +30,7 @@
 		echo "CakePHP environment unavailable.";
 	} ?>
 
-<h2><?php echo __('CakePHP Environment'); ?></h2>
+<h2><?php echo __('Application Environment'); ?></h2>
 <?php
 	if (!empty($content['app'])) {
 		$cakeRows = array();
@@ -42,5 +42,22 @@
 		}
 		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Application Environment Vars'));
 	} else {
-		echo "No application environment unavailable.";
+		echo "Application environment unavailable.";
+	}
+
+	if (isset($content['hidef'])) {
+		echo  '<h2>' . __('Hidef Environment') . '</h2>';
+		if (!empty($content['hidef'])) {
+			$cakeRows = array();
+			foreach ($content['hidef'] as $key => $val) {
+				$cakeRows[] = array(
+					$key,
+					$val
+				);
+			}
+			echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Hidef Environment Vars'));
+		} else {
+			echo "Hidef environment unavailable.";
+		}
+
 	}

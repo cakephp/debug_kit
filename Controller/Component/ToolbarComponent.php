@@ -316,8 +316,8 @@ class ToolbarComponent extends Component implements CakeEventListener {
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 
-		$this->javascript = array_merge($this->javascript, $vars['javascript']);
-		$this->css = array_merge($this->css, $vars['css']);
+		$this->javascript = array_unique(array_merge($this->javascript, $vars['javascript']));
+		$this->css = array_unique(array_merge($this->css, $vars['css']));
 		unset($vars['javascript'], $vars['css']);
 
 		$controller->set(array(

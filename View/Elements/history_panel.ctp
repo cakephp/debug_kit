@@ -17,6 +17,8 @@
  * @since         DebugKit 1.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+
+$this->start('panelContent');
 ?>
 <h2> <?php echo __d('debug_kit', 'Request History'); ?></h2>
 <?php if (empty($content)): ?>
@@ -31,4 +33,6 @@
 			<li><?php echo $this->Html->link($previous['title'], $previous['url'], array('class' => 'history-link')); ?></li>
 		<?php endforeach; ?>
 	</ul>
-<?php endif; ?>
+<?php
+	endif;
+$this->end('panelContent');

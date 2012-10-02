@@ -17,6 +17,8 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+
+$this->start('panelContent');
 ?>
 <h2><?php echo __d('debug_kit', 'Logs') ?></h2>
 <div class="code-table">
@@ -41,3 +43,4 @@
 	<?php endif; ?>
 <?php endif; ?>
 </div>
+<?php $this->end('panelContent');

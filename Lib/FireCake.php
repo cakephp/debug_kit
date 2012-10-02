@@ -25,11 +25,9 @@
 App::uses('Debugger', 'Utility');
 
 if (!function_exists('firecake')) {
-
-	function firecake($message, $label = null) {
+	function firecake ($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
-
 }
 
 class FireCake {

@@ -17,6 +17,10 @@
  * @since         DebugKit 1.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+
+$this->start('panelContent');
 ?>
 <h2><?php echo __d('debug_kit', 'Session'); ?></h2>
-<?php echo $this->Toolbar->makeNeatArray($content); ?>
+<?php
+echo $this->Toolbar->makeNeatArray($content);
+$this->end('paneContent');

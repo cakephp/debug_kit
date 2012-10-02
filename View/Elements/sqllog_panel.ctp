@@ -17,6 +17,8 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
+$this->start('panelContent');
 $headers = array('Query', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
 if (isset($debugKitInHistoryMode)) {
 	$content = $this->Toolbar->readCache('sql_log', $this->request->params['pass'][0]);
@@ -54,4 +56,5 @@ if (isset($debugKitInHistoryMode)) {
 	<?php endforeach; ?>
 <?php else:
 	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
-endif; ?>
+endif;
+$this->end('panelContent');

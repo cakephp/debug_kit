@@ -17,9 +17,18 @@
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+
+$this->start('panelContent');
 ?>
 <h2> <?php echo __d('debug_kit', 'View Variables'); ?></h2>
-<?php 
-$content['$this->validationErrors'] = $this->validationErrors;
-$content['Loaded Helpers'] = $this->Helpers->attached();
-echo $this->Toolbar->makeNeatArray($content); ?>
+<?php
+$global['title_for_layout'] = $content['title_for_layout'];
+$global['$request->data'] = $content['$request->data'];
+unset($content['title_for_layout'], $content['$request->data']);
+echo $this->Toolbar->makeNeatArray($content);
+
+$global['$this->validationErrors'] = $this->validationErrors;
+$global['Loaded Helpers'] = $this->Helpers->attached();
+echo $this->Toolbar->makeNeatArray($global);
+
+$this->end('panelContent');

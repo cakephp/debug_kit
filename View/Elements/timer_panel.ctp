@@ -18,6 +18,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 
+
 $this->Number = $this->Helpers->load('Number');
 $this->SimpleGraph = $this->Helpers->load('DebugKit.SimpleGraph');
 
@@ -32,6 +33,12 @@ else:
 		extract($content);
 	endif;
 endif;
+
+if ($priority > 0) {
+	$this->assign('panelTitle', sprintf('<b>%d ms / %d mb</b>', $this->Number->precision($requestTime * 1000, 0), $this->Number->toReadableSize($peakMemory)));
+}
+
+$this->start('panelContent');
 ?>
 <div class="debug-info">
 	<h2><?php echo __d('debug_kit', 'Memory'); ?></h2>
@@ -110,3 +117,6 @@ if (!isset($debugKitInHistoryMode)):
 endif;
 ?>
 </div>
+<?php $this->end('panelContent');
+
+

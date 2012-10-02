@@ -242,17 +242,21 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			if (is_numeric($key)) {
 				$panels[] = $value;
 			}
-			if (is_string($key) && $value === false) {
-				$index = array_search($key, $panels);
-				if ($index !== false) {
-					unset($panels[$index]);
-				}
-				// Compatibility for when panels were not
-				// required to have a plugin prefix.
-				$alternate = 'DebugKit.' . ucfirst($key);
-				$index = array_search($alternate, $panels);
-				if ($index !== false) {
-					unset($panels[$index]);
+			if (is_string($key)) {
+				if ($value === false) {
+					$index = array_search($key, $panels);
+					if ($index !== false) {
+						unset($panels[$index]);
+					}
+					// Compatibility for when panels were not
+					// required to have a plugin prefix.
+					$alternate = 'DebugKit.' . ucfirst($key);
+					$index = array_search($alternate, $panels);
+					if ($index !== false) {
+						unset($panels[$index]);
+					}
+				} else {
+					$panels[] = array($key => $value);
 				}
 			}
 		}
@@ -403,6 +407,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			$vars[$panelName]['elementName'] = $elementName;
 			$vars[$panelName]['plugin'] = $panel->plugin;
 			$vars[$panelName]['title'] = $panel->title;
+			$vars[$panelName]['priority'] = $panel->priority;
 			$vars[$panelName]['disableTimer'] = true;
 
 			if (!empty($panel->javascript)) {
@@ -422,6 +427,11 @@ class ToolbarComponent extends Component implements CakeEventListener {
  */
 	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
+			if (is_array($panel)) {
+				$settings = array_merge($settings, current($panel));
+				$panel = key($panel);
+			}
+
 			$className = ucfirst($panel) . 'Panel';
 			list($plugin, $className) = pluginSplit($className, true);
 

@@ -44,5 +44,23 @@
 		$headers = array('Constant', 'Value');
 		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Application Environment Vars'));
 	} else {
-		echo "No application environment unavailable.";
+		echo "Application environment unavailable.";
+	}
+
+	if (isset($content['hidef'])) {
+		echo  '<h2>' . __('Hidef Environment') . '</h2>';
+		if (!empty($content['hidef'])) {
+			$cakeRows = array();
+			foreach ($content['hidef'] as $key => $val) {
+				$cakeRows[] = array(
+					$key,
+					$val
+				);
+			}
+			$headers = array('Constant', 'Value');
+			echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Hidef Environment Vars'));
+		} else {
+			echo "Hidef environment unavailable.";
+		}
+
 	}

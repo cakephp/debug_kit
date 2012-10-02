@@ -16,6 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+$this->start('panelContent');
 $headers = array('Query', 'Affected', 'Num. rows', 'Took (ms)', 'Actions');
 if (isset($debugKitInHistoryMode)) {
 	$content = $this->Toolbar->readCache('sql_log', $this->request->params['pass'][0]);
@@ -62,3 +63,4 @@ if (isset($debugKitInHistoryMode)) {
 <?php else:
 	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
 endif;
+$this->end('panelContent');

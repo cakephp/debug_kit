@@ -19,6 +19,8 @@ App::uses('DebugPanel', 'DebugKit.Lib');
  */
 class TimerPanel extends DebugPanel {
 
+	public $priority = 1;
+
 /**
  * startup - add in necessary helpers
  *

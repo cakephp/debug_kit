@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains methods for Profiling and creating 
+ * Contains methods for Profiling and creating
  * timers.
  *
  * PHP versions 5
@@ -21,6 +21,7 @@
 App::uses('Debugger', 'Utility');
 
 class DebugTimer {
+
 /**
  * Internal timers array
  *
@@ -81,7 +82,7 @@ class DebugTimer {
 		$end = microtime(true);
 		if (!$name) {
 			$names = array_reverse(array_keys(self::$__timers));
-			foreach($names as $name) {
+			foreach ($names as $name) {
 				if (!empty(self::$__timers[$name]['end'])) {
 					continue;
 				}

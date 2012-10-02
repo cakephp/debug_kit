@@ -1,3 +1,4 @@
+<?php $this->start('panelContent'); ?>
 <h2><?php echo __('PHP Environment');?></h2>
 <?php
 	$headers = array('Environment Variable', 'Value');
@@ -64,3 +65,4 @@
 		}
 
 	}
+$this->end('panelContent');

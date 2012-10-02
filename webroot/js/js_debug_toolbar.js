@@ -829,43 +829,6 @@ DEBUGKIT.historyPanel = function () {
 }();
 DEBUGKIT.loader.register(DEBUGKIT.historyPanel);
 
-//Add events + behaviors for toolbar collapser.
-DEBUGKIT.toolbarToggle = function () {
-	var toolbar = DEBUGKIT.toolbar,
-		$ = DEBUGKIT.$,
-		Cookie = DEBUGKIT.Util.Cookie,
-		toolbarHidden = false;
-
-	return {
-		init: function () {
-			var button = $('#hide-toolbar'),
-				self = this;
-
-			button.on('click', function (event) {
-				event.preventDefault();
-				self.toggleToolbar();
-			});
-
-			var toolbarState = Cookie.read('toolbarDisplay');
-			if (toolbarState != 'show') {
-				toolbarHidden = false;
-				this.toggleToolbar();
-			}
-		},
-
-		toggleToolbar: function () {
-			var display = toolbarHidden ? 'show' : 'hide';
-			$.each(toolbar.panels, function (i, panel) {
-				$(panel.element)[display]();
-				Cookie.write('toolbarDisplay', display);
-			});
-			toolbarHidden = !toolbarHidden;
-			return false;
-		}
-	};
-}();
-DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
-
 DEBUGKIT.$(document).ready(function () {
 	DEBUGKIT.loader.init();
 });

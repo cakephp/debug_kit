@@ -15,7 +15,7 @@
 		echo "PHP environment unavailable.";
 	}
 ?>
-<h2><?php echo __('CakePHP Environment'); ?></h2>
+<h2><?php echo __('CakePHP Constants'); ?></h2>
 <?php
 	if (!empty($content['cake'])) {
 		$cakeRows = array();
@@ -25,12 +25,13 @@
 				$val
 			);
 		}
+		$headers = array('Constant', 'Value');
 		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'CakePHP Environment Vars'));
 	} else {
 		echo "CakePHP environment unavailable.";
 	} ?>
 
-<h2><?php echo __('CakePHP Environment'); ?></h2>
+<h2><?php echo __('App Constants'); ?></h2>
 <?php
 	if (!empty($content['app'])) {
 		$cakeRows = array();
@@ -40,7 +41,26 @@
 				$val
 			);
 		}
+		$headers = array('Constant', 'Value');
 		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Application Environment Vars'));
 	} else {
-		echo "No application environment unavailable.";
+		echo "Application environment unavailable.";
+	}
+
+	if (isset($content['hidef'])) {
+		echo  '<h2>' . __('Hidef Environment') . '</h2>';
+		if (!empty($content['hidef'])) {
+			$cakeRows = array();
+			foreach ($content['hidef'] as $key => $val) {
+				$cakeRows[] = array(
+					$key,
+					$val
+				);
+			}
+			$headers = array('Constant', 'Value');
+			echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Hidef Environment Vars'));
+		} else {
+			echo "Hidef environment unavailable.";
+		}
+
 	}

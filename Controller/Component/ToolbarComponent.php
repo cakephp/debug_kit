@@ -399,16 +399,16 @@ class ToolbarComponent extends Component implements CakeEventListener {
 		foreach ($panels as $panelName) {
 			$panel = $this->panels[$panelName];
 			$panelName = Inflector::underscore($panelName);
-			$vars[$panelName]['content'] = $panel->beforeRender($controller);
+			$vars[$panel->priority][$panelName]['content'] = $panel->beforeRender($controller);
 			$elementName = Inflector::underscore($panelName) . '_panel';
 			if (isset($panel->elementName)) {
 				$elementName = $panel->elementName;
 			}
-			$vars[$panelName]['elementName'] = $elementName;
-			$vars[$panelName]['plugin'] = $panel->plugin;
-			$vars[$panelName]['title'] = $panel->title;
-			$vars[$panelName]['priority'] = $panel->priority;
-			$vars[$panelName]['disableTimer'] = true;
+			$vars[$panel->priority][$panelName]['elementName'] = $elementName;
+			$vars[$panel->priority][$panelName]['plugin'] = $panel->plugin;
+			$vars[$panel->priority][$panelName]['title'] = $panel->title;
+			$vars[$panel->priority][$panelName]['priority'] = $panel->priority;
+			$vars[$panel->priority][$panelName]['disableTimer'] = true;
 
 			if (!empty($panel->javascript)) {
 				$vars['javascript'] = array_merge($vars['javascript'], (array)$panel->javascript);
@@ -417,7 +417,15 @@ class ToolbarComponent extends Component implements CakeEventListener {
 				$vars['css'] = array_merge($vars['css'], (array)$panel->css);
 			}
 		}
-		return $vars;
+
+		$return = array('javascript' => $vars['javascript'], 'css' => $vars['css']);
+		unset($vars['javascript'], $vars['css']);
+
+		foreach ($vars as $var) {
+			$return += $var;
+ 		}
+
+		return $return;
 	}
 
 /**

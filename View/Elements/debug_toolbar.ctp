@@ -32,7 +32,7 @@
 		<ul id="panel-tabs-featured">
 			<?php $isMajorPanel = true; endif; ?>
 			<?php $panelUnderscore = Inflector::underscore($panelName);?>
-			<li class="panel-tab<?php if ($panelInfo['priority'] > 0) { echo " featured";} ?>">
+			<li class="panel-tab">
 			<?php
 
 				$title = (empty($panelInfo['title'])) ? Inflector::humanize($panelUnderscore) : $panelInfo['title'];

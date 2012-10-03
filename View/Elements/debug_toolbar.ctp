@@ -27,17 +27,14 @@
 		<?php echo $this->Html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP', 'class' => 'icon')); ?>
 		<ul id="panel-tabs">
 		<?php
-			// Decrescent order, because of float right
-			uasort($debugToolbarPanels, function ($a, $b) {
-				if ($a['priority'] == $b['priority']) {
-					return 0;
-				}
-				return ($a['priority'] < $b['priority']) ? -1 : 1;
-			});
-
-			foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
+			$isMajorPanel = false;
+			foreach ($debugToolbarPanels as $panelName => $panelInfo):
+				if ($panelInfo['priority'] > 0 && !$isMajorPanel) : ?>
+		</ul>
+		<ul id="panel-tabs-featured">
+			<?php $isMajorPanel = true; endif; ?>
 			<?php $panelUnderscore = Inflector::underscore($panelName);?>
-			<li class="panel-tab<?php if ($panelInfo['priority'] > 0) { echo " featured";} ?>">
+			<li class="panel-tab">
 			<?php
 
 				$title = (empty($panelInfo['title'])) ? Inflector::humanize($panelUnderscore) : $panelInfo['title'];

@@ -24,7 +24,7 @@ body {
 }
 
 /* panel tabs */
-#debug-kit-toolbar #panel-tabs {
+#debug-kit-toolbar #panel-tabs, #debug-kit-toolbar #panel-tabs-featured {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -36,7 +36,7 @@ body {
 	padding: 0;
 	list-style: none;
 }
-#debug-kit-toolbar .panel-tab.featured {
+#debug-kit-toolbar #panel-tabs-featured {
 	float: right;
 }
 #debug-kit-toolbar .panel-tab > a {

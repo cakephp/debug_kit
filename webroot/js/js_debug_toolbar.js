@@ -554,7 +554,7 @@ DEBUGKIT.toolbar = function () {
 				throw new Error('Toolbar not found, make sure you loaded it.');
 			}
 
-			this.elements.panel = $('#panel-tabs');
+			this.elements.panel = $('#panel-tabs, #panel-tabs-featured');
 			this.elements.panel.find('.panel-tab').each(function (i, panel) {
 				_this.addPanel(panel);
 			});

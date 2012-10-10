@@ -44,5 +44,5 @@
 		$headers = array('Constant', 'Value');
 		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Application Environment Vars'));
 	} else {
-		echo "No application environment unavailable.";
+		echo "No application environment available.";
 	}

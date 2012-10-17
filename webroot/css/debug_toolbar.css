@@ -34,6 +34,9 @@ body {
 #debug-kit-toolbar #panel-tabs a {
 	font-size: 12px;
 }
+#debug-kit-toolbar #panel-tabs a {
+	font-size: 12px;
+}
 #debug-kit-toolbar .panel-tab {
 	clear: none;
 	float: left;

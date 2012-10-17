@@ -29,6 +29,9 @@ body {
 	margin: 0;
 	padding: 0;
 }
+#debug-kit-toolbar #panel-tabs a {
+	font-size: 12px;
+}
 #debug-kit-toolbar .panel-tab {
 	clear: none;
 	float: left;

@@ -80,10 +80,11 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		parent::tearDown();
-
 		$_SERVER = $this->_server;
 		$_GET = $this->_get;
+
+		parent::tearDown();
+
 		App::build(array(
 			'plugins' => $this->_paths['plugins'],
 			'views' => $this->_paths['views'],

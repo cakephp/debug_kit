@@ -1,4 +1,4 @@
-<h2><?php echo __('PHP Environment');?></h2>
+<h2><?php echo __d('debug_kit', 'PHP Environment');?></h2>
 <?php
 	$headers = array('Environment Variable', 'Value');
 
@@ -15,7 +15,7 @@
 		echo "PHP environment unavailable.";
 	}
 ?>
-<h2><?php echo __('CakePHP Constants'); ?></h2>
+<h2><?php echo __d('debug_kit', 'CakePHP Constants'); ?></h2>
 <?php
 	if (!empty($content['cake'])) {
 		$cakeRows = array();
@@ -31,7 +31,7 @@
 		echo "CakePHP environment unavailable.";
 	} ?>
 
-<h2><?php echo __('App Constants'); ?></h2>
+<h2><?php echo __d('debug_kit', 'App Constants'); ?></h2>
 <?php
 	if (!empty($content['app'])) {
 		$cakeRows = array();

@@ -55,7 +55,8 @@
 			}
 
 			return array(
-				'DebugKit.js_debug_toolbar'
+				'DebugKit.js_debug_toolbar',
+				'DebugKit.debug_kit'
 			);
 		}
 	}

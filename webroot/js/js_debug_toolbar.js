@@ -32,6 +32,8 @@ var DEBUGKIT = function () {
 	};
 }() ;
 
+DEBUGKIT.$ = jQuery.noConflict(true);
+
 DEBUGKIT.loader = function () {
 	return {
 		//list of methods to run on startup.
@@ -252,7 +254,7 @@ DEBUGKIT.Util.Event = function () {
 			event.pageX = event.clientX + (doc.scrollLeft || 0) - (doc.clientLeft || 0);
 			event.pageY = event.clientY + (doc.scrollTop || 0) - (doc.clientTop || 0);
 		}
-		return event
+		return event;
 	};
 
 	return {
@@ -536,6 +538,7 @@ DEBUGKIT.Util.Request.prototype.serialize = function (data) {
 DEBUGKIT.toolbar = function () {
 	//shortcuts
 	var Cookie = DEBUGKIT.Util.Cookie,
+		$ = DEBUGKIT.$,
 		toolbarHidden = false;
 
 	return {
@@ -829,6 +832,7 @@ DEBUGKIT.loader.register(DEBUGKIT.historyPanel);
 //Add events + behaviors for toolbar collapser.
 DEBUGKIT.toolbarToggle = function () {
 	var toolbar = DEBUGKIT.toolbar,
+		$ = DEBUGKIT.$,
 		Cookie = DEBUGKIT.Util.Cookie,
 		toolbarHidden = false;
 
@@ -862,55 +866,6 @@ DEBUGKIT.toolbarToggle = function () {
 }();
 DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
 
-$(document).ready(function () {
+DEBUGKIT.$(document).ready(function () {
 	DEBUGKIT.loader.init();
-
-	$('#debug-kit-toolbar > ul#panel-tabs table').each(function() {
-        var $table = $(this);
-        $('th', $table).each(function(column) {
-            var $header = $(this);
-            $header.live('click', function() {
-				var direction = 1;
-				if($header.hasClass('asc')) {
-					$('th', $table).removeClass('asc desc');
-					$header.removeClass('asc');
-					$header.addClass('desc');
-				} else if($header.hasClass('desc')) {
-					$('th', $table).removeClass('asc desc');
-					direction = 0;
-					$header.removeClass('desc');
-					$header.addClass('asc');
-				} else {
-					$('th', $table).removeClass('asc desc');
-					$header.addClass('asc');
-				}
-
-                var rows = $table.find('tbody > tr').get();
-                rows.sort(function(a, b) {
-					debug($header);
-                    var keyA = $(a).children('td').eq(column).text();
-                    var keyB = $(b).children('td').eq(column).text();
-
-					if(isNaN(keyA) || isNaN(keyB)) {
-						keyA.toUpperCase();
-						keyB.toUpperCase();
-					} else {
-						keyA = parseFloat(keyA);
-						keyB = parseFloat(keyB);
-					}
-                    if(keyA < keyB) {
-						return direction ? 1 : -1;
-					}
-                    if(keyA > keyB) {
-						return direction ? -1 : 1;
-					}
-                    return 0;
-                });
-
-                $.each(rows, function(index, row) {
-                    $table.children('tbody').append(row);
-                });
-            });
-        });
-    });
 });

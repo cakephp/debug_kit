@@ -51,6 +51,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
+
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'View' => array(

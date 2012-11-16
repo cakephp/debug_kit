@@ -24,9 +24,7 @@ class TimedBehaviorTestCase extends CakeTestCase {
 	public $fixtures = array('core.article');
 
 /**
- * startTest callback
- *
- * @return void
+ * @brief set up at the start
  */
 	public function setUp() {
 		parent::setUp();
@@ -35,14 +33,11 @@ class TimedBehaviorTestCase extends CakeTestCase {
 	}
 
 /**
- * end a test
- *
- * @return void
+ * @brief break down at the end
  */
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Article);
-		ClassRegistry::flush();
 		DebugKitDebugger::clearTimers();
 	}
 

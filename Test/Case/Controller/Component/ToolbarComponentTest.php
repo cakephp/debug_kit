@@ -75,7 +75,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 	}
 
 /**
- * endTest
+ * tearDown
  *
  * @return void
  */

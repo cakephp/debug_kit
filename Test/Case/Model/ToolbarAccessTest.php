@@ -67,4 +67,5 @@ class ToolbarAccessTestCase extends CakeTestCase {
 		$this->assertTrue(is_array($result));
 		$this->assertFalse(empty($result));
 	}
+
 }

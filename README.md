@@ -18,6 +18,22 @@ The master branch has the following requirements:
 * Set debug mode to at least 1.
 * Make sure to remove the 'sql_dump' element from your layout if you want to experience the awesome that is the debug kit SQL log.
 
+### Using Composer
+
+Ensure both `require` and `installer-paths` are in `composer.json`:
+
+```
+{
+    "require": {
+        "cakephp/debug_kit": "2.2.*"
+    },
+    "extra": {
+        "installer-paths": {
+            "app/Plugin/DebugKit/": ["cakephp/debug_kit"]
+        }
+    }
+}
+```
 
 ## Reporting issues
 

@@ -1,0 +1,4 @@
+<?php
+	$config['DebugKit'] = array(
+
+	);

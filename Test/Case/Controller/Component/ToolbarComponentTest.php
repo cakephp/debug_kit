@@ -61,7 +61,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+		InfinitasRouter::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		$this->_server = $_SERVER;
 		$this->_get = $_GET;
 		$this->_paths = array();
@@ -75,7 +75,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 	}
 
 /**
- * endTest
+ * tearDown
  *
  * @return void
  */
@@ -446,7 +446,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
  */
 	public function testHistoryUrlGenerationWithPrefixes() {
 		$this->url = '/debugkit_url_with_prefixes_test';
-		Router::connect($this->url, array(
+		InfinitasRouter::connect($this->url, array(
 			'controller' => 'posts',
 			'action' => 'edit',
 			'admin' => 1,

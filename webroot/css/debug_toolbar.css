@@ -182,7 +182,10 @@
 	font-family: Arial, sans-serif;
 	margin-bottom:0.6em;
 	background:none;
+	cursor: pointer;
 }
+
+#debug-kit-toolbar th.
 #debug-kit-toolbar h1 {
 	font-size: 18px;
 }

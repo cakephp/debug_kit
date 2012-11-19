@@ -50,7 +50,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		Router::connect('/:controller/:action');
+		InfinitasRouter::connect('/:controller/:action');
 
 		$request = new CakeRequest();
 		$request->addParams(array('controller' => 'pages', 'action' => 'display'));

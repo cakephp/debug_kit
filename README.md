@@ -20,17 +20,12 @@ The master branch has the following requirements:
 
 ### Using Composer
 
-Ensure both `require` and `installer-paths` are in `composer.json`:
+Ensure `require` is present in `composer.json`. This will install the plugin into `Plugin/DebugKit`:
 
 ```
 {
     "require": {
         "cakephp/debug_kit": "2.2.*"
-    },
-    "extra": {
-        "installer-paths": {
-            "app/Plugin/DebugKit/": ["cakephp/debug_kit"]
-        }
     }
 }
 ```

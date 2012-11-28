@@ -6,7 +6,7 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
 
 The master branch has the following requirements:
 
-* CakePHP 2.1.3 or greater.
+* CakePHP 2.2.0 or greater.
 * PHP 5.3.0 or greater.
 
 ## Installation
@@ -118,7 +118,15 @@ Panel Classes simply need to be placed in`Panel` directory inside a `Lib` path. 
 		...
 	}
 
-Notice that custom panels are required to subclass the `DebugPanel` class. 
+Notice that custom panels are required to subclass the `DebugPanel` class.  Panels can define the
+`css` and `javascript` properties to include additional CSS or javascript on the page.  Both
+properties should be an array.
+
+	class MyCustomPanel extends DebugPanel {
+		public $javascript = array(
+			'/my_plugin/js/custom_panel.js'
+		);
+	}
 
 ### Callbacks
 
@@ -138,7 +146,7 @@ Much like `startup()` `beforeRender()` is called during the Component beforeRend
 	 * beforeRender callback - grabs request params
 	 *
 	 * @return array
-	 **/
+	 */
 		function beforeRender(Controller $controller) {
 			return $controller->params;
 		}

@@ -219,7 +219,7 @@ class DebugKitDebugger extends Debugger {
 			FireCake::log($data['context'], 'Context');
 		}
 		if (isset($data['trace'])) {
-			FireCake::log($data['trace'], 'Trace');
+			FireCake::log(preg_split('/[\r\n]+/',$data['trace']), 'Trace');
 		}
 		FireCake::groupEnd();
 	}

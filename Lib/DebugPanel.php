@@ -47,7 +47,7 @@ class DebugPanel {
 	public $javascript = array();
 
 /**
- * Provide a custom element name for this panel.  If null, the underscored version of the class
+ * Provide a custom element name for this panel. If null, the underscored version of the class
  * name will be used.
  *
  * @var string

@@ -40,7 +40,7 @@ class DebugMemory {
 /**
  * Get peak memory use
  *
- * @return integer peak memory use (in bytes).  Returns 0 if memory_get_peak_usage() is not available
+ * @return integer peak memory use (in bytes). Returns 0 if memory_get_peak_usage() is not available
  */
 	public static function getPeak() {
 		return memory_get_peak_usage();

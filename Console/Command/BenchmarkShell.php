@@ -46,7 +46,7 @@ class BenchmarkShell extends Shell {
 
 		$url = $this->args[0];
 		$defaults = array('t' => 100, 'n' => 10);
-		$options  = array_merge($defaults, $this->params);
+		$options = array_merge($defaults, $this->params);
 		$times = array();
 
 		$this->out(String::insert(__d('debug_kit', '-> Testing :url'), compact('url')));

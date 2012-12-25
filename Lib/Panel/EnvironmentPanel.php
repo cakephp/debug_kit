@@ -16,7 +16,7 @@ class EnvironmentPanel extends DebugPanel {
  *
  * @return array
  */
-	public function beforeRender (Controller $controller) {
+	public function beforeRender(Controller $controller) {
 		parent::beforeRender ($controller);
 
 		$return = array();

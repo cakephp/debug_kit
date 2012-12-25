@@ -96,7 +96,7 @@ def zip_recursive(destination, source_dir, rootfiles):
     """
     Recursively zips source_dir into destination.
     rootfiles should contain a list of files in the top level directory that 
-    are to be included.  Any top level files not in rootfiles will be omitted
+    are to be included. Any top level files not in rootfiles will be omitted
     from the zip file.
     """
     zipped = zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED)

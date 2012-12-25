@@ -45,7 +45,7 @@ endif;
 	$memoryPoints = DebugKitDebugger::getMemoryPoints();
 
 	$rows = array();
-	foreach($memoryPoints as $key => $value):
+	foreach ($memoryPoints as $key => $value):
 		$rows[] = array($key, $this->Number->toReadableSize($value));
 	endforeach;
 

@@ -1,7 +1,7 @@
 <?php
 /**
- * Abstract Toolbar helper.  Provides Base methods for content
- * specific debug toolbar helpers.  Acts as a facade for other toolbars helpers as well.
+ * Abstract Toolbar helper. Provides Base methods for content
+ * specific debug toolbar helpers. Acts as a facade for other toolbars helpers as well.
  *
  * PHP versions 5
  *
@@ -25,7 +25,7 @@ App::uses('ConnectionManager', 'Model');
 class ToolbarHelper extends AppHelper {
 
 /**
- * settings property to be overloaded.  Subclasses should specify a format
+ * settings property to be overloaded. Subclasses should specify a format
  *
  * @var array
  */
@@ -111,7 +111,7 @@ class ToolbarHelper extends AppHelper {
 /**
  * Allows for writing to panel cache from view.
  * Some panels generate all variables in the view by
- * necessity ie. Timer.  Using this method, will allow you to replace in full
+ * necessity ie. Timer. Using this method, will allow you to replace in full
  * the content for a panel.
  *
  * @param string $name Name of the panel you are replacing.

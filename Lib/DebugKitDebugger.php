@@ -161,7 +161,7 @@ class DebugKitDebugger extends Debugger {
 /**
  * Get peak memory use
  *
- * @return integer peak memory use (in bytes).  Returns 0 if memory_get_peak_usage() is not available
+ * @return integer peak memory use (in bytes). Returns 0 if memory_get_peak_usage() is not available
  * @deprecated Use DebugMemory::getPeak() instead.
  */
 	public static function getPeakMemoryUse() {

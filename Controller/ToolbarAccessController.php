@@ -91,8 +91,8 @@ class ToolbarAccessController extends DebugKitAppController {
 
 /**
  * Run SQL explain/profiling on queries. Checks the hash + the hashed queries,
- * if there is mismatch a 404 will be rendered.  If debug == 0 a 404 will also be
- * rendered.  No explain will be run if a 404 is made.
+ * if there is mismatch a 404 will be rendered. If debug == 0 a 404 will also be
+ * rendered. No explain will be run if a 404 is made.
  *
  * @throws BadRequestException
  * @return void

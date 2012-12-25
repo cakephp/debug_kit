@@ -48,7 +48,7 @@
 	}
 
 	if (isset($content['hidef'])) {
-		echo  '<h2>' . __('Hidef Environment') . '</h2>';
+		echo '<h2>' . __('Hidef Environment') . '</h2>';
 		if (!empty($content['hidef'])) {
 			$cakeRows = array();
 			foreach ($content['hidef'] as $key => $val) {

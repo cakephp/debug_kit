@@ -192,7 +192,7 @@ class DebugTimer {
 	public static function requestStartTime() {
 		if (defined('TIME_START')) {
 			$startTime = TIME_START;
-		} else if (isset($GLOBALS['TIME_START'])) {
+		} elseif (isset($GLOBALS['TIME_START'])) {
 			$startTime = $GLOBALS['TIME_START'];
 		} else {
 			$startTime = env('REQUEST_TIME');

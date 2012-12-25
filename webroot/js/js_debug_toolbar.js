@@ -2,7 +2,7 @@
  * Debug Toolbar Javascript.
  *
  * Creates the DEBUGKIT namespace and provides methods for extending
- * and enhancing the Html toolbar.  Includes library agnostic Event, Element,
+ * and enhancing the Html toolbar. Includes library agnostic Event, Element,
  * Cookie and Request wrappers.
  *
  *
@@ -456,7 +456,7 @@ DEBUGKIT.Util.Request = function (options) {
 		//open connection
 		this.transport.open(this.options.method, url, this.options.async);
 
-		//set statechange and pass the active XHR object to it.  From here it handles all status changes.
+		//set statechange and pass the active XHR object to it. From here it handles all status changes.
 		this.transport.onreadystatechange = function () {
 			self.onReadyStateChange.apply(self, arguments);
 		};
@@ -701,7 +701,7 @@ DEBUGKIT.toolbar = function () {
 			return false;
 		},
 
-		// Deactivate a panel.  use true to hide all panels.
+		// Deactivate a panel. use true to hide all panels.
 		deactivatePanel: function (id) {
 			if (id === true) {
 				for (var i in this.panels) {

@@ -52,7 +52,7 @@ class WhitespaceShell extends Shell {
 	}
 
 /**
- * Much like main() except files are modified.  Be sure to have
+ * Much like main() except files are modified. Be sure to have
  * backups or use version control.
  *
  * @return void

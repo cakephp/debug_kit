@@ -65,7 +65,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	}
 
 /**
- * endTest()
+ * endTest($method)
  *
  * @return void
  */

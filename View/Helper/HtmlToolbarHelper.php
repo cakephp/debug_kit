@@ -170,7 +170,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @return string Rendered Html link or '' if the query is not a select/describe
  */
 	public function explainLink($sql, $connection) {
-		if (!preg_match('/^(SELECT)/i', $sql)) {
+		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {
 			return '';
 		}
 		$hash = Security::hash($sql . $connection, null, true);

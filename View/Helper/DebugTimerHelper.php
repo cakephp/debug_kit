@@ -1,6 +1,7 @@
 <?php
 App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugMemory', 'DebugKit.Lib');
+App::uses('Helper', 'View');
 
 /**
  * Debug TimerHelper

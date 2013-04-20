@@ -136,7 +136,7 @@ class IncludePanel extends DebugPanel {
  */
 	protected function _getFileType($file) {
 		foreach ($this->_fileTypes as $type) {
-			if (preg_match(sprintf('/%s/i', $type), $file)) {
+			if (stripos($file, '/' . $type . '/') !== false) {
 				return $type;
 			}
 		}

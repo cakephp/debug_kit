@@ -194,6 +194,20 @@ class ToolbarHelper extends AppHelper {
 			}
 			if ($isHtml) {
 				$query['query'] = h($query['query']);
+				if (!empty($query['params']) && is_array($query['params'])) {
+					$bindParam = $bindType = null;
+					if (preg_match('/.+ :.+/', $query['query'])) {
+						$bindType = true;
+					}
+					foreach ($query['params'] as $bindKey => $bindVal) {
+						if ($bindType === true) {
+							$bindParam .= h($bindKey) ." => " . h($bindVal) . ", ";
+						} else {
+							$bindParam .= h($bindVal) . ", ";
+						}
+					}
+					$query['query'] .= " [ " . rtrim($bindParam, ', ') . " ]";
+				}
 			}
 			unset($query['params']);
 			$out['queries'][] = $query;

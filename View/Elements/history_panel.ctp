@@ -28,7 +28,7 @@
 			'#', array('class' => 'history-link', 'id' => 'history-restore-current')); ?>
 		</li>
 		<?php foreach ($content as $previous): ?>
-			<li><?php echo $this->Html->link($previous['title'], $previous['url'], array('class' => 'history-link')); ?></li>
+			<li><?php echo $this->Html->link(!empty($previous['title']) ? $previous['title'] : '-', $previous['url'], array('class' => 'history-link')); ?></li>
 		<?php endforeach; ?>
 	</ul>
 <?php endif; ?>

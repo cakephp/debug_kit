@@ -24,8 +24,8 @@ $this->start('panelContent');
 
 <h4>Include Paths</h4>
 <?php
-	foreach ($content['paths'] as $i => $path) {
-		if (strstr($path, CAKE)) {
+	foreach($content['paths'] as $i => $path) {
+		if(strstr($path, CAKE)) {
 			$content['paths'][$i] = '-> ' . $path;
 			break;
 		}

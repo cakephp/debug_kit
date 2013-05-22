@@ -22,7 +22,7 @@ $this->start('panelContent');
 ?>
 <h2> <?php echo __d('debug_kit', 'Request History'); ?></h2>
 <?php if (empty($content)): ?>
-	<p class="warning"><?php echo __d('debug_kit', 'No previous requests logged.'); ?></p>
+  <p class="warning"><?php echo __d('debug_kit', 'No previous requests logged.'); ?></p>
 <?php else: ?>
 	<?php echo count($content); ?> <?php echo __d('debug_kit', 'previous requests available') ?>
 	<ul class="history-list">

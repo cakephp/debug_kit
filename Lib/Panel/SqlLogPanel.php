@@ -72,7 +72,7 @@ class SqlLogPanel extends DebugPanel {
 			if ($queriesCount === 0) {
 				$this->title = __d('debug_kit', '<b>0</b> Sql');
 			} else {
-				$this->title = sprintf('<b>%dms / %s</b> sql', $queriesTime, $queriesCount);
+				$this->title = sprintf('<b>%s ms / %d</b> sql', number_format($queriesTime), $queriesCount);
 			}
 		}
 

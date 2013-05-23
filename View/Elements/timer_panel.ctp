@@ -34,7 +34,7 @@ else:
 endif;
 
 if ($priority > 0) {
-	$this->assign('panelTitle', sprintf('<b>%d ms / %d mb</b>', $this->Number->precision($requestTime * 1000, 0), $this->Number->toReadableSize($peakMemory)));
+	$this->assign('panelTitle', sprintf('<b>%s ms / %d mb</b>', number_format($requestTime * 1000), $this->Number->toReadableSize($peakMemory)));
 }
 
 $this->start('panelContent');

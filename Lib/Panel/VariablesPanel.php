@@ -29,7 +29,8 @@ class VariablesPanel extends DebugPanel {
  */
 	public function beforeRender(Controller $controller) {
 		if ($this->priority > 0) {
-			$this->title = __d('debug_kit', '<b>%d</b> vars', (count(array_diff(array_keys($controller->viewVars), array('title_for_layout')))));
+			$count = count(array_diff(array_keys($controller->viewVars), array('title_for_layout')));
+			$this->title = __dn('debug_kit', '<b>%d</b> var', '<b>%d</b> vars', $count, $count);
 		}
 
 		return array_merge($controller->viewVars, array('$request->data' => $controller->request->data));

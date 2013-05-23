@@ -17,13 +17,15 @@
  * @since         DebugKit 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
+
+$this->start('panelContent');
 ?>
 <h2> <?php echo __d('debug_kit', 'Included Files'); ?></h2>
 
 <h4>Include Paths</h4>
 <?php
-	foreach ($content['paths'] as $i => $path) {
-		if (strstr($path, CAKE)) {
+	foreach($content['paths'] as $i => $path) {
+		if(strstr($path, CAKE)) {
 			$content['paths'][$i] = '-> ' . $path;
 			break;
 		}
@@ -33,4 +35,6 @@
 ?>
 
 <h4>Included Files</h4>
-<?php echo $this->Toolbar->makeNeatArray($content); ?>
+<?php
+echo $this->Toolbar->makeNeatArray($content);
+$this->end('panelContent');

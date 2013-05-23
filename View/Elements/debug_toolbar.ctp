@@ -24,28 +24,31 @@
 	<?php if (empty($debugToolbarPanels)) :?>
 		<p class="warning"><?php echo __d('debug_kit', 'There are no active panels. You must enable a panel to see its output.'); ?></p>
 	<?php else: ?>
+		<?php echo $this->Html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP', 'class' => 'icon')); ?>
 		<ul id="panel-tabs">
-			<li class="panel-tab icon">
-				<a href="#hide" id="hide-toolbar">
-					<?php echo $this->Html->image('/debug_kit/img/cake.icon.png', array('alt' => 'CakePHP')); ?>
-				</a>
-			</li>
-		<?php foreach ($debugToolbarPanels as $panelName => $panelInfo): ?>
+		<?php
+			$isMajorPanel = false;
+			foreach ($debugToolbarPanels as $panelName => $panelInfo):
+				if ($panelInfo['priority'] > 0 && !$isMajorPanel) : ?>
+		</ul>
+		<ul id="panel-tabs-featured">
+			<?php $isMajorPanel = true; endif; ?>
 			<?php $panelUnderscore = Inflector::underscore($panelName);?>
 			<li class="panel-tab">
 			<?php
+
 				$title = (empty($panelInfo['title'])) ? Inflector::humanize($panelUnderscore) : $panelInfo['title'];
-				echo $this->Toolbar->panelStart($title, $panelUnderscore);
+				$this->element($panelInfo['elementName'], array_merge($panelInfo, array('title' => $title)), array(
+					'plugin' => (empty($panelInfo['plugin'])) ? null : Inflector::camelize($panelInfo['plugin'])
+				));
+
+				echo $this->Toolbar->panelStart(($this->fetch('panelTitle') ? $this->fetch('panelTitle') : $title), $panelUnderscore);
 			?>
 				<div class="panel-content" id="<?php echo $panelUnderscore ?>-tab">
 					<a href="#" class="panel-toggle ui-control ui-button">+</a>
 					<div class="panel-resize-region">
 						<div class="panel-content-data">
-							<?php
-								echo $this->element($panelInfo['elementName'], $panelInfo, array(
-									'plugin' => (empty($panelInfo['plugin'])) ? null : Inflector::camelize($panelInfo['plugin'])
-								)); 
-							?>
+							<?php echo $this->fetch('panelContent'); ?>
 						</div>
 						<div class="panel-content-data panel-history" id="<?php echo $panelUnderscore; ?>-history">
 							<!-- content here -->
@@ -55,7 +58,10 @@
 				</div>
 			<?php $this->Toolbar->panelEnd(); ?>
 			</li>
-		<?php endforeach; ?>
+		<?php
+			$this->assign('panelTitle', '');
+			$this->assign('panelContent', '');
+		endforeach; ?>
 		</ul>
 	<?php endif; ?>
 </div>

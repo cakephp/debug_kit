@@ -25,12 +25,12 @@ class IncludePanel extends DebugPanel {
 /**
  * Get a list of plugins on construct for later use
  */
-	public function __construct() {
+	public function  __construct($settings) {
 		foreach (CakePlugin::loaded() as $plugin) {
 			$this->_pluginPaths[$plugin] = CakePlugin::path($plugin);
 		}
 
-		parent::__construct();
+		parent::__construct($settings);
 	}
 
 /**
@@ -41,17 +41,25 @@ class IncludePanel extends DebugPanel {
  */
 	public function beforeRender(Controller $controller) {
 		$return = array('core' => array(), 'app' => array(), 'plugins' => array());
+		$filesCount = 0;
 
 		foreach (get_included_files() as $file) {
 			$pluginName = $this->_isPluginFile($file);
 
 			if ($pluginName) {
 				$return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, $pluginName);
-			} elseif ($this->_isAppFile($file)) {
+				$filesCount += count($return['plugins'][$pluginName][$this->_getFileType($file)]);
+			} else if ($this->_isAppFile($file)) {
 				$return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
-			} elseif ($this->_isCoreFile($file)) {
+				$filesCount += count($return['app'][$this->_getFileType($file)]);
+			} else if ($this->_isCoreFile($file)) {
 				$return['core'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'core');
+				$filesCount += count($return['core'][$this->_getFileType($file)]);
 			}
+		}
+
+		if ($this->priority > 0) {
+			$this->title = sprintf('<b>%d</b> %s', $filesCount, __dn('debug_kit', 'include', 'includes', $filesCount, $filesCount));
 		}
 
 		$return['paths'] = $this->_includePaths();
@@ -117,7 +125,7 @@ class IncludePanel extends DebugPanel {
  * @return bool
  */
 	protected function _niceFileName($file, $type) {
-		switch ($type) {
+		switch($type) {
 			case 'app':
 				return str_replace(APP, 'APP/', $file);
 
@@ -136,7 +144,7 @@ class IncludePanel extends DebugPanel {
  */
 	protected function _getFileType($file) {
 		foreach ($this->_fileTypes as $type) {
-			if (stripos($file, '/' . $type . '/') !== false) {
+			if (preg_match(sprintf('/%s/i', $type), $file)) {
 				return $type;
 			}
 		}

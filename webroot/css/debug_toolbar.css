@@ -32,11 +32,11 @@ body {
 #debug-kit-toolbar #panel-tabs a {
 	font-size: 12px;
 }
-#debug-kit-toolbar #panel-tabs-featured li
+#debug-kit-toolbar #panel-tabs-featured > li
 {
 	border-left: 1px solid #1e2228;
 }
-#debug-kit-toolbar #panel-tabs-featured a
+#debug-kit-toolbar #panel-tabs-featured > li > a
 {
 	border-left: 1px solid #3f444d;
 	border-right: 1px solid #3f444d;

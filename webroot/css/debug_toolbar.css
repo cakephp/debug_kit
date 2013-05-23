@@ -14,9 +14,9 @@ body {
 	font-family: helvetica, arial, sans-serif;
 	font-size: 12px;
 	direction: ltr;
-	background: #000 url(/debug_kit/img/background.png);
-	border-bottom: 2px solid #000;
-	box-shadow: 0 -2px 2px rgba(0,0,0,0.3) inset;
+	background-color: #2f363f;
+	border-bottom: 1px solid #1e2228;
+	box-shadow: 0 0 5px rgba(0,0,0,.7), 0 -1px 0 #3f444d inset;
 }
 #debug-kit-toolbar img {
 	border:0;
@@ -28,11 +28,18 @@ body {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.5);
-	border-radius: 8px 0 0 8px;
 }
 #debug-kit-toolbar #panel-tabs a {
 	font-size: 12px;
+}
+#debug-kit-toolbar #panel-tabs-featured li
+{
+	border-left: 1px solid #1e2228;
+}
+#debug-kit-toolbar #panel-tabs-featured a
+{
+	border-left: 1px solid #3f444d;
+	border-right: 1px solid #3f444d;
 }
 #debug-kit-toolbar .panel-tab {
 	clear: none;
@@ -76,7 +83,7 @@ body {
 	text-shadow: none;
 }
 #debug-kit-toolbar .panel-tab > a:hover {
-	background: rgba(0,0,0,0.5);
+	background: #222a2f;
 	text-decoration:none;
 	color: steelblue;
 }
@@ -114,6 +121,7 @@ body {
 	box-shadow:0px 5px 6px rgba(0, 0, 0, 0.5);
 	height: 200px;
 	overflow: hidden;
+	transition: height .2s;
 }
 
 #debug-kit-toolbar .panel-resize-region {

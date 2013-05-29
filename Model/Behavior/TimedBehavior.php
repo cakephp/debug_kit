@@ -2,23 +2,29 @@
 /**
  * DebugKit TimedBehavior
  *
- * PHP versions 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.models.behaviors
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Model.Behavior
  * @since         DebugKit 1.3
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 App::uses('DebugKitDebugger', 'DebugKit.Lib');
 
+/**
+ * Class TimedBehavior
+ *
+ * @package       DebugKit.Model.Behavior
+ * @since         DebugKit 1.3
+ */
 class TimedBehavior extends ModelBehavior {
 
 /**
@@ -38,7 +44,7 @@ class TimedBehavior extends ModelBehavior {
 /**
  * Setup the behavior and import required classes.
  *
- * @param object $Model Model using the behavior
+ * @param \Model|object $Model Model using the behavior
  * @param array $settings Settings to override for model.
  * @return void
  */
@@ -67,6 +73,7 @@ class TimedBehavior extends ModelBehavior {
  *
  * @param Model $Model
  * @param array $results Array of results
+ * @param $primary
  * @return boolean true.
  */
 	public function afterFind(Model $Model, $results, $primary) {
@@ -89,9 +96,9 @@ class TimedBehavior extends ModelBehavior {
 /**
  * afterSave, stop the timer started from a save.
  *
- * @param string $Model
+ * @param \Model $Model
  * @param string $created
- * @return void
+ * @return boolean Always true
  */
 	public function afterSave(Model $Model, $created) {
 		DebugKitDebugger::stopTimer($Model->alias . '_save');

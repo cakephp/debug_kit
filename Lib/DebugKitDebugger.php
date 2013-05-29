@@ -1,34 +1,39 @@
 <?php
 /**
- * DebugKit Debugger class. Extends and enhances core
- * debugger. Adds benchmarking and timing functionality.
+ * DebugKit Debugger class.
  *
- * PHP versions 5
+ * Extends and enhances core debugger.
+ * Adds benchmarking and timing functionality.
+ *
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.vendors
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Lib
  * @since         DebugKit 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
+
 App::uses('Debugger', 'Utility');
 App::uses('FireCake', 'DebugKit.Lib');
 App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugMemory', 'DebugKit.Lib');
 
 /**
- * Debug Kit Temporary Debugger Class
+ * DebugKit Temporary Debugger Class
  *
  * Provides the future features that are planned. Yet not implemented in the 1.2 code base
  *
  * This file will not be needed in future version of CakePHP.
+ *
+ * @package       DebugKit.Lib
+ * @since         DebugKit 0.1
  */
 class DebugKitDebugger extends Debugger {
 
@@ -69,6 +74,7 @@ class DebugKitDebugger extends Debugger {
 		}
 		echo '</tbody></table>';
 	}
+
 /**
  * Start an benchmarking timer.
  *
@@ -200,7 +206,7 @@ class DebugKitDebugger extends Debugger {
  * @deprecated Use DebugMemory::clear() instead.
  */
 	public static function clearMemoryPoints() {
-		return DebugMemory::clear();
+		DebugMemory::clear();
 	}
 
 /**
@@ -223,9 +229,7 @@ class DebugKitDebugger extends Debugger {
 		}
 		FireCake::groupEnd();
 	}
-
 }
-
 
 DebugKitDebugger::getInstance('DebugKitDebugger');
 Debugger::addFormat('fb', array('callback' => 'DebugKitDebugger::fireError'));

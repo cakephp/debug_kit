@@ -1,27 +1,33 @@
 <?php
-App::uses('DebugTimer', 'DebugKit.Lib');
-App::uses('DebugMemory', 'DebugKit.Lib');
-App::uses('Helper', 'View');
-
 /**
  * Debug TimerHelper
  *
  * Tracks time and memory usage while rendering view.
  *
- * PHP versions 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.View.Helper
  * @since         DebugKit 2.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
+
+App::uses('DebugTimer', 'DebugKit.Lib');
+App::uses('DebugMemory', 'DebugKit.Lib');
+App::uses('Helper', 'View');
+
+/**
+ * Class DebugTimerHelper
+ *
+ * @package       DebugKit.View.Helper
+ */
 class DebugTimerHelper extends Helper {
 
 /**
@@ -36,7 +42,7 @@ class DebugTimerHelper extends Helper {
  * Constructor
  *
  * @param View $View
- * @para array $array
+ * @param array $settings
  */
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
@@ -66,7 +72,7 @@ class DebugTimerHelper extends Helper {
  * Stops the timer point before rendering a file.
  *
  * @param string $viewFile The view being rendered
- * @param string $contents The contents of the view.
+ * @param string $content The contents of the view.
  */
 	public function afterRenderFile($viewFile, $content) {
 		if ($this->_renderComplete) {
@@ -86,5 +92,4 @@ class DebugTimerHelper extends Helper {
 		DebugMemory::record(__d('debug_kit', 'View render complete'));
 		$this->_renderComplete = true;
 	}
-
 }

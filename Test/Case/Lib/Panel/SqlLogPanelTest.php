@@ -1,22 +1,28 @@
 <?php
+/**
+ * SqlLogPanelTest
+ *
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Test.Case.Lib.Panel
+ * @since         DebugKit 2.1
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
 App::uses('SqlLogPanel', 'DebugKit.Lib/Panel');
 App::uses('Model', 'Model');
 App::uses('Controller', 'Controller');
 
 /**
- * SqlLogPanelTest
+ * Class SqlLogPanelTest
  *
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.tests.controllers.components
+ * @package       DebugKit.Test.Case.Lib.Panel
  * @since         DebugKit 2.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 class SqlLogPanelTest extends CakeTestCase {
 

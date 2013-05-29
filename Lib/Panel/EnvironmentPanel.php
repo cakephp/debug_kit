@@ -1,19 +1,37 @@
 <?php
-
-App::uses ('DebugPanel', 'DebugKit.Lib');
-
 /**
  * Environment Panel
  *
  * Provides information about your PHP and CakePHP environment to assist with debugging.
  *
- * @package       cake.debug_kit.panels
+ * PHP 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Lib.Panel
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ *
+ */
+
+App::uses ('DebugPanel', 'DebugKit.Lib');
+
+/**
+ * Class EnvironmentPanel
+ *
+ * @package       DebugKit.Lib.Panel
  */
 class EnvironmentPanel extends DebugPanel {
 
 /**
  * beforeRender - Get necessary data about environment to pass back to controller
  *
+ * @param Controller $controller
  * @return array
  */
 	public function beforeRender(Controller $controller) {
@@ -64,5 +82,4 @@ class EnvironmentPanel extends DebugPanel {
 
 		return $return;
 	}
-
 }

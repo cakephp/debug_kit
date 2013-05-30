@@ -3,35 +3,47 @@
  * FirePHP Class for CakePHP
  *
  * Provides most of the functionality offered by FirePHPCore
- * Interoperates with FirePHP extension for firefox
+ * Interoperates with FirePHP extension for Firefox
  *
  * For more information see: http://www.firephp.org/
  *
- * PHP versions 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.views.helpers
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Lib
  * @since         DebugKit 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 App::uses('Debugger', 'Utility');
 
 if (!function_exists('firecake')) {
 
+	/**
+	 * Procedural version of FireCake::log()
+	 *
+	 * @param $message
+	 * @param null $label
+	 */
 	function firecake($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
 
 }
 
+/**
+ * Class FireCake
+ *
+ * @package       DebugKit.Lib
+ * @since         DebugKit 0.1
+ */
 class FireCake {
 
 /**
@@ -72,6 +84,11 @@ class FireCake {
 		'groupEnd' => 'GROUP_END',
 	);
 
+/**
+ * Version number for X-Wf-1-Plugin-1 HTML header
+ *
+ * @var string
+ */
 	protected $_version = '0.2.1';
 
 /**
@@ -106,7 +123,7 @@ class FireCake {
  * get Instance of the singleton
  *
  * @param string $class Class instance to store in the singleton. Used with subclasses and Tests.
- * @return void
+ * @return FireCake
  */
 	public static function getInstance($class = null) {
 		static $instance = array();
@@ -231,8 +248,8 @@ class FireCake {
 /**
  * Convenience wrapper for TABLE messages
  *
- * @param string $message Message to log
  * @param string $label Label for message (optional)
+ * @param string $message Message to log
  * @return void
  */
 	public static function table($label, $message) {
@@ -242,8 +259,8 @@ class FireCake {
 /**
  * Convenience wrapper for DUMP messages
  *
- * @param string $message Message to log
  * @param string $label Unique label for message
+ * @param string $message Message to log
  * @return void
  */
 	public static function dump($label, $message) {
@@ -275,7 +292,7 @@ class FireCake {
  * Convenience wrapper for GROUPEND messages
  * Closes a group block
  *
- * @param string $label Label for group (optional)
+ * @internal param string $label Label for group (optional)
  * @return void
  */
 	public static function groupEnd() {
@@ -291,7 +308,7 @@ class FireCake {
  * fb($message, $label, $type) - Send a message with a custom label and type.
  *
  * @param mixed $message Message to output. For other parameters see usage above.
- * @return void
+ * @return boolean Success
  */
 	public static function fb($message) {
 		$_this = FireCake::getInstance();
@@ -408,6 +425,7 @@ class FireCake {
  * Parse a debug backtrace
  *
  * @param array $trace Debug backtrace output
+ * @param $messageName
  * @return array
  */
 	protected static function _parseTrace($trace, $messageName) {
@@ -457,7 +475,7 @@ class FireCake {
  * @param mixed $object Object or variable to encode to string.
  * @param int $objectDepth Current Depth in object chains.
  * @param int $arrayDepth Current Depth in array chains.
- * @return void
+ * @return string|Object
  */
 	public static function stringEncode($object, $objectDepth = 1, $arrayDepth = 1) {
 		$_this = FireCake::getInstance();
@@ -501,7 +519,8 @@ class FireCake {
  * Encode an object into JSON
  *
  * @param mixed $object Object or array to json encode
- * @param boolean $doIt
+ * @param bool $skipEncode
+ * @internal param bool $doIt
  * @static
  * @return string
  */
@@ -516,10 +535,11 @@ class FireCake {
 /**
  * Send Headers - write headers.
  *
+ * @param $name
+ * @param $value
  * @return void
- **/
+ */
 	protected function _sendHeader($name, $value) {
 		header($name . ': ' . $value);
 	}
-
 }

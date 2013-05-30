@@ -1,12 +1,29 @@
 <?php
-App::uses('DebugPanel', 'DebugKit.Lib');
-
 /**
  * SqlLog Panel
  *
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
  *
- * @package       cake.debug_kit.panels
+ * PHP 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Lib.Panel
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
+App::uses('DebugPanel', 'DebugKit.Lib');
+
+/**
+ * Class SqlLogPanel
+ *
+ * @package       DebugKit.Lib.Panel
  */
 class SqlLogPanel extends DebugPanel {
 
@@ -21,8 +38,8 @@ class SqlLogPanel extends DebugPanel {
 /**
  * Gets the connection names that should have logs + dumps generated.
  *
- * @param string $controller
- * @return void
+ * @param \Controller|string $controller
+ * @return array
  */
 	public function beforeRender(Controller $controller) {
 		if (!class_exists('ConnectionManager')) {

@@ -4,24 +4,29 @@
  *
  * Injects the toolbar elements into non-HTML layouts via FireCake.
  *
- * PHP versions 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.views.helpers
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
+
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('FireCake', 'DebugKit.Lib');
 
+/**
+ * Class FirePhpToolbarHelper
+ *
+ * @package       DebugKit.View.Helper
+ */
 class FirePhpToolbarHelper extends ToolbarHelper {
 
 /**
@@ -87,6 +92,8 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 /**
  * Start a panel which is a 'Group' in FirePHP
  *
+ * @param $title
+ * @param $anchor
  * @return void
  */
 	public function panelStart($title, $anchor) {

@@ -5,33 +5,32 @@
  * Provides basic benchmarking of application requests
  * functionally similar to Apache AB
  *
- * PHP versions 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.vendors.shells
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Console.Command
  * @since         DebugKit 1.0
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
+
+App::uses('String','Utility');
 
 /**
  * Benchmark Shell Class
  *
- * @package cake
- * @subpackage cake.debug_kit.vendors.shells
+ * @package       DebugKit.Console.Command
+ * @since         DebugKit 1.0
  * @todo Print/export time detail information
  * @todo Export/graphing of data to .dot format for graphviz visualization
  * @todo Make calculated results round to leading significant digit position of std dev.
  */
-App::uses('String','Utility');
-
 class BenchmarkShell extends Shell {
 
 /**
@@ -64,6 +63,7 @@ class BenchmarkShell extends Shell {
 		}
 		$this->_results($times);
 	}
+
 /**
  * Prints calculated results
  *
@@ -125,15 +125,18 @@ class BenchmarkShell extends Shell {
 
 		return $M2 / $n;
 	}
+
 /**
  * Calculate the standard deviation.
  *
  * @param array $times Array of values
+ * @param bool $sample
  * @return float Standard deviation
  */
 	protected function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
+
 /**
  * Help for Benchmark shell
  *

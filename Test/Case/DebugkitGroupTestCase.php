@@ -1,12 +1,43 @@
 <?php
+/**
+ * DebugKit Group Test Case
+ *
+ * PHP 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       DebugKit.Test.Case
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ **/
 
-class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
+/**
+ * Class DebugKitGroupTestCase
+ *
+ * @package       DebugKit.Test.Case
+ */
+class DebugKitGroupTestCase extends PHPUnit_Framework_TestSuite {
 
+/**
+ * Constructor
+ */
 	public function __construct() {
 		$label = Inflector::humanize(Inflector::underscore(get_class($this)));
 		parent::__construct($label);
 	}
 
+/**
+ * Get Test Files
+ *
+ * @param null $directory
+ * @param null $excludes
+ * @return array
+ */
 	public static function getTestFiles($directory = null, $excludes = null) {
 		if (is_array($directory)) {
 			$files = array();
@@ -38,7 +69,6 @@ class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
 					!preg_match('|^All.+?\.php$|', basename($file)) &&
 					($excludes === null || !in_array($file, $excludes))
 				) {
-
 					$files[] = $file;
 				}
 			}
@@ -48,5 +78,4 @@ class DebugkitGroupTestCase extends PHPUnit_Framework_TestSuite {
 
 		return $files;
 	}
-
 }

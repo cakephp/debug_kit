@@ -23,7 +23,7 @@ if (isset($debugKitInHistoryMode)) {
 }
 ?>
 <h2><?php echo __d('debug_kit', 'Sql Logs')?></h2>
-<?php if (!empty($content)) : ?>
+<?php if (!empty($content) && !empty($content['connections'])) : ?>
 	<?php foreach ($content['connections'] as $dbName => $explain): ?>
 	<div class="sql-log-panel-query-log">
 		<h4><?php echo $dbName ?></h4>
@@ -53,5 +53,6 @@ if (isset($debugKitInHistoryMode)) {
 	</div>
 	<?php endforeach; ?>
 <?php else:
-	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
+	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections or cache available'));
+  echo $this->element('sql_dump');
 endif; ?>

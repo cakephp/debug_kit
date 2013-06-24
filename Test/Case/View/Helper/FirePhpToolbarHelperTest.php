@@ -86,9 +86,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::flush();
-		Router::reload();
 		TestFireCake::reset();
 	}
 
@@ -101,7 +100,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar->makeNeatArray(array(1,2,3));
 		$result = $this->firecake->sentHeaders;
 		$this->assertTrue(isset($result['X-Wf-1-1-1-1']));
-		$this->assertPattern('/\[1,2,3\]/', $result['X-Wf-1-1-1-1']);
+		$this->assertRegexp('/\[1,2,3\]/', $result['X-Wf-1-1-1-1']);
 	}
 
 /**

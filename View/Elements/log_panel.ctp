@@ -19,7 +19,7 @@
 ?>
 <h2><?php echo __d('debug_kit', 'Logs') ?></h2>
 <div class="code-table">
-<?php if ($content instanceof DebugKitLogListener): ?>
+<?php if ($content instanceof DebugKitLog): ?>
 	<?php foreach ($content->logs as $logName => $logs): ?>
 		<h3><?php echo $logName ?></h3>
 		<?php

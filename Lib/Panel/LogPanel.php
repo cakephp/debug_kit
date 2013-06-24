@@ -39,7 +39,7 @@ class LogPanel extends DebugPanel {
 			));
 		}
 		CakeLog::config('debug_kit_log_panel', array(
-			'engine' => 'DebugKit.DebugKitLogListener',
+			'engine' => 'DebugKit.DebugKitLog',
 			'panel' => $this
 		));
 	}

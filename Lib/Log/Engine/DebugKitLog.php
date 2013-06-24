@@ -17,11 +17,11 @@
  */
 
 /**
- * Class DebugKitLogListener
+ * Class DebugKitLog
  *
  * @package       DebugKit.Lib.Log.Engine
  */
-class DebugKitLogListener implements CakeLogInterface {
+class DebugKitLog implements CakeLogInterface {
 
 /**
  * logs
@@ -34,7 +34,7 @@ class DebugKitLogListener implements CakeLogInterface {
  * Makes the reverse link needed to get the logs later.
  *
  * @param $options
- * @return \DebugKitLogListener
+ * @return \DebugKitLog
  */
 	public function __construct($options) {
 		$options['panel']->logger = $this;

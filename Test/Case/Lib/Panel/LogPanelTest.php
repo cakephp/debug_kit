@@ -58,7 +58,7 @@ class LogPanelTest extends CakeTestCase {
 		CakeLog::write('error', 'Test');
 
 		$result = $this->panel->beforeRender($controller);
-		$this->assertInstanceOf('DebugKitLogListener', $result);
+		$this->assertInstanceOf('DebugKitLog', $result);
 		$this->assertTrue(isset($result->logs));
 		$this->assertCount(1, $result->logs['error']);
 	}

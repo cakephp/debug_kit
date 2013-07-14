@@ -1,12 +1,5 @@
 <?php
 /**
- * Benchmark Shell.
- *
- * Provides basic benchmarking of application requests
- * functionally similar to Apache AB
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -18,12 +11,15 @@
  * @package       DebugKit.Console.Command
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('String','Utility');
 
 /**
  * Benchmark Shell Class
+ *
+ * Provides basic benchmarking of application requests
+ * functionally similar to Apache AB
  *
  * @package       DebugKit.Console.Command
  * @since         DebugKit 1.0
@@ -137,32 +133,27 @@ class BenchmarkShell extends Shell {
 		return sqrt($this->_variance($times, $sample));
 	}
 
-/**
- * Help for Benchmark shell
- *
- * @return void
- */
-	public function help() {
-		$this->out(__d('debug_kit', "DebugKit Benchmark Shell"));
-		$this->out("");
-		$this->out(__d('debug_kit', "\tAllows you to obtain some rough benchmarking statistics \n\tabout a fully qualified URL."));
-		$this->out("");
-		$this->out(__d('debug_kit', "\tUse:"));
-		$this->out(__d('debug_kit', "\t\tcake benchmark [-n iterations] [-t timeout] url"));
-		$this->out("");
-		$this->out(__d('debug_kit', "\tParams:"));
-		$this->out(__d('debug_kit', "\t\t-n Number of iterations to perform. Defaults to 10. \n\t\t   Must be an integer."));
-		$this->out(__d('debug_kit', "\t\t-t Maximum total time for all iterations, in seconds. \n\t\t   Defaults to 100. Must be an integer."));
-		$this->out("");
-		$this->out(__d('debug_kit', "\tIf a single iteration takes more than the \n\ttimeout specified, only one request will be made."));
-		$this->out("");
-		$this->out(__d('debug_kit', "\tExample Use:"));
-		$this->out(__d('debug_kit', "\t\tcake benchmark -n 10 -t 100 http://localhost/testsite"));
-		$this->out("");
-		$this->out(__d('debug_kit', "\tNote that this benchmark does not include browser render time"));
-		$this->out("");
-		$this->hr();
-		$this->out("");
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+		$parser->description(__d('debug_kit',
+			'Allows you to obtain some rough benchmarking statistics' .
+			'about a fully qualified URL.'
+		))
+		->addOption('n', array(
+			'default' => 10,
+			'help' => __d('debug_kit', 'Number of iterations to perform.')
+		))
+		->addOption('t', array(
+			'default' => 100,
+			'help' => __d('debug_kit', 'Maximum total time for all iterations, in seconds.' .
+				'If a single iteration takes more than the tiemout, only one request will be made'
+			)
+		))
+		->epilog(__d('debug_kit',
+			'Example Use: `cake benchmark --n 10 --t 100 http://localhost/testsite`. ' .
+			'<info>Note:</info> this benchmark does not include browser render times.'
+		));
+		return $parser;
 	}
 }
 

@@ -204,4 +204,5 @@ class DebugTimer {
 		}
 		return $startTime;
 	}
+
 }

@@ -1,12 +1,5 @@
 <?php
 /**
- * Html Toolbar Helper
- *
- * Injects the toolbar elements into HTML layouts.
- * Contains helper methods for
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -18,13 +11,17 @@
  * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('Security', 'Utility');
 
 /**
- * Class HtmlToolbarHelper
+ * Html Toolbar Helper
+ *
+ * Injects the toolbar elements into HTML layouts.
+ * Contains helper methods for
+ *
  *
  * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
@@ -205,4 +202,5 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$form .= $this->Form->end();
 		return $form;
 	}
+
 }

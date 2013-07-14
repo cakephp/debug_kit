@@ -60,4 +60,5 @@ class ToolbarAccess extends Object {
 		}
 		return $return;
 	}
+
 }

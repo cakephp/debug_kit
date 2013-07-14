@@ -92,6 +92,7 @@ class DebugMemory {
 		}
 		return $marks;
 	}
+
 /**
  * Clear out any existing memory points
  *
@@ -100,4 +101,5 @@ class DebugMemory {
 	public static function clear() {
 		self::$_points = array();
 	}
+
 }

@@ -1,11 +1,5 @@
 <?php
 /**
- * Debug TimerHelper
- *
- * Tracks time and memory usage while rendering view.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,7 +11,7 @@
  * @package       DebugKit.View.Helper
  * @since         DebugKit 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugMemory', 'DebugKit.Lib');
@@ -25,6 +19,8 @@ App::uses('Helper', 'View');
 
 /**
  * Class DebugTimerHelper
+ *
+ * Tracks time and memory usage while rendering view.
  *
  * @package       DebugKit.View.Helper
  */
@@ -92,4 +88,5 @@ class DebugTimerHelper extends Helper {
 		DebugMemory::record(__d('debug_kit', 'View render complete'));
 		$this->_renderComplete = true;
 	}
+
 }

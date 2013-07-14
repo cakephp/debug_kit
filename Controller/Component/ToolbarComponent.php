@@ -502,4 +502,5 @@ class ToolbarComponent extends Component implements CakeEventListener {
 		array_unshift($history, $vars);
 		Cache::write($this->cacheKey, $history, 'debug_kit');
 	}
+
 }

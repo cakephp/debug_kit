@@ -1,11 +1,5 @@
 <?php
 /**
- * Simple Graph Helper
- *
- * Allows creation and display of extremely simple graphing elements
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,13 +11,15 @@
  * @package       DebugKit.View.Helper
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('HtmlHelper', 'View/Helper');
 
 /**
  * Class SimpleGraphHelper
+ *
+ * Allows creation and display of extremely simple graphing elements
  *
  * @package       DebugKit.View.Helper
  * @since         DebugKit 1.0
@@ -90,4 +86,5 @@ class SimpleGraphHelper extends AppHelper {
 			false
 		);
 	}
+
 }

@@ -1,11 +1,5 @@
 <?php
 /**
- * FirePHP Toolbar Helper
- *
- * Injects the toolbar elements into non-HTML layouts via FireCake.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,13 +11,15 @@
  * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('FireCake', 'DebugKit.Lib');
 
 /**
- * Class FirePhpToolbarHelper
+ * FirePHP Toolbar Helper
+ *
+ * Injects the toolbar elements into non-HTML layouts via FireCake.
  *
  * @package       DebugKit.View.Helper
  */
@@ -108,4 +104,5 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 	public function panelEnd() {
 		FireCake::groupEnd();
 	}
+
 }

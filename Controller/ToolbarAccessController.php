@@ -1,11 +1,5 @@
 <?php
 /**
- * DebugKit ToolbarAccess Controller
- *
- * Allows retrieval of information from the debugKit internals.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,13 +11,15 @@
  * @package       DebugKit.Controller
  * @since         DebugKit 1.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('Security', 'Utility');
 App::uses('DebugKitAppController', 'DebugKit.Controller');
 
 /**
- * Class ToolbarAccessController
+ * DebugKit ToolbarAccess Controller
+ *
+ * Allows retrieval of information from the debugKit internals.
  *
  * @package       DebugKit.Controller
  * @since         DebugKit 1.1
@@ -121,4 +117,5 @@ class ToolbarAccessController extends DebugKitAppController {
 		$result = $this->ToolbarAccess->explainQuery($this->request->data['log']['ds'], $this->request->data['log']['sql']);
 		$this->set(compact('result'));
 	}
+
 }

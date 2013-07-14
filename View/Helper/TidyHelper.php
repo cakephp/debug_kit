@@ -1,11 +1,5 @@
 <?php
 /**
- * Tidy Helper
- *
- * Passes html through tidy on the command line, and reports markup errors
- *
- * PHP 5
- *
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -22,6 +16,8 @@ App::uses('File', 'Utility');
 
 /**
  * TidyHelper class
+ *
+ * Passes html through tidy on the command line, and reports markup errors
  *
  * @uses          AppHelper
  * @package       DebugKit.View.Helper

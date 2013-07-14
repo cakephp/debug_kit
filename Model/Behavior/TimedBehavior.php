@@ -1,9 +1,5 @@
 <?php
 /**
- * DebugKit TimedBehavior
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -104,4 +100,5 @@ class TimedBehavior extends ModelBehavior {
 		DebugKitDebugger::stopTimer($Model->alias . '_save');
 		return true;
 	}
+
 }

@@ -35,10 +35,6 @@ class BenchmarkShell extends Shell {
  * @return void
  */
 	public function main() {
-		if (empty($this->args) || count($this->args) > 1) {
-			return $this->help();
-		}
-
 		$url = $this->args[0];
 		$defaults = array('t' => 100, 'n' => 10);
 		$options = array_merge($defaults, $this->params);
@@ -138,6 +134,10 @@ class BenchmarkShell extends Shell {
 		$parser->description(__d('debug_kit',
 			'Allows you to obtain some rough benchmarking statistics' .
 			'about a fully qualified URL.'
+		))
+		->addArgument('url', array(
+			'help' => __d('debug_kit', 'The URL to request.'),
+			'required' => true
 		))
 		->addOption('n', array(
 			'default' => 10,

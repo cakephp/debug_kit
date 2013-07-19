@@ -90,8 +90,7 @@ class IncludePanel extends DebugPanel {
  * @return array
  */
 	protected function _includePaths() {
-		$split = (stripos(PHP_OS, 'win') !== false) ? ';' : ':';
-		$paths = array_flip(array_merge(explode($split, get_include_path()), array(CAKE)));
+		$paths = array_flip(array_merge(explode(PATH_SEPARATOR, get_include_path()), array(CAKE)));
 
 		unset($paths['.']);
 		return array_flip($paths);

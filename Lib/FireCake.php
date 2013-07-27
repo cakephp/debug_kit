@@ -128,7 +128,7 @@ class FireCake {
 	public static function getInstance($class = null) {
 		static $instance = array();
 		if (!empty($class)) {
-			if (!$instance || strtolower($class) != strtolower(get_class($instance[0]))) {
+			if (!$instance || strtolower($class) !== strtolower(get_class($instance[0]))) {
 				$instance[0] = new $class();
 				$instance[0]->setOptions();
 			}
@@ -361,7 +361,7 @@ class FireCake {
 				for ($i = 0, $len = count($trace); $i < $len; $i++) {
 					$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
 					$selfCall = ($keySet &&
-						strtolower($trace[$i]['class']) == 'firecake' &&
+						strtolower($trace[$i]['class']) === 'firecake' &&
 						in_array($trace[$i]['function'], $_this->_methodIndex)
 					);
 					if ($selfCall) {
@@ -432,7 +432,7 @@ class FireCake {
 		$message = array();
 		for ($i = 0, $len = count($trace); $i < $len; $i++) {
 			$keySet = (isset($trace[$i]['class']) && isset($trace[$i]['function']));
-			$selfCall = ($keySet && $trace[$i]['class'] == 'FireCake');
+			$selfCall = ($keySet && $trace[$i]['class'] === 'FireCake');
 			if (!$selfCall) {
 				$message = array(
 					'Class' => isset($trace[$i]['class']) ? $trace[$i]['class'] : '',

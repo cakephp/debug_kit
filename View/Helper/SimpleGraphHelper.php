@@ -66,7 +66,7 @@ class SimpleGraphHelper extends AppHelper {
 		$graphValue = ($value / $max) * $width;
 		$graphValue = max(round($graphValue), 1);
 
-		if ($valueType == 'percentage') {
+		if ($valueType === 'percentage') {
 			$graphOffset = 0;
 		} else {
 			$graphOffset = ($offset / $max) * $width;

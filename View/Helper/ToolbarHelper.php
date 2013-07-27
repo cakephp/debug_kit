@@ -184,7 +184,7 @@ class ToolbarHelper extends AppHelper {
 				$query['numRows'] / $query['took'] <= $options['threshold']
 			);
 			$query['actions'] = '';
-			$isHtml = ($this->getName() == 'HtmlToolbar');
+			$isHtml = ($this->getName() === 'HtmlToolbar');
 			if ($isSlow && $isHtml) {
 				$query['actions'] = sprintf(
 					'<span class="slow-query">%s</span>',

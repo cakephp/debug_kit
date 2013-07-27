@@ -150,7 +150,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			return false;
 		}
 		if (
-			$this->settings['autoRun'] == false &&
+			$this->settings['autoRun'] === false &&
 			!isset($this->controller->request->query['debug'])
 		) {
 			$this->enabled = false;

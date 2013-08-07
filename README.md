@@ -15,8 +15,8 @@ The master branch has the following requirements:
 * Ensure the plugin is loaded in `app/Config/bootstrap.php` by calling `CakePlugin::load('DebugKit');`
 * Include the toolbar component in your `AppController.php`:
    * `public $components = array('DebugKit.Toolbar');`
-* Set debug mode to at least 1.
-* Make sure to remove the 'sql_dump' element from your layout if you want to experience the awesome that is the debug kit SQL log.
+* Set `Configure::write('debug', 1);` in `app/Config/core.php`.
+* Make sure to remove the 'sql_dump' element from your layout (usually `app/View/Layouts/default.ctp` if you want to experience the awesome that is the debug kit SQL log.
 
 ### Using Composer
 

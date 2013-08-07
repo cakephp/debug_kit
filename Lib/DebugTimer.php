@@ -126,7 +126,7 @@ class DebugTimer {
 
 		$times = array();
 		if (!empty(self::$_timers)) {
-			$firstTimer = current(self::$_timers);
+			$firstTimer = reset(self::$_timers);
 			$_end = $firstTimer['start'];
 		} else {
 			$_end = $now;

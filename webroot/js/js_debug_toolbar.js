@@ -817,7 +817,6 @@ DEBUGKIT.historyPanel = function () {
 	return {
 		init : function () {
 			if (toolbar.panels['history'] === undefined) {
-				console.error('Bailing on history');
 				return;
 			}
 

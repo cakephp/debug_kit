@@ -40,10 +40,10 @@ DEBUGKIT.$ = jQuery.noConflict(true);
 
 DEBUGKIT.loader = function () {
 	return {
-		//list of methods to run on startup.
+		// List of methods to run on startup.
 		_startup: [],
 
-		//register a new method to be run on dom ready.
+		// Register a new method to be run on dom ready.
 		register: function (method) {
 			this._startup.push(method);
 		},
@@ -66,7 +66,7 @@ DEBUGKIT.sqlLog = function () {
 			var buttons = sqlPanel.find('input');
 
 			// Button handling code for explain links.
-			// performs XHR request to get explain query.
+			// Performs XHR request to get explain query.
 			var handleButton = function (event) {
 				event.preventDefault();
 				var form = $(this.form),
@@ -95,16 +95,16 @@ DEBUGKIT.loader.register(DEBUGKIT.sqlLog);
 //
 // NOTE DEBUGKIT.Util.Element is Deprecated.
 //
-//Util module and Element utility class.
+// Util module and Element utility class.
 DEBUGKIT.module('Util');
 DEBUGKIT.Util.Element = {
 
-	//test if an element is a name node.
+	// Test if an element is a name node.
 	nodeName: function (element, name) {
 		return element.nodeName && element.nodeName.toLowerCase() === name.toLowerCase();
 	},
 
-	//return a boolean if the element has the classname
+	// Return a boolean if the element has the classname
 	hasClass: function (element, className) {
 		if (!element.className) {
 			return false;
@@ -147,7 +147,7 @@ DEBUGKIT.Util.Element = {
 		element.style.display = 'none';
 	},
 
-	//go between hide() and show() depending on element.style.display
+	// Go between hide() and show() depending on element.style.display
 	toggle: function (element) {
 		if (element.style.display === 'none') {
 			this.show(element);
@@ -175,16 +175,16 @@ DEBUGKIT.Util.Element = {
 		return this._walk(element, 'previousSibling');
 	},
 
-	//get or set an element's height, omit value to get, add value (integer) to set.
+	// Get or set an element's height, omit value to get, add value (integer) to set.
 	height: function (element, value) {
-		//get value
+		// Get value
 		if (value === undefined) {
 			return parseInt(this.getStyle(element, 'height'), 10);
 		}
 		element.style.height = value + 'px';
 	},
 
-	//gets the style in css format for property
+	// Gets the style in css format for property
 	getStyle: function (element, property) {
 		if (element.currentStyle) {
 			property = property.replace(/-[a-z]/g, function (match) {
@@ -228,7 +228,7 @@ DEBUGKIT.Util.Collection = {
 //
 // NOTE DEBUGKIT.Util.Event is Deprecated.
 //
-//Event binding
+// Event binding
 DEBUGKIT.Util.Event = function () {
 	var _listeners = {},
 		_eventId = 0;
@@ -261,7 +261,7 @@ DEBUGKIT.Util.Event = function () {
 	};
 
 	return {
-		// bind an event listener of type to element, handler is your method.
+		// Bind an event listener of type to element, handler is your method.
 		addEvent: function (element, type, handler, capture) {
 			capture = (capture === undefined) ? false : capture;
 
@@ -282,7 +282,7 @@ DEBUGKIT.Util.Event = function () {
 			_listeners[++_eventId] = {element: element, type: type, handler: callback};
 		},
 
-		// destroy an event listener. requires the exact same function as was used for attaching
+		// Destroy an event listener. requires the exact same function as was used for attaching
 		// the event.
 		removeEvent: function (element, type, handler) {
 			if (element.removeEventListener) {
@@ -296,14 +296,14 @@ DEBUGKIT.Util.Event = function () {
 			}
 		},
 
-		// bind an event to the DOMContentLoaded or other similar event.
+		// Bind an event to the DOMContentLoaded or other similar event.
 		domready: function (callback) {
 			if (document.addEventListener) {
 				return document.addEventListener('DOMContentLoaded', callback, false);
 			}
 
 			if (document.all && !window.opera) {
-				//Define a "blank" external JavaScript tag
+				// Define a "blank" external JavaScript tag
 				document.write(
 					'<script type="text/javascript" id="__domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>'
 				);
@@ -327,7 +327,7 @@ DEBUGKIT.Util.Event = function () {
 			}
 		},
 
-		// unload all the events attached by DebugKit. Fix any memory leaks.
+		// Unload all the events attached by DebugKit. Fix any memory leaks.
 		unload: function () {
 			var listener;
 			for (var i in _listeners) {
@@ -342,11 +342,11 @@ DEBUGKIT.Util.Event = function () {
 	};
 }();
 
-//Cookie utility
+// Cookie utility
 DEBUGKIT.Util.Cookie = function () {
 	var cookieLife = 60;
 
-//public methods
+// Public methods
 	return {
 		/*
 		Write to cookie
@@ -371,7 +371,7 @@ DEBUGKIT.Util.Cookie = function () {
 			var cookieJarLength = cookieJar.length;
 			for (var i = 0; i < cookieJarLength; i++) {
 				var chips = cookieJar[i];
-				//trim leading spaces
+				// Trim leading spaces
 				while (chips.charAt(0) === ' ') {
 					chips = chips.substring(1, chips.length);
 				}
@@ -451,7 +451,7 @@ DEBUGKIT.Util.Request = function (options) {
 	var ajax = this.createObj();
 	this.transport = ajax;
 
-	//event assignment
+	// Event assignment
 	this.onComplete = this.options.onComplete;
 	this.onRequest = this.options.onRequest;
 	this.onFail = this.options.onFail;
@@ -461,10 +461,10 @@ DEBUGKIT.Util.Request = function (options) {
 			url = url + ((url.charAt(url.length - 1) === '?') ? '&' : '?') + data; //check for ? at the end of the string
 			data = null;
 		}
-		//open connection
+		// Open connection
 		this.transport.open(this.options.method, url, this.options.async);
 
-		//set statechange and pass the active XHR object to it. From here it handles all status changes.
+		// Set statechange and pass the active XHR object to it. From here it handles all status changes.
 		this.transport.onreadystatechange = function () {
 			self.onReadyStateChange.apply(self, arguments);
 		};
@@ -542,9 +542,9 @@ DEBUGKIT.Util.Request.prototype.serialize = function (data) {
 };
 
 
-//Basic toolbar module.
+// Basic toolbar module.
 DEBUGKIT.toolbar = function () {
-	//shortcuts
+	// Shortcuts
 	var Cookie = DEBUGKIT.Util.Cookie,
 		$ = DEBUGKIT.$,
 		toolbarHidden = false;
@@ -605,14 +605,14 @@ DEBUGKIT.toolbar = function () {
 			return panel.id;
 		},
 
-		// find the handle element and make the panel drag resizable.
+		// Find the handle element and make the panel drag resizable.
 		makePanelDraggable: function (panel) {
 
-			//create a variable in the enclosing scope, for scope tricks.
+			// Create a variable in the enclosing scope, for scope tricks.
 			var currentElement = null;
 
 			// Use the elements startHeight stored Event.pageY and current Event.pageY to
-			// resize the panel
+			// resize the panel.
 			var mouseMoveHandler = function (event) {
 				event.preventDefault();
 				if (!currentElement) {
@@ -622,8 +622,8 @@ DEBUGKIT.toolbar = function () {
 				currentElement.parent().height(newHeight);
 			};
 
-			// handle the mouseup event, remove the other listeners so the panel
-			// doesn't continue to resize
+			// Handle the mouseup event, remove the other listeners so the panel
+			// doesn't continue to resize.
 			var mouseUpHandler = function (event) {
 				currentElement = null;
 				$(document).off('mousemove', mouseMoveHandler).off('mouseup', mouseUpHandler);
@@ -636,7 +636,7 @@ DEBUGKIT.toolbar = function () {
 				currentElement.data('startY', event.pageY);
 				currentElement.data('startHeight', currentElement.parent().height());
 
-				// attach to document so mouse doesn't have to stay precisely on the 'handle'
+				// Attach to document so mouse doesn't have to stay precisely on the 'handle'.
 				$(document).on('mousemove', mouseMoveHandler)
 					.on('mouseup', mouseUpHandler);
 			};
@@ -644,7 +644,7 @@ DEBUGKIT.toolbar = function () {
 			panel.content.find('.panel-resize-handle').on('mousedown', mouseDownHandler);
 		},
 
-		// make the maximize button work on the panels.
+		// Make the maximize button work on the panels.
 		makePanelMinMax: function (panel) {
 			var _oldHeight;
 

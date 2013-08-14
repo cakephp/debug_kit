@@ -202,12 +202,12 @@ DEBUGKIT.Util.Element = {
 // NOTE DEBUGKIT.Util.Collection is Deprecated.
 //
 DEBUGKIT.Util.Collection = {
-	/*
-	Apply the passed function to each item in the collection.
-	The current element in the collection will be `this` in the callback
-	The callback is also passed the element and the index as arguments.
-	Optionally you can supply a binding parameter to change `this` in the callback.
-	*/
+	/**
+	 * Apply the passed function to each item in the collection.
+	 * The current element in the collection will be `this` in the callback
+	 * The callback is also passed the element and the index as arguments.
+	 * Optionally you can supply a binding parameter to change `this` in the callback.
+	 */
 	apply: function (collection, callback, binding) {
 		var name, thisVar, i = 0, len = collection.length;
 
@@ -348,11 +348,12 @@ DEBUGKIT.Util.Cookie = function () {
 
 // Public methods
 	return {
-		/*
-		Write to cookie
-		@param [string] name Name of cookie to write.
-		@param [mixed] value Value to write to cookie.
-		*/
+		/**
+		 * Write to cookie.
+		 *
+		 * @param [string] name Name of cookie to write.
+		 * @param [mixed] value Value to write to cookie.
+		 */
 		write: function (name, value) {
 			var date = new Date();
 			date.setTime(date.getTime() + (cookieLife * 24 * 60 * 60 * 1000));
@@ -361,10 +362,11 @@ DEBUGKIT.Util.Cookie = function () {
 			return true;
 		},
 
-		/*
-		Read from the cookie
-		@param [string] name Name of cookie to read.
-		*/
+		/**
+		 * Read from the cookie.
+		 *
+		 * @param [string] name Name of cookie to read.
+		 */
 		read: function (name) {
 			name = name + '=';
 			var cookieJar = document.cookie.split(';');
@@ -382,10 +384,11 @@ DEBUGKIT.Util.Cookie = function () {
 			return false;
 		},
 
-		/*
-		Delete a cookie by name.
-		@param [string] name of cookie to delete.
-		*/
+		/**
+		 * Delete a cookie by name.
+		 *
+		 * @param [string] name of cookie to delete.
+		 */
 		del: function (name) {
 			var date = new Date();
 			date.setFullYear(2000, 0, 1);
@@ -398,11 +401,13 @@ DEBUGKIT.Util.Cookie = function () {
 //
 // NOTE DEBUGKIT.Util.merge is Deprecated.
 //
-/*
- Object merge takes any number of arguments and glues them together
- @param [Object] one first object
- @return object
-*/
+
+/**
+ * Object merge takes any number of arguments and glues them together.
+ *
+ * @param [Object] one first object
+ * @return object
+ */
 DEBUGKIT.Util.merge = function () {
 	var out = {};
 	var argumentsLength = arguments.length;
@@ -420,9 +425,10 @@ DEBUGKIT.Util.merge = function () {
 //
 // NOTE DEBUGKIT.Util.isArray is Deprecated.
 //
-/*
- Check if the given object is an array.
-*/
+
+/**
+ * Check if the given object is an array.
+ */
 DEBUGKIT.Util.isArray = function (test) {
 	return Object.prototype.toString.call(test) === '[object Array]';
 };
@@ -506,10 +512,10 @@ DEBUGKIT.Util.Request.prototype.onReadyStateChange = function () {
 	}
 };
 
-/*
- Creates cross-broswer XHR object used for requests
- Tries using the standard XmlHttpRequest, then IE's wacky ActiveX Objects
-*/
+/**
+ * Creates cross-broswer XHR object used for requests.
+ * Tries using the standard XmlHttpRequest, then IE's wacky ActiveX Objects.
+ */
 DEBUGKIT.Util.Request.prototype.createObj = function () {
 	var request = null;
 	try {
@@ -528,9 +534,9 @@ DEBUGKIT.Util.Request.prototype.createObj = function () {
 	return request;
 };
 
-/*
- Serializes an object literal into a querystring
-*/
+/**
+ * Serializes an object literal into a querystring.
+ */
 DEBUGKIT.Util.Request.prototype.serialize = function (data) {
 	var out = '';
 	for (var name in data) {

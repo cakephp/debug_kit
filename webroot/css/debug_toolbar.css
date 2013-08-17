@@ -377,7 +377,7 @@
 
 /* Minimized mode */
 #debug-kit-toolbar.minimized {
-	opacity: 0.4;
+	opacity: 0.75;
 }
 #debug-kit-toolbar.minimized:hover {
 	opacity: inherit;

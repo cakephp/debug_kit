@@ -46,12 +46,13 @@ DebugKit has several releases, they are compatible with different release of Cak
 * `1.3.0` is compatible with CakePHP 1.3.x only. It will not work with CakePHP 1.2. You can also use the `1.3` branch to get the most recent updates and bugfixes.
 * `2.0.0` is compatible with CakePHP 2.0.x only. It will not work with previous CakePHP versions.
 * `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with older versions of CakePHP as this release uses new API's available in 2.2. You can also use the `master` branch to get the most recent updates.
+* `2.2.1` is compatible with CakePHP 2.2.0 and greater. It is a necessary upgrade for people using CakePHP 2.4 as thenaming conventions around loggers changed in that release.
 
 # Documentation
 
 ## Toolbar Panels
 
-The debugKit Toolbar is comprised of several panels. Each panel is comprised of a panel class and view element. Typically a panel handles the collection and display of a single type of information such as Logs or Request information. You can choose to panels from the toolbar or add you own custom panels.
+The DebugKit Toolbar is comprised of several panels. Each panel is comprised of a panel class and view element. Typically a panel handles the collection and display of a single type of information such as Logs or Request information. You can choose to panels from the toolbar or add you own custom panels.
 
 ### Built-in Panels
 

@@ -33,7 +33,7 @@ class DebugKitLog implements CakeLogInterface {
 /**
  * Makes the reverse link needed to get the logs later.
  *
- * @param $options
+ * @param array $options
  * @return \DebugKitLog
  */
 	public function __construct($options) {
@@ -43,14 +43,19 @@ class DebugKitLog implements CakeLogInterface {
 /**
  * Captures log messages in memory
  *
- * @param $type
- * @param $message
+ * @param string $type
+ * @param string $message
  * @return void
  */
 	public function write($type, $message) {
+		if (!CakeLog::stream($type)) {
+			trigger_error(__d('debug_kit', 'Logging stream %s not configured', $type));
+		}
+
 		if (!isset($this->logs[$type])) {
 			$this->logs[$type] = array();
 		}
 		$this->logs[$type][] = array(date('Y-m-d H:i:s'), $message);
 	}
+
 }

@@ -180,7 +180,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {
 			return '';
 		}
-		$hash = Security::hash($sql . $connection, null, true);
+		$hash = Security::hash($sql . $connection);
 		$url = array(
 			'plugin' => 'debug_kit',
 			'controller' => 'toolbar_access',

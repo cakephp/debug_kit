@@ -72,7 +72,7 @@ class TimedBehavior extends ModelBehavior {
  * @param $primary
  * @return boolean true.
  */
-	public function afterFind(Model $Model, $results, $primary) {
+	public function afterFind(Model $Model, $results, $primary = false) {
 		DebugKitDebugger::stopTimer($Model->alias . '_find');
 		return true;
 	}

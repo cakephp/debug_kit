@@ -9,8 +9,8 @@ env:
   - CAKE_VERSION=2.2.7 DB=pgsql
   - CAKE_VERSION=master DB=mysql
   - CAKE_VERSION=master DB=pgsql
-  - CAKE_VERSION=2.4 DB=mysql
-  - CAKE_VERSION=2.4 DB=pgsql
+  - CAKE_VERSION=2.4.1 DB=mysql
+  - CAKE_VERSION=2.4.1 DB=pgsql
 
 before_script:
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"

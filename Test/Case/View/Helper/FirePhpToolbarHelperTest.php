@@ -27,7 +27,6 @@ App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('FirePhpToolbarHelper', 'DebugKit.View/Helper');
 
 require_once $path . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
-FireCake::getInstance('TestFireCake');
 
 /**
  * Class FirePhpToolbarHelperTestCase
@@ -54,7 +53,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.FirePhpToolbar'));
 		$this->Toolbar->FirePhpToolbar = new FirePhpToolbarHelper($this->View);
 
-		$this->firecake = FireCake::getInstance();
+		$this->firecake = FireCake::getInstance('TestFireCake');
+		TestFireCake::reset();
 	}
 
 /**

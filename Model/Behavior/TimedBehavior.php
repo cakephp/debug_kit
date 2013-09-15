@@ -96,7 +96,7 @@ class TimedBehavior extends ModelBehavior {
  * @param string $created
  * @return boolean Always true
  */
-	public function afterSave(Model $Model, $created) {
+	public function afterSave(Model $Model, $created, $options = array()) {
 		DebugKitDebugger::stopTimer($Model->alias . '_save');
 		return true;
 	}

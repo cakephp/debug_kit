@@ -37,6 +37,16 @@ class FireCakeTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		$this->firecake = FireCake::getInstance('TestFireCake');
+		TestFireCake::reset();
+	}
+
+/**
+ * Reset the FireCake counters and headers.
+ *
+ * @return void
+ */
+	public function tearDown() {
+		TestFireCake::reset();
 	}
 
 /**
@@ -334,12 +344,4 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:\d*,/', $json);
 	}
 
-/**
- * Reset the FireCake counters and headers.
- *
- * @return void
- */
-	public function tearDown() {
-		TestFireCake::reset();
-	}
 }

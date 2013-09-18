@@ -32,4 +32,4 @@
 ?>
 
 <h4>Included Files</h4>
-<?php echo $this->Toolbar->makeNeatArray($content); ?>
+<?php echo $this->Toolbar->makeNeatArray($content);

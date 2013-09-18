@@ -48,4 +48,4 @@ endif;
 <?php endif; ?>
 
 <h4><?php echo __d('debug_kit', 'Current Route') ?></h4>
-<?php echo $this->Toolbar->makeNeatArray($content['currentRoute']); ?>
+<?php echo $this->Toolbar->makeNeatArray($content['currentRoute']);

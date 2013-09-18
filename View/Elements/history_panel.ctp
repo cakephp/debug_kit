@@ -30,4 +30,4 @@
 			<li><?php echo $this->Html->link($previous['title'], $previous['url'], array('class' => 'history-link')); ?></li>
 		<?php endforeach; ?>
 	</ul>
-<?php endif; ?>
+<?php endif;

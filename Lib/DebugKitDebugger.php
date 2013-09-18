@@ -229,6 +229,7 @@ class DebugKitDebugger extends Debugger {
 		}
 		FireCake::groupEnd();
 	}
+
 }
 
 DebugKitDebugger::getInstance('DebugKitDebugger');

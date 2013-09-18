@@ -205,7 +205,7 @@ class ToolbarHelper extends AppHelper {
 					}
 					foreach ($query['params'] as $bindKey => $bindVal) {
 						if ($bindType === true) {
-							$bindParam .= h($bindKey) ." => " . h($bindVal) . ", ";
+							$bindParam .= h($bindKey) . " => " . h($bindVal) . ", ";
 						} else {
 							$bindParam .= h($bindVal) . ", ";
 						}

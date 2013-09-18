@@ -66,8 +66,8 @@
 	padding: 4px;
 }
 #debug-kit-toolbar .panel-tab a.edit-value {
-    float: none;
-    display: inline;
+		float: none;
+		display: inline;
 }
 
 /* Hovering over link shows tab, useful for no js  */

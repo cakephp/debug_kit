@@ -26,12 +26,12 @@ App::uses('Debugger', 'Utility');
 
 if (!function_exists('firecake')) {
 
-	/**
-	 * Procedural version of FireCake::log()
-	 *
-	 * @param $message
-	 * @param null $label
-	 */
+/**
+ * Procedural version of FireCake::log()
+ *
+ * @param $message
+ * @param null $label
+ */
 	function firecake($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
@@ -376,9 +376,9 @@ class FireCake {
 		$structureIndex = 1;
 		if ($type == $_this->_levels['dump']) {
 			$structureIndex = 2;
-			$_this->_sendHeader('X-Wf-1-Structure-2','http://meta.firephp.org/Wildfire/Structure/FirePHP/Dump/0.1');
+			$_this->_sendHeader('X-Wf-1-Structure-2', 'http://meta.firephp.org/Wildfire/Structure/FirePHP/Dump/0.1');
 		} else {
-			$_this->_sendHeader('X-Wf-1-Structure-1','http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1');
+			$_this->_sendHeader('X-Wf-1-Structure-1', 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1');
 		}
 
 		$_this->_sendHeader('X-Wf-Protocol-1', 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2');

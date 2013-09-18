@@ -27,4 +27,3 @@ foreach ($toolbarState as $panelName => $panel) {
 }
 echo json_encode($panels);
 Configure::write('debug', 0);
-?>

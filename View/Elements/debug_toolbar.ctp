@@ -43,7 +43,7 @@
 							<?php
 								echo $this->element($panelInfo['elementName'], $panelInfo, array(
 									'plugin' => (empty($panelInfo['plugin'])) ? null : Inflector::camelize($panelInfo['plugin'])
-								)); 
+								));
 							?>
 						</div>
 						<div class="panel-content-data panel-history" id="<?php echo $panelUnderscore; ?>-history">

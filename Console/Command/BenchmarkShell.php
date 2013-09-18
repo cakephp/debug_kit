@@ -13,7 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('String','Utility');
+App::uses('String', 'Utility');
 
 /**
  * Benchmark Shell Class
@@ -113,7 +113,9 @@ class BenchmarkShell extends Shell {
 			$M2 = $M2 + $delta * ($time - $mean);
 		}
 
-		if ($sample) $n -= 1;
+		if ($sample) {
+			$n -= 1;
+		}
 
 		return $M2 / $n;
 	}

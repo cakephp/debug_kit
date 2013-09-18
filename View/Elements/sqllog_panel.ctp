@@ -44,7 +44,7 @@ if (isset($debugKitInHistoryMode)) {
 			);
 			echo '</h5>';
 			echo $this->Toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
-		 ?>
+			?>
 		<h4><?php echo __d('debug_kit', 'Query Explain:'); ?></h4>
 		<div id="sql-log-explain-<?php echo $dbName ?>">
 			<a id="debug-kit-explain-<?php echo $dbName ?>"> </a>
@@ -54,4 +54,4 @@ if (isset($debugKitInHistoryMode)) {
 	<?php endforeach; ?>
 <?php else:
 	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
-endif; ?>
+endif;

@@ -9,4 +9,3 @@ echo $this->Html->tableCells($result);
 <?php
 // Consume and toss out the timers
 $timers = DebugKitDebugger::getTimers(true);
-?>

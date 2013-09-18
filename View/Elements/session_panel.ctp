@@ -18,4 +18,4 @@
  **/
 ?>
 <h2><?php echo __d('debug_kit', 'Session'); ?></h2>
-<?php echo $this->Toolbar->makeNeatArray($content); ?>
+<?php echo $this->Toolbar->makeNeatArray($content);

@@ -32,21 +32,21 @@ Ensure `require` is present in `composer.json`. This will install the plugin int
 
 ## Reporting issues
 
-If you have an issues with DebugKit please open a ticket on lighthouse http://cakephp.lighthouseapp.com/projects/42880-debug-kit/overview
+If you have an issue with DebugKit please open a ticket on lighthouse http://cakephp.lighthouseapp.com/projects/42880-debug-kit/overview
 
 ## Contributing
 
-If you'd like to contribute to DebugKit, check out the [Roadmap](http://cakephp.lighthouseapp.com/projects/42880/roadmap) for any planned features. You can fork the project add features and send pull requests, or open tickets on lighthouse.
+If you'd like to contribute to DebugKit, check out the [Roadmap](http://cakephp.lighthouseapp.com/projects/42880/roadmap) for any planned features. You can fork the project, add features, and send pull requests; or open tickets on lighthouse.
 
 ## Versions
 
-DebugKit has several releases, they are compatible with different release of CakePHP. Downloading a tag, or checking out the correct branch.
+DebugKit has several releases, each compatible with different releases of CakePHP. Use the appropriate version by downloading a tag, or checking out the correct branch.
 
 * `1.0, 1.1, 1.2` are compatible with CakePHP 1.2.x. These releases of DebugKit will not work with CakePHP 1.3. You can also use the `1.2-branch` for the mos recent updates and bugfixes.
 * `1.3.0` is compatible with CakePHP 1.3.x only. It will not work with CakePHP 1.2. You can also use the `1.3` branch to get the most recent updates and bugfixes.
 * `2.0.0` is compatible with CakePHP 2.0.x only. It will not work with previous CakePHP versions.
 * `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with older versions of CakePHP as this release uses new API's available in 2.2. You can also use the `master` branch to get the most recent updates.
-* `2.2.1` is compatible with CakePHP 2.2.0 and greater. It is a necessary upgrade for people using CakePHP 2.4 as thenaming conventions around loggers changed in that release.
+* `2.2.1` is compatible with CakePHP 2.2.0 and greater. It is a necessary upgrade for people using CakePHP 2.4 as the naming conventions around loggers changed in that release.
 
 # Documentation
 

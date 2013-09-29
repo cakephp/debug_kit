@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Test.Case.View.Helper
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
@@ -31,7 +30,6 @@ require_once $path . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 /**
  * Class FirePhpToolbarHelperTestCase
  *
- * @package       DebugKit.Test.Case.View.Helper
  * @since         DebugKit 0.1
  */
 class FirePhpToolbarHelperTestCase extends CakeTestCase {

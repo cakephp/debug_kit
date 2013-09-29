@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Test.Case
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
@@ -22,7 +21,6 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
 /**
  * DebugKitViewTestSuite class
  *
- * @package       DebugKit.Test.Case
  * @since         DebugKit 1.0
  */
 class AllDebugKitTest extends DebugkitGroupTestCase {

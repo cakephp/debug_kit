@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Test.Case.Model.Behavior
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -22,7 +21,6 @@ App::uses('DebugKitDebugger', 'DebugKit.Lib');
 /**
  * Class TimedBehaviorTestCase
  *
- * @package       DebugKit.Test.Case.Model.Behavior
  * @since         DebugKit 1.3
  */
 class TimedBehaviorTestCase extends CakeTestCase {

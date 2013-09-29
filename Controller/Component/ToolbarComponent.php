@@ -451,7 +451,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			$panelObj = new $className($settings);
 			if ($panelObj instanceof DebugPanel) {
 				list(, $panel) = pluginSplit($panel);
-				$this->panels[strtolower($panel)] = $panelObj;
+				$this->panels[Inflector::underscore($panel)] = $panelObj;
 			}
 		}
 	}

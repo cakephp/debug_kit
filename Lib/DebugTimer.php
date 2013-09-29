@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Lib
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -22,7 +21,6 @@ App::uses('Debugger', 'Utility');
 /**
  * Class DebugTimer
  *
- * @package       DebugKit.Lib
  * @since         DebugKit 0.1
  */
 class DebugTimer {
@@ -39,7 +37,7 @@ class DebugTimer {
  *
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
- * @return bool Always true
+ * @return boolean Always true
  */
 	public static function start($name = null, $message = null) {
 		$start = microtime(true);
@@ -117,7 +115,7 @@ class DebugTimer {
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
- * @param bool $clear false
+ * @param boolean $clear false
  * @return array
  */
 	public static function getAll($clear = false) {
@@ -157,7 +155,7 @@ class DebugTimer {
 /**
  * Clear all existing timers
  *
- * @return bool true
+ * @return boolean true
  */
 	public static function clear() {
 		self::$_timers = array();

@@ -15,7 +15,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Lib
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
@@ -32,7 +31,6 @@ App::uses('DebugMemory', 'DebugKit.Lib');
  *
  * This file will not be needed in future version of CakePHP.
  *
- * @package       DebugKit.Lib
  * @since         DebugKit 0.1
  */
 class DebugKitDebugger extends Debugger {
@@ -80,7 +78,7 @@ class DebugKitDebugger extends Debugger {
  *
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
- * @return bool true
+ * @return boolean true
  * @deprecated use DebugTimer::start()
  */
 	public static function startTimer($name = null, $message = null) {
@@ -104,7 +102,7 @@ class DebugKitDebugger extends Debugger {
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
- * @param bool $clear false
+ * @param boolean $clear false
  * @return array
  * @deprecated use DebugTimer::getAll()
  */
@@ -115,7 +113,7 @@ class DebugKitDebugger extends Debugger {
 /**
  * Clear all existing timers
  *
- * @return bool true
+ * @return boolean true
  * @deprecated use DebugTimer::clear()
  */
 	public static function clearTimers() {

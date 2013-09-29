@@ -14,7 +14,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Lib.Panel
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
@@ -23,7 +22,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 /**
  * Class SqlLogPanel
  *
- * @package       DebugKit.Lib.Panel
  */
 class SqlLogPanel extends DebugPanel {
 
@@ -31,7 +29,7 @@ class SqlLogPanel extends DebugPanel {
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
  * is done.
  *
- * @var int
+ * @var integer
  */
 	public $slowRate = 20;
 

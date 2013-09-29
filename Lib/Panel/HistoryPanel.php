@@ -14,7 +14,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Lib.Panel
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
 
@@ -23,7 +22,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 /**
  * Class HistoryPanel
  *
- * @package       DebugKit.Lib.Panel
  */
 class HistoryPanel extends DebugPanel {
 

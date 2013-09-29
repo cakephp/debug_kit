@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Test.Case.Lib
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
@@ -23,7 +22,6 @@ require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFir
 /**
  * Test Case For FireCake
  *
- * @package       DebugKit.Test.Case.Lib
  * @since         DebugKit 0.1
  */
 class FireCakeTestCase extends CakeTestCase {

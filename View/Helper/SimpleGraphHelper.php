@@ -8,7 +8,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.View.Helper
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -21,7 +20,6 @@ App::uses('HtmlHelper', 'View/Helper');
  *
  * Allows creation and display of extremely simple graphing elements
  *
- * @package       DebugKit.View.Helper
  * @since         DebugKit 1.0
  */
 class SimpleGraphHelper extends AppHelper {

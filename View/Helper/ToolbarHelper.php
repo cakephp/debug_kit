@@ -8,7 +8,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -21,7 +20,6 @@ App::uses('ConnectionManager', 'Model');
  * Provides Base methods for content specific debug toolbar helpers.
  * Acts as a facade for other toolbars helpers as well.
  *
- * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
  */
 class ToolbarHelper extends AppHelper {
@@ -134,7 +132,7 @@ class ToolbarHelper extends AppHelper {
  * Read the toolbar
  *
  * @param string $name Name of the panel you want cached data for
- * @param int $index
+ * @param integer $index
  * @return mixed Boolean false on failure, array of data otherwise.
  */
 	public function readCache($name, $index = 0) {

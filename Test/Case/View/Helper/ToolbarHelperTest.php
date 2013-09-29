@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Test.Case.View.Helper
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
@@ -25,7 +24,6 @@ App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 /**
  * Class MockBackendHelper
  *
- * @package       DebugKit.Test.Case.View.Helper
  * @since         DebugKit 0.1
  */
 class MockBackendHelper extends Helper {
@@ -34,7 +32,6 @@ class MockBackendHelper extends Helper {
 /**
  * Class ToolbarHelperTestCase
  *
- * @package       DebugKit.Test.Case.View.Helper
  */
 class ToolbarHelperTestCase extends CakeTestCase {
 

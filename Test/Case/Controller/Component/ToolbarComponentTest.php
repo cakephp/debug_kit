@@ -12,7 +12,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Test.Case.Controller.Component
  * @since         DebugKit 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -28,7 +27,6 @@ App::uses('DebugTimer', 'DebugKit.Lib');
 /**
  * Class TestToolbarComponent
  *
- * @package       DebugKit.Test.Case.Controller.Component
  * @since         DebugKit 2.1
  */
 class TestToolbarComponent extends ToolbarComponent {
@@ -47,7 +45,6 @@ class TestToolbarComponent extends ToolbarComponent {
 /**
  * DebugKitToolbarComponentTestCase Test case
  *
- * @package       DebugKit.Test.Case.Controller.Component
  */
 class DebugKitToolbarComponentTestCase extends CakeTestCase {
 

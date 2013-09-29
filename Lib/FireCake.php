@@ -17,7 +17,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Lib
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -41,7 +40,6 @@ if (!function_exists('firecake')) {
 /**
  * Class FireCake
  *
- * @package       DebugKit.Lib
  * @since         DebugKit 0.1
  */
 class FireCake {
@@ -94,7 +92,7 @@ class FireCake {
 /**
  * internal messageIndex counter
  *
- * @var int
+ * @var integer
  */
 	protected $_messageIndex = 1;
 
@@ -115,7 +113,7 @@ class FireCake {
 /**
  * FireCake output status
  *
- * @var bool
+ * @var boolean
  **/
 	protected $_enabled = true;
 
@@ -473,8 +471,8 @@ class FireCake {
  * Filter out recursion, so no errors are raised by json_encode or $javascript->object()
  *
  * @param mixed $object Object or variable to encode to string.
- * @param int $objectDepth Current Depth in object chains.
- * @param int $arrayDepth Current Depth in array chains.
+ * @param integer $objectDepth Current Depth in object chains.
+ * @param integer $arrayDepth Current Depth in array chains.
  * @return string|Object
  */
 	public static function stringEncode($object, $objectDepth = 1, $arrayDepth = 1) {
@@ -519,7 +517,7 @@ class FireCake {
  * Encode an object into JSON
  *
  * @param mixed $object Object or array to json encode
- * @param bool $skipEncode
+ * @param boolean $skipEncode
  * @internal param bool $doIt
  * @static
  * @return string

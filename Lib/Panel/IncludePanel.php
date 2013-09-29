@@ -14,7 +14,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Lib.Panel
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
 
@@ -23,7 +22,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 /**
  * Class IncludePanel
  *
- * @package       DebugKit.Lib.Panel
  */
 class IncludePanel extends DebugPanel {
 
@@ -99,7 +97,7 @@ class IncludePanel extends DebugPanel {
 /**
  * Check if a path is part of cake core
  * @param string $file
- * @return bool
+ * @return boolean
  */
 	protected function _isCoreFile($file) {
 		return strstr($file, CAKE);
@@ -108,7 +106,7 @@ class IncludePanel extends DebugPanel {
 /**
  * Check if a path is from APP but not a plugin
  * @param string $file
- * @return bool
+ * @return boolean
  */
 	protected function _isAppFile($file) {
 		return strstr($file, APP);
@@ -117,7 +115,7 @@ class IncludePanel extends DebugPanel {
 /**
  * Check if a path is from a plugin
  * @param string $file
- * @return bool
+ * @return boolean
  */
 	protected function _isPluginFile($file) {
 		foreach ($this->_pluginPaths as $plugin => $path) {
@@ -136,7 +134,7 @@ class IncludePanel extends DebugPanel {
  *  - app for app files
  *  - core for core files
  *  - PluginName for the name of a plugin
- * @return bool
+ * @return boolean
  */
 	protected function _niceFileName($file, $type) {
 		switch ($type) {

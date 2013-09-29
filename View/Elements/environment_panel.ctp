@@ -14,7 +14,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.View.Elements
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>

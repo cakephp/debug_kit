@@ -8,7 +8,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Console.Command
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -19,7 +18,6 @@ App::uses('Folder', 'Utility');
  *
  * Based on jperras' shell found at http://bin.cakephp.org/view/626544881
  *
- * @package       DebugKit.Console.Command
  * @since         DebugKit 1.3
  */
 class WhitespaceShell extends Shell {

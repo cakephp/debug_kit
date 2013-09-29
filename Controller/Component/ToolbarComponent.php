@@ -9,7 +9,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.Controller.Component
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -25,7 +24,6 @@ App::uses('CakeEventListener', 'Event');
 /**
  * Class ToolbarComponent
  *
- * @package       DebugKit.Controller.Component
  * @since         DebugKit 0.1
  */
 class ToolbarComponent extends Component implements CakeEventListener {
@@ -231,7 +229,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * If automatically disabled, tell component collection about the state.
  *
  * @param Controller $controller
- * @return bool
+ * @return boolean
  */
 	public function initialize(Controller $controller) {
 		if (!$this->enabled) {
@@ -272,7 +270,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * Component Startup
  *
  * @param Controller $controller
- * @return bool
+ * @return boolean
  */
 	public function startup(Controller $controller) {
 		$panels = array_keys($this->panels);
@@ -294,7 +292,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * @param Controller $controller
  * @param $url
  * @param null $status
- * @param bool $exit
+ * @param boolean $exit
  * @return void
  */
 	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
@@ -368,7 +366,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 /**
  * Load a toolbar state from cache
  *
- * @param int $key
+ * @param integer $key
  * @return array
  */
 	public function loadState($key) {

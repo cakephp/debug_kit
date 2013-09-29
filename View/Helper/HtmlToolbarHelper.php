@@ -8,7 +8,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
@@ -23,7 +22,6 @@ App::uses('Security', 'Utility');
  * Contains helper methods for
  *
  *
- * @package       DebugKit.View.Helper
  * @since         DebugKit 0.1
  */
 class HtmlToolbarHelper extends ToolbarHelper {
@@ -46,9 +44,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * Recursively goes through an array and makes neat HTML out of it.
  *
  * @param mixed $values Array to make pretty.
- * @param int $openDepth Depth to add open class
- * @param int $currentDepth current depth.
- * @param bool $doubleEncode
+ * @param integer $openDepth Depth to add open class
+ * @param integer $currentDepth current depth.
+ * @param boolean $doubleEncode
  * @return string
  */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {

@@ -95,7 +95,7 @@ foreach ($timers as $timerName => $timeInfo):
 	$i++;
 endforeach;
 
-if (strtolower($this->Toolbar->getName()) == 'firephptoolbar'):
+if (strtolower($this->Toolbar->getName()) === 'firephptoolbar'):
 	for ($i = 0, $len = count($rows); $i < $len; $i++):
 		unset($rows[$i][2]);
 	endfor;

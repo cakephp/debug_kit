@@ -38,9 +38,6 @@ var DEBUGKIT = function () {
 	function versionGreater(a, b) {
 		var len = Math.min(a.length, b.length);
 		for (var i = 0; i < len; i++) {
-			if (a[i] === undefined || b[i] === undefined) {
-				return false;
-			}
 			if (parseInt(a[i], 10) < parseInt(b[i], 10)) {
 				return false;
 			}

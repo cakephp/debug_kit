@@ -39,7 +39,8 @@ class ToolbarComponent extends Component implements CakeEventListener {
  */
 	public $settings = array(
 		'forceEnable' => false,
-		'autoRun' => true
+		'autoRun' => true,
+		'addJquery' => true
 	);
 
 /**
@@ -329,6 +330,10 @@ class ToolbarComponent extends Component implements CakeEventListener {
 		);
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
+        
+		if(!$this->settings['addJquery']) {
+			unset($this->javascript['jquery']);
+		}
 
 		$this->javascript = array_unique(array_merge($this->javascript, $vars['javascript']));
 		$this->css = array_unique(array_merge($this->css, $vars['css']));

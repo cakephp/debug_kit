@@ -34,20 +34,32 @@ var DEBUGKIT = function () {
 	};
 }();
 
-// Look for existing jQuery that is reasonably new.
-if (window.jQuery && jQuery.fn.jquery >= "1.8.1") {
-	DEBUGKIT.$ = window.jQuery;
-} else {
-	// sync load the file. Using document.write() does not block
-	// in recent versions of chrome.
-	var req = new XMLHttpRequest();
-	req.onload = function () {
-		eval(this.responseText);
-		DEBUGKIT.$ = jQuery.noConflict(); // do not unset window.jQuery
-	};
-	req.open('get', window.DEBUGKIT_JQUERY_URL, false);
-	req.send();
-}
+(function () {
+	function versionCompare(version, min, max) {
+		version = parseInt(version.replace('.', ''), 10);
+		min = parseInt(min.replace('.', ''), 10);
+		max = parseInt(max.replace('.', ''), 10);
+		if (version >= min && version <= max) {
+			return true;
+		}
+		return false;
+	}
+
+	// Look for existing jQuery that matches the requirements.
+	if (window.jQuery && versionCompare(jQuery.fn.jquery, "1.8.1", "2.0.9")) {
+		DEBUGKIT.$ = window.jQuery;
+	} else {
+		// sync load the file. Using document.write() does not block
+		// in recent versions of chrome.
+		var req = new XMLHttpRequest();
+		req.onload = function () {
+			eval(this.responseText);
+			DEBUGKIT.$ = jQuery.noConflict(); // do not unset window.jQuery
+		};
+		req.open('get', window.DEBUGKIT_JQUERY_URL, false);
+		req.send();
+	}
+})();
 
 DEBUGKIT.loader = function () {
 	return {

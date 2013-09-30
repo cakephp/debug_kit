@@ -35,18 +35,28 @@ var DEBUGKIT = function () {
 }();
 
 (function () {
-	function versionCompare(version, min, max) {
-		version = parseInt(version.replace('.', ''), 10);
-		min = parseInt(min.replace('.', ''), 10);
-		max = parseInt(max.replace('.', ''), 10);
-		if (version >= min && version <= max) {
-			return true;
+	function versionGreater(a, b) {
+		var len = Math.min(a.length, b.length);
+		for (var i = 0; i < len; i++) {
+			if (a[i] === undefined || b[i] === undefined) {
+				return false;
+			}
+			if (parseInt(a[i], 10) < parseInt(b[i], 10)) {
+				return false;
+			}
 		}
-		return false;
+		return true;
+	}
+
+	function versionWithin(version, min, max) {
+		version = version.split('.');
+		min = min.split('.');
+		max = max.split('.');
+		return versionGreater(version, min) && !versionGreater(version, max);
 	}
 
 	// Look for existing jQuery that matches the requirements.
-	if (window.jQuery && versionCompare(jQuery.fn.jquery, "1.8.1", "2.0.9")) {
+	if (window.jQuery && versionWithin(jQuery.fn.jquery, "1.8", "2.0")) {
 		DEBUGKIT.$ = window.jQuery;
 	} else {
 		// sync load the file. Using document.write() does not block

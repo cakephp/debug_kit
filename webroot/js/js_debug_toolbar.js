@@ -21,8 +21,6 @@
 
 /* jshint jquery: true */
 
-/* global ActiveXObject: false */
-
 var DEBUGKIT = function () {
 	var undef;
 	return {
@@ -36,7 +34,20 @@ var DEBUGKIT = function () {
 	};
 }();
 
-DEBUGKIT.$ = jQuery.noConflict(true);
+// Look for existing jQuery that is reasonably new.
+if (window.jQuery && jQuery.fn.jquery >= "1.8.1") {
+	DEBUGKIT.$ = window.jQuery;
+} else {
+	// sync load the file. Using document.write() does not block
+	// in recent versions of chrome.
+	var req = new XMLHttpRequest();
+	req.onload = function () {
+		eval(this.responseText);
+		DEBUGKIT.$ = jQuery.noConflict(); // do not unset window.jQuery
+	};
+	req.open('get', window.DEBUGKIT_JQUERY_URL, false);
+	req.send();
+}
 
 DEBUGKIT.loader = function () {
 	return {

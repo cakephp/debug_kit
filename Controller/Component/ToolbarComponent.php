@@ -87,7 +87,6 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * @var array
  */
 	public $javascript = array(
-		'jquery' => 'DebugKit.jquery',
 		'libs' => 'DebugKit.js_debug_toolbar'
 	);
 

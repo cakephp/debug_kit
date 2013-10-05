@@ -1,7 +1,5 @@
 <?php
 /**
- * DebugToolbar Test
- *
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
@@ -45,11 +43,11 @@ class TestToolbarComponent extends ToolbarComponent {
 }
 
 /**
- * DebugKitToolbarComponentTestCase Test case
+ * ToolbarComponentTestCase Test case
  *
  * @package       DebugKit.Test.Case.Controller.Component
  */
-class DebugKitToolbarComponentTestCase extends CakeTestCase {
+class ToolbarComponentTestCase extends CakeTestCase {
 
 /**
  * fixtures
@@ -180,7 +178,7 @@ class DebugKitToolbarComponentTestCase extends CakeTestCase {
 		$this->Controller->Toolbar->loadPanels(array('DebugkitTestPlugin.PluginTest'));
 		$this->assertInstanceOf(
 			'PluginTestPanel',
-			$this->Controller->Toolbar->panels['plugintest']
+			$this->Controller->Toolbar->panels['plugin_test']
 		);
 	}
 

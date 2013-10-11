@@ -34,10 +34,15 @@ var DEBUGKIT = function () {
 }();
 
 (function () {
-	function versionGreater(a, b) {
+	function versionGTE(a, b) {
 		var len = Math.min(a.length, b.length);
 		for (var i = 0; i < len; i++) {
-			if (parseInt(a[i], 10) < parseInt(b[i], 10)) {
+			a[i] = parseInt(a[i], 10);
+			b[i] = parseInt(b[i], 10);
+			if (a[i] > b[i]) {
+				return true;
+			}
+			if (a[i] < b[i]) {
 				return false;
 			}
 		}
@@ -48,7 +53,7 @@ var DEBUGKIT = function () {
 		version = version.split('.');
 		min = min.split('.');
 		max = max.split('.');
-		return versionGreater(version, min) && !versionGreater(version, max);
+		return versionGTE(version, min) && versionGTE(max, version);
 	}
 
 	// Look for existing jQuery that matches the requirements.

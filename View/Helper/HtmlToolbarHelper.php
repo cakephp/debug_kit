@@ -69,6 +69,11 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		}
 		foreach ($values as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
+			if (is_array($value) && count($value) > 0) {
+				$out .= '(array)';
+			} elseif (is_object($value)) {
+				$out .= '(object)';
+			}
 			if ($value === null) {
 				$value = '(null)';
 			}
@@ -85,7 +90,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				$value = 'function';
 			}
 
-			if (($value instanceof ArrayAccess || $value instanceof Iterator || is_array($value)) && !empty($value)) {
+			if (($value instanceof ArrayAccess || $value instanceof Iterator || is_array($value) || is_object($value)) && !empty($value)) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
 			} else {
 				$out .= h($value, $doubleEncode);

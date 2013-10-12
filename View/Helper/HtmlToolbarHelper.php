@@ -69,9 +69,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		}
 		foreach ($values as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
-            if(is_array($value) && count($value) > 0) {
+            if (is_array($value) && count($value) > 0) {
                 $out .= '(array)';
-            } else if(is_object($value)) {
+            } else if (is_object($value)) {
                 $out .= '(object)';
             }
 			if ($value === null) {

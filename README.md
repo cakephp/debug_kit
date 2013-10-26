@@ -32,11 +32,11 @@ Ensure `require` is present in `composer.json`. This will install the plugin int
 
 ## Reporting issues
 
-If you have an issue with DebugKit please open a ticket on lighthouse http://cakephp.lighthouseapp.com/projects/42880-debug-kit/overview
+If you have a problem with DebugKit please open an issue on [GitHub](https://github.com/cakephp/debug_kit/issues).
 
 ## Contributing
 
-If you'd like to contribute to DebugKit, check out the [Roadmap](http://cakephp.lighthouseapp.com/projects/42880/roadmap) for any planned features. You can fork the project, add features, and send pull requests; or open tickets on lighthouse.
+If you'd like to contribute to DebugKit, check out the [roadmap](http://cakephp.lighthouseapp.com/projects/42880/roadmap) for any planned features. You can [fork](https://help.github.com/articles/fork-a-repo) the project, add features, and send [pull requests](https://help.github.com/articles/using-pull-requests) or open [issues](https://github.com/cakephp/debug_kit/issues).
 
 ## Versions
 
@@ -117,7 +117,6 @@ autoRun is a new configuration setting for DebugKit 1.2. It allows you to contro
 
 When visiting a page you can add `?debug=true` to the url and the toolbar will be visible. Otherwise it will stay hidden and not execute.
 
-
 ## Developing your own panels
 
 You can create your own custom panels for DebugKit to help in debugging your applications.
@@ -190,7 +189,6 @@ To use a plugin panel, use the common CakePHP dot notation for plugins.
 	public $components = array('DebugKit.Toolbar' => array(
 	    'panels' => array('MyPlugin.MyCustom')
 	));
-
 
 The above would load all the default panels as well as the custom panel from `MyPlugin`. 
 

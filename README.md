@@ -16,7 +16,9 @@ The master branch has the following requirements:
 * Include the toolbar component in your `AppController.php`:
    * `public $components = array('DebugKit.Toolbar');`
 * Set `Configure::write('debug', 1);` in `app/Config/core.php`.
-* Make sure to remove the 'sql_dump' element from your layout (usually `app/View/Layouts/default.ctp` if you want to experience the awesome that is the debug kit SQL log.
+* Make sure to remove the 'sql_dump' element from your layout (usually
+  `app/View/Layouts/default.ctp` if you want to experience the awesome that is
+  the debug kit SQL log.
 
 ### Using Composer
 
@@ -36,32 +38,56 @@ If you have a problem with DebugKit please open an issue on [GitHub](https://git
 
 ## Contributing
 
-If you'd like to contribute to DebugKit, check out the [roadmap](http://cakephp.lighthouseapp.com/projects/42880/roadmap) for any planned features. You can [fork](https://help.github.com/articles/fork-a-repo) the project, add features, and send [pull requests](https://help.github.com/articles/using-pull-requests) or open [issues](https://github.com/cakephp/debug_kit/issues).
+If you'd like to contribute to DebugKit, check out the
+[roadmap](https://github.com/cakephp/debug_kit/wiki/roadmap) for any
+planned features. You can [fork](https://help.github.com/articles/fork-a-repo)
+the project, add features, and send [pull
+requests](https://help.github.com/articles/using-pull-requests) or open
+[issues](https://github.com/cakephp/debug_kit/issues).
 
 ## Versions
 
-DebugKit has several releases, each compatible with different releases of CakePHP. Use the appropriate version by downloading a tag, or checking out the correct branch.
+DebugKit has several releases, each compatible with different releases of
+CakePHP. Use the appropriate version by downloading a tag, or checking out the
+correct branch.
 
-* `1.0, 1.1, 1.2` are compatible with CakePHP 1.2.x. These releases of DebugKit will not work with CakePHP 1.3. You can also use the `1.2-branch` for the mos recent updates and bugfixes.
-* `1.3.0` is compatible with CakePHP 1.3.x only. It will not work with CakePHP 1.2. You can also use the `1.3` branch to get the most recent updates and bugfixes.
-* `2.0.0` is compatible with CakePHP 2.0.x only. It will not work with previous CakePHP versions.
-* `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with older versions of CakePHP as this release uses new API's available in 2.2. You can also use the `master` branch to get the most recent updates.
-* `2.2.1` is compatible with CakePHP 2.2.0 and greater. It is a necessary upgrade for people using CakePHP 2.4 as the naming conventions around loggers changed in that release.
+* `1.0, 1.1, 1.2` are compatible with CakePHP 1.2.x. These releases of DebugKit
+  will not work with CakePHP 1.3. You can also use the `1.2-branch` for the mos
+  recent updates and bugfixes.
+* `1.3.0` is compatible with CakePHP 1.3.x only. It will not work with CakePHP
+  1.2. You can also use the `1.3` branch to get the most recent updates and
+  bugfixes.
+* `2.0.0` is compatible with CakePHP 2.0.x only. It will not work with previous
+  CakePHP versions.
+* `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with
+  older versions of CakePHP as this release uses new API's available in 2.2.
+  You can also use the `master` branch to get the most recent updates.
+* `2.2.1` is compatible with CakePHP 2.2.0 and greater. It is a necessary
+  upgrade for people using CakePHP 2.4 as the naming conventions around loggers
+  changed in that release.
 
 # Documentation
 
 ## Toolbar Panels
 
-The DebugKit Toolbar is comprised of several panels. Each panel is comprised of a panel class and view element. Typically a panel handles the collection and display of a single type of information such as Logs or Request information. You can choose to panels from the toolbar or add you own custom panels.
+The DebugKit Toolbar is comprised of several panels. Each panel is comprised of
+a panel class and view element. Typically a panel handles the collection and
+display of a single type of information such as Logs or Request information.
+You can choose to panels from the toolbar or add you own custom panels.
 
 ### Built-in Panels
 
 There are several built-in panels. They are
 
- * **History** Allows access to previous request information, useful when debugging actions with redirects.
- * **Request** Displays information about the current request, GET, POST, Cake Parameters, Current Route information and Cookies if the `CookieComponent` is in you controller's components.
+ * **History** Allows access to previous request information, useful when
+   debugging actions with redirects.
+ * **Request** Displays information about the current request, GET, POST, Cake
+   Parameters, Current Route information and Cookies if the `CookieComponent`
+   is in you controller's components.
  * **Session** Display the information currently in the Session.
- * **Timer** Display any timers that were set during the request see [wiki:debugkitdebugger DebugKitDebugger] for more information. Also displays memory use at component callbacks as well as peak memory used.
+ * **Timer** Display any timers that were set during the request see
+   `DebugKitDebugger` for more information. Also displays
+   memory use at component callbacks as well as peak memory used.
  * **Sql Logs** Displays sql logs for each database connection.
  * **Log** Display any entries made to the log files this request.
  * **Variables** Display View variables set in controller.

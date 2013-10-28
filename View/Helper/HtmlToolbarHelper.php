@@ -60,7 +60,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if (is_bool($values)) {
 				$values = array($values);
 			}
-			if (is_null($values)) {
+			if ($values === null) {
 				$values = array(null);
 			}
 		}

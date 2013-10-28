@@ -507,7 +507,7 @@ class FireCake {
 				$return[$key] = FireCake::stringEncode($value, 1, $arrayDepth + 1);
 			}
 		}
-		if (is_string($object) || is_numeric($object) || is_bool($object) || is_null($object)) {
+		if (is_string($object) || is_numeric($object) || is_bool($object) || $object === null) {
 			return $object;
 		}
 		return $return;

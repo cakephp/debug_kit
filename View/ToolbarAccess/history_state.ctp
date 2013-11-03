@@ -18,7 +18,7 @@
 
 $panels = array();
 foreach ($toolbarState as $panelName => $panel) {
-	if (!empty($panel)) {
+	if (!empty($panel) && !empty($panel['elementName'])) {
 		$panels[$panelName] = $this->element($panel['elementName'], array(
 			'content' => $panel['content']
 		), array(

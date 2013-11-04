@@ -14,7 +14,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('View', 'View');
 App::uses('Controller', 'Controller');
@@ -56,7 +56,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * Setup
  *
  * @return void
- **/
+ */
 	public function setUp() {
 		parent::setUp();
 
@@ -84,11 +84,11 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	}
 
 /**
- * Test Neat Array formatting
+ * Test makeNeatArray with basic types.
  *
  * @return void
- **/
-	public function testMakeNeatArray() {
+ */
+	public function testMakeNeatArrayBasic() {
 		$in = false;
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
@@ -124,7 +124,14 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 			'/ul'
 		);
 		$this->assertTags($result, $expected);
+	}
 
+/**
+ * Test Neat Array formatting
+ *
+ * @return void
+ */
+	public function testMakeNeatArray() {
 		$in = array('key' => 'value');
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
@@ -271,7 +278,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * Test injection of toolbar
  *
  * @return void
- **/
+ */
 	public function testInjectToolbar() {
 		$this->Controller->viewPath = 'Posts';
 		$request = new CakeRequest('/posts/index');
@@ -298,7 +305,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * test injection of javascript
  *
  * @return void
- **/
+ */
 	public function testJavascriptInjection() {
 		$this->Controller->viewPath = 'Posts';
 		$this->Controller->uses = null;
@@ -367,7 +374,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * test starting a panel
  *
  * @return void
- **/
+ */
 	public function testStartPanel() {
 		$result = $this->Toolbar->panelStart('My Panel', 'my_panel');
 		$expected = array(
@@ -382,7 +389,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * test ending a panel
  *
  * @return void
- **/
+ */
 	public function testPanelEnd() {
 		$result = $this->Toolbar->panelEnd();
 		$this->assertNull($result);

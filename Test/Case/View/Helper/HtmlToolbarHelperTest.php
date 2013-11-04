@@ -79,8 +79,8 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->Toolbar, $this->Controller);
-		ClassRegistry::flush();
 	}
 
 /**
@@ -394,4 +394,5 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->panelEnd();
 		$this->assertNull($result);
 	}
+
 }

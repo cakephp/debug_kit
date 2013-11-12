@@ -70,10 +70,12 @@ correct branch.
 
 ## Toolbar Panels
 
-The DebugKit Toolbar is comprised of several panels. Each panel is comprised of
-a panel class and view element. Typically a panel handles the collection and
-display of a single type of information such as Logs or Request information.
-You can choose to panels from the toolbar or add you own custom panels.
+The DebugKit Toolbar is comprised of several panels, which are shown by clicking the
+CakePHP icon in the upper right-hand corner of your browser after DebugKit has been
+installed and loaded. Each panel is comprised of a panel class and view element.
+Typically a panel handles the collection and display of a single type of information
+such as Logs or Request information. You can choose to panels from the toolbar or add
+your own custom panels.
 
 ### Built-in Panels
 

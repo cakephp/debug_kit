@@ -108,7 +108,7 @@ class ToolbarAccessController extends DebugKitAppController {
 		) {
 			throw new BadRequestException('Invalid parameters');
 		}
-		$hash = Security::hash($this->request->data['log']['sql'] . $this->request->data['log']['ds'], null, true);
+		$hash = Security::hash($this->request->data['log']['sql'] . $this->request->data['log']['ds'], 'sha1', true);
 		if ($hash !== $this->request->data['log']['hash']) {
 			throw new BadRequestException('Invalid parameters');
 		}

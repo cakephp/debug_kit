@@ -127,6 +127,37 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 	}
 
 /**
+ * Test that cyclic references can be printed.
+ *
+ * @return void
+ */
+	public function testMakeNeatArrayCyclicObjects() {
+		$a = new StdClass;
+		$b = new StdClass;
+		$a->child = $b;
+		$b->parent = $a;
+
+		$in = array('obj' => $a);
+		$result = $this->Toolbar->makeNeatArray($in);
+		$expected = array(
+			array('ul' => array('class' => 'neat-array depth-0')),
+			'<li', '<strong', 'obj', '/strong', '(object)',
+			array('ul' => array('class' => 'neat-array depth-1')),
+			'<li', '<strong', 'child', '/strong', '(object)',
+			array('ul' => array('class' => 'neat-array depth-2')),
+			'<li', '<strong', 'parent', '/strong',
+			'(object) - recursion',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul',
+			'/li',
+			'/ul'
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
  * Test Neat Array formatting
  *
  * @return void

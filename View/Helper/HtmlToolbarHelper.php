@@ -90,7 +90,14 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				$value = 'function';
 			}
 
-			if (($value instanceof ArrayAccess || $value instanceof Iterator || is_array($value) || is_object($value)) && !empty($value)) {
+			if (
+				(
+				$value instanceof ArrayAccess ||
+				$value instanceof Iterator ||
+				is_array($value) ||
+				is_object($value)
+				) && !empty($value)
+			) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
 			} else {
 				$out .= h($value, $doubleEncode);

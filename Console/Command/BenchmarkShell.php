@@ -146,7 +146,7 @@ class BenchmarkShell extends Shell {
 		->addOption('t', array(
 			'default' => 100,
 			'help' => __d('debug_kit', 'Maximum total time for all iterations, in seconds.' .
-				'If a single iteration takes more than the tiemout, only one request will be made'
+				'If a single iteration takes more than the timeout, only one request will be made'
 			)
 		))
 		->epilog(__d('debug_kit',

@@ -27,12 +27,21 @@ require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFir
 class DebugKitDebuggerTest extends CakeTestCase {
 
 /**
+ * Is the Test being run via CLI
+ * @param Boolean
+ */
+	private static $isCLI = false;
+
+/**
  * setUp method
  *
  * @return void
  */
 	public function setUp() {
 		parent::setUp();
+
+		self::$isCLI = array_key_exists('PWD', $_SERVER );
+
 		Configure::write('log', false);
 		$this->firecake = FireCake::getInstance('TestFireCake');
 		TestFireCake::reset();
@@ -56,6 +65,8 @@ class DebugKitDebuggerTest extends CakeTestCase {
  * @return void
  */
 	public function testOutput() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		Debugger::getInstance('DebugKitDebugger');
 		Debugger::addFormat('fb', array('callback' => 'DebugKitDebugger::fireError'));
 		Debugger::outputAs('fb');

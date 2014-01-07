@@ -35,12 +35,20 @@ require_once $path . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 class FirePhpToolbarHelperTestCase extends CakeTestCase {
 
 /**
+ * Is the Test being run via CLI
+ * @param Boolean
+ */
+	private static $isCLI = false;
+
+/**
  * setUp
  *
  * @return void
  **/
 	public function setUp() {
 		parent::setUp();
+
+		self::$isCLI = array_key_exists('PWD', $_SERVER );
 
 		Router::connect('/:controller/:action');
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
@@ -95,6 +103,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function testMakeNeatArray() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$this->Toolbar->makeNeatArray(array(1,2,3));
 		$result = $this->firecake->sentHeaders;
 		$this->assertTrue(isset($result['X-Wf-1-1-1-1']));
@@ -107,6 +117,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function testAfterLayout() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$this->Controller->viewPath = 'Posts';
 		$request = new CakeRequest('/posts/index');
 		$request->addParams(Router::parse($request->url));
@@ -134,6 +146,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	public function testPanelStart() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$this->Toolbar->panelStart('My Panel', 'my_panel');
 		$result = $this->firecake->sentHeaders;
 		$this->assertPattern('/GROUP_START.+My Panel/', $result['X-Wf-1-1-1-1']);
@@ -145,6 +159,8 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	public function testPanelEnd() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$this->Toolbar->panelEnd();
 		$result = $this->firecake->sentHeaders;
 		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);

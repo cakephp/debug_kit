@@ -62,7 +62,7 @@ correct branch.
 * `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with
   older versions of CakePHP as this release uses new API's available in 2.2.
   You can also use the `master` branch to get the most recent updates.
-* `2.2.1` is compatible with CakePHP 2.2.0 and greater. It is a necessary
+* `2.2.1` and `2.2.2` are compatible with CakePHP 2.2.0 and greater. It is a necessary
   upgrade for people using CakePHP 2.4 as the naming conventions around loggers
   changed in that release.
 
@@ -70,10 +70,12 @@ correct branch.
 
 ## Toolbar Panels
 
-The DebugKit Toolbar is comprised of several panels. Each panel is comprised of
-a panel class and view element. Typically a panel handles the collection and
-display of a single type of information such as Logs or Request information.
-You can choose to panels from the toolbar or add you own custom panels.
+The DebugKit Toolbar is comprised of several panels, which are shown by clicking the
+CakePHP icon in the upper right-hand corner of your browser after DebugKit has been
+installed and loaded. Each panel is comprised of a panel class and view element.
+Typically a panel handles the collection and display of a single type of information
+such as Logs or Request information. You can choose to panels from the toolbar or add
+your own custom panels.
 
 ### Built-in Panels
 

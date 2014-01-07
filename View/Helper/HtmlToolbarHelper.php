@@ -50,6 +50,10 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * @return string
  */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
+		static $printedObjects = null;
+		if ($currentDepth === 0) {
+			$printedObjects = new SplObjectStorage();
+		}
 		$className = "neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {
 			$className .= ' expanded';
@@ -69,6 +73,11 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		}
 		foreach ($values as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
+			if (is_array($value) && count($value) > 0) {
+				$out .= '(array)';
+			} elseif (is_object($value)) {
+				$out .= '(object)';
+			}
 			if ($value === null) {
 				$value = '(null)';
 			}
@@ -85,7 +94,24 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				$value = 'function';
 			}
 
-			if (($value instanceof ArrayAccess || $value instanceof Iterator || is_array($value)) && !empty($value)) {
+			$isObject = is_object($value);
+			if ($isObject && $printedObjects->contains($value)) {
+				$isObject = false;
+				$value = ' - recursion';
+			}
+
+			if ($isObject) {
+				$printedObjects->attach($value);
+			}
+
+			if (
+				(
+				$value instanceof ArrayAccess ||
+				$value instanceof Iterator ||
+				is_array($value) ||
+				$isObject
+				) && !empty($value)
+			) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
 			} else {
 				$out .= h($value, $doubleEncode);

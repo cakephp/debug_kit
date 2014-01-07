@@ -65,7 +65,8 @@ var DEBUGKIT = function () {
 		var req = new XMLHttpRequest();
 		req.onload = function () {
 			eval(this.responseText);
-			DEBUGKIT.$ = jQuery.noConflict(); // do not unset window.jQuery
+			// Restore both $ and jQuery to the original values.
+			DEBUGKIT.$ = jQuery.noConflict(true);
 		};
 		req.open('get', window.DEBUGKIT_JQUERY_URL, false);
 		req.send();

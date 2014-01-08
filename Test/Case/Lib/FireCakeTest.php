@@ -27,6 +27,12 @@ require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFir
 class FireCakeTestCase extends CakeTestCase {
 
 /**
+ * Is the Test being run via CLI
+ * @param Boolean
+ */
+	private static $isCLI = false;
+
+/**
  * setup test
  *
  * Fill FireCake with TestFireCake instance.
@@ -34,6 +40,7 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		self::$isCLI = array_key_exists('PWD', $_SERVER );
 		$this->firecake = FireCake::getInstance('TestFireCake');
 		TestFireCake::reset();
 	}
@@ -55,6 +62,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testGetInstanceOverride() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$instance = FireCake::getInstance();
 		$instance2 = FireCake::getInstance();
 		$this->assertReference($instance, $instance2);
@@ -68,6 +77,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testSetOptions() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		$this->assertEquals($this->firecake->options['includeLineNumbers'], false);
 	}
@@ -78,6 +89,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testLog() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::log('Testing');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -96,6 +109,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testInfo() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::info('I have information');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -114,6 +129,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testWarn() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::warn('A Warning');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -132,6 +149,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testError() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::error('An error');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
@@ -150,6 +169,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testDump() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::dump('mydump', array('one' => 1, 'two' => 2));
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-2-1-1'], '28|{"mydump":{"one":1,"two":2}}|');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-2']));
@@ -161,6 +182,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testTable() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$table[] = array('Col 1 Heading','Col 2 Heading');
 		$table[] = array('Row 1 Col 1','Row 1 Col 2');
 		$table[] = array('Row 2 Col 1','Row 2 Col 2');
@@ -176,6 +199,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testStringEncode() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$vars = array(1,2,3);
 		$result = $this->firecake->stringEncode($vars);
 		$this->assertEquals($result, array(1,2,3));
@@ -192,6 +217,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testStringEncodeObjects() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$obj = FireCake::getInstance();
 		$result = $this->firecake->stringEncode($obj);
 
@@ -206,6 +233,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testTrace() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::trace('myTrace');
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-Protocol-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
@@ -221,6 +250,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testEnableDisable() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::disable();
 		FireCake::trace('myTrace');
 		$this->assertTrue(empty($this->firecake->sentHeaders));
@@ -236,6 +267,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testMultiLineOutput() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::trace('myTrace');
 		$this->assertGreaterThan(1, $this->firecake->sentHeaders['X-Wf-1-Index']);
 		$header = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
@@ -252,6 +285,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testIncludeLineNumbers() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => true));
 		FireCake::info('Testing');
 		$result = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
@@ -265,6 +300,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testGroup() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::group('test');
 		FireCake::info('my info');
@@ -280,6 +317,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testFbParameterParsing() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Test');
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '23|[{"Type":"LOG"},"Test"]|');
@@ -302,6 +341,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testIncorrectMessageType() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('includeLineNumbers' => false));
 		FireCake::fb('Hello World', 'foobared');
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], '30|[{"Type":"LOG"},"Hello World"]|');
@@ -313,6 +354,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testDetectClientExtension() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		$back = env('HTTP_USER_AGENT');
 		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4 FirePHP/0.2.1';
 		$this->assertTrue(FireCake::detectClientExtension());
@@ -331,6 +374,8 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testNonNativeEncoding() {
+		$this->skipIf( self::$isCLI, 'CLI so unable to send Headers to Firebug' );
+
 		FireCake::setOptions(array('useNativeJsonEncode' => false));
 		$json = FireCake::jsonEncode(array('one' => 1, 'two' => 2));
 		$this->assertEquals($json, '{"one":1,"two":2}');

@@ -230,3 +230,13 @@ By default DebugKit uses File as engine for internal cache, but if you want to u
 	);
 
 You can use any cache engine supported by CakePHP, the same you set in both core.php and bootstrap.php files with Cache::config() method.
+
+## Viewing the toolbar for ajax requests
+
+When doing Ajax requests, you will not be able to see an HTML version of the toolbar. However, if you have a browser extension that supports FirePHP, you can view
+the toolbar in your browser:
+
+- [FirePHP for chrome](https://chrome.google.com/webstore/detail/firephp4chrome/gpgbmonepdpnacijbbdijfbecmgoojma)
+- [FirePHP for firefox](https://addons.mozilla.org/en-US/firefox/addon/firephp/)
+
+Once you have installed the correct extension, you should see the toolbar data output on each ajax request.

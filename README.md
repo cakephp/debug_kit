@@ -62,7 +62,7 @@ correct branch.
 * `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with
   older versions of CakePHP as this release uses new API's available in 2.2.
   You can also use the `master` branch to get the most recent updates.
-* `2.2.1` and `2.2.2` are compatible with CakePHP 2.2.0 and greater. It is a necessary
+* `2.2.x` are compatible with CakePHP 2.2.0 and greater. It is a necessary
   upgrade for people using CakePHP 2.4 as the naming conventions around loggers
   changed in that release.
 

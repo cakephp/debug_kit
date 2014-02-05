@@ -146,6 +146,10 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  */
 	public function testGetQueryLogs() {
+		if (Configure::read('debug') < 2) {
+			$this->markTestSkipped('Can\'t test query logging when debug < 2');
+		}
+
 		$model = new CakeTestModel(array('table' => 'posts', 'alias' => 'Post'));
 		$model->find('all');
 		$model->find('first');

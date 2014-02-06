@@ -50,7 +50,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$db = ConnectionManager::get('test');
+		$db = ConnectionManager::getDatasource('test');
 		$db->fullDebug = true;
 
 		Configure::write('Cache.disable', false);

@@ -20,6 +20,7 @@ App::uses('View', 'View');
 App::uses('Controller', 'Controller');
 App::uses('Helper', 'View');
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
+App::uses('ConnectionManager', 'Manager');
 
 /**
  * Class MockBackendHelper
@@ -49,8 +50,10 @@ class ToolbarHelperTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$db = ConnectionManager::get('test');
+		$db->fullDebug = true;
+
 		Configure::write('Cache.disable', false);
-		Configure::write('debug', 2);
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 

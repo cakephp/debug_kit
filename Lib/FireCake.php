@@ -1,14 +1,5 @@
 <?php
 /**
- * FirePHP Class for CakePHP
- *
- * Provides most of the functionality offered by FirePHPCore
- * Interoperates with FirePHP extension for Firefox
- *
- * For more information see: http://www.firephp.org/
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -38,9 +29,13 @@ if (!function_exists('firecake')) {
 }
 
 /**
- * Class FireCake
+ * FirePHP Class for CakePHP
  *
- * @since         DebugKit 0.1
+ * Provides most of the functionality offered by FirePHPCore
+ * Interoperates with FirePHP extension for Firefox
+ *
+ * For more information see: http://www.firephp.org/
+ *
  */
 class FireCake {
 
@@ -114,7 +109,7 @@ class FireCake {
  * FireCake output status
  *
  * @var boolean
- **/
+ */
 	protected $_enabled = true;
 
 /**

@@ -1,11 +1,5 @@
 <?php
 /**
- * Debug Panel
- *
- * Base class for debug panels.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -19,7 +13,7 @@
  */
 
 /**
- * Class DebugPanel
+ * Base class for debug panels.
  *
  * @since         DebugKit 0.1
  */

@@ -1,11 +1,5 @@
 <?php
 /**
- * DebugKit ToolbarAccess Model
- *
- * Contains logic for accessing DebugKit specific information.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -16,14 +10,14 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('ConnectionManager', 'Model');
 
 /**
  * Class ToolbarAccess
  *
- * @since         DebugKit 1.3
+ * Contains logic for accessing DebugKit specific information.
  */
 class ToolbarAccess extends Object {
 

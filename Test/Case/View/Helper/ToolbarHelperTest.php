@@ -14,7 +14,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('View', 'View');
 App::uses('Controller', 'Controller');
@@ -46,7 +46,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * setUp
  *
  * @return void
- **/
+ */
 	public function setUp() {
 		parent::setUp();
 		Configure::write('Cache.disable', false);
@@ -87,7 +87,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * test cache writing for views.
  *
  * @return void
- **/
+ */
 	public function testCacheWrite() {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result);
@@ -98,7 +98,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * top most level of the history stack. As this is where the current request is stored.
  *
  * @return void
- **/
+ */
 	public function testOnlyWritingToFirstElement() {
 		$values = array(
 			array('test' => array('content' => array('first', 'values'))),
@@ -118,7 +118,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * test cache reading for views
  *
  * @return void
- **/
+ */
 	public function testCacheRead() {
 		$result = $this->Toolbar->writeCache('test', array('stuff', 'to', 'cache'));
 		$this->assertTrue($result, 'Cache write failed %s');
@@ -137,7 +137,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * Test that reading/writing doesn't work with no cache config.
  *
  * @return void
- **/
+ */
 	public function testNoCacheConfigPresent() {
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'MockBackendHelper'));
 

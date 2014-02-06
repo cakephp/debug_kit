@@ -1,11 +1,5 @@
 <?php
 /**
- * Timer Panel
- *
- * Provides debug information on all timers used in a request.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -20,7 +14,7 @@
 App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
- * Class TimerPanel
+ * Provides debug information on all timers used in a request.
  *
  */
 class TimerPanel extends DebugPanel {

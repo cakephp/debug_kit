@@ -1,11 +1,5 @@
 <?php
 /**
- * SqlLog Panel
- *
- * Provides debug information on the SQL logs and provides links to an ajax explain interface.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -20,7 +14,7 @@
 App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
- * Class SqlLogPanel
+ * Provides debug information on the SQL logs and provides links to an ajax explain interface.
  *
  */
 class SqlLogPanel extends DebugPanel {

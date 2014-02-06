@@ -14,7 +14,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
 

@@ -1,12 +1,5 @@
 <?php
 /**
- * DebugKit Debugger class.
- *
- * Extends and enhances core debugger.
- * Adds benchmarking and timing functionality.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,7 +10,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 
 App::uses('Debugger', 'Utility');
 App::uses('FireCake', 'DebugKit.Lib');
@@ -157,7 +150,7 @@ class DebugKitDebugger extends Debugger {
  *
  * @return integer number of bytes ram currently in use. 0 if memory_get_usage() is not available.
  * @deprecated Use DebugMemory::getCurrent() instead.
- **/
+ */
 	public static function getMemoryUse() {
 		return DebugMemory::getCurrent();
 	}

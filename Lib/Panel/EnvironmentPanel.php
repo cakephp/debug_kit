@@ -1,11 +1,5 @@
 <?php
 /**
- * Environment Panel
- *
- * Provides information about your PHP and CakePHP environment to assist with debugging.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -21,7 +15,7 @@
 App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
- * Class EnvironmentPanel
+ * Provides information about your PHP and CakePHP environment to assist with debugging.
  *
  */
 class EnvironmentPanel extends DebugPanel {

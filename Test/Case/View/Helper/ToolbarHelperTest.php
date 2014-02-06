@@ -48,7 +48,9 @@ class ToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	public function setUp() {
+		parent::setUp();
 		Configure::write('Cache.disable', false);
+		Configure::write('debug', 2);
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
@@ -61,9 +63,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		));
 		$this->Toolbar->MockBackend = $this->getMock('Helper', array('testMethod'), array($this->View));
 
-		if (isset($this->_debug)) {
-			Configure::write('debug', $this->_debug);
-		}
 		$this->_viewPaths = App::path('views');
 		App::build(array(
 			'View' => array(
@@ -71,7 +70,17 @@ class ToolbarHelperTestCase extends CakeTestCase {
 				APP . 'Plugin' . DS . 'DebugKit' . DS . 'View' . DS,
 				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'View' . DS
 		)), true);
-		$this->_debug = Configure::read('debug');
+	}
+
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		Cache::delete('debug_kit_toolbar_test_case', 'default');
+		unset($this->Toolbar, $this->Controller);
 	}
 
 /**
@@ -164,14 +173,4 @@ class ToolbarHelperTestCase extends CakeTestCase {
 		$this->assertEquals($cached[$model->useDbConfig]['queries'][0], $result['queries'][0]);
 	}
 
-/**
- * tearDown
- *
- * @return void
- */
-	public function tearDown() {
-		parent::tearDown();
-		Cache::delete('debug_kit_toolbar_test_case', 'default');
-		unset($this->Toolbar, $this->Controller);
-	}
 }

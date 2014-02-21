@@ -26,6 +26,11 @@ Ensure `require` is present in `composer.json`. This will install the plugin int
 
 ```
 {
+    "extra": {
+	"installer-paths": {
+	    "app/Plugin/DebugKit": ["cakephp/debug_kit"]
+        }
+    },
     "require": {
         "cakephp/debug_kit": "2.2.*"
     }

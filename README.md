@@ -229,7 +229,7 @@ Panels should pick up their title and element name by convention. However, if yo
 Panels provided by [Cake Plugins](http://book.cakephp.org/2.0/en/plugins.html) work almost entirely the same as other plugins, with one minor difference:  You must set `var $plugin` to be the name of the plugin directory, so that the panel's Elements can be located at render time.
 ```php
 class MyCustomPanel extends DebugPanel {
-    public var $plugin = 'MyPlugin';
+    public $plugin = 'MyPlugin';
         ...
 }
 ```

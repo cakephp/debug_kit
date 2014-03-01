@@ -16,6 +16,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+App::uses('DebugPanel', 'DebugKit.Lib');
+
 /**
  * Class TestPanel
  *

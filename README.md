@@ -162,11 +162,17 @@ You can create your own custom panels for DebugKit to help in debugging your app
 
 Panel Classes simply need to be placed in`Panel` directory inside a `Lib` path. The filename should match the classname, so the class `MyCustomPanel` would be expected to have a filename of `app/Lib/Panel/MyCustomPanel.php`.
 ```php
+
+App::uses('DebugPanel', 'DebugKit.Lib');
+
+/**
+ * My Custom Panel
+ */
 class MyCustomPanel extends DebugPanel {
         ...
 }
 ```
-See also the example `Test/test_app/Plugin/DebugkitTestPlugin/Lib/Panel/PluginTestPanel.php `.
+See also the example `Test/test_app/Plugin/DebugkitTestPlugin/Lib/Panel/PluginTestPanel.php`.
 
 Notice that custom panels are required to subclass the `DebugPanel` class. Panels can define the
 `css` and `javascript` properties to include additional CSS or javascript on the page. Both

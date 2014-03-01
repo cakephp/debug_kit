@@ -13,8 +13,12 @@ The master branch has the following requirements:
 
 * Clone/Copy the files in this directory into `app/Plugin/DebugKit`
 * Ensure the plugin is loaded in `app/Config/bootstrap.php` by calling `CakePlugin::load('DebugKit');`
-* Include the toolbar component in your `AppController.php`:
-   * `public $components = array('DebugKit.Toolbar');`
+* Include the toolbar component in your `app/Controller/AppController.php`:
+```
+class AppController extends Controller {
+         public $components = array('DebugKit.Toolbar');
+}
+```
 * Set `Configure::write('debug', 1);` in `app/Config/core.php`.
 * Make sure to remove the 'sql_dump' element from your layout (usually
   `app/View/Layouts/default.ctp` if you want to experience the awesome that is

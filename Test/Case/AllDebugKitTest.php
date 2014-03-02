@@ -23,7 +23,7 @@ require_once dirname(__FILE__) . DS . 'DebugkitGroupTestCase.php';
  *
  * @since         DebugKit 1.0
  */
-class AllDebugKitTest extends DebugkitGroupTestCase {
+class AllDebugKitTest extends DebugKitGroupTestCase {
 
 /**
  * Assemble Test Suite

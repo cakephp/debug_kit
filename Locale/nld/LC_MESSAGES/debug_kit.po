@@ -2,87 +2,91 @@
 # Copyright 2008 Andy Dawson <andydawson76@yahoo.co.uk>
 # No version information was available in the source files.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: debug_kit-\n"
 "POT-Creation-Date: 2009-05-27 09:47+0200\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: Andy Dawson <andydawson76@yahoo.co.uk>\n"
-"Language-Team:\n"
+"PO-Revision-Date: 2014-03-04 11:41+0200\n"
+"Last-Translator: Marlin Cremers <m.cremers@mms-projects.net>\n"
+"Language-Team: \n"
+"Language: nld\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.9-dev\n"
 "X-Poedit-Basepath: ../../../\n"
 
 #: controllers/components/toolbar.php:91
 msgid "Component initialization and startup"
-msgstr ""
+msgstr "Component initializatie en opstarten"
 
 #: controllers/components/toolbar.php:140
 msgid "Controller Action"
-msgstr ""
+msgstr "Controller Actie"
 
 #: controllers/components/toolbar.php:167
 msgid "Render Controller Action"
-msgstr ""
+msgstr "Produceer Controller Actie"
 
 #: controllers/components/toolbar.php:231
 msgid "Could not load DebugToolbar panel %s"
-msgstr ""
+msgstr "Kon DebugToolbar paneel %s niet laden"
 
 #: views/elements/debug_toolbar.ctp:25
 msgid "There are no active panels. You must enable a panel to see its output."
 msgstr ""
+"Er zijn geen actieve panelen. Je moet een paneel aanzetten om de uitvoer te "
+"zien."
 
 #: views/elements/history_panel.ctp:21
 msgid "Request History"
-msgstr ""
+msgstr "Aanvraag Geschiedenis"
 
 #: views/elements/history_panel.ctp:23
 msgid "No previous requests logged."
-msgstr ""
+msgstr "Geen vorige aanvragen gelogged."
 
 #: views/elements/history_panel.ctp:25
 msgid "previous requests available"
-msgstr ""
+msgstr "vorige aanvraag beschikbaar"
 
 #: views/elements/history_panel.ctp:27
 msgid "Restore to current request"
-msgstr ""
+msgstr "Herstel naar actuele aanvraag"
 
 #: views/elements/log_panel.ctp:21
 msgid "Logs"
-msgstr ""
+msgstr "Logs"
 
 #: views/elements/log_panel.ctp:28
 msgid "Time"
-msgstr ""
+msgstr "Tijd"
 
 #: views/elements/log_panel.ctp:28
 #: views/elements/timer_panel.ctp:54
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #: views/elements/log_panel.ctp:37
 msgid "There were no log entries made this request"
-msgstr ""
+msgstr "Er zijn geen log vermeldingen gemaakt in deze aanvraag"
 
 #: views/elements/request_panel.ctp:21
 msgid "Request"
-msgstr ""
+msgstr "Aanvraag"
 
 #: views/elements/request_panel.ctp:35
 msgid "Current Route"
-msgstr ""
+msgstr "Huide Route"
 
 #: views/elements/session_panel.ctp:21
 msgid "Session"
-msgstr ""
+msgstr "Sessie"
 
 #: views/elements/sql_log_panel.ctp:21
 msgid "Sql Logs"
-msgstr ""
+msgstr "Sql Logs"
 
 #: views/elements/sql_log_panel.ctp:31
 msgid "toggle (%s) query explains for %s"
@@ -94,19 +98,19 @@ msgstr ""
 
 #: views/elements/sql_log_panel.ctp:44
 msgid "No active database connections"
-msgstr ""
+msgstr "Geen actieve database verbindingen"
 
 #: views/elements/timer_panel.ctp:33
 msgid "Memory"
-msgstr ""
+msgstr "Geheugen"
 
 #: views/elements/timer_panel.ctp:35
 msgid "Current Memory Use"
-msgstr ""
+msgstr "Actueel Geheugen Gebruik"
 
 #: views/elements/timer_panel.ctp:39
 msgid "Peak Memory Use"
-msgstr ""
+msgstr "Hoogste Geheugen Gebruik"
 
 #: views/elements/timer_panel.ctp:43
 msgid "Timers"
@@ -114,25 +118,24 @@ msgstr ""
 
 #: views/elements/timer_panel.ctp:45
 msgid "%s (ms)"
-msgstr ""
+msgstr "%s (ms)"
 
 #: views/elements/timer_panel.ctp:46
 msgid "Total Request Time:"
-msgstr ""
+msgstr "Totale Aanvraag Tijd:"
 
 #: views/elements/timer_panel.ctp:54
 msgid "Time in ms"
-msgstr ""
+msgstr "Tijd in ms"
 
 #: views/elements/timer_panel.ctp:54
 msgid "Graph"
-msgstr ""
+msgstr "Diagram"
 
 #: views/elements/variables_panel.ctp:21
 msgid "View Variables"
-msgstr ""
+msgstr "View Variabelen"
 
 #: views/helpers/simple_graph.php:79
 msgid "Starting %sms into the request, taking %sms"
 msgstr ""
-

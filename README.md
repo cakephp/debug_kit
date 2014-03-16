@@ -259,7 +259,8 @@ You can use any cache engine supported by CakePHP, the same you set in both core
 When doing Ajax requests, you will not be able to see an HTML version of the toolbar. However, if you have a browser extension that supports FirePHP, you can view
 the toolbar in your browser:
 
-- [FirePHP for chrome](https://chrome.google.com/webstore/detail/firephp4chrome/gpgbmonepdpnacijbbdijfbecmgoojma)
+- [FirePHP 4 chrome](https://chrome.google.com/webstore/detail/firephp4chrome/gpgbmonepdpnacijbbdijfbecmgoojma)
+- [FirePHP for chrome](https://chrome.google.com/webstore/detail/firephp-for-chrome/goajlbdffkligccnfgibeilhdnnpaead)
 - [FirePHP for firefox](https://addons.mozilla.org/en-US/firefox/addon/firephp/)
 
 Once you have installed the correct extension, you should see the toolbar data output on each ajax request.

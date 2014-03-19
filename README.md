@@ -12,6 +12,12 @@ The master branch has the following requirements:
 ## Installation
 
 * Clone/Copy the files in this directory into `app/Plugin/DebugKit`
+
+This can be done with the git submodule command
+```sh
+git submodule add https://github.com/cakephp/debug_kit.git app/Plugin/DebugKit
+```
+
 * Ensure the plugin is loaded in `app/Config/bootstrap.php` by calling `CakePlugin::load('DebugKit');`
 * Include the toolbar component in your `app/Controller/AppController.php`:
 ```php

@@ -57,7 +57,7 @@ var DEBUGKIT = function () {
 	}
 
 	// Look for existing jQuery that matches the requirements.
-	if (window.jQuery && versionWithin(jQuery.fn.jquery, "1.8", "2.0")) {
+	if (window.jQuery && versionWithin(jQuery.fn.jquery, "1.8", "2.1")) {
 		DEBUGKIT.$ = window.jQuery;
 	} else {
 		// sync load the file. Using document.write() does not block

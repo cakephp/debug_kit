@@ -34,12 +34,14 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * - forceEnable - Force the toolbar to display even if debug == 0. Default = false
  * - autoRun - Automatically display the toolbar. If set to false, toolbar display can be triggered by adding
  *    `?debug=true` to your URL.
+ * - adminOnly - If set to true, the toolbar will only be displayed to users with role_id == 1
  *
  * @var array
  */
 	public $settings = array(
 		'forceEnable' => false,
 		'autoRun' => true
+    'adminOnly' => false
 	);
 
 /**
@@ -153,6 +155,18 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			$this->enabled = false;
 			return false;
 		}
+    // Added to appear only for admin role
+		if( 
+      $this->settings['adminOnly'] && 
+      isset( $this->controller->Auth)
+    ) {
+        $user = $this->controller->Auth->user();
+        $isadmin = ( $user['role_id'] == 1 ) ;
+        if ( ! $isadmin){
+    			$this->enabled = false;
+          return false;
+        }
+    }
 
 		$this->controller->getEventManager()->attach($this);
 

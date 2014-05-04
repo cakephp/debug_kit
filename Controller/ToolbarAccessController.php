@@ -88,6 +88,8 @@ class ToolbarAccessController extends DebugKitAppController {
 		$oldState = $this->Toolbar->loadState($key);
 		$this->set('toolbarState', $oldState);
 		$this->set('debugKitInHistoryMode', true);
+		$this->viewClass = null;
+		$this->layout = null;
 	}
 
 /**

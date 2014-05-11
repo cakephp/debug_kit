@@ -176,51 +176,47 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * @return array
  */
 	public function implementedEvents() {
-		$before = function ($name) {
-			return function () use ($name) {
-				DebugTimer::start($name, __d('debug_kit', $name));
-			};
-		};
-		$after = function ($name) {
-			return function () use ($name) {
-				DebugTimer::stop($name);
-			};
-		};
-
-		return array(
-			'Controller.initialize' => array(
-				array('priority' => 0, 'callable' => $before('Event: Controller.initialize')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.initialize'))
-			),
-			'Controller.startup' => array(
-				array('priority' => 0, 'callable' => $before('Event: Controller.startup')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.startup'))
-			),
-			'Controller.beforeRender' => array(
-				array('priority' => 0, 'callable' => $before('Event: Controller.beforeRender')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.beforeRender'))
-			),
-			'Controller.shutdown' => array(
-				array('priority' => 0, 'callable' => $before('Event: Controller.shutdown')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.shutdown'))
-			),
-			'View.beforeRender' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.beforeRender')),
-				array('priority' => 999, 'callable' => $after('Event: View.beforeRender'))
-			),
-			'View.afterRender' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.afterRender')),
-				array('priority' => 999, 'callable' => $after('Event: View.afterRender'))
-			),
-			'View.beforeLayout' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.beforeLayout')),
-				array('priority' => 999, 'callable' => $after('Event: View.beforeLayout'))
-			),
-			'View.afterLayout' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.afterLayout')),
-				array('priority' => 999, 'callable' => $after('Event: View.afterLayout'))
-			),
+		$events = array(
+			'Controller.initialize',
+			'Controller.startup',
+			'Controller.beforeRender',
+			'Controller.shutdown',
+			'View.beforeRender',
+			'View.afterRender',
+			'View.beforeLayout',
+			'View.afterLayout',
 		);
+
+		$listeners = array();
+
+		foreach ($events as $event) {
+			$listeners[$event] = array(
+				array('priority' => 0, 'callable' => 'beforeCoreEvent'),
+				array('priority' => 999, 'callable' => 'afterCoreEvent')
+			);
+		}
+
+		return $listeners;
+	}
+
+/**
+ * Event handler for start of core events.
+ *
+ * @param CakeEvent $event
+ * @returns void
+ */
+	public function beforeCoreEvent(CakeEvent $event) {
+		DebugTimer::start('Event: ' . $event->name(), __d('debug_kit', 'Event: ' . $event->name()));
+	}
+
+/**
+ * Event handler for end of core events.
+ *
+ * @param CakeEvent $event
+ * @returns void
+ */
+	public function afterCoreEvent(CakeEvent $event) {
+		DebugTimer::stop('Event: ' . $event->name());
 	}
 
 /**

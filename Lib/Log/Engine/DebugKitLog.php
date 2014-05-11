@@ -45,6 +45,6 @@ class DebugKitLog implements CakeLogInterface {
 		if (!isset($this->logs[$type])) {
 			$this->logs[$type] = array();
 		}
-		$this->logs[$type][] = array(date('Y-m-d H:i:s'), $message);
+		$this->logs[$type][] = array(date('Y-m-d H:i:s'), (string)$message);
 	}
 }

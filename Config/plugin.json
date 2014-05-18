@@ -1,0 +1,12 @@
+{
+ "name": "DebugKit",
+ "description": "DebugKit",
+
+ "author": "CakePHP",
+ "authorUrl": "http://cakephp.org",
+
+ "dependencies": {
+  "plugins": [
+    "extensions"
+  ]
+ }

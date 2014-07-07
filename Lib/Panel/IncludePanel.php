@@ -40,7 +40,7 @@ class IncludePanel extends DebugPanel {
 /**
  * Get a list of plugins on construct for later use
  */
-	public function  __construct($settings) {
+	public function __construct($settings) {
 		foreach (CakePlugin::loaded() as $plugin) {
 			$this->_pluginPaths[$plugin] = CakePlugin::path($plugin);
 		}
@@ -64,10 +64,10 @@ class IncludePanel extends DebugPanel {
 			if ($pluginName) {
 				$return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, $pluginName);
 				$filesCount += count($return['plugins'][$pluginName][$this->_getFileType($file)]);
-			} else if ($this->_isAppFile($file)) {
+			} elseif ($this->_isAppFile($file)) {
 				$return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
 				$filesCount += count($return['app'][$this->_getFileType($file)]);
-			} else if ($this->_isCoreFile($file)) {
+			} elseif ($this->_isCoreFile($file)) {
 				$return['core'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'core');
 				$filesCount += count($return['core'][$this->_getFileType($file)]);
 			}
@@ -139,7 +139,7 @@ class IncludePanel extends DebugPanel {
  * @return boolean
  */
 	protected function _niceFileName($file, $type) {
-		switch($type) {
+		switch ($type) {
 			case 'app':
 				return str_replace(APP, 'APP/', $file);
 

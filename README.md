@@ -27,8 +27,8 @@ class AppController extends Controller {
 ```
 * Set `Configure::write('debug', 1);` in `app/Config/core.php`.
 * Make sure to remove the 'sql_dump' element from your layout (usually
-  `app/View/Layouts/default.ctp` if you want to experience the awesome that is
-  the debug kit SQL log.
+  `app/View/Layouts/default.ctp`), if you want to experience the awesome that is
+  the DebugKit SQL log.
 
 ### Using Composer
 
@@ -42,7 +42,7 @@ Ensure `require` is present in `composer.json`. This will install the plugin int
 }
 ```
 
-## Reporting issues
+## Reporting Issues
 
 If you have a problem with DebugKit please open an issue on [GitHub](https://github.com/cakephp/debug_kit/issues).
 
@@ -83,13 +83,13 @@ correct branch.
 The DebugKit Toolbar is comprised of several panels, which are shown by clicking the
 CakePHP icon in the upper right-hand corner of your browser after DebugKit has been
 installed and loaded. Each panel is comprised of a panel class and view element.
-Typically a panel handles the collection and display of a single type of information
+Typically, a panel handles the collection and display of a single type of information
 such as Logs or Request information. You can choose to panels from the toolbar or add
 your own custom panels.
 
 ### Built-in Panels
 
-There are several built-in panels. They are
+There are several built-in panels, they are:
 
  * **History** Allows access to previous request information, useful when
    debugging actions with redirects.
@@ -160,7 +160,7 @@ var $components = array(
 
 When visiting a page you can add `?debug=true` to the url and the toolbar will be visible. Otherwise it will stay hidden and not execute.
 
-## Developing your own panels
+## Developing Your Own Panels
 
 You can create your own custom panels for DebugKit to help in debugging your applications.
 
@@ -205,7 +205,7 @@ beforeRender(Controller $controller)
 
 Much like `startup()` `beforeRender()` is called during the Component beforeRender() process. Again `$controller` is a reference to the current controller. Normally at this point you could do additional introspection on the controller. The return of a panels `beforeRender()` is automatically passed to the View by the Toolbar Component. Therefore, under normal use you do not need to explicitly set variables to the controller.
 
-#### Example of beforeRender callback
+#### Example of beforeRender Callback
 ```php
 /**
  * beforeRender callback - grabs request params
@@ -223,7 +223,7 @@ This would return cake's internal params array. The return of a panel's `beforeR
 
 Each Panel is expected to have a view element that renders the content from the panel. The element name must be the underscored inflection of the class name. For example `SessionPanel` has an element named `session_panel.ctp`, and sqllogPanel has an element named `sqllog_panel.ctp`. These elements should be located in the root of your `View/Elements` directory.
 
-#### Custom titles and elements
+#### Custom Titles and Elements
 
 Panels should pick up their title and element name by convention. However, if you need to choose a custom element name or title, there are properties to allow that configuration.
 
@@ -250,7 +250,7 @@ The above would load all the default panels as well as the custom panel from `My
 
 ## Cache Engine
 
-By default DebugKit uses File as engine for internal cache, but if you want to use another cache engine you can customize it simply adding an cache key inside the components config array.
+By default, DebugKit uses File as engine for internal cache, but if you want to use another cache engine you can customize it simply adding an cache key inside the components config array.
 ```php
 public $components = array('DebugKit.Toolbar' => array(
         'cache' => array('engine' => 'Memcache', 'servers' => array('127.0.0.1:11211'))
@@ -258,11 +258,11 @@ public $components = array('DebugKit.Toolbar' => array(
 );
 ```
 
-You can use any cache engine supported by CakePHP, the same you set in both core.php and bootstrap.php files with Cache::config() method.
+You can use any cache engine supported by CakePHP, the same way you set in both core.php and bootstrap.php files with the Cache::config() method.
 
-## Viewing the toolbar for ajax requests
+## Viewing the Toolbar for AJAX Requests
 
-When doing Ajax requests, you will not be able to see an HTML version of the toolbar. However, if you have a browser extension that supports FirePHP, you can view
+When doing AJAX requests, you will not be able to see an HTML version of the toolbar. However, if you have a browser extension that supports FirePHP, you can view
 the toolbar in your browser:
 
 - [FirePHP 4 chrome](https://chrome.google.com/webstore/detail/firephp4chrome/gpgbmonepdpnacijbbdijfbecmgoojma)

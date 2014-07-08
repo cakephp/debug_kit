@@ -250,7 +250,7 @@ The above would load all the default panels as well as the custom panel from `My
 
 ## Cache Engine
 
-By default, DebugKit uses File as engine for internal cache, but if you want to use another cache engine you can customize it simply adding an cache key inside the components config array.
+By default, DebugKit uses File as the engine for internal cache, but if you want to use another cache engine you can customize it by simply adding a cache key inside the components config array.
 ```php
 public $components = array('DebugKit.Toolbar' => array(
         'cache' => array('engine' => 'Memcache', 'servers' => array('127.0.0.1:11211'))

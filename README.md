@@ -41,6 +41,7 @@ Ensure `require` is present in `composer.json`. This will install the plugin int
     }
 }
 ```
+Consider using "require-dev" if you only want to include DebugKit for your development environment.
 
 ## Reporting Issues
 
@@ -113,14 +114,14 @@ The toolbar has a few configuration settings. Settings are passed in the compone
 public $components = array(
     'DebugKit.Toolbar' => array(/* array of settings */)
 );
-```	
+```
 
 ### Configuring Panels
 
 You can customize the toolbar to show your custom panels or hide any built-in panel when adding it toolbar to your components.
 ```php
 public $components = array('DebugKit.Toolbar' => array(
-    'panels' => array('customPanel', 'timer'=>false)
+    'panels' => array('MyCustom', 'timer'=>false)
     )
 );
 ```
@@ -132,11 +133,11 @@ Would display your custom panel and all built-in panels except the 'Timer' panel
 Using the panels key you can specify which panels you want to load, as well as the order in which you want the panels loaded.
 ```php
 public $components = array(
-        'DebugKit.Toolbar' => array('panels' => array('myCustomPanel', 'timer' => false))
+        'DebugKit.Toolbar' => array('panels' => array('MyCustom', 'timer' => false))
 );
 ```
-	
-Would add your custom panel `myCustomPanel` to the toolbar and exclude the default `Timer` panel. In addition to choosing which panels you want, you can pass options into the `__construct` of the panels. For example the built-in `History` panel uses the `history` key to set the number of historical requests to track.
+
+Would add your custom panel `MyCustomPanel` to the toolbar and exclude the default `Timer` panel. In addition to choosing which panels you want, you can pass options into the `__construct` of the panels. For example the built-in `History` panel uses the `history` key to set the number of historical requests to track.
 ```php
 public $components = array(
         'DebugKit.Toolbar' => array('history' => 10)
@@ -153,7 +154,7 @@ The `forceEnable` setting is new in DebugKit 1.1. It allows you to force the too
 
 autoRun is a new configuration setting for DebugKit 1.2. It allows you to control whether or not the toolbar is displayed automatically or whether you would like to use a query string parameter to enable it. Set this configuration key to false to use query string parameter toggling of the toolbar.
 ```php
-var $components = array(
+public $components = array(
     'DebugKit.Toolbar' => array('autoRun' => false)
 );
 ```
@@ -219,7 +220,7 @@ Much like `startup()` `beforeRender()` is called during the Component beforeRend
 
 This would return cake's internal params array. The return of a panel's `beforeRender()` is available in you Panel element as `$content`
 
-### Panel Elements 
+### Panel Elements
 
 Each Panel is expected to have a view element that renders the content from the panel. The element name must be the underscored inflection of the class name. For example `SessionPanel` has an element named `session_panel.ctp`, and sqllogPanel has an element named `sqllog_panel.ctp`. These elements should be located in the root of your `View/Elements` directory.
 
@@ -232,7 +233,7 @@ Panels should pick up their title and element name by convention. However, if yo
 
 ### Panels as Cake Plugins
 
-Panels provided by [Cake Plugins](http://book.cakephp.org/2.0/en/plugins.html) work almost entirely the same as other plugins, with one minor difference:  You must set `var $plugin` to be the name of the plugin directory, so that the panel's Elements can be located at render time.
+Panels provided by [Cake Plugins](http://book.cakephp.org/2.0/en/plugins.html) work almost entirely the same as other plugins, with one minor difference:  You must set `public $plugin` to be the name of the plugin directory, so that the panel's Elements can be located at render time.
 ```php
 class MyCustomPanel extends DebugPanel {
     public $plugin = 'MyPlugin';
@@ -240,13 +241,13 @@ class MyCustomPanel extends DebugPanel {
 }
 ```
 
-To use a plugin panel, use the common CakePHP dot notation for plugins. 
+To use a plugin panel, use the common CakePHP dot notation for plugins.
 ```php
 public $components = array('DebugKit.Toolbar' => array(
     'panels' => array('MyPlugin.MyCustom')
 ));
 ```
-The above would load all the default panels as well as the custom panel from `MyPlugin`. 
+The above would load all the default panels as well as the custom panel from `MyPlugin`.
 
 ## Cache Engine
 

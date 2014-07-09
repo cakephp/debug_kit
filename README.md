@@ -41,6 +41,7 @@ Ensure `require` is present in `composer.json`. This will install the plugin int
     }
 }
 ```
+Consider using "require-dev" if you only want to include DebugKit for your development environment.
 
 ## Reporting Issues
 

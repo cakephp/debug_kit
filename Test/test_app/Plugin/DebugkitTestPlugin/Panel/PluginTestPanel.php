@@ -14,6 +14,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Panel;
 
 App::uses('DebugPanel', 'DebugKit.Lib');
 

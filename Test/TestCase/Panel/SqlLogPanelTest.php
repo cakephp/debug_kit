@@ -12,6 +12,7 @@
  * @since         DebugKit 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace DebugKit\Test\TestCase\Panel;
 
 App::uses('SqlLogPanel', 'DebugKit.Lib/Panel');
 App::uses('Model', 'Model');

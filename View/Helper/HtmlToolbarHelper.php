@@ -11,6 +11,7 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace DebugKit\View\Helper;
 
 App::uses('ToolbarHelper', 'DebugKit.View/Helper');
 App::uses('Security', 'Utility');

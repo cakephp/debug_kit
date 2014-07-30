@@ -17,8 +17,10 @@
  **/
 namespace DebugKit\Test\TestCase;
 
-App::uses('FireCake', 'DebugKit.Lib');
-require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
+use Cake\Core\Plugin;
+use Cake\TestSuite\TestCase;
+use DebugKit\FireCake;
+require_once Plugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 
 /**
  * Test Case For FireCake

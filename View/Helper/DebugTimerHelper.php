@@ -13,9 +13,11 @@
  */
 namespace DebugKit\View\Helper;
 
-App::uses('DebugTimer', 'DebugKit.Lib');
-App::uses('DebugMemory', 'DebugKit.Lib');
-App::uses('Helper', 'View');
+use Cake\Utility\Debugger;
+use Cake\View\Helper;
+use Cake\View\View;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
 
 /**
  * Class DebugTimerHelper

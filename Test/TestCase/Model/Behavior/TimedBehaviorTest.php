@@ -17,7 +17,8 @@
  */
 namespace DebugKit\Test\TestCase\Model\Behavior;
 
-App::uses('DebugKitDebugger', 'DebugKit.Lib');
+use Cake\TestSuite\TestCase;
+use DebugKit\DebugKitDebugger;
 
 /**
  * Class TimedBehaviorTestCase

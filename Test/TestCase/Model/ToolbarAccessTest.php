@@ -17,7 +17,8 @@
  **/
 namespace DebugKit\Test\TestCase\Model;
 
-App::uses('ToolbarAccess', 'DebugKit.Model');
+use Cake\TestSuite\TestCase;
+use DebugKit\Model\ToolbarAccess;
 
 /**
  * Test case for ToolbarAccess model

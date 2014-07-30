@@ -12,7 +12,9 @@
  */
 namespace DebugKit\Panel;
 
-App::uses('DebugPanel', 'DebugKit.Lib');
+use Cake\Controller\Controller;
+use Cake\Routing\Router;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on the Current request params.

@@ -17,7 +17,8 @@
  */
 namespace DebugKit\Test\test_app\Panel;
 
-App::uses('DebugPanel', 'DebugKit.Lib');
+use Cake\Controller\Controller;
+use DebugKit\DebugPanel;
 
 /**
  * Class TestPanel

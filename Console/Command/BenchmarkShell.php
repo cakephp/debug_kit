@@ -13,7 +13,8 @@
  */
 namespace DebugKit\Console\Command;
 
-App::uses('String', 'Utility');
+use Cake\Console\Shell;
+use Cake\Utility\String;
 
 /**
  * Benchmark Shell Class

@@ -16,7 +16,8 @@
  **/
 namespace DebugKit\Test\TestCase;
 
-App::uses('DebugMemory', 'DebugKit.Lib');
+use Cake\TestSuite\TestCase;
+use DebugKit\DebugMemory;
 
 /**
  * Class DebugMemoryTest

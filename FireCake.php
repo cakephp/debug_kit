@@ -13,7 +13,7 @@
  */
 namespace DebugKit;
 
-App::uses('Debugger', 'Utility');
+use Cake\Utility\Debugger;
 
 if (!function_exists('firecake')) {
 

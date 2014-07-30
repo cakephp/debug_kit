@@ -13,7 +13,7 @@
  */
 namespace DebugKit\Model;
 
-App::uses('AppModel', 'Model');
+use App\Model\AppModel;
 
 /**
  * Class DebugKitAppModel

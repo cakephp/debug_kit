@@ -14,9 +14,10 @@
  */
 namespace DebugKit\Test\TestCase\Panel;
 
-App::uses('SqlLogPanel', 'DebugKit.Lib/Panel');
-App::uses('Model', 'Model');
-App::uses('Controller', 'Controller');
+use App\Model\Model;
+use Cake\Controller\Controller;
+use Cake\TestSuite\TestCase;
+use DebugKit\Lib\Panel\SqlLogPanel;
 
 /**
  * Class SqlLogPanelTest

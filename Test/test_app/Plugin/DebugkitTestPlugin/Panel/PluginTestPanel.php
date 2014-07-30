@@ -16,7 +16,7 @@
  */
 namespace Panel;
 
-App::uses('DebugPanel', 'DebugKit.Lib');
+use DebugKit\DebugPanel;
 
 /**
  * Class PluginTestPanel

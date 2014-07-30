@@ -13,9 +13,10 @@
  */
 namespace DebugKit\View\Helper;
 
-App::uses('DebugKitDebugger', 'DebugKit.Lib');
-App::uses('AppHelper', 'View/Helper');
-App::uses('ConnectionManager', 'Model');
+use App\Model\ConnectionManager;
+use App\View\Helper\AppHelper;
+use Cake\Cache\Cache;
+use DebugKit\DebugKitDebugger;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.

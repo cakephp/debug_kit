@@ -13,8 +13,8 @@
  */
 namespace DebugKit\View\Helper;
 
-App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('FireCake', 'DebugKit.Lib');
+use DebugKit\FireCake;
+use DebugKit\View\Helper\ToolbarHelper;
 
 /**
  * FirePHP Toolbar Helper

@@ -17,14 +17,17 @@
  **/
 namespace DebugKit\Test\TestCase\View\Helper;
 
-$path = CakePlugin::path('DebugKit');
+use Cake\Controller\Controller;
+use Cake\Core\App;
+use Cake\Core\Plugin;
+use Cake\Network\Response;
+use Cake\Routing\Router;
+use Cake\TestSuite\TestCase;
+use Cake\View\View;
+use DebugKit\View\Helper\FirePhpToolbarHelper;
+use DebugKit\View\Helper\ToolbarHelper;
+$path = Plugin::path('DebugKit');
 
-App::uses('View', 'View');
-App::uses('Controller', 'Controller');
-App::uses('CakeResponse', 'Network');
-App::uses('Router', 'Routing');
-App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('FirePhpToolbarHelper', 'DebugKit.View/Helper');
 
 require_once $path . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 
@@ -47,7 +50,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
-		$this->Controller = new Controller($this->getMock('CakeRequest'), new CakeResponse());
+		$this->Controller = new Controller($this->getMock('Request'), new Response());
 		$this->View = new View($this->Controller);
 		$this->Toolbar = new ToolbarHelper($this->View, array('output' => 'DebugKit.FirePhpToolbar'));
 		$this->Toolbar->FirePhpToolbar = new FirePhpToolbarHelper($this->View);
@@ -109,7 +112,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  */
 	public function testAfterLayout() {
 		$this->Controller->viewPath = 'Posts';
-		$request = new CakeRequest('/posts/index');
+		$request = new Request('/posts/index');
 		$request->addParams(Router::parse($request->url));
 		$request->addPaths(array(
 			'webroot' => '/',

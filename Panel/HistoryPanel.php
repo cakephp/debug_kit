@@ -12,7 +12,9 @@
  */
 namespace DebugKit\Panel;
 
-App::uses('DebugPanel', 'DebugKit.Lib');
+use Cake\Cache\Cache;
+use Cake\Controller\Controller;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on previous requests.

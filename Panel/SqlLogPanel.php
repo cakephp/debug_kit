@@ -12,7 +12,9 @@
  */
 namespace DebugKit\Panel;
 
-App::uses('DebugPanel', 'DebugKit.Lib');
+use Cake\Controller\Controller;
+use Cake\Database\ConnectionManager;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.

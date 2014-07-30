@@ -13,8 +13,9 @@
  */
 namespace DebugKit\Controller;
 
-App::uses('Security', 'Utility');
-App::uses('DebugKitAppController', 'DebugKit.Controller');
+use Cake\Core\Configure;
+use Cake\Utility\Security;
+use DebugKit\Controller\DebugKitAppController;
 
 /**
  * DebugKit ToolbarAccess Controller

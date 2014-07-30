@@ -17,11 +17,15 @@
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-App::uses('View', 'View');
-App::uses('Controller', 'Controller');
-App::uses('Helper', 'View');
-App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('ConnectionManager', 'Manager');
+use App\Manager\ConnectionManager;
+use Cake\Cache\Cache;
+use Cake\Controller\Controller;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Cake\View\Helper;
+use Cake\View\View;
+use DebugKit\View\Helper\ToolbarHelper;
 
 /**
  * Class MockBackendHelper

@@ -13,7 +13,8 @@
  */
 namespace DebugKit\Model;
 
-App::uses('ConnectionManager', 'Model');
+use App\Model\ConnectionManager;
+use Cake\Core\Object;
 
 /**
  * Class ToolbarAccess

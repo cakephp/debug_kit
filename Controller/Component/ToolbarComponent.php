@@ -14,20 +14,26 @@
  */
 namespace DebugKit\Controller\Component;
 
-App::uses('CakeLog', 'Log');
-App::uses('CakeLogInterface', 'Log');
-App::uses('DebugTimer', 'DebugKit.Lib');
-App::uses('DebugMemory', 'DebugKit.Lib');
-App::uses('HelperCollection', 'View');
-App::uses('CakeEventManager', 'Event');
-App::uses('CakeEventListener', 'Event');
+use App\View\HelperCollection;
+use Cake\Cache\Cache;
+use Cake\Controller\Component;
+use Cake\Controller\Controller;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Event\EventListener;
+use Cake\Event\EventManager;
+use Cake\Log\Log;
+use Cake\Log\LogInterface;
+use Cake\Utility\Inflector;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
 
 /**
  * Class ToolbarComponent
  *
  * @since         DebugKit 0.1
  */
-class ToolbarComponent extends Component implements CakeEventListener {
+class ToolbarComponent extends Component implements EventListener {
 
 /**
  * Settings for the Component
@@ -442,7 +448,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 			$className = ucfirst($panel) . 'Panel';
 			list($plugin, $className) = pluginSplit($className, true);
 
-			App::uses($className, $plugin . 'Panel');
+			/* TODO: App::uses($className, $plugin . 'Panel'); */
 			if (!class_exists($className)) {
 				trigger_error(__d('debug_kit', 'Could not load DebugToolbar panel %s', $panel), E_USER_WARNING);
 				continue;

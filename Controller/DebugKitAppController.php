@@ -13,8 +13,8 @@
  */
 namespace DebugKit\Controller;
 
-App::uses('Controller', 'Controller');
-App::uses('AppController', 'Controller');
+use App\Controller\AppController;
+use Cake\Controller\Controller;
 
 /**
  * Class DebugKitAppController

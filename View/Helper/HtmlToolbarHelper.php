@@ -13,8 +13,10 @@
  */
 namespace DebugKit\View\Helper;
 
-App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('Security', 'Utility');
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Cake\Utility\Security;
+use DebugKit\View\Helper\ToolbarHelper;
 
 /**
  * Html Toolbar Helper

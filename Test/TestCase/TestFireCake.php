@@ -17,7 +17,7 @@
  */
 namespace DebugKit\Test\TestCase;
 
-App::uses('FireCake', 'DebugKit.Lib');
+use DebugKit\FireCake;
 
 /**
  * TestFireCake class allows for testing of FireCake

@@ -12,7 +12,10 @@
  */
 namespace DebugKit\View\Helper;
 
-App::uses('File', 'Utility');
+use Cake\Core\Configure;
+use Cake\Log\Log;
+use Cake\Utility\Debugger;
+use Cake\Utility\File;
 
 /**
  * TidyHelper class
@@ -161,8 +164,8 @@ class TidyHelper extends AppHelper {
 
 		if (Configure::read('debug')) {
 			$source = Debugger::trace(array('depth' => 1, 'start' => 2)) . "\n";
-			//CakeLog::write('system_calls_' . date('Y-m-d'), "\n" . $source . Debugger::exportVar(compact('cmd','out','return')));
-			//CakeLog::write('system_calls', "\n" . $source . Debugger::exportVar(compact('cmd','out','return')));
+			//Log::write('system_calls_' . date('Y-m-d'), "\n" . $source . Debugger::exportVar(compact('cmd','out','return')));
+			//Log::write('system_calls', "\n" . $source . Debugger::exportVar(compact('cmd','out','return')));
 		}
 		if ($return) {
 			return false;

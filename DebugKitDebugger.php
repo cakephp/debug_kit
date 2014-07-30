@@ -13,10 +13,11 @@
  */
 namespace DebugKit;
 
-App::uses('Debugger', 'Utility');
-App::uses('FireCake', 'DebugKit.Lib');
-App::uses('DebugTimer', 'DebugKit.Lib');
-App::uses('DebugMemory', 'DebugKit.Lib');
+use Cake\Core\Configure;
+use Cake\Utility\Debugger;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
+use DebugKit\FireCake;
 
 /**
  * DebugKit Temporary Debugger Class

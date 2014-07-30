@@ -15,13 +15,17 @@
  */
 namespace DebugKit\Test\TestCase\Controller\Component;
 
-App::uses('Router', 'Routing');
-App::uses('Controller', 'Controller');
-App::uses('AppController', 'Controller');
-App::uses('Component', 'Controller');
-App::uses('ToolbarComponent', 'DebugKit.Controller/Component');
-App::uses('DebugMemory', 'DebugKit.Lib');
-App::uses('DebugTimer', 'DebugKit.Lib');
+use App\Controller\AppController;
+use Cake\Cache\Cache;
+use Cake\Controller\Component;
+use Cake\Controller\Controller;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Routing\Router;
+use DebugKit\Controller\Component\ToolbarComponent;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
 
 /**
  * Class TestToolbarComponent
@@ -119,7 +123,7 @@ class ToolbarComponentTestCase extends CakeTestCase {
  * @return Controller
  */
 	protected function _loadController($settings = array()) {
-		$request = new CakeRequest($this->url);
+		$request = new Request($this->url);
 		$request->addParams(Router::parse($this->url));
 		$this->Controller = new Controller($request);
 		$this->Controller->uses = null;
@@ -171,7 +175,7 @@ class ToolbarComponentTestCase extends CakeTestCase {
 			'Plugin' => array($debugKitPath . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		));
 
-		CakePlugin::load('DebugkitTestPlugin');
+		Plugin::load('DebugkitTestPlugin');
 		$this->_loadController();
 		$this->Controller->Toolbar->loadPanels(array('DebugkitTestPlugin.PluginTest'));
 		$this->assertInstanceOf(

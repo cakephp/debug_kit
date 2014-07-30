@@ -12,7 +12,8 @@
  */
 namespace DebugKit\Panel;
 
-App::uses('DebugPanel', 'DebugKit.Lib');
+use Cake\Controller\Controller;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on all timers used in a request.

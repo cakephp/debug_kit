@@ -13,7 +13,9 @@
  */
 namespace DebugKit\Model\Behavior;
 
-App::uses('DebugKitDebugger', 'DebugKit.Lib');
+use Cake\Model\Behavior;
+use Cake\Model\Model;
+use DebugKit\DebugKitDebugger;
 
 /**
  * Class TimedBehavior

@@ -17,7 +17,9 @@
  */
 namespace DebugKit\Test\TestCase;
 
-App::uses('DebugTimer', 'DebugKit.Lib');
+use Cake\TestSuite\TestCase;
+use Cake\Utility\Debugger;
+use DebugKit\DebugTimer;
 
 /**
  * Class DebugTimerTest

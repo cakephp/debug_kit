@@ -13,8 +13,8 @@
  */
 namespace DebugKit\View\Helper;
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('HtmlHelper', 'View/Helper');
+use App\View\Helper\AppHelper;
+use App\View\Helper\HtmlHelper;
 
 /**
  * Class SimpleGraphHelper

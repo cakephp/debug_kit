@@ -29,16 +29,12 @@ class RequestPanel extends DebugPanel {
  * @return array
  */
 	public function beforeRender(Controller $controller) {
-		$out = array();
+		$out = [];
 		$out['params'] = $controller->request->params;
-		$out['url'] = $controller->request->url;
 		$out['query'] = $controller->request->query;
 		$out['data'] = $controller->request->data;
-		if (isset($controller->Cookie)) {
-			$out['cookie'] = $controller->Cookie->read();
-		}
+		$out['cookie'] = $controller->request->cookies;
 		$out['get'] = $_GET;
-		$out['currentRoute'] = Router::currentRoute();
 		return $out;
 	}
 }

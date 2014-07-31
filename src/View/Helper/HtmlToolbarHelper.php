@@ -54,7 +54,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
 		static $printedObjects = null;
 		if ($currentDepth === 0) {
-			$printedObjects = new SplObjectStorage();
+			$printedObjects = new \SplObjectStorage();
 		}
 		$className = "neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {

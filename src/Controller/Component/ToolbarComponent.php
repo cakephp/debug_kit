@@ -25,6 +25,7 @@ use Cake\Log\Log;
 use Cake\Log\LogInterface;
 use Cake\Utility\Inflector;
 use DebugKit\DebugMemory;
+use DebugKit\DebugPanel;
 use DebugKit\DebugTimer;
 
 /**

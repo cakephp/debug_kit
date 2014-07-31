@@ -1,11 +1,5 @@
 <?php
 /**
- * Debug Toolbar Element
- *
- * Renders all of the other panel elements.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,6 +11,13 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+/**
+ * Debug Toolbar Element
+ *
+ * Renders all of the other panel elements.
+ */
+use Cake\Utility\Inflector;
 ?>
 <div id="debug-kit-toolbar">
 	<?php if (empty($debugToolbarPanels)) :?>
@@ -39,11 +40,15 @@
 					<a href="#" class="panel-toggle ui-control ui-button">+</a>
 					<div class="panel-resize-region">
 						<div class="panel-content-data">
-							<?php
-								echo $this->element($panelInfo['elementName'], $panelInfo, array(
-									'plugin' => (empty($panelInfo['plugin'])) ? null : Inflector::camelize($panelInfo['plugin'])
-								));
-							?>
+						<?php
+						$plugin = '';
+						if (!empty($panelInfo['plugin'])):
+							$plugin = Inflector::camelize($panelInfo['plugin']) . '.';
+						endif;
+						?>
+						<?= $this->element(
+							$plugin . $panelInfo['elementName'],
+							$panelInfo) ?>
 						</div>
 						<div class="panel-content-data panel-history" id="<?php echo $panelUnderscore; ?>-history">
 							<!-- content here -->

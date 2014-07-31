@@ -43,33 +43,24 @@ class EnvironmentPanel extends DebugPanel {
 		$return['cake'] = array(
 			'APP' => APP,
 			'APP_DIR' => APP_DIR,
-			'APPLIBS' => APPLIBS,
 			'CACHE' => CACHE,
 			'CAKE' => CAKE,
 			'CAKE_CORE_INCLUDE_PATH' => CAKE_CORE_INCLUDE_PATH,
 			'CORE_PATH' => CORE_PATH,
 			'CAKE_VERSION' => Configure::version(),
-			'CSS' => CSS,
-			'CSS_URL' => CSS_URL,
 			'DS' => DS,
-			'FULL_BASE_URL' => FULL_BASE_URL,
-			'IMAGES' => IMAGES,
-			'IMAGES_URL' => IMAGES_URL,
-			'JS' => JS,
-			'JS_URL' => JS_URL,
 			'LOGS' => LOGS,
 			'ROOT' => ROOT,
 			'TESTS' => TESTS,
 			'TMP' => TMP,
-			'VENDORS' => VENDORS,
 			'WEBROOT_DIR' => WEBROOT_DIR,
 			'WWW_ROOT' => WWW_ROOT
 		);
 
 		$cakeConstants = array_fill_keys(
 			array(
-				'DS', 'ROOT', 'FULL_BASE_URL', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
-				'LOG_ERROR', 'FULL_BASE_URL'
+				'DS', 'ROOT', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
+				'LOG_ERROR'
 			), ''
 		);
 		$var = get_defined_constants(true);

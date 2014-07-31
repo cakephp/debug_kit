@@ -15,9 +15,11 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+use DebugKit\DebugTimer;
+use DebugKit\DebugKitDebugger;
 
-$this->Number = $this->Helpers->load('Number');
-$this->SimpleGraph = $this->Helpers->load('DebugKit.SimpleGraph');
+$this->addHelper('Number');
+$this->addHelper('DebugKit.SimpleGraph');
 
 if (!isset($debugKitInHistoryMode)):
 	$timers = DebugTimer::getAll(true);

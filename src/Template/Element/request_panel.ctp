@@ -45,6 +45,3 @@ endif;
 <?php else: ?>
 	<p class="info">To view Cookies, add CookieComponent to Controller</p>
 <?php endif; ?>
-
-<h4><?php echo __d('debug_kit', 'Current Route') ?></h4>
-<?php echo $this->Toolbar->makeNeatArray($content['currentRoute']);

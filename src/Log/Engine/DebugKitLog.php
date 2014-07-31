@@ -12,11 +12,13 @@
  */
 namespace DebugKit\Log\Engine;
 
+use Cake\Log\LogInterface;
+
 /**
  * A CakeLog listener which saves having to munge files or other configured loggers.
  *
  */
-class DebugKitLog implements CakeLogInterface {
+class DebugKitLog implements LogInterface {
 
 /**
  * logs
@@ -26,23 +28,13 @@ class DebugKitLog implements CakeLogInterface {
 	public $logs = array();
 
 /**
- * Makes the reverse link needed to get the logs later.
- *
- * @param $options
- * @return \DebugKitLog
- */
-	public function __construct($options) {
-		$options['panel']->logger = $this;
-	}
-
-/**
  * Captures log messages in memory
  *
  * @param $type
  * @param $message
  * @return void
  */
-	public function write($type, $message) {
+	public function write($type, $message, $scope = []) {
 		if (!isset($this->logs[$type])) {
 			$this->logs[$type] = array();
 		}

@@ -21,18 +21,4 @@ use DebugKit\DebugPanel;
  */
 class TimerPanel extends DebugPanel {
 
-/**
- * startup - add in necessary helpers
- *
- * @param Controller $controller
- * @return void
- */
-	public function startup(Controller $controller) {
-		if (!in_array('Number', array_keys(HelperCollection::normalizeObjectArray($controller->helpers)))) {
-			$controller->helpers[] = 'Number';
-		}
-		if (!in_array('SimpleGraph', array_keys(HelperCollection::normalizeObjectArray($controller->helpers)))) {
-			$controller->helpers[] = 'DebugKit.SimpleGraph';
-		}
-	}
 }

@@ -29,15 +29,8 @@ class LogPanel extends DebugPanel {
  */
 	public function __construct() {
 		parent::__construct();
-		$existing = Log::configured();
-		if (empty($existing)) {
-			Log::config('default', array(
-				'engine' => 'FileLog'
-			));
-		}
 		Log::config('debug_kit_log_panel', array(
-			'engine' => 'DebugKit.DebugKitLog',
-			'panel' => $this
+			'engine' => 'DebugKit.DebugKit',
 		));
 	}
 
@@ -48,7 +41,6 @@ class LogPanel extends DebugPanel {
  * @return array
  */
 	public function beforeRender(Controller $controller) {
-		$logger = $this->logger;
-		return $logger;
+		return Log::engine('debug_kit_log_panel');
 	}
 }

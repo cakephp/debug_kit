@@ -13,9 +13,10 @@
  */
 namespace DebugKit\View\Helper;
 
-use App\Model\ConnectionManager;
-use App\View\Helper\AppHelper;
+use Cake\Datasource\ConnectionManager;
+use Cake\Event\Event;
 use Cake\Cache\Cache;
+use Cake\View\Helper;
 use DebugKit\DebugKitDebugger;
 
 /**
@@ -24,7 +25,7 @@ use DebugKit\DebugKitDebugger;
  *
  * @since         DebugKit 0.1
  */
-class ToolbarHelper extends AppHelper {
+class ToolbarHelper extends Helper {
 
 /**
  * settings property to be overloaded. Subclasses should specify a format
@@ -48,10 +49,10 @@ class ToolbarHelper extends AppHelper {
  * @return \ToolbarHelper
  */
 	public function __construct($View, $options = array()) {
-		$this->_myName = strtolower(get_class($this));
+		$this->_myName = get_class($this);
 		$this->settings = array_merge($this->settings, $options);
 
-		if ($this->_myName !== 'toolbarhelper') {
+		if ($this->_myName !== 'DebugKit\View\Helper\ToolbarHelper') {
 			parent::__construct($View, $options);
 			return;
 		}
@@ -77,10 +78,11 @@ class ToolbarHelper extends AppHelper {
 /**
  * afterLayout callback
  *
+ * @param \Cake\Event\Event $event The event
  * @param string $layoutFile
  * @return void
  */
-	public function afterLayout($layoutFile) {
+	public function afterLayout(Event $event, $layoutFile) {
 		if (!$this->request->is('requested')) {
 			$this->send();
 		}
@@ -107,7 +109,10 @@ class ToolbarHelper extends AppHelper {
  */
 	public function __call($method, $params) {
 		if (method_exists($this->{$this->_backEndClassName}, $method)) {
-			return $this->{$this->_backEndClassName}->dispatchMethod($method, $params);
+			return call_user_func_array(
+				[$this->{$this->_backEndClassName}, $method],
+				$params
+			);
 		}
 	}
 

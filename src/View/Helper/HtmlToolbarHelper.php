@@ -190,13 +190,15 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				}
 			}
 		}
-		if (preg_match('#</head>#', $view->output)) {
-			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
+		$content = $view->fetch('content');
+		if (preg_match('#</head>#', $content)) {
+			$content = preg_replace('#</head>#', $head . "\n</head>", $content, 1);
 		}
-		$toolbar = $view->element('debug_toolbar', array('disableTimer' => true), array('plugin' => 'DebugKit'));
-		if (preg_match('#</body>#', $view->output)) {
-			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
+		$toolbar = $view->element('DebugKit.debug_toolbar', array('disableTimer' => true));
+		if (preg_match('#</body>#', $content)) {
+			$content = preg_replace('#</body>#', $toolbar . "\n</body>", $content, 1);
 		}
+		$view->assign('content', $content);
 	}
 
 /**

@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Controller;
 
+use Cake\Error\BadRequestException;
 use Cake\Core\Configure;
 use Cake\Utility\Security;
 use DebugKit\Controller\DebugKitAppController;
@@ -22,7 +23,7 @@ use DebugKit\Controller\DebugKitAppController;
  *
  * Allows retrieval of information from the debugKit internals.
  *
- * @since         DebugKit 1.1
+ * @since DebugKit 1.1
  */
 class ToolbarAccessController extends DebugKitAppController {
 
@@ -84,7 +85,7 @@ class ToolbarAccessController extends DebugKitAppController {
  * @return void
  */
 	public function history_state($key = null) {
-		if (Configure::read('debug') == 0) {
+		if (!Configure::read('debug')) {
 			return $this->redirect($this->referer());
 		}
 		$oldState = $this->Toolbar->loadState($key);

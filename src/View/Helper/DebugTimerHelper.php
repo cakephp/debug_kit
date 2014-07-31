@@ -13,6 +13,7 @@
  */
 namespace DebugKit\View\Helper;
 
+use Cake\Event\Event;
 use Cake\Utility\Debugger;
 use Cake\View\Helper;
 use Cake\View\View;
@@ -52,9 +53,10 @@ class DebugTimerHelper extends Helper {
 /**
  * Sets a timer point before rendering a file.
  *
+ * @param \Cake\Event\Event $event The event
  * @param string $viewFile The view being rendered
  */
-	public function beforeRenderFile($viewFile) {
+	public function beforeRenderFile(Event $event, $viewFile) {
 		if ($this->_renderComplete) {
 			return;
 		}
@@ -68,10 +70,11 @@ class DebugTimerHelper extends Helper {
 /**
  * Stops the timer point before rendering a file.
  *
+ * @param \Cake\Event\Event $event The event
  * @param string $viewFile The view being rendered
  * @param string $content The contents of the view.
  */
-	public function afterRenderFile($viewFile, $content) {
+	public function afterRenderFile(Event $event, $viewFile, $content) {
 		if ($this->_renderComplete) {
 			return;
 		}
@@ -81,9 +84,10 @@ class DebugTimerHelper extends Helper {
 /**
  * Stop timers for rendering.
  *
+ * @param \Cake\Event\Event $event The event
  * @param string $layoutFile
  */
-	public function afterLayout($layoutFile) {
+	public function afterLayout(Event $event, $layoutFile) {
 		DebugTimer::stop('viewRender');
 		DebugTimer::stop('controllerRender');
 		DebugMemory::record(__d('debug_kit', 'View render complete'));

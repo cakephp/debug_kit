@@ -134,9 +134,9 @@ class ToolbarComponent extends Component {
 			$panels = $this->_makePanelList($settings['panels']);
 			unset($settings['panels']);
 		}
-		$this->controller = $collection->getController();
-
 		parent::__construct($collection, (array)$settings);
+
+		$this->controller = $collection->getController();
 
 		$enabled = true;
 		if (
@@ -189,12 +189,15 @@ class ToolbarComponent extends Component {
 			),
 			'Controller.startup' => array(
 				array('priority' => 0, 'callable' => $before('Event: Controller.startup')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.startup'))
+				array('priority' => 999, 'callable' => $after('Event: Controller.startup')),
+				array('priority' => 10, 'callable' => 'startup'),
 			),
 			'Controller.beforeRender' => array(
 				array('priority' => 0, 'callable' => $before('Event: Controller.beforeRender')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.beforeRender'))
+				array('priority' => 999, 'callable' => $after('Event: Controller.beforeRender')),
+				array('priority' => 10, 'callable' => 'beforeRender'),
 			),
+			'Controller.beforeRedirect' => 'beforeRedirect',
 			'Controller.shutdown' => array(
 				array('priority' => 0, 'callable' => $before('Event: Controller.shutdown')),
 				array('priority' => 999, 'callable' => $after('Event: Controller.shutdown'))
@@ -278,9 +281,6 @@ class ToolbarComponent extends Component {
  * @return void
  */
 	public function beforeRedirect(Event $event, $url, $status = null, $exit = true) {
-		if (!class_exists('DebugTimer')) {
-			return null;
-		}
 		DebugTimer::stop('controllerAction');
 		DebugTimer::start(
 			'processToolbar',
@@ -301,9 +301,6 @@ class ToolbarComponent extends Component {
  * @return void
  */
 	public function beforeRender(Event $event) {
-		if (!class_exists('DebugTimer')) {
-			return null;
-		}
 		DebugTimer::stop('controllerAction');
 
 		DebugTimer::start(

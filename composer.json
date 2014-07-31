@@ -26,6 +26,12 @@
         "php": ">=5.3.0",
         "composer/installers": "*"
     },
+    "autoload": {
+        "psr-4": {
+            "Cake\\DebugKit\\": "src",
+            "Cake\\DebugKit\\Test\\": "tests",
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.2.x-dev"

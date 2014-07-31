@@ -13,6 +13,8 @@
  */
 namespace DebugKit;
 
+use Cake\Controller\Controller;
+
 /**
  * Base class for debug panels.
  *

@@ -14,14 +14,13 @@
  */
 namespace DebugKit\Controller\Component;
 
-use App\View\HelperCollection;
 use Cake\Cache\Cache;
 use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Event\EventListener;
-use Cake\Event\EventManager;
+use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\Log\LogInterface;
 use Cake\Utility\Inflector;
@@ -33,7 +32,7 @@ use DebugKit\DebugTimer;
  *
  * @since         DebugKit 0.1
  */
-class ToolbarComponent extends Component implements EventListener {
+class ToolbarComponent extends Component {
 
 /**
  * Settings for the Component
@@ -44,7 +43,7 @@ class ToolbarComponent extends Component implements EventListener {
  *
  * @var array
  */
-	public $settings = array(
+	public $_defaultConfig = array(
 		'forceEnable' => false,
 		'autoRun' => true
 	);
@@ -119,13 +118,6 @@ class ToolbarComponent extends Component implements EventListener {
 	public $cacheDuration = '+4 hours';
 
 /**
- * Status whether component is enable or disable
- *
- * @var boolean
- */
-	public $enabled = true;
-
-/**
  * Constructor
  *
  * If debug is off the component will be disabled and not do any further time tracking
@@ -133,9 +125,9 @@ class ToolbarComponent extends Component implements EventListener {
  *
  * @param ComponentCollection $collection
  * @param array $settings
- * @return \ToolbarComponent
+ * @return void
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentRegistry $collection, $settings = array()) {
 		$settings = array_merge((array)Configure::read('DebugKit'), $settings);
 		$panels = $this->_defaultPanels;
 		if (isset($settings['panels'])) {
@@ -144,24 +136,21 @@ class ToolbarComponent extends Component implements EventListener {
 		}
 		$this->controller = $collection->getController();
 
-		parent::__construct($collection, array_merge($this->settings, (array)$settings));
+		parent::__construct($collection, (array)$settings);
 
+		$enabled = true;
 		if (
 			!Configure::read('debug') &&
 			empty($this->settings['forceEnable'])
 		) {
-			$this->enabled = false;
-			return false;
+			return;
 		}
 		if (
 			$this->settings['autoRun'] === false &&
 			!isset($this->controller->request->query['debug'])
 		) {
-			$this->enabled = false;
-			return false;
+			return;
 		}
-
-		$this->controller->getEventManager()->attach($this);
 
 		DebugMemory::record(__d('debug_kit', 'Component initialization'));
 
@@ -174,7 +163,6 @@ class ToolbarComponent extends Component implements EventListener {
 		}
 
 		$this->_loadPanels($panels, $settings);
-		return false;
 	}
 
 /**
@@ -231,19 +219,6 @@ class ToolbarComponent extends Component implements EventListener {
 	}
 
 /**
- * Initialize callback.
- * If automatically disabled, tell component collection about the state.
- *
- * @param Controller $controller
- * @return boolean
- */
-	public function initialize(Controller $controller) {
-		if (!$this->enabled) {
-			$this->_Collection->disable('Toolbar');
-		}
-	}
-
-/**
  * Go through user panels and remove default panels as indicated.
  *
  * @param array $userPanels The list of panels ther user has added removed.
@@ -278,7 +253,8 @@ class ToolbarComponent extends Component implements EventListener {
  * @param Controller $controller
  * @return boolean
  */
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
+		$controller = $event->subject();
 		$panels = array_keys($this->panels);
 		foreach ($panels as $panelName) {
 			$this->panels[$panelName]->startup($controller);
@@ -301,7 +277,7 @@ class ToolbarComponent extends Component implements EventListener {
  * @param boolean $exit
  * @return void
  */
-	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
+	public function beforeRedirect(Event $event, $url, $status = null, $exit = true) {
 		if (!class_exists('DebugTimer')) {
 			return null;
 		}
@@ -310,6 +286,7 @@ class ToolbarComponent extends Component implements EventListener {
 			'processToolbar',
 			__d('debug_kit', 'Processing toolbar state')
 		);
+		$controller = $event->subject();
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 		DebugTimer::stop('processToolbar');
@@ -323,7 +300,7 @@ class ToolbarComponent extends Component implements EventListener {
  * @param Controller $controller
  * @return void
  */
-	public function beforeRender(Controller $controller) {
+	public function beforeRender(Event $event) {
 		if (!class_exists('DebugTimer')) {
 			return null;
 		}
@@ -333,6 +310,7 @@ class ToolbarComponent extends Component implements EventListener {
 			'processToolbar',
 			__d('debug_kit', 'Processing toolbar data')
 		);
+		$controller = $event->subject();
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 
@@ -445,12 +423,11 @@ class ToolbarComponent extends Component implements EventListener {
  */
 	protected function _loadPanels($panels, $settings) {
 		foreach ($panels as $panel) {
-			$className = ucfirst($panel) . 'Panel';
-			list($plugin, $className) = pluginSplit($className, true);
-
-			/* TODO: App::uses($className, $plugin . 'Panel'); */
-			if (!class_exists($className)) {
-				trigger_error(__d('debug_kit', 'Could not load DebugToolbar panel %s', $panel), E_USER_WARNING);
+			$className = App::className($panel, 'Panel', 'Panel');
+			if ($className === false) {
+				throw new \RuntimeException(
+					__d('debug_kit', 'Could not load DebugToolbar panel %s', $panel)
+				);
 				continue;
 			}
 			$panelObj = new $className($settings);

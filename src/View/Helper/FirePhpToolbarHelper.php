@@ -11,10 +11,10 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\View\Helper;
+namespace Cake\DebugKit\View\Helper;
 
-use DebugKit\FireCake;
-use DebugKit\View\Helper\ToolbarHelper;
+use Cake\DebugKit\FireCake;
+use Cake\DebugKit\View\Helper\ToolbarHelper;
 
 /**
  * FirePHP Toolbar Helper

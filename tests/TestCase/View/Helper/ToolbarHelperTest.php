@@ -15,7 +15,7 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Test\TestCase\View\Helper;
+namespace Cake\DebugKit\Test\TestCase\View\Helper;
 
 use App\Manager\ConnectionManager;
 use Cake\Cache\Cache;
@@ -25,7 +25,7 @@ use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\View\View;
-use DebugKit\View\Helper\ToolbarHelper;
+use Cake\DebugKit\View\Helper\ToolbarHelper;
 
 /**
  * Class MockBackendHelper

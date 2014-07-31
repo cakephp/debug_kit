@@ -15,10 +15,10 @@
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
-namespace DebugKit\Test\TestCase\Model;
+namespace Cake\DebugKit\Test\TestCase\Model;
 
 use Cake\TestSuite\TestCase;
-use DebugKit\Model\ToolbarAccess;
+use Cake\DebugKit\Model\ToolbarAccess;
 
 /**
  * Test case for ToolbarAccess model

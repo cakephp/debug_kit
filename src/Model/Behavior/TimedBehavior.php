@@ -11,11 +11,11 @@
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Model\Behavior;
+namespace Cake\DebugKit\Model\Behavior;
 
 use Cake\Model\Behavior;
 use Cake\Model\Model;
-use DebugKit\DebugKitDebugger;
+use Cake\DebugKit\DebugKitDebugger;
 
 /**
  * Class TimedBehavior

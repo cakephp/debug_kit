@@ -14,12 +14,12 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
-namespace DebugKit\Test\TestCase\Panel;
+namespace Cake\DebugKit\Test\TestCase\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
-use DebugKit\Lib\Panel\LogPanel;
+use Cake\DebugKit\Lib\Panel\LogPanel;
 
 /**
  * Class LogPanelTest

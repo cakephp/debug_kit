@@ -11,12 +11,12 @@
  * @since         DebugKit 1.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Controller;
+namespace Cake\DebugKit\Controller;
 
 use Cake\Error\BadRequestException;
 use Cake\Core\Configure;
 use Cake\Utility\Security;
-use DebugKit\Controller\DebugKitAppController;
+use Cake\DebugKit\Controller\DebugKitAppController;
 
 /**
  * DebugKit ToolbarAccess Controller

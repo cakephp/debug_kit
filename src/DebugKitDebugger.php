@@ -11,13 +11,13 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit;
+namespace Cake\DebugKit;
 
 use Cake\Core\Configure;
 use Cake\Utility\Debugger;
-use DebugKit\DebugMemory;
-use DebugKit\DebugTimer;
-use DebugKit\FireCake;
+use Cake\DebugKit\DebugMemory;
+use Cake\DebugKit\DebugTimer;
+use Cake\DebugKit\FireCake;
 
 /**
  * DebugKit Temporary Debugger Class

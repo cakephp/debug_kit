@@ -11,11 +11,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  *
  */
-namespace DebugKit\Panel;
+namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use DebugKit\DebugPanel;
+use Cake\DebugKit\DebugPanel;
 
 /**
  * Provides information about your PHP and CakePHP environment to assist with debugging.

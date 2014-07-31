@@ -10,7 +10,7 @@
  * @since         v 1.0 (22-Jun-2009)
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\View\Helper;
+namespace Cake\DebugKit\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\Log\Log;

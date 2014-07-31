@@ -11,13 +11,13 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\View\Helper;
+namespace Cake\DebugKit\View\Helper;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 use Cake\View\Helper;
-use DebugKit\DebugKitDebugger;
+use Cake\DebugKit\DebugKitDebugger;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.

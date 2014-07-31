@@ -28,8 +28,8 @@
     },
     "autoload": {
         "psr-4": {
-            "DebugKit\\": "src",
-            "DebugKit\\Test\\": "tests",
+            "Cake\\DebugKit\\": "src",
+            "Cake\\DebugKit\\Test\\": "tests",
         }
     },
     "extra": {

@@ -44,7 +44,7 @@ class SqlLogPanel extends DebugPanel {
  * This will unfortunately build all the connections, but they
  * won't connect until used.
  *
- * @param \Controller|string $controller
+ * @param \Cake\Controller\Controller $controller
  * @return array
  */
 	public function startup(Controller $controller) {

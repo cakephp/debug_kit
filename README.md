@@ -1,4 +1,4 @@
-# CakePHP DebugKit [![Build Status](https://secure.travis-ci.org/cakephp/debug_kit.png?branch=master)](http://travis-ci.org/cakephp/debug_kit)
+# CakePHP DebugKit [![Build Status](https://secure.travis-ci.org/cakephp/debug_kit.png?branch=3.0)](http://travis-ci.org/cakephp/debug_kit)
 
 DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP applications.
 
@@ -6,42 +6,27 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
 
 The master branch has the following requirements:
 
-* CakePHP 2.2.0 or greater.
-* PHP 5.3.0 or greater.
+* CakePHP 3.0.0 or greater.
+* PHP 5.4.19 or greater.
 
 ## Installation
 
-* Clone/Copy the files in this directory into `app/Plugin/DebugKit`
-
-This can be done with the git submodule command
+* Install the plugin with composer
 ```sh
-git submodule add https://github.com/cakephp/debug_kit.git app/Plugin/DebugKit
+php composer.phar require cakephp/debug_kit "3.0.*-dev"
 ```
 
-* Ensure the plugin is loaded in `app/Config/bootstrap.php` by calling `CakePlugin::load('DebugKit');`
+* Ensure the plugin is loaded in `src/Config/bootstrap.php` by calling
+```php
+Plugin::load('DebugKit', ['namespace' => 'Cake\DebugKit']);
+```
 * Include the toolbar component in your `app/Controller/AppController.php`:
 ```php
 class AppController extends Controller {
-         public $components = array('DebugKit.Toolbar');
+    public $components = array('DebugKit.Toolbar');
 }
 ```
-* Set `Configure::write('debug', 1);` in `app/Config/core.php`.
-* Make sure to remove the 'sql_dump' element from your layout (usually
-  `app/View/Layouts/default.ctp`), if you want to experience the awesome that is
-  the DebugKit SQL log.
-
-### Using Composer
-
-Ensure `require` is present in `composer.json`. This will install the plugin into `Plugin/DebugKit`:
-
-```json
-{
-    "require": {
-        "cakephp/debug_kit": "2.2.*"
-    }
-}
-```
-Consider using "require-dev" if you only want to include DebugKit for your development environment.
+* Set `Configure::write('debug', 1);` in `src/Config/app.php`.
 
 ## Reporting Issues
 
@@ -76,6 +61,7 @@ correct branch.
 * `2.2.x` are compatible with CakePHP 2.2.0 and greater. It is a necessary
   upgrade for people using CakePHP 2.4 as the naming conventions around loggers
   changed in that release.
+* `3.0.x` is compatible with CakePHP 3.0.x and is still under active development.
 
 # Documentation
 

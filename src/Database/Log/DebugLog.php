@@ -11,7 +11,7 @@
  * @since         DebugKit 3.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Database\Log;
+namespace Cake\DebugKit\Database\Log;
 
 use Cake\Database\Log\QueryLogger;
 use Cake\Database\Log\LoggedQuery;

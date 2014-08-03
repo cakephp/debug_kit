@@ -113,7 +113,7 @@ class DebugLog extends QueryLogger {
  */
 	public function log(LoggedQuery $query) {
 		if ($this->_logger) {
-			$this->logger->log($query);
+			$this->_logger->log($query);
 		}
 		if (!empty($query->params)) {
 			$query->query = $this->_interpolate($query);

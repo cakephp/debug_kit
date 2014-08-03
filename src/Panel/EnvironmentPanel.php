@@ -26,7 +26,7 @@ class EnvironmentPanel extends DebugPanel {
 /**
  * beforeRender - Get necessary data about environment to pass back to controller
  *
- * @param Controller $controller
+ * @param \Cake\Controller\Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

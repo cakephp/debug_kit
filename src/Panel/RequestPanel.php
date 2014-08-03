@@ -13,8 +13,8 @@
 namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\Routing\Router;
 use Cake\DebugKit\DebugPanel;
+use Cake\Routing\Router;
 
 /**
  * Provides debug information on the Current request params.
@@ -25,7 +25,7 @@ class RequestPanel extends DebugPanel {
 /**
  * beforeRender callback - grabs request params
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

@@ -24,7 +24,7 @@ class SessionPanel extends DebugPanel {
 /**
  * beforeRender callback
  *
- * @param \Controller|object $controller
+ * @param \Cake\Controller\Controller $controller The controller
  * @return array
  */
 	public function beforeRender(Controller $controller) {

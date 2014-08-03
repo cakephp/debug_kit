@@ -161,8 +161,8 @@ class DebugTimer {
 /**
  * Get the difference in time between the timer start and timer end.
  *
- * @param $name string the name of the timer you want elapsed time for.
- * @param $precision int the number of decimal places to return, defaults to 5.
+ * @param string $name the name of the timer you want elapsed time for.
+ * @param int $precision the number of decimal places to return, defaults to 5.
  * @return float number of seconds elapsed for timer name, 0 on missing key
  */
 	public static function elapsedTime($name = 'default', $precision = 5) {

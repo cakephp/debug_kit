@@ -52,7 +52,7 @@ class ToolbarHelper extends Helper {
 		$this->_myName = get_class($this);
 		$this->settings = array_merge($this->settings, $options);
 
-		if ($this->_myName !== 'DebugKit\View\Helper\ToolbarHelper') {
+		if ($this->_myName !== 'Cake\DebugKit\View\Helper\ToolbarHelper') {
 			parent::__construct($View, $options);
 			return;
 		}

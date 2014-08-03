@@ -13,8 +13,9 @@
 namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\Database\ConnectionManager;
+use Cake\Datasource\ConnectionManager;
 use Cake\DebugKit\DebugPanel;
+use Cake\DebugKit\Database\Log\DebugLog;
 
 /**
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
@@ -31,37 +32,51 @@ class SqlLogPanel extends DebugPanel {
 	public $slowRate = 20;
 
 /**
+ * Loggers connected
+ *
+ * @var array
+ */
+	protected $_loggers = [];
+
+/**
+ * Startup hook - configures logger.
+ *
+ * This will unfortunately build all the connections, but they
+ * won't connect until used.
+ *
+ * @param \Cake\Controller\Controller $controller
+ * @return array
+ */
+	public function startup(Controller $controller) {
+		$configs = ConnectionManager::configured();
+		foreach ($configs as $name) {
+			// Skip test configs.
+			if (strpos($name, 'test') !== false) {
+				continue;
+			}
+			$connection = ConnectionManager::get($name);
+			$logger = null;
+			if ($connection->logQueries()) {
+				$logger = $connection->logger();
+			}
+
+			$spy = new DebugLog($logger, $name);
+			$this->_loggers[] = $spy;
+			$connection->logQueries(true);
+			$connection->logger($spy);
+		}
+	}
+
+/**
  * Gets the connection names that should have logs + dumps generated.
  *
  * @param \Controller|string $controller
  * @return array
  */
 	public function beforeRender(Controller $controller) {
-		if (!class_exists('ConnectionManager')) {
-			return array();
-		}
-		$connections = array();
-
-		$dbConfigs = ConnectionManager::sourceList();
-		foreach ($dbConfigs as $configName) {
-			$driver = null;
-			$db = ConnectionManager::getDataSource($configName);
-			if (
-				(empty($db->config['driver']) && empty($db->config['datasource'])) ||
-				!method_exists($db, 'getLog')
-			) {
-				continue;
-			}
-			if (isset($db->config['datasource'])) {
-				$driver = $db->config['datasource'];
-			}
-			$explain = false;
-			$isExplainable = (preg_match('/(Mysql|Postgres)$/', $driver));
-			if ($isExplainable) {
-				$explain = true;
-			}
-			$connections[$configName] = $explain;
-		}
-		return array('connections' => $connections, 'threshold' => $this->slowRate);
+		return [
+			'loggers' => $this->_loggers,
+			'threshold' => $this->slowRate,
+		];
 	}
 }

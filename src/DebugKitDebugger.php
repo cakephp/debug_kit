@@ -225,5 +225,5 @@ class DebugKitDebugger extends Debugger {
 
 }
 
-DebugKitDebugger::getInstance('DebugKit\DebugKitDebugger');
+DebugKitDebugger::getInstance('Cake\DebugKit\DebugKitDebugger');
 Debugger::addFormat('fb', array('callback' => 'DebugKitDebugger::fireError'));

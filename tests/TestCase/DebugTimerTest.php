@@ -1,9 +1,5 @@
 <?php
 /**
- * DebugTimer Test Case
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -22,11 +18,9 @@ use Cake\Utility\Debugger;
 use Cake\DebugKit\DebugTimer;
 
 /**
- * Class DebugTimerTest
- *
- * @since         debug_kit 2.0
+ * DebugTimerTest
  */
-class DebugTimerTest extends CakeTestCase {
+class DebugTimerTest extends TestCase {
 
 /**
  * tearDown method
@@ -57,7 +51,7 @@ class DebugTimerTest extends CakeTestCase {
 		$this->assertTrue($elapsed >= $expected);
 
 		DebugTimer::start('test3');
-		$this->assertIdentical(DebugTimer::elapsedTime('test3'), 0);
+		$this->assertSame(DebugTimer::elapsedTime('test3'), 0);
 		$this->assertFalse(DebugTimer::stop('wrong'));
 	}
 

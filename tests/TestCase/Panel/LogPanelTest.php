@@ -1,9 +1,5 @@
 <?php
 /**
- * DebugKit Log Panel Test Cases
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -19,13 +15,13 @@ namespace Cake\DebugKit\Test\TestCase\Panel;
 use Cake\Controller\Controller;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\Lib\Panel\LogPanel;
+use Cake\DebugKit\Panel\LogPanel;
 
 /**
  * Class LogPanelTest
  *
  */
-class LogPanelTest extends CakeTestCase {
+class LogPanelTest extends TestCase {
 
 /**
  * set up
@@ -35,6 +31,16 @@ class LogPanelTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->panel = new LogPanel();
+	}
+
+/**
+ * Teardown method.
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		Log::drop('debug_kit_log_panel');
 	}
 
 /**
@@ -59,7 +65,7 @@ class LogPanelTest extends CakeTestCase {
 		Log::write('error', 'Test');
 
 		$result = $this->panel->beforeRender($controller);
-		$this->assertInstanceOf('DebugKitLog', $result);
+		$this->assertInstanceOf('Cake\DebugKit\Log\Engine\DebugKitLog', $result);
 		$this->assertTrue(isset($result->logs));
 		$this->assertCount(1, $result->logs['error']);
 	}

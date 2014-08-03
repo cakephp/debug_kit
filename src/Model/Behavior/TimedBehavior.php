@@ -13,16 +13,13 @@
  */
 namespace Cake\DebugKit\Model\Behavior;
 
-use Cake\Model\Behavior;
-use Cake\Model\Model;
+use Cake\ORM\Behavior;
 use Cake\DebugKit\DebugKitDebugger;
 
 /**
  * Class TimedBehavior
- *
- * @since         DebugKit 1.3
  */
-class TimedBehavior extends ModelBehavior {
+class TimedBehavior extends Behavior {
 
 /**
  * Behavior settings

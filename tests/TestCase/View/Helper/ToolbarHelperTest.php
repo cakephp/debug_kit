@@ -1,9 +1,5 @@
 <?php
 /**
- * Toolbar facade tests.
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,20 +13,19 @@
  */
 namespace Cake\DebugKit\Test\TestCase\View\Helper;
 
-use App\Manager\ConnectionManager;
 use Cake\Cache\Cache;
-use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
+use Cake\Network\Request;
 use Cake\Routing\Router;
+use Cake\TestSuite\TestCase;
 use Cake\View\Helper;
 use Cake\View\View;
 use Cake\DebugKit\View\Helper\ToolbarHelper;
 
 /**
  * Class MockBackendHelper
- *
- * @since         DebugKit 0.1
  */
 class MockBackendHelper extends Helper {
 }
@@ -39,7 +34,7 @@ class MockBackendHelper extends Helper {
  * Class ToolbarHelperTestCase
  *
  */
-class ToolbarHelperTestCase extends CakeTestCase {
+class ToolbarHelperTestCase extends TestCase {
 
 /**
  * Fixtures
@@ -55,29 +50,25 @@ class ToolbarHelperTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$db = ConnectionManager::getDatasource('test');
+		$db = ConnectionManager::get('test');
 		$db->fullDebug = true;
 
 		Configure::write('Cache.disable', false);
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
 
-		$this->Controller = new Controller(null);
-		$this->View = new View($this->Controller);
+		$request = new Request();
+		$this->View = new View($request);
 		$this->Toolbar = new ToolbarHelper($this->View, array(
 			'output' => 'MockBackendHelper',
 			'cacheKey' => 'debug_kit_toolbar_test_case',
 			'cacheConfig' => 'default'
 		));
-		$this->Toolbar->MockBackend = $this->getMock('Helper', array('testMethod'), array($this->View));
-
-		$this->_viewPaths = App::path('views');
-		App::build(array(
-			'View' => array(
-				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'View' . DS,
-				APP . 'Plugin' . DS . 'DebugKit' . DS . 'View' . DS,
-				CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'View' . DS
-		)), true);
+		$this->Toolbar->MockBackend = $this->getMock(
+			'Cake\View\Helper',
+			array('testMethod'),
+			array($this->View)
+		);
 	}
 
 /**
@@ -88,7 +79,7 @@ class ToolbarHelperTestCase extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		Cache::delete('debug_kit_toolbar_test_case', 'default');
-		unset($this->Toolbar, $this->Controller);
+		unset($this->Toolbar);
 	}
 
 /**
@@ -154,31 +145,6 @@ class ToolbarHelperTestCase extends CakeTestCase {
 
 		$result = $this->Toolbar->readCache('test');
 		$this->assertFalse($result, 'Reading cache succeeded with no cache config %s');
-	}
-
-/**
- * ensure that getQueryLogs works and writes to the cache so the history panel will
- * work.
- *
- * @return void
- */
-	public function testGetQueryLogs() {
-		$model = new CakeTestModel(array('table' => 'posts', 'alias' => 'Post'));
-		$model->find('all');
-		$model->find('first');
-
-		$result = $this->Toolbar->getQueryLogs($model->useDbConfig, array('cache' => false));
-		$this->assertTrue(is_array($result));
-		$this->assertTrue(count($result) >= 2, 'Should be more than 2 queries in the log %s');
-		$this->assertTrue(isset($result['queries'][0]['actions']));
-
-		$model->find('first');
-		Cache::delete('debug_kit_toolbar_test_case', 'default');
-		$result = $this->Toolbar->getQueryLogs($model->useDbConfig, array('cache' => true));
-
-		$cached = $this->Toolbar->readCache('sql_log');
-		$this->assertTrue(isset($cached[$model->useDbConfig]));
-		$this->assertEquals($cached[$model->useDbConfig]['queries'][0], $result['queries'][0]);
 	}
 
 }

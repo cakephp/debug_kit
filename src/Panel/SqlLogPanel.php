@@ -50,10 +50,6 @@ class SqlLogPanel extends DebugPanel {
 	public function startup(Controller $controller) {
 		$configs = ConnectionManager::configured();
 		foreach ($configs as $name) {
-			// Skip test configs.
-			if (strpos($name, 'test') !== false) {
-				continue;
-			}
 			$connection = ConnectionManager::get($name);
 			$logger = null;
 			if ($connection->logQueries()) {

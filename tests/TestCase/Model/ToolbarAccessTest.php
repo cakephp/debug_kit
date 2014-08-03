@@ -1,9 +1,5 @@
 <?php
 /**
- * DebugKit ToolbarAccess Model Test case
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,15 +13,15 @@
  **/
 namespace Cake\DebugKit\Test\TestCase\Model;
 
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\DebugKit\Model\ToolbarAccess;
 
 /**
  * Test case for ToolbarAccess model
  *
- * @since         DebugKit 1.3
  */
-class ToolbarAccessTestCase extends CakeTestCase {
+class ToolbarAccessTestCase extends TestCase {
 
 /**
  * Included fixtures
@@ -60,10 +56,10 @@ class ToolbarAccessTestCase extends CakeTestCase {
  * @return void
  */
 	public function testExplainQuery() {
-		$Post = new CakeTestModel(array('table' => 'posts', 'alias' => 'Post'));
-		$db = $Post->getDataSource();
-		$sql = 'SELECT * FROM ' . $db->fullTableName('posts') . ';';
-		$result = $this->Model->explainQuery($Post->useDbConfig, $sql);
+		$this->markTestIncomplete('Test only works on MySQL or Postgres');
+		$posts = TableRegistry::get('Posts');
+		$sql = 'SELECT * FROM posts';
+		$result = $this->Model->explainQuery('test', $sql);
 
 		$this->assertTrue(is_array($result));
 		$this->assertFalse(empty($result));

@@ -13,15 +13,14 @@
  */
 namespace Cake\DebugKit\Model;
 
-use App\Model\ConnectionManager;
-use Cake\Core\Object;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Class ToolbarAccess
  *
  * Contains logic for accessing DebugKit specific information.
  */
-class ToolbarAccess extends Object {
+class ToolbarAccess {
 
 /**
  * Runs an explain on a query if the connection supports EXPLAIN.
@@ -32,8 +31,8 @@ class ToolbarAccess extends Object {
  * @return array Array of explain information or empty array if connection is unsupported.
  */
 	public function explainQuery($connection, $query) {
-		$db = ConnectionManager::getDataSource($connection);
-		$datasource = $db->config['datasource'];
+		$db = ConnectionManager::get($connection);
+		$datasource = $db->config()['driver'];
 
 		$return = array();
 		if (preg_match('/(Mysql|Postgres)$/', $datasource)) {

@@ -27,8 +27,8 @@ class PanelFixture extends TestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => ['type' => 'integer'],
-		'request_id' => ['type' => 'integer', 'null' => false],
+		'id' => ['type' => 'uuid'],
+		'request_id' => ['type' => 'uuid', 'null' => false],
 		'panel' => ['type' => 'string'],
 		'content' => ['type' => 'text'],
 		'_constraints' => [

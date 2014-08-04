@@ -10,7 +10,12 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Event\EventManager;
+use Cake\Routing\DispatcherFactory;
+use Cake\DebugKit\Routing\Filter\DebugBarFilter;
+
 
 ConnectionManager::create('debug_kit', [
 	'className' => 'Cake\Database\Connection',
@@ -20,3 +25,9 @@ ConnectionManager::create('debug_kit', [
 	'cacheMetadata' => true,
 	'quoteIdentifiers' => false,
 ]);
+
+// Setup the DebugBar
+$debugBar = new DebugBarFilter(EventManager::instance(), Configure::read('DebugKit'));
+$debugBar->setup();
+
+DispatcherFactory::add($debugBar);

@@ -13,14 +13,15 @@
  */
 namespace Cake\DebugKit;
 
-use Cake\Controller\Controller;
+use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
 
 /**
  * Base class for debug panels.
  *
  * @since         DebugKit 0.1
  */
-class DebugPanel {
+class DebugPanel implements EventListenerInterface {
 
 /**
  * Defines which plugin this panel is from so the element can be located.
@@ -60,9 +61,25 @@ class DebugPanel {
 	public $elementName = null;
 
 /**
+ * The data collected about a given request.
+ *
+ * @var array
+ */
+	protected $_data = [];
+
+/**
  * Empty constructor
  */
 	public function __construct() {
+	}
+
+/**
+ * Get the data a panel has collected.
+ *
+ * @return array
+ */
+	public function data() {
+		return $this->_data;
 	}
 
 /**
@@ -70,18 +87,30 @@ class DebugPanel {
  *
  * Pull information from the controller / request
  *
- * @param \Controller|object $controller Controller reference.
+ * @param \Cake\Event\Event $event event reference.
  * @return void
  */
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
 	}
 
 /**
  * Prepare output vars before Controller Rendering.
  *
- * @param \Controller|object $controller Controller reference.
+ * @param \Cake\Event\Event $event event reference.
  * @return void
  */
-	public function beforeRender(Controller $controller) {
+	public function beforeRender(Event $event) {
+	}
+
+/**
+ * Get the events this panels supports.
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+		return [
+			'Controller.beforeRender' => 'beforeRender',
+			'Controller.startup' => 'startup'
+		];
 	}
 }

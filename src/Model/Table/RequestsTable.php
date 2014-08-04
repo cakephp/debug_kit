@@ -12,12 +12,15 @@
  */
 namespace Cake\Debugkit\Model\Table;
 
+use Cake\DebugKit\Model\Table\LazyTableTrait;
 use Cake\ORM\Table;
 
 /**
  * The requests table tracks basic information about each request.
  */
 class RequestsTable extends Table {
+
+	use LazyTableTrait;
 
 /**
  * initialize method
@@ -27,6 +30,12 @@ class RequestsTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->hasMany('DebugKit.Panels');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => ['requested_at' => 'new']
+			]
+		]);
+		$this->ensureTables(['DebugKit.Panel', 'DebugKit.Request']);
 	}
 
 /**

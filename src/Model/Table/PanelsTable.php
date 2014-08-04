@@ -12,6 +12,7 @@
  */
 namespace Cake\Debugkit\Model\Table;
 
+use Cake\DebugKit\Model\Table\LazyTableTrait;
 use Cake\ORM\Table;
 
 /**
@@ -19,6 +20,8 @@ use Cake\ORM\Table;
  * each request.
  */
 class PanelsTable extends Table {
+
+	use LazyTableTrait;
 
 /**
  * initialize method
@@ -28,6 +31,7 @@ class PanelsTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->belongsTo('DebugKit.Requests');
+		$this->ensureTables(['DebugKit.Panel', 'DebugKit.Request']);
 	}
 
 /**

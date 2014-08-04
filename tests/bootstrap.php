@@ -59,6 +59,9 @@ Configure::write('App', [
 		'templates' => [APP . 'Template' . DS]
 	]
 ]);
+Configure::write('Session', [
+	'defaults' => 'php'
+]);
 
 Cache::config([
 	'_cake_core_' => [
@@ -94,9 +97,8 @@ ConnectionManager::config('test', [
 	'timezone' => 'UTC'
 ]);
 
-Configure::write('Session', [
-	'defaults' => 'php'
-]);
+// Use the test connection for 'debug_kit' as well.
+ConnectionManager::alias('test', 'debug_kit');
 
 Log::config([
 	'debug' => [

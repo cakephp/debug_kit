@@ -13,9 +13,9 @@
 namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\Datasource\ConnectionManager;
 use Cake\DebugKit\DebugPanel;
 use Cake\DebugKit\Database\Log\DebugLog;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
@@ -44,16 +44,12 @@ class SqlLogPanel extends DebugPanel {
  * This will unfortunately build all the connections, but they
  * won't connect until used.
  *
- * @param \Cake\Controller\Controller $controller
+ * @param \Cake\Controller\Controller $controller The controller.
  * @return array
  */
 	public function startup(Controller $controller) {
 		$configs = ConnectionManager::configured();
 		foreach ($configs as $name) {
-			// Skip test configs.
-			if (strpos($name, 'test') !== false) {
-				continue;
-			}
 			$connection = ConnectionManager::get($name);
 			$logger = null;
 			if ($connection->logQueries()) {
@@ -70,7 +66,7 @@ class SqlLogPanel extends DebugPanel {
 /**
  * Gets the connection names that should have logs + dumps generated.
  *
- * @param \Controller|string $controller
+ * @param \Controller|string $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

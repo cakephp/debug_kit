@@ -54,7 +54,7 @@ class IncludePanel extends DebugPanel {
 /**
  * Get a list of files that were included and split them out into the various parts of the app
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {
@@ -82,6 +82,7 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Get the possible include paths
+ *
  * @return array
  */
 	protected function _includePaths() {
@@ -93,7 +94,8 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Check if a path is part of cake core
- * @param string $file
+ *
+ * @param string $file File to check
  * @return boolean
  */
 	protected function _isCoreFile($file) {
@@ -102,7 +104,8 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Check if a path is from APP but not a plugin
- * @param string $file
+ *
+ * @param string $file File to check
  * @return boolean
  */
 	protected function _isAppFile($file) {
@@ -111,7 +114,8 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Check if a path is from a plugin
- * @param string $file
+ *
+ * @param string $file File to check
  * @return boolean
  */
 	protected function _isPluginFile($file) {
@@ -126,12 +130,13 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Replace the path with APP, CORE or the plugin name
- * @param string $file
- * @param string
+ *
+ * @param string $file File to check
+ * @param string $type
  *  - app for app files
  *  - core for core files
  *  - PluginName for the name of a plugin
- * @return boolean
+ * @return bool
  */
 	protected function _niceFileName($file, $type) {
 		switch ($type) {
@@ -148,7 +153,8 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Get the type of file (model, controller etc)
- * @param string $file
+ *
+ * @param string $file File to check.
  * @return string
  */
 	protected function _getFileType($file) {

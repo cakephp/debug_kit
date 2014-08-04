@@ -217,11 +217,10 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$url = array(
 			'plugin' => 'debug_kit',
 			'controller' => 'toolbar_access',
-			'action' => 'sql_explain'
+			'action' => 'sql_explain',
+			'prefix' => false,
 		);
-		foreach (Router::prefixes() as $prefix) {
-			$url[$prefix] = false;
-		}
+
 		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0);
 		$uid = $this->explainLinkUid . '_' . rand(0, 10000);
 		$form = $this->Form->create('log', array('url' => $url, 'id' => "logForm{$uid}"));

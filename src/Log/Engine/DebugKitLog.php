@@ -30,8 +30,9 @@ class DebugKitLog implements LogInterface {
 /**
  * Captures log messages in memory
  *
- * @param $type
- * @param $message
+ * @param string $type The type of message being logged.
+ * @param string $message The message being logged.
+ * @param array $scope The scope
  * @return void
  */
 	public function write($type, $message, $scope = []) {

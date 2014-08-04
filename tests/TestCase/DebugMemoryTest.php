@@ -1,9 +1,5 @@
 <?php
 /**
- * DebugKit Debug Memory Test Cases
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -13,7 +9,7 @@
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 namespace Cake\DebugKit\Test\TestCase;
 
 use Cake\TestSuite\TestCase;
@@ -23,7 +19,7 @@ use Cake\DebugKit\DebugMemory;
  * Class DebugMemoryTest
  *
  */
-class DebugMemoryTest extends CakeTestCase {
+class DebugMemoryTest extends TestCase {
 
 /**
  * test memory usage

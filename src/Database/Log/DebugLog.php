@@ -13,8 +13,8 @@
  */
 namespace Cake\DebugKit\Database\Log;
 
-use Cake\Database\Log\QueryLogger;
 use Cake\Database\Log\LoggedQuery;
+use Cake\Database\Log\QueryLogger;
 
 /**
  * DebugKit Query logger.
@@ -24,6 +24,7 @@ use Cake\Database\Log\LoggedQuery;
  * or stored for future use.
  */
 class DebugLog extends QueryLogger {
+
 /**
  * Logs from the current request.
  *
@@ -63,6 +64,7 @@ class DebugLog extends QueryLogger {
  * Constructor
  *
  * @param Cake\Database\Log\QueryLogger $logger The logger to decorate and spy on.
+ * @param string $name The name of the connection being logged.
  */
 	public function __construct($logger, $name) {
 		$this->_logger = $logger;
@@ -108,12 +110,12 @@ class DebugLog extends QueryLogger {
 /**
  * Log queries
  *
- * @param \Cake\Database\Log\LoggedQuery $query
+ * @param \Cake\Database\Log\LoggedQuery $query The query being logged.
  * @return void
  */
 	public function log(LoggedQuery $query) {
 		if ($this->_logger) {
-			$this->logger->log($query);
+			$this->_logger->log($query);
 		}
 		if (!empty($query->params)) {
 			$query->query = $this->_interpolate($query);

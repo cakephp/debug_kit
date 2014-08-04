@@ -1,7 +1,5 @@
 <?php
 /**
- * SqlLogPanelTest
- *
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -14,17 +12,15 @@
  */
 namespace Cake\DebugKit\Test\TestCase\Panel;
 
-use App\Model\Model;
 use Cake\Controller\Controller;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\Lib\Panel\SqlLogPanel;
+use Cake\DebugKit\Panel\SqlLogPanel;
 
 /**
  * Class SqlLogPanelTest
- *
- * @since         DebugKit 2.1
  */
-class SqlLogPanelTest extends CakeTestCase {
+class SqlLogPanelTest extends TestCase {
 
 /**
  * fixtures.
@@ -49,13 +45,16 @@ class SqlLogPanelTest extends CakeTestCase {
  * @return void
  */
 	public function testBeforeRender() {
-		$Article = ClassRegistry::init('Article');
-		$Article->find('first', array('conditions' => array('Article.id' => 1)));
-
 		$controller = new Controller();
+		$result = $this->panel->startup($controller);
+
+		$Article = TableRegistry::get('Articles');
+		$Article->findById(1)->first();
+
 		$result = $this->panel->beforeRender($controller);
 
-		$this->assertTrue(isset($result['connections'][$Article->useDbConfig]));
-		$this->assertTrue(isset($result['threshold']));
+		$this->assertArrayHasKey('loggers', $result);
+		$this->assertCount(1, $result['loggers']);
+		$this->assertArrayHasKey('threshold', $result);
 	}
 }

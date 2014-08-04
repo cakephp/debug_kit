@@ -13,8 +13,8 @@
 namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\Log\Log;
 use Cake\DebugKit\DebugPanel;
+use Cake\Log\Log;
 
 /**
  * Log Panel - Reads log entries made this request.
@@ -37,7 +37,7 @@ class LogPanel extends DebugPanel {
 /**
  * beforeRender Callback
  *
- * @param Controller $controller
+ * @param Controller $controller The controller
  * @return array
  */
 	public function beforeRender(Controller $controller) {

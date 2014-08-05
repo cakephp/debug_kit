@@ -11,22 +11,22 @@ The master branch has the following requirements:
 
 ## Installation
 
-* Install the plugin with composer
+* Install the plugin with composer from your CakePHP Project's ROOT directory (where composer.json file is located)
 ```sh
 php composer.phar require cakephp/debug_kit "3.0.*-dev"
 ```
 
-* Ensure the plugin is loaded in `src/Config/bootstrap.php` by calling
+* Ensure the plugin is loaded in `config/bootstrap.php` by calling
 ```php
 Plugin::load('DebugKit', ['namespace' => 'Cake\DebugKit']);
 ```
-* Include the toolbar component in your `app/Controller/AppController.php`:
+* Include the toolbar component in your `src/Controller/AppController.php`:
 ```php
 class AppController extends Controller {
     public $components = array('DebugKit.Toolbar');
 }
 ```
-* Set `Configure::write('debug', 1);` in `src/Config/app.php`.
+* Set `'debug' => true,` in `config/app.php`.
 
 ## Reporting Issues
 

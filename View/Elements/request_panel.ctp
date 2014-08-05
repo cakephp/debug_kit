@@ -15,6 +15,8 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+$this->start('panelContent');
 ?>
 <h2> <?php echo __d('debug_kit', 'Request'); ?></h2>
 
@@ -47,4 +49,6 @@ endif;
 <?php endif; ?>
 
 <h4><?php echo __d('debug_kit', 'Current Route') ?></h4>
-<?php echo $this->Toolbar->makeNeatArray($content['currentRoute']);
+<?php
+echo $this->Toolbar->makeNeatArray($content['currentRoute']);
+$this->end('panelContent');

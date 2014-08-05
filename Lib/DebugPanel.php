@@ -48,6 +48,8 @@ class DebugPanel {
  */
 	public $javascript = array();
 
+	public $priority = 0;
+
 /**
  * Provide a custom element name for this panel. If null, the underscored version of the class
  * name will be used.
@@ -57,9 +59,12 @@ class DebugPanel {
 	public $elementName = null;
 
 /**
- * Empty constructor
+ * Constructor
  */
-	public function __construct() {
+	public function __construct($settings) {
+		if (isset($settings['priority'])) {
+			$this->priority = (int)$settings['priority'];
+		}
 	}
 
 /**

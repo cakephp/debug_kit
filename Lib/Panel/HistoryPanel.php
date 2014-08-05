@@ -36,6 +36,8 @@ class HistoryPanel extends DebugPanel {
 		if (isset($settings['history'])) {
 			$this->history = $settings['history'];
 		}
+
+		parent::__construct($settings);
 	}
 
 /**

@@ -25,7 +25,6 @@ if (!function_exists('firecake')) {
 	function firecake($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
 	}
-
 }
 
 /**

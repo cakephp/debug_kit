@@ -9,12 +9,15 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Model;
+namespace Cake\DebugKit\Routing\Filter;
 
 use Cake\DebugKit\Panel\DebugPanel;
 use Cake\DebugKit\Panel\PanelRegistry;
+use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\DispatcherFilter;
 use Cake\Utility\String;
 
 /**
@@ -44,14 +47,14 @@ class DebugBarFilter extends DispatcherFilter {
 		// Attempt to execute last.
 		'priority' => 9999,
 		'panels' => [
-			'DebugKit.Session',
-			'DebugKit.Request',
+			// 'DebugKit.Session',
+			// 'DebugKit.Request',
 			'DebugKit.SqlLog',
-			'DebugKit.Timer',
-			'DebugKit.Log',
-			'DebugKit.Variables',
-			'DebugKit.Environment',
-			'DebugKit.Include'
+			// 'DebugKit.Timer',
+			// 'DebugKit.Log',
+			// 'DebugKit.Variables',
+			// 'DebugKit.Environment',
+			// 'DebugKit.Include'
 		],
 	];
 
@@ -65,6 +68,24 @@ class DebugBarFilter extends DispatcherFilter {
 		$this->eventManager($events);
 		$this->config($config);
 		$this->_registry = new PanelRegistry($events);
+	}
+
+/**
+ * Get the list of loaded panels
+ *
+ * @return array
+ */
+	public function loadedPanels() {
+		return $this->_registry->loaded();
+	}
+
+/**
+ * Get the list of loaded panels
+ *
+ * @return Cake\DebugKit\Panel\DebugPanel|null The panel or null.
+ */
+	public function panel($name) {
+		return $this->_registry->{$name};
 	}
 
 /**

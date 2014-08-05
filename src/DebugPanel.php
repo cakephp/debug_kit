@@ -13,15 +13,16 @@
  */
 namespace Cake\DebugKit;
 
+use Cake\Controller\Controller;
 use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
+use Cake\Event\EventListener;
 
 /**
  * Base class for debug panels.
  *
  * @since         DebugKit 0.1
  */
-class DebugPanel implements EventListenerInterface {
+class DebugPanel implements EventListener {
 
 /**
  * Defines which plugin this panel is from so the element can be located.
@@ -74,6 +75,30 @@ class DebugPanel implements EventListenerInterface {
 	}
 
 /**
+ * startup the panel
+ *
+ * Pull information from the controller / request
+ *
+ * Old style callbacks for non-event based toolbar.
+ *
+ * @param \Cake\Controller\Controller $controller controller reference.
+ * @return void
+ */
+	public function startup(Controller $event) {
+	}
+
+/**
+ * Prepare output vars before Controller Rendering.
+ *
+ * Old style callbacks for non-event based toolbar.
+ *
+ * @param \Cake\Controller\Controller $controller controller reference.
+ * @return void
+ */
+	public function beforeRender(Controller $event) {
+	}
+
+/**
  * Get the data a panel has collected.
  *
  * @return array
@@ -83,23 +108,21 @@ class DebugPanel implements EventListenerInterface {
 	}
 
 /**
- * startup the panel
+ * Initialize callback
  *
- * Pull information from the controller / request
- *
- * @param \Cake\Event\Event $event event reference.
+ * @param \Cake\Event\Event $event The event.
  * @return void
  */
-	public function startup(Event $event) {
+	public function initialize(Event $event) {
 	}
 
 /**
- * Prepare output vars before Controller Rendering.
+ * Shutdown callback
  *
- * @param \Cake\Event\Event $event event reference.
+ * @param \Cake\Event\Event $event The event.
  * @return void
  */
-	public function beforeRender(Event $event) {
+	public function shutdown(Event $event) {
 	}
 
 /**
@@ -109,8 +132,8 @@ class DebugPanel implements EventListenerInterface {
  */
 	public function implementedEvents() {
 		return [
-			'Controller.beforeRender' => 'beforeRender',
-			'Controller.startup' => 'startup'
+			'Controller.initialize' => 'initialize',
+			'Controller.shutdown' => 'shutdown',
 		];
 	}
 }

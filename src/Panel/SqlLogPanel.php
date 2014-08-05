@@ -48,7 +48,7 @@ class SqlLogPanel extends DebugPanel {
  * @param \Cake\Event\Event $event The event.
  * @return array
  */
-	public function startup(Event $event) {
+	public function startup(Controller $controller) {
 		$configs = ConnectionManager::configured();
 		foreach ($configs as $name) {
 			$connection = ConnectionManager::get($name);
@@ -67,13 +67,33 @@ class SqlLogPanel extends DebugPanel {
 /**
  * Gets the connection names that should have logs + dumps generated.
  *
- * @param \Cake\Event\Event $event The event.
+ * @param \Cake\Controller\Controller $contoller The controller.
  * @return array
  */
-	public function beforeRender(Event $event) {
+	public function beforeRender(Controller $controller) {
 		return [
 			'loggers' => $this->_loggers,
 			'threshold' => $this->slowRate,
 		];
+	}
+
+/**
+ * Gets the connection names that should have logs + dumps generated.
+ *
+ * @param \Cake\Event\Event $event The event.
+ * @return array
+ */
+	public function initialize(Event $event) {
+		$this->startup($event->subject());
+	}
+
+/**
+ * Stores the data this panel wants.
+ *
+ * @param \Cake\Event\Event $event The event.
+ * @return array
+ */
+	public function shutdown(Event $event) {
+		$this->_data = $this->beforeRender($event->subject());
 	}
 }

@@ -17,6 +17,7 @@ use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\String;
 
 /**
  * Test the debug bar
@@ -75,7 +76,7 @@ class DebugBarFilterTest extends TestCase {
  */
 	public function testAfterDispatchSavesData() {
 		$request = new Request(['url' => '/articles']);
-		$request->params['_debug_kit_id'] = 'abc123';
+		$request->params['_debug_kit_id'] = String::uuid();
 
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();

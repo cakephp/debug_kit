@@ -14,13 +14,15 @@
 namespace Cake\DebugKit;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
+use Cake\Event\EventListener;
 
 /**
  * Base class for debug panels.
  *
  * @since         DebugKit 0.1
  */
-class DebugPanel {
+class DebugPanel implements EventListener {
 
 /**
  * Defines which plugin this panel is from so the element can be located.
@@ -60,6 +62,13 @@ class DebugPanel {
 	public $elementName = null;
 
 /**
+ * The data collected about a given request.
+ *
+ * @var array
+ */
+	protected $_data = [];
+
+/**
  * Empty constructor
  */
 	public function __construct() {
@@ -70,18 +79,61 @@ class DebugPanel {
  *
  * Pull information from the controller / request
  *
- * @param \Controller|object $controller Controller reference.
+ * Old style callbacks for non-event based toolbar.
+ *
+ * @param \Cake\Controller\Controller $controller controller reference.
  * @return void
  */
-	public function startup(Controller $controller) {
+	public function startup(Controller $event) {
 	}
 
 /**
  * Prepare output vars before Controller Rendering.
  *
- * @param \Controller|object $controller Controller reference.
+ * Old style callbacks for non-event based toolbar.
+ *
+ * @param \Cake\Controller\Controller $controller controller reference.
  * @return void
  */
-	public function beforeRender(Controller $controller) {
+	public function beforeRender(Controller $event) {
+	}
+
+/**
+ * Get the data a panel has collected.
+ *
+ * @return array
+ */
+	public function data() {
+		return $this->_data;
+	}
+
+/**
+ * Initialize callback
+ *
+ * @param \Cake\Event\Event $event The event.
+ * @return void
+ */
+	public function initialize(Event $event) {
+	}
+
+/**
+ * Shutdown callback
+ *
+ * @param \Cake\Event\Event $event The event.
+ * @return void
+ */
+	public function shutdown(Event $event) {
+	}
+
+/**
+ * Get the events this panels supports.
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+		return [
+			'Controller.initialize' => 'initialize',
+			'Controller.shutdown' => 'shutdown',
+		];
 	}
 }

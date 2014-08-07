@@ -14,6 +14,7 @@ namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\DebugKit\DebugPanel;
+use Cake\Event\Event;
 
 /**
  * Provides debug information on the Session contents.
@@ -30,5 +31,18 @@ class SessionPanel extends DebugPanel {
 	public function beforeRender(Controller $controller) {
 		$sessions = $controller->Toolbar->Session->read();
 		return $sessions;
+	}
+
+/**
+ * shutdown callback
+ *
+ * @param \Cake\Event\Event $event The event
+ * @return array
+ */
+	public function shutdown(Event $event) {
+		$request = $event->data['request'];
+		if ($request) {
+			$this->_data = $request->session()->read();
+		}
 	}
 }

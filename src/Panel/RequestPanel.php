@@ -14,6 +14,7 @@ namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\DebugKit\DebugPanel;
+use Cake\Event\Event;
 use Cake\Routing\Router;
 
 /**
@@ -36,5 +37,15 @@ class RequestPanel extends DebugPanel {
 		$out['cookie'] = $controller->request->cookies;
 		$out['get'] = $_GET;
 		return $out;
+	}
+
+/**
+ * Data collection callback.
+ *
+ * @param \Cake\Event\Event $event
+ * @return void
+ */
+	public function shutdown(Event $event) {
+		$this->_data = $this->beforeRender($event->subject());
 	}
 }

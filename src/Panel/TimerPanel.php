@@ -17,8 +17,15 @@ use Cake\DebugKit\DebugPanel;
 
 /**
  * Provides debug information on all timers used in a request.
- *
  */
 class TimerPanel extends DebugPanel {
+
+/**
+ * Return an array of events to listen to.
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+	}
 
 }

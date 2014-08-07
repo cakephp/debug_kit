@@ -16,6 +16,7 @@ namespace Cake\DebugKit\Panel;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\DebugKit\DebugPanel;
+use Cake\Event\Event;
 
 /**
  * Provides information about your PHP and CakePHP environment to assist with debugging.
@@ -30,8 +31,6 @@ class EnvironmentPanel extends DebugPanel {
  * @return array
  */
 	public function beforeRender(Controller $controller) {
-		parent::beforeRender($controller);
-
 		$return = array();
 
 		// PHP Data
@@ -72,4 +71,15 @@ class EnvironmentPanel extends DebugPanel {
 
 		return $return;
 	}
+
+/**
+ * Shutdown callback
+ *
+ * @param \Cake\Event\Event $event Event
+ * @return void
+ */
+	public function shutdown(Event $event) {
+		$this->_data = $this->beforeRender($event->subject());
+	}
+
 }

@@ -14,6 +14,7 @@ namespace Cake\DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\DebugKit\DebugPanel;
+use Cake\Event\Event;
 use Cake\Log\Log;
 
 /**
@@ -43,4 +44,15 @@ class LogPanel extends DebugPanel {
 	public function beforeRender(Controller $controller) {
 		return Log::engine('debug_kit_log_panel');
 	}
+
+/**
+ * Shutdown event.
+ *
+ * @param \Cake\Event\Event $event Event
+ * @return void
+ */
+	public function shutdown(Event $event) {
+		$this->_data = Log::engine('debug_kit_log_panel');
+	}
+
 }

@@ -18,6 +18,7 @@ use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\DispatcherFilter;
+use Cake\Routing\Router;
 use Cake\Utility\String;
 
 /**
@@ -100,7 +101,6 @@ class DebugBarFilter extends DispatcherFilter {
 		foreach ($this->config('panels') as $panel) {
 			$this->_registry->load($panel);
 		}
-		$this->eventManager()->attach($this);
 	}
 
 /**
@@ -144,6 +144,33 @@ class DebugBarFilter extends DispatcherFilter {
 			]);
 		}
 		$requests->save($row);
+
+		$this->_injectScripts($data['id'], $event->data['response']);
+	}
+
+/**
+ * Injects the JS to build the toolbar.
+ *
+ * The toolbar will only be injected if the response's content type
+ * contains HTML and there is a </body> tag.
+ *
+ * @param string $id ID to fetch data from.
+ * @param \Cake\Network\Response $response The response to augment.
+ * @return void
+ */
+	protected function _injectScripts($id, $response) {
+		if (strpos($response->type(), 'html') === false) {
+			return;
+		}
+		$body = $response->body();
+		$pos = strrpos($body, '</body>');
+		if ($pos === false) {
+			return;
+		}
+		$script = "<script>var __debug_kit_id = '${id}';</script>";
+		$script .= '<script src="' . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
+		$body = substr($body, 0, $pos) . $script . substr($body, $pos);
+		$response->body($body);
 	}
 
 }

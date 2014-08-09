@@ -102,4 +102,56 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertEquals('Sql Log', $result->panels[0]->title);
 	}
 
+/**
+ * Test that afterDispatch modifies response
+ *
+ * @return void
+ */
+	public function testAfterDispatchModifiesResponse() {
+		$request = new Request(['url' => '/articles']);
+		$request->params['_debug_kit_id'] = String::uuid();
+
+		$response = new Response([
+			'statusCode' => 200,
+			'type' => 'text/html',
+			'body' => '<html><title>test</title><body><p>some text</p></body>'
+		]);
+		$request->params['_debug_kit_id'] = String::uuid();
+
+		$bar = new DebugBarFilter($this->events, []);
+		$bar->setup();
+
+		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
+		$bar->afterDispatch($event);
+		$expected = '<html><title>test</title><body><p>some text</p>' .
+			"<script>var __debug_kit_id = '" . $request->params['_debug_kit_id'] . "';</script>" .
+			'<script src="/debug_kit/js/toolbar.js"></script>' .
+			'</body>';
+		$this->assertTextEquals($expected, $response->body());
+	}
+
+/**
+ * Test that afterDispatch does not modify response
+ *
+ * @return void
+ */
+	public function testAfterDispatchNoModifyResponse() {
+		$request = new Request(['url' => '/articles']);
+		$request->params['_debug_kit_id'] = String::uuid();
+
+		$response = new Response([
+			'statusCode' => 200,
+			'type' => 'application/json',
+			'body' => '{"some":"json"}'
+		]);
+		$request->params['_debug_kit_id'] = String::uuid();
+
+		$bar = new DebugBarFilter($this->events, []);
+		$bar->setup();
+
+		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
+		$bar->afterDispatch($event);
+		$this->assertTextEquals('{"some":"json"}', $response->body());
+	}
+
 }

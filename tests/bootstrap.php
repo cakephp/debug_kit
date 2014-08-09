@@ -27,6 +27,7 @@ define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
 define('TMP', sys_get_temp_dir() . DS);
+define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP);
 

@@ -15,6 +15,7 @@ use Cake\DebugKit\Routing\Filter\DebugBarFilter;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\String;
@@ -78,10 +79,13 @@ class DebugBarFilterTest extends TestCase {
 		$request = new Request(['url' => '/articles']);
 		$request->params['_debug_kit_id'] = String::uuid();
 
+		$response = new Response(['statusCode' => 200, 'type' => 'text/html']);
+		$request->params['_debug_kit_id'] = String::uuid();
+
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();
 
-		$event = new Event('Dispatcher.afterDispatch', $this, compact('request'));
+		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
 		$bar->afterDispatch($event);
 
 		$requests = TableRegistry::get('DebugKit.Requests');
@@ -89,8 +93,13 @@ class DebugBarFilterTest extends TestCase {
 
 		$this->assertEquals('articles', $result->url);
 		$this->assertNotEmpty($result->requested_at);
+		$this->assertNotEmpty('text/html', $result->content_type);
+		$this->assertEquals(200, $result->status_code);
 		$this->assertCount(1, $result->panels);
+
 		$this->assertEquals('SqlLog', $result->panels[0]->panel);
+		$this->assertEquals('sql_log', $result->panels[0]->element);
+		$this->assertEquals('Sql Log', $result->panels[0]->title);
 	}
 
 }

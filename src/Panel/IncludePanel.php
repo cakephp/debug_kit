@@ -48,8 +48,6 @@ class IncludePanel extends DebugPanel {
 		foreach (Plugin::loaded() as $plugin) {
 			$this->_pluginPaths[$plugin] = Plugin::path($plugin);
 		}
-
-		parent::__construct();
 	}
 
 /**

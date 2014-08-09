@@ -30,6 +30,8 @@ class PanelFixture extends TestFixture {
 		'id' => ['type' => 'uuid'],
 		'request_id' => ['type' => 'uuid', 'null' => false],
 		'panel' => ['type' => 'string'],
+		'title' => ['type' => 'string'],
+		'element' => ['type' => 'string'],
 		'content' => ['type' => 'text'],
 		'_constraints' => [
 			'primary' => ['type' => 'primary', 'columns' => ['id']],

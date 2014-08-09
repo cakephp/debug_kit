@@ -29,6 +29,8 @@ class RequestFixture extends TestFixture {
 	public $fields = array(
 		'id' => ['type' => 'uuid', 'null' => false],
 		'url' => ['type' => 'string', 'null' => false],
+		'content_type' => ['type' => 'string'],
+		'status_code' => ['type' => 'integer'],
 		'requested_at' => ['type' => 'datetime', 'null' => false],
 		'_constraints' => [
 			'primary' => ['type' => 'primary', 'columns' => ['id']],

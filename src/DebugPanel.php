@@ -16,6 +16,7 @@ namespace Cake\DebugKit;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListener;
+use Cake\Utility\Inflector;
 
 /**
  * Base class for debug panels.
@@ -32,34 +33,11 @@ class DebugPanel implements EventListener {
 	public $plugin = 'DebugKit';
 
 /**
- * Defines the title for displaying on the toolbar. If null, the class name will be used.
- * Overriding this allows you to define a custom name in the toolbar.
+ * Title attribute
  *
- * @var string
+ * @deprecated
  */
-	public $title = null;
-
-/**
- * Panel's css files
- *
- * @var array
- */
-	public $css = array();
-
-/**
- * Panel's javascript files
- *
- * @var array
- */
-	public $javascript = array();
-
-/**
- * Provide a custom element name for this panel. If null, the underscored version of the class
- * name will be used.
- *
- * @var string
- */
-	public $elementName = null;
+	public $title;
 
 /**
  * The data collected about a given request.
@@ -69,9 +47,35 @@ class DebugPanel implements EventListener {
 	protected $_data = [];
 
 /**
- * Empty constructor
+ * Get the panel name.
+ *
+ * Inflected from the classname by default. Changing this will update
+ * both the element and title.
+ *
+ * @return string
  */
-	public function __construct() {
+	protected function _name() {
+		list($ns, $name) = namespaceSplit(get_class($this));
+		return substr($name, 0, strlen('Panel') * -1);
+	}
+/**
+ * Get the title for the panel.
+ *
+ * @return string
+ */
+	public function title() {
+		$name = $this->_name();
+		return Inflector::humanize(Inflector::underscore($name));
+	}
+
+/**
+ * Get the element name for the panel.
+ *
+ * @return string
+ */
+	public function elementName() {
+		$name = $this->_name();
+		return Inflector::underscore($name);
 	}
 
 /**

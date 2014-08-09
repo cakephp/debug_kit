@@ -121,15 +121,13 @@ class DebugBarFilter extends DispatcherFilter {
  */
 	public function afterDispatch(Event $event) {
 		$request = $event->data['request'];
+		$response = $event->data['response'];
 
-		$panelData = [];
-		foreach ($this->_registry->loaded() as $name) {
-			$panel = $this->_registry->{$name};
-			$panelData[$name] = $panel->data();
-		}
 		$data = [
 			'id' => $request->param('_debug_kit_id'),
 			'url' => $request->url,
+			'content_type' => $response->type(),
+			'status_code' => $response->statusCode(),
 			'requested_at' => $request->env('REQUEST_TIME'),
 			'panels' => []
 		];
@@ -137,15 +135,18 @@ class DebugBarFilter extends DispatcherFilter {
 		$row = $requests->newEntity($data);
 		$row->isNew(true);
 
-		foreach ($panelData as $panel => $contents) {
+		foreach ($this->_registry->loaded() as $name) {
+			$panel = $this->_registry->{$name};
 			$row->panels[] = $requests->Panels->newEntity([
-				'panel' => $panel,
-				'content' => serialize($contents)
+				'panel' => $name,
+				'element' => $panel->elementName(),
+				'title' => $panel->title(),
+				'content' => serialize($panel->data())
 			]);
 		}
 		$requests->save($row);
 
-		$this->_injectScripts($data['id'], $event->data['response']);
+		$this->_injectScripts($data['id'], $response);
 	}
 
 /**

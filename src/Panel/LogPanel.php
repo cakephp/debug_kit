@@ -29,7 +29,6 @@ class LogPanel extends DebugPanel {
  * @return \LogPanel
  */
 	public function __construct() {
-		parent::__construct();
 		Log::config('debug_kit_log_panel', array(
 			'engine' => 'DebugKit.DebugKit',
 		));

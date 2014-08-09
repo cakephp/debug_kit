@@ -47,24 +47,13 @@ class DebugPanel implements EventListener {
 	protected $_data = [];
 
 /**
- * Get the panel name.
- *
- * Inflected from the classname by default. Changing this will update
- * both the element and title.
- *
- * @return string
- */
-	protected function _name() {
-		list($ns, $name) = namespaceSplit(get_class($this));
-		return substr($name, 0, strlen('Panel') * -1);
-	}
-/**
  * Get the title for the panel.
  *
  * @return string
  */
 	public function title() {
-		$name = $this->_name();
+		list($ns, $name) = namespaceSplit(get_class($this));
+		$name = substr($name, 0, strlen('Panel') * -1);
 		return Inflector::humanize(Inflector::underscore($name));
 	}
 
@@ -74,7 +63,7 @@ class DebugPanel implements EventListener {
  * @return string
  */
 	public function elementName() {
-		$name = $this->_name();
+		list($ns, $name) = namespaceSplit(get_class($this));
 		return $this->plugin . '.' . Inflector::underscore($name);
 	}
 

@@ -83,7 +83,7 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertCount(1, $result->panels);
 
 		$this->assertEquals('SqlLog', $result->panels[0]->panel);
-		$this->assertEquals('DebugKit.sql_log', $result->panels[0]->element);
+		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[0]->element);
 		$this->assertEquals('Sql Log', $result->panels[0]->title);
 	}
 

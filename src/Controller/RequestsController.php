@@ -12,6 +12,7 @@
 namespace Cake\DebugKit\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Cake\Error\NotFoundException;
 use Cake\Event\Event;
 
@@ -20,6 +21,7 @@ use Cake\Event\Event;
  */
 class RequestsController extends Controller {
 
+	public $layout = 'DebugKit.toolbar';
 /**
  * Before filter handler.
  *

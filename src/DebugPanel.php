@@ -75,7 +75,7 @@ class DebugPanel implements EventListener {
  */
 	public function elementName() {
 		$name = $this->_name();
-		return Inflector::underscore($name);
+		return $this->plugin . '.' . Inflector::underscore($name);
 	}
 
 /**

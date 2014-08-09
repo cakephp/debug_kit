@@ -104,16 +104,6 @@ class DebugBarFilter extends DispatcherFilter {
 	}
 
 /**
- * Before dispatch hook.
- *
- * @param \Cake\Event\Event $event The event.
- */
-	public function beforeDispatch(Event $event) {
-		$request = $event->data['request'];
-		$request->params['_debug_kit_id'] = String::uuid();
-	}
-
-/**
  * Save the toolbar data.
  *
  * @param \Cake\Network\Request $request The request to save panel data for.
@@ -124,7 +114,6 @@ class DebugBarFilter extends DispatcherFilter {
 		$response = $event->data['response'];
 
 		$data = [
-			'id' => $request->param('_debug_kit_id'),
 			'url' => $request->url,
 			'content_type' => $response->type(),
 			'status_code' => $response->statusCode(),
@@ -144,9 +133,9 @@ class DebugBarFilter extends DispatcherFilter {
 				'content' => serialize($panel->data())
 			]);
 		}
-		$requests->save($row);
+		$row = $requests->save($row);
 
-		$this->_injectScripts($data['id'], $response);
+		$this->_injectScripts($row->id, $response);
 	}
 
 /**

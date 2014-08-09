@@ -57,20 +57,6 @@ class DebugBarFilterTest extends TestCase {
 	}
 
 /**
- * Test that beforeDispatch sets properties up.
- *
- * @return void
- */
-	public function testBeforeDispatch() {
-		$request = new Request();
-		$event = new Event('Dispatcher.beforeDispatch', $this, compact('request'));
-
-		$bar = new DebugBarFilter($this->events, []);
-		$bar->beforeDispatch($event);
-		$this->assertArrayHasKey('_debug_kit_id', $request->params);
-	}
-
-/**
  * Test that afterDispatch saves panel data.
  *
  * @return void
@@ -80,7 +66,6 @@ class DebugBarFilterTest extends TestCase {
 		$request->params['_debug_kit_id'] = String::uuid();
 
 		$response = new Response(['statusCode' => 200, 'type' => 'text/html']);
-		$request->params['_debug_kit_id'] = String::uuid();
 
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();
@@ -109,22 +94,22 @@ class DebugBarFilterTest extends TestCase {
  */
 	public function testAfterDispatchModifiesResponse() {
 		$request = new Request(['url' => '/articles']);
-		$request->params['_debug_kit_id'] = String::uuid();
 
 		$response = new Response([
 			'statusCode' => 200,
 			'type' => 'text/html',
 			'body' => '<html><title>test</title><body><p>some text</p></body>'
 		]);
-		$request->params['_debug_kit_id'] = String::uuid();
 
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();
 
 		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
 		$bar->afterDispatch($event);
+		$toolbar = TableRegistry::get('DebugKit.Requests')->find()->first();
+
 		$expected = '<html><title>test</title><body><p>some text</p>' .
-			"<script>var __debug_kit_id = '" . $request->params['_debug_kit_id'] . "';</script>" .
+			"<script>var __debug_kit_id = '" . $toolbar->id . "';</script>" .
 			'<script src="/debug_kit/js/toolbar.js"></script>' .
 			'</body>';
 		$this->assertTextEquals($expected, $response->body());

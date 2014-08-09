@@ -14,10 +14,10 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Routing\DispatcherFactory;
+use Cake\Routing\Router;
 use Cake\DebugKit\Routing\Filter\DebugBarFilter;
 
-
-ConnectionManager::create('debug_kit', [
+ConnectionManager::config('debug_kit', [
 	'className' => 'Cake\Database\Connection',
 	'driver' => 'Cake\Database\Driver\Sqlite',
 	'database' => TMP . 'debug_kit.sqlite',
@@ -26,8 +26,13 @@ ConnectionManager::create('debug_kit', [
 	'quoteIdentifiers' => false,
 ]);
 
+Router::plugin('DebugKit', function($routes) {
+	$routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
+	$routes->connect('/panels/:action/*', ['controller' => 'Panels']);
+});
+
 // Setup the DebugBar
-$debugBar = new DebugBarFilter(EventManager::instance(), Configure::read('DebugKit'));
+$debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
 $debugBar->setup();
 
 DispatcherFactory::add($debugBar);

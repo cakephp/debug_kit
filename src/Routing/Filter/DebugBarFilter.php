@@ -18,6 +18,7 @@ use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\DispatcherFilter;
+use Cake\Routing\Router;
 use Cake\Utility\String;
 
 /**
@@ -100,17 +101,6 @@ class DebugBarFilter extends DispatcherFilter {
 		foreach ($this->config('panels') as $panel) {
 			$this->_registry->load($panel);
 		}
-		$this->eventManager()->attach($this);
-	}
-
-/**
- * Before dispatch hook.
- *
- * @param \Cake\Event\Event $event The event.
- */
-	public function beforeDispatch(Event $event) {
-		$request = $event->data['request'];
-		$request->params['_debug_kit_id'] = String::uuid();
 	}
 
 /**
@@ -121,15 +111,12 @@ class DebugBarFilter extends DispatcherFilter {
  */
 	public function afterDispatch(Event $event) {
 		$request = $event->data['request'];
+		$response = $event->data['response'];
 
-		$panelData = [];
-		foreach ($this->_registry->loaded() as $name) {
-			$panel = $this->_registry->{$name};
-			$panelData[$name] = $panel->data();
-		}
 		$data = [
-			'id' => $request->param('_debug_kit_id'),
 			'url' => $request->url,
+			'content_type' => $response->type(),
+			'status_code' => $response->statusCode(),
 			'requested_at' => $request->env('REQUEST_TIME'),
 			'panels' => []
 		];
@@ -137,13 +124,43 @@ class DebugBarFilter extends DispatcherFilter {
 		$row = $requests->newEntity($data);
 		$row->isNew(true);
 
-		foreach ($panelData as $panel => $contents) {
+		foreach ($this->_registry->loaded() as $name) {
+			$panel = $this->_registry->{$name};
 			$row->panels[] = $requests->Panels->newEntity([
-				'panel' => $panel,
-				'content' => serialize($contents)
+				'panel' => $name,
+				'element' => $panel->elementName(),
+				'title' => $panel->title(),
+				'content' => serialize($panel->data())
 			]);
 		}
-		$requests->save($row);
+		$row = $requests->save($row);
+
+		$this->_injectScripts($row->id, $response);
+	}
+
+/**
+ * Injects the JS to build the toolbar.
+ *
+ * The toolbar will only be injected if the response's content type
+ * contains HTML and there is a </body> tag.
+ *
+ * @param string $id ID to fetch data from.
+ * @param \Cake\Network\Response $response The response to augment.
+ * @return void
+ */
+	protected function _injectScripts($id, $response) {
+		if (strpos($response->type(), 'html') === false) {
+			return;
+		}
+		$body = $response->body();
+		$pos = strrpos($body, '</body>');
+		if ($pos === false) {
+			return;
+		}
+		$script = "<script>var __debug_kit_id = '${id}';</script>";
+		$script .= '<script src="' . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
+		$body = substr($body, 0, $pos) . $script . substr($body, $pos);
+		$response->body($body);
 	}
 
 }

@@ -15,6 +15,7 @@ namespace Cake\DebugKit\Panel;
 use Cake\Controller\Controller;
 use Cake\Core\Plugin;
 use Cake\DebugKit\DebugPanel;
+use Cake\Event\Event;
 
 /**
  * Provides a list of included files for the current request
@@ -47,8 +48,6 @@ class IncludePanel extends DebugPanel {
 		foreach (Plugin::loaded() as $plugin) {
 			$this->_pluginPaths[$plugin] = Plugin::path($plugin);
 		}
-
-		parent::__construct();
 	}
 
 /**
@@ -166,4 +165,15 @@ class IncludePanel extends DebugPanel {
 
 		return 'Other';
 	}
+
+/**
+ * Shutdown callback
+ *
+ * @param \Cake\Event\Event $event Event
+ * @return void
+ */
+	public function shutdown(Event $event) {
+		$this->_data = $this->beforeRender($event->subject());
+	}
+
 }

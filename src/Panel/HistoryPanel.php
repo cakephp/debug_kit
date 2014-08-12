@@ -10,11 +10,11 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Panel;
+namespace DebugKit\Panel;
 
 use Cake\Cache\Cache;
 use Cake\Controller\Controller;
-use Cake\DebugKit\DebugPanel;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on previous requests.

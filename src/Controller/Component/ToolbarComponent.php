@@ -12,7 +12,7 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Controller\Component;
+namespace DebugKit\Controller\Component;
 
 use Cake\Cache\Cache;
 use Cake\Controller\Component;
@@ -24,9 +24,9 @@ use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\Log\LogInterface;
 use Cake\Utility\Inflector;
-use Cake\DebugKit\DebugMemory;
-use Cake\DebugKit\DebugPanel;
-use Cake\DebugKit\DebugTimer;
+use DebugKit\DebugMemory;
+use DebugKit\DebugPanel;
+use DebugKit\DebugTimer;
 
 /**
  * Class ToolbarComponent

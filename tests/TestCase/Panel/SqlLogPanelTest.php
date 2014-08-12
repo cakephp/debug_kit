@@ -10,12 +10,12 @@
  * @since         DebugKit 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\TestCase\Panel;
+namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Controller\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\Panel\SqlLogPanel;
+use DebugKit\Panel\SqlLogPanel;
 
 /**
  * Class SqlLogPanelTest

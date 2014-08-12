@@ -114,4 +114,4 @@ Log::config([
 	]
 ]);
 
-Plugin::load('DebugKit', ['namespace' => 'Cake\DebugKit', 'path' => ROOT]);
+Plugin::load('DebugKit', ['path' => ROOT]);

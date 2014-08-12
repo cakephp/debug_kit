@@ -11,13 +11,13 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit;
+namespace DebugKit;
 
 use Cake\Core\Configure;
 use Cake\Utility\Debugger;
-use Cake\DebugKit\DebugMemory;
-use Cake\DebugKit\DebugTimer;
-use Cake\DebugKit\FireCake;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
+use DebugKit\FireCake;
 
 /**
  * DebugKit Temporary Debugger Class
@@ -225,5 +225,5 @@ class DebugKitDebugger extends Debugger {
 
 }
 
-DebugKitDebugger::getInstance('Cake\DebugKit\DebugKitDebugger');
+DebugKitDebugger::getInstance('DebugKit\DebugKitDebugger');
 Debugger::addFormat('fb', array('callback' => 'DebugKitDebugger::fireError'));

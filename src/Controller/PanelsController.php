@@ -9,7 +9,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Controller;
+namespace DebugKit\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;

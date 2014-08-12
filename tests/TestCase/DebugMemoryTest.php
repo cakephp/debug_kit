@@ -10,10 +10,10 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\TestCase;
+namespace DebugKit\Test\TestCase;
 
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\DebugMemory;
+use DebugKit\DebugMemory;
 
 /**
  * Class DebugMemoryTest

@@ -18,7 +18,7 @@ php composer.phar require cakephp/debug_kit "3.0.*-dev"
 
 * Ensure the plugin is loaded in `config/bootstrap.php` by calling
 ```php
-Plugin::load('DebugKit', ['namespace' => 'Cake\DebugKit']);
+Plugin::load('DebugKit');
 ```
 * Include the toolbar component in your `src/Controller/AppController.php`:
 ```php

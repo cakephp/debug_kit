@@ -15,10 +15,10 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\test_app\Panel;
+namespace DebugKit\Test\test_app\Panel;
 
 use Cake\Controller\Controller;
-use Cake\DebugKit\DebugPanel;
+use DebugKit\DebugPanel;
 
 /**
  * Class TestPanel

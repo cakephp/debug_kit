@@ -11,7 +11,7 @@
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\View\Helper;
+namespace DebugKit\View\Helper;
 
 use App\View\Helper\AppHelper;
 use App\View\Helper\HtmlHelper;

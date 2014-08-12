@@ -11,14 +11,14 @@
  * @since         DebugKit 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\View\Helper;
+namespace DebugKit\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Debugger;
 use Cake\View\Helper;
 use Cake\View\View;
-use Cake\DebugKit\DebugMemory;
-use Cake\DebugKit\DebugTimer;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
 
 /**
  * Class DebugTimerHelper

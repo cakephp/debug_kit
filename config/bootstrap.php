@@ -15,7 +15,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Routing\DispatcherFactory;
 use Cake\Routing\Router;
-use Cake\DebugKit\Routing\Filter\DebugBarFilter;
+use DebugKit\Routing\Filter\DebugBarFilter;
 
 ConnectionManager::config('debug_kit', [
 	'className' => 'Cake\Database\Connection',

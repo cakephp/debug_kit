@@ -32,14 +32,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Cake\\DebugKit\\": "src",
-            "Cake\\DebugKit\\Test\\": "tests"
+            "DebugKit\\": "src",
+            "DebugKit\\Test\\": "tests"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.2.x-dev"
-        },
-        "installer-name": "DebugKit"
+        }
     }
 }

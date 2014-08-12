@@ -9,7 +9,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Panel;
+namespace DebugKit\Panel;
 
 use Cake\Core\App;
 use Cake\Event\EventManager;
@@ -67,7 +67,7 @@ class PanelRegistry extends ObjectRegistry {
  * @param string $class The classname to create.
  * @param string $alias The alias of the panel.
  * @param array $config An array of config to use for the panel.
- * @return Cake\DebugKit\DebugPanel The constructed panel class.
+ * @return DebugKit\DebugPanel The constructed panel class.
  */
 	protected function _create($class, $alias, $config) {
 		$instance = new $class($this, $config);

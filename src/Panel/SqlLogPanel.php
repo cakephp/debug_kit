@@ -10,11 +10,11 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Panel;
+namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\DebugKit\DebugPanel;
-use Cake\DebugKit\Database\Log\DebugLog;
+use DebugKit\DebugPanel;
+use DebugKit\Database\Log\DebugLog;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 

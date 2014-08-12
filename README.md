@@ -4,7 +4,7 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
 
 ## Requirements
 
-The master branch has the following requirements:
+The 3.0 branch has the following requirements:
 
 * CakePHP 3.0.0 or greater.
 * PHP 5.4.19 or greater.
@@ -18,7 +18,7 @@ php composer.phar require cakephp/debug_kit "3.0.*-dev"
 
 * Ensure the plugin is loaded in `config/bootstrap.php` by calling
 ```php
-Plugin::load('DebugKit', ['namespace' => 'Cake\DebugKit']);
+Plugin::load('DebugKit');
 ```
 * Include the toolbar component in your `src/Controller/AppController.php`:
 ```php

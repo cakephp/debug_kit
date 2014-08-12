@@ -10,10 +10,10 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\TestCase\Database\Log;
+namespace DebugKit\Test\TestCase\Database\Log;
 
 use Cake\Database\Log\LoggedQuery;
-use Cake\DebugKit\Database\Log\DebugLog;
+use DebugKit\Database\Log\DebugLog;
 use Cake\TestSuite\TestCase;
 
 /**

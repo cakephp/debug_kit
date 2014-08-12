@@ -10,9 +10,9 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\Debugkit\Model\Table;
+namespace DebugKit\Model\Table;
 
-use Cake\DebugKit\Model\Table\LazyTableTrait;
+use DebugKit\Model\Table\LazyTableTrait;
 use Cake\ORM\Table;
 
 /**

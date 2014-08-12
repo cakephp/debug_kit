@@ -11,11 +11,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  *
  */
-namespace Cake\DebugKit\Panel;
+namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\DebugKit\DebugPanel;
+use DebugKit\DebugPanel;
 use Cake\Event\Event;
 
 /**

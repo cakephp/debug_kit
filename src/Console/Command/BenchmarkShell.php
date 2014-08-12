@@ -11,7 +11,7 @@
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Console\Command;
+namespace DebugKit\Console\Command;
 
 use Cake\Console\Shell;
 use Cake\Utility\String;

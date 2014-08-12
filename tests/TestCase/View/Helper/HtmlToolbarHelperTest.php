@@ -11,7 +11,7 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\TestCase\View\Helper;
+namespace DebugKit\Test\TestCase\View\Helper;
 
 use Cake\Controller\Controller;
 use Cake\Core\App;
@@ -22,8 +22,8 @@ use Cake\TestSuite\TestCase;
 use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Cake\DebugKit\View\Helper\HtmlToolbarHelper;
-use Cake\DebugKit\View\Helper\ToolbarHelper;
+use DebugKit\View\Helper\HtmlToolbarHelper;
+use DebugKit\View\Helper\ToolbarHelper;
 use StdClass;
 
 /**

@@ -11,7 +11,7 @@
  * @since         DebugKit 2.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\TestCase\Controller\Component;
+namespace DebugKit\Test\TestCase\Controller\Component;
 
 use App\Controller\AppController;
 use Cake\Cache\Cache;
@@ -24,9 +24,9 @@ use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\Controller\Component\ToolbarComponent;
-use Cake\DebugKit\DebugMemory;
-use Cake\DebugKit\DebugTimer;
+use DebugKit\Controller\Component\ToolbarComponent;
+use DebugKit\DebugMemory;
+use DebugKit\DebugTimer;
 
 /**
  * Class TestToolbarComponent

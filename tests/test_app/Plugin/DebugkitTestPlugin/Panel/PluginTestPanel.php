@@ -16,7 +16,7 @@
  */
 namespace Panel;
 
-use Cake\DebugKit\DebugPanel;
+use DebugKit\DebugPanel;
 
 /**
  * Class PluginTestPanel

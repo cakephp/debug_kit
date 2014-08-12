@@ -11,11 +11,11 @@
  * @since         debug_kit 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\TestCase;
+namespace DebugKit\Test\TestCase;
 
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Debugger;
-use Cake\DebugKit\DebugTimer;
+use DebugKit\DebugTimer;
 
 /**
  * DebugTimerTest

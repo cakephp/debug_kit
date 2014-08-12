@@ -11,13 +11,13 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\View\Helper;
+namespace DebugKit\View\Helper;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Cache\Cache;
 use Cake\View\Helper;
-use Cake\DebugKit\DebugKitDebugger;
+use DebugKit\DebugKitDebugger;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.
@@ -52,7 +52,7 @@ class ToolbarHelper extends Helper {
 		$this->_myName = get_class($this);
 		$this->settings = array_merge($this->settings, $options);
 
-		if ($this->_myName !== 'Cake\DebugKit\View\Helper\ToolbarHelper') {
+		if ($this->_myName !== 'DebugKit\View\Helper\ToolbarHelper') {
 			parent::__construct($View, $options);
 			return;
 		}

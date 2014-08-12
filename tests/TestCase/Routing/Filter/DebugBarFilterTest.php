@@ -9,9 +9,9 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Test\Routing\Filter;
+namespace DebugKit\Test\Routing\Filter;
 
-use Cake\DebugKit\Routing\Filter\DebugBarFilter;
+use DebugKit\Routing\Filter\DebugBarFilter;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
@@ -53,7 +53,7 @@ class DebugBarFilterTest extends TestCase {
 
 		$this->assertContains('SqlLog', $bar->loadedPanels());
 		$this->assertCount(1, $this->events->listeners('Controller.shutdown'));
-		$this->assertInstanceOf('Cake\DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
+		$this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
 	}
 
 /**

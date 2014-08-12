@@ -9,10 +9,10 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Routing\Filter;
+namespace DebugKit\Routing\Filter;
 
-use Cake\DebugKit\Panel\DebugPanel;
-use Cake\DebugKit\Panel\PanelRegistry;
+use DebugKit\Panel\DebugPanel;
+use DebugKit\Panel\PanelRegistry;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
@@ -35,7 +35,7 @@ class DebugBarFilter extends DispatcherFilter {
 /**
  * The panel registry.
  *
- * @var \Cake\DebugKit\Panel\PanelRegistry
+ * @var \DebugKit\Panel\PanelRegistry
  */
 	protected $_registry;
 
@@ -83,7 +83,7 @@ class DebugBarFilter extends DispatcherFilter {
 /**
  * Get the list of loaded panels
  *
- * @return Cake\DebugKit\Panel\DebugPanel|null The panel or null.
+ * @return DebugKit\Panel\DebugPanel|null The panel or null.
  */
 	public function panel($name) {
 		return $this->_registry->{$name};

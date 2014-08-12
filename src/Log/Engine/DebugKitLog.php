@@ -10,7 +10,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\DebugKit\Log\Engine;
+namespace DebugKit\Log\Engine;
 
 use Cake\Log\LogInterface;
 

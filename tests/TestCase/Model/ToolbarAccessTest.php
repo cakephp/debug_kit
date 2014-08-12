@@ -11,11 +11,11 @@
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
-namespace Cake\DebugKit\Test\TestCase\Model;
+namespace DebugKit\Test\TestCase\Model;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\Model\ToolbarAccess;
+use DebugKit\Model\ToolbarAccess;
 
 /**
  * Test case for ToolbarAccess model

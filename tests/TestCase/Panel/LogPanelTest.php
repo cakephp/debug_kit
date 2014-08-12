@@ -10,12 +10,12 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
-namespace Cake\DebugKit\Test\TestCase\Panel;
+namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
-use Cake\DebugKit\Panel\LogPanel;
+use DebugKit\Panel\LogPanel;
 
 /**
  * Class LogPanelTest
@@ -65,7 +65,7 @@ class LogPanelTest extends TestCase {
 		Log::write('error', 'Test');
 
 		$result = $this->panel->beforeRender($controller);
-		$this->assertInstanceOf('Cake\DebugKit\Log\Engine\DebugKitLog', $result);
+		$this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $result);
 		$this->assertTrue(isset($result->logs));
 		$this->assertCount(1, $result->logs['error']);
 	}

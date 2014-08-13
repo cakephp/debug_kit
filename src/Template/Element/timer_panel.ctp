@@ -15,8 +15,8 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-use Cake\DebugKit\DebugTimer;
-use Cake\DebugKit\DebugKitDebugger;
+use DebugKit\DebugTimer;
+use DebugKit\DebugKitDebugger;
 
 $this->addHelper('Number');
 $this->addHelper('DebugKit.SimpleGraph');

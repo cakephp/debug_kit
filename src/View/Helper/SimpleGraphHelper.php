@@ -13,8 +13,7 @@
  */
 namespace DebugKit\View\Helper;
 
-use App\View\Helper\AppHelper;
-use App\View\Helper\HtmlHelper;
+use Cake\View\Helper;
 
 /**
  * Class SimpleGraphHelper
@@ -23,7 +22,7 @@ use App\View\Helper\HtmlHelper;
  *
  * @since         DebugKit 1.0
  */
-class SimpleGraphHelper extends AppHelper {
+class SimpleGraphHelper extends Helper {
 
 /**
  * Helpers

@@ -111,6 +111,10 @@ class DebugBarFilter extends DispatcherFilter {
  */
 	public function afterDispatch(Event $event) {
 		$request = $event->data['request'];
+		// Skip debugkit requests.
+		if ($request->param('plugin') === 'DebugKit') {
+			return;
+		}
 		$response = $event->data['response'];
 
 		$data = [
@@ -157,7 +161,8 @@ class DebugBarFilter extends DispatcherFilter {
 		if ($pos === false) {
 			return;
 		}
-		$script = "<script>var __debug_kit_id = '${id}';</script>";
+		$url = Router::url('/', true);
+		$script = "<script>var __debug_kit_id = '${id}', __debug_kit_base_url = '${url}';</script>";
 		$script .= '<script src="' . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
 		$body = substr($body, 0, $pos) . $script . substr($body, $pos);
 		$response->body($body);

@@ -109,7 +109,8 @@ class DebugBarFilterTest extends TestCase {
 		$toolbar = TableRegistry::get('DebugKit.Requests')->find()->first();
 
 		$expected = '<html><title>test</title><body><p>some text</p>' .
-			"<script>var __debug_kit_id = '" . $toolbar->id . "';</script>" .
+			"<script>var __debug_kit_id = '" . $toolbar->id . "', " .
+			"__debug_kit_base_url = 'http://localhost/';</script>" .
 			'<script src="/debug_kit/js/toolbar.js"></script>' .
 			'</body>';
 		$this->assertTextEquals($expected, $response->body());

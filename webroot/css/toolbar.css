@@ -27,6 +27,10 @@ body {
 	padding: 0px 9px;
 }
 
-.panel-content {
+#panel-content {
 	display: none;
+	background: #fff;
+	position: absolute;
+	top: 0;
+	bottom: 0;
 }

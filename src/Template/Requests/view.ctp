@@ -1,3 +1,11 @@
+<?php
+use Cake\Routing\Router;
+?>
+
+<div id="panel-content">
+<!-- content here -->
+</div>
+
 <ul class="toolbar">
 	<li id="panel-button">Bug</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
@@ -8,13 +16,9 @@
 	</li>
 	<?php endforeach; ?>
 </ul>
-
-<div class="panel-content">
-<!-- content here -->
-</div>
-
 <?php $this->start('scripts') ?>
 <script>
+var baseUrl = "<?= Router::url('/', true); ?>";
 
 function Toolbar(options) {
 	this.button = options.button;
@@ -62,6 +66,26 @@ $(document).ready(function() {
 	toolbar.button.on('click', function(e) {
 		toolbar.toggle();
 		window.parent.postMessage(toolbar.state(), window.location.origin)
+	});
+
+	var contentArea = $('#panel-content');
+	$('.panel').on('click', function(e) {
+		if (contentArea.is(':visible')) {
+			contentArea.hide();
+			return false;
+		}
+		var panel = $(this);
+		var id = panel.data('id');
+		var url = baseUrl + 'debug_kit/panels/view/' + id;
+
+		// Temporary text.
+		contentArea.html('Loading..');
+		contentArea.show();
+		window.parent.postMessage('expand', window.location.origin);
+
+		$.get(url, function(response) {
+			// contentArea.html(response);
+		});
 	});
 
 	// Start off collapsed.

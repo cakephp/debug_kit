@@ -14,8 +14,8 @@
 			return;
 		}
 		if (event.data === 'expand') {
-			iframe.height = '100%';
 			iframe.width = '100%';
+			iframe.height = '100%';
 			return;
 		}
 	};

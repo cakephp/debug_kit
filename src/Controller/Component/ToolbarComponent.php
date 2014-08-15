@@ -462,7 +462,8 @@ class ToolbarComponent extends Component {
 				if (
 					$item instanceof Closure ||
 					$item instanceof PDO ||
-					$item instanceof SimpleXmlElement
+					$item instanceof SimpleXmlElement ||
+					$item instanceof \Cake\ORM\Query
 				) {
 					$item = 'Unserializable object - ' . get_class($item);
 				} elseif ($item instanceof Exception) {

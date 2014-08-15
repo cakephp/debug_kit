@@ -1,17 +1,16 @@
-<div class="toolbar">
-<ul>
+<ul class="toolbar">
 	<li id="panel-button">Bug</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
 	<li class="panel" data-id="<?= $panel->id ?>">
 		<span class="panel-title">
 			<?= h($panel->title); ?>
 		</span>
-		<div class="panel-region">
-		<!-- content here -->
-		</div>
 	</li>
 	<?php endforeach; ?>
 </ul>
+
+<div class="panel-content">
+<!-- content here -->
 </div>
 
 <?php $this->start('scripts') ?>
@@ -32,10 +31,20 @@ function nextState() {
 	return states[this.state];
 }
 
+function updateToolbar(state) {
+	if (state === 'toolbar') {
+		$('.panel').show();
+	}
+	if (state === 'collapse') {
+		$('.panel').hide();
+	}
+}
 
 $(document).ready(function() {
 	$('#panel-button').on('click', function(e) {
-		window.parent.postMessage(nextState(), window.location.domain)
+		var state = nextState();
+		updateToolbar(state);
+		window.parent.postMessage(state, window.location.domain)
 	});
 
 	// Start off collapsed.

@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Debug Kit Toolbar</title>
+		<?= $this->Html->css('DebugKit.reset'); ?>
 		<?= $this->Html->css('DebugKit.toolbar'); ?>
 	</head>
 	<body>

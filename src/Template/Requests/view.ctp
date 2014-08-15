@@ -15,36 +15,53 @@
 
 <?php $this->start('scripts') ?>
 <script>
-function nextState() {
-	var states = [
-		'collapse',
-		'toolbar',
-		'expand'
-	];
-	if (this.state === undefined) {
-		this.state = 0;
-	}
-	this.state++;
-	if (this.state > states.length) {
-		this.state = 0;
-	}
-	return states[this.state];
+
+function Toolbar(options) {
+	this.button = options.button;
 }
 
-function updateToolbar(state) {
-	if (state === 'toolbar') {
-		$('.panel').show();
-	}
-	if (state === 'collapse') {
-		$('.panel').hide();
+Toolbar.prototype = {
+	_state: 0,
+
+	states: [
+		'collapse',
+		'toolbar',
+	],
+
+	toggle: function() {
+		this.updateButtons(this.nextState());
+	},
+
+	state: function() {
+		return this.states[this._state];
+	},
+
+	nextState: function() {
+		this._state++;
+		if (this._state == this.states.length) {
+			this._state = 0;
+		}
+		return this.state();
+	},
+
+	updateButtons: function(state) {
+		if (state === 'toolbar') {
+			$('.panel').show();
+		}
+		if (state === 'collapse') {
+			$('.panel').hide();
+		}
 	}
 }
 
 $(document).ready(function() {
-	$('#panel-button').on('click', function(e) {
-		var state = nextState();
-		updateToolbar(state);
-		window.parent.postMessage(state, window.location.domain)
+	var toolbar = new Toolbar({
+		button: $('#panel-button')
+	});
+
+	toolbar.button.on('click', function(e) {
+		toolbar.toggle();
+		window.parent.postMessage(toolbar.state(), window.location.origin)
 	});
 
 	// Start off collapsed.

@@ -1,9 +1,5 @@
 <?php
 /**
- * Log Panel Element
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -15,12 +11,14 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+use DebugKit\Log\DebugKitLog;
 ?>
-<h2><?php echo __d('debug_kit', 'Logs') ?></h2>
 <div class="code-table">
-<?php if ($content instanceof DebugKitLog): ?>
-	<?php foreach ($content->logs as $logName => $logs): ?>
-		<h3><?php echo $logName ?></h3>
+<?php if (empty($logger)): ?>
+	<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
+<?php else: ?>
+	<?php foreach ($logger->logs as $logName => $logs): ?>
+		<h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
 		<?php
 			$len = count($logs);
 			if ($len > 0):
@@ -34,8 +32,5 @@
 				echo $this->Toolbar->table($rows, $headers, array('title' => $logName));
 			endif; ?>
 	<?php endforeach; ?>
-	<?php if (empty($content->logs)): ?>
-		<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
-	<?php endif; ?>
 <?php endif; ?>
 </div>

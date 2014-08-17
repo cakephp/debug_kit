@@ -29,6 +29,9 @@ class LogPanel extends DebugPanel {
  * @return \LogPanel
  */
 	public function __construct() {
+		if (Log::config('debug_kit_log_panel')) {
+			return;
+		}
 		Log::config('debug_kit_log_panel', array(
 			'engine' => 'DebugKit.DebugKit',
 		));
@@ -51,7 +54,7 @@ class LogPanel extends DebugPanel {
  * @return void
  */
 	public function shutdown(Event $event) {
-		$this->_data = Log::engine('debug_kit_log_panel');
+		$this->_data = ['logger' => Log::engine('debug_kit_log_panel')];
 	}
 
 }

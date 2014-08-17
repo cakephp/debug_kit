@@ -16,32 +16,30 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<h2> <?php echo __d('debug_kit', 'Request'); ?></h2>
-
-<h4>Cake Params</h4>
-<?php echo $this->Toolbar->makeNeatArray($content['params']); ?>
+<h4>Routing Params</h4>
+<?php echo $this->Toolbar->makeNeatArray($params); ?>
 
 <h4>Post data</h4>
 <?php
 if (empty($content['data'])):
 	echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
 else:
-	echo $this->Toolbar->makeNeatArray($content['data']);
+	echo $this->Toolbar->makeNeatArray($data);
 endif;
 ?>
 
 <h4>Query string</h4>
 <?php
-if (empty($content['query'])):
+if (empty($query)):
 	echo '<p class="info">' . __d('debug_kit', 'No querystring data.') . '</p>';
 else:
-	echo $this->Toolbar->makeNeatArray($content['query']);
+	echo $this->Toolbar->makeNeatArray($query);
 endif;
 ?>
 
 <h4>Cookie</h4>
-<?php if (isset($content['cookie'])): ?>
-	<?php echo $this->Toolbar->makeNeatArray($content['cookie']); ?>
+<?php if (isset($cookie)): ?>
+	<?= $this->Toolbar->makeNeatArray($cookie); ?>
 <?php else: ?>
-	<p class="info">To view Cookies, add CookieComponent to Controller</p>
+	<p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
 <?php endif; ?>

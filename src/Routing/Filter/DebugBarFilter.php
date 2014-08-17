@@ -49,7 +49,7 @@ class DebugBarFilter extends DispatcherFilter {
 		'priority' => 9999,
 		'panels' => [
 			'DebugKit.Session',
-			// 'DebugKit.Request',
+			'DebugKit.Request',
 			'DebugKit.SqlLog',
 			// 'DebugKit.Timer',
 			// 'DebugKit.Log',

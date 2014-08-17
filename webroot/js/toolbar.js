@@ -2,7 +2,6 @@
 	var iframe;
 
 	var onMessage = function(event) {
-		console.log('onmessage', event);
 		if (event.data === 'collapse') {
 			iframe.height = 40;
 			iframe.width = 40;

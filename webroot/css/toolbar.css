@@ -141,3 +141,53 @@ table td:nth-child(2),
 table th:nth-child(2) {
 	text-align:right;
 }
+
+/** Neat Array styles **/
+.neat-array,
+.neat-array li {
+	list-style:none;
+	list-style-image:none;
+}
+.neat-array {
+	padding: 1px 2px 1px 20px;
+	background: #CE9E23;
+	list-style: none;
+	margin: 0 0 1em 0;
+}
+.neat-array .neat-array {
+	padding: 0 0 0 20px;
+	margin: 0;
+	border-top:1px solid #CE9E23;
+}
+.neat-array li {
+	background: #FEF6E5;
+	border-top: 1px solid #CE9E23;
+	border-bottom: 1px solid #CE9E23;
+	margin: 0;
+	line-height: 1.5em;
+}
+.neat-array li:hover {
+	background: #fff;
+}
+.neat-array li strong {
+	padding: 0 8px;
+	font-weight: bold;
+}
+
+/* expandable sections */
+.neat-array li.expandable {
+	cursor: pointer;
+}
+.neat-array .expanded {
+	border-bottom:0;
+}
+.neat-array li.expandable.expanded > strong:before {
+	content: 'v ';
+}
+.neat-array li.expandable.collapsed > strong:before,
+.neat-array li.expandable.expanded .expandable.collapsed > strong:before {
+	content: '> ';
+}
+.neat-array li {
+	cursor: default;
+}

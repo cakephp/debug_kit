@@ -48,7 +48,7 @@ class DebugBarFilter extends DispatcherFilter {
 		// Attempt to execute last.
 		'priority' => 9999,
 		'panels' => [
-			// 'DebugKit.Session',
+			'DebugKit.Session',
 			// 'DebugKit.Request',
 			'DebugKit.SqlLog',
 			// 'DebugKit.Timer',

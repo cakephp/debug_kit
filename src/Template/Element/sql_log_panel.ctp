@@ -59,12 +59,6 @@
 		<?php endforeach; ?>
 		</tbody>
 		</table>
-
-		<h4><?= __d('debug_kit', 'Query Explain:'); ?></h4>
-		<div id="sql-log-explain-<?= h($logger->name()); ?>">
-			<a id="debug-kit-explain-<?= h($logger->name()); ?>"> </a>
-			<p><?= __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
-		</div>
 	</div>
 	<?php endforeach; ?>
 <?php endif; ?>

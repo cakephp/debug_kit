@@ -29,7 +29,9 @@ class RequestsTable extends Table {
  * @return void
  */
 	public function initialize(array $config) {
-		$this->hasMany('DebugKit.Panels');
+		$this->hasMany('DebugKit.Panels', [
+			'sort' => 'Panels.title ASC',
+		]);
 		$this->addBehavior('Timestamp', [
 			'events' => [
 				'Model.beforeSave' => ['requested_at' => 'new']

@@ -52,7 +52,7 @@ class DebugBarFilterTest extends TestCase {
 		$bar->setup();
 
 		$this->assertContains('SqlLog', $bar->loadedPanels());
-		$this->assertCount(1, $this->events->listeners('Controller.shutdown'));
+		$this->assertGreaterThan(1, $this->events->listeners('Controller.shutdown'));
 		$this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
 	}
 
@@ -80,11 +80,11 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertNotEmpty($result->requested_at);
 		$this->assertNotEmpty('text/html', $result->content_type);
 		$this->assertEquals(200, $result->status_code);
-		$this->assertCount(1, $result->panels);
+		$this->assertGreaterThan(1, $result->panels);
 
-		$this->assertEquals('SqlLog', $result->panels[0]->panel);
-		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[0]->element);
-		$this->assertEquals('Sql Log', $result->panels[0]->title);
+		$this->assertEquals('SqlLog', $result->panels[5]->panel);
+		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[5]->element);
+		$this->assertEquals('Sql Log', $result->panels[5]->title);
 	}
 
 /**

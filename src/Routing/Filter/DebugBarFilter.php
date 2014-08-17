@@ -51,7 +51,7 @@ class DebugBarFilter extends DispatcherFilter {
 			'DebugKit.Session',
 			'DebugKit.Request',
 			'DebugKit.SqlLog',
-			// 'DebugKit.Timer',
+			'DebugKit.Timer',
 			'DebugKit.Log',
 			// 'DebugKit.Variables',
 			'DebugKit.Environment',

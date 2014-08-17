@@ -11,49 +11,32 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-use DebugKit\DebugTimer;
-use DebugKit\DebugKitDebugger;
-
 $this->addHelper('Number');
 $this->addHelper('DebugKit.SimpleGraph');
-
-if (!isset($debugKitInHistoryMode)):
-	$timers = DebugTimer::getAll(true);
-	$currentMemory = DebugKitDebugger::getMemoryUse();
-	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
-	$requestTime = DebugTimer::requestTime();
-else:
-	$content = $this->Toolbar->readCache('timer', $this->request->params['pass'][0]);
-	if (is_array($content)):
-		extract($content);
-	endif;
-endif;
 ?>
-<div class="debug-info">
-	<h2><?php echo __d('debug_kit', 'Memory'); ?></h2>
+<section>
+	<h3><?php echo __d('debug_kit', 'Memory'); ?></h3>
 	<div class="peak-mem-use">
-	<?php
-		echo $this->Toolbar->message(__d('debug_kit', 'Peak Memory Use'), $this->Number->toReadableSize($peakMemory)); ?>
+		<strong><?= __d('debug_kit', 'Peak Memory Use:') ?></strong>
+		<?= $this->Number->toReadableSize($peakMemory); ?>
 	</div>
 
 	<?php
 	$headers = array(__d('debug_kit', 'Message'), __d('debug_kit', 'Memory use'));
-	$memoryPoints = DebugKitDebugger::getMemoryPoints();
-
 	$rows = array();
-	foreach ($memoryPoints as $key => $value):
+	foreach ($memory as $key => $value):
 		$rows[] = array($key, $this->Number->toReadableSize($value));
 	endforeach;
-
 	echo $this->Toolbar->table($rows, $headers);
 	?>
 </div>
+</section>
 
-<div class="debug-info debug-timers">
-	<h2><?php echo __d('debug_kit', 'Timers'); ?></h2>
+<section>
+	<h3><?php echo __d('debug_kit', 'Timers'); ?></h3>
 	<div class="request-time">
-		<?php $totalTime = __d('debug_kit', '%s (ms)', $this->Number->precision($requestTime * 1000, 0)); ?>
-		<?php echo $this->Toolbar->message(__d('debug_kit', 'Total Request Time:'), $totalTime)?>
+		<strong><?= __d('debug_kit', 'Total Request Time:') ?></strong>
+		<?= $this->Number->precision($requestTime * 1000, 0) ?> ms
 	</div>
 <?php
 $rows = array();
@@ -92,17 +75,6 @@ foreach ($timers as $timerName => $timeInfo):
 	$i++;
 endforeach;
 
-if (strtolower($this->Toolbar->getName()) === 'firephptoolbar'):
-	for ($i = 0, $len = count($rows); $i < $len; $i++):
-		unset($rows[$i][2]);
-	endfor;
-	unset($headers[2]);
-endif;
-
-echo $this->Toolbar->table($rows, $headers, array('title' => 'Timers'));
-
-if (!isset($debugKitInHistoryMode)):
-	$this->Toolbar->writeCache('timer', compact('timers', 'currentMemory', 'peakMemory', 'requestTime'));
-endif;
+echo $this->Toolbar->table($rows, $headers);
 ?>
-</div>
+</section>

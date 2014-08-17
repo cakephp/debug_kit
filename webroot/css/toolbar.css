@@ -139,7 +139,8 @@ table tr:nth-child(2n) td {
 }
 
 /* Two column tables have the 2nd cell right aligned */
-.debug-table th:nth-child(2) {
+.debug-table th:nth-child(2),
+.debug-table td:nth-child(2) {
 	text-align:right;
 }
 
@@ -193,4 +194,30 @@ table tr:nth-child(2n) td {
 }
 .neat-array li {
 	cursor: default;
+}
+
+
+
+/**
+ * Graph table.
+ */
+.graph-bar,
+.graph-bar-value {
+	margin: 0;
+	padding: 0;
+	border: none;
+	overflow: hidden;
+	height: 10px;
+}
+.graph-bar {
+	background: #ddd;
+	padding: 2px;
+	border-radius: 2px;
+	height: 12px;
+}
+.graph-bar-value {
+	background: -webkit-linear-gradient(top, #77D124, #4B9406);
+	background: -moz-linear-gradient(top, #77D124, #4B9406);
+	border-radius: 3px;
+	border: 1px solid #4B9406;
 }

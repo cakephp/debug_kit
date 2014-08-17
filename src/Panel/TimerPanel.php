@@ -50,7 +50,6 @@ class TimerPanel extends DebugPanel {
 			'Controller.startup' => array(
 				array('priority' => 0, 'callable' => $before('Event: Controller.startup')),
 				array('priority' => 999, 'callable' => $after('Event: Controller.startup')),
-				array('priority' => 10, 'callable' => 'startup'),
 				array('priority' => 999, 'callable' => function() {
 					DebugMemory::record(__d('debug_kit', 'Controller action start.'));
 				}),
@@ -58,7 +57,6 @@ class TimerPanel extends DebugPanel {
 			'Controller.beforeRender' => array(
 				array('priority' => 0, 'callable' => $before('Event: Controller.beforeRender')),
 				array('priority' => 999, 'callable' => $after('Event: Controller.beforeRender')),
-				array('priority' => 10, 'callable' => 'beforeRender'),
 				array('priority' => 999, 'callable' => function() {
 					DebugMemory::record(__d('debug_kit', 'View Render start.'));
 				}),
@@ -66,7 +64,7 @@ class TimerPanel extends DebugPanel {
 			'Controller.beforeRedirect' => 'beforeRedirect',
 			'Controller.shutdown' => array(
 				array('priority' => 0, 'callable' => $before('Event: Controller.shutdown')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.shutdown'))
+				array('priority' => 999, 'callable' => $after('Event: Controller.shutdown')),
 			),
 			'View.beforeRender' => array(
 				array('priority' => 0, 'callable' => $before('Event: View.beforeRender')),
@@ -85,6 +83,20 @@ class TimerPanel extends DebugPanel {
 				array('priority' => 999, 'callable' => $after('Event: View.afterLayout'))
 			),
 		);
+	}
+
+/**
+ * Get the data for the panel.
+ *
+ * @return array
+ */
+	public function data() {
+		return [
+			'requestTime' => DebugTimer::requestTime(),
+			'timers' => DebugTimer::getAll(),
+			'memory' => DebugMemory::getAll(),
+			'peakMemory' => DebugMemory::getPeak(),
+		];
 	}
 
 }

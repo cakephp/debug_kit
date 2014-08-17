@@ -16,14 +16,13 @@
  */
 use Cake\Utility\Inflector;
 ?>
-<h2><?php echo __d('debug_kit', 'App Constants'); ?></h2>
 <?php
-	if (!empty($content['app'])) {
+	if (!empty($app)) {
 		$cakeRows = array();
-		foreach ($content['app'] as $key => $val) {
+		foreach ($app as $key => $val) {
 			$cakeRows[] = array(
-				$key,
-				$val
+				h($key),
+				h($val)
 			);
 		}
 		$headers = array('Constant', 'Value');
@@ -34,9 +33,9 @@ use Cake\Utility\Inflector;
 
 <h2><?php echo __d('debug_kit', 'CakePHP Constants'); ?></h2>
 <?php
-	if (!empty($content['cake'])) {
+	if (!empty($cake)) {
 		$cakeRows = array();
-		foreach ($content['cake'] as $key => $val) {
+		foreach ($cake as $key => $val) {
 			$cakeRows[] = array(
 				h($key),
 				h($val)
@@ -52,9 +51,9 @@ use Cake\Utility\Inflector;
 <?php
 	$headers = array('Environment Variable', 'Value');
 
-	if (!empty($content['php'])) {
+	if (!empty($php)) {
 		$phpRows = array();
-		foreach ($content['php'] as $key => $val) {
+		foreach ($php as $key => $val) {
 			$phpRows[] = array(
 				h(Inflector::humanize(strtolower($key))),
 				h($val)
@@ -65,11 +64,11 @@ use Cake\Utility\Inflector;
 		echo "PHP environment unavailable.";
 	}
 
-	if (isset($content['hidef'])) {
+	if (isset($hidef)) {
 		echo '<h2>' . __d('debug_kit', 'Hidef Environment') . '</h2>';
-		if (!empty($content['hidef'])) {
+		if (!empty($hidef)) {
 			$cakeRows = array();
-			foreach ($content['hidef'] as $key => $val) {
+			foreach ($hidef as $key => $val) {
 				$cakeRows[] = array(
 					h($key),
 					h($val)

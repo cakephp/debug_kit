@@ -137,12 +137,15 @@ table th {
 table tr:nth-child(2n) td {
 	background: #f6f6f6;
 }
-table td:nth-child(2),
-table th:nth-child(2) {
+
+/* Two column tables have the 2nd cell right aligned */
+.debug-table th:nth-child(2) {
 	text-align:right;
 }
 
-/** Neat Array styles **/
+/**
+ * Neat Array styles
+ */
 .neat-array,
 .neat-array li {
 	list-style:none;

@@ -2,8 +2,11 @@
 use Cake\Routing\Router;
 ?>
 
-<div id="panel-content">
-<!-- content here -->
+<div id="panel-content-container">
+	<span id="panel-close" class="button-close">&times;</span>
+	<div id="panel-content">
+		<!-- content here -->
+	</div>
 </div>
 
 <ul class="toolbar">
@@ -22,6 +25,9 @@ var baseUrl = "<?= Router::url('/', true); ?>";
 
 function Toolbar(options) {
 	this.button = options.button;
+	this.panelButtons = options.panelButtons;
+	this.content = options.content;
+	this.panelClose = options.panelClose;
 }
 
 Toolbar.prototype = {
@@ -48,6 +54,10 @@ Toolbar.prototype = {
 		return this.state();
 	},
 
+	hideButtons: function() {
+		this.panelButtons.hide();
+	},
+
 	updateButtons: function(state) {
 		if (state === 'toolbar') {
 			$('.panel').show();
@@ -55,12 +65,39 @@ Toolbar.prototype = {
 		if (state === 'collapse') {
 			$('.panel').hide();
 		}
+	},
+
+	isExpanded: function() {
+		return this.content.is(':visible');
+	},
+
+	hideContent: function() {
+		this.content.hide();
+	},
+
+	loadPanel: function(id) {
+		var url = baseUrl + 'debug_kit/panels/view/' + id;
+		var contentArea = this.content.find('#panel-content');
+
+		// Temporary text.
+		contentArea.html('Loading..');
+
+		this.content.show();
+		window.parent.postMessage('expand', window.location.origin);
+
+		$.get(url, function(response) {
+			contentArea.html(response);
+		});
 	}
 }
 
+
 $(document).ready(function() {
 	var toolbar = new Toolbar({
-		button: $('#panel-button')
+		button: $('#panel-button'),
+		content: $('#panel-content-container'),
+		panelButtons: $('.panel'),
+		panelClose: $('#panel-close')
 	});
 
 	toolbar.button.on('click', function(e) {
@@ -68,28 +105,21 @@ $(document).ready(function() {
 		window.parent.postMessage(toolbar.state(), window.location.origin)
 	});
 
-	var contentArea = $('#panel-content');
-	$('.panel').on('click', function(e) {
-		if (contentArea.is(':visible')) {
-			contentArea.hide();
+	toolbar.panelButtons.on('click', function(e) {
+		if (toolbar.isExpanded()) {
+			toolbar.hideContent();
 			return false;
 		}
-		var panel = $(this);
-		var id = panel.data('id');
-		var url = baseUrl + 'debug_kit/panels/view/' + id;
+		toolbar.loadPanel($(this).data('id'));
+	});
 
-		// Temporary text.
-		contentArea.html('Loading..');
-		contentArea.show();
-		window.parent.postMessage('expand', window.location.origin);
-
-		$.get(url, function(response) {
-			// contentArea.html(response);
-		});
+	toolbar.panelClose.on('click', function(e) {
+		toolbar.hideContent();
+		return false;
 	});
 
 	// Start off collapsed.
-	$('.panel').hide();
+	toolbar.hideButtons();
 });
 </script>
 <?php $this->end() ?>

@@ -31,7 +31,7 @@ body {
 	padding: 0px 9px;
 }
 
-#panel-content {
+#panel-content-container {
 	display: none;
 	background: #fff;
 	position: absolute;
@@ -39,4 +39,26 @@ body {
 	bottom: 40px;
 	left: 0;
 	right: 0;
+}
+
+.button-close {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: #eee;
+	color: #000;
+	display: inline-block;
+	padding: 8px;
+	line-height: 7px;
+	font-size: 14px;
+	height: 8px;
+	width: 8px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+.button-close:hover {
+	background: #ccc;
 }

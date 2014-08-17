@@ -15,41 +15,56 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
-$headers = array('Query', 'Num. rows', 'Took (ms)');
-if (isset($debugKitInHistoryMode)) {
-	$content = $this->Toolbar->readCache('sql_log', $this->request->params['pass'][0]);
-}
 ?>
-<h2><?php echo __d('debug_kit', 'Sql Logs')?></h2>
-<?php if (!empty($content)) : ?>
-	<?php foreach ($content['loggers'] as $logger): ?>
+<?php if (empty($loggers)): ?>
+<div class="warning"><?= __d('debug_kit', 'No active database connections') ?></div>
+<?php endif ?>
+
+<?php if (!empty($loggers)): ?>
+	<?php foreach ($loggers as $logger): ?>
+	<?php
+	$queries = $logger->queries();
+	if (empty($queries)):
+		continue;
+	endif;
+	?>
 	<div class="sql-log-panel-query-log">
 		<h4><?= h($logger->name()) ?></h4>
-		<?php
-			$queries = $logger->queries();
-			if (empty($queries)):
-				echo ' ' . __d('debug_kit', 'No query logs.');
-			else:
-				echo '<h5>';
-				echo __d(
-					'debug_kit',
-					'Total Time: %s ms &mdash; Total Queries: %s &mdash; Total Rows: %s',
-					$logger->totalTime(),
-					count($queries),
-					$logger->totalRows()
-				);
-				echo '</h5>';
-				echo $this->Toolbar->table($queries, $headers, array('title' => 'SQL Log ' . $logger->name()));
-			?>
-		<h4><?php echo __d('debug_kit', 'Query Explain:'); ?></h4>
+		<h5>
+		<?= __d(
+			'debug_kit',
+			'Total Time: {0} ms &mdash; Total Queries: {0} &mdash; Total Rows: {0}',
+			$logger->totalTime(),
+			count($queries),
+			$logger->totalRows()
+			);
+		?>
+		</h5>
+
+		<table cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<th><?= __d('debug_kit', 'Query') ?></th>
+				<th class="right-text"><?= __d('debug_kit', 'Num rows') ?></th>
+				<th class="right-text"><?= __d('debug_kit', 'Took (ms)') ?></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($queries as $query): ?>
+			<tr>
+				<td><?= h($query['query']); ?></td>
+				<td class="right-text"><?= h($query['rows']); ?></td>
+				<td class="right-text"><?= h($query['took']); ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+		</table>
+
+		<h4><?= __d('debug_kit', 'Query Explain:'); ?></h4>
 		<div id="sql-log-explain-<?= h($logger->name()); ?>">
 			<a id="debug-kit-explain-<?= h($logger->name()); ?>"> </a>
-			<p><?php echo __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
+			<p><?= __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
 		</div>
-		<?php endif; ?>
 	</div>
 	<?php endforeach; ?>
-<?php else:
-	echo $this->Toolbar->message('Warning', __d('debug_kit', 'No active database connections'));
-endif;
+<?php endif; ?>

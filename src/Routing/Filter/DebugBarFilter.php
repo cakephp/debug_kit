@@ -55,7 +55,7 @@ class DebugBarFilter extends DispatcherFilter {
 			// 'DebugKit.Log',
 			// 'DebugKit.Variables',
 			'DebugKit.Environment',
-			// 'DebugKit.Include'
+			'DebugKit.Include'
 		],
 	];
 

@@ -85,7 +85,7 @@ class IncludePanel extends DebugPanel {
  * @return array
  */
 	protected function _includePaths() {
-		$paths = array_flip(array_merge(explode(PATH_SEPARATOR, get_include_path()), array(CAKE)));
+		$paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
 
 		unset($paths['.']);
 		return array_flip($paths);
@@ -123,7 +123,6 @@ class IncludePanel extends DebugPanel {
 				return $plugin;
 			}
 		}
-
 		return false;
 	}
 

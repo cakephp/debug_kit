@@ -16,19 +16,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
 ?>
-<h2> <?php echo __d('debug_kit', 'Included Files'); ?></h2>
-
 <h4>Include Paths</h4>
-<?php
-	foreach ($content['paths'] as $i => $path) {
-		if (strstr($path, CAKE)) {
-			$content['paths'][$i] = '-> ' . $path;
-			break;
-		}
-	}
-	echo $this->Toolbar->makeNeatArray(array_filter($content['paths']));
-	unset($content['paths']);
-?>
+<?= $this->Toolbar->makeNeatArray($paths) ?>
 
 <h4>Included Files</h4>
-<?php echo $this->Toolbar->makeNeatArray($content);
+<?= $this->Toolbar->makeNeatArray(['core' => $core, 'app' => $app, 'plugins' => $plugins]); ?>

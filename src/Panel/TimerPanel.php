@@ -38,7 +38,12 @@ class TimerPanel extends DebugPanel {
 				DebugTimer::stop($name);
 			};
 		};
-
+		$both = function($name) use ($before, $after) {
+			return [
+				['priority' => 0, 'callable' => $before('Event: ' . $name)],
+				['priority' => 999, 'callable' => $after('Event: ' . $name)]
+			];
+		};
 
 		return [
 			'Controller.initialize' => [
@@ -67,23 +72,10 @@ class TimerPanel extends DebugPanel {
 					DebugTimer::start(__d('debug_kit', 'View Render start'));
 				}],
 			],
-			'Controller.beforeRedirect' => 'beforeRedirect',
-			'View.beforeRender' => [
-				['priority' => 0, 'callable' => $before('Event: View.beforeRender')],
-				['priority' => 999, 'callable' => $after('Event: View.beforeRender')]
-			],
-			'View.afterRender' => [
-				['priority' => 0, 'callable' => $before('Event: View.afterRender')],
-				['priority' => 999, 'callable' => $after('Event: View.afterRender')]
-			],
-			'View.beforeLayout' => [
-				['priority' => 0, 'callable' => $before('Event: View.beforeLayout')],
-				['priority' => 999, 'callable' => $after('Event: View.beforeLayout')]
-			],
-			'View.afterLayout' => [
-				['priority' => 0, 'callable' => $before('Event: View.afterLayout')],
-				['priority' => 999, 'callable' => $after('Event: View.afterLayout')]
-			],
+			'View.beforeRender' => $both('View.beforeRender'),
+			'View.afterRender' => $both('View.afterRender'),
+			'View.beforeLayout' => $both('View.beforeLayout'),
+			'View.afterLayout' => $both('View.afterLayout'),
 			'View.beforeRenderFile' => [
 				['priority' => 0, 'callable' => function($event, $filename) {
 					DebugTimer::start(__d('debug_kit', 'Render {0}', $filename));

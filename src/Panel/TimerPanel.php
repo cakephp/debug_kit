@@ -39,69 +39,70 @@ class TimerPanel extends DebugPanel {
 			};
 		};
 
-		return array(
-			'Controller.initialize' => array(
-				array('priority' => 0, 'callable' => function() {
+
+		return [
+			'Controller.initialize' => [
+				['priority' => 0, 'callable' => function() {
 					DebugMemory::record(__d('debug_kit', 'Controller initialization'));
-				}),
-				array('priority' => 0, 'callable' => $before('Event: Controller.initialize')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.initialize'))
-			),
-			'Controller.startup' => array(
-				array('priority' => 0, 'callable' => $before('Event: Controller.startup')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.startup')),
-				array('priority' => 999, 'callable' => function() {
+				}],
+				['priority' => 0, 'callable' => $before('Event: Controller.initialize')],
+				['priority' => 999, 'callable' => $after('Event: Controller.initialize')]
+			],
+			'Controller.startup' => [
+				['priority' => 0, 'callable' => $before('Event: Controller.startup')],
+				['priority' => 999, 'callable' => $after('Event: Controller.startup')],
+				['priority' => 999, 'callable' => function() {
 					DebugMemory::record(__d('debug_kit', 'Controller action start'));
 					DebugTimer::start(__d('debug_kit', 'Controller action'));
-				}),
-			),
-			'Controller.beforeRender' => array(
-				array('priority' => 0, 'callable' => function() {
+				}],
+			],
+			'Controller.beforeRender' => [
+				['priority' => 0, 'callable' => function() {
 					DebugTimer::stop(__d('debug_kit', 'Controller action'));
-				}),
-				array('priority' => 0, 'callable' => $before('Event: Controller.beforeRender')),
-				array('priority' => 999, 'callable' => $after('Event: Controller.beforeRender')),
-				array('priority' => 999, 'callable' => function() {
+				}],
+				['priority' => 0, 'callable' => $before('Event: Controller.beforeRender')],
+				['priority' => 999, 'callable' => $after('Event: Controller.beforeRender')],
+				['priority' => 999, 'callable' => function() {
 					DebugMemory::record(__d('debug_kit', 'View Render start'));
 					DebugTimer::start(__d('debug_kit', 'View Render start'));
-				}),
-			),
+				}],
+			],
 			'Controller.beforeRedirect' => 'beforeRedirect',
-			'View.beforeRender' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.beforeRender')),
-				array('priority' => 999, 'callable' => $after('Event: View.beforeRender'))
-			),
-			'View.afterRender' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.afterRender')),
-				array('priority' => 999, 'callable' => $after('Event: View.afterRender'))
-			),
-			'View.beforeLayout' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.beforeLayout')),
-				array('priority' => 999, 'callable' => $after('Event: View.beforeLayout'))
-			),
-			'View.afterLayout' => array(
-				array('priority' => 0, 'callable' => $before('Event: View.afterLayout')),
-				array('priority' => 999, 'callable' => $after('Event: View.afterLayout'))
-			),
-			'View.beforeRenderFile' => array(
-				array('priority' => 0, 'callable' => function($event, $filename) {
+			'View.beforeRender' => [
+				['priority' => 0, 'callable' => $before('Event: View.beforeRender')],
+				['priority' => 999, 'callable' => $after('Event: View.beforeRender')]
+			],
+			'View.afterRender' => [
+				['priority' => 0, 'callable' => $before('Event: View.afterRender')],
+				['priority' => 999, 'callable' => $after('Event: View.afterRender')]
+			],
+			'View.beforeLayout' => [
+				['priority' => 0, 'callable' => $before('Event: View.beforeLayout')],
+				['priority' => 999, 'callable' => $after('Event: View.beforeLayout')]
+			],
+			'View.afterLayout' => [
+				['priority' => 0, 'callable' => $before('Event: View.afterLayout')],
+				['priority' => 999, 'callable' => $after('Event: View.afterLayout')]
+			],
+			'View.beforeRenderFile' => [
+				['priority' => 0, 'callable' => function($event, $filename) {
 					DebugTimer::start(__d('debug_kit', 'Render {0}', $filename));
-				}),
-			),
-			'View.afterRenderFile' => array(
-				array('priority' => 0, 'callable' => function($event, $filename) {
+				}],
+			],
+			'View.afterRenderFile' => [
+				['priority' => 0, 'callable' => function($event, $filename) {
 					DebugTimer::stop(__d('debug_kit', 'Render {0}', $filename));
-				}),
-			),
-			'Controller.shutdown' => array(
-				array('priority' => 0, 'callable' => $before('Event: Controller.shutdown')),
-				array('priority' => 0, 'callable' => function() {
+				}],
+			],
+			'Controller.shutdown' => [
+				['priority' => 0, 'callable' => $before('Event: Controller.shutdown')],
+				['priority' => 0, 'callable' => function() {
 					DebugTimer::stop(__d('debug_kit', 'View Render start'));
 					DebugMemory::record(__d('debug_kit', 'Controller shutdown'));
-				}),
-				array('priority' => 999, 'callable' => $after('Event: Controller.shutdown')),
-			),
-		);
+				}],
+				['priority' => 999, 'callable' => $after('Event: Controller.shutdown')],
+			],
+		];
 	}
 
 /**

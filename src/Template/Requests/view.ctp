@@ -78,6 +78,7 @@ Toolbar.prototype = {
 	loadPanel: function(id) {
 		var url = baseUrl + 'debug_kit/panels/view/' + id;
 		var contentArea = this.content.find('#panel-content');
+		var _this = this;
 
 		// Temporary text.
 		contentArea.html('Loading..');
@@ -87,6 +88,18 @@ Toolbar.prototype = {
 
 		$.get(url, function(response) {
 			contentArea.html(response);
+			_this.bindNeatArray();
+		});
+	},
+
+	bindNeatArray: function() {
+		var lists = this.content.find('.depth-0');
+		lists.find('ul').hide()
+			.parent().addClass('expandable collapsed');
+
+		lists.on('click', 'li', function (event) {
+			event.stopPropagation();
+			$(this).children('ul').toggle().toggleClass('expanded collapsed');
 		});
 	}
 }

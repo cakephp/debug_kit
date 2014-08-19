@@ -10,7 +10,7 @@ use Cake\Routing\Router;
 </div>
 
 <ul class="toolbar">
-	<li id="panel-button">Bug</li>
+	<li id="panel-button">DK</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
 	<li class="panel" data-id="<?= $panel->id ?>">
 		<span class="panel-title">

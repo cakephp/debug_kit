@@ -15,6 +15,7 @@ namespace DebugKit\Panel;
 use Cake\Controller\Controller;
 use DebugKit\DebugPanel;
 use Cake\Event\Event;
+use Cake\Database\Query;
 
 /**
  * Provides debug information on the View variables.
@@ -40,10 +41,15 @@ class VariablesPanel extends DebugPanel {
  */
 	public function shutdown(Event $event) {
 		$controller = $event->subject();
-		$request = $event->data['request'];
-		$this->_data = array_merge(
-			$controller->viewVars,
-			['$request->data' => $request->data]
-		);
+
+		$vars = $controller->viewVars;
+		foreach ($vars as $k => $v) {
+			// Execute queries so we can show the results in the toolbar.
+			if ($v instanceof Query) {
+				$vars[$k] = $v->all();
+			}
+		}
+
+		$this->_data = ['content' => $vars];
 	}
 }

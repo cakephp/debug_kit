@@ -69,6 +69,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if ($values === null) {
 				$values = array(null);
 			}
+			if (is_object($values) && method_exists($values, 'toArray')) {
+				$values = $values->toArray();
+			}
 		}
 		if (empty($values)) {
 			$values[] = '(empty)';

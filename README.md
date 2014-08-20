@@ -16,15 +16,9 @@ The 3.0 branch has the following requirements:
 php composer.phar require cakephp/debug_kit "3.0.*-dev"
 ```
 
-* Ensure the plugin is loaded in `config/bootstrap.php` by calling
+* Load the plugin
 ```php
-Plugin::load('DebugKit');
-```
-* Include the toolbar component in your `src/Controller/AppController.php`:
-```php
-class AppController extends Controller {
-    public $components = array('DebugKit.Toolbar');
-}
+Plugin::load('DebugKit', ['bootstrap' => true]);
 ```
 * Set `'debug' => true,` in `config/app.php`.
 

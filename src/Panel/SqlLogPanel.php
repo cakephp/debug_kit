@@ -44,6 +44,9 @@ class SqlLogPanel extends DebugPanel {
 		$configs = ConnectionManager::configured();
 		foreach ($configs as $name) {
 			$connection = ConnectionManager::get($name);
+			if ($connection->configName() === 'debug_kit') {
+				continue;
+			}
 			$logger = null;
 			if ($connection->logQueries()) {
 				$logger = $connection->logger();

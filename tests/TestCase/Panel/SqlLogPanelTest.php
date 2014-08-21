@@ -54,7 +54,7 @@ class SqlLogPanelTest extends TestCase {
 		$result = $this->panel->beforeRender($controller);
 
 		$this->assertArrayHasKey('loggers', $result);
-		$this->assertCount(1, $result['loggers']);
+		$this->assertCount(3, $result['loggers']);
 		$this->assertArrayHasKey('threshold', $result);
 	}
 }

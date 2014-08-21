@@ -83,7 +83,11 @@ class DebugBarFilter extends DispatcherFilter {
 		if ($enabled) {
 			return true;
 		}
-		return (bool)$this->config('forceEnable');
+		$force = $this->config('forceEnable');
+		if (is_callable($force)) {
+			return $force();
+		}
+		return $force;
 	}
 
 /**

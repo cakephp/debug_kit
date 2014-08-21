@@ -167,4 +167,19 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
 	}
 
+/**
+ * test isEnabled responds to forceEnable callable.
+ *
+ * @return void
+ */
+	public function testIsEnabledForceEnableCallable() {
+		Configure::write('debug', false);
+		$bar = new DebugBarFilter($this->events, [
+			'forceEnable' => function() {
+				return true;
+			}
+		]);
+		$this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
+	}
+
 }

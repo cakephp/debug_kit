@@ -15,7 +15,7 @@ namespace DebugKit\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use DebugKit\DebugKitDebugger;
+use DebugKit\DebugTimer;
 
 /**
  * Class TimedBehaviorTestCase
@@ -50,7 +50,7 @@ class TimedBehaviorTestCase extends TestCase {
 		parent::tearDown();
 		unset($this->Article);
 		TableRegistry::clear();
-		DebugKitDebugger::clearTimers();
+		DebugTimer::clear();
 	}
 
 /**
@@ -59,7 +59,7 @@ class TimedBehaviorTestCase extends TestCase {
  * @return void
  */
 	public function testFindTimers() {
-		$timers = DebugKitDebugger::getTimers(false);
+		$timers = DebugTimer::getAll(false);
 		$this->assertEquals(count($timers), 1);
 
 		$this->Article->find('all');
@@ -77,11 +77,11 @@ class TimedBehaviorTestCase extends TestCase {
  * @return void
  */
 	public function testSaveTimers() {
-		$timers = DebugKitDebugger::getTimers(false);
+		$timers = DebugTimer::getAll(false);
 		$this->assertEquals(count($timers), 1);
 
 		$this->Article->save(array('user_id' => 1, 'title' => 'test', 'body' => 'test'));
-		$result = DebugKitDebugger::getTimers(false);
+		$result = DebugTimer::getAll(false);
 		$this->assertEquals(count($result), 2);
 	}
 }

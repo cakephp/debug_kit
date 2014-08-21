@@ -33,14 +33,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  *
  * @var array
  */
-	public $helpers = array('Html', 'Form', 'Url');
-
-/**
- * settings property
- *
- * @var array
- */
-	public $settings = array('format' => 'html', 'forceEnable' => false);
+	public $helpers = ['Html', 'Form', 'Url'];
 
 /**
  * Recursively goes through an array and makes neat HTML out of it.
@@ -128,30 +121,6 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	}
 
 /**
- * Create an HTML message
- *
- * @param string $label label content
- * @param string $message message content
- * @return string
- */
-	public function message($label, $message) {
-		return sprintf('<p><strong>%s</strong> %s</p>', $label, $message);
-	}
-
-/**
- * Start a panel.
- * Make a link and anchor.
- *
- * @param $title
- * @param $anchor
- * @return string
- */
-	public function panelStart($title, $anchor) {
-		$link = $this->Html->link($title, '#' . $anchor);
-		return $link;
-	}
-
-/**
  * Create a table.
  *
  * @param array $rows Rows to make.
@@ -166,76 +135,6 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'), false, false);
 		$out .= '</table>';
 		return $out;
-	}
-
-/**
- * Send method
- *
- * @return void
- */
-	public function send() {
-		if (!$this->settings['forceEnable'] && Configure::read('debug') == 0) {
-			return;
-		}
-		$view = $this->_View;
-		$head = '';
-		if (isset($view->viewVars['debugToolbarCss']) && !empty($view->viewVars['debugToolbarCss'])) {
-			$head .= $this->Html->css($view->viewVars['debugToolbarCss']);
-		}
-
-		$js = sprintf('window.DEBUGKIT_JQUERY_URL = "%s";', $this->Url->webroot('/debug_kit/js/jquery.js'));
-		$head .= $this->Html->scriptBlock($js);
-
-		if (isset($view->viewVars['debugToolbarJavascript'])) {
-			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {
-				if ($script) {
-					$head .= $this->Html->script($script);
-				}
-			}
-		}
-		$content = $view->fetch('content');
-		if (preg_match('#</head>#', $content)) {
-			$content = preg_replace('#</head>#', $head . "\n</head>", $content, 1);
-		}
-		$toolbar = $view->element('DebugKit.debug_toolbar', array('disableTimer' => true));
-		if (preg_match('#</body>#', $content)) {
-			$content = preg_replace('#</body>#', $toolbar . "\n</body>", $content, 1);
-		}
-		$view->assign('content', $content);
-	}
-
-/**
- * Generates a SQL explain link for a given query
- *
- * @param string $sql SQL query string you want an explain link for.
- * @param $connection
- * @return string Rendered Html link or '' if the query is not a select/describe
- */
-	public function explainLink($sql, $connection) {
-		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {
-			return '';
-		}
-		$sql = str_replace(array("\n", "\t"), ' ', $sql);
-		$hash = Security::hash($sql . $connection, 'sha1', true);
-		$url = array(
-			'plugin' => 'debug_kit',
-			'controller' => 'toolbar_access',
-			'action' => 'sql_explain',
-			'prefix' => false,
-		);
-
-		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0);
-		$uid = $this->explainLinkUid . '_' . rand(0, 10000);
-		$form = $this->Form->create('log', array('url' => $url, 'id' => "logForm{$uid}"));
-		$form .= $this->Form->hidden('log.ds', array('id' => "logDs{$uid}", 'value' => $connection));
-		$form .= $this->Form->hidden('log.sql', array('id' => "logSql{$uid}", 'value' => $sql));
-		$form .= $this->Form->hidden('log.hash', array('id' => "logHash{$uid}", 'value' => $hash));
-		$form .= $this->Form->submit(__d('debug_kit', 'Explain'), array(
-			'div' => false,
-			'class' => 'sql-explain-link'
-		));
-		$form .= $this->Form->end();
-		return $form;
 	}
 
 }

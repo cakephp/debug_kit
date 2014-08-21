@@ -14,10 +14,10 @@
 use DebugKit\Log\DebugKitLog;
 ?>
 <div class="code-table">
-<?php if (empty($logger)): ?>
+<?php if ($logger->noLogs()): ?>
 	<p class="info"><?php echo __d('debug_kit', 'There were no log entries made this request'); ?></p>
 <?php else: ?>
-	<?php foreach ($logger->logs as $logName => $logs): ?>
+	<?php foreach ($logger->all() as $logName => $logs): ?>
 		<h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
 		<?php
 			$len = count($logs);

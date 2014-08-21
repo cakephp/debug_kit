@@ -66,7 +66,7 @@ class LogPanelTest extends TestCase {
 
 		$result = $this->panel->beforeRender($controller);
 		$this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $result);
-		$this->assertTrue(isset($result->logs));
-		$this->assertCount(1, $result->logs['error']);
+		$logs = $result->all();
+		$this->assertCount(1, $logs['error']);
 	}
 }

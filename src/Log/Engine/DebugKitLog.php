@@ -25,7 +25,7 @@ class DebugKitLog implements LogInterface {
  *
  * @var array
  */
-	public $logs = array();
+	protected $_logs = array();
 
 /**
  * Captures log messages in memory
@@ -39,6 +39,25 @@ class DebugKitLog implements LogInterface {
 		if (!isset($this->logs[$type])) {
 			$this->logs[$type] = array();
 		}
-		$this->logs[$type][] = array(date('Y-m-d H:i:s'), (string)$message);
+		$this->_logs[$type][] = array(date('Y-m-d H:i:s'), (string)$message);
 	}
+
+/**
+ * Get the logs.
+ *
+ * @return array
+ */
+	public function all() {
+		return $this->_logs;
+	}
+
+/**
+ * Check if there are no logs.
+ *
+ * @return bool
+ */
+	public function noLogs() {
+		return empty($this->_logs);
+	}
+
 }

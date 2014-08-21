@@ -40,7 +40,9 @@ Toolbar.prototype = {
 	],
 
 	toggle: function() {
-		this.updateButtons(this.nextState());
+		var state = this.nextState();
+		this.updateButtons(state);
+		window.parent.postMessage(state, window.location.origin)
 	},
 
 	state: function() {
@@ -74,6 +76,7 @@ Toolbar.prototype = {
 
 	hideContent: function() {
 		this.content.hide();
+		window.parent.postMessage(this.state(), window.location.origin);
 	},
 
 	loadPanel: function(id) {
@@ -121,7 +124,6 @@ $(document).ready(function() {
 
 	toolbar.button.on('click', function(e) {
 		toolbar.toggle();
-		window.parent.postMessage(toolbar.state(), window.location.origin)
 	});
 
 	toolbar.panelButtons.on('click', function(e) {
@@ -131,7 +133,6 @@ $(document).ready(function() {
 
 		if (toolbar.isExpanded() && samePanel) {
 			toolbar.hideContent();
-			window.parent.postMessage(toolbar.state(), window.location.origin);
 		}
 		if (samePanel) {
 			return false;

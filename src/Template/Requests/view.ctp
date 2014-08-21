@@ -31,6 +31,7 @@ function Toolbar(options) {
 }
 
 Toolbar.prototype = {
+	_currentPanel: null,
 	_state: 0,
 
 	states: [
@@ -79,6 +80,7 @@ Toolbar.prototype = {
 		var url = baseUrl + 'debug_kit/panels/view/' + id;
 		var contentArea = this.content.find('#panel-content');
 		var _this = this;
+		this._currentPanel = id;
 
 		// Temporary text.
 		contentArea.html('Loading..');
@@ -101,6 +103,10 @@ Toolbar.prototype = {
 			event.stopPropagation();
 			$(this).children('ul').toggle().toggleClass('expanded collapsed');
 		});
+	},
+
+	currentPanel: function() {
+		return this._currentPanel;
 	}
 }
 
@@ -119,11 +125,18 @@ $(document).ready(function() {
 	});
 
 	toolbar.panelButtons.on('click', function(e) {
-		if (toolbar.isExpanded()) {
+		e.preventDefault();
+		var id = $(this).data('id');
+		var samePanel = toolbar.currentPanel() === id;
+
+		if (toolbar.isExpanded() && samePanel) {
 			toolbar.hideContent();
+			window.parent.postMessage(toolbar.state(), window.location.origin);
+		}
+		if (samePanel) {
 			return false;
 		}
-		toolbar.loadPanel($(this).data('id'));
+		toolbar.loadPanel(id);
 	});
 
 	toolbar.panelClose.on('click', function(e) {

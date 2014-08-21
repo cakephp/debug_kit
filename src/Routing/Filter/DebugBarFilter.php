@@ -13,6 +13,7 @@ namespace DebugKit\Routing\Filter;
 
 use DebugKit\Panel\DebugPanel;
 use DebugKit\Panel\PanelRegistry;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
@@ -57,6 +58,7 @@ class DebugBarFilter extends DispatcherFilter {
 			'DebugKit.Environment',
 			'DebugKit.Include'
 		],
+		'forceEnable' => false,
 	];
 
 /**
@@ -69,6 +71,19 @@ class DebugBarFilter extends DispatcherFilter {
 		$this->eventManager($events);
 		$this->config($config);
 		$this->_registry = new PanelRegistry($events);
+	}
+
+/**
+ * Check whether or not debug kit is enabled.
+ *
+ * @return bool
+ */
+	public function isEnabled() {
+		$enabled = (bool)Configure::read('debug');
+		if ($enabled) {
+			return true;
+		}
+		return (bool)$this->config('forceEnable');
 	}
 
 /**

@@ -17,6 +17,12 @@ use Cake\Routing\DispatcherFactory;
 use Cake\Routing\Router;
 use DebugKit\Routing\Filter\DebugBarFilter;
 
+$debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
+
+if (!$debugBar->isEnabled()) {
+	return;
+}
+
 if (!ConnectionManager::config('debug_kit')) {
 	ConnectionManager::config('debug_kit', [
 		'className' => 'Cake\Database\Connection',
@@ -33,8 +39,8 @@ Router::plugin('DebugKit', function($routes) {
 	$routes->connect('/panels/:action/*', ['controller' => 'Panels']);
 });
 
-// Setup the DebugBar
-$debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
+
+// Setup panels
 $debugBar->setup();
 
 DispatcherFactory::add($debugBar);

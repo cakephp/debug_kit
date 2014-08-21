@@ -12,6 +12,7 @@
 namespace DebugKit\Test\Routing\Filter;
 
 use DebugKit\Routing\Filter\DebugBarFilter;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
@@ -138,6 +139,32 @@ class DebugBarFilterTest extends TestCase {
 		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
 		$bar->afterDispatch($event);
 		$this->assertTextEquals('{"some":"json"}', $response->body());
+	}
+
+/**
+ * test isEnabled responds to debug flag.
+ *
+ * @return void
+ */
+	public function testIsEnabled() {
+		Configure::write('debug', true);
+		$bar = new DebugBarFilter($this->events, []);
+		$this->assertTrue($bar->isEnabled(), 'debug is on, panel is enabled');
+
+		Configure::write('debug', false);
+		$bar = new DebugBarFilter($this->events, []);
+		$this->assertFalse($bar->isEnabled(), 'debug is off, panel is disabled');
+	}
+
+/**
+ * test isEnabled responds to forceEnable config flag.
+ *
+ * @return void
+ */
+	public function testIsEnabledForceEnable() {
+		Configure::write('debug', false);
+		$bar = new DebugBarFilter($this->events, ['forceEnable' => true]);
+		$this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
 	}
 
 }

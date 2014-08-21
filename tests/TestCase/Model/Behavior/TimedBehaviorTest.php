@@ -36,7 +36,6 @@ class TimedBehaviorTestCase extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->markTestIncomplete('Not working yet');
 		$this->Article = TableRegistry::get('Articles');
 		$this->Article->addBehavior('DebugKit.Timed');
 	}
@@ -59,15 +58,15 @@ class TimedBehaviorTestCase extends TestCase {
  * @return void
  */
 	public function testFindTimers() {
-		$timers = DebugTimer::getAll(false);
+		$timers = DebugTimer::getAll();
 		$this->assertEquals(count($timers), 1);
 
-		$this->Article->find('all');
-		$result = DebugKitDebugger::getTimers(false);
+		$this->Article->find('all')->first();
+		$result = DebugTimer::getAll();
 		$this->assertEquals(count($result), 2);
 
-		$this->Article->find('all');
-		$result = DebugKitDebugger::getTimers(false);
+		$this->Article->find('all')->first();
+		$result = DebugTimer::getAll();
 		$this->assertEquals(count($result), 3);
 	}
 
@@ -77,11 +76,12 @@ class TimedBehaviorTestCase extends TestCase {
  * @return void
  */
 	public function testSaveTimers() {
-		$timers = DebugTimer::getAll(false);
+		$timers = DebugTimer::getAll();
 		$this->assertEquals(count($timers), 1);
 
-		$this->Article->save(array('user_id' => 1, 'title' => 'test', 'body' => 'test'));
-		$result = DebugTimer::getAll(false);
+		$article = $this->Article->newEntity(['user_id' => 1, 'title' => 'test', 'body' => 'test']);
+		$this->Article->save($article);
+		$result = DebugTimer::getAll();
 		$this->assertEquals(count($result), 2);
 	}
 }

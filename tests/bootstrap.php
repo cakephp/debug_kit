@@ -16,6 +16,7 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
+use Cake\Routing\DispatcherFactory;
 
 require_once 'vendor/autoload.php';
 
@@ -25,7 +26,11 @@ define('ROOT', dirname(__DIR__) . DS);
 define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
+define('TESTS', ROOT . 'tests');
 define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
+define('APP_DIR', 'test_app');
+define('WEBROOT_DIR', 'webroot');
+define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
@@ -88,7 +93,7 @@ if (!getenv('db_class')) {
 	putenv('db_dsn=sqlite::memory:');
 }
 
-ConnectionManager::config('test', [
+$config = [
 	'className' => 'Cake\Database\Connection',
 	'driver' => getenv('db_class'),
 	'dsn' => getenv('db_dsn'),
@@ -96,10 +101,12 @@ ConnectionManager::config('test', [
 	'login' => getenv('db_login'),
 	'password' => getenv('db_password'),
 	'timezone' => 'UTC'
-]);
+];
 
 // Use the test connection for 'debug_kit' as well.
-ConnectionManager::alias('test', 'debug_kit');
+ConnectionManager::config('test', $config);
+ConnectionManager::config('test_debug_kit', $config);
+
 
 Log::config([
 	'debug' => [
@@ -114,4 +121,6 @@ Log::config([
 	]
 ]);
 
-Plugin::load('DebugKit', ['path' => ROOT]);
+Plugin::load('DebugKit', ['path' => ROOT, 'bootstrap' => true]);
+
+DispatcherFactory::add('ControllerFactory');

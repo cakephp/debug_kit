@@ -25,14 +25,6 @@ use Cake\Event\Event;
 class SqlLogPanel extends DebugPanel {
 
 /**
- * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
- * is done.
- *
- * @var integer
- */
-	public $slowRate = 20;
-
-/**
  * Loggers connected
  *
  * @var array
@@ -48,7 +40,7 @@ class SqlLogPanel extends DebugPanel {
  * @param \Cake\Event\Event $event The event.
  * @return array
  */
-	public function startup(Controller $controller) {
+	public function initialize(Event $event) {
 		$configs = ConnectionManager::configured();
 		foreach ($configs as $name) {
 			$connection = ConnectionManager::get($name);
@@ -65,35 +57,14 @@ class SqlLogPanel extends DebugPanel {
 	}
 
 /**
- * Gets the connection names that should have logs + dumps generated.
- *
- * @param \Cake\Controller\Controller $contoller The controller.
- * @return array
- */
-	public function beforeRender(Controller $controller) {
-		return [
-			'loggers' => $this->_loggers,
-			'threshold' => $this->slowRate,
-		];
-	}
-
-/**
- * Gets the connection names that should have logs + dumps generated.
- *
- * @param \Cake\Event\Event $event The event.
- * @return array
- */
-	public function initialize(Event $event) {
-		$this->startup($event->subject());
-	}
-
-/**
  * Stores the data this panel wants.
  *
  * @param \Cake\Event\Event $event The event.
  * @return array
  */
 	public function shutdown(Event $event) {
-		$this->_data = $this->beforeRender($event->subject());
+		$this->_data = [
+			'loggers' => $this->_loggers,
+		];
 	}
 }

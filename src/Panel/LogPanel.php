@@ -38,16 +38,6 @@ class LogPanel extends DebugPanel {
 	}
 
 /**
- * beforeRender Callback
- *
- * @param Controller $controller The controller
- * @return array
- */
-	public function beforeRender(Controller $controller) {
-		return Log::engine('debug_kit_log_panel');
-	}
-
-/**
  * Shutdown event.
  *
  * @param \Cake\Event\Event $event Event

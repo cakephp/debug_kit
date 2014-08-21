@@ -25,17 +25,20 @@ use Cake\Event\Event;
 class EnvironmentPanel extends DebugPanel {
 
 /**
- * beforeRender - Get necessary data about environment to pass back to controller
+ * Get necessary data about environment to pass back to controller
  *
  * @param \Cake\Controller\Controller $controller The controller.
  * @return array
  */
-	public function beforeRender(Controller $controller) {
-		$return = array();
+	protected function _prepare(Controller $controller) {
+		$return = [];
 
 		// PHP Data
 		$phpVer = phpversion();
-		$return['php'] = array_merge(array('PHP_VERSION' => $phpVer), $_SERVER);
+		$return['php'] = array_merge(
+			['PHP_VERSION' => $phpVer],
+			$_SERVER
+		);
 		unset($return['php']['argv']);
 
 		// CakePHP Data
@@ -79,7 +82,7 @@ class EnvironmentPanel extends DebugPanel {
  * @return void
  */
 	public function shutdown(Event $event) {
-		$this->_data = $this->beforeRender($event->subject());
+		$this->_data = $this->_prepare($event->subject());
 	}
 
 }

@@ -12,7 +12,7 @@
  **/
 namespace DebugKit\Test\TestCase\Panel;
 
-use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\LogPanel;
@@ -55,18 +55,22 @@ class LogPanelTest extends TestCase {
 	}
 
 /**
- * testBeforeRender
+ * test shutdown
  *
  * @return void
  */
-	public function testBeforeRender() {
-		$controller = new Controller();
+	public function testShutdown() {
+		$event = new Event('Sample');
 
 		Log::write('error', 'Test');
 
-		$result = $this->panel->beforeRender($controller);
-		$this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $result);
-		$logs = $result->all();
-		$this->assertCount(1, $logs['error']);
+		$this->panel->shutdown($event);
+		$result = $this->panel->data();
+
+		$this->assertArrayHasKey('logger', $result);
+		$logger = $result['logger'];
+
+		$this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $logger);
+		$this->assertCount(1, $logger->all()['error']);
 	}
 }

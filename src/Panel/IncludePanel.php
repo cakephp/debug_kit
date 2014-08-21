@@ -56,7 +56,7 @@ class IncludePanel extends DebugPanel {
  * @param Controller $controller The controller.
  * @return array
  */
-	public function beforeRender(Controller $controller) {
+	protected function _prepare(Controller $controller) {
 		$return = array('core' => array(), 'app' => array(), 'plugins' => array());
 
 		foreach (get_included_files() as $file) {
@@ -172,7 +172,7 @@ class IncludePanel extends DebugPanel {
  * @return void
  */
 	public function shutdown(Event $event) {
-		$this->_data = $this->beforeRender($event->subject());
+		$this->_data = $this->_prepare($event->subject());
 	}
 
 }

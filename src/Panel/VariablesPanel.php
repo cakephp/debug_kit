@@ -24,16 +24,6 @@ use Cake\Database\Query;
 class VariablesPanel extends DebugPanel {
 
 /**
- * beforeRender callback
- *
- * @param Controller $controller The controller.
- * @return array
- */
-	public function beforeRender(Controller $controller) {
-		return array_merge($controller->viewVars, array('$request->data' => $controller->request->data));
-	}
-
-/**
  * Shutdown event
  *
  * @param \Cake\Event\Event $event The event
@@ -49,7 +39,6 @@ class VariablesPanel extends DebugPanel {
 				$vars[$k] = $v->all();
 			}
 		}
-
 		$this->_data = ['content' => $vars];
 	}
 }

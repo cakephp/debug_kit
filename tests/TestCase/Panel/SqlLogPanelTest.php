@@ -13,6 +13,7 @@
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\SqlLogPanel;
@@ -44,17 +45,17 @@ class SqlLogPanelTest extends TestCase {
  *
  * @return void
  */
-	public function testBeforeRender() {
-		$controller = new Controller();
-		$result = $this->panel->startup($controller);
+	public function testShutdown() {
+		$event = new Event('Sample');
+		$result = $this->panel->initialize($event);
 
-		$Article = TableRegistry::get('Articles');
-		$Article->findById(1)->first();
+		$articles = TableRegistry::get('Articles');
+		$articles->findById(1)->first();
 
-		$result = $this->panel->beforeRender($controller);
+		$this->panel->shutdown($event);
+		$result = $this->panel->data();
 
 		$this->assertArrayHasKey('loggers', $result);
 		$this->assertCount(3, $result['loggers']);
-		$this->assertArrayHasKey('threshold', $result);
 	}
 }

@@ -17,14 +17,16 @@ use Cake\Routing\DispatcherFactory;
 use Cake\Routing\Router;
 use DebugKit\Routing\Filter\DebugBarFilter;
 
-ConnectionManager::config('debug_kit', [
-	'className' => 'Cake\Database\Connection',
-	'driver' => 'Cake\Database\Driver\Sqlite',
-	'database' => TMP . 'debug_kit.sqlite',
-	'encoding' => 'utf8',
-	'cacheMetadata' => true,
-	'quoteIdentifiers' => false,
-]);
+if (!ConnectionManager::config('debug_kit')) {
+	ConnectionManager::config('debug_kit', [
+		'className' => 'Cake\Database\Connection',
+		'driver' => 'Cake\Database\Driver\Sqlite',
+		'database' => TMP . 'debug_kit.sqlite',
+		'encoding' => 'utf8',
+		'cacheMetadata' => true,
+		'quoteIdentifiers' => false,
+	]);
+}
 
 Router::plugin('DebugKit', function($routes) {
 	$routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);

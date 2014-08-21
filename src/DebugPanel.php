@@ -33,13 +33,6 @@ class DebugPanel implements EventListener {
 	public $plugin = 'DebugKit';
 
 /**
- * Title attribute
- *
- * @deprecated
- */
-	public $title;
-
-/**
  * The data collected about a given request.
  *
  * @var array

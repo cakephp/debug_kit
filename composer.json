@@ -32,8 +32,13 @@
     },
     "autoload": {
         "psr-4": {
-            "DebugKit\\": "src",
-            "DebugKit\\Test\\": "tests"
+            "DebugKit\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DebugKit\\Test\\": "tests",
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests"
         }
     },
     "extra": {

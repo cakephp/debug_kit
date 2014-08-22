@@ -75,6 +75,7 @@ Toolbar.prototype = {
 
 	hideContent: function() {
 		this.content.hide();
+		this._currentPanel = null;
 		window.parent.postMessage(this.state(), window.location.origin);
 	},
 

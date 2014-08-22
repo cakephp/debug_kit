@@ -9,7 +9,9 @@ use Cake\Routing\Router;
 </div>
 
 <ul class="toolbar">
-	<li id="panel-button">DK</li>
+	<li id="panel-button">
+		<?= $this->Html->image('DebugKit.cake.icon.png', ['alt' => 'Debug Kit']) ?>
+	</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
 	<li class="panel" data-id="<?= $panel->id ?>">
 		<span class="panel-button">

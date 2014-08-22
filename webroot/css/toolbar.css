@@ -67,7 +67,8 @@ h4 {
 	float: left;
 }
 #panel-button {
-	width: 40px;
+	width: 30px;
+	padding: 5px;
 }
 
 .panel {

@@ -25,13 +25,6 @@ use Cake\View\Helper;
 class SimpleGraphHelper extends Helper {
 
 /**
- * Helpers
- *
- * @var array
- */
-	public $helpers = array('Html');
-
-/**
  * Default settings to be applied to each Simple Graph
  *
  * Allowed options:
@@ -52,8 +45,8 @@ class SimpleGraphHelper extends Helper {
 /**
  * bar method
  *
- * @param $value Value to be graphed
- * @param $offset how much indentation
+ * @param float $value Value to be graphed
+ * @param int $offset how much indentation
  * @param array|\Graph $options Graph options
  * @return string Html graph
  */
@@ -70,18 +63,11 @@ class SimpleGraphHelper extends Helper {
 			$graphOffset = ($offset / $max) * $width;
 			$graphOffset = round($graphOffset);
 		}
-		return $this->Html->div(
-			'debug-kit-graph-bar',
-				$this->Html->div(
-					'debug-kit-graph-bar-value',
-					' ',
-					array(
-						'style' => "margin-left: {$graphOffset}px; width: {$graphValue}px",
-						'title' => __d('debug_kit', "Starting %sms into the request, taking %sms", $offset, $value),
-					)
-				),
-			array('style' => "width: {$width}px;"),
-			false
+		return sprintf(
+			'<div class="graph-bar" style="%s"><div class="graph-bar-value" style="%s" title="%s"> </div></div>',
+			"width: {$width}px",
+			"margin-left: {$graphOffset}px; width: {$graphValue}px",
+			__d('debug_kit', "Starting {0}ms into the request, taking {1}ms", $offset, $value)
 		);
 	}
 

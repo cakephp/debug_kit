@@ -21,7 +21,7 @@ use Cake\Event\Event;
  */
 class PanelsController extends Controller {
 
-	public $layout = 'DebugKit.toolbar';
+	public $layout = 'DebugKit.panel';
 
 /**
  * Before filter handler.
@@ -45,5 +45,6 @@ class PanelsController extends Controller {
 	public function view($id = null) {
 		$panel = $this->Panels->get($id);
 		$this->set('panel', $panel);
+		$this->set(unserialize($panel->content));
 	}
 }

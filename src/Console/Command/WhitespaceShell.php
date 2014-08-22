@@ -14,6 +14,7 @@
 namespace DebugKit\Console\Command;
 
 use Cake\Utility\Folder;
+
 /**
  * Whitespace shell. Helps find and trim whitespace from files.
  *

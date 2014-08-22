@@ -33,13 +33,6 @@ class DebugPanel implements EventListener {
 	public $plugin = 'DebugKit';
 
 /**
- * Title attribute
- *
- * @deprecated
- */
-	public $title;
-
-/**
  * The data collected about a given request.
  *
  * @var array
@@ -65,30 +58,6 @@ class DebugPanel implements EventListener {
 	public function elementName() {
 		list($ns, $name) = namespaceSplit(get_class($this));
 		return $this->plugin . '.' . Inflector::underscore($name);
-	}
-
-/**
- * startup the panel
- *
- * Pull information from the controller / request
- *
- * Old style callbacks for non-event based toolbar.
- *
- * @param \Cake\Controller\Controller $controller controller reference.
- * @return void
- */
-	public function startup(Controller $event) {
-	}
-
-/**
- * Prepare output vars before Controller Rendering.
- *
- * Old style callbacks for non-event based toolbar.
- *
- * @param \Cake\Controller\Controller $controller controller reference.
- * @return void
- */
-	public function beforeRender(Controller $event) {
 	}
 
 /**

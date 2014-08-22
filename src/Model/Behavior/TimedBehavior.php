@@ -13,8 +13,9 @@
  */
 namespace DebugKit\Model\Behavior;
 
+use Cake\Event\Event;
 use Cake\ORM\Behavior;
-use DebugKit\DebugKitDebugger;
+use DebugKit\DebugTimer;
 
 /**
  * Class TimedBehavior
@@ -22,81 +23,42 @@ use DebugKit\DebugKitDebugger;
 class TimedBehavior extends Behavior {
 
 /**
- * Behavior settings
- *
- * @var array
- */
-	public $settings = array();
-
-/**
- * Default setting values
- *
- * @var array
- */
-	protected $_defaults = array();
-
-/**
- * Setup the behavior and import required classes.
- *
- * @param \Model|object $Model Model using the behavior
- * @param array $settings Settings to override for model.
- * @return void
- */
-	public function setup(Model $Model, $settings = null) {
-		if (is_array($settings)) {
-			$this->settings[$Model->alias] = array_merge($this->_defaults, $settings);
-		} else {
-			$this->settings[$Model->alias] = $this->_defaults;
-		}
-	}
-
-/**
  * beforeFind, starts a timer for a find operation.
  *
- * @param Model $Model
+ * @param Cake\Event\Event $event The beforeFind event
+ * @param Cake\ORM\Query $query
  * @param array $queryData Array of query data (not modified)
  * @return boolean true
  */
-	public function beforeFind(Model $Model, $queryData) {
-		DebugKitDebugger::startTimer($Model->alias . '_find', $Model->alias . '->find()');
-		return true;
-	}
-
-/**
- * afterFind, stops a timer for a find operation.
- *
- * @param Model $Model
- * @param array $results Array of results
- * @param $primary
- * @return boolean true.
- */
-	public function afterFind(Model $Model, $results, $primary = false) {
-		DebugKitDebugger::stopTimer($Model->alias . '_find');
-		return true;
+	public function beforeFind(Event $event, $query) {
+		$alias = $event->subject()->alias();
+		DebugTimer::start($alias . '_find', $alias . '->find()');
+		return $query->formatResults(function($results) use ($alias) {
+			DebugTimer::stop($alias . '_find');
+			return $results;
+		});
 	}
 
 /**
  * beforeSave, starts a time before a save is initiated.
  *
- * @param Model $Model
- * @param array $options
- * @return boolean true
+ * @param Cake\Event\Event $event The beforeSave event
+ * @return void
  */
-	public function beforeSave(Model $Model, $options = array()) {
-		DebugKitDebugger::startTimer($Model->alias . '_save', $Model->alias . '->save()');
-		return true;
+	public function beforeSave(Event $event) {
+		$alias = $event->subject()->alias();
+		DebugTimer::start($alias . '_save', $alias . '->save()');
 	}
 
 /**
  * afterSave, stop the timer started from a save.
  *
- * @param \Model $Model
- * @param string $created
- * @return boolean Always true
+ * @param Cake\Event\Event $event The afterSave event
+ * @return void
  */
-	public function afterSave(Model $Model, $created, $options = array()) {
-		DebugKitDebugger::stopTimer($Model->alias . '_save');
-		return true;
+	public function afterSave(Event $event) {
+		$alias = $event->subject()->alias();
+		DebugTimer::stop($alias . '_save');
 	}
 
 }

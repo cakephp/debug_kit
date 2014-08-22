@@ -18,20 +18,8 @@ use Cake\Event\Event;
 
 /**
  * Provides debug information on the Session contents.
- *
  */
 class SessionPanel extends DebugPanel {
-
-/**
- * beforeRender callback
- *
- * @param \Cake\Controller\Controller $controller The controller
- * @return array
- */
-	public function beforeRender(Controller $controller) {
-		$sessions = $controller->Toolbar->Session->read();
-		return $sessions;
-	}
 
 /**
  * shutdown callback
@@ -40,9 +28,9 @@ class SessionPanel extends DebugPanel {
  * @return array
  */
 	public function shutdown(Event $event) {
-		$request = $event->data['request'];
+		$request = $event->subject()->request;
 		if ($request) {
-			$this->_data = $request->session()->read();
+			$this->_data = ['content' => $request->session()->read()];
 		}
 	}
 }

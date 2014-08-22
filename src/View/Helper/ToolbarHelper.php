@@ -28,129 +28,146 @@ use DebugKit\DebugKitDebugger;
 class ToolbarHelper extends Helper {
 
 /**
- * settings property to be overloaded. Subclasses should specify a format
+ * helpers property
  *
  * @var array
  */
-	public $settings = array();
+	public $helpers = array('Html', 'Form', 'Url');
 
 /**
- * flag for whether or not cache is enabled.
+ * Recursively goes through an array and makes neat HTML out of it.
  *
- * @var boolean
- */
-	protected $_cacheEnabled = false;
-
-/**
- * Construct the helper and make the backend helper.
- *
- * @param $View
- * @param array|string $options
- * @return \ToolbarHelper
- */
-	public function __construct($View, $options = array()) {
-		$this->_myName = get_class($this);
-		$this->settings = array_merge($this->settings, $options);
-
-		if ($this->_myName !== 'DebugKit\View\Helper\ToolbarHelper') {
-			parent::__construct($View, $options);
-			return;
-		}
-
-		if (!isset($options['output'])) {
-			$options['output'] = 'DebugKit.HtmlToolbar';
-		}
-		$className = $options['output'];
-		if (strpos($options['output'], '.') !== false) {
-			list($plugin, $className) = explode('.', $options['output']);
-		}
-		$this->_backEndClassName = $className;
-		$this->helpers[$options['output']] = $options;
-		if (isset($options['cacheKey']) && isset($options['cacheConfig'])) {
-			$this->_cacheKey = $options['cacheKey'];
-			$this->_cacheConfig = $options['cacheConfig'];
-			$this->_cacheEnabled = true;
-		}
-
-		parent::__construct($View, $options);
-	}
-
-/**
- * afterLayout callback
- *
- * @param \Cake\Event\Event $event The event
- * @param string $layoutFile
- * @return void
- */
-	public function afterLayout(Event $event, $layoutFile) {
-		if (!$this->request->is('requested')) {
-			$this->send();
-		}
-	}
-
-/**
- * Get the name of the backend Helper
- * used to conditionally trigger toolbar output
- *
+ * @param mixed $values Array to make pretty.
+ * @param integer $openDepth Depth to add open class
+ * @param integer $currentDepth current depth.
+ * @param boolean $doubleEncode Whether or not to double encode.
  * @return string
  */
-	public function getName() {
-		return $this->_backEndClassName;
+	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
+		static $printedObjects = null;
+		if ($currentDepth === 0) {
+			$printedObjects = new \SplObjectStorage();
+		}
+		$className = "neat-array depth-$currentDepth";
+		if ($openDepth > $currentDepth) {
+			$className .= ' expanded';
+		}
+		$nextDepth = $currentDepth + 1;
+		$out = "<ul class=\"$className\">";
+		if (!is_array($values)) {
+			if (is_bool($values)) {
+				$values = array($values);
+			}
+			if ($values === null) {
+				$values = array(null);
+			}
+			if (is_object($values) && method_exists($values, 'toArray')) {
+				$values = $values->toArray();
+			}
+		}
+		if (empty($values)) {
+			$values[] = '(empty)';
+		}
+		foreach ($values as $key => $value) {
+			$out .= '<li><strong>' . $key . '</strong>';
+			if (is_array($value) && count($value) > 0) {
+				$out .= '(array)';
+			} elseif (is_object($value)) {
+				$out .= '(object)';
+			}
+			if ($value === null) {
+				$value = '(null)';
+			}
+			if ($value === false) {
+				$value = '(false)';
+			}
+			if ($value === true) {
+				$value = '(true)';
+			}
+			if (empty($value) && $value != 0) {
+				$value = '(empty)';
+			}
+			if ($value instanceof Closure) {
+				$value = 'function';
+			}
+
+			$isObject = is_object($value);
+			if ($isObject && $printedObjects->contains($value)) {
+				$isObject = false;
+				$value = ' - recursion';
+			}
+
+			if ($isObject) {
+				$printedObjects->attach($value);
+			}
+
+			if (
+				(
+				$value instanceof ArrayAccess ||
+				$value instanceof Iterator ||
+				is_array($value) ||
+				$isObject
+				) && !empty($value)
+			) {
+				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
+			} else {
+				$out .= h($value, $doubleEncode);
+			}
+			$out .= '</li>';
+		}
+		$out .= '</ul>';
+		return $out;
 	}
 
 /**
- * call__
+ * Create a table.
  *
- * Allows method calls on backend helper
- *
- * @param string $method
- * @param mixed $params
- * @return mixed|void
+ * @param array $rows Rows to make.
+ * @param array $headers Optional header row.
+ * @return string
  */
-	public function __call($method, $params) {
-		if (method_exists($this->{$this->_backEndClassName}, $method)) {
-			return call_user_func_array(
-				[$this->{$this->_backEndClassName}, $method],
-				$params
-			);
+	public function table($rows, $headers = array()) {
+		$out = '<table class="debug-table">';
+		if (!empty($headers)) {
+			$out .= $this->Html->tableHeaders($headers);
 		}
+		$out .= $this->Html->tableCells($rows, array('class' => 'odd'), array('class' => 'even'), false, false);
+		$out .= '</table>';
+		return $out;
 	}
 
 /**
- * Allows for writing to panel cache from view.
- * Some panels generate all variables in the view by
- * necessity ie. Timer. Using this method, will allow you to replace in full
- * the content for a panel.
+ * Generates a SQL explain link for a given query
  *
- * @param string $name Name of the panel you are replacing.
- * @param string $content Content to write to the panel.
- * @return boolean Success of write.
+ * @param string $sql SQL query string you want an explain link for.
+ * @param string $connection The connection name to make an explain link for.
+ * @return string Rendered Html link or '' if the query is not a select/describe.
  */
-	public function writeCache($name, $content) {
-		if (!$this->_cacheEnabled) {
-			return false;
+	public function explainLink($sql, $connection) {
+		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {
+			return '';
 		}
-		$existing = (array)Cache::read($this->_cacheKey, $this->_cacheConfig);
-		$existing[0][$name]['content'] = $content;
-		return Cache::write($this->_cacheKey, $existing, $this->_cacheConfig);
-	}
+		$sql = str_replace(array("\n", "\t"), ' ', $sql);
+		$hash = Security::hash($sql . $connection, 'sha1', true);
+		$url = array(
+			'plugin' => 'debug_kit',
+			'controller' => 'toolbar_access',
+			'action' => 'sql_explain',
+			'prefix' => false,
+		);
 
-/**
- * Read the toolbar
- *
- * @param string $name Name of the panel you want cached data for
- * @param integer $index
- * @return mixed Boolean false on failure, array of data otherwise.
- */
-	public function readCache($name, $index = 0) {
-		if (!$this->_cacheEnabled) {
-			return false;
-		}
-		$existing = (array)Cache::read($this->_cacheKey, $this->_cacheConfig);
-		if (!isset($existing[$index][$name]['content'])) {
-			return false;
-		}
-		return $existing[$index][$name]['content'];
+		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0);
+		$uid = $this->explainLinkUid . '_' . rand(0, 10000);
+		$form = $this->Form->create('log', array('url' => $url, 'id' => "logForm{$uid}"));
+		$form .= $this->Form->hidden('log.ds', array('id' => "logDs{$uid}", 'value' => $connection));
+		$form .= $this->Form->hidden('log.sql', array('id' => "logSql{$uid}", 'value' => $sql));
+		$form .= $this->Form->hidden('log.hash', array('id' => "logHash{$uid}", 'value' => $hash));
+		$form .= $this->Form->submit(__d('debug_kit', 'Explain'), array(
+			'div' => false,
+			'class' => 'sql-explain-link'
+		));
+		$form .= $this->Form->end();
+		return $form;
 	}
 
 }

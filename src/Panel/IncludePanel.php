@@ -56,7 +56,7 @@ class IncludePanel extends DebugPanel {
  * @param Controller $controller The controller.
  * @return array
  */
-	public function beforeRender(Controller $controller) {
+	protected function _prepare(Controller $controller) {
 		$return = array('core' => array(), 'app' => array(), 'plugins' => array());
 
 		foreach (get_included_files() as $file) {
@@ -85,7 +85,7 @@ class IncludePanel extends DebugPanel {
  * @return array
  */
 	protected function _includePaths() {
-		$paths = array_flip(array_merge(explode(PATH_SEPARATOR, get_include_path()), array(CAKE)));
+		$paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
 
 		unset($paths['.']);
 		return array_flip($paths);
@@ -123,7 +123,6 @@ class IncludePanel extends DebugPanel {
 				return $plugin;
 			}
 		}
-
 		return false;
 	}
 
@@ -173,7 +172,7 @@ class IncludePanel extends DebugPanel {
  * @return void
  */
 	public function shutdown(Event $event) {
-		$this->_data = $this->beforeRender($event->subject());
+		$this->_data = $this->_prepare($event->subject());
 	}
 
 }

@@ -12,6 +12,7 @@
 namespace DebugKit\Test\Routing\Filter;
 
 use DebugKit\Routing\Filter\DebugBarFilter;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
@@ -52,7 +53,7 @@ class DebugBarFilterTest extends TestCase {
 		$bar->setup();
 
 		$this->assertContains('SqlLog', $bar->loadedPanels());
-		$this->assertCount(1, $this->events->listeners('Controller.shutdown'));
+		$this->assertGreaterThan(1, $this->events->listeners('Controller.shutdown'));
 		$this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
 	}
 
@@ -74,17 +75,20 @@ class DebugBarFilterTest extends TestCase {
 		$bar->afterDispatch($event);
 
 		$requests = TableRegistry::get('DebugKit.Requests');
-		$result = $requests->find()->contain('Panels')->first();
+		$result = $requests->find()
+			->order(['Requests.requested_at' => 'DESC'])
+			->contain('Panels')
+			->first();
 
 		$this->assertEquals('articles', $result->url);
 		$this->assertNotEmpty($result->requested_at);
 		$this->assertNotEmpty('text/html', $result->content_type);
 		$this->assertEquals(200, $result->status_code);
-		$this->assertCount(1, $result->panels);
+		$this->assertGreaterThan(1, $result->panels);
 
-		$this->assertEquals('SqlLog', $result->panels[0]->panel);
-		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[0]->element);
-		$this->assertEquals('Sql Log', $result->panels[0]->title);
+		$this->assertEquals('SqlLog', $result->panels[5]->panel);
+		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[5]->element);
+		$this->assertEquals('Sql Log', $result->panels[5]->title);
 	}
 
 /**
@@ -106,10 +110,13 @@ class DebugBarFilterTest extends TestCase {
 
 		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
 		$bar->afterDispatch($event);
-		$toolbar = TableRegistry::get('DebugKit.Requests')->find()->first();
+		$toolbar = TableRegistry::get('DebugKit.Requests')->find()
+			->order(['Requests.requested_at' => 'DESC'])
+			->first();
 
 		$expected = '<html><title>test</title><body><p>some text</p>' .
-			"<script>var __debug_kit_id = '" . $toolbar->id . "';</script>" .
+			"<script>var __debug_kit_id = '" . $toolbar->id . "', " .
+			"__debug_kit_base_url = 'http://localhost/';</script>" .
 			'<script src="/debug_kit/js/toolbar.js"></script>' .
 			'</body>';
 		$this->assertTextEquals($expected, $response->body());
@@ -137,6 +144,47 @@ class DebugBarFilterTest extends TestCase {
 		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
 		$bar->afterDispatch($event);
 		$this->assertTextEquals('{"some":"json"}', $response->body());
+	}
+
+/**
+ * test isEnabled responds to debug flag.
+ *
+ * @return void
+ */
+	public function testIsEnabled() {
+		Configure::write('debug', true);
+		$bar = new DebugBarFilter($this->events, []);
+		$this->assertTrue($bar->isEnabled(), 'debug is on, panel is enabled');
+
+		Configure::write('debug', false);
+		$bar = new DebugBarFilter($this->events, []);
+		$this->assertFalse($bar->isEnabled(), 'debug is off, panel is disabled');
+	}
+
+/**
+ * test isEnabled responds to forceEnable config flag.
+ *
+ * @return void
+ */
+	public function testIsEnabledForceEnable() {
+		Configure::write('debug', false);
+		$bar = new DebugBarFilter($this->events, ['forceEnable' => true]);
+		$this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
+	}
+
+/**
+ * test isEnabled responds to forceEnable callable.
+ *
+ * @return void
+ */
+	public function testIsEnabledForceEnableCallable() {
+		Configure::write('debug', false);
+		$bar = new DebugBarFilter($this->events, [
+			'forceEnable' => function() {
+				return true;
+			}
+		]);
+		$this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
 	}
 
 }

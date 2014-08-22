@@ -24,28 +24,20 @@ use Cake\Routing\Router;
 class RequestPanel extends DebugPanel {
 
 /**
- * beforeRender callback - grabs request params
- *
- * @param Controller $controller The controller.
- * @return array
- */
-	public function beforeRender(Controller $controller) {
-		$out = [];
-		$out['params'] = $controller->request->params;
-		$out['query'] = $controller->request->query;
-		$out['data'] = $controller->request->data;
-		$out['cookie'] = $controller->request->cookies;
-		$out['get'] = $_GET;
-		return $out;
-	}
-
-/**
  * Data collection callback.
  *
- * @param \Cake\Event\Event $event
+ * @param \Cake\Event\Event $event The shutdown event.
  * @return void
  */
 	public function shutdown(Event $event) {
-		$this->_data = $this->beforeRender($event->subject());
+		$controller = $event->subject();
+		$request = $controller->request;
+		$this->_data = [
+			'params' => $request->params,
+			'query' => $request->query,
+			'data' => $request->data,
+			'cookie' => $request->cookies,
+			'get' => $_GET,
+		];
 	}
 }

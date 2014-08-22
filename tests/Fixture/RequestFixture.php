@@ -36,5 +36,20 @@ class RequestFixture extends TestFixture {
 			'primary' => ['type' => 'primary', 'columns' => ['id']],
 		]
 	);
+
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = [
+		[
+			'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+			'url' => '/tasks/add',
+			'content_type' => 'text/html',
+			'status_code' => 200,
+			'requested_at' => '2014-08-21 7:41:12'
+		]
+	];
 }
 

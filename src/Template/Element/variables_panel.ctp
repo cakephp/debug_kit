@@ -1,9 +1,5 @@
 <?php
 /**
- * View Variables Panel Element
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -15,8 +11,4 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-?>
-<h2> <?php echo __d('debug_kit', 'View Variables'); ?></h2>
-<?php
-$content['Loaded Helpers'] = $this->_helpers->loaded();
 echo $this->Toolbar->makeNeatArray($content);

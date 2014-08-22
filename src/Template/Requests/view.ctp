@@ -1,15 +1,60 @@
-<div class="toolbar">
-<ul>
-	<li id="panel-button">Bug</li>
+<?php
+use Cake\Routing\Router;
+?>
+<div id="panel-content-container">
+	<span id="panel-close" class="button-close">&times;</span>
+	<div id="panel-content">
+		<!-- content here -->
+	</div>
+</div>
+
+<ul class="toolbar">
+	<li id="panel-button">DK</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
 	<li class="panel" data-id="<?= $panel->id ?>">
 		<span class="panel-title">
 			<?= h($panel->title); ?>
 		</span>
-		<div class="panel-region">
-		<!-- content here -->
-		</div>
 	</li>
 	<?php endforeach; ?>
 </ul>
-</div>
+<?php $this->start('scripts') ?>
+<script>
+var baseUrl = "<?= Router::url('/', true); ?>";
+
+$(document).ready(function() {
+	var toolbar = new Toolbar({
+		button: $('#panel-button'),
+		content: $('#panel-content-container'),
+		panelButtons: $('.panel'),
+		panelClose: $('#panel-close')
+	});
+
+	toolbar.button.on('click', function(e) {
+		toolbar.toggle();
+	});
+
+	toolbar.panelButtons.on('click', function(e) {
+		e.preventDefault();
+		var id = $(this).data('id');
+		var samePanel = toolbar.currentPanel() === id;
+
+		if (toolbar.isExpanded() && samePanel) {
+			toolbar.hideContent();
+		}
+		if (samePanel) {
+			return false;
+		}
+		toolbar.loadPanel(id);
+	});
+
+	toolbar.panelClose.on('click', function(e) {
+		toolbar.hideContent();
+		return false;
+	});
+
+	// Start off collapsed.
+	toolbar.hideButtons();
+});
+</script>
+<?php $this->end() ?>

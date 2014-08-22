@@ -13,6 +13,7 @@ namespace DebugKit\Routing\Filter;
 
 use DebugKit\Panel\DebugPanel;
 use DebugKit\Panel\PanelRegistry;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
@@ -48,15 +49,16 @@ class DebugBarFilter extends DispatcherFilter {
 		// Attempt to execute last.
 		'priority' => 9999,
 		'panels' => [
-			// 'DebugKit.Session',
-			// 'DebugKit.Request',
+			'DebugKit.Session',
+			'DebugKit.Request',
 			'DebugKit.SqlLog',
-			// 'DebugKit.Timer',
-			// 'DebugKit.Log',
-			// 'DebugKit.Variables',
-			// 'DebugKit.Environment',
-			// 'DebugKit.Include'
+			'DebugKit.Timer',
+			'DebugKit.Log',
+			'DebugKit.Variables',
+			'DebugKit.Environment',
+			'DebugKit.Include'
 		],
+		'forceEnable' => false,
 	];
 
 /**
@@ -72,6 +74,23 @@ class DebugBarFilter extends DispatcherFilter {
 	}
 
 /**
+ * Check whether or not debug kit is enabled.
+ *
+ * @return bool
+ */
+	public function isEnabled() {
+		$enabled = (bool)Configure::read('debug');
+		if ($enabled) {
+			return true;
+		}
+		$force = $this->config('forceEnable');
+		if (is_callable($force)) {
+			return $force();
+		}
+		return $force;
+	}
+
+/**
  * Get the list of loaded panels
  *
  * @return array
@@ -83,6 +102,7 @@ class DebugBarFilter extends DispatcherFilter {
 /**
  * Get the list of loaded panels
  *
+ * @param string $name The name of the panel you want to get.
  * @return DebugKit\Panel\DebugPanel|null The panel or null.
  */
 	public function panel($name) {
@@ -106,11 +126,15 @@ class DebugBarFilter extends DispatcherFilter {
 /**
  * Save the toolbar data.
  *
- * @param \Cake\Network\Request $request The request to save panel data for.
+ * @param \Cake\Event\Event $event The afterDispatch event.
  * @return void
  */
 	public function afterDispatch(Event $event) {
 		$request = $event->data['request'];
+		// Skip debugkit requests.
+		if ($request->param('plugin') === 'DebugKit') {
+			return;
+		}
 		$response = $event->data['response'];
 
 		$data = [
@@ -157,7 +181,8 @@ class DebugBarFilter extends DispatcherFilter {
 		if ($pos === false) {
 			return;
 		}
-		$script = "<script>var __debug_kit_id = '${id}';</script>";
+		$url = Router::url('/', true);
+		$script = "<script>var __debug_kit_id = '${id}', __debug_kit_base_url = '${url}';</script>";
 		$script .= '<script src="' . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
 		$body = substr($body, 0, $pos) . $script . substr($body, $pos);
 		$response->body($body);

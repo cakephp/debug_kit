@@ -15,7 +15,7 @@ namespace DebugKit\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use DebugKit\DebugKitDebugger;
+use DebugKit\DebugTimer;
 
 /**
  * Class TimedBehaviorTestCase
@@ -36,7 +36,6 @@ class TimedBehaviorTestCase extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->markTestIncomplete('Not working yet');
 		$this->Article = TableRegistry::get('Articles');
 		$this->Article->addBehavior('DebugKit.Timed');
 	}
@@ -50,7 +49,7 @@ class TimedBehaviorTestCase extends TestCase {
 		parent::tearDown();
 		unset($this->Article);
 		TableRegistry::clear();
-		DebugKitDebugger::clearTimers();
+		DebugTimer::clear();
 	}
 
 /**
@@ -59,15 +58,15 @@ class TimedBehaviorTestCase extends TestCase {
  * @return void
  */
 	public function testFindTimers() {
-		$timers = DebugKitDebugger::getTimers(false);
+		$timers = DebugTimer::getAll();
 		$this->assertEquals(count($timers), 1);
 
-		$this->Article->find('all');
-		$result = DebugKitDebugger::getTimers(false);
+		$this->Article->find('all')->first();
+		$result = DebugTimer::getAll();
 		$this->assertEquals(count($result), 2);
 
-		$this->Article->find('all');
-		$result = DebugKitDebugger::getTimers(false);
+		$this->Article->find('all')->first();
+		$result = DebugTimer::getAll();
 		$this->assertEquals(count($result), 3);
 	}
 
@@ -77,11 +76,12 @@ class TimedBehaviorTestCase extends TestCase {
  * @return void
  */
 	public function testSaveTimers() {
-		$timers = DebugKitDebugger::getTimers(false);
+		$timers = DebugTimer::getAll();
 		$this->assertEquals(count($timers), 1);
 
-		$this->Article->save(array('user_id' => 1, 'title' => 'test', 'body' => 'test'));
-		$result = DebugKitDebugger::getTimers(false);
+		$article = $this->Article->newEntity(['user_id' => 1, 'title' => 'test', 'body' => 'test']);
+		$this->Article->save($article);
+		$result = DebugTimer::getAll();
 		$this->assertEquals(count($result), 2);
 	}
 }

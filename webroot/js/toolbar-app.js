@@ -104,7 +104,10 @@ Toolbar.prototype = {
 
 		lists.on('click', 'li', function (event) {
 			event.stopPropagation();
-			$(this).children('ul').toggle().toggleClass('expanded collapsed');
+			var el = $(this);
+			el.children('ul').toggle();
+			el.toggleClass('expanded')
+				.toggleClass('collapsed');
 		});
 	},
 

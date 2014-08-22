@@ -9,7 +9,7 @@ h1,
 h2,
 h3,
 h4 {
-	margin: 10px 0;
+	margin: 15px 0;
 	font-weight: bold;
 	line-height: 20px;
 	text-rendering: optimizelegibility;
@@ -75,7 +75,6 @@ h4 {
 #panel-content-container {
 	display: none;
 	background: #fff;
-	padding: 10px;
 	position: absolute;
 	top: 0;
 	bottom: 40px;
@@ -83,13 +82,23 @@ h4 {
 	right: 0;
 	overflow-y: auto;
 }
+.panel-title {
+	color: #fff;
+	font-weight: normal;
+	background: #87C152;
+	padding: 10px;
+	margin: 0;
+}
+.panel-content {
+	padding: 10px;
+}
 
 .button-close {
 	position: absolute;
 	top: 15px;
 	right: 15px;
-	background: #eee;
-	color: #000;
+	background: rgba(0, 0, 0, 0.3);
+	color: #fff;
 	display: inline-block;
 	padding: 8px;
 	line-height: 12px;
@@ -103,7 +112,7 @@ h4 {
 	cursor: pointer;
 }
 .button-close:hover {
-	background: #ccc;
+	background: rgba(0, 0, 0, 0.5);
 }
 
 /**
@@ -111,23 +120,21 @@ h4 {
  */
 table {
 	width: 100%;
-	border: 1px solid #eee;
-	border-left: 0;
-	clear:both;
+	border: 1px solid #ccc;
+	clear: both;
 	margin: 10px 0;
 	border-spacing: 0;
 }
 table td,
 table th {
 	text-align: left;
-	border: 0;
-	border-left: 1px solid #eee;
-	padding: 4px;
+	border: 1px solid #ccc;
+	padding: 6px;
 	margin: 0;
 }
 table th {
-	border-bottom: 1px solid #bbb;
-	border-left: 1px solid #bbb;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
 	background: -webkit-linear-gradient(top, #d4d4d4, #c1c1c1);
 	background: -moz-linear-gradient(top, #d4d4d4, #c1c1c1);
 	color: #222;
@@ -158,19 +165,19 @@ table tr:nth-child(2n) td {
 }
 .neat-array {
 	padding: 1px 2px 1px 20px;
-	background: #CE9E23;
+	background: #FF9700;
 	list-style: none;
 	margin: 0 0 1em 0;
 }
 .neat-array .neat-array {
 	padding: 0 0 0 20px;
 	margin: 0;
-	border-top:1px solid #CE9E23;
+	border-top:1px solid #FF9700;
 }
 .neat-array li {
 	background: #FEF6E5;
-	border-top: 1px solid #CE9E23;
-	border-bottom: 1px solid #CE9E23;
+	border-top: 1px solid #FF9700;
+	border-bottom: 1px solid #FF9700;
 	margin: 0;
 	line-height: 1.5em;
 }
@@ -190,11 +197,15 @@ table tr:nth-child(2n) td {
 	border-bottom:0;
 }
 .neat-array li.expandable.expanded > strong:before {
-	content: 'v ';
+	position: relative;
+	left: -3px;
+	content: "\2937 ";
 }
 .neat-array li.expandable.collapsed > strong:before,
 .neat-array li.expandable.expanded .expandable.collapsed > strong:before {
-	content: '> ';
+	position: relative;
+	left: -3px;
+	content: "\2192 ";
 }
 .neat-array li {
 	cursor: default;

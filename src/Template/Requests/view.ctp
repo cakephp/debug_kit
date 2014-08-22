@@ -12,7 +12,7 @@ use Cake\Routing\Router;
 	<li id="panel-button">DK</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
 	<li class="panel" data-id="<?= $panel->id ?>">
-		<span class="panel-title">
+		<span class="panel-button">
 			<?= h($panel->title); ?>
 		</span>
 	</li>

@@ -29,12 +29,11 @@ $this->addHelper('DebugKit.SimpleGraph');
 		<?php foreach ($memory as $key => $value): ?>
 		<tr>
 			<td><?= h($key); ?></td>
-			<td><?= $this->Number->toReadableSize($value) ?></td>
+			<td class="right-text"><?= $this->Number->toReadableSize($value) ?></td>
 		</tr>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
 </section>
 
 <section>
@@ -74,7 +73,7 @@ $this->addHelper('DebugKit.SimpleGraph');
 			<td>
 			<?= h($indent . $timeInfo['message']) ?>
 			</td>
-			<td><?= $this->Number->precision($timeInfo['time'] * 1000, 2) ?></td>
+			<td class="right-text"><?= $this->Number->precision($timeInfo['time'] * 1000, 2) ?></td>
 			<td><?= $this->SimpleGraph->bar(
 				$this->Number->precision($timeInfo['time'] * 1000, 2),
 				$this->Number->precision($timeInfo['start'] * 1000, 2),

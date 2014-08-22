@@ -1,3 +1,6 @@
+/**
+ * Colors borrowed from http://www.google.es/design/spec/style/color.html#color-ui-color-palette
+ */
 body {
 	font-family: Helvetica, Arial, sans-serif;
 }
@@ -85,7 +88,7 @@ h4 {
 .panel-title {
 	color: #fff;
 	font-weight: normal;
-	background: #87C152;
+	background: #009688;
 	padding: 10px;
 	margin: 0;
 }
@@ -120,7 +123,7 @@ h4 {
  */
 table {
 	width: 100%;
-	border: 1px solid #ccc;
+	border: 0;
 	clear: both;
 	margin: 10px 0;
 	border-spacing: 0;
@@ -128,21 +131,18 @@ table {
 table td,
 table th {
 	text-align: left;
-	border: 1px solid #ccc;
+	border: 0;
 	padding: 6px;
 	margin: 0;
 }
-table th {
+table td {
 	border-bottom: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	background: -webkit-linear-gradient(top, #d4d4d4, #c1c1c1);
-	background: -moz-linear-gradient(top, #d4d4d4, #c1c1c1);
-	color: #222;
+}
+table th {
+	border-bottom: 3px solid #004d40;
+	color: #111;
 	font-weight: bold;
 	line-height: 16px;
-}
-table tr:nth-child(2n) td {
-	background: #f6f6f6;
 }
 
 .debug-table td {
@@ -165,18 +165,18 @@ table tr:nth-child(2n) td {
 }
 .neat-array {
 	padding: 1px 2px 1px 20px;
-	background: #78CEE0;
+	background: #B3E5FC;
 	list-style: none;
 	margin: 0 0 1em 0;
 }
 .neat-array .neat-array {
 	padding: 0 0 0 20px;
 	margin: 0;
-	border-top: 1px solid #78CEE0;
+	border-top: 1px solid #B3E5FC;
 }
 .neat-array li {
-	border-top: 1px solid #78CEE0;
-	border-bottom: 1px solid #78CEE0;
+	border-top: 1px solid #B3E5FC;
+	border-bottom: 1px solid #B3E5FC;
 	background: rgba(255, 255, 255, 0.95);
 	margin: 0;
 	line-height: 1.5em;
@@ -222,17 +222,11 @@ table tr:nth-child(2n) td {
 	padding: 0;
 	border: none;
 	overflow: hidden;
-	height: 10px;
+	height: 14px;
 }
 .graph-bar {
 	background: #ddd;
-	padding: 2px;
-	border-radius: 2px;
-	height: 12px;
 }
 .graph-bar-value {
-	background: -webkit-linear-gradient(top, #77D124, #4B9406);
-	background: -moz-linear-gradient(top, #77D124, #4B9406);
-	border-radius: 3px;
-	border: 1px solid #4B9406;
+	background: #259b24;
 }

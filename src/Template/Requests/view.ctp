@@ -53,8 +53,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	// Start off collapsed.
-	toolbar.hideButtons();
+	toolbar.loadState();
 });
 </script>
 <?php $this->end() ?>

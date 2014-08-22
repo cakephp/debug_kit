@@ -29,7 +29,31 @@ Toolbar.prototype = {
 		if (this._state == this.states.length) {
 			this._state = 0;
 		}
+		this.saveState();
 		return this.state();
+	},
+
+	saveState: function() {
+		if (!window.localStorage) {
+			return;
+		}
+		window.localStorage.setItem('toolbar_state', this._state);
+	},
+
+	loadState: function() {
+		if (!window.localStorage) {
+			return;
+		}
+		var old = window.localStorage.getItem('toolbar_state');
+		if (!old) {
+			old = 0;
+		}
+		if (old == 0) {
+			return this.hideContent();
+		}
+		if (old == 1) {
+			return this.toggle();
+		}
 	},
 
 	hideButtons: function() {

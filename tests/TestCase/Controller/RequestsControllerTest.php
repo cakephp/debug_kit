@@ -53,7 +53,7 @@ class RequestsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$result = $this->testAction('/debug_kit/toolbar/view/aaaa-1111', ['return' => 'contents']);
+		$result = $this->testAction('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', ['return' => 'contents']);
 		$this->assertContains('Request', $result, 'Has a panel button');
 		$this->assertContains('/css/toolbar.css', $result, 'Has a CSS file');
 	}
@@ -65,7 +65,7 @@ class RequestsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testViewNotExists() {
-		$this->testAction('/debug_kit/toolbar/view/not-there', ['return' => 'contents']);
+		$this->testAction('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', ['return' => 'contents']);
 	}
 
 }

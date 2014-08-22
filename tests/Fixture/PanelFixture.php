@@ -46,8 +46,8 @@ class PanelFixture extends TestFixture {
  */
 	public $records = [
 		[
-			'id' => 'aaaa-request-panel',
-			'request_id' => 'aaaa-1111',
+			'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+			'request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
 			'panel' => 'DebugKit.Request',
 			'title' => 'Request',
 			'element' => 'DebugKit.request_panel',

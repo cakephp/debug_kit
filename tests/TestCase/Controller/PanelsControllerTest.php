@@ -53,7 +53,7 @@ class PanelsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$result = $this->testAction('/debug_kit/panels/view/aaaa-request-panel', ['return' => 'contents']);
+		$result = $this->testAction('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', ['return' => 'contents']);
 		$this->assertContains('Request</h2>', $result);
 		$this->assertContains('Routing Params</h4>', $result);
 	}
@@ -65,7 +65,7 @@ class PanelsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testViewNotExists() {
-		$this->testAction('/debug_kit/panels/view/not-there', ['return' => 'contents']);
+		$this->testAction('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa', ['return' => 'contents']);
 	}
 
 }

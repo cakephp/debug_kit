@@ -75,7 +75,10 @@ class DebugBarFilterTest extends TestCase {
 		$bar->afterDispatch($event);
 
 		$requests = TableRegistry::get('DebugKit.Requests');
-		$result = $requests->find()->contain('Panels')->first();
+		$result = $requests->find()
+			->order(['Requests.requested_at' => 'DESC'])
+			->contain('Panels')
+			->first();
 
 		$this->assertEquals('articles', $result->url);
 		$this->assertNotEmpty($result->requested_at);
@@ -107,7 +110,9 @@ class DebugBarFilterTest extends TestCase {
 
 		$event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
 		$bar->afterDispatch($event);
-		$toolbar = TableRegistry::get('DebugKit.Requests')->find()->first();
+		$toolbar = TableRegistry::get('DebugKit.Requests')->find()
+			->order(['Requests.requested_at' => 'DESC'])
+			->first();
 
 		$expected = '<html><title>test</title><body><p>some text</p>' .
 			"<script>var __debug_kit_id = '" . $toolbar->id . "', " .

@@ -44,7 +44,7 @@ class RequestFixture extends TestFixture {
  */
 	public $records = [
 		[
-			'id' => 'aaaa-1111',
+			'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
 			'url' => '/tasks/add',
 			'content_type' => 'text/html',
 			'status_code' => 200,

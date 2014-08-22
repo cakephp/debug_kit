@@ -8,6 +8,8 @@ The 3.0 branch has the following requirements:
 
 * CakePHP 3.0.0 or greater.
 * PHP 5.4.19 or greater.
+* SQLite or another database driver that CakePHP can talk to. By default DebugKit will use SQLite, if you
+  need to use a different database see the Database Configuration section below.
 
 ## Installation
 
@@ -58,6 +60,12 @@ correct branch.
 * `3.0.x` is compatible with CakePHP 3.0.x and is still under active development.
 
 # Documentation
+
+## Database Configuration
+
+By default DebugKit will store panel data into a SQLite database in your application's `tmp`
+directory. If you cannot install pdo_sqlite, you can configure DebugKit to use a different
+database by defining a `debug_kit` connection in your `config/app.php` file.
 
 ## Toolbar Panels
 

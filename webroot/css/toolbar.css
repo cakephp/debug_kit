@@ -4,6 +4,8 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
 
 body {
+	padding: 0;
+	margin: 0;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -67,9 +69,15 @@ h4 {
 	float: left;
 }
 #panel-button {
+	line-height: 20px;
+	height: 30px;
 	width: 30px;
 	padding: 5px;
 }
+#panel-button img {
+	margin: 0;
+}
+
 
 .panel {
 	border-left: 1px solid #ccc;

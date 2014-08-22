@@ -25,7 +25,7 @@
 		}
 		var body = doc.getElementsByTagName('body');
 		iframe = doc.createElement('iframe');
-		iframe.style = 'position: fixed; bottom: 0; right: 0; border: 0; outline: 0;'
+		iframe.style = 'position: fixed; bottom: 0; right: 0; border: 0; outline: 0; overflow: hidden;'
 		iframe.height = 40;
 		iframe.width = 40;
 		iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/view/' + __debug_kit_id;

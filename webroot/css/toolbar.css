@@ -1,6 +1,8 @@
 /**
  * Colors borrowed from http://www.google.es/design/spec/style/color.html#color-ui-color-palette
  */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
+
 body {
 	font-family: Helvetica, Arial, sans-serif;
 }
@@ -12,6 +14,7 @@ h1,
 h2,
 h3,
 h4 {
+	font-family: 'Open Sans', sans-serif;
 	margin: 15px 0;
 	font-weight: bold;
 	line-height: 20px;

@@ -40,7 +40,7 @@ class ToolbarHelper extends Helper {
  * @param mixed $values Array to make pretty.
  * @param integer $openDepth Depth to add open class
  * @param integer $currentDepth current depth.
- * @param boolean $doubleEncode
+ * @param boolean $doubleEncode Whether or not to double encode.
  * @return string
  */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
@@ -140,8 +140,8 @@ class ToolbarHelper extends Helper {
  * Generates a SQL explain link for a given query
  *
  * @param string $sql SQL query string you want an explain link for.
- * @param $connection
- * @return string Rendered Html link or '' if the query is not a select/describe
+ * @param string $connection The connection name to make an explain link for.
+ * @return string Rendered Html link or '' if the query is not a select/describe.
  */
 	public function explainLink($sql, $connection) {
 		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {

@@ -102,6 +102,7 @@ class DebugBarFilter extends DispatcherFilter {
 /**
  * Get the list of loaded panels
  *
+ * @param string $name The name of the panel you want to get.
  * @return DebugKit\Panel\DebugPanel|null The panel or null.
  */
 	public function panel($name) {
@@ -125,7 +126,7 @@ class DebugBarFilter extends DispatcherFilter {
 /**
  * Save the toolbar data.
  *
- * @param \Cake\Network\Request $request The request to save panel data for.
+ * @param \Cake\Event\Event $event The afterDispatch event.
  * @return void
  */
 	public function afterDispatch(Event $event) {

@@ -61,30 +61,6 @@ class DebugPanel implements EventListener {
 	}
 
 /**
- * startup the panel
- *
- * Pull information from the controller / request
- *
- * Old style callbacks for non-event based toolbar.
- *
- * @param \Cake\Controller\Controller $controller controller reference.
- * @return void
- */
-	public function startup(Controller $event) {
-	}
-
-/**
- * Prepare output vars before Controller Rendering.
- *
- * Old style callbacks for non-event based toolbar.
- *
- * @param \Cake\Controller\Controller $controller controller reference.
- * @return void
- */
-	public function beforeRender(Controller $event) {
-	}
-
-/**
  * Get the data a panel has collected.
  *
  * @return array

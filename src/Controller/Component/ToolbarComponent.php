@@ -30,11 +30,11 @@ class ToolbarComponent extends Component {
  * If debug is off the component will be disabled and not do any further time tracking
  * or load the toolbar helper.
  *
- * @param ComponentCollection $collection
- * @param array $settings
+ * @param \Cake\Controller\ComponentRegistry $registry The ComponentRegistry
+ * @param array $settings An array of config
  * @return void
  */
-	public function __construct(ComponentRegistry $collection, $settings = array()) {
+	public function __construct(ComponentRegistry $registry, $settings = []) {
 		$msg = 'DebugKit is now loaded through plugin bootstrapping. Make sure you have ' .
 			'`Plugin::load("DebugKit", ["bootstrap" => true]);` in your application\'s bootstrap.php.';
 		throw new \RuntimeException($msg);

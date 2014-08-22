@@ -45,8 +45,8 @@ class SimpleGraphHelper extends Helper {
 /**
  * bar method
  *
- * @param $value Value to be graphed
- * @param $offset how much indentation
+ * @param float $value Value to be graphed
+ * @param int $offset how much indentation
  * @param array|\Graph $options Graph options
  * @return string Html graph
  */

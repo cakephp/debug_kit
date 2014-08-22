@@ -41,7 +41,7 @@
 		?>
 		</h5>
 
-		<table cellspacing="0" cellpadding="0">
+		<table cellspacing="0" cellpadding="0" class="debug-table">
 		<thead>
 			<tr>
 				<th><?= __d('debug_kit', 'Query') ?></th>

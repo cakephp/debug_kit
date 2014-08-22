@@ -21,14 +21,19 @@ $this->addHelper('DebugKit.SimpleGraph');
 		<?= $this->Number->toReadableSize($peakMemory); ?>
 	</div>
 
-	<?php
-	$headers = array(__d('debug_kit', 'Message'), __d('debug_kit', 'Memory use'));
-	$rows = array();
-	foreach ($memory as $key => $value):
-		$rows[] = array($key, $this->Number->toReadableSize($value));
-	endforeach;
-	echo $this->Toolbar->table($rows, $headers);
-	?>
+	<table cellspacing="0" cellpadding="0">
+		<thead>
+			<tr><th><?= __d('debug_kit', 'Message') ?></th><th><?= __d('debug_kit', 'Memory Use') ?></th></tr>
+		</thead>
+		<tbody>
+		<?php foreach ($memory as $key => $value): ?>
+		<tr>
+			<td><?= h($key); ?></td>
+			<td><?= $this->Number->toReadableSize($value) ?></td>
+		</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 </div>
 </section>
 
@@ -38,43 +43,50 @@ $this->addHelper('DebugKit.SimpleGraph');
 		<strong><?= __d('debug_kit', 'Total Request Time:') ?></strong>
 		<?= $this->Number->precision($requestTime * 1000, 0) ?> ms
 	</div>
-<?php
-$rows = array();
-$end = end($timers);
-$maxTime = $end['end'];
 
-$headers = array(
-	__d('debug_kit', 'Message'),
-	__d('debug_kit', 'Time in ms'),
-	__d('debug_kit', 'Graph')
-);
+	<table cellspacing="0" cellpadding="0">
+		<thead>
+		<tr>
+			<th><?= __d('debug_kit', 'Event') ?></th>
+			<th><?= __d('debug_kit', 'Time in ms') ?></th>
+			<th><?= __d('debug_kit', 'Timeline') ?></th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php
+		$rows = [];
+		$end = end($timers);
+		$maxTime = $end['end'];
 
-$i = 0;
-$values = array_values($timers);
+		$i = 0;
+		$values = array_values($timers);
 
-foreach ($timers as $timerName => $timeInfo):
-	$indent = 0;
-	for ($j = 0; $j < $i; $j++) {
-		if (($values[$j]['end'] > $timeInfo['start']) && ($values[$j]['end']) > ($timeInfo['end'])) {
-			$indent++;
-		}
-	}
-	$indent = str_repeat(' &raquo; ', $indent);
-	$rows[] = array(
-		$indent . $timeInfo['message'],
-		$this->Number->precision($timeInfo['time'] * 1000, 2),
-		$this->SimpleGraph->bar(
-			$this->Number->precision($timeInfo['time'] * 1000, 2),
-			$this->Number->precision($timeInfo['start'] * 1000, 2),
-			array(
-				'max' => $maxTime * 1000,
-				'requestTime' => $requestTime * 1000,
-			)
-		)
-	);
-	$i++;
-endforeach;
-
-echo $this->Toolbar->table($rows, $headers);
-?>
+		foreach ($timers as $timerName => $timeInfo):
+			$indent = 0;
+			for ($j = 0; $j < $i; $j++):
+				if (($values[$j]['end'] > $timeInfo['start']) && ($values[$j]['end']) > ($timeInfo['end'])):
+					$indent++;
+				endif;
+			endfor;
+			$indent = str_repeat("\xC2\xA0\xC2\xA0", $indent);
+		?>
+		<tr>
+			<td>
+			<?= h($indent . $timeInfo['message']) ?>
+			</td>
+			<td><?= $this->Number->precision($timeInfo['time'] * 1000, 2) ?></td>
+			<td><?= $this->SimpleGraph->bar(
+				$this->Number->precision($timeInfo['time'] * 1000, 2),
+				$this->Number->precision($timeInfo['start'] * 1000, 2),
+				array(
+					'max' => $maxTime * 1000,
+					'requestTime' => $requestTime * 1000,
+				)
+			) ?></td>
+			<?php
+			$i++;
+		endforeach;
+		?>
+		</tbody>
+	</table>
 </section>

@@ -138,6 +138,10 @@ table tr:nth-child(2n) td {
 	background: #f6f6f6;
 }
 
+.debug-table td {
+	font-family: Monaco, Consolas, mono-space;
+}
+
 /* Two column tables have the 2nd cell right aligned */
 .debug-table th:nth-child(2),
 .debug-table td:nth-child(2) {

@@ -18,14 +18,14 @@ use DebugKit\Log\DebugKitLog;
 <?php else: ?>
 	<?php foreach ($logger->all() as $logName => $logs): ?>
 		<h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
-		<table cellspacing="0" cellpadding="0">
+		<table cellspacing="0" cellpadding="0" class="debug-table">
 			<thead>
 				<tr><th><?= __d('debug_kit', 'Time') ?></th><th><?= __d('debug_kit', 'Message') ?></th></tr>
 			</thead>
 			<tbody>
 			<?php foreach ($logs as $log): ?>
 				<tr>
-				<td width="170"><?= $log[0] ?></td>
+				<td width="200" class="code"><?= $log[0] ?></td>
 				<td><?= h($log[1]) ?></td>
 				</tr>
 			<?php endforeach; ?>

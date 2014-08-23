@@ -43,7 +43,7 @@ class PanelsTable extends Table {
  * @param array $options The options to use.
  * @return Cake\ORM\Query The query.
  */
-	public function findByRequest(Query $query, array $options = []) {
+	public function findByRequest(Query $query, array $options) {
 		if (empty($options['requestId'])) {
 			throw \RuntimeException('Missing request id in findByRequest.');
 		}

@@ -35,12 +35,12 @@ if (!ConnectionManager::config('debug_kit')) {
 }
 
 Router::plugin('DebugKit', function($routes) {
+	$routes->extensions('json');
 	$routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
 	$routes->connect('/panels/:action/*', ['controller' => 'Panels']);
 });
 
 
-// Setup panels
+// Setup toolbar
 $debugBar->setup();
-
 DispatcherFactory::add($debugBar);

@@ -49,14 +49,13 @@ h4 {
 
 
 .toolbar {
-	background: #efefef;
-	background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#cacaca));
-	background: -moz-linear-gradient(top, #efefef, #cacaca);
+	background: #e0e0e0;
 	height: 40px;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
+	border-radius: 8px 0 0 0;
 }
 
 /* Open close button */

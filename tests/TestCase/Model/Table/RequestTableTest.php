@@ -39,6 +39,8 @@ class RequestTableTest extends TestCase {
 
 /**
  * Test the recent finder.
+ *
+ * @return void
  */
 	public function testFindRecent() {
 		$table = TableRegistry::get('DebugKit.Requests');

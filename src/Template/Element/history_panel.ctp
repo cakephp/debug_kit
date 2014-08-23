@@ -28,10 +28,12 @@ use Cake\Routing\Router;
 		<?php foreach ($requests as $request): ?>
 			<?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>
 			<li>
-				<?= $this->Html->link($request->url, $url, ['class' => 'history-link']); ?>
-				<span class="history-time"><?= h($request->requested_at) ?></span>
-				<span class="history-code"><?= h($request->status_code) ?></span>
-				<span class="history-type"><?= h($request->content_type) ?></span>
+				<a class="history-link" href="<?= $this->Url->build($url) ?>">
+					<span class="history-time"><?= h($request->requested_at) ?></span>
+					<span class="history-code"><?= h($request->status_code) ?></span>
+					<span class="history-type"><?= h($request->content_type) ?></span>
+					<span class="history-url"><?= h($request->url) ?></span>
+				</a>
 			</li>
 		<?php endforeach; ?>
 	</ul>

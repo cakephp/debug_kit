@@ -240,7 +240,6 @@ table th {
 }
 
 
-
 /**
  * Graph table.
  */
@@ -257,4 +256,47 @@ table th {
 }
 .graph-bar-value {
 	background: #259b24;
+}
+
+
+/**
+ * History panel
+ */
+.history-list li {
+	border-bottom: 1px solid #ccc;
+}
+.history-list li:last-child {
+	border-bottom: 0;
+}
+.history-list li:hover {
+	background-color: #e7e9fd;
+}
+
+.history-link {
+	color: #222;
+	display: block;
+	text-decoration: none;
+	padding: 6px;
+}
+
+.history-type,
+.history-code,
+.history-time {
+	font-size: 12px;
+	line-height: 14px;
+}
+.history-type,
+.history-code {
+	display: inline-block;
+	background: #eee;
+	padding: 2px;
+	border-radius: 4px;
+}
+.history-time {
+	font-size: 12px;
+	display: block;
+}
+.history-url {
+	font-size: 14px;
+	font-family: Monaco, Consolas, mono-space;
 }

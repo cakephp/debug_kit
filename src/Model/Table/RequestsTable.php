@@ -13,6 +13,7 @@
 namespace DebugKit\Model\Table;
 
 use DebugKit\Model\Table\LazyTableTrait;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 
 /**
@@ -48,4 +49,17 @@ class RequestsTable extends Table {
 	public static function defaultConnectionName() {
 		return 'debug_kit';
 	}
+
+/**
+ * Finder method to get recent requests as a simple array
+ *
+ * @param Cake\ORM\Query $query The query
+ * @param array $options The options
+ * @return Query The query.
+ */
+	public function findRecent(Query $query, array $options) {
+		return $query->order(['Requests.requested_at' => 'DESC'])
+			->limit(10);
+	}
+
 }

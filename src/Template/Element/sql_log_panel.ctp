@@ -17,6 +17,18 @@
  */
 $noOutput = true;
 ?>
+
+<?php if (!empty($tables)): ?>
+<h4>Generated Models</h4>
+<p class="warning">The following Table objects used <code>Cake\ORM\Table</code> instead of a concrete class:</p>
+<ul class="list">
+<?php foreach ($tables as $table): ?>
+	<li><?= h($table) ?></li>
+<?php endforeach ?>
+</ul>
+<hr />
+<?php endif; ?>
+
 <?php if (!empty($loggers)): ?>
 	<?php foreach ($loggers as $logger): ?>
 	<?php

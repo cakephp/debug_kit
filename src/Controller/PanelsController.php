@@ -51,6 +51,8 @@ class PanelsController extends Controller {
 
 /**
  * Index method that lets you get requests by panelid.
+ * 
+ * @return void
  */
 	public function index($requestId = null) {
 		$query = $this->Panels->find('byRequest', ['requestId' => $requestId]);

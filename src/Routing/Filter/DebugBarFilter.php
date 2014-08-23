@@ -56,7 +56,8 @@ class DebugBarFilter extends DispatcherFilter {
 			'DebugKit.Log',
 			'DebugKit.Variables',
 			'DebugKit.Environment',
-			'DebugKit.Include'
+			'DebugKit.Include',
+			'DebugKit.History',
 		],
 		'forceEnable' => false,
 	];
@@ -138,7 +139,7 @@ class DebugBarFilter extends DispatcherFilter {
 		$response = $event->data['response'];
 
 		$data = [
-			'url' => $request->url,
+			'url' => $request->here(),
 			'content_type' => $response->type(),
 			'status_code' => $response->statusCode(),
 			'requested_at' => $request->env('REQUEST_TIME'),

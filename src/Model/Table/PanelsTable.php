@@ -13,6 +13,7 @@
 namespace DebugKit\Model\Table;
 
 use DebugKit\Model\Table\LazyTableTrait;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 
 /**
@@ -32,6 +33,22 @@ class PanelsTable extends Table {
 	public function initialize(array $config) {
 		$this->belongsTo('DebugKit.Requests');
 		$this->ensureTables(['DebugKit.Panel', 'DebugKit.Request']);
+	}
+
+/**
+ * Find panels by requestid
+ *
+ *
+ * @param Cake\ORM\Query $query The query
+ * @param array $options The options to use.
+ * @return Cake\ORM\Query The query.
+ */
+	public function findByRequest(Query $query, array $options) {
+		if (empty($options['requestId'])) {
+			throw \RuntimeException('Missing request id in findByRequest.');
+		}
+		return $query->where(['Panels.request_id' => $options['requestId']])
+			->order(['Panels.title' => 'ASC']);
 	}
 
 /**

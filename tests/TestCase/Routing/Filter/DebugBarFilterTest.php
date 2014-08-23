@@ -80,15 +80,15 @@ class DebugBarFilterTest extends TestCase {
 			->contain('Panels')
 			->first();
 
-		$this->assertEquals('articles', $result->url);
+		$this->assertEquals('/articles', $result->url);
 		$this->assertNotEmpty($result->requested_at);
 		$this->assertNotEmpty('text/html', $result->content_type);
 		$this->assertEquals(200, $result->status_code);
 		$this->assertGreaterThan(1, $result->panels);
 
-		$this->assertEquals('SqlLog', $result->panels[5]->panel);
-		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[5]->element);
-		$this->assertEquals('Sql Log', $result->panels[5]->title);
+		$this->assertEquals('SqlLog', $result->panels[6]->panel);
+		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[6]->element);
+		$this->assertEquals('Sql Log', $result->panels[6]->title);
 	}
 
 /**

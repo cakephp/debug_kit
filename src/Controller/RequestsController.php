@@ -37,17 +37,6 @@ class RequestsController extends Controller {
 	}
 
 /**
- * Get a paginated list of requests.
- *
- * @return void
- */
-	public function index() {
-		$this->paginate = ['contain' => 'Panels'];
-		$toolbars = $this->paginate($this->Requests);
-		$this->set('toolbar', $toolbars);
-	}
-
-/**
  * View a request's data.
  *
  * @param string $id The id.

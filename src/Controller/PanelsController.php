@@ -21,6 +21,18 @@ use Cake\Event\Event;
  */
 class PanelsController extends Controller {
 
+/**
+ * components
+ *
+ * @var array
+ */
+	public $components = ['RequestHandler'];
+
+/**
+ * Layout property.
+ *
+ * @var string
+ */
 	public $layout = 'DebugKit.panel';
 
 /**
@@ -35,6 +47,23 @@ class PanelsController extends Controller {
 		if (!Configure::read('debug')) {
 			throw new NotFoundException();
 		}
+	}
+
+/**
+ * Index method that lets you get requests by panelid.
+ * 
+ * @return void
+ */
+	public function index($requestId = null) {
+		$query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
+		$panels = $query->toArray();
+		if (empty($panels)) {
+			throw new NotFoundException();
+		}
+		$this->set([
+			'_serialize' => ['panels'],
+			'panels' => $panels
+		]);
 	}
 
 /**

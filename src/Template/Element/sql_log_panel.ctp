@@ -15,11 +15,8 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+$noOutput = true;
 ?>
-<?php if (empty($loggers)): ?>
-<div class="warning"><?= __d('debug_kit', 'No active database connections') ?></div>
-<?php endif ?>
-
 <?php if (!empty($loggers)): ?>
 	<?php foreach ($loggers as $logger): ?>
 	<?php
@@ -27,6 +24,8 @@
 	if (empty($queries)):
 		continue;
 	endif;
+
+	$noOutput = false;
 	?>
 	<div class="sql-log-panel-query-log">
 		<h4><?= h($logger->name()) ?></h4>
@@ -62,3 +61,7 @@
 	</div>
 	<?php endforeach; ?>
 <?php endif; ?>
+
+<?php if ($noOutput): ?>
+<div class="warning"><?= __d('debug_kit', 'No active database connections') ?></div>
+<?php endif ?>

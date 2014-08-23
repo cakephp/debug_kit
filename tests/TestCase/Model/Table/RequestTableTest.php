@@ -36,4 +36,17 @@ class RequestTableTest extends TestCase {
 		$schema = $connection->schemaCollection();
 		$this->assertContains('requests', $schema->listTables());
 	}
+
+/**
+ * Test the recent finder.
+ *
+ * @return void
+ */
+	public function testFindRecent() {
+		$table = TableRegistry::get('DebugKit.Requests');
+		$query = $table->find('recent');
+		$this->assertEquals(10, $query->clause('limit'));
+		$this->assertNotEmpty($query->clause('order'));
+	}
+
 }

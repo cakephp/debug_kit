@@ -88,15 +88,30 @@ h4 {
  * Panel layout
  */
 #panel-content-container {
-	display: none;
 	background: #fff;
 	position: absolute;
-	top: 0;
+	top: 100%;
 	bottom: 40px;
 	left: 0;
 	right: 0;
 	overflow-y: auto;
+	transition: top 0.25s ease-out;
 }
+
+#panel-content-container.enabled {
+	top: 0;
+	transition: top 0.25s ease-out-expo;
+}
+
+@keyframes slideup {
+	from {
+		top: 100%;
+	}
+	to {
+		top: 0%;
+	}
+}
+
 .panel-title {
 	color: #fff;
 	font-weight: normal;
@@ -129,6 +144,7 @@ h4 {
 .button-close:hover {
 	background: rgba(0, 0, 0, 0.5);
 }
+
 
 /**
  * Tables

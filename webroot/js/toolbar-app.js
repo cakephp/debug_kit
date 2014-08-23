@@ -56,16 +56,12 @@ Toolbar.prototype = {
 		}
 	},
 
-	hideButtons: function() {
-		this.panelButtons.hide();
-	},
-
 	updateButtons: function(state) {
 		if (state === 'toolbar') {
-			$('.panel').show();
+			this.panelButtons.show();
 		}
 		if (state === 'collapse') {
-			$('.panel').hide();
+			this.panelButtons.hide();
 		}
 	},
 
@@ -74,9 +70,15 @@ Toolbar.prototype = {
 	},
 
 	hideContent: function() {
-		this.content.hide();
-		this._currentPanel = null;
-		window.parent.postMessage(this.state(), window.location.origin);
+		// slide out - css animation
+		this.content.removeClass('enabled');
+		var _this = this;
+
+		// Hardcode timer as one does.
+		setTimeout(function() {
+			_this._currentPanel = null;
+			window.parent.postMessage(_this.state(), window.location.origin);
+		}, 250);
 	},
 
 	loadPanel: function(id) {
@@ -85,11 +87,10 @@ Toolbar.prototype = {
 		var _this = this;
 		this._currentPanel = id;
 
-		// Temporary text.
-		contentArea.html('Loading..');
-
-		this.content.show();
 		window.parent.postMessage('expand', window.location.origin);
+
+		// Slide panel into place - css transitions.
+		this.content.addClass('enabled');
 
 		$.get(url, function(response) {
 			contentArea.html(response);

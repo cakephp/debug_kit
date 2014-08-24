@@ -13,10 +13,11 @@
 namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use DebugKit\DebugPanel;
-use DebugKit\Database\Log\DebugLog;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use DebugKit\Database\Log\DebugLog;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
@@ -67,6 +68,9 @@ class SqlLogPanel extends DebugPanel {
  */
 	public function shutdown(Event $event) {
 		$this->_data = [
+			'tables' => array_map(function($table) {
+				return $table->alias();
+			},  TableRegistry::genericInstances()),
 			'loggers' => $this->_loggers,
 		];
 	}

@@ -181,6 +181,11 @@ table th {
 	text-align:right;
 }
 
+.list {
+	list-style: disc;
+	margin: 10px 0 10px 20px;
+}
+
 /**
  * Neat Array styles
  */

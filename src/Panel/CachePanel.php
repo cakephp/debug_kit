@@ -35,7 +35,8 @@ class CachePanel extends DebugPanel {
  * @param \Cake\Event\Event $event The initialize event.
  */
 	public function initialize(Event $event) {
-		foreach (Cache::configured as $name => $config) {
+		foreach (Cache::configured() as $name) {
+			$config = Cache::config($name);
 			Cache::drop($name);
 			$instance = new DebugEngine($config);
 			Cache::config($name, $instance);

@@ -15,6 +15,7 @@ namespace DebugKit\Cache\Engine;
 
 use Cake\Core\App;
 use Cake\Cache\CacheEngine;
+use Cake\Cache\CacheRegistry;
 use DebugKit\DebugTimer;
 
 /**
@@ -90,7 +91,9 @@ class DebugEngine extends CacheEngine {
 			$this->_engine = $this->_config;
 			return true;
 		}
-		throw new \RuntimeException('Not done here just yet.');
+		$registry = new CacheRegistry;
+		$this->_engine = $registry->load('spies', $this->_config);
+		return true;
 	}
 
 /**
@@ -124,7 +127,7 @@ class DebugEngine extends CacheEngine {
 		$result = $this->_engine->read($key);
 		DebugTimer::stop('Cache read ' . $key);
 		$metric = 'hit';
-		if ($result === false && $value !== '') {
+		if ($result === false) {
 			$metric = 'miss';
 		}
 		$this->_track($metric);

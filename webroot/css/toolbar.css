@@ -143,6 +143,13 @@ h4 {
 	background: rgba(0, 0, 0, 0.5);
 }
 
+.section-tile {
+	box-sizing: border-box;
+	float: left;
+	width: 50%;
+	padding: 10px;
+}
+
 
 /**
  * Tables

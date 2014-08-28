@@ -16,7 +16,9 @@
 	<p class="info"><?php echo __d('debug_kit', 'There were no cache operations this request.'); ?></p>
 <?php else: ?>
 	<?php foreach ($metrics as $name => $counters): ?>
+	<section class="section-tile">
 		<h3><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h3>
+		<button class="button clear-cache" data-name="<?= h($name) ?>">Clear <?= h($name) ?> cache</button>
 		<table cellspacing="0" cellpadding="0" class="debug-table">
 			<thead>
 				<tr><th><?= __d('debug_kit', 'Metric') ?></th><th><?= __d('debug_kit', 'Total') ?></th></tr>
@@ -30,5 +32,31 @@
 			<?php endforeach; ?>
 			</tbody>
 		</table>
+	</section>
 	<?php endforeach; ?>
 <?php endif; ?>
+
+<script>
+var baseUrl = '<?= $this->Url->build([
+	'plugin' => 'DebugKit',
+	'controller' => 'Toolbar',
+	'action' => 'clear_cache'
+]); ?>';
+
+$(document).ready(function() {
+	$('.clear-cache').on('click', function(e) {
+		var name = $(this).data('name');
+		var xhr = $.ajax({
+			url: baseUrl,
+			data {name: name},
+			dataType: 'json',
+			type: 'POST',
+		});
+		xhr.done(function(response) {
+			alert('Cache ' + name + ' cleared.');
+		}).error(function(response) {
+			alert('Cache ' + name + ' could not be cleared.');
+		});
+		e.preventDefault();
+	});
+});

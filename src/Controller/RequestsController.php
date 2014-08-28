@@ -46,4 +46,5 @@ class RequestsController extends Controller {
 		$toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
 		$this->set('toolbar', $toolbar);
 	}
+
 }

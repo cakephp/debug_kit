@@ -39,6 +39,7 @@ class CachePanel extends DebugPanel {
 			$config = Cache::config($name);
 			Cache::drop($name);
 			$instance = new DebugEngine($config);
+			$this->_instances[$name] = $instance;
 			Cache::config($name, $instance);
 		}
 	}

@@ -24,7 +24,7 @@
 			<tbody>
 			<?php foreach ($counters as $key => $val): ?>
 				<tr>
-				<td><?= h($k) ?></td>
+				<td><?= h($key) ?></td>
 				<td class="right-text"><?= $val ?></td>
 				</tr>
 			<?php endforeach; ?>

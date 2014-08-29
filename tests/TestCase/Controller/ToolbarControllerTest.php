@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Routing\Router;
 use Cake\TestSuite\ControllerTestCase;
 
@@ -43,8 +44,23 @@ class ToolbarControllerTestCase extends ControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 		Router::plugin('DebugKit', function($routes) {
-			$routes->connect('/panels/:action/*', ['controller' => 'Panels']);
+			$routes->connect(
+				'/toolbar/clear_cache/*',
+				['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']);
 		});
+	}
+
+/**
+ * Test clearing the cache does not work with GET
+ *
+ * @expectedException Cake\Error\MethodNotAllowedException
+ */
+	public function testClearCacheNoGet() {
+		$this->testAction('/debug_kit/toolbar/clear_cache', [
+			'method' => 'GET',
+			'query' => ['name' => 'testing'],
+			'return' => 'contents'
+		]);
 	}
 
 /**
@@ -54,13 +70,18 @@ class ToolbarControllerTestCase extends ControllerTestCase {
 		$mock = $this->getMock('Cake\Cache\CacheEngine');
 		$mock->expects($this->once())
 			->method('init')
-			->will($this->returnTrue());
+			->will($this->returnValue(true));
 		$mock->expects($this->once())
 			->method('clear')
-			->will($this->returnTrue());
-		Cache::configure('testing', $mock);
+			->will($this->returnValue(true));
+		Cache::config('testing', $mock);
 
-		$result = $this->testAction('/debug_kit/toolbar/clear_cache/testing', ['return' => 'contents']);
+		$result = $this->testAction('/debug_kit/toolbar/clear_cache', [
+			'method' => 'POST',
+			'data' => ['name' => 'testing'],
+			'return' => 'contents'
+		]);
+		$this->assertContains('success', $result);
 	}
 
 }

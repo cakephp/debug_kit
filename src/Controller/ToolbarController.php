@@ -30,6 +30,13 @@ class ToolbarController extends Controller {
 	public $components = ['RequestHandler'];
 
 /**
+ * View class
+ *
+ * @var string
+ */
+	public $viewClass = 'Cake\View\JsonView';
+
+/**
  * Before filter handler.
  *
  * @param \Cake\Event\Event $event The event.
@@ -46,9 +53,14 @@ class ToolbarController extends Controller {
 /**
  * Clear a named cache.
  *
+ * @return void
  */
-	public function clear_cache($name) {
-		$result = Cache::clear($name, false);
+	public function clearCache() {
+		$this->request->allowMethod('post');
+		if (!$this->request->data('name')) {
+			throw new NotFoundException('Invalid cache engine name.');
+		}
+		$result = Cache::clear(false, $this->request->data('name'));
 		$this->set([
 			'_serialize' => ['success'],
 			'success' => $result,

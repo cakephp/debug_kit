@@ -62,6 +62,31 @@ class DebugEngine extends CacheEngine {
 	}
 
 /**
+ * Initialize the proxied Cache Engine
+ *
+ * @param array $config array of setting for the engine
+ * @return bool True if the engine has been successfully initialized, false if not
+ */
+	public function init(array $config = []) {
+		if (is_object($this->_config)) {
+			$this->_engine = $this->_config;
+			return true;
+		}
+		$registry = new CacheRegistry;
+		$this->_engine = $registry->load('spies', $this->_config);
+		return true;
+	}
+
+/**
+ * Get the internal engine
+ *
+ * @return \Cake\Cache\CacheEngine
+ */
+	public function engine() {
+		return $this->_engine;
+	}
+
+/**
  * Get the metrics for this object.
  *
  * @return array
@@ -78,22 +103,6 @@ class DebugEngine extends CacheEngine {
  */
 	protected function _track($metric) {
 		$this->_metrics[$metric] = $this->_metrics[$metric] + 1;
-	}
-
-/**
- * Initialize the proxied Cache Engine
- *
- * @param array $config array of setting for the engine
- * @return bool True if the engine has been successfully initialized, false if not
- */
-	public function init(array $config = []) {
-		if (is_object($this->_config)) {
-			$this->_engine = $this->_config;
-			return true;
-		}
-		$registry = new CacheRegistry;
-		$this->_engine = $registry->load('spies', $this->_config);
-		return true;
 	}
 
 /**

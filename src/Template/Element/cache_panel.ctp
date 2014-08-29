@@ -18,7 +18,7 @@
 	<?php foreach ($metrics as $name => $counters): ?>
 	<section class="section-tile">
 		<h3><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h3>
-		<button class="button clear-cache" data-name="<?= h($name) ?>">Clear <?= h($name) ?> cache</button>
+		<button class="btn-primary clear-cache" data-name="<?= h($name) ?>">Clear <?= h($name) ?> cache</button>
 		<table cellspacing="0" cellpadding="0" class="debug-table">
 			<thead>
 				<tr><th><?= __d('debug_kit', 'Metric') ?></th><th><?= __d('debug_kit', 'Total') ?></th></tr>

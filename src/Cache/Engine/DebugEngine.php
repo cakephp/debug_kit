@@ -64,7 +64,7 @@ class DebugEngine extends CacheEngine {
 /**
  * Initialize the proxied Cache Engine
  *
- * @param array $config array of setting for the engine
+ * @param array $config Array of setting for the engine.
  * @return bool True, this engine cannot fail to initialize.
  */
 	public function init(array $config = []) {

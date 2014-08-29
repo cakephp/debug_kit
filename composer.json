@@ -24,7 +24,7 @@
 	},
 	"require": {
 		"php": ">=5.4.19",
-		"cakephp/cakephp-plugin": "*"
+		"cakephp/plugin-installer": "*"
 	},
 	"require-dev": {
 		"cakephp/cakephp": "3.0.*-dev",

@@ -27,7 +27,10 @@ class ToolbarControllerTestCase extends ControllerTestCase {
  *
  * @var array
  */
-	public $fixtures = ['plugin.debug_kit.request', 'plugin.debug_kit.panel'];
+	public $fixtures = [
+		'plugin.debug_kit.request',
+		'plugin.debug_kit.panel'
+	];
 
 /**
  * Don't reload routes.
@@ -54,6 +57,7 @@ class ToolbarControllerTestCase extends ControllerTestCase {
  * Test clearing the cache does not work with GET
  *
  * @expectedException Cake\Error\MethodNotAllowedException
+ * @return void
  */
 	public function testClearCacheNoGet() {
 		$this->testAction('/debug_kit/toolbar/clear_cache', [
@@ -65,6 +69,8 @@ class ToolbarControllerTestCase extends ControllerTestCase {
 
 /**
  * Test clearing the cache.
+ *
+ * @return void
  */
 	public function testClearCache() {
 		$mock = $this->getMock('Cake\Cache\CacheEngine');

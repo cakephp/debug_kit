@@ -65,7 +65,7 @@ class DebugEngine extends CacheEngine {
  * Initialize the proxied Cache Engine
  *
  * @param array $config array of setting for the engine
- * @return bool True if the engine has been successfully initialized, false if not
+ * @return bool True, this engine cannot fail to initialize.
  */
 	public function init(array $config = []) {
 		if (is_object($this->_config)) {
@@ -102,7 +102,7 @@ class DebugEngine extends CacheEngine {
  * @return void
  */
 	protected function _track($metric) {
-		$this->_metrics[$metric] = $this->_metrics[$metric] + 1;
+		$this->_metrics[$metric] = $this->_metrics[$metric]++;
 	}
 
 /**

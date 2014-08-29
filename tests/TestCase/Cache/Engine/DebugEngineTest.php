@@ -54,6 +54,7 @@ class DebugEngineTest extends TestCase {
  * Test that the normal errors bubble up still.
  *
  * @expectedException Cake\Error\Exception
+ * @return void
  */
 	public function testInitErrorOnInvalidConfig() {
 		$engine = new DebugEngine([

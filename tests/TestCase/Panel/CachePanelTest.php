@@ -19,7 +19,6 @@ use DebugKit\Panel\CachePanel;
 
 /**
  * Class CachePanelTest
- *
  */
 class CachePanelTest extends TestCase {
 

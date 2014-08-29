@@ -19,6 +19,7 @@
 	<section class="section-tile">
 		<h3><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h3>
 		<button class="btn-primary clear-cache" data-name="<?= h($name) ?>">Clear <?= h($name) ?> cache</button>
+		<span class="inline-message"></span>
 		<table cellspacing="0" cellpadding="0" class="debug-table">
 			<thead>
 				<tr><th><?= __d('debug_kit', 'Metric') ?></th><th><?= __d('debug_kit', 'Total') ?></th></tr>
@@ -44,19 +45,27 @@ var baseUrl = '<?= $this->Url->build([
 ]); ?>';
 
 $(document).ready(function() {
+	function showMessage(el, text) {
+		el.show().text(text).fadeOut(2000);
+	}
+
 	$('.clear-cache').on('click', function(e) {
-		var name = $(this).data('name');
+		var el = $(this);
+		var name = el.data('name');
+		var messageEl = el.parent().find('.inline-message');
+
 		var xhr = $.ajax({
 			url: baseUrl,
-			data {name: name},
+			data: {name: name},
 			dataType: 'json',
-			type: 'POST',
+			type: 'POST'
 		});
 		xhr.done(function(response) {
-			alert('Cache ' + name + ' cleared.');
+			showMessage(messageEl, name + ' cache cleared.')
 		}).error(function(response) {
-			alert('Cache ' + name + ' could not be cleared.');
+			showMessage(messageEl, name + ' cache could not be cleared.');
 		});
 		e.preventDefault();
 	});
 });
+</script>

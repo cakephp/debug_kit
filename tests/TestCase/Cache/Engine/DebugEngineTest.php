@@ -106,11 +106,11 @@ class DebugEngineTest extends TestCase {
 
 		$result = DebugTimer::getAll();
 		$this->assertCount(6, $result);
-		$this->assertArrayHasKey('Cache read key', $result);
-		$this->assertArrayHasKey('Cache write key', $result);
-		$this->assertArrayHasKey('Cache delete key', $result);
-		$this->assertArrayHasKey('Cache increment key', $result);
-		$this->assertArrayHasKey('Cache decrement key', $result);
+		$this->assertArrayHasKey('Cache.read key', $result);
+		$this->assertArrayHasKey('Cache.write key', $result);
+		$this->assertArrayHasKey('Cache.delete key', $result);
+		$this->assertArrayHasKey('Cache.increment key', $result);
+		$this->assertArrayHasKey('Cache.decrement key', $result);
 	}
 
 }

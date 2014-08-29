@@ -110,9 +110,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function write($key, $value) {
 		$this->_track('write');
-		DebugTimer::start('Cache write ' . $key);
+		DebugTimer::start('Cache.write ' . $key);
 		$result = $this->_engine->write($key, $value);
-		DebugTimer::stop('Cache write ' . $key);
+		DebugTimer::stop('Cache.write ' . $key);
 		return $result;
 	}
 
@@ -121,9 +121,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function writeMany($data) {
 		$this->_track('write');
-		DebugTimer::start('Cache writeMany');
+		DebugTimer::start('Cache.writeMany');
 		$result = $this->_engine->writeMany($data);
-		DebugTimer::stop('Cache writeMany');
+		DebugTimer::stop('Cache.writeMany');
 		return $result;
 	}
 
@@ -132,9 +132,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function read($key) {
 		$this->_track('read');
-		DebugTimer::start('Cache read ' . $key);
+		DebugTimer::start('Cache.read ' . $key);
 		$result = $this->_engine->read($key);
-		DebugTimer::stop('Cache read ' . $key);
+		DebugTimer::stop('Cache.read ' . $key);
 		$metric = 'hit';
 		if ($result === false) {
 			$metric = 'miss';
@@ -148,9 +148,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function readMany($data) {
 		$this->_track('read');
-		DebugTimer::start('Cache readMany');
+		DebugTimer::start('Cache.readMany');
 		$result = $this->_engine->readMany($data);
-		DebugTimer::stop('Cache readMany');
+		DebugTimer::stop('Cache.readMany');
 		return $result;
 	}
 
@@ -159,9 +159,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function increment($key, $offset = 1) {
 		$this->_track('write');
-		DebugTimer::start('Cache increment ' . $key);
+		DebugTimer::start('Cache.increment ' . $key);
 		$result = $this->_engine->increment($key, $offset);
-		DebugTimer::stop('Cache increment ' . $key);
+		DebugTimer::stop('Cache.increment ' . $key);
 		return $result;
 	}
 
@@ -170,9 +170,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function decrement($key, $offset = 1) {
 		$this->_track('write');
-		DebugTimer::start('Cache decrement ' . $key);
+		DebugTimer::start('Cache.decrement ' . $key);
 		$result = $this->_engine->decrement($key, $offset);
-		DebugTimer::stop('Cache decrement ' . $key);
+		DebugTimer::stop('Cache.decrement ' . $key);
 		return $result;
 	}
 
@@ -181,9 +181,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function delete($key) {
 		$this->_track('delete');
-		DebugTimer::start('Cache delete ' . $key);
+		DebugTimer::start('Cache.delete ' . $key);
 		$result = $this->_engine->delete($key);
-		DebugTimer::stop('Cache delete ' . $key);
+		DebugTimer::stop('Cache.delete ' . $key);
 		return $result;
 	}
 
@@ -192,9 +192,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function deleteMany($data) {
 		$this->_track('delete');
-		DebugTimer::start('Cache deleteMany');
+		DebugTimer::start('Cache.deleteMany');
 		$result = $this->_engine->deleteMany($data);
-		DebugTimer::stop('Cache deleteMany');
+		DebugTimer::stop('Cache.deleteMany');
 		return $result;
 	}
 
@@ -203,9 +203,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function clear($check) {
 		$this->_track('delete');
-		DebugTimer::start('Cache clear');
+		DebugTimer::start('Cache.clear');
 		$result = $this->_engine->clear($check);
-		DebugTimer::stop('Cache clear');
+		DebugTimer::stop('Cache.clear');
 		return $result;
 	}
 
@@ -221,9 +221,9 @@ class DebugEngine extends CacheEngine {
  */
 	public function clearGroup($group) {
 		$this->_track('delete');
-		DebugTimer::start('Cache clearGroup ' . $group);
+		DebugTimer::start('Cache.clearGroup ' . $group);
 		$result = $this->_engine->clearGroup($group);
-		DebugTimer::stop('Cache clearGroup ' . $group);
+		DebugTimer::stop('Cache.clearGroup ' . $group);
 		return $result;
 	}
 

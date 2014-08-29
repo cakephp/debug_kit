@@ -38,13 +38,13 @@
 <?php endif; ?>
 
 <script>
-var baseUrl = '<?= $this->Url->build([
-	'plugin' => 'DebugKit',
-	'controller' => 'Toolbar',
-	'action' => 'clearCache'
-]); ?>';
-
 $(document).ready(function() {
+	var baseUrl = '<?= $this->Url->build([
+		'plugin' => 'DebugKit',
+		'controller' => 'Toolbar',
+		'action' => 'clearCache'
+	]); ?>';
+
 	function showMessage(el, text) {
 		el.show().text(text).fadeOut(2000);
 	}

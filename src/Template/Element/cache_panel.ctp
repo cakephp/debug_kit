@@ -40,7 +40,7 @@
 var baseUrl = '<?= $this->Url->build([
 	'plugin' => 'DebugKit',
 	'controller' => 'Toolbar',
-	'action' => 'clear_cache'
+	'action' => 'clearCache'
 ]); ?>';
 
 $(document).ready(function() {

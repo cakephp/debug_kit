@@ -74,6 +74,7 @@ class DebugEngine extends CacheEngine {
 		}
 		$registry = new CacheRegistry;
 		$this->_engine = $registry->load('spies', $this->_config);
+		unset($registry);
 		return true;
 	}
 

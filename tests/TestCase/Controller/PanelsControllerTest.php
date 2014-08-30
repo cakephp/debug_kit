@@ -26,7 +26,10 @@ class PanelsControllerTestCase extends ControllerTestCase {
  *
  * @var array
  */
-	public $fixtures = ['plugin.debug_kit.request', 'plugin.debug_kit.panel'];
+	public $fixtures = [
+		'plugin.debug_kit.request',
+		'plugin.debug_kit.panel'
+	];
 
 /**
  * Don't reload routes.

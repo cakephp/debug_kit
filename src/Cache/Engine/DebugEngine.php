@@ -102,7 +102,7 @@ class DebugEngine extends CacheEngine {
  * @return void
  */
 	protected function _track($metric) {
-		$this->_metrics[$metric] = $this->_metrics[$metric]++;
+		$this->_metrics[$metric]++;
 	}
 
 /**

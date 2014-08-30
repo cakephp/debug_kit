@@ -29,7 +29,8 @@ class RequestTableTest extends TestCase {
  */
 	public function testInitializeCreatesSchema() {
 		$connection = ConnectionManager::get('test');
-		$connection->execute('DROP TABLE IF EXISTS requests');
+		$stmt = $connection->execute('DROP TABLE IF EXISTS requests');
+		$stmt->closeCursor();
 
 		$table = TableRegistry::get('DebugKit.Requests');
 

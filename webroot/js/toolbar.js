@@ -28,7 +28,7 @@
 		iframe.setAttribute('style', 'position: fixed; bottom: 0; right: 0; border: 0; outline: 0; overflow: hidden; z-index: 99999;');
 		iframe.height = 40;
 		iframe.width = 40;
-		iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/view/' + __debug_kit_id;
+		iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/' + __debug_kit_id;
 
 		body[0].appendChild(iframe);
 

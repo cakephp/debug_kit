@@ -90,7 +90,7 @@ Cache::config([
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
 	putenv('db_class=Cake\Database\Driver\Sqlite');
-	putenv('db_dsn=sqlite::memory:');
+	putenv('db_dsn=sqlite://' . TMP . 'debug_kit_test.sqlite');
 }
 
 $config = [
@@ -100,7 +100,7 @@ $config = [
 	'database' => getenv('db_database'),
 	'login' => getenv('db_login'),
 	'password' => getenv('db_password'),
-	'timezone' => 'UTC'
+	'timezone' => 'UTC',
 ];
 
 // Use the test connection for 'debug_kit' as well.

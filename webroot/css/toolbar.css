@@ -143,6 +143,13 @@ h4 {
 	background: rgba(0, 0, 0, 0.5);
 }
 
+.section-tile {
+	box-sizing: border-box;
+	float: left;
+	width: 50%;
+	padding: 10px;
+}
+
 
 /**
  * Tables
@@ -347,4 +354,22 @@ table th {
 .info:before {
 	color: #80deea;
 	content: 'i';
+}
+
+/**
+ * Buttons
+ */
+.btn-primary {
+	font-size: 14px;
+	border: 1px solid #8bc34a;
+	background-color: #9ccc65;
+	color: #fff;
+	border-radius: 4px;
+	text-shadow: 0 1px 0 #689f38;
+	box-shadow: 0 2px 0 #689f38;
+}
+.btn-primary:active {
+	box-shadow: none;
+	position: relative;
+	top: 2px;
 }

@@ -383,3 +383,7 @@ table th {
 	position: relative;
 	top: 2px;
 }
+
+.btn-primary:hover {
+	cursor:pointer;
+}

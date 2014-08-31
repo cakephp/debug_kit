@@ -111,4 +111,15 @@ class TimerPanel extends DebugPanel {
 		];
 	}
 
+/**
+ * Get the summary for the panel.
+ *
+ * @return string
+ */
+	public function summary() {
+		$time = DebugTimer::requestTime();
+		$memory = DebugMemory::getPeak();
+		return "$time ms - $memory MB";
+	}
+
 }

@@ -156,6 +156,7 @@ class DebugBarFilter extends DispatcherFilter {
 				'panel' => $name,
 				'element' => $panel->elementName(),
 				'title' => $panel->title(),
+				'summary' => $panel->summary(),
 				'content' => serialize($panel->data())
 			]);
 		}

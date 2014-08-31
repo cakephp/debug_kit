@@ -61,17 +61,30 @@ class SqlLogPanel extends DebugPanel {
 	}
 
 /**
- * Stores the data this panel wants.
+ * Get the data this panel wants to store.
  *
- * @param \Cake\Event\Event $event The event.
  * @return array
  */
-	public function shutdown(Event $event) {
-		$this->_data = [
+	public function data() {
+		return [
 			'tables' => array_map(function($table) {
 				return $table->alias();
 			},  TableRegistry::genericInstances()),
 			'loggers' => $this->_loggers,
 		];
+	}
+
+/**
+ * Get summary data from the queries run.
+ *
+ * @return string
+ */
+	public function summary() {
+		$count = $time = 0;
+		foreach ($this->_loggers as $logger) {
+			$count += count($logger->queries());
+			$time += $logger->totalTime();
+		}
+		return "{$count} - $time ms";
 	}
 }

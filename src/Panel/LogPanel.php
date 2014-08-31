@@ -38,13 +38,24 @@ class LogPanel extends DebugPanel {
 	}
 
 /**
- * Shutdown event.
+ * Get the panel data
  *
- * @param \Cake\Event\Event $event Event
  * @return void
  */
-	public function shutdown(Event $event) {
-		$this->_data = ['logger' => Log::engine('debug_kit_log_panel')];
+	public function data() {
+		return [
+			'logger' => Log::engine('debug_kit_log_panel')
+		];
+	}
+
+/**
+ * Get the summary data.
+ *
+ * @return string
+ */
+	public function summary() {
+		$logger = Log::engine('debug_kit_log_panel');
+		return $logger->count();
 	}
 
 }

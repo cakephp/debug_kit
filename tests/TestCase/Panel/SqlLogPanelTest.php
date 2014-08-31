@@ -45,17 +45,33 @@ class SqlLogPanelTest extends TestCase {
  *
  * @return void
  */
-	public function testShutdown() {
+	public function testData() {
 		$event = new Event('Sample');
 		$result = $this->panel->initialize($event);
 
 		$articles = TableRegistry::get('Articles');
 		$articles->findById(1)->first();
 
-		$this->panel->shutdown($event);
 		$result = $this->panel->data();
 
 		$this->assertArrayHasKey('loggers', $result);
 		$this->assertCount(3, $result['loggers']);
 	}
+
+/**
+ * Test getting summary data.
+ *
+ * @return void
+ */
+	public function testSummary() {
+		$event = new Event('Sample');
+		$result = $this->panel->initialize($event);
+
+		$articles = TableRegistry::get('Articles');
+		$articles->findById(1)->first();
+
+		$result = $this->panel->summary();
+		$this->assertRegExp('/1 - \d+ ms/', $result);
+	}
+
 }

@@ -13,6 +13,7 @@
 namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
+use Cake\Utility\Number;
 use DebugKit\DebugPanel;
 use DebugKit\DebugMemory;
 use DebugKit\DebugTimer;
@@ -109,6 +110,17 @@ class TimerPanel extends DebugPanel {
 			'memory' => DebugMemory::getAll(),
 			'peakMemory' => DebugMemory::getPeak(),
 		];
+	}
+
+/**
+ * Get the summary for the panel.
+ *
+ * @return string
+ */
+	public function summary() {
+		$time = Number::precision(DebugTimer::requestTime(), 2);
+		$memory = Number::toReadableSize(DebugMemory::getPeak());
+		return "$time s - $memory";
 	}
 
 }

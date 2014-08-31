@@ -44,7 +44,7 @@ $noOutput = true;
 		<h5>
 		<?= __d(
 			'debug_kit',
-			'Total Time: {0} ms &mdash; Total Queries: {0} &mdash; Total Rows: {0}',
+			'Total Time: {0} ms &mdash; Total Queries: {1} &mdash; Total Rows: {2}',
 			$logger->totalTime(),
 			count($queries),
 			$logger->totalRows()

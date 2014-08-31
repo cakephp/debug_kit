@@ -17,6 +17,11 @@ use Cake\Routing\Router;
 		<span class="panel-button">
 			<?= h($panel->title); ?>
 		</span>
+		<?php if (strlen($panel->summary)): ?>
+		<span class="panel-summary">
+			<?= h($panel->summary) ?>
+		</span>
+		<?php endif ?>
 	</li>
 	<?php endforeach; ?>
 </ul>

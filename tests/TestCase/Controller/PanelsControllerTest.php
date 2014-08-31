@@ -64,7 +64,7 @@ class PanelsControllerTestCase extends ControllerTestCase {
 /**
  * Test getting a panel that does notexists.
  *
- * @expectedException Cake\ORM\Error\RecordNotFoundException
+ * @expectedException Cake\ORM\Exception\RecordNotFoundException
  * @return void
  */
 	public function testViewNotExists() {

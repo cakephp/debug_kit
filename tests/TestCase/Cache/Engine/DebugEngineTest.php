@@ -53,7 +53,7 @@ class DebugEngineTest extends TestCase {
 /**
  * Test that the normal errors bubble up still.
  *
- * @expectedException Cake\Error\Exception
+ * @expectedException BadMethodCallException
  * @return void
  */
 	public function testInitErrorOnInvalidConfig() {

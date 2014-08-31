@@ -76,6 +76,15 @@ h4 {
 #panel-button img {
 	margin: 0;
 }
+.panel-summary {
+	background: rgba(255, 255, 255, 0.5);
+	color: #333;
+	font-size: 12px;
+	line-height: 20px;
+	padding: 4px;
+	border-radius: 4px;
+	vertical-align: middle;
+}
 
 
 .panel {

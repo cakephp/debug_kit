@@ -61,7 +61,7 @@ class RequestsControllerTestCase extends ControllerTestCase {
 /**
  * Test getting a toolb that does notexists.
  *
- * @expectedException Cake\ORM\Error\RecordNotFoundException
+ * @expectedException Cake\ORM\Exception\RecordNotFoundException
  * @return void
  */
 	public function testViewNotExists() {

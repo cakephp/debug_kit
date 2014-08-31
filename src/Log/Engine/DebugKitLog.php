@@ -52,6 +52,17 @@ class DebugKitLog implements LogInterface {
 	}
 
 /**
+ * Get the number of log entires.
+ *
+ * @return int
+ */
+	public function count() {
+		return array_reduce($this->_logs, function($sum, $v) {
+			return $sum + count($v);
+		}, 0);
+	}
+
+/**
  * Check if there are no logs.
  *
  * @return bool

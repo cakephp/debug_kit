@@ -59,12 +59,9 @@ class LogPanelTest extends TestCase {
  *
  * @return void
  */
-	public function testShutdown() {
-		$event = new Event('Sample');
-
+	public function testData() {
 		Log::write('error', 'Test');
 
-		$this->panel->shutdown($event);
 		$result = $this->panel->data();
 
 		$this->assertArrayHasKey('logger', $result);
@@ -73,4 +70,19 @@ class LogPanelTest extends TestCase {
 		$this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $logger);
 		$this->assertCount(1, $logger->all()['error']);
 	}
+
+/**
+ * Test that the log panel outputs a summary.
+ *
+ * @return void
+ */
+	public function testSummary() {
+		Log::write('error', 'Test');
+		$this->assertEquals(1, $this->panel->summary());
+
+		Log::write('error', 'Test 2');
+		Log::write('notice', 'A thing');
+		$this->assertEquals(3, $this->panel->summary());
+	}
+
 }

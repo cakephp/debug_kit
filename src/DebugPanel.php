@@ -70,6 +70,17 @@ class DebugPanel implements EventListener {
 	}
 
 /**
+ * Get the summary data for a panel.
+ *
+ * This data is displayed in the toolbar even when the panel is collapsed.
+ *
+ * @return string
+ */
+	public function summary() {
+		return '';
+	}
+
+/**
  * Initialize callback
  *
  * @param \Cake\Event\Event $event The event.

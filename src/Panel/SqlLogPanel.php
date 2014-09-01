@@ -53,10 +53,14 @@ class SqlLogPanel extends DebugPanel {
 				$logger = $connection->logger();
 			}
 
-			$spy = new DebugLog($logger, $name);
-			$this->_loggers[] = $spy;
+			if ($logger instanceof DebugLog) {
+				continue;
+			}
+			$logger = new DebugLog($logger, $name);
+
 			$connection->logQueries(true);
-			$connection->logger($spy);
+			$connection->logger($logger);
+			$this->_loggers[] = $logger;
 		}
 	}
 

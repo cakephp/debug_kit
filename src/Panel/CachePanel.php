@@ -37,10 +37,14 @@ class CachePanel extends DebugPanel {
 	public function initialize(Event $event) {
 		foreach (Cache::configured() as $name) {
 			$config = Cache::config($name);
-			Cache::drop($name);
-			$instance = new DebugEngine($config);
+			if ($config['className'] instanceof DebugEngine) {
+				$instance = $config['className'];
+			} else {
+				Cache::drop($name);
+				$instance = new DebugEngine($config);
+				Cache::config($name, $instance);
+			}
 			$this->_instances[$name] = $instance;
-			Cache::config($name, $instance);
 		}
 	}
 

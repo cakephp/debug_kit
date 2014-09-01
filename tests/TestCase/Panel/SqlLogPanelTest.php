@@ -13,6 +13,7 @@
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Controller\Controller;
+use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -41,21 +42,39 @@ class SqlLogPanelTest extends TestCase {
 	}
 
 /**
+ * Ensure that subrequests don't double proxy the logger.
+ *
+ * @return void
+ */
+	public function testInitializeTwiceNoDoubleProxy() {
+		$event = new Event('Sample');
+
+		$this->panel->initialize($event);
+		$db = ConnectionManager::get('test');
+		$logger = $db->logger();
+		$this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
+
+		$this->panel->initialize($event);
+		$second = $db->logger();
+		$this->assertSame($second, $logger);
+
+		$this->assertCount(2, $this->panel->data()['loggers']);
+	}
+
+/**
  * test the parsing of source list.
  *
  * @return void
  */
 	public function testData() {
 		$event = new Event('Sample');
-		$result = $this->panel->initialize($event);
+		$this->panel->initialize($event);
 
 		$articles = TableRegistry::get('Articles');
 		$articles->findById(1)->first();
 
 		$result = $this->panel->data();
-
 		$this->assertArrayHasKey('loggers', $result);
-		$this->assertCount(3, $result['loggers']);
 	}
 
 /**
@@ -71,7 +90,7 @@ class SqlLogPanelTest extends TestCase {
 		$articles->findById(1)->first();
 
 		$result = $this->panel->summary();
-		$this->assertRegExp('/1 - \d+ ms/', $result);
+		$this->assertRegExp('/\d+ - \d+ ms/', $result);
 	}
 
 }

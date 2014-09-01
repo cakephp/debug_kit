@@ -133,8 +133,8 @@ class DebugBarFilter extends DispatcherFilter {
  */
 	public function afterDispatch(Event $event) {
 		$request = $event->data['request'];
-		// Skip debugkit requests.
-		if ($request->param('plugin') === 'DebugKit') {
+		// Skip debugkit requests and requestAction()
+		if ($request->param('plugin') === 'DebugKit' || $request->is('requested')) {
 			return;
 		}
 		$response = $event->data['response'];

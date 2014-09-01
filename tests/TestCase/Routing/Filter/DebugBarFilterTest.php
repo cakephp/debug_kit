@@ -61,6 +61,28 @@ class DebugBarFilterTest extends TestCase {
 	}
 
 /**
+ * Test that afterDispatch ignores requestAction
+ *
+ * @return void
+ */
+	public function testAfterDispatchIgnoreRequestAction() {
+		$request = new Request([
+			'url' => '/articles',
+			'params' => ['plugin' => null, 'requested' => 1]
+		]);
+		$response = new Response([
+			'statusCode' => 200,
+			'type' => 'text/html',
+			'body' => '<html><title>test</title><body><p>some text</p></body>'
+		]);
+
+		$bar = new DebugBarFilter($this->events, []);
+		$event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
+		$this->assertNull($bar->afterDispatch($event));
+		$this->assertNotContains('<script>', $response->body());
+	}
+
+/**
  * Test that afterDispatch saves panel data.
  *
  * @return void

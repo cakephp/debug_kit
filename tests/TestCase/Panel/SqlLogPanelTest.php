@@ -57,8 +57,6 @@ class SqlLogPanelTest extends TestCase {
 		$this->panel->initialize($event);
 		$second = $db->logger();
 		$this->assertSame($second, $logger);
-
-		$this->assertCount(2, $this->panel->data()['loggers']);
 	}
 
 /**

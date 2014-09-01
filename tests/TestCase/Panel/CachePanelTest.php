@@ -50,11 +50,28 @@ class CachePanelTest extends TestCase {
  */
 	public function testInitialize() {
 		$event = new Event('Sample');
-
 		$this->panel->initialize($event);
+
 		$result = $this->panel->data();
 		$this->assertArrayHasKey('debug_kit_test', $result['metrics']);
 		$this->assertArrayHasKey('_cake_model_', $result['metrics']);
+	}
+
+/**
+ * Ensure that subrequests don't double proxy the cache engine.
+ *
+ * @return void
+ */
+	public function testInitializeTwiceNoDoubleProxy() {
+		$event = new Event('Sample');
+
+		$this->panel->initialize($event);
+		$result = Cache::engine('debug_kit_test');
+		$this->assertInstanceOf('DebugKit\Cache\Engine\DebugEngine', $result);
+
+		$this->panel->initialize($event);
+		$result2 = Cache::engine('debug_kit_test');
+		$this->assertSame($result2, $result);
 	}
 
 }

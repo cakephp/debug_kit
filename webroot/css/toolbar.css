@@ -72,6 +72,9 @@ h4 {
 	height: 30px;
 	width: 30px;
 	padding: 5px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
 }
 #panel-button img {
 	margin: 0;

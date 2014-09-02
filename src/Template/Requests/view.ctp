@@ -9,11 +9,8 @@ use Cake\Routing\Router;
 </div>
 
 <ul id="toolbar" class="toolbar">
-	<li id="panel-button">
-		<?= $this->Html->image('DebugKit.cake.icon.png', ['alt' => 'Debug Kit']) ?>
-	</li>
 	<?php foreach ($toolbar->panels as $panel): ?>
-	<li class="panel" data-id="<?= $panel->id ?>">
+	<li class="panel" data-id="<?= $panel->id ?>" style="display: none;">
 		<span class="panel-button">
 			<?= h($panel->title); ?>
 		</span>
@@ -24,6 +21,9 @@ use Cake\Routing\Router;
 		<?php endif ?>
 	</li>
 	<?php endforeach; ?>
+	<li id="panel-button">
+		<?= $this->Html->image('DebugKit.cake.icon.png', ['alt' => 'Debug Kit']) ?>
+	</li>
 </ul>
 <?php $this->start('scripts') ?>
 <script>

@@ -229,12 +229,12 @@ class DebugEngine extends CacheEngine {
 	}
 
 /**
- * Accessor method for the CacheEngine's configuration array
+ * Magic __toString() method to get the CacheEngine's name
  *
- * @return array Returns the CacheEngine's configuration array
+ * @return array Returns the CacheEngine's name
  */
-	public function getConfig() {
-		return $this->_config;
+	public function __toString() {
+		return $this->_config['className'];
 	}
 
 }

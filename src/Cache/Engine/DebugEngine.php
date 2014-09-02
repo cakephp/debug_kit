@@ -231,7 +231,7 @@ class DebugEngine extends CacheEngine {
 /**
  * Magic __toString() method to get the CacheEngine's name
  *
- * @return array Returns the CacheEngine's name
+ * @return string Returns the CacheEngine's name
  */
 	public function __toString() {
 		return $this->_config['className'];

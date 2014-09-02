@@ -8,7 +8,7 @@ use Cake\Routing\Router;
 	</div>
 </div>
 
-<ul class="toolbar">
+<ul id="toolbar" class="toolbar">
 	<li id="panel-button">
 		<?= $this->Html->image('DebugKit.cake.icon.png', ['alt' => 'Debug Kit']) ?>
 	</li>
@@ -31,7 +31,7 @@ var baseUrl = "<?= Router::url('/', true); ?>";
 
 $(document).ready(function() {
 	var toolbar = new Toolbar({
-		button: $('#panel-button'),
+		button: $('#toolbar'),
 		content: $('#panel-content-container'),
 		panelButtons: $('.panel'),
 		panelClose: $('#panel-close')
@@ -43,6 +43,7 @@ $(document).ready(function() {
 
 	toolbar.panelButtons.on('click', function(e) {
 		e.preventDefault();
+		e.stopPropagation();
 		var id = $(this).data('id');
 		var samePanel = toolbar.currentPanel() === id;
 

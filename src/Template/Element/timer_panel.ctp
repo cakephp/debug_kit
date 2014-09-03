@@ -75,8 +75,8 @@ $this->addHelper('DebugKit.SimpleGraph');
 			</td>
 			<td class="right-text"><?= $this->Number->precision($timeInfo['time'] * 1000, 2) ?></td>
 			<td><?= $this->SimpleGraph->bar(
-				$this->Number->precision($timeInfo['time'] * 1000, 2),
-				$this->Number->precision($timeInfo['start'] * 1000, 2),
+				$timeInfo['time'] * 1000,
+				$timeInfo['start'] * 1000,
 				array(
 					'max' => $maxTime * 1000,
 					'requestTime' => $requestTime * 1000,

@@ -94,6 +94,9 @@ h4 {
 	border-left: 1px solid #ffb400;
 	padding: 0px 9px;
 }
+.panel:first-child {
+	border-left: 0;
+}
 
 /**
  * Panel layout

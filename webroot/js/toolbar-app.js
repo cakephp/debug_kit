@@ -66,7 +66,7 @@ Toolbar.prototype = {
 	},
 
 	isExpanded: function() {
-		return this.content.is(':visible');
+		return this.content.hasClass('enabled');
 	},
 
 	hideContent: function() {

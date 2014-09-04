@@ -36,6 +36,20 @@ $(document).ready(function() {
 		panelButtons: $('.panel'),
 		panelClose: $('#panel-close')
 	});
+	
+	$(document).keydown(function(e) {
+  		if (e.keyCode === 27) {
+  			if (toolbar.isExpanded()) {  		
+  				toolbar.hideContent();
+  				return false;
+  			} 
+  			if( toolbar.state() === "toolbar") {
+  				toolbar.toggle();
+  				return false;
+  			}
+  		}
+  		return false;
+	});
 
 	toolbar.button.on('click', function(e) {
 		toolbar.toggle();

@@ -43,12 +43,11 @@ $(document).ready(function() {
   				toolbar.hideContent();
   				return false;
   			} 
-  			if( toolbar.state() === "toolbar") {
+  			if (toolbar.state() === "toolbar") {
   				toolbar.toggle();
   				return false;
   			}
   		}
-  		return false;
 	});
 
 	toolbar.button.on('click', function(e) {

@@ -55,7 +55,7 @@ use Cake\Utility\Inflector;
 		$phpRows = array();
 		foreach ($php as $key => $val) {
 			$phpRows[] = array(
-				h(Inflector::humanize(strtolower($key))),
+				h($key),
 				h($val)
 			);
 		}

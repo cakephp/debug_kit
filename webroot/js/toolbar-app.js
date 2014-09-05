@@ -3,6 +3,7 @@ function Toolbar(options) {
 	this.panelButtons = options.panelButtons;
 	this.content = options.content;
 	this.panelClose = options.panelClose;
+	this.keyboardScope = options.keyboardScope;
 }
 
 Toolbar.prototype = {
@@ -103,7 +104,7 @@ Toolbar.prototype = {
 		lists.find('ul').hide()
 			.parent().addClass('expandable collapsed');
 
-		lists.on('click', 'li', function (event) {
+		lists.on('click', 'li', function(event) {
 			event.stopPropagation();
 			var el = $(this);
 			el.children('ul').toggle();
@@ -114,5 +115,22 @@ Toolbar.prototype = {
 
 	currentPanel: function() {
 		return this._currentPanel;
+	},
+
+	updateByKeyboad: function() {
+		var _this = this;
+		this.keyboardScope.keydown(function(event) {
+			// Check for Esc key
+	  		if (event.keyCode === 27) {
+	  			// Close active panel
+	  			if (_this.isExpanded()) {  		
+	  				return _this.hideContent();
+	  			} 
+	  			// Collapse the toolbar
+	  			if (_this.state() === "toolbar") {
+	  				return _this.toggle();
+	  			}
+	  		}
+	  	});
 	}
 };

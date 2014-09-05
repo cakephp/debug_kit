@@ -34,21 +34,11 @@ $(document).ready(function() {
 		button: $('#toolbar'),
 		content: $('#panel-content-container'),
 		panelButtons: $('.panel'),
-		panelClose: $('#panel-close')
+		panelClose: $('#panel-close'),
+		keyboardScope : $(document)
 	});
-	
-	$(document).keydown(function(e) {
-  		if (e.keyCode === 27) {
-  			if (toolbar.isExpanded()) {  		
-  				toolbar.hideContent();
-  				return false;
-  			} 
-  			if (toolbar.state() === "toolbar") {
-  				toolbar.toggle();
-  				return false;
-  			}
-  		}
-	});
+
+	toolbar.updateByKeyboad();
 
 	toolbar.button.on('click', function(e) {
 		toolbar.toggle();

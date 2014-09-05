@@ -117,7 +117,7 @@ Toolbar.prototype = {
 		return this._currentPanel;
 	},
 
-	updateByKeyboad: function() {
+	keyboardListener: function() {
 		var _this = this;
 		this.keyboardScope.keydown(function(event) {
 			// Check for Esc key

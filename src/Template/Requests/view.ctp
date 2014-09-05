@@ -38,7 +38,7 @@ $(document).ready(function() {
 		keyboardScope : $(document)
 	});
 
-	toolbar.updateByKeyboad();
+	toolbar.keyboardListener();
 
 	toolbar.button.on('click', function(e) {
 		toolbar.toggle();

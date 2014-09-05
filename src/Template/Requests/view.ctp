@@ -34,8 +34,11 @@ $(document).ready(function() {
 		button: $('#toolbar'),
 		content: $('#panel-content-container'),
 		panelButtons: $('.panel'),
-		panelClose: $('#panel-close')
+		panelClose: $('#panel-close'),
+		keyboardScope : $(document)
 	});
+
+	toolbar.keyboardListener();
 
 	toolbar.button.on('click', function(e) {
 		toolbar.toggle();

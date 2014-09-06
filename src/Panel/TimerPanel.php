@@ -13,7 +13,7 @@
 namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\Utility\Number;
+use Cake\I18n\Number;
 use DebugKit\DebugPanel;
 use DebugKit\DebugMemory;
 use DebugKit\DebugTimer;

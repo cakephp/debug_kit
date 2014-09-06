@@ -13,7 +13,7 @@
  */
 namespace DebugKit;
 
-use Cake\Utility\Debugger;
+use Cake\Error\Debugger;
 
 /**
  * Contains methods for Profiling and creating timers.

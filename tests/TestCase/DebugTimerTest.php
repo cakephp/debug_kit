@@ -14,7 +14,7 @@
 namespace DebugKit\Test\TestCase;
 
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Debugger;
+use Cake\Error\Debugger;
 use DebugKit\DebugTimer;
 
 /**

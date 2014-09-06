@@ -1,9 +1,9 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,12 +12,12 @@
  */
 namespace DebugKit\Model\Table;
 
-use DebugKit\Model\Table\LazyTableTrait;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use DebugKit\Model\Table\LazyTableTrait;
 
 /**
- * The panels table collects the information for each panel on 
+ * The panels table collects the information for each panel on
  * each request.
  */
 class PanelsTable extends Table {
@@ -38,14 +38,14 @@ class PanelsTable extends Table {
 /**
  * Find panels by requestid
  *
- *
  * @param Cake\ORM\Query $query The query
  * @param array $options The options to use.
  * @return Cake\ORM\Query The query.
+ * @throws \RuntimeException
  */
 	public function findByRequest(Query $query, array $options) {
 		if (empty($options['requestId'])) {
-			throw \RuntimeException('Missing request id in findByRequest.');
+			throw new \RuntimeException('Missing request id in findByRequest.');
 		}
 		return $query->where(['Panels.request_id' => $options['requestId']])
 			->order(['Panels.title' => 'ASC']);

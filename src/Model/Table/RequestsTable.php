@@ -1,9 +1,9 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,9 +12,9 @@
  */
 namespace DebugKit\Model\Table;
 
-use DebugKit\Model\Table\LazyTableTrait;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use DebugKit\Model\Table\LazyTableTrait;
 
 /**
  * The requests table tracks basic information about each request.

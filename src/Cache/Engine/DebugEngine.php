@@ -13,9 +13,9 @@
  */
 namespace DebugKit\Cache\Engine;
 
-use Cake\Core\App;
 use Cake\Cache\CacheEngine;
 use Cake\Cache\CacheRegistry;
+use Cake\Core\App;
 use DebugKit\DebugTimer;
 
 /**

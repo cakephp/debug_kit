@@ -1,5 +1,6 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -11,7 +12,6 @@
  */
 namespace DebugKit\Test\Routing\Filter;
 
-use DebugKit\Routing\Filter\DebugBarFilter;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
@@ -20,6 +20,7 @@ use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\String;
+use DebugKit\Routing\Filter\DebugBarFilter;
 
 /**
  * Test the debug bar

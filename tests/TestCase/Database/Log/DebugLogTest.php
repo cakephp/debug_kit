@@ -20,6 +20,7 @@ use DebugKit\Database\Log\DebugLog;
  * DebugLog test case
  */
 class DebugLogTest extends TestCase {
+
 /**
  * setup
  *

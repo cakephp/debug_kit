@@ -1,5 +1,6 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -22,12 +23,13 @@ use Cake\Network\Exception\NotFoundException;
 class RequestsController extends Controller {
 
 	public $layout = 'DebugKit.toolbar';
+
 /**
  * Before filter handler.
  *
  * @param \Cake\Event\Event $event The event.
  * @return void
- * @throws \Cake\Error\NotFoundException
+ * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function beforeFilter(Event $event) {
 		// TODO add config override

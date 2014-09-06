@@ -1,7 +1,6 @@
 <?php
 /**
- * DebugKit DebugToolbar Component
- *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -33,6 +32,7 @@ class ToolbarComponent extends Component {
  * @param \Cake\Controller\ComponentRegistry $registry The ComponentRegistry
  * @param array $settings An array of config
  * @return void
+ * @throws \RuntimeException
  */
 	public function __construct(ComponentRegistry $registry, $settings = []) {
 		$msg = 'DebugKit is now loaded through plugin bootstrapping. Make sure you have ' .

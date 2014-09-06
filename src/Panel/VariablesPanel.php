@@ -13,8 +13,8 @@
 namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
 use Cake\Database\Query;
+use Cake\Event\Event;
 use DebugKit\DebugPanel;
 
 /**

@@ -1,5 +1,6 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -53,10 +54,10 @@ class PanelRegistry extends ObjectRegistry {
  * @param string $class The classname that is missing.
  * @param string $plugin The plugin the component is missing in.
  * @return void
- * @throws \Cake\Controller\Error\MissingComponentException
+ * @throws \RuntimeException
  */
 	protected function _throwMissingClassError($class, $plugin) {
-		throw new \RuntimeError("Unable to find '$class' panel.");
+		throw new \RuntimeException("Unable to find '$class' panel.");
 	}
 
 /**

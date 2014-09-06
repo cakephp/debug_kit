@@ -1,5 +1,6 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -41,7 +42,7 @@ class ToolbarController extends Controller {
  *
  * @param \Cake\Event\Event $event The event.
  * @return void
- * @throws \Cake\Error\NotFoundException
+ * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function beforeFilter(Event $event) {
 		// TODO add config override.
@@ -54,6 +55,7 @@ class ToolbarController extends Controller {
  * Clear a named cache.
  *
  * @return void
+ * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function clearCache() {
 		$this->request->allowMethod('post');

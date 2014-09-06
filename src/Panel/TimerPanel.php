@@ -14,8 +14,8 @@ namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\I18n\Number;
-use DebugKit\DebugPanel;
 use DebugKit\DebugMemory;
+use DebugKit\DebugPanel;
 use DebugKit\DebugTimer;
 
 /**

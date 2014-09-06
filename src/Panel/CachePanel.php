@@ -22,6 +22,7 @@ use DebugKit\DebugPanel;
  * A panel for spying on cache engines.
  */
 class CachePanel extends DebugPanel {
+
 /**
  * The cache spy instances used.
  *

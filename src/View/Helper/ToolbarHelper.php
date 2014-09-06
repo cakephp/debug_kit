@@ -13,8 +13,8 @@
  */
 namespace DebugKit\View\Helper;
 
-use Cake\Datasource\ConnectionManager;
 use Cake\Cache\Cache;
+use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\View\Helper;
 use DebugKit\DebugKitDebugger;

@@ -20,7 +20,7 @@ use Cake\Routing\Router;
 	<ul class="history-list">
 		<li>
 			<?= $this->Html->link(
-				__d('debug_kit', 'Current request'),
+				__d('debug_kit', 'Back to current request'),
 				['plugin' => 'DebugKit', 'controller' => 'Requests', 'action' => 'view', $panel->request_id],
 				['class' => 'active history-link']
 			); ?>

@@ -13,9 +13,9 @@
 namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use DebugKit\DebugPanel;
 use Cake\Event\Event;
 use Cake\Log\Log;
+use DebugKit\DebugPanel;
 
 /**
  * Log Panel - Reads log entries made this request.

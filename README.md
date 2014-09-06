@@ -109,7 +109,7 @@ expected to have a filename of `src/Panel/MyCustomPanel.php`.
 ```php
 namespace App\Panel;
 
-use Cake\DebugKit\DebugPanel;
+use DebugKit\DebugPanel;
 
 /**
  * My Custom Panel

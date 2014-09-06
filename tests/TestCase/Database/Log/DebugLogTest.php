@@ -13,8 +13,8 @@
 namespace DebugKit\Test\TestCase\Database\Log;
 
 use Cake\Database\Log\LoggedQuery;
-use DebugKit\Database\Log\DebugLog;
 use Cake\TestSuite\TestCase;
+use DebugKit\Database\Log\DebugLog;
 
 /**
  * DebugLog test case

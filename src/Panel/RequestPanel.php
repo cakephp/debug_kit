@@ -13,9 +13,9 @@
 namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
-use DebugKit\DebugPanel;
 use Cake\Event\Event;
 use Cake\Routing\Router;
+use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on the Current request params.

@@ -13,8 +13,8 @@
  */
 namespace DebugKit\Test\TestCase;
 
-use Cake\TestSuite\TestCase;
 use Cake\Error\Debugger;
+use Cake\TestSuite\TestCase;
 use DebugKit\DebugTimer;
 
 /**

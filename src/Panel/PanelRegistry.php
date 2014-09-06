@@ -12,9 +12,9 @@
 namespace DebugKit\Panel;
 
 use Cake\Core\App;
+use Cake\Core\ObjectRegistry;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
-use Cake\Core\ObjectRegistry;
 
 /**
  * Registry object for panels.

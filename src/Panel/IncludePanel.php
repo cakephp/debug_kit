@@ -14,8 +14,8 @@ namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Core\Plugin;
-use DebugKit\DebugPanel;
 use Cake\Event\Event;
+use DebugKit\DebugPanel;
 
 /**
  * Provides a list of included files for the current request

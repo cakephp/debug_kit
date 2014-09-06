@@ -11,8 +11,6 @@
  */
 namespace DebugKit\Routing\Filter;
 
-use DebugKit\Panel\DebugPanel;
-use DebugKit\Panel\PanelRegistry;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
@@ -21,6 +19,8 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\DispatcherFilter;
 use Cake\Routing\Router;
 use Cake\Utility\String;
+use DebugKit\Panel\DebugPanel;
+use DebugKit\Panel\PanelRegistry;
 
 /**
  * Toolbar injector filter.

@@ -73,6 +73,7 @@ class PanelsController extends Controller {
  * View a panel's data.
  *
  * @param string $id The id.
+ * @return void
  */
 	public function view($id = null) {
 		$panel = $this->Panels->get($id);

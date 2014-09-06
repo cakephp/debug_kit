@@ -124,13 +124,18 @@ class BenchmarkShell extends Shell {
  * Calculate the standard deviation.
  *
  * @param array $times Array of values
- * @param boolean $sample
+ * @param boolean $sample ''
  * @return float Standard deviation
  */
 	protected function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
 
+/**
+ * Get option parser.
+ *
+ * @return \Cake\Console\OptionParser
+ */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(__d('debug_kit',

@@ -34,6 +34,7 @@ class CachePanel extends DebugPanel {
  * Initialize - install cache spies.
  *
  * @param \Cake\Event\Event $event The initialize event.
+ * @return void
  */
 	public function initialize(Event $event) {
 		foreach (Cache::configured() as $name) {

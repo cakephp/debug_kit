@@ -25,9 +25,8 @@ class TimedBehavior extends Behavior {
 /**
  * beforeFind, starts a timer for a find operation.
  *
- * @param Cake\Event\Event $event The beforeFind event
- * @param Cake\ORM\Query $query
- * @param array $queryData Array of query data (not modified)
+ * @param \Cake\Event\Event $event The beforeFind event
+ * @param \Cake\ORM\Query $query Query
  * @return boolean true
  */
 	public function beforeFind(Event $event, $query) {

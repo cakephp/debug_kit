@@ -53,6 +53,7 @@ class PanelsController extends Controller {
 /**
  * Index method that lets you get requests by panelid.
  *
+ * @param string $requestId Request id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */

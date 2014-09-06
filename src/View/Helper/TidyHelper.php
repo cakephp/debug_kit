@@ -1,5 +1,6 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -46,7 +47,7 @@ class TidyHelper extends AppHelper {
  * Fudge the markup slightly so that the tag which is invalid is highlighted
  *
  * @param string $html ''
- * @param string $out ''
+ * @param string &$out ''
  * @return array
  */
 	public function process($html = '', &$out = '') {
@@ -117,7 +118,7 @@ class TidyHelper extends AppHelper {
  * normalized string so that the error messages can be linked to the line that caused them.
  *
  * @param string $in ''
- * @param string $out ''
+ * @param string &$out ''
  * @return string
  */
 	public function tidyErrors($in = '', &$out = '') {
@@ -151,8 +152,8 @@ class TidyHelper extends AppHelper {
 /**
  * exec method
  *
- * @param mixed $cmd
- * @param mixed $out null
+ * @param mixed $cmd ''
+ * @param mixed &$out null
  * @return boolean True if successful
  */
 	protected function _exec($cmd, &$out = null) {

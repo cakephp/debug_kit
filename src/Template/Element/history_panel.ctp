@@ -16,7 +16,7 @@ use Cake\Routing\Router;
 <?php if (empty($requests)): ?>
 	<p class="warning"><?= __d('debug_kit', 'No previous requests logged.'); ?></p>
 <?php else: ?>
-	<?= count($requests); ?> <?= __d('debug_kit', 'previous requests available') ?>
+	<p><?= count($requests); ?> <?= __d('debug_kit', 'previous requests available') ?></p>
 	<ul class="history-list">
 		<li>
 			<?= $this->Html->link(
@@ -44,9 +44,11 @@ $(document).ready(function() {
 	var thisPanel = '<?= h($panel->id) ?>';
 	var urlBase = '<?= Router::fullBaseUrl() ?>';
 
-	$('.history-link').on('click', function(e) {
+	var buttons = $('.history-link');
+	buttons.on('click', function(e) {
 		var el = $(this);
 		e.preventDefault();
+		buttons.removeClass('active');
 		el.addClass('active');
 
 		$.getJSON(el.attr('href'), function(response) {

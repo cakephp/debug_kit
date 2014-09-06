@@ -15,7 +15,7 @@ namespace DebugKit\View\Helper;
 use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Utility\Debugger;
-use Cake\Utility\File;
+use Cake\Filesystem\File;
 
 /**
  * TidyHelper class

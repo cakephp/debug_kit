@@ -11,8 +11,6 @@ env:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - env: PHPCS=1
   include:
     - php: 5.4
       env: PHPCS=1
@@ -31,7 +29,7 @@ before_script:
 
 script:
   - sh -c "if [ '$PHPCS' != '1' ]; then phpunit; fi"
-  - sh -c "if [ '$PHPCS' = '1' ]; then phpcs -p --extensions=php --standard=CakePHP ./src ./tests; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then phpcs -n -p --extensions=php --standard=CakePHP ./src ./tests; fi"
 
 notifications:
   email: false

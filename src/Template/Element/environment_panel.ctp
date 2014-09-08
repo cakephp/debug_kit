@@ -47,7 +47,7 @@ use Cake\Utility\Inflector;
 		echo "CakePHP environment unavailable.";
 	} ?>
 
-<h2><?= __d('debug_kit', 'PHP Environment');?></h2>
+<h2><?= __d('debug_kit', 'PHP Environment') ?></h2>
 <?php
 	$headers = array('Environment Variable', 'Value');
 

@@ -14,16 +14,16 @@
 use Cake\Routing\Router;
 ?>
 <?php if (empty($requests)): ?>
-	<p class="warning"><?= __d('debug_kit', 'No previous requests logged.'); ?></p>
+	<p class="warning"><?= __d('debug_kit', 'No previous requests logged.') ?></p>
 <?php else: ?>
-	<p><?= count($requests); ?> <?= __d('debug_kit', 'previous requests available') ?></p>
+	<p><?= count($requests) ?> <?= __d('debug_kit', 'previous requests available') ?></p>
 	<ul class="history-list">
 		<li>
 			<?= $this->Html->link(
 				__d('debug_kit', 'Back to current request'),
 				['plugin' => 'DebugKit', 'controller' => 'Requests', 'action' => 'view', $panel->request_id],
 				['class' => 'active history-link']
-			); ?>
+			) ?>
 		</li>
 		<?php foreach ($requests as $request): ?>
 			<?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>

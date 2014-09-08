@@ -31,7 +31,7 @@ use Cake\Utility\Inflector;
 		echo "No application environment available.";
 	} ?>
 
-<h2><?php echo __d('debug_kit', 'CakePHP Constants'); ?></h2>
+<h2><?= __d('debug_kit', 'CakePHP Constants') ?></h2>
 <?php
 	if (!empty($cake)) {
 		$cakeRows = array();
@@ -47,7 +47,7 @@ use Cake\Utility\Inflector;
 		echo "CakePHP environment unavailable.";
 	} ?>
 
-<h2><?php echo __d('debug_kit', 'PHP Environment');?></h2>
+<h2><?= __d('debug_kit', 'PHP Environment') ?></h2>
 <?php
 	$headers = array('Environment Variable', 'Value');
 

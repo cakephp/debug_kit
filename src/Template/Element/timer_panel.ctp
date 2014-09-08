@@ -15,10 +15,10 @@ $this->addHelper('Number');
 $this->addHelper('DebugKit.SimpleGraph');
 ?>
 <section>
-	<h3><?php echo __d('debug_kit', 'Memory'); ?></h3>
+	<h3><?= __d('debug_kit', 'Memory') ?></h3>
 	<div class="peak-mem-use">
 		<strong><?= __d('debug_kit', 'Peak Memory Use:') ?></strong>
-		<?= $this->Number->toReadableSize($peakMemory); ?>
+		<?= $this->Number->toReadableSize($peakMemory) ?>
 	</div>
 
 	<table cellspacing="0" cellpadding="0">
@@ -28,7 +28,7 @@ $this->addHelper('DebugKit.SimpleGraph');
 		<tbody>
 		<?php foreach ($memory as $key => $value): ?>
 		<tr>
-			<td><?= h($key); ?></td>
+			<td><?= h($key) ?></td>
 			<td class="right-text"><?= $this->Number->toReadableSize($value) ?></td>
 		</tr>
 		<?php endforeach; ?>
@@ -37,7 +37,7 @@ $this->addHelper('DebugKit.SimpleGraph');
 </section>
 
 <section>
-	<h3><?php echo __d('debug_kit', 'Timers'); ?></h3>
+	<h3><?= __d('debug_kit', 'Timers') ?></h3>
 	<div class="request-time">
 		<strong><?= __d('debug_kit', 'Total Request Time:') ?></strong>
 		<?= $this->Number->precision($requestTime * 1000, 0) ?> ms

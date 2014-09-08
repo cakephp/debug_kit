@@ -17,7 +17,7 @@
  */
 ?>
 <h4>Routing Params</h4>
-<?php echo $this->Toolbar->makeNeatArray($params); ?>
+<?= $this->Toolbar->makeNeatArray($params) ?>
 
 <h4>Post data</h4>
 <?php
@@ -39,7 +39,7 @@ endif;
 
 <h4>Cookie</h4>
 <?php if (isset($cookie)): ?>
-	<?= $this->Toolbar->makeNeatArray($cookie); ?>
+	<?= $this->Toolbar->makeNeatArray($cookie) ?>
 <?php else: ?>
 	<p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
 <?php endif; ?>

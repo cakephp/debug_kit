@@ -13,7 +13,7 @@
  */
 ?>
 <?php if (empty($metrics)): ?>
-	<p class="info"><?php echo __d('debug_kit', 'There were no cache operations this request.'); ?></p>
+	<p class="info"><?= __d('debug_kit', 'There were no cache operations this request.') ?></p>
 <?php else: ?>
 	<?php foreach ($metrics as $name => $counters): ?>
 	<section class="section-tile">

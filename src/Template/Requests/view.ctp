@@ -12,7 +12,7 @@ use Cake\Routing\Router;
 	<?php foreach ($toolbar->panels as $panel): ?>
 	<li class="panel" data-id="<?= $panel->id ?>" style="display: none;">
 		<span class="panel-button">
-			<?= h($panel->title); ?>
+			<?= h($panel->title) ?>
 		</span>
 		<?php if (strlen($panel->summary)): ?>
 		<span class="panel-summary">
@@ -27,7 +27,7 @@ use Cake\Routing\Router;
 </ul>
 <?php $this->start('scripts') ?>
 <script>
-var baseUrl = "<?= Router::url('/', true); ?>";
+var baseUrl = "<?= Router::url('/', true) ?>";
 
 $(document).ready(function() {
 	var toolbar = new Toolbar({

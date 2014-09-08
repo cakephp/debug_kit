@@ -63,9 +63,9 @@ $noOutput = true;
 		<tbody>
 		<?php foreach ($queries as $query): ?>
 			<tr>
-				<td><?= h($query['query']); ?></td>
-				<td class="right-text"><?= h($query['rows']); ?></td>
-				<td class="right-text"><?= h($query['took']); ?></td>
+				<td><?= h($query['query']) ?></td>
+				<td class="right-text"><?= h($query['rows']) ?></td>
+				<td class="right-text"><?= h($query['took']) ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

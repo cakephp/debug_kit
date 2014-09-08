@@ -20,4 +20,4 @@
 <?= $this->Toolbar->makeNeatArray($paths) ?>
 
 <h4>Included Files</h4>
-<?= $this->Toolbar->makeNeatArray(['core' => $core, 'app' => $app, 'plugins' => $plugins]); ?>
+<?= $this->Toolbar->makeNeatArray(['core' => $core, 'app' => $app, 'plugins' => $plugins]) ?>

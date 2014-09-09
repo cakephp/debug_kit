@@ -117,6 +117,10 @@ Toolbar.prototype = {
 		return this._currentPanel;
 	},
 
+	currentPanelButton: function() {
+		return this.button.find("[data-id='" + this.currentPanel() + "']");
+	},
+
 	keyboardListener: function() {
 		var _this = this;
 		this.keyboardScope.keydown(function(event) {
@@ -130,6 +134,20 @@ Toolbar.prototype = {
 	  			if (_this.state() === "toolbar") {
 	  				return _this.toggle();
 	  			}
+	  		}
+	  		// Check for left arrow
+	  		if (event.keyCode === 37 && _this.isExpanded()) {
+  				var prevPanel = _this.currentPanelButton().prev();
+  				if (prevPanel.hasClass('panel')) {
+  					return _this.loadPanel(prevPanel.data('id'));
+  				}
+	  		}
+	  		// Check for right arrow
+	  		if (event.keyCode === 39 && _this.isExpanded()) {
+  				var nextPanel = _this.currentPanelButton().next();
+  				if (nextPanel.hasClass('panel')) {
+  					return _this.loadPanel(nextPanel.data('id'));
+  				}	
 	  		}
 	  	});
 	}

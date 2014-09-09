@@ -23,11 +23,10 @@
 		"source": "https://github.com/cakephp/debug_kit"
 	},
 	"require": {
-		"php": ">=5.4.19",
+		"cakephp/cakephp": "3.0.*-dev",
 		"cakephp/plugin-installer": "dev-master"
 	},
 	"require-dev": {
-		"cakephp/cakephp": "3.0.*-dev",
 		"phpunit/phpunit": "4.1.*"
 	},
 	"autoload": {

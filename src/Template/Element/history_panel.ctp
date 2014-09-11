@@ -22,13 +22,13 @@ use Cake\Routing\Router;
 			<?= $this->Html->link(
 				__d('debug_kit', 'Back to current request'),
 				['plugin' => 'DebugKit', 'controller' => 'Requests', 'action' => 'view', $panel->request_id],
-				['class' => 'active history-link']
+				['class' => 'history-link', 'data-request' => $panel->request_id]
 			) ?>
 		</li>
 		<?php foreach ($requests as $request): ?>
 			<?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>
 			<li>
-				<a class="history-link" href="<?= $this->Url->build($url) ?>">
+				<a class="history-link" data-request="<?= $request->id ?>" href="<?= $this->Url->build($url) ?>">
 					<span class="history-time"><?= h($request->requested_at) ?></span>
 					<span class="history-code"><?= h($request->status_code) ?></span>
 					<span class="history-type"><?= h($request->content_type) ?></span>
@@ -45,11 +45,17 @@ $(document).ready(function() {
 	var urlBase = '<?= Router::fullBaseUrl() ?>';
 
 	var buttons = $('.history-link');
+
+	// Highlight the active request.
+	buttons.filter('[data-request=' + window.toolbar.currentRequest + ']').addClass('active');
+
 	buttons.on('click', function(e) {
 		var el = $(this);
 		e.preventDefault();
 		buttons.removeClass('active');
 		el.addClass('active');
+
+		toolbar.currentRequest = el.data('request');
 
 		$.getJSON(el.attr('href'), function(response) {
 			for (var i = 0, len = response.panels.length; i < len; i++) {

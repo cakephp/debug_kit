@@ -21,7 +21,7 @@ use Cake\Routing\Router;
 		<li>
 			<?= $this->Html->link(
 				__d('debug_kit', 'Back to current request'),
-				['plugin' => 'DebugKit', 'controller' => 'Requests', 'action' => 'view', $panel->request_id],
+				['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id],
 				['class' => 'history-link', 'data-request' => $panel->request_id]
 			) ?>
 		</li>
@@ -43,7 +43,6 @@ $(document).ready(function() {
 	var panelButtons = $('.panel');
 	var thisPanel = '<?= h($panel->id) ?>';
 	var urlBase = '<?= Router::fullBaseUrl() ?>';
-
 	var buttons = $('.history-link');
 
 	// Highlight the active request.
@@ -55,7 +54,7 @@ $(document).ready(function() {
 		buttons.removeClass('active');
 		el.addClass('active');
 
-		toolbar.currentRequest = el.data('request');
+		window.toolbar.currentRequest = el.data('request');
 
 		$.getJSON(el.attr('href'), function(response) {
 			for (var i = 0, len = response.panels.length; i < len; i++) {
@@ -63,7 +62,7 @@ $(document).ready(function() {
 				var button = panelButtons.eq(i);
 
 				// Don't overwrite the history panel.
-				if (button.data('id') === thisPanel) {
+				if (button.data('id') == thisPanel) {
 					continue;
 				}
 				button.data('id', panel.id);

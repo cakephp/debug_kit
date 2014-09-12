@@ -325,14 +325,9 @@ table th {
 	padding: 6px;
 }
 
-.history-type,
-.history-code,
-.history-time {
+.history-bubble {
 	font-size: 12px;
 	line-height: 14px;
-}
-.history-type,
-.history-code {
 	display: inline-block;
 	background: #eee;
 	padding: 2px;

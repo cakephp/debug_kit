@@ -142,6 +142,7 @@ class DebugBarFilter extends DispatcherFilter {
 		$data = [
 			'url' => $request->here(),
 			'content_type' => $response->type(),
+			'method' => $request->method(),
 			'status_code' => $response->statusCode(),
 			'requested_at' => $request->env('REQUEST_TIME'),
 			'panels' => []

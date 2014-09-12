@@ -89,7 +89,10 @@ class DebugBarFilterTest extends TestCase {
  * @return void
  */
 	public function testAfterDispatchSavesData() {
-		$request = new Request(['url' => '/articles']);
+		$request = new Request([
+			'url' => '/articles',
+			'environment' => ['REQUEST_METHOD' => 'GET']
+		]);
 		$response = new Response([
 			'statusCode' => 200,
 			'type' => 'text/html',
@@ -108,6 +111,7 @@ class DebugBarFilterTest extends TestCase {
 			->contain('Panels')
 			->first();
 
+		$this->assertEquals('GET', $result->method);
 		$this->assertEquals('/articles', $result->url);
 		$this->assertNotEmpty($result->requested_at);
 		$this->assertNotEmpty('text/html', $result->content_type);

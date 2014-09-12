@@ -57,6 +57,12 @@ $(document).ready(function() {
 		window.toolbar.currentRequest = el.data('request');
 
 		$.getJSON(el.attr('href'), function(response) {
+			if (response.panels[0].request_id == window.toolbar.originalRequest) {
+				$('#panel-content-container').removeClass('history-mode');
+			} else {
+				$('#panel-content-container').addClass('history-mode');
+			}
+
 			for (var i = 0, len = response.panels.length; i < len; i++) {
 				var panel = response.panels[i];
 				var button = panelButtons.eq(i);

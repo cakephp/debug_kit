@@ -5,12 +5,14 @@ function Toolbar(options) {
 	this.panelClose = options.panelClose;
 	this.keyboardScope = options.keyboardScope;
 	this.currentRequest = options.currentRequest;
+	this.originalRequest = options.originalRequest;
 }
 
 Toolbar.prototype = {
 	_currentPanel: null,
 	_state: 0,
 	currentRequest: null,
+	originalRequest: null,
 
 	states: [
 		'collapse',

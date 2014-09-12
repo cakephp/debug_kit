@@ -37,7 +37,8 @@ $(document).ready(function() {
 		panelButtons: $('.panel'),
 		panelClose: $('#panel-close'),
 		keyboardScope : $(document),
-		currentRequest: '<?= $toolbar->id ?>'
+		currentRequest: '<?= $toolbar->id ?>',
+		originalRequest: '<?= $toolbar->id ?>'
 	});
 
 	toolbar.keyboardListener();

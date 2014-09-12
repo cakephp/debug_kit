@@ -89,7 +89,6 @@ class DebugBarFilterTest extends TestCase {
  * @return void
  */
 	public function testAfterDispatchSavesData() {
-		$this->markTestIncomplete('This causes MySQL to fail');
 		$request = new Request(['url' => '/articles']);
 		$response = new Response(['statusCode' => 200, 'type' => 'text/html']);
 

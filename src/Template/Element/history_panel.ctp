@@ -42,7 +42,6 @@ use Cake\Routing\Router;
 $(document).ready(function() {
 	var panelButtons = $('.panel');
 	var thisPanel = '<?= h($panel->id) ?>';
-	var urlBase = '<?= Router::fullBaseUrl() ?>';
 	var buttons = $('.history-link');
 
 	// Highlight the active request.

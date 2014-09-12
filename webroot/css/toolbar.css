@@ -135,6 +135,11 @@ p {
 	background: #009688;
 	padding: 10px;
 	margin: 0;
+	transition: background-color 300ms linear;
+}
+.history-mode .panel-title {
+	background: #ab47bc;
+	transition: background-color 300ms linear;
 }
 .panel-content {
 	padding: 10px;

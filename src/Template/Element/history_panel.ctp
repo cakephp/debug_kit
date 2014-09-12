@@ -21,14 +21,14 @@ use Cake\Routing\Router;
 		<li>
 			<?= $this->Html->link(
 				__d('debug_kit', 'Back to current request'),
-				['plugin' => 'DebugKit', 'controller' => 'Requests', 'action' => 'view', $panel->request_id],
-				['class' => 'active history-link']
+				['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id],
+				['class' => 'history-link', 'data-request' => $panel->request_id]
 			) ?>
 		</li>
 		<?php foreach ($requests as $request): ?>
 			<?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>
 			<li>
-				<a class="history-link" href="<?= $this->Url->build($url) ?>">
+				<a class="history-link" data-request="<?= $request->id ?>" href="<?= $this->Url->build($url) ?>">
 					<span class="history-time"><?= h($request->requested_at) ?></span>
 					<span class="history-code"><?= h($request->status_code) ?></span>
 					<span class="history-type"><?= h($request->content_type) ?></span>
@@ -42,25 +42,37 @@ use Cake\Routing\Router;
 $(document).ready(function() {
 	var panelButtons = $('.panel');
 	var thisPanel = '<?= h($panel->id) ?>';
-	var urlBase = '<?= Router::fullBaseUrl() ?>';
-
 	var buttons = $('.history-link');
+
+	// Highlight the active request.
+	buttons.filter('[data-request=' + window.toolbar.currentRequest + ']').addClass('active');
+
 	buttons.on('click', function(e) {
 		var el = $(this);
 		e.preventDefault();
 		buttons.removeClass('active');
 		el.addClass('active');
 
+		window.toolbar.currentRequest = el.data('request');
+
 		$.getJSON(el.attr('href'), function(response) {
+			if (response.panels[0].request_id == window.toolbar.originalRequest) {
+				$('#panel-content-container').removeClass('history-mode');
+			} else {
+				$('#panel-content-container').addClass('history-mode');
+			}
+
 			for (var i = 0, len = response.panels.length; i < len; i++) {
 				var panel = response.panels[i];
 				var button = panelButtons.eq(i);
+				var summary = button.find('.panel-summary');
 
 				// Don't overwrite the history panel.
-				if (button.data('id') === thisPanel) {
+				if (button.data('id') == thisPanel) {
 					continue;
 				}
 				button.data('id', panel.id);
+				summary.text(panel.summary);
 			}
 		});
 	});

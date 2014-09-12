@@ -28,14 +28,17 @@ use Cake\Routing\Router;
 <?php $this->start('scripts') ?>
 <script>
 var baseUrl = "<?= Router::url('/', true) ?>";
+var toolbar;
 
 $(document).ready(function() {
-	var toolbar = new Toolbar({
+	toolbar = new Toolbar({
 		button: $('#toolbar'),
 		content: $('#panel-content-container'),
 		panelButtons: $('.panel'),
 		panelClose: $('#panel-close'),
-		keyboardScope : $(document)
+		keyboardScope : $(document),
+		currentRequest: '<?= $toolbar->id ?>',
+		originalRequest: '<?= $toolbar->id ?>'
 	});
 
 	toolbar.keyboardListener();

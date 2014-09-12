@@ -90,7 +90,11 @@ class DebugBarFilterTest extends TestCase {
  */
 	public function testAfterDispatchSavesData() {
 		$request = new Request(['url' => '/articles']);
-		$response = new Response(['statusCode' => 200, 'type' => 'text/html']);
+		$response = new Response([
+			'statusCode' => 200,
+			'type' => 'text/html',
+			'body' => '<html><title>test</title><body><p>some text</p></body>'
+		]);
 
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();
@@ -114,34 +118,9 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertEquals('DebugKit.sql_log_panel', $result->panels[7]->element);
 		$this->assertNotEmpty($result->panels[7]->summary);
 		$this->assertEquals('Sql Log', $result->panels[7]->title);
-	}
-
-/**
- * Test that afterDispatch modifies response
- *
- * @return void
- */
-	public function testAfterDispatchModifiesResponse() {
-		$this->markTestIncomplete('Causes problems in MySQL');
-		$request = new Request(['url' => '/articles']);
-		$response = new Response([
-			'statusCode' => 200,
-			'type' => 'text/html',
-			'body' => '<html><title>test</title><body><p>some text</p></body>'
-		]);
-
-		$bar = new DebugBarFilter($this->events, []);
-		$bar->setup();
-
-		$event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
-		$bar->afterDispatch($event);
-
-		$toolbar = TableRegistry::get('DebugKit.Requests')->find()
-			->order(['Requests.requested_at' => 'DESC'])
-			->first();
 
 		$expected = '<html><title>test</title><body><p>some text</p>' .
-			"<script>var __debug_kit_id = '" . $toolbar->id . "', " .
+			"<script>var __debug_kit_id = '" . $result->id . "', " .
 			"__debug_kit_base_url = 'http://localhost/';</script>" .
 			'<script src="/debug_kit/js/toolbar.js"></script>' .
 			'</body>';
@@ -154,7 +133,6 @@ class DebugBarFilterTest extends TestCase {
  * @return void
  */
 	public function testAfterDispatchNoModifyResponse() {
-		$this->markTestIncomplete('Something funny happens with MySQL here.');
 		$request = new Request(['url' => '/articles']);
 
 		$response = new Response([

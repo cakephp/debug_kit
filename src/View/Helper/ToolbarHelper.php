@@ -136,38 +136,4 @@ class ToolbarHelper extends Helper {
 		return $out;
 	}
 
-/**
- * Generates a SQL explain link for a given query
- *
- * @param string $sql SQL query string you want an explain link for.
- * @param string $connection The connection name to make an explain link for.
- * @return string Rendered Html link or '' if the query is not a select/describe.
- */
-	public function explainLink($sql, $connection) {
-		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {
-			return '';
-		}
-		$sql = str_replace(array("\n", "\t"), ' ', $sql);
-		$hash = Security::hash($sql . $connection, 'sha1', true);
-		$url = array(
-			'plugin' => 'debug_kit',
-			'controller' => 'toolbar_access',
-			'action' => 'sql_explain',
-			'prefix' => false,
-		);
-
-		$this->explainLinkUid = (isset($this->explainLinkUid) ? $this->explainLinkUid + 1 : 0);
-		$uid = $this->explainLinkUid . '_' . rand(0, 10000);
-		$form = $this->Form->create('log', array('url' => $url, 'id' => "logForm{$uid}"));
-		$form .= $this->Form->hidden('log.ds', array('id' => "logDs{$uid}", 'value' => $connection));
-		$form .= $this->Form->hidden('log.sql', array('id' => "logSql{$uid}", 'value' => $sql));
-		$form .= $this->Form->hidden('log.hash', array('id' => "logHash{$uid}", 'value' => $hash));
-		$form .= $this->Form->submit(__d('debug_kit', 'Explain'), array(
-			'div' => false,
-			'class' => 'sql-explain-link'
-		));
-		$form .= $this->Form->end();
-		return $form;
-	}
-
 }

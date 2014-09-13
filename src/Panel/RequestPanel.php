@@ -38,6 +38,7 @@ class RequestPanel extends DebugPanel {
 			'data' => $request->data,
 			'cookie' => $request->cookies,
 			'get' => $_GET,
+			'headers' => ['response' => headers_sent($file, $line), 'file' => $file, 'line' => $line],
 		];
 	}
 }

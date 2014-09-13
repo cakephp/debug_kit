@@ -16,7 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<?php if ($headers['response']): ?>
+<?php if (!empty($headers) && $headers['response']): ?>
 <h4>Warning</h4>
 	<?= '<p class="warning">' . __d('debug_kit', "Headers already sent at file {$headers['file']} and line {$headers['line']}.") . '</p>' ?>
 <?php endif; ?>

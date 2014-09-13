@@ -30,8 +30,9 @@ use Cake\Routing\Router;
 			<li>
 				<a class="history-link" data-request="<?= $request->id ?>" href="<?= $this->Url->build($url) ?>">
 					<span class="history-time"><?= h($request->requested_at) ?></span>
-					<span class="history-code"><?= h($request->status_code) ?></span>
-					<span class="history-type"><?= h($request->content_type) ?></span>
+					<span class="history-bubble"><?= h($request->method) ?></span>
+					<span class="history-bubble"><?= h($request->status_code) ?></span>
+					<span class="history-bubble"><?= h($request->content_type) ?></span>
 					<span class="history-url"><?= h($request->url) ?></span>
 				</a>
 			</li>

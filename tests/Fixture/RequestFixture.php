@@ -31,6 +31,7 @@ class RequestFixture extends TestFixture {
 		'url' => ['type' => 'string', 'null' => false],
 		'content_type' => ['type' => 'string'],
 		'status_code' => ['type' => 'integer'],
+		'method' => ['type' => 'string'],
 		'requested_at' => ['type' => 'datetime', 'null' => false],
 		'_constraints' => [
 			'primary' => ['type' => 'primary', 'columns' => ['id']],

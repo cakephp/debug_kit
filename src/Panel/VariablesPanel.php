@@ -14,6 +14,7 @@ namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Database\Query;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use DebugKit\DebugPanel;
 
@@ -31,14 +32,20 @@ class VariablesPanel extends DebugPanel {
  */
 	public function shutdown(Event $event) {
 		$controller = $event->subject();
-
+		$errors = [];
 		$vars = $controller->viewVars;
 		foreach ($vars as $k => $v) {
 			// Execute queries so we can show the results in the toolbar.
 			if ($v instanceof Query) {
 				$vars[$k] = $v->all();
+			// Get the validation errors for Entity
+			} elseif ($v instanceof EntityInterface) {
+				$errors[$k] = $v->errors();
 			}
 		}
-		$this->_data = ['content' => $vars];
+		$this->_data = [
+			'content' => $vars,
+			'errors' => $errors
+		];
 	}
 }

@@ -12,3 +12,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 echo $this->Toolbar->makeNeatArray($content);
+
+if (!empty($errors)):
+	echo '<h4>Validation errors</h4>';
+	echo $this->Toolbar->makeNeatArray($errors);
+endif;

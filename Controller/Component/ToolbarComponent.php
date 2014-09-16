@@ -178,7 +178,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 	public function implementedEvents() {
 		$before = function ($name) {
 			return function () use ($name) {
-				DebugTimer::start($name, __d('debug_kit', $name));
+				DebugTimer::start($name, $name);
 			};
 		};
 		$after = function ($name) {

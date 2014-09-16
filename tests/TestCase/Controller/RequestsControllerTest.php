@@ -14,26 +14,22 @@
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Routing\Router;
-use Cake\TestSuite\ControllerTestCase;
+use Cake\TestSuite\IntegrationTestCase;
 
 /**
  * Request controller test.
  */
-class RequestsControllerTestCase extends ControllerTestCase {
+class RequestsControllerTestCase extends IntegrationTestCase {
 
 /**
  * Fixtures.
  *
  * @var array
  */
-	public $fixtures = ['plugin.debug_kit.request', 'plugin.debug_kit.panel'];
-
-/**
- * Don't reload routes.
- *
- * @var bool
- */
-	public $loadRoutes = false;
+	public $fixtures = [
+		'plugin.debug_kit.request',
+		'plugin.debug_kit.panel'
+	];
 
 /**
  * Setup method.
@@ -53,19 +49,24 @@ class RequestsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$result = $this->testAction('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', ['return' => 'contents']);
-		$this->assertContains('Request', $result, 'Has a panel button');
-		$this->assertContains('/css/toolbar.css', $result, 'Has a CSS file');
+		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
+		$result = $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+
+		$this->assertResponseOk();
+		$this->assertResponseContains('Request', 'Has a panel button');
+		$this->assertResponseContains('/css/toolbar.css', 'Has a CSS file');
 	}
 
 /**
  * Test getting a toolb that does notexists.
  *
- * @expectedException Cake\ORM\Exception\RecordNotFoundException
  * @return void
  */
 	public function testViewNotExists() {
-		$this->testAction('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', ['return' => 'contents']);
+		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
+		$this->get('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');
+
+		$this->assertResponseError();
 	}
 
 }

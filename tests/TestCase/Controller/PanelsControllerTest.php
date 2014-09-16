@@ -14,12 +14,12 @@
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Routing\Router;
-use Cake\TestSuite\ControllerTestCase;
+use Cake\TestSuite\IntegrationTestCase;
 
 /**
  * Panel controller test.
  */
-class PanelsControllerTestCase extends ControllerTestCase {
+class PanelsControllerTestCase extends IntegrationTestCase {
 
 /**
  * Fixtures.
@@ -30,13 +30,6 @@ class PanelsControllerTestCase extends ControllerTestCase {
 		'plugin.debug_kit.request',
 		'plugin.debug_kit.panel'
 	];
-
-/**
- * Don't reload routes.
- *
- * @var bool
- */
-	public $loadRoutes = false;
 
 /**
  * Setup method.
@@ -56,19 +49,28 @@ class PanelsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$result = $this->testAction('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', ['return' => 'contents']);
-		$this->assertContains('Request</h2>', $result);
-		$this->assertContains('Routing Params</h4>', $result);
+		$this->configRequest([
+			'headers' => ['Accept' => 'application/json']
+		]);
+		$this->get('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+
+		$this->assertResponseOk();
+		$this->assertResponseContains('Request</h2>');
+		$this->assertResponseContains('Routing Params</h4>');
 	}
 
 /**
  * Test getting a panel that does notexists.
  *
- * @expectedException Cake\ORM\Exception\RecordNotFoundException
  * @return void
  */
 	public function testViewNotExists() {
-		$this->testAction('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa', ['return' => 'contents']);
+		$this->configRequest([
+			'headers' => ['Accept' => 'application/json']
+		]);
+		$this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa.json');
+		$this->assertResponseError();
+		$this->assertResponseContains('Error page');
 	}
 
 }

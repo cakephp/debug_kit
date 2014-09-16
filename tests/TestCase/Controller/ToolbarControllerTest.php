@@ -15,12 +15,12 @@ namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Routing\Router;
-use Cake\TestSuite\ControllerTestCase;
+use Cake\TestSuite\IntegrationTestCase;
 
 /**
  * Toolbar controller test.
  */
-class ToolbarControllerTestCase extends ControllerTestCase {
+class ToolbarControllerTestCase extends IntegrationTestCase {
 
 /**
  * Fixtures.
@@ -31,13 +31,6 @@ class ToolbarControllerTestCase extends ControllerTestCase {
 		'plugin.debug_kit.request',
 		'plugin.debug_kit.panel'
 	];
-
-/**
- * Don't reload routes.
- *
- * @var bool
- */
-	public $loadRoutes = false;
 
 /**
  * Setup method.
@@ -56,15 +49,12 @@ class ToolbarControllerTestCase extends ControllerTestCase {
 /**
  * Test clearing the cache does not work with GET
  *
- * @expectedException Cake\Error\MethodNotAllowedException
  * @return void
  */
 	public function testClearCacheNoGet() {
-		$this->testAction('/debug_kit/toolbar/clear_cache', [
-			'method' => 'GET',
-			'query' => ['name' => 'testing'],
-			'return' => 'contents'
-		]);
+		$this->get('/debug_kit/toolbar/clear_cache?name=testing');
+
+		$this->assertEquals(405, $this->_response->statusCode());
 	}
 
 /**
@@ -82,12 +72,10 @@ class ToolbarControllerTestCase extends ControllerTestCase {
 			->will($this->returnValue(true));
 		Cache::config('testing', $mock);
 
-		$result = $this->testAction('/debug_kit/toolbar/clear_cache', [
-			'method' => 'POST',
-			'data' => ['name' => 'testing'],
-			'return' => 'contents'
-		]);
-		$this->assertContains('success', $result);
+		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
+		$this->post('/debug_kit/toolbar/clear_cache', ['name' => 'testing']);
+		$this->assertResponseOk();
+		$this->assertResponseContains('success');
 	}
 
 }

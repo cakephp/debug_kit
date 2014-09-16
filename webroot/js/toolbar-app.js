@@ -129,30 +129,30 @@ Toolbar.prototype = {
 		var _this = this;
 		this.keyboardScope.keydown(function(event) {
 			// Check for Esc key
-	  		if (event.keyCode === 27) {
-	  			// Close active panel
-	  			if (_this.isExpanded()) {  		
-	  				return _this.hideContent();
-	  			} 
-	  			// Collapse the toolbar
-	  			if (_this.state() === "toolbar") {
-	  				return _this.toggle();
-	  			}
-	  		}
-	  		// Check for left arrow
-	  		if (event.keyCode === 37 && _this.isExpanded()) {
-  				var prevPanel = _this.currentPanelButton().prev();
-  				if (prevPanel.hasClass('panel')) {
-  					return _this.loadPanel(prevPanel.data('id'));
-  				}
-	  		}
-	  		// Check for right arrow
-	  		if (event.keyCode === 39 && _this.isExpanded()) {
-  				var nextPanel = _this.currentPanelButton().next();
-  				if (nextPanel.hasClass('panel')) {
-  					return _this.loadPanel(nextPanel.data('id'));
-  				}	
-	  		}
-	  	});
+			if (event.keyCode === 27) {
+				// Close active panel
+				if (_this.isExpanded()) {  		
+					return _this.hideContent();
+				} 
+				// Collapse the toolbar
+				if (_this.state() === "toolbar") {
+					return _this.toggle();
+				}
+			}
+			// Check for left arrow
+			if (event.keyCode === 37 && _this.isExpanded()) {
+				var prevPanel = _this.currentPanelButton().prev();
+				if (prevPanel.hasClass('panel')) {
+					return _this.loadPanel(prevPanel.data('id'));
+				}
+			}
+			// Check for right arrow
+			if (event.keyCode === 39 && _this.isExpanded()) {
+				var nextPanel = _this.currentPanelButton().next();
+				if (nextPanel.hasClass('panel')) {
+					return _this.loadPanel(nextPanel.data('id'));
+				}	
+			}
+		});
 	}
 };

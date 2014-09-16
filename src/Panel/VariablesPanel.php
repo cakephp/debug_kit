@@ -41,6 +41,7 @@ class VariablesPanel extends DebugPanel {
 			// Get the validation errors for Entity
 			} elseif ($v instanceof EntityInterface) {
 				$errors[$k] = $v->errors();
+			}
 		}
 		$this->_data = [
 			'content' => $vars,

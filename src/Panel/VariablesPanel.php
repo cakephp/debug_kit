@@ -14,8 +14,8 @@ namespace DebugKit\Panel;
 
 use Cake\Controller\Controller;
 use Cake\Database\Query;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Entity;
 use DebugKit\DebugPanel;
 
 /**
@@ -39,12 +39,8 @@ class VariablesPanel extends DebugPanel {
 			if ($v instanceof Query) {
 				$vars[$k] = $v->all();
 			// Get the validation errors for Entity
-			} elseif ($v instanceof Entity) {
+			} elseif ($v instanceof EntityInterface) {
 				$errors[$k] = $v->errors();
-			// Get the validation errors for Array
-			} elseif (is_array($v) && !empty($v['errors'])) {
-				$errors[$k] = $v['errors'];
-			}
 		}
 		$this->_data = [
 			'content' => $vars,

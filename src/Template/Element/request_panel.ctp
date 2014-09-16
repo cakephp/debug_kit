@@ -26,7 +26,7 @@
 
 <h4>Post data</h4>
 <?php
-if (empty($content['data'])):
+if (empty($data)):
 	echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
 else:
 	echo $this->Toolbar->makeNeatArray($data);

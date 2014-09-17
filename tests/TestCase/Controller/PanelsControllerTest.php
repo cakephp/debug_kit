@@ -68,7 +68,7 @@ class PanelsControllerTestCase extends IntegrationTestCase {
 		$this->configRequest([
 			'headers' => ['Accept' => 'application/json']
 		]);
-		$this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa.json');
+		$this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
 		$this->assertResponseError();
 		$this->assertResponseContains('Error page');
 	}

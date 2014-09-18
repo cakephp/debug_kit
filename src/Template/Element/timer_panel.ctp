@@ -11,8 +11,6 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-$this->addHelper('Number');
-$this->addHelper('DebugKit.SimpleGraph');
 ?>
 <section>
 	<h3><?= __d('debug_kit', 'Memory') ?></h3>

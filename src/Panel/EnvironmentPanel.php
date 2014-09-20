@@ -55,7 +55,6 @@ class EnvironmentPanel extends DebugPanel {
 			'ROOT' => ROOT,
 			'TESTS' => TESTS,
 			'TMP' => TMP,
-			'WEBROOT_DIR' => WEBROOT_DIR,
 			'WWW_ROOT' => WWW_ROOT
 		);
 

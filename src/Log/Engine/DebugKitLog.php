@@ -12,13 +12,13 @@
  */
 namespace DebugKit\Log\Engine;
 
-use Cake\Log\LogInterface;
+use Cake\Log\Engine\BaseLog;
 
 /**
  * A CakeLog listener which saves having to munge files or other configured loggers.
  *
  */
-class DebugKitLog implements LogInterface {
+class DebugKitLog extends BaseLog {
 
 /**
  * logs
@@ -32,14 +32,14 @@ class DebugKitLog implements LogInterface {
  *
  * @param string $type The type of message being logged.
  * @param string $message The message being logged.
- * @param array $scope The scope
+ * @param array $context Additional context data
  * @return void
  */
-	public function write($type, $message, $scope = []) {
+	public function log($type, $message, array $context = []) {
 		if (!isset($this->logs[$type])) {
 			$this->logs[$type] = array();
 		}
-		$this->_logs[$type][] = array(date('Y-m-d H:i:s'), (string)$message);
+		$this->_logs[$type][] = array(date('Y-m-d H:i:s'), $this->_format($message));
 	}
 
 /**

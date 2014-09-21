@@ -81,12 +81,11 @@ class DebugPanel implements EventListener {
 	}
 
 /**
- * Initialize callback
+ * Initialize hook method.
  *
- * @param \Cake\Event\Event $event The event.
  * @return void
  */
-	public function initialize(Event $event) {
+	public function initialize() {
 	}
 
 /**
@@ -105,7 +104,6 @@ class DebugPanel implements EventListener {
  */
 	public function implementedEvents() {
 		return [
-			'Controller.initialize' => 'initialize',
 			'Controller.shutdown' => 'shutdown',
 		];
 	}

@@ -15,6 +15,7 @@ namespace DebugKit\Test\Routing\Filter;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
@@ -59,6 +60,22 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertContains('SqlLog', $bar->loadedPanels());
 		$this->assertGreaterThan(1, $this->events->listeners('Controller.shutdown'));
 		$this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
+	}
+
+/**
+ * Test that beforeDispatch call initialize on each panel
+ *
+ * @return void
+ */
+	public function testBeforeDispatch() {
+		$bar = new DebugBarFilter($this->events, []);
+		$bar->setup();
+
+		$this->assertNull(Log::config('debug_kit_log_panel'));
+		$event = new Event('Dispatcher.beforeDispatch');
+		$bar->beforeDispatch($event);
+
+		$this->assertNotEmpty(Log::config('debug_kit_log_panel'), 'Panel attached logger.');
 	}
 
 /**

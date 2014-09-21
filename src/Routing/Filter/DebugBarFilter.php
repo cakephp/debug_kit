@@ -46,8 +46,6 @@ class DebugBarFilter extends DispatcherFilter {
  * @var array
  */
 	protected $_defaultConfig = [
-		// Attempt to execute last.
-		'priority' => 9999,
 		'panels' => [
 			'DebugKit.Cache',
 			'DebugKit.Session',
@@ -73,6 +71,24 @@ class DebugBarFilter extends DispatcherFilter {
 		$this->eventManager($events);
 		$this->config($config);
 		$this->_registry = new PanelRegistry($events);
+	}
+
+/**
+ * Event bindings
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+		return [
+			'Dispatcher.beforeDispatch' => [
+				'callable' => 'beforeDispatch',
+				'priority' => 0,
+			],
+			'Dispatcher.afterDispatch' => [
+				'callable' => 'afterDispatch',
+				'priority' => 9999,
+			],
+		];
 	}
 
 /**

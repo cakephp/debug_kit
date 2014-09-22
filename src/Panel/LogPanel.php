@@ -24,11 +24,11 @@ use DebugKit\DebugPanel;
 class LogPanel extends DebugPanel {
 
 /**
- * Constructor - sets up the log listener.
+ * Initialize hook - sets up the log listener.
  *
  * @return \LogPanel
  */
-	public function __construct() {
+	public function initialize() {
 		if (Log::config('debug_kit_log_panel')) {
 			return;
 		}
@@ -55,6 +55,9 @@ class LogPanel extends DebugPanel {
  */
 	public function summary() {
 		$logger = Log::engine('debug_kit_log_panel');
+		if (!$logger) {
+			return 0;
+		}
 		return $logger->count();
 	}
 

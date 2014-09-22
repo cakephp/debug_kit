@@ -48,7 +48,9 @@ class LogPanelTest extends TestCase {
  *
  * @return void
  */
-	public function testConstructor() {
+	public function testInitialize() {
+		$this->panel->initialize();
+
 		$result = Log::configured();
 		$this->assertContains('debug_kit_log_panel', $result);
 		$this->assertTrue(count($result) > 1, 'Default loggers were not added.');
@@ -60,6 +62,7 @@ class LogPanelTest extends TestCase {
  * @return void
  */
 	public function testData() {
+		$this->panel->initialize();
 		Log::write('error', 'Test');
 
 		$result = $this->panel->data();
@@ -77,6 +80,8 @@ class LogPanelTest extends TestCase {
  * @return void
  */
 	public function testSummary() {
+		$this->panel->initialize();
+
 		Log::write('error', 'Test');
 		$this->assertEquals(1, $this->panel->summary());
 

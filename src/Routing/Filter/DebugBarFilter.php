@@ -46,8 +46,6 @@ class DebugBarFilter extends DispatcherFilter {
  * @var array
  */
 	protected $_defaultConfig = [
-		// Attempt to execute last.
-		'priority' => 9999,
 		'panels' => [
 			'DebugKit.Cache',
 			'DebugKit.Session',
@@ -73,6 +71,24 @@ class DebugBarFilter extends DispatcherFilter {
 		$this->eventManager($events);
 		$this->config($config);
 		$this->_registry = new PanelRegistry($events);
+	}
+
+/**
+ * Event bindings
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+		return [
+			'Dispatcher.beforeDispatch' => [
+				'callable' => 'beforeDispatch',
+				'priority' => 0,
+			],
+			'Dispatcher.afterDispatch' => [
+				'callable' => 'afterDispatch',
+				'priority' => 9999,
+			],
+		];
 	}
 
 /**
@@ -122,6 +138,17 @@ class DebugBarFilter extends DispatcherFilter {
 	public function setup() {
 		foreach ($this->config('panels') as $panel) {
 			$this->_registry->load($panel);
+		}
+	}
+
+/**
+ * Call the initialize method onl all the loaded panels.
+ *
+ * @param \Cake\Event\Event $event The beforeDispatch event.
+ */
+	public function beforeDispatch(Event $event) {
+		foreach ($this->_registry->loaded() as $panel) {
+			$this->_registry->{$panel}->initialize();
 		}
 	}
 

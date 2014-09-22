@@ -234,6 +234,10 @@ class DebugEngine extends CacheEngine {
  * @return string Returns the CacheEngine's name
  */
 	public function __toString() {
+		if (!empty($this->_engine)) {
+			list($ns, $class) = namespaceSplit(get_class($this->_engine));
+			return str_replace('Engine', '', $class);
+		}
 		return $this->_config['className'];
 	}
 

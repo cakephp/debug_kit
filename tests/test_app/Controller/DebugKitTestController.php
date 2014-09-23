@@ -17,6 +17,8 @@
  **/
 namespace DebugKit\Test\test_app\Controller;
 
+use Cake\Controller\Controller;
+
 /**
  * Class DebugKitTestController
  *

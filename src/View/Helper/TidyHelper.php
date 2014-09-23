@@ -17,6 +17,7 @@ use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Filesystem\File;
 use Cake\Log\Log;
+use Cake\View\Helper;
 
 /**
  * TidyHelper class
@@ -26,7 +27,7 @@ use Cake\Log\Log;
  * @uses          AppHelper
  * @since         v 1.0 (22-Jun-2009)
  */
-class TidyHelper extends AppHelper {
+class TidyHelper extends Helper {
 
 /**
  * helpers property

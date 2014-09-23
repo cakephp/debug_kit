@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Console\Command;
 
+use Cake\Console\Shell;
 use Cake\Filesystem\Folder;
 
 /**

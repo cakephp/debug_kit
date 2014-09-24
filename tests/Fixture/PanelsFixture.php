@@ -15,11 +15,11 @@ namespace Debugkit\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * Panel fixture.
+ * Panels fixture.
  *
  * Used to create schema for tests and at runtime.
  */
-class PanelFixture extends TestFixture {
+class PanelsFixture extends TestFixture {
 
 /**
  * fields property

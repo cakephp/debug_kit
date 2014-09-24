@@ -38,7 +38,7 @@ class RequestsTable extends Table {
 				'Model.beforeSave' => ['requested_at' => 'new']
 			]
 		]);
-		$this->ensureTables(['DebugKit.Panel', 'DebugKit.Request']);
+		$this->ensureTables(['DebugKit.Panels', 'DebugKit.Requests']);
 	}
 
 /**

@@ -27,7 +27,7 @@ class TimedBehaviorTestCase extends TestCase {
  *
  * @var array
  */
-	public $fixtures = array('core.article');
+	public $fixtures = ['core.articles'];
 
 /**
  * Start Test callback

@@ -29,7 +29,7 @@ class SqlLogPanelTest extends TestCase {
  *
  * @var array
  */
-	public $fixtures = ['core.article'];
+	public $fixtures = ['core.articles'];
 
 /**
  * Setup

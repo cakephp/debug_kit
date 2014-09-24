@@ -72,7 +72,7 @@ $(document).ready(function() {
 				if (button.data('id') == thisPanel) {
 					continue;
 				}
-				button.data('id', panel.id);
+				button.attr('data-id', panel.id);
 				summary.text(panel.summary);
 			}
 		});

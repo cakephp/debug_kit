@@ -41,33 +41,8 @@ $(document).ready(function() {
 		originalRequest: '<?= $toolbar->id ?>'
 	});
 
-	toolbar.keyboardListener();
+	toolbar.initialize();
 
-	toolbar.button.on('click', function(e) {
-		toolbar.toggle();
-	});
-
-	toolbar.panelButtons.on('click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		var id = $(this).data('id');
-		var samePanel = toolbar.currentPanel() === id;
-
-		if (toolbar.isExpanded() && samePanel) {
-			toolbar.hideContent();
-		}
-		if (samePanel) {
-			return false;
-		}
-		toolbar.loadPanel(id);
-	});
-
-	toolbar.panelClose.on('click', function(e) {
-		toolbar.hideContent();
-		return false;
-	});
-
-	toolbar.loadState();
 });
 </script>
 <?php $this->end() ?>

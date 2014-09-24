@@ -154,5 +154,38 @@ Toolbar.prototype = {
 				}	
 			}
 		});
+	},
+
+	mouseListener : function() {
+		var _this = this;
+		this.panelButtons.on('click', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			var id = $(this).attr('data-id');
+			var samePanel = _this.currentPanel() === id;
+
+			if (_this.isExpanded() && samePanel) {
+				_this.hideContent();
+			}
+			if (samePanel) {
+				return false;
+			}
+			_this.loadPanel(id);
+		});
+
+		this.button.on('click', function(e) {
+			_this.toggle();
+		});
+
+		toolbar.panelClose.on('click', function(e) {
+			_this.hideContent();
+			return false;
+		});
+	},
+
+	initialize: function() {
+		this.mouseListener();
+		this.keyboardListener();
+		this.loadState();
 	}
 };

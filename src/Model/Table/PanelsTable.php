@@ -32,7 +32,7 @@ class PanelsTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->belongsTo('DebugKit.Requests');
-		$this->ensureTables(['DebugKit.Panel', 'DebugKit.Request']);
+		$this->ensureTables(['DebugKit.Panels', 'DebugKit.Requests']);
 	}
 
 /**

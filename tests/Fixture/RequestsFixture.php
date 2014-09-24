@@ -15,11 +15,11 @@ namespace Debugkit\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * Request fixture.
+ * Requests fixture.
  *
  * Used to create schema for tests and at runtime.
  */
-class RequestFixture extends TestFixture {
+class RequestsFixture extends TestFixture {
 
 /**
  * fields property

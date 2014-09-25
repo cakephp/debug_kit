@@ -7,6 +7,9 @@
 	</head>
 	<body>
 	<?= $this->fetch('content') ?>
+	<div id="loader">
+		<?= $this->Html->image('DebugKit.cake.icon.png', ['class' => 'indicator'])?>
+	</div>
 	</body>
 	<?= $this->Html->script('DebugKit.jquery') ?>
 	<?= $this->Html->script('DebugKit.toolbar-app') ?>

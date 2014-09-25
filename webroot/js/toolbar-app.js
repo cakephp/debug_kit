@@ -90,14 +90,17 @@ Toolbar.prototype = {
 		var url = baseUrl + 'debug_kit/panels/view/' + id;
 		var contentArea = this.content.find('#panel-content');
 		var _this = this;
+		var loader = $('#loader');
 		this._currentPanel = id;
 
 		window.parent.postMessage('expand', window.location.origin);
 
 		// Slide panel into place - css transitions.
 		this.content.addClass('enabled');
+		loader.addClass('loading');
 
 		$.get(url, function(response) {
+			loader.removeClass('loading');
 			contentArea.html(response);
 			_this.bindNeatArray();
 		});

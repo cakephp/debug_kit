@@ -70,7 +70,7 @@ class SqlLogPanel extends DebugPanel {
  */
 	public function data() {
 		return [
-			'tables' => array_map(function($table) {
+			'tables' => array_map(function ($table) {
 				return $table->alias();
 			}, TableRegistry::genericInstances()),
 			'loggers' => $this->_loggers,

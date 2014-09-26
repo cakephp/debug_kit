@@ -204,7 +204,7 @@ class DebugBarFilterTest extends TestCase {
 	public function testIsEnabledForceEnableCallable() {
 		Configure::write('debug', false);
 		$bar = new DebugBarFilter($this->events, [
-			'forceEnable' => function() {
+			'forceEnable' => function () {
 				return true;
 			}
 		]);

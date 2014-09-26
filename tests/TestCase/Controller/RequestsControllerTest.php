@@ -38,7 +38,7 @@ class RequestsControllerTestCase extends IntegrationTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		Router::plugin('DebugKit', function($routes) {
+		Router::plugin('DebugKit', function ($routes) {
 			$routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
 		});
 	}

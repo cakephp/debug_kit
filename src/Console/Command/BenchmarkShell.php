@@ -99,7 +99,7 @@ class BenchmarkShell extends Shell {
  * p. 232. Boston: Addison-Wesley.
  *
  * @param array $times Array of values
- * @param boolean $sample If true, calculates an unbiased estimate of the population
+ * @param bool $sample If true, calculates an unbiased estimate of the population
  * 						  variance from a finite sample.
  * @return float Variance
  */
@@ -124,7 +124,7 @@ class BenchmarkShell extends Shell {
  * Calculate the standard deviation.
  *
  * @param array $times Array of values
- * @param boolean $sample ''
+ * @param bool $sample ''
  * @return float Standard deviation
  */
 	protected function _deviation($times, $sample = true) {

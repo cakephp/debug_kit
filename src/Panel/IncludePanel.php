@@ -95,7 +95,7 @@ class IncludePanel extends DebugPanel {
  * Check if a path is part of cake core
  *
  * @param string $file File to check
- * @return boolean
+ * @return bool
  */
 	protected function _isCoreFile($file) {
 		return strstr($file, CAKE);
@@ -105,7 +105,7 @@ class IncludePanel extends DebugPanel {
  * Check if a path is from APP but not a plugin
  *
  * @param string $file File to check
- * @return boolean
+ * @return bool
  */
 	protected function _isAppFile($file) {
 		return strstr($file, APP);
@@ -115,7 +115,7 @@ class IncludePanel extends DebugPanel {
  * Check if a path is from a plugin
  *
  * @param string $file File to check
- * @return boolean
+ * @return bool
  */
 	protected function _isPluginFile($file) {
 		foreach ($this->_pluginPaths as $plugin => $path) {

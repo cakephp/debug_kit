@@ -155,7 +155,7 @@ class TidyHelper extends Helper {
  *
  * @param mixed $cmd ''
  * @param mixed &$out null
- * @return boolean True if successful
+ * @return bool True if successful
  */
 	protected function _exec($cmd, &$out = null) {
 		if (DS === '/') {

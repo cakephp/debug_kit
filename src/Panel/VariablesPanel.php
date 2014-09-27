@@ -38,8 +38,8 @@ class VariablesPanel extends DebugPanel {
 			// Execute queries so we can show the results in the toolbar.
 			if ($v instanceof Query) {
 				$vars[$k] = $v->all();
-			// Get the validation errors for Entity
 			} elseif ($v instanceof EntityInterface) {
+				// Get the validation errors for Entity
 				$errors[$k] = $v->errors();
 			}
 		}

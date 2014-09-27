@@ -27,12 +27,12 @@ class TimedBehavior extends Behavior {
  *
  * @param \Cake\Event\Event $event The beforeFind event
  * @param \Cake\ORM\Query $query Query
- * @return boolean true
+ * @return bool true
  */
 	public function beforeFind(Event $event, $query) {
 		$alias = $event->subject()->alias();
 		DebugTimer::start($alias . '_find', $alias . '->find()');
-		return $query->formatResults(function($results) use ($alias) {
+		return $query->formatResults(function ($results) use ($alias) {
 			DebugTimer::stop($alias . '_find');
 			return $results;
 		});

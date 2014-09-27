@@ -39,7 +39,7 @@ class ToolbarControllerTestCase extends IntegrationTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		Router::plugin('DebugKit', function($routes) {
+		Router::plugin('DebugKit', function ($routes) {
 			$routes->connect(
 				'/toolbar/clear_cache/*',
 				['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']);

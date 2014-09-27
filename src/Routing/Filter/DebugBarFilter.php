@@ -145,6 +145,7 @@ class DebugBarFilter extends DispatcherFilter {
  * Call the initialize method onl all the loaded panels.
  *
  * @param \Cake\Event\Event $event The beforeDispatch event.
+ * @return void
  */
 	public function beforeDispatch(Event $event) {
 		foreach ($this->_registry->loaded() as $panel) {

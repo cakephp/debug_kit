@@ -184,6 +184,8 @@ table {
 	clear: both;
 	margin: 10px 0;
 	border-spacing: 0;
+	table-layout: fixed;
+	word-wrap: break-word;
 }
 table td,
 table th {

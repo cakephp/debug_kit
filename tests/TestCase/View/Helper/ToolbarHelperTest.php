@@ -291,14 +291,12 @@ class ToolbarHelperTestCase extends TestCase {
 		$result = $this->Toolbar->table($rows);
 		$expected = array(
 			'table' => array('class' => 'debug-table'),
-			array('tr' => array('class' => 'odd')),
+			'<tr',
 			'<td', '1', '/td',
-			'<td', '2', '/td',
-			'/tr',
-			array('tr' => array('class' => 'even')),
+			'<td', '2', '/td', '/tr',
+			'<tr',
 			'<td', '3', '/td',
-			'<td', '4', '/td',
-			'/tr',
+			'<td', '4', '/td', '/tr',
 			'/table'
 		);
 		$this->assertTags($result, $expected);

@@ -61,7 +61,6 @@ class EnvironmentPanel extends DebugPanel {
 		$cakeConstants = array_fill_keys(
 			array(
 				'DS', 'ROOT', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
-				'LOG_ERROR'
 			), ''
 		);
 		$var = get_defined_constants(true);

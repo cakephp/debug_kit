@@ -143,9 +143,8 @@ Toolbar.prototype = {
 			}
 			// Check for left arrow
 			if (event.keyCode === 37 && _this.isExpanded()) {
-				var currentPanel = _this.currentPanelButton();
-				currentPanel.removeClass('panel-active');
-				var prevPanel = currentPanel.prev();
+				_this.panelButtons.removeClass('panel-active');
+				var prevPanel = _this.currentPanelButton().prev();
 				if (prevPanel.hasClass('panel')) {
 					prevPanel.addClass('panel-active');
 					return _this.loadPanel(prevPanel.data('id'));
@@ -153,9 +152,8 @@ Toolbar.prototype = {
 			}
 			// Check for right arrow
 			if (event.keyCode === 39 && _this.isExpanded()) {
-				var currentPanel = _this.currentPanelButton();
-				currentPanel.removeClass('panel-active');
-				var nextPanel = currentPanel.next();
+				_this.panelButtons.removeClass('panel-active');
+				var nextPanel = _this.currentPanelButton().next();
 				if (nextPanel.hasClass('panel')) {
 					nextPanel.addClass('panel-active');
 					return _this.loadPanel(nextPanel.data('id'));

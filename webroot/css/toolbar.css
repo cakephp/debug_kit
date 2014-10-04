@@ -99,6 +99,16 @@ p {
 }
 .panel:first-child {
 	border-left: 0;
+	border-radius: 8px 0 0 0;;
+}
+.panel-active {
+	color: #fff;
+	background-color: #009688;
+	transition: background-color 300ms linear;
+
+}
+.history-mode .panel-active {
+	background: #ab47bc;
 }
 
 /**
@@ -139,7 +149,6 @@ p {
 }
 .history-mode .panel-title {
 	background: #ab47bc;
-	transition: background-color 300ms linear;
 }
 .panel-content {
 	padding: 10px;

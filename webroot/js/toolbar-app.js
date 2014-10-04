@@ -77,6 +77,8 @@ Toolbar.prototype = {
 	hideContent: function() {
 		// slide out - css animation
 		this.content.removeClass('enabled');
+		// remove the active state on buttons
+		this.currentPanelButton().removeClass('panel-active');
 		var _this = this;
 
 		// Hardcode timer as one does.
@@ -131,7 +133,7 @@ Toolbar.prototype = {
 			// Check for Esc key
 			if (event.keyCode === 27) {
 				// Close active panel
-				if (_this.isExpanded()) {  		
+				if (_this.isExpanded()) {
 					return _this.hideContent();
 				} 
 				// Collapse the toolbar
@@ -141,15 +143,21 @@ Toolbar.prototype = {
 			}
 			// Check for left arrow
 			if (event.keyCode === 37 && _this.isExpanded()) {
-				var prevPanel = _this.currentPanelButton().prev();
+				var currentPanel = _this.currentPanelButton();
+				currentPanel.removeClass('panel-active');
+				var prevPanel = currentPanel.prev();
 				if (prevPanel.hasClass('panel')) {
+					prevPanel.addClass('panel-active');
 					return _this.loadPanel(prevPanel.data('id'));
 				}
 			}
 			// Check for right arrow
 			if (event.keyCode === 39 && _this.isExpanded()) {
-				var nextPanel = _this.currentPanelButton().next();
+				var currentPanel = _this.currentPanelButton();
+				currentPanel.removeClass('panel-active');
+				var nextPanel = currentPanel.next();
 				if (nextPanel.hasClass('panel')) {
+					nextPanel.addClass('panel-active');
 					return _this.loadPanel(nextPanel.data('id'));
 				}	
 			}
@@ -159,6 +167,7 @@ Toolbar.prototype = {
 	mouseListener : function() {
 		var _this = this;
 		this.panelButtons.on('click', function(e) {
+			_this.panelButtons.removeClass('panel-active');
 			e.preventDefault();
 			e.stopPropagation();
 			var id = $(this).attr('data-id');
@@ -170,6 +179,7 @@ Toolbar.prototype = {
 			if (samePanel) {
 				return false;
 			}
+			$(this).addClass('panel-active');
 			_this.loadPanel(id);
 		});
 

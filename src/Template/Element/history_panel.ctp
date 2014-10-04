@@ -59,8 +59,10 @@ $(document).ready(function() {
 		$.getJSON(el.attr('href'), function(response) {
 			if (response.panels[0].request_id == window.toolbar.originalRequest) {
 				$('#panel-content-container').removeClass('history-mode');
+				$('#toolbar').removeClass('history-mode');
 			} else {
 				$('#panel-content-container').addClass('history-mode');
+				$('#toolbar').addClass('history-mode');
 			}
 
 			for (var i = 0, len = response.panels.length; i < len; i++) {

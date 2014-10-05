@@ -61,9 +61,9 @@ $noOutput = true;
 				];
 			}
 			$headers = [
-				__d('debug_kit','Query'),
-				__d('debug_kit','Num rows'),
-				__d('debug_kit','Took (ms)'),
+				__d('debug_kit', 'Query'),
+				__d('debug_kit', 'Num rows'),
+				__d('debug_kit', 'Took (ms)'),
 			];
 			echo $this->Toolbar->table($sqlLogRows, $headers);
 		?>

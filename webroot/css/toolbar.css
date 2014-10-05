@@ -193,8 +193,6 @@ table {
 	clear: both;
 	margin: 10px 0;
 	border-spacing: 0;
-	table-layout: fixed;
-	word-wrap: break-word;
 }
 table td,
 table th {
@@ -217,10 +215,14 @@ table th {
 	font-family: Monaco, Consolas, mono-space;
 }
 
-/* Two column tables have the 2nd cell right aligned */
-.debug-table th:nth-child(2),
-.debug-table td:nth-child(2) {
+/* X column tables have the 2nd+ cell right aligned */
+.debug-table th:nth-child(n+2),
+.debug-table td:nth-child(n+2) {
 	text-align:right;
+}
+.debug-table td:nth-child(n+2) {
+	word-wrap: break-word;
+	word-break: break-word; // Not standard for webkit
 }
 
 .list {

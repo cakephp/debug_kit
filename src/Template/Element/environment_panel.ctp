@@ -26,7 +26,7 @@ use Cake\Utility\Inflector;
 			);
 		}
 		$headers = array('Constant', 'Value');
-		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Application Environment Vars'));
+		echo $this->Toolbar->table($cakeRows, $headers);
 	} else {
 		echo "No application environment available.";
 	} ?>
@@ -42,7 +42,7 @@ use Cake\Utility\Inflector;
 			);
 		}
 		$headers = array('Constant', 'Value');
-		echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'CakePHP Environment Vars'));
+		echo $this->Toolbar->table($cakeRows, $headers);
 	} else {
 		echo "CakePHP environment unavailable.";
 	} ?>
@@ -59,7 +59,7 @@ use Cake\Utility\Inflector;
 				h($val)
 			);
 		}
-		echo $this->Toolbar->table($phpRows, $headers, array('title' => 'CakePHP Environment Vars'));
+		echo $this->Toolbar->table($phpRows, $headers);
 	} else {
 		echo "PHP environment unavailable.";
 	}
@@ -75,7 +75,7 @@ use Cake\Utility\Inflector;
 				);
 			}
 			$headers = array('Constant', 'Value');
-			echo $this->Toolbar->table($cakeRows, $headers, array('title' => 'Hidef Environment Vars'));
+			echo $this->Toolbar->table($cakeRows, $headers);
 		} else {
 			echo "No Hidef environment available.";
 		}

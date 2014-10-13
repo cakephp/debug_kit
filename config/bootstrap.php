@@ -17,7 +17,7 @@ use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
 use Cake\Routing\Router;
 use DebugKit\Routing\Filter\DebugBarFilter;
-use PDO;
+use \PDO;
 
 $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
 

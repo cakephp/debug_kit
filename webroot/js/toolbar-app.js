@@ -16,12 +16,13 @@ Toolbar.prototype = {
 
 	states: [
 		'collapse',
-		'toolbar',
+		'toolbar'
 	],
 
 	toggle: function() {
 		var state = this.nextState();
 		this.updateButtons(state);
+		this.updateToolbarState(state);
 		window.parent.postMessage(state, window.location.origin)
 	},
 
@@ -58,6 +59,15 @@ Toolbar.prototype = {
 		}
 		if (old == 1) {
 			return this.toggle();
+		}
+	},
+
+	updateToolbarState: function(state) {
+		if (state === 'toolbar') {
+			this.button.addClass('open');
+		}
+		if (state === 'collapse') {
+			this.button.removeClass('open');
 		}
 	},
 

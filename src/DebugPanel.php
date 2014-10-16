@@ -15,7 +15,7 @@ namespace DebugKit;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-use Cake\Event\EventListener;
+use Cake\Event\EventListenerInterface;
 use Cake\Utility\Inflector;
 
 /**
@@ -23,7 +23,7 @@ use Cake\Utility\Inflector;
  *
  * @since         DebugKit 0.1
  */
-class DebugPanel implements EventListener {
+class DebugPanel implements EventListenerInterface {
 
 /**
  * Defines which plugin this panel is from so the element can be located.

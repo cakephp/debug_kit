@@ -16,6 +16,7 @@ use Cake\Controller\Controller;
 use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\Utility\Hash;
 use DebugKit\DebugPanel;
 
 /**
@@ -23,6 +24,32 @@ use DebugKit\DebugPanel;
  *
  */
 class VariablesPanel extends DebugPanel {
+
+/**
+ * Extracts nested validation errors
+ *
+ * @param EntityInterface $entity Entity to extract
+ *
+ * @return array
+ */
+	protected function _getErrors(EntityInterface $entity) {
+		$errors = $entity->errors();
+
+		foreach ($entity->visibleProperties() as $property) {
+			$v = $entity[$property];
+			if ($v instanceof EntityInterface) {
+				$errors[$property] = $this->_getErrors($v);
+			} elseif (is_array($v)) {
+				foreach ($v as $key => $varValue) {
+					if ($varValue instanceof EntityInterface) {
+						$errors[$property][$key] = $this->_getErrors($varValue);
+					}
+				}
+			}
+		}
+
+		return Hash::filter($errors);
+	}
 
 /**
  * Shutdown event
@@ -40,7 +67,7 @@ class VariablesPanel extends DebugPanel {
 				$vars[$k] = $v->all();
 			} elseif ($v instanceof EntityInterface) {
 				// Get the validation errors for Entity
-				$errors[$k] = $v->errors();
+				$errors[$k] = $this->_getErrors($v);
 			}
 		}
 		$this->_data = [

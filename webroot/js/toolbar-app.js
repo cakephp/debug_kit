@@ -10,6 +10,7 @@ function Toolbar(options) {
 
 Toolbar.prototype = {
 	_currentPanel: null,
+	_lastPanel: null,
 	_state: 0,
 	currentRequest: null,
 	originalRequest: null,
@@ -92,14 +93,26 @@ Toolbar.prototype = {
 		var url = baseUrl + 'debug_kit/panels/view/' + id;
 		var contentArea = this.content.find('#panel-content');
 		var _this = this;
+		var timer;
+		var loader = $('#loader');
+
+		if (this._lastPanel != id) {
+			timer = setTimeout(function() {
+				loader.addClass('loading');
+			}, 500);
+		}
+
 		this._currentPanel = id;
+		this._lastPanel = id;
 
 		window.parent.postMessage('expand', window.location.origin);
 
-		// Slide panel into place - css transitions.
-		this.content.addClass('enabled');
-
 		$.get(url, function(response) {
+			clearTimeout(timer);
+			loader.removeClass('loading');
+
+			// Slide panel into place - css transitions.
+			_this.content.addClass('enabled');
 			contentArea.html(response);
 			_this.bindNeatArray();
 		});

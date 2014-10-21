@@ -409,13 +409,8 @@ table th {
 	cursor:pointer;
 }
 
-#loader.loading {
-	display: block;
-	opacity: 1;
-}
-
 #loader {
-	background: rgba(0, 0, 0, 0.7);
+	background: rgba(255, 255, 255, 0.7);
 	position: absolute;
 	top: 0;
 	bottom: 40px;
@@ -426,6 +421,11 @@ table th {
 	display: none;
 	opacity: 0;
 	transition: opacity 0.5s ease-in;
+}
+
+#loader.loading {
+	display: block;
+	opacity: 1;
 }
 
 #loader .indicator {

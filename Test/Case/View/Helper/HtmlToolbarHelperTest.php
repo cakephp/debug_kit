@@ -447,24 +447,6 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 			'/form',
 		);
 		$this->assertTags($result, $expected);
-
-		$sql = 'SELECT *
-			FROM tasks';
-		$result = $this->Toolbar->explainLink($sql, 'default');
-		$sql = str_replace(array("\n", "\t"), ' ', $sql);
-		$expected = array(
-			'form' => array('action' => '/debug_kit/toolbar_access/sql_explain', 'method' => 'post',
-				'accept-charset' => 'utf-8', 'id'),
-			array('div' => array('style' => 'display:none;')),
-			array('input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST')),
-			'/div',
-			array('input' => array('type' => 'hidden', 'id', 'name' => 'data[log][ds]', 'value' => 'default')),
-			array('input' => array('type' => 'hidden', 'id', 'name' => 'data[log][sql]', 'value' => $sql)),
-			array('input' => array('type' => 'hidden', 'id', 'name' => 'data[log][hash]', 'value')),
-			array('input' => array('class' => 'sql-explain-link', 'type' => 'submit', 'value' => 'Explain')),
-			'/form',
-		);
-		$this->assertTags($result, $expected);
 	}
 
 }

@@ -56,21 +56,32 @@ var DEBUGKIT = function () {
 		return versionGTE(version, min) && versionGTE(max, version);
 	}
 
-	// Look for existing jQuery that matches the requirements.
-	if (window.jQuery && versionWithin(jQuery.fn.jquery, "1.8", "2.1")) {
-		DEBUGKIT.$ = window.jQuery;
-	} else {
-		// sync load the file. Using document.write() does not block
-		// in recent versions of chrome.
-		var req = new XMLHttpRequest();
-		req.onload = function () {
-			eval(this.responseText);
-			// Restore both $ and jQuery to the original values.
-			DEBUGKIT.$ = jQuery.noConflict(true);
-		};
-		req.open('get', window.DEBUGKIT_JQUERY_URL, false);
-		req.send();
+	function initOnReady() {
+		DEBUGKIT.$(document).ready(function () {
+			DEBUGKIT.registerModules(DEBUGKIT.$);
+			DEBUGKIT.loader.init();
+		});
 	}
+
+	// Push checking for jQuery at the end of the stack.
+	// This will catch JS included at the bottom of a page.
+	setTimeout(function() {
+		// Look for existing jQuery that matches the requirements.
+		if (window.jQuery && versionWithin(jQuery.fn.jquery, "1.8", "2.1")) {
+			DEBUGKIT.$ = window.jQuery;
+			initOnReady();
+		} else {
+			var req = new XMLHttpRequest();
+			req.onload = function () {
+				eval(this.responseText);
+				// Restore both $ and jQuery to the original values.
+				DEBUGKIT.$ = jQuery.noConflict(true);
+				initOnReady();
+			};
+			req.open('get', window.DEBUGKIT_JQUERY_URL, true);
+			req.send();
+		}
+	}, 0);
 })();
 
 DEBUGKIT.loader = function () {
@@ -91,9 +102,12 @@ DEBUGKIT.loader = function () {
 	};
 }();
 
+
+DEBUGKIT.registerModules = function($) {
+
+
 DEBUGKIT.module('sqlLog');
 DEBUGKIT.sqlLog = function () {
-	var $ = DEBUGKIT.$;
 
 	return {
 		init : function () {
@@ -587,7 +601,6 @@ DEBUGKIT.Util.Request.prototype.serialize = function (data) {
 DEBUGKIT.toolbar = function () {
 	// Shortcuts
 	var Cookie = DEBUGKIT.Util.Cookie,
-		$ = DEBUGKIT.$,
 		toolbarHidden = false;
 
 	return {
@@ -787,7 +800,6 @@ DEBUGKIT.loader.register(DEBUGKIT.toolbar);
 DEBUGKIT.module('historyPanel');
 DEBUGKIT.historyPanel = function () {
 	var toolbar = DEBUGKIT.toolbar,
-		$ = DEBUGKIT.$,
 		historyLinks;
 
 	// Private methods to handle JSON response and insertion of
@@ -880,7 +892,6 @@ DEBUGKIT.loader.register(DEBUGKIT.historyPanel);
 //Add events + behaviors for toolbar collapser.
 DEBUGKIT.toolbarToggle = function () {
 	var toolbar = DEBUGKIT.toolbar,
-		$ = DEBUGKIT.$,
 		Cookie = DEBUGKIT.Util.Cookie,
 		toolbarHidden = false;
 
@@ -921,6 +932,5 @@ DEBUGKIT.toolbarToggle = function () {
 }();
 DEBUGKIT.loader.register(DEBUGKIT.toolbarToggle);
 
-DEBUGKIT.$(document).ready(function () {
-	DEBUGKIT.loader.init();
-});
+
+}; // DEBUGKIT.registerModules

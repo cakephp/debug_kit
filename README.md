@@ -12,36 +12,27 @@ The master branch has the following requirements:
 ## Installation
 
 * Clone/Copy the files in this directory into `app/Plugin/DebugKit`
-
-This can be done with the git submodule command
+* Assuming you are using `git` for your application, you can run:
 ```sh
-git submodule add https://github.com/cakephp/debug_kit.git app/Plugin/DebugKit
+git clone https://github.com/cakephp/debug_kit.git app/Plugin/DebugKit
 ```
+* If you are not using git, or would prefer to use composer you should run:
+```sh
+php composer.phar require cakephp/debug_kit "2.2.*"
+```
+You may want to use `require-dev` if you only want to include DebugKit in your development environment.
 
 * Ensure the plugin is loaded in `app/Config/bootstrap.php` by calling `CakePlugin::load('DebugKit');`
 * Include the toolbar component in your `app/Controller/AppController.php`:
 ```php
 class AppController extends Controller {
-         public $components = array('DebugKit.Toolbar');
+    public $components = array('DebugKit.Toolbar');
 }
 ```
 * Set `Configure::write('debug', 1);` in `app/Config/core.php`.
 * Make sure to remove the 'sql_dump' element from your layout (usually
   `app/View/Layouts/default.ctp`), if you want to experience the awesome that is
   the DebugKit SQL log.
-
-### Using Composer
-
-Ensure `require` is present in `composer.json`. This will install the plugin into `Plugin/DebugKit`:
-
-```json
-{
-    "require": {
-        "cakephp/debug_kit": "2.2.*"
-    }
-}
-```
-Consider using "require-dev" if you only want to include DebugKit for your development environment.
 
 ## Reporting Issues
 

@@ -12,9 +12,9 @@ The master branch has the following requirements:
 ## Installation
 
 * Clone/Copy the files in this directory into `app/Plugin/DebugKit`
-* Assuming you are using `git` for your application, you can use git submodules:
+* Assuming you are using `git` for your application, you can run:
 ```sh
-git submodule add https://github.com/cakephp/debug_kit.git app/Plugin/DebugKit
+git clone https://github.com/cakephp/debug_kit.git app/Plugin/DebugKit
 ```
 * If you are not using git, or would prefer to use composer you should run:
 ```sh

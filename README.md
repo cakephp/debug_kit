@@ -29,10 +29,10 @@ Because this plugin has the type `cakephp-plugin` set in it's own `composer.json
 
 _[Manual]_
 
-* Download this: [https://github.com/cakephp/debug_kit/zipball/master](https://github.com/cakephp/debug_kit/zipball/master)
+* Download the [DebugKit archive](https://github.com/cakephp/debug_kit/zipball/master).
 * Unzip that download.
-* Copy the resulting folder to `app/Plugin`
-* Rename the folder you just copied to `DebugKit`
+* Rename the resulting folder to `DebugKit`
+* Then copy this folder into `app/Plugin/`
 
 _[GIT Submodule]_
 

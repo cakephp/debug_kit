@@ -31,17 +31,10 @@
 
 	<php>
 		<!-- Postgres
-		<env name="db_class" value="Cake\Database\Driver\Postgres"/>
-		<env name="db_database" value="cake_test"/>
-		<env name="db_login" value=""/>
-		<env name="db_password" value=""/>
+		<env name="db_dsn" value="postgres://root@localhost/cake_test_db"/>
 		-->
 		<!-- Mysql
-		<env name="db_class" value="Cake\Database\Driver\Mysql"/>
-		<env name="db_dsn" value="mysql:host=localhost;dbname=cake_test"/>
-		<env name="db_database" value=""/>
-		<env name="db_login" value=""/>
-		<env name="db_password" value=""/>
+		<env name="db_dsn" value="mysql://root@localhost/cake_test_db"/>
 		-->
 	</php>
 </phpunit>

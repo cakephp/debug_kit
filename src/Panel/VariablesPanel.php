@@ -17,11 +17,11 @@ use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
-use DebugKit\DebugPanel;
 use Closure;
+use DebugKit\DebugPanel;
+use Exception;
 use PDO;
 use SimpleXmlElement;
-use Exception;
 
 /**
  * Provides debug information on the View variables.

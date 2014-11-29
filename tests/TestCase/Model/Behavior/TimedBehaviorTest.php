@@ -63,11 +63,11 @@ class TimedBehaviorTestCase extends TestCase {
 
 		$this->Article->find('all')->first();
 		$result = DebugTimer::getAll();
-		$this->assertEquals(count($result), 3);
+		$this->assertEquals(count($result), 2);
 
 		$this->Article->find('all')->first();
 		$result = DebugTimer::getAll();
-		$this->assertEquals(count($result), 5);
+		$this->assertEquals(count($result), 3);
 	}
 
 /**

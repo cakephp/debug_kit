@@ -111,7 +111,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				$isObject
 				) && !empty($value)
 			) {
-				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
+				$out .= $this->makeNeatArray($isObject ? (array)$value : $value, $openDepth, $nextDepth, $doubleEncode);
 			} else {
 				$out .= h($value, $doubleEncode);
 			}

@@ -223,6 +223,7 @@ Toolbar.prototype = {
 
 	initialize: function() {
 		this.windowOrigin();
+		this.mouseListener();
 		this.keyboardListener();
 		this.loadState();
 	}

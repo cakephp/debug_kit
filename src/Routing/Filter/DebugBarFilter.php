@@ -181,12 +181,19 @@ class DebugBarFilter extends DispatcherFilter {
 
 		foreach ($this->_registry->loaded() as $name) {
 			$panel = $this->_registry->{$name};
+			try {
+				$content = serialize($panel->data());
+			} catch (\Exception $e) {
+				$content = serialize([
+					'error' => $e->getMessage(),
+				]);
+			}
 			$row->panels[] = $requests->Panels->newEntity([
 				'panel' => $name,
 				'element' => $panel->elementName(),
 				'title' => $panel->title(),
 				'summary' => $panel->summary(),
-				'content' => serialize($panel->data())
+				'content' => $content,
 			]);
 		}
 		$row = $requests->save($row);

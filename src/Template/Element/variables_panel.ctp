@@ -11,7 +11,13 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-echo $this->Toolbar->makeNeatArray($content);
+if (isset($error)):
+	printf('<p class="warning">%s</p>', $error);
+endif;
+
+if (!empty($content)):
+	echo $this->Toolbar->makeNeatArray($content);
+endif;
 
 if (!empty($errors)):
 	echo '<h4>Validation errors</h4>';

@@ -137,7 +137,7 @@ class IncludePanel extends DebugPanel
      * Replace the path with APP, CORE or the plugin name
      *
      * @param string $file File to check
-     * @param string $type
+     * @param string $type The file type
      *  - app for app files
      *  - core for core files
      *  - PluginName for the name of a plugin

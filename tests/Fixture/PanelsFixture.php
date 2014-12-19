@@ -21,11 +21,11 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class PanelsFixture extends TestFixture {
 
-/**
- * fields property
- *
- * @var array
- */
+	/**
+	 * fields property
+	 *
+	 * @var array
+	 */
 	public $fields = [
 		'id' => ['type' => 'uuid'],
 		'request_id' => ['type' => 'uuid', 'null' => false],
@@ -40,11 +40,11 @@ class PanelsFixture extends TestFixture {
 		]
 	];
 
-/**
- * Records
- *
- * @var array
- */
+	/**
+	 * Records
+	 *
+	 * @var array
+	 */
 	public $records = [
 		[
 			'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',

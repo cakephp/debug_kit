@@ -22,32 +22,32 @@ use DebugKit\Panel\CachePanel;
  */
 class CachePanelTest extends TestCase {
 
-/**
- * set up
- *
- * @return void
- */
+	/**
+	 * set up
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$this->panel = new CachePanel();
 		Cache::config('debug_kit_test', ['className' => 'Null']);
 	}
 
-/**
- * Teardown method.
- *
- * @return void
- */
+	/**
+	 * Teardown method.
+	 *
+	 * @return void
+	 */
 	public function tearDown() {
 		parent::tearDown();
 		Cache::drop('debug_kit_test');
 	}
 
-/**
- * test initialize
- *
- * @return void
- */
+	/**
+	 * test initialize
+	 *
+	 * @return void
+	 */
 	public function testInitialize() {
 		$event = new Event('Sample');
 		$this->panel->initialize($event);
@@ -57,11 +57,11 @@ class CachePanelTest extends TestCase {
 		$this->assertArrayHasKey('_cake_model_', $result['metrics']);
 	}
 
-/**
- * Ensure that subrequests don't double proxy the cache engine.
- *
- * @return void
- */
+	/**
+	 * Ensure that subrequests don't double proxy the cache engine.
+	 *
+	 * @return void
+	 */
 	public function testInitializeTwiceNoDoubleProxy() {
 		$event = new Event('Sample');
 

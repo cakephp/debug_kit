@@ -23,27 +23,27 @@ use Cake\Network\Exception\NotFoundException;
  */
 class ToolbarController extends Controller {
 
-/**
- * components
- *
- * @var array
- */
+	/**
+	 * components
+	 *
+	 * @var array
+	 */
 	public $components = ['RequestHandler'];
 
-/**
- * View class
- *
- * @var string
- */
+	/**
+	 * View class
+	 *
+	 * @var string
+	 */
 	public $viewClass = 'Cake\View\JsonView';
 
-/**
- * Before filter handler.
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+	/**
+	 * Before filter handler.
+	 *
+	 * @param \Cake\Event\Event $event The event.
+	 * @return void
+	 * @throws \Cake\Network\Exception\NotFoundException
+	 */
 	public function beforeFilter(Event $event) {
 		// TODO add config override.
 		if (!Configure::read('debug')) {
@@ -51,12 +51,12 @@ class ToolbarController extends Controller {
 		}
 	}
 
-/**
- * Clear a named cache.
- *
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+	/**
+	 * Clear a named cache.
+	 *
+	 * @return void
+	 * @throws \Cake\Network\Exception\NotFoundException
+	 */
 	public function clearCache() {
 		$this->request->allowMethod('post');
 		if (!$this->request->data('name')) {

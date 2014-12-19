@@ -29,11 +29,11 @@ use Cake\Utility\String;
  */
 class BenchmarkShell extends Shell {
 
-/**
- * Main execution of shell
- *
- * @return void
- */
+	/**
+	 * Main execution of shell
+	 *
+	 * @return void
+	 */
 	public function main() {
 		$url = $this->args[0];
 		$defaults = array('t' => 100, 'n' => 10);
@@ -56,12 +56,12 @@ class BenchmarkShell extends Shell {
 		$this->_results($times);
 	}
 
-/**
- * Prints calculated results
- *
- * @param array $times Array of time values
- * @return void
- */
+	/**
+	 * Prints calculated results
+	 *
+	 * @param array $times Array of time values
+	 * @return void
+	 */
 	protected function _results($times) {
 		$duration = array_sum($times);
 		$requests = count($times);
@@ -91,18 +91,18 @@ class BenchmarkShell extends Shell {
 		$this->out("");
 	}
 
-/**
- * One-pass, numerically stable calculation of population variance.
- *
- * Donald E. Knuth (1998).
- * The Art of Computer Programming, volume 2: Seminumerical Algorithms, 3rd edn.,
- * p. 232. Boston: Addison-Wesley.
- *
- * @param array $times Array of values
- * @param bool $sample If true, calculates an unbiased estimate of the population
- * 						  variance from a finite sample.
- * @return float Variance
- */
+	/**
+	 * One-pass, numerically stable calculation of population variance.
+	 *
+	 * Donald E. Knuth (1998).
+	 * The Art of Computer Programming, volume 2: Seminumerical Algorithms, 3rd edn.,
+	 * p. 232. Boston: Addison-Wesley.
+	 *
+	 * @param array $times Array of values
+	 * @param bool $sample If true, calculates an unbiased estimate of the population
+	 * 						  variance from a finite sample.
+	 * @return float Variance
+	 */
 	protected function _variance($times, $sample = true) {
 		$n = $mean = $M2 = 0;
 
@@ -120,22 +120,22 @@ class BenchmarkShell extends Shell {
 		return $M2 / $n;
 	}
 
-/**
- * Calculate the standard deviation.
- *
- * @param array $times Array of values
- * @param bool $sample ''
- * @return float Standard deviation
- */
+	/**
+	 * Calculate the standard deviation.
+	 *
+	 * @param array $times Array of values
+	 * @param bool $sample ''
+	 * @return float Standard deviation
+	 */
 	protected function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
 
-/**
- * Get option parser.
- *
- * @return \Cake\Console\OptionParser
- */
+	/**
+	 * Get option parser.
+	 *
+	 * @return \Cake\Console\OptionParser
+	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(__d('debug_kit',

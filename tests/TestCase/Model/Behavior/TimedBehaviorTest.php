@@ -22,29 +22,29 @@ use DebugKit\DebugTimer;
  */
 class TimedBehaviorTestCase extends TestCase {
 
-/**
- * Fixtures
- *
- * @var array
- */
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
 	public $fixtures = ['core.articles'];
 
-/**
- * Start Test callback
- *
- * @return void
- */
+	/**
+	 * Start Test callback
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$this->Article = TableRegistry::get('Articles');
 		$this->Article->addBehavior('DebugKit.Timed');
 	}
 
-/**
- * End a test
- *
- * @return void
- */
+	/**
+	 * End a test
+	 *
+	 * @return void
+	 */
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Article);
@@ -52,11 +52,11 @@ class TimedBehaviorTestCase extends TestCase {
 		DebugTimer::clear();
 	}
 
-/**
- * Test find timers
- *
- * @return void
- */
+	/**
+	 * Test find timers
+	 *
+	 * @return void
+	 */
 	public function testFindTimers() {
 		$timers = DebugTimer::getAll();
 		$this->assertEquals(count($timers), 1);
@@ -70,11 +70,11 @@ class TimedBehaviorTestCase extends TestCase {
 		$this->assertEquals(count($result), 3);
 	}
 
-/**
- * Test save timers
- *
- * @return void
- */
+	/**
+	 * Test save timers
+	 *
+	 * @return void
+	 */
 	public function testSaveTimers() {
 		$timers = DebugTimer::getAll();
 		$this->assertEquals(count($timers), 1);

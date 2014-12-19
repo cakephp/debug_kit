@@ -24,28 +24,28 @@ use DebugKit\Panel\SqlLogPanel;
  */
 class SqlLogPanelTest extends TestCase {
 
-/**
- * fixtures.
- *
- * @var array
- */
+	/**
+	 * fixtures.
+	 *
+	 * @var array
+	 */
 	public $fixtures = ['core.articles'];
 
-/**
- * Setup
- *
- * @return void
- */
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$this->panel = new SqlLogPanel();
 	}
 
-/**
- * Ensure that subrequests don't double proxy the logger.
- *
- * @return void
- */
+	/**
+	 * Ensure that subrequests don't double proxy the logger.
+	 *
+	 * @return void
+	 */
 	public function testInitializeTwiceNoDoubleProxy() {
 		$event = new Event('Sample');
 
@@ -59,11 +59,11 @@ class SqlLogPanelTest extends TestCase {
 		$this->assertSame($second, $logger);
 	}
 
-/**
- * test the parsing of source list.
- *
- * @return void
- */
+	/**
+	 * test the parsing of source list.
+	 *
+	 * @return void
+	 */
 	public function testData() {
 		$event = new Event('Sample');
 		$this->panel->initialize($event);
@@ -75,11 +75,11 @@ class SqlLogPanelTest extends TestCase {
 		$this->assertArrayHasKey('loggers', $result);
 	}
 
-/**
- * Test getting summary data.
- *
- * @return void
- */
+	/**
+	 * Test getting summary data.
+	 *
+	 * @return void
+	 */
 	public function testSummary() {
 		$event = new Event('Sample');
 		$result = $this->panel->initialize($event);

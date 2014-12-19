@@ -23,11 +23,11 @@ use DebugKit\DebugPanel;
  */
 class HistoryPanel extends DebugPanel {
 
-/**
- * Get the data for the panel.
- *
- * @return array
- */
+	/**
+	 * Get the data for the panel.
+	 *
+	 * @return array
+	 */
 	public function data() {
 		$table = TableRegistry::get('DebugKit.Requests');
 		$recent = $table->find('recent');

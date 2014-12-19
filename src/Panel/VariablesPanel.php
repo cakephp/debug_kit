@@ -29,13 +29,13 @@ use SimpleXmlElement;
  */
 class VariablesPanel extends DebugPanel {
 
-/**
- * Extracts nested validation errors
- *
- * @param EntityInterface $entity Entity to extract
- *
- * @return array
- */
+	/**
+	 * Extracts nested validation errors
+	 *
+	 * @param EntityInterface $entity Entity to extract
+	 *
+	 * @return array
+	 */
 	protected function _getErrors(EntityInterface $entity) {
 		$errors = $entity->errors();
 
@@ -55,12 +55,12 @@ class VariablesPanel extends DebugPanel {
 		return Hash::filter($errors);
 	}
 
-/**
- * Shutdown event
- *
- * @param \Cake\Event\Event $event The event
- * @return void
- */
+	/**
+	 * Shutdown event
+	 *
+	 * @param \Cake\Event\Event $event The event
+	 * @return void
+	 */
 	public function shutdown(Event $event) {
 		$controller = $event->subject();
 		$errors = [];

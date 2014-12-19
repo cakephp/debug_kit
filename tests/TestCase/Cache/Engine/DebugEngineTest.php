@@ -22,11 +22,11 @@ use DebugKit\DebugTimer;
  */
 class DebugEngineTest extends TestCase {
 
-/**
- * setup
- *
- * @return void
- */
+	/**
+	 * setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$mock = $this->getMock('Cake\Cache\CacheEngine');
@@ -36,11 +36,11 @@ class DebugEngineTest extends TestCase {
 		DebugTimer::clear();
 	}
 
-/**
- * Test that init() builds engines based on config.
- *
- * @return void
- */
+	/**
+	 * Test that init() builds engines based on config.
+	 *
+	 * @return void
+	 */
 	public function testInitEngineBasedOnConfig() {
 		$engine = new DebugEngine([
 			'className' => 'File',
@@ -50,12 +50,12 @@ class DebugEngineTest extends TestCase {
 		$this->assertInstanceOf('Cake\Cache\Engine\FileEngine', $engine->engine());
 	}
 
-/**
- * Test that the normal errors bubble up still.
- *
- * @expectedException BadMethodCallException
- * @return void
- */
+	/**
+	 * Test that the normal errors bubble up still.
+	 *
+	 * @expectedException BadMethodCallException
+	 * @return void
+	 */
 	public function testInitErrorOnInvalidConfig() {
 		$engine = new DebugEngine([
 			'className' => 'Derpy',
@@ -64,11 +64,11 @@ class DebugEngineTest extends TestCase {
 		$engine->init();
 	}
 
-/**
- * Test that methods are proxied.
- *
- * @return void
- */
+	/**
+	 * Test that methods are proxied.
+	 *
+	 * @return void
+	 */
 	public function testProxyMethodsTracksMetrics() {
 		$this->mock->expects($this->at(0))
 			->method('read');
@@ -93,11 +93,11 @@ class DebugEngineTest extends TestCase {
 		$this->assertEquals(1, $result['read']);
 	}
 
-/**
- * Test that methods are proxied.
- *
- * @return void
- */
+	/**
+	 * Test that methods are proxied.
+	 *
+	 * @return void
+	 */
 	public function testProxyMethodsTimers() {
 		$this->engine->read('key');
 		$this->engine->write('key', 'value');

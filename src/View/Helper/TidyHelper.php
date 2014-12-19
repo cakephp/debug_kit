@@ -29,28 +29,28 @@ use Cake\View\Helper;
  */
 class TidyHelper extends Helper {
 
-/**
- * helpers property
- *
- * @var array
- */
+	/**
+	 * helpers property
+	 *
+	 * @var array
+	 */
 	public $helpers = array('DebugKit.Toolbar');
 
-/**
- * results property
- *
- * @var mixed null
- */
+	/**
+	 * results property
+	 *
+	 * @var mixed null
+	 */
 	public $results = null;
 
-/**
- * Return a nested array of errors for the passed html string
- * Fudge the markup slightly so that the tag which is invalid is highlighted
- *
- * @param string $html ''
- * @param string &$out ''
- * @return array
- */
+	/**
+	 * Return a nested array of errors for the passed html string
+	 * Fudge the markup slightly so that the tag which is invalid is highlighted
+	 *
+	 * @param string $html ''
+	 * @param string &$out ''
+	 * @return array
+	 */
 	public function process($html = '', &$out = '') {
 		$errors = $this->tidyErrors($html, $out);
 
@@ -86,15 +86,15 @@ class TidyHelper extends Helper {
 		return $result;
 	}
 
-/**
- * report method
- *
- * Call process if a string is passed, or no prior results exist - and return the results using
- * the toolbar helper to generate a nested navigatable array
- *
- * @param mixed $html null
- * @return string
- */
+	/**
+	 * report method
+	 *
+	 * Call process if a string is passed, or no prior results exist - and return the results using
+	 * the toolbar helper to generate a nested navigatable array
+	 *
+	 * @param mixed $html null
+	 * @return string
+	 */
 	public function report($html = null) {
 		if ($html) {
 			$this->process($html);
@@ -114,14 +114,14 @@ class TidyHelper extends Helper {
 		return $this->Toolbar->makeNeatArray(array_filter($this->results), 0, 0, false);
 	}
 
-/**
- * Run the html string through tidy, and return the (raw) errors. pass back a reference to the
- * normalized string so that the error messages can be linked to the line that caused them.
- *
- * @param string $in ''
- * @param string &$out ''
- * @return string
- */
+	/**
+	 * Run the html string through tidy, and return the (raw) errors. pass back a reference to the
+	 * normalized string so that the error messages can be linked to the line that caused them.
+	 *
+	 * @param string $in ''
+	 * @param string &$out ''
+	 * @return string
+	 */
 	public function tidyErrors($in = '', &$out = '') {
 		$out = preg_replace('@>\s*<@s', ">\n<", $in);
 
@@ -150,13 +150,13 @@ class TidyHelper extends Helper {
 		return $errors;
 	}
 
-/**
- * exec method
- *
- * @param mixed $cmd ''
- * @param mixed &$out null
- * @return bool True if successful
- */
+	/**
+	 * exec method
+	 *
+	 * @param mixed $cmd ''
+	 * @param mixed &$out null
+	 * @return bool True if successful
+	 */
 	protected function _exec($cmd, &$out = null) {
 		if (DS === '/') {
 			$_out = exec($cmd . ' 2>&1', $out, $return);

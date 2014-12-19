@@ -23,39 +23,39 @@ use DebugKit\DebugPanel;
  */
 class IncludePanel extends DebugPanel {
 
-/**
- * The list of plugins within the application
- *
- * @var <type>
- */
+	/**
+	 * The list of plugins within the application
+	 *
+	 * @var <type>
+	 */
 	protected $_pluginPaths = array();
 
-/**
- * File Types
- *
- * @var array
- */
+	/**
+	 * File Types
+	 *
+	 * @var array
+	 */
 	protected $_fileTypes = array(
 		'Cache', 'Config', 'Configure', 'Console', 'Component', 'Controller',
 		'Behavior', 'Datasource', 'Model', 'Plugin', 'Test', 'View', 'Utility',
 		'Network', 'Routing', 'I18n', 'Log', 'Error'
 	);
 
-/**
- * Get a list of plugins on construct for later use
- */
+	/**
+	 * Get a list of plugins on construct for later use
+	 */
 	public function __construct() {
 		foreach (Plugin::loaded() as $plugin) {
 			$this->_pluginPaths[$plugin] = Plugin::path($plugin);
 		}
 	}
 
-/**
- * Get a list of files that were included and split them out into the various parts of the app
- *
- * @param Controller $controller The controller.
- * @return array
- */
+	/**
+	 * Get a list of files that were included and split them out into the various parts of the app
+	 *
+	 * @param Controller $controller The controller.
+	 * @return array
+	 */
 	protected function _prepare(Controller $controller) {
 		$return = array('core' => array(), 'app' => array(), 'plugins' => array());
 
@@ -79,11 +79,11 @@ class IncludePanel extends DebugPanel {
 		return $return;
 	}
 
-/**
- * Get the possible include paths
- *
- * @return array
- */
+	/**
+	 * Get the possible include paths
+	 *
+	 * @return array
+	 */
 	protected function _includePaths() {
 		$paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
 
@@ -91,32 +91,32 @@ class IncludePanel extends DebugPanel {
 		return array_flip($paths);
 	}
 
-/**
- * Check if a path is part of cake core
- *
- * @param string $file File to check
- * @return bool
- */
+	/**
+	 * Check if a path is part of cake core
+	 *
+	 * @param string $file File to check
+	 * @return bool
+	 */
 	protected function _isCoreFile($file) {
 		return strstr($file, CAKE);
 	}
 
-/**
- * Check if a path is from APP but not a plugin
- *
- * @param string $file File to check
- * @return bool
- */
+	/**
+	 * Check if a path is from APP but not a plugin
+	 *
+	 * @param string $file File to check
+	 * @return bool
+	 */
 	protected function _isAppFile($file) {
 		return strstr($file, APP);
 	}
 
-/**
- * Check if a path is from a plugin
- *
- * @param string $file File to check
- * @return bool
- */
+	/**
+	 * Check if a path is from a plugin
+	 *
+	 * @param string $file File to check
+	 * @return bool
+	 */
 	protected function _isPluginFile($file) {
 		foreach ($this->_pluginPaths as $plugin => $path) {
 			if (strstr($file, $path)) {
@@ -126,16 +126,16 @@ class IncludePanel extends DebugPanel {
 		return false;
 	}
 
-/**
- * Replace the path with APP, CORE or the plugin name
- *
- * @param string $file File to check
- * @param string $type
- *  - app for app files
- *  - core for core files
- *  - PluginName for the name of a plugin
- * @return bool
- */
+	/**
+	 * Replace the path with APP, CORE or the plugin name
+	 *
+	 * @param string $file File to check
+	 * @param string $type
+	 *  - app for app files
+	 *  - core for core files
+	 *  - PluginName for the name of a plugin
+	 * @return bool
+	 */
 	protected function _niceFileName($file, $type) {
 		switch ($type) {
 			case 'app':
@@ -149,12 +149,12 @@ class IncludePanel extends DebugPanel {
 		}
 	}
 
-/**
- * Get the type of file (model, controller etc)
- *
- * @param string $file File to check.
- * @return string
- */
+	/**
+	 * Get the type of file (model, controller etc)
+	 *
+	 * @param string $file File to check.
+	 * @return string
+	 */
 	protected function _getFileType($file) {
 		foreach ($this->_fileTypes as $type) {
 			if (stripos($file, '/' . $type . '/') !== false) {
@@ -165,12 +165,12 @@ class IncludePanel extends DebugPanel {
 		return 'Other';
 	}
 
-/**
- * Shutdown callback
- *
- * @param \Cake\Event\Event $event Event
- * @return void
- */
+	/**
+	 * Shutdown callback
+	 *
+	 * @param \Cake\Event\Event $event Event
+	 * @return void
+	 */
 	public function shutdown(Event $event) {
 		$this->_data = $this->_prepare($event->subject());
 	}

@@ -25,12 +25,12 @@ use Cake\Filesystem\Folder;
  */
 class WhitespaceShell extends Shell {
 
-/**
- * Will check files for whitespace and notify you
- * of any files containing leading or trailing whitespace.
- *
- * @return void
- */
+	/**
+	 * Will check files for whitespace and notify you
+	 * of any files containing leading or trailing whitespace.
+	 *
+	 * @return void
+	 */
 	public function main() {
 		$path = APP;
 		if (!empty($this->params['path']) && strpos($this->params['path'], '/') === 0) {
@@ -53,12 +53,12 @@ class WhitespaceShell extends Shell {
 		}
 	}
 
-/**
- * Much like main() except files are modified. Be sure to have
- * backups or use version control.
- *
- * @return void
- */
+	/**
+	 * Much like main() except files are modified. Be sure to have
+	 * backups or use version control.
+	 *
+	 * @return void
+	 */
 	public function trim() {
 		$path = APP;
 		if (!empty($this->params['path']) && strpos($this->params['path'], '/') === 0) {
@@ -81,11 +81,11 @@ class WhitespaceShell extends Shell {
 		}
 	}
 
-/**
- * get the option parser
- *
- * @return ConsoleOptionParser
- */
+	/**
+	 * get the option parser
+	 *
+	 * @return ConsoleOptionParser
+	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		return $parser->addOption('path', array(

@@ -30,11 +30,11 @@ use StdClass;
  */
 class ToolbarHelperTestCase extends TestCase {
 
-/**
- * Setup
- *
- * @return void
- */
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		Router::connect('/:controller/:action');
@@ -46,21 +46,21 @@ class ToolbarHelperTestCase extends TestCase {
 		$this->Toolbar = new ToolbarHelper($this->View);
 	}
 
-/**
- * Tear Down
- *
- * @return void
- */
+	/**
+	 * Tear Down
+	 *
+	 * @return void
+	 */
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Toolbar);
 	}
 
-/**
- * Test makeNeatArray with basic types.
- *
- * @return void
- */
+	/**
+	 * Test makeNeatArray with basic types.
+	 *
+	 * @return void
+	 */
 	public function testMakeNeatArrayBasic() {
 		$in = false;
 		$result = $this->Toolbar->makeNeatArray($in);
@@ -99,11 +99,11 @@ class ToolbarHelperTestCase extends TestCase {
 		$this->assertTags($result, $expected);
 	}
 
-/**
- * Test that cyclic references can be printed.
- *
- * @return void
- */
+	/**
+	 * Test that cyclic references can be printed.
+	 *
+	 * @return void
+	 */
 	public function testMakeNeatArrayCyclicObjects() {
 		$a = new StdClass;
 		$b = new StdClass;
@@ -130,11 +130,11 @@ class ToolbarHelperTestCase extends TestCase {
 		$this->assertTags($result, $expected);
 	}
 
-/**
- * Test Neat Array formatting
- *
- * @return void
- */
+	/**
+	 * Test Neat Array formatting
+	 *
+	 * @return void
+	 */
 	public function testMakeNeatArray() {
 		$in = array('key' => 'value');
 		$result = $this->Toolbar->makeNeatArray($in);
@@ -252,11 +252,11 @@ class ToolbarHelperTestCase extends TestCase {
 		$this->assertTags($result, $expected);
 	}
 
-/**
- * Test makeNeatArray with object inputs.
- *
- * @return void
- */
+	/**
+	 * Test makeNeatArray with object inputs.
+	 *
+	 * @return void
+	 */
 	public function testMakeNeatArrayObjects() {
 		$in = new StdClass();
 		$in->key = 'value';
@@ -278,11 +278,11 @@ class ToolbarHelperTestCase extends TestCase {
 		$this->assertTags($result, $expected);
 	}
 
-/**
- * Test Table generation
- *
- * @return void
- */
+	/**
+	 * Test Table generation
+	 *
+	 * @return void
+	 */
 	public function testTable() {
 		$rows = array(
 			array(1, 2),

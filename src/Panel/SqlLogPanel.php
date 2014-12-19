@@ -25,21 +25,21 @@ use DebugKit\DebugPanel;
  */
 class SqlLogPanel extends DebugPanel {
 
-/**
- * Loggers connected
- *
- * @var array
- */
+	/**
+	 * Loggers connected
+	 *
+	 * @var array
+	 */
 	protected $_loggers = [];
 
-/**
- * Initialize hook - configures logger.
- *
- * This will unfortunately build all the connections, but they
- * won't connect until used.
- *
- * @return array
- */
+	/**
+	 * Initialize hook - configures logger.
+	 *
+	 * This will unfortunately build all the connections, but they
+	 * won't connect until used.
+	 *
+	 * @return array
+	 */
 	public function initialize() {
 		$configs = ConnectionManager::configured();
 		foreach ($configs as $name) {
@@ -63,11 +63,11 @@ class SqlLogPanel extends DebugPanel {
 		}
 	}
 
-/**
- * Get the data this panel wants to store.
- *
- * @return array
- */
+	/**
+	 * Get the data this panel wants to store.
+	 *
+	 * @return array
+	 */
 	public function data() {
 		return [
 			'tables' => array_map(function ($table) {
@@ -77,11 +77,11 @@ class SqlLogPanel extends DebugPanel {
 		];
 	}
 
-/**
- * Get summary data from the queries run.
- *
- * @return string
- */
+	/**
+	 * Get summary data from the queries run.
+	 *
+	 * @return string
+	 */
 	public function summary() {
 		$count = $time = 0;
 		foreach ($this->_loggers as $logger) {

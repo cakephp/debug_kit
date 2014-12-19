@@ -23,11 +23,11 @@ use DebugKit\DebugTimer;
  */
 class TimerPanel extends DebugPanel {
 
-/**
- * Return an array of events to listen to.
- *
- * @return array
- */
+	/**
+	 * Return an array of events to listen to.
+	 *
+	 * @return array
+	 */
 	public function implementedEvents() {
 		$before = function ($name) {
 			return function () use ($name) {
@@ -98,11 +98,11 @@ class TimerPanel extends DebugPanel {
 		];
 	}
 
-/**
- * Get the data for the panel.
- *
- * @return array
- */
+	/**
+	 * Get the data for the panel.
+	 *
+	 * @return array
+	 */
 	public function data() {
 		return [
 			'requestTime' => DebugTimer::requestTime(),
@@ -112,11 +112,11 @@ class TimerPanel extends DebugPanel {
 		];
 	}
 
-/**
- * Get the summary for the panel.
- *
- * @return string
- */
+	/**
+	 * Get the summary for the panel.
+	 *
+	 * @return string
+	 */
 	public function summary() {
 		$time = Number::precision(DebugTimer::requestTime(), 2);
 		$memory = Number::toReadableSize(DebugMemory::getPeak());

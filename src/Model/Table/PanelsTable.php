@@ -24,25 +24,25 @@ class PanelsTable extends Table {
 
 	use LazyTableTrait;
 
-/**
- * initialize method
- *
- * @param array $config Config data.
- * @return void
- */
+	/**
+	 * initialize method
+	 *
+	 * @param array $config Config data.
+	 * @return void
+	 */
 	public function initialize(array $config) {
 		$this->belongsTo('DebugKit.Requests');
 		$this->ensureTables(['DebugKit.Panels', 'DebugKit.Requests']);
 	}
 
-/**
- * Find panels by requestid
- *
- * @param Cake\ORM\Query $query The query
- * @param array $options The options to use.
- * @return Cake\ORM\Query The query.
- * @throws \RuntimeException
- */
+	/**
+	 * Find panels by requestid
+	 *
+	 * @param Cake\ORM\Query $query The query
+	 * @param array $options The options to use.
+	 * @return Cake\ORM\Query The query.
+	 * @throws \RuntimeException
+	 */
 	public function findByRequest(Query $query, array $options) {
 		if (empty($options['requestId'])) {
 			throw new \RuntimeException('Missing request id in findByRequest.');
@@ -51,11 +51,11 @@ class PanelsTable extends Table {
 			->order(['Panels.title' => 'ASC']);
 	}
 
-/**
- * DebugKit tables are special.
- *
- * @return string
- */
+	/**
+	 * DebugKit tables are special.
+	 *
+	 * @return string
+	 */
 	public static function defaultConnectionName() {
 		return 'debug_kit';
 	}

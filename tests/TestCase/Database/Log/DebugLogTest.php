@@ -21,21 +21,21 @@ use DebugKit\Database\Log\DebugLog;
  */
 class DebugLogTest extends TestCase {
 
-/**
- * setup
- *
- * @return void
- */
+	/**
+	 * setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$this->logger = new DebugLog(null, 'test');
 	}
 
-/**
- * Test logs being stored.
- *
- * @return void
- */
+	/**
+	 * Test logs being stored.
+	 *
+	 * @return void
+	 */
 	public function testLog() {
 		$query = new LoggedQuery();
 		$query->sql = 'SELECT * FROM posts';
@@ -55,11 +55,11 @@ class DebugLogTest extends TestCase {
 		$this->assertEquals(10, $this->logger->totalRows());
 	}
 
-/**
- * Test decoration of logger.
- *
- * @return void
- */
+	/**
+	 * Test decoration of logger.
+	 *
+	 * @return void
+	 */
 	public function testLogDecorates() {
 		$orig = $this->getMock('Cake\Database\Log\QueryLogger');
 		$orig->expects($this->once())

@@ -22,27 +22,27 @@ use Cake\Network\Exception\NotFoundException;
  */
 class PanelsController extends Controller {
 
-/**
- * components
- *
- * @var array
- */
+	/**
+	 * components
+	 *
+	 * @var array
+	 */
 	public $components = ['RequestHandler'];
 
-/**
- * Layout property.
- *
- * @var string
- */
+	/**
+	 * Layout property.
+	 *
+	 * @var string
+	 */
 	public $layout = 'DebugKit.panel';
 
-/**
- * Before filter handler.
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+	/**
+	 * Before filter handler.
+	 *
+	 * @param \Cake\Event\Event $event The event.
+	 * @return void
+	 * @throws \Cake\Network\Exception\NotFoundException
+	 */
 	public function beforeFilter(Event $event) {
 		// TODO add config override.
 		if (!Configure::read('debug')) {
@@ -50,13 +50,13 @@ class PanelsController extends Controller {
 		}
 	}
 
-/**
- * Index method that lets you get requests by panelid.
- *
- * @param string $requestId Request id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+	/**
+	 * Index method that lets you get requests by panelid.
+	 *
+	 * @param string $requestId Request id
+	 * @return void
+	 * @throws \Cake\Network\Exception\NotFoundException
+	 */
 	public function index($requestId = null) {
 		$query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
 		$panels = $query->toArray();
@@ -69,12 +69,12 @@ class PanelsController extends Controller {
 		]);
 	}
 
-/**
- * View a panel's data.
- *
- * @param string $id The id.
- * @return void
- */
+	/**
+	 * View a panel's data.
+	 *
+	 * @param string $id The id.
+	 * @return void
+	 */
 	public function view($id = null) {
 		$panel = $this->Panels->get($id);
 		$this->set('panel', $panel);

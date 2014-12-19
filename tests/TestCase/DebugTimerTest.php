@@ -22,20 +22,20 @@ use DebugKit\DebugTimer;
  */
 class DebugTimerTest extends TestCase {
 
-/**
- * tearDown method
- *
- * @return void
- */
+	/**
+	 * tearDown method
+	 *
+	 * @return void
+	 */
 	public function tearDown() {
 		DebugTimer::clear();
 	}
 
-/**
- * Start Timer test
- *
- * @return void
- */
+	/**
+	 * Start Timer test
+	 *
+	 * @return void
+	 */
 	public function testTimers() {
 		$this->assertTrue(DebugTimer::start('test1', 'this is my first test'));
 		usleep(5000);
@@ -55,11 +55,11 @@ class DebugTimerTest extends TestCase {
 		$this->assertFalse(DebugTimer::stop('wrong'));
 	}
 
-/**
- * test timers with no names.
- *
- * @return void
- */
+	/**
+	 * test timers with no names.
+	 *
+	 * @return void
+	 */
 	public function testAnonymousTimers() {
 		$this->assertTrue(DebugTimer::start());
 		usleep(2000);
@@ -80,11 +80,11 @@ class DebugTimerTest extends TestCase {
 		$this->assertEquals($expected, $timers[$expected]['message']);
 	}
 
-/**
- * Assert that nested anonymous timers don't get mixed up.
- *
- * @return void
- */
+	/**
+	 * Assert that nested anonymous timers don't get mixed up.
+	 *
+	 * @return void
+	 */
 	public function testNestedAnonymousTimers() {
 		$this->assertTrue(DebugTimer::start());
 		usleep(100);
@@ -107,12 +107,12 @@ class DebugTimerTest extends TestCase {
 		$this->assertTrue($firstTimer['time'] > $secondTimer['time']);
 	}
 
-/**
- * test that calling start with the same name does not overwrite previous timers
- * and instead adds new ones.
- *
- * @return void
- */
+	/**
+	 * test that calling start with the same name does not overwrite previous timers
+	 * and instead adds new ones.
+	 *
+	 * @return void
+	 */
 	public function testRepeatTimers() {
 		DebugTimer::start('my timer', 'This is the first call');
 		usleep(100);
@@ -133,11 +133,11 @@ class DebugTimerTest extends TestCase {
 		$this->assertEquals('This is the second call #2', $timers['my timer #2']['message']);
 	}
 
-/**
- * testRequestTime
- *
- * @return void
- */
+	/**
+	 * testRequestTime
+	 *
+	 * @return void
+	 */
 	public function testRequestTime() {
 		$result1 = DebugTimer::requestTime();
 		usleep(50);
@@ -145,11 +145,11 @@ class DebugTimerTest extends TestCase {
 		$this->assertTrue($result1 < $result2);
 	}
 
-/**
- * test getting all the set timers.
- *
- * @return void
- */
+	/**
+	 * test getting all the set timers.
+	 *
+	 * @return void
+	 */
 	public function testGetTimers() {
 		DebugTimer::start('test1', 'this is my first test');
 		DebugTimer::stop('test1');

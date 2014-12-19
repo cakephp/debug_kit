@@ -25,94 +25,94 @@ use Cake\Database\Log\QueryLogger;
  */
 class DebugLog extends QueryLogger {
 
-/**
- * Logs from the current request.
- *
- * @var array
- */
+	/**
+	 * Logs from the current request.
+	 *
+	 * @var array
+	 */
 	protected $_queries = [];
 
-/**
- * Decorated logger.
- *
- * @var Cake\Database\Log\LoggedQuery
- */
+	/**
+	 * Decorated logger.
+	 *
+	 * @var Cake\Database\Log\LoggedQuery
+	 */
 	protected $_logger;
 
-/**
- * Name of the connection being logged.
- *
- * @var string
- */
+	/**
+	 * Name of the connection being logged.
+	 *
+	 * @var string
+	 */
 	protected $_connectionName;
 
-/**
- * Total time (ms) of all queries
- *
- * @var int
- */
+	/**
+	 * Total time (ms) of all queries
+	 *
+	 * @var int
+	 */
 	protected $_totalTime = 0;
 
-/**
- * Total rows of all queries
- *
- * @var int
- */
+	/**
+	 * Total rows of all queries
+	 *
+	 * @var int
+	 */
 	protected $_totalRows = 0;
 
-/**
- * Constructor
- *
- * @param Cake\Database\Log\QueryLogger $logger The logger to decorate and spy on.
- * @param string $name The name of the connection being logged.
- */
+	/**
+	 * Constructor
+	 *
+	 * @param Cake\Database\Log\QueryLogger $logger The logger to decorate and spy on.
+	 * @param string $name The name of the connection being logged.
+	 */
 	public function __construct($logger, $name) {
 		$this->_logger = $logger;
 		$this->_connectionName = $name;
 	}
 
-/**
- * Get the stored logs.
- *
- * @return array
- */
+	/**
+	 * Get the stored logs.
+	 *
+	 * @return array
+	 */
 	public function name() {
 		return $this->_connectionName;
 	}
 
-/**
- * Get the stored logs.
- *
- * @return array
- */
+	/**
+	 * Get the stored logs.
+	 *
+	 * @return array
+	 */
 	public function queries() {
 		return $this->_queries;
 	}
 
-/**
- * Get the total time
- *
- * @return int
- */
+	/**
+	 * Get the total time
+	 *
+	 * @return int
+	 */
 	public function totalTime() {
 		return $this->_totalTime;
 	}
 
-/**
- * Get the total rows
- *
- * @return int
- */
+	/**
+	 * Get the total rows
+	 *
+	 * @return int
+	 */
 	public function totalRows() {
 		return $this->_totalRows;
 	}
 
-/**
- * Log queries
- *
- * @param \Cake\Database\Log\LoggedQuery $query The query being logged.
- * @return void
- */
+	/**
+	 * Log queries
+	 *
+	 * @param \Cake\Database\Log\LoggedQuery $query The query being logged.
+	 * @return void
+	 */
 	public function log(LoggedQuery $query) {
 		if ($this->_logger) {
 			$this->_logger->log($query);

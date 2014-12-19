@@ -21,12 +21,12 @@ use DebugKit\DebugPanel;
  */
 class SessionPanel extends DebugPanel {
 
-/**
- * shutdown callback
- *
- * @param \Cake\Event\Event $event The event
- * @return array
- */
+	/**
+	 * shutdown callback
+	 *
+	 * @param \Cake\Event\Event $event The event
+	 * @return array
+	 */
 	public function shutdown(Event $event) {
 		$request = $event->subject()->request;
 		if ($request) {

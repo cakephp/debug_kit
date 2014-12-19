@@ -23,11 +23,11 @@ use DebugKit\DebugPanel;
  */
 class LogPanel extends DebugPanel {
 
-/**
- * Initialize hook - sets up the log listener.
- *
- * @return \LogPanel
- */
+	/**
+	 * Initialize hook - sets up the log listener.
+	 *
+	 * @return \LogPanel
+	 */
 	public function initialize() {
 		if (Log::config('debug_kit_log_panel')) {
 			return;
@@ -37,22 +37,22 @@ class LogPanel extends DebugPanel {
 		));
 	}
 
-/**
- * Get the panel data
- *
- * @return void
- */
+	/**
+	 * Get the panel data
+	 *
+	 * @return void
+	 */
 	public function data() {
 		return [
 			'logger' => Log::engine('debug_kit_log_panel')
 		];
 	}
 
-/**
- * Get the summary data.
- *
- * @return string
- */
+	/**
+	 * Get the summary data.
+	 *
+	 * @return string
+	 */
 	public function summary() {
 		$logger = Log::engine('debug_kit_log_panel');
 		if (!$logger) {

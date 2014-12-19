@@ -24,12 +24,12 @@ use DebugKit\DebugPanel;
  */
 class EnvironmentPanel extends DebugPanel {
 
-/**
- * Get necessary data about environment to pass back to controller
- *
- * @param \Cake\Controller\Controller $controller The controller.
- * @return array
- */
+	/**
+	 * Get necessary data about environment to pass back to controller
+	 *
+	 * @param \Cake\Controller\Controller $controller The controller.
+	 * @return array
+	 */
 	protected function _prepare(Controller $controller) {
 		$return = [];
 
@@ -73,12 +73,12 @@ class EnvironmentPanel extends DebugPanel {
 		return $return;
 	}
 
-/**
- * Shutdown callback
- *
- * @param \Cake\Event\Event $event Event
- * @return void
- */
+	/**
+	 * Shutdown callback
+	 *
+	 * @param \Cake\Event\Event $event Event
+	 * @return void
+	 */
 	public function shutdown(Event $event) {
 		$this->_data = $this->_prepare($event->subject());
 	}

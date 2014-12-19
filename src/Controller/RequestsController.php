@@ -24,13 +24,13 @@ class RequestsController extends Controller {
 
 	public $layout = 'DebugKit.toolbar';
 
-/**
- * Before filter handler.
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+	/**
+	 * Before filter handler.
+	 *
+	 * @param \Cake\Event\Event $event The event.
+	 * @return void
+	 * @throws \Cake\Network\Exception\NotFoundException
+	 */
 	public function beforeFilter(Event $event) {
 		// TODO add config override
 		if (!Configure::read('debug')) {
@@ -38,12 +38,12 @@ class RequestsController extends Controller {
 		}
 	}
 
-/**
- * View a request's data.
- *
- * @param string $id The id.
- * @return void
- */
+	/**
+	 * View a request's data.
+	 *
+	 * @param string $id The id.
+	 * @return void
+	 */
 	public function view($id = null) {
 		$toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
 		$this->set('toolbar', $toolbar);

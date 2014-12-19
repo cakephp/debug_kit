@@ -23,12 +23,12 @@ use DebugKit\DebugPanel;
  */
 class RequestPanel extends DebugPanel {
 
-/**
- * Data collection callback.
- *
- * @param \Cake\Event\Event $event The shutdown event.
- * @return void
- */
+	/**
+	 * Data collection callback.
+	 *
+	 * @param \Cake\Event\Event $event The shutdown event.
+	 * @return void
+	 */
 	public function shutdown(Event $event) {
 		$controller = $event->subject();
 		$request = $controller->request;

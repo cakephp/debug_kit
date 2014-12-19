@@ -21,21 +21,21 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class RequestsControllerTestCase extends IntegrationTestCase {
 
-/**
- * Fixtures.
- *
- * @var array
- */
+	/**
+	 * Fixtures.
+	 *
+	 * @var array
+	 */
 	public $fixtures = [
 		'plugin.debug_kit.requests',
 		'plugin.debug_kit.panels'
 	];
 
-/**
- * Setup method.
- *
- * @return void
- */
+	/**
+	 * Setup method.
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		Router::plugin('DebugKit', function ($routes) {
@@ -43,11 +43,11 @@ class RequestsControllerTestCase extends IntegrationTestCase {
 		});
 	}
 
-/**
- * Test getting a toolbar that exists.
- *
- * @return void
- */
+	/**
+	 * Test getting a toolbar that exists.
+	 *
+	 * @return void
+	 */
 	public function testView() {
 		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
 		$result = $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
@@ -57,11 +57,11 @@ class RequestsControllerTestCase extends IntegrationTestCase {
 		$this->assertResponseContains('/css/toolbar.css', 'Has a CSS file');
 	}
 
-/**
- * Test getting a toolb that does notexists.
- *
- * @return void
- */
+	/**
+	 * Test getting a toolb that does notexists.
+	 *
+	 * @return void
+	 */
 	public function testViewNotExists() {
 		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
 		$this->get('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');

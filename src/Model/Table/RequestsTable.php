@@ -23,12 +23,12 @@ class RequestsTable extends Table {
 
 	use LazyTableTrait;
 
-/**
- * initialize method
- *
- * @param array $config Config data.
- * @return void
- */
+	/**
+	 * initialize method
+	 *
+	 * @param array $config Config data.
+	 * @return void
+	 */
 	public function initialize(array $config) {
 		$this->hasMany('DebugKit.Panels', [
 			'sort' => 'Panels.title ASC',
@@ -41,22 +41,22 @@ class RequestsTable extends Table {
 		$this->ensureTables(['DebugKit.Panels', 'DebugKit.Requests']);
 	}
 
-/**
- * DebugKit tables are special.
- *
- * @return string
- */
+	/**
+	 * DebugKit tables are special.
+	 *
+	 * @return string
+	 */
 	public static function defaultConnectionName() {
 		return 'debug_kit';
 	}
 
-/**
- * Finder method to get recent requests as a simple array
- *
- * @param Cake\ORM\Query $query The query
- * @param array $options The options
- * @return Query The query.
- */
+	/**
+	 * Finder method to get recent requests as a simple array
+	 *
+	 * @param Cake\ORM\Query $query The query
+	 * @param array $options The options
+	 * @return Query The query.
+	 */
 	public function findRecent(Query $query, array $options) {
 		return $query->order(['Requests.requested_at' => 'DESC'])
 			->limit(10);

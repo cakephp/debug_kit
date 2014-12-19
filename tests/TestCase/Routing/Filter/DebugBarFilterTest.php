@@ -28,31 +28,31 @@ use DebugKit\Routing\Filter\DebugBarFilter;
  */
 class DebugBarFilterTest extends TestCase {
 
-/**
- * Fixtures
- *
- * @var array
- */
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
 	public $fixtures = [
 		'plugin.debug_kit.requests',
 		'plugin.debug_kit.panels'
 	];
 
-/**
- * setup
- *
- * @return void
- */
+	/**
+	 * setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$this->events = new EventManager();
 	}
 
-/**
- * Test loading panels.
- *
- * @return void
- */
+	/**
+	 * Test loading panels.
+	 *
+	 * @return void
+	 */
 	public function testSetupLoadingPanels() {
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();
@@ -62,11 +62,11 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
 	}
 
-/**
- * Test that beforeDispatch call initialize on each panel
- *
- * @return void
- */
+	/**
+	 * Test that beforeDispatch call initialize on each panel
+	 *
+	 * @return void
+	 */
 	public function testBeforeDispatch() {
 		$bar = new DebugBarFilter($this->events, []);
 		$bar->setup();
@@ -78,11 +78,11 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertNotEmpty(Log::config('debug_kit_log_panel'), 'Panel attached logger.');
 	}
 
-/**
- * Test that afterDispatch ignores requestAction
- *
- * @return void
- */
+	/**
+	 * Test that afterDispatch ignores requestAction
+	 *
+	 * @return void
+	 */
 	public function testAfterDispatchIgnoreRequestAction() {
 		$request = new Request([
 			'url' => '/articles',
@@ -100,11 +100,11 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertNotContains('<script>', $response->body());
 	}
 
-/**
- * Test that afterDispatch saves panel data.
- *
- * @return void
- */
+	/**
+	 * Test that afterDispatch saves panel data.
+	 *
+	 * @return void
+	 */
 	public function testAfterDispatchSavesData() {
 		$request = new Request([
 			'url' => '/articles',
@@ -148,11 +148,11 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertTextEquals($expected, $response->body());
 	}
 
-/**
- * Test that afterDispatch does not modify response
- *
- * @return void
- */
+	/**
+	 * Test that afterDispatch does not modify response
+	 *
+	 * @return void
+	 */
 	public function testAfterDispatchNoModifyResponse() {
 		$request = new Request(['url' => '/articles']);
 
@@ -170,11 +170,11 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertTextEquals('{"some":"json"}', $response->body());
 	}
 
-/**
- * test isEnabled responds to debug flag.
- *
- * @return void
- */
+	/**
+	 * test isEnabled responds to debug flag.
+	 *
+	 * @return void
+	 */
 	public function testIsEnabled() {
 		Configure::write('debug', true);
 		$bar = new DebugBarFilter($this->events, []);
@@ -185,22 +185,22 @@ class DebugBarFilterTest extends TestCase {
 		$this->assertFalse($bar->isEnabled(), 'debug is off, panel is disabled');
 	}
 
-/**
- * test isEnabled responds to forceEnable config flag.
- *
- * @return void
- */
+	/**
+	 * test isEnabled responds to forceEnable config flag.
+	 *
+	 * @return void
+	 */
 	public function testIsEnabledForceEnable() {
 		Configure::write('debug', false);
 		$bar = new DebugBarFilter($this->events, ['forceEnable' => true]);
 		$this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
 	}
 
-/**
- * test isEnabled responds to forceEnable callable.
- *
- * @return void
- */
+	/**
+	 * test isEnabled responds to forceEnable callable.
+	 *
+	 * @return void
+	 */
 	public function testIsEnabledForceEnableCallable() {
 		Configure::write('debug', false);
 		$bar = new DebugBarFilter($this->events, [

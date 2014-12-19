@@ -23,31 +23,31 @@ use DebugKit\Panel\LogPanel;
  */
 class LogPanelTest extends TestCase {
 
-/**
- * set up
- *
- * @return void
- */
+	/**
+	 * set up
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		$this->panel = new LogPanel();
 	}
 
-/**
- * Teardown method.
- *
- * @return void
- */
+	/**
+	 * Teardown method.
+	 *
+	 * @return void
+	 */
 	public function tearDown() {
 		parent::tearDown();
 		Log::drop('debug_kit_log_panel');
 	}
 
-/**
- * Test that logging configs are created.
- *
- * @return void
- */
+	/**
+	 * Test that logging configs are created.
+	 *
+	 * @return void
+	 */
 	public function testInitialize() {
 		$this->panel->initialize();
 
@@ -56,11 +56,11 @@ class LogPanelTest extends TestCase {
 		$this->assertTrue(count($result) > 1, 'Default loggers were not added.');
 	}
 
-/**
- * test shutdown
- *
- * @return void
- */
+	/**
+	 * test shutdown
+	 *
+	 * @return void
+	 */
 	public function testData() {
 		$this->panel->initialize();
 		Log::write('error', 'Test');
@@ -74,11 +74,11 @@ class LogPanelTest extends TestCase {
 		$this->assertCount(1, $logger->all()['error']);
 	}
 
-/**
- * Test that the log panel outputs a summary.
- *
- * @return void
- */
+	/**
+	 * Test that the log panel outputs a summary.
+	 *
+	 * @return void
+	 */
 	public function testSummary() {
 		$this->panel->initialize();
 

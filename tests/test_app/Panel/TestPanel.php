@@ -27,11 +27,11 @@ use DebugKit\DebugPanel;
  */
 class TestPanel extends DebugPanel {
 
-/**
- * Startup
- *
- * @param Controller $controller
- */
+	/**
+	 * Startup
+	 *
+	 * @param Controller $controller
+	 */
 	public function startup(Controller $controller) {
 		$controller->testPanel = true;
 	}

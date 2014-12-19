@@ -27,22 +27,22 @@ use DebugKit\DebugKitDebugger;
  */
 class ToolbarHelper extends Helper {
 
-/**
- * helpers property
- *
- * @var array
- */
+	/**
+	 * helpers property
+	 *
+	 * @var array
+	 */
 	public $helpers = array('Html', 'Form', 'Url');
 
-/**
- * Recursively goes through an array and makes neat HTML out of it.
- *
- * @param mixed $values Array to make pretty.
- * @param int $openDepth Depth to add open class
- * @param int $currentDepth current depth.
- * @param bool $doubleEncode Whether or not to double encode.
- * @return string
- */
+	/**
+	 * Recursively goes through an array and makes neat HTML out of it.
+	 *
+	 * @param mixed $values Array to make pretty.
+	 * @param int $openDepth Depth to add open class
+	 * @param int $currentDepth current depth.
+	 * @param bool $doubleEncode Whether or not to double encode.
+	 * @return string
+	 */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
 		static $printedObjects = null;
 		if ($currentDepth === 0) {
@@ -119,13 +119,13 @@ class ToolbarHelper extends Helper {
 		return $out;
 	}
 
-/**
- * Create a table.
- *
- * @param array $rows Rows to make.
- * @param array $headers Optional header row.
- * @return string
- */
+	/**
+	 * Create a table.
+	 *
+	 * @param array $rows Rows to make.
+	 * @param array $headers Optional header row.
+	 * @return string
+	 */
 	public function table($rows, $headers = array()) {
 		$out = '<table class="debug-table">';
 		if (!empty($headers)) {

@@ -33,18 +33,18 @@ class DebugBarFilter extends DispatcherFilter {
 
 	use EventManagerTrait;
 
-/**
- * The panel registry.
- *
- * @var \DebugKit\Panel\PanelRegistry
- */
+	/**
+	 * The panel registry.
+	 *
+	 * @var \DebugKit\Panel\PanelRegistry
+	 */
 	protected $_registry;
 
-/**
- * Default configuration.
- *
- * @var array
- */
+	/**
+	 * Default configuration.
+	 *
+	 * @var array
+	 */
 	protected $_defaultConfig = [
 		'panels' => [
 			'DebugKit.Cache',
@@ -61,23 +61,23 @@ class DebugBarFilter extends DispatcherFilter {
 		'forceEnable' => false,
 	];
 
-/**
- * Constructor
- *
- * @param \Cake\Event\EventManager $events The event manager to use.
- * @param array $config The configuration data for DebugKit.
- */
+	/**
+	 * Constructor
+	 *
+	 * @param \Cake\Event\EventManager $events The event manager to use.
+	 * @param array $config The configuration data for DebugKit.
+	 */
 	public function __construct(EventManager $events, array $config) {
 		$this->eventManager($events);
 		$this->config($config);
 		$this->_registry = new PanelRegistry($events);
 	}
 
-/**
- * Event bindings
- *
- * @return array
- */
+	/**
+	 * Event bindings
+	 *
+	 * @return array
+	 */
 	public function implementedEvents() {
 		return [
 			'Dispatcher.beforeDispatch' => [
@@ -91,11 +91,11 @@ class DebugBarFilter extends DispatcherFilter {
 		];
 	}
 
-/**
- * Check whether or not debug kit is enabled.
- *
- * @return bool
- */
+	/**
+	 * Check whether or not debug kit is enabled.
+	 *
+	 * @return bool
+	 */
 	public function isEnabled() {
 		$enabled = (bool)Configure::read('debug');
 		if ($enabled) {
@@ -108,57 +108,57 @@ class DebugBarFilter extends DispatcherFilter {
 		return $force;
 	}
 
-/**
- * Get the list of loaded panels
- *
- * @return array
- */
+	/**
+	 * Get the list of loaded panels
+	 *
+	 * @return array
+	 */
 	public function loadedPanels() {
 		return $this->_registry->loaded();
 	}
 
-/**
- * Get the list of loaded panels
- *
- * @param string $name The name of the panel you want to get.
- * @return DebugKit\Panel\DebugPanel|null The panel or null.
- */
+	/**
+	 * Get the list of loaded panels
+	 *
+	 * @param string $name The name of the panel you want to get.
+	 * @return DebugKit\Panel\DebugPanel|null The panel or null.
+	 */
 	public function panel($name) {
 		return $this->_registry->{$name};
 	}
 
-/**
- * Do the required setup work.
- *
- * - Build panels.
- * - Connect events
- *
- * @return void
- */
+	/**
+	 * Do the required setup work.
+	 *
+	 * - Build panels.
+	 * - Connect events
+	 *
+	 * @return void
+	 */
 	public function setup() {
 		foreach ($this->config('panels') as $panel) {
 			$this->_registry->load($panel);
 		}
 	}
 
-/**
- * Call the initialize method onl all the loaded panels.
- *
- * @param \Cake\Event\Event $event The beforeDispatch event.
- * @return void
- */
+	/**
+	 * Call the initialize method onl all the loaded panels.
+	 *
+	 * @param \Cake\Event\Event $event The beforeDispatch event.
+	 * @return void
+	 */
 	public function beforeDispatch(Event $event) {
 		foreach ($this->_registry->loaded() as $panel) {
 			$this->_registry->{$panel}->initialize();
 		}
 	}
 
-/**
- * Save the toolbar data.
- *
- * @param \Cake\Event\Event $event The afterDispatch event.
- * @return void
- */
+	/**
+	 * Save the toolbar data.
+	 *
+	 * @param \Cake\Event\Event $event The afterDispatch event.
+	 * @return void
+	 */
 	public function afterDispatch(Event $event) {
 		$request = $event->data['request'];
 		// Skip debugkit requests and requestAction()
@@ -201,16 +201,16 @@ class DebugBarFilter extends DispatcherFilter {
 		$this->_injectScripts($row->id, $response);
 	}
 
-/**
- * Injects the JS to build the toolbar.
- *
- * The toolbar will only be injected if the response's content type
- * contains HTML and there is a </body> tag.
- *
- * @param string $id ID to fetch data from.
- * @param \Cake\Network\Response $response The response to augment.
- * @return void
- */
+	/**
+	 * Injects the JS to build the toolbar.
+	 *
+	 * The toolbar will only be injected if the response's content type
+	 * contains HTML and there is a </body> tag.
+	 *
+	 * @param string $id ID to fetch data from.
+	 * @param \Cake\Network\Response $response The response to augment.
+	 * @return void
+	 */
 	protected function _injectScripts($id, $response) {
 		if (strpos($response->type(), 'html') === false) {
 			return;

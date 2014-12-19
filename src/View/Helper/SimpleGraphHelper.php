@@ -24,32 +24,32 @@ use Cake\View\Helper;
  */
 class SimpleGraphHelper extends Helper {
 
-/**
- * Default settings to be applied to each Simple Graph
- *
- * Allowed options:
- *
- * - max => (int) Maximum value in the graphs
- * - width => (int)
- * - valueType => string (value, percentage)
- * - style => array
- *
- * @var array
- */
+	/**
+	 * Default settings to be applied to each Simple Graph
+	 *
+	 * Allowed options:
+	 *
+	 * - max => (int) Maximum value in the graphs
+	 * - width => (int)
+	 * - valueType => string (value, percentage)
+	 * - style => array
+	 *
+	 * @var array
+	 */
 	protected $_defaultSettings = array(
 		'max' => 100,
 		'width' => 350,
 		'valueType' => 'value',
 	);
 
-/**
- * bar method
- *
- * @param float $value Value to be graphed
- * @param int $offset how much indentation
- * @param array|\Graph $options Graph options
- * @return string Html graph
- */
+	/**
+	 * bar method
+	 *
+	 * @param float $value Value to be graphed
+	 * @param int $offset how much indentation
+	 * @param array|\Graph $options Graph options
+	 * @return string Html graph
+	 */
 	public function bar($value, $offset, $options = array()) {
 		$settings = array_merge($this->_defaultSettings, $options);
 		extract($settings);

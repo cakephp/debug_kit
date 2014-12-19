@@ -21,21 +21,21 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class PanelsControllerTestCase extends IntegrationTestCase {
 
-/**
- * Fixtures.
- *
- * @var array
- */
+	/**
+	 * Fixtures.
+	 *
+	 * @var array
+	 */
 	public $fixtures = [
 		'plugin.debug_kit.requests',
 		'plugin.debug_kit.panels'
 	];
 
-/**
- * Setup method.
- *
- * @return void
- */
+	/**
+	 * Setup method.
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		Router::plugin('DebugKit', function ($routes) {
@@ -43,11 +43,11 @@ class PanelsControllerTestCase extends IntegrationTestCase {
 		});
 	}
 
-/**
- * Test getting a panel that exists.
- *
- * @return void
- */
+	/**
+	 * Test getting a panel that exists.
+	 *
+	 * @return void
+	 */
 	public function testView() {
 		$this->configRequest([
 			'headers' => ['Accept' => 'application/json']
@@ -59,11 +59,11 @@ class PanelsControllerTestCase extends IntegrationTestCase {
 		$this->assertResponseContains('Routing Params</h4>');
 	}
 
-/**
- * Test getting a panel that does notexists.
- *
- * @return void
- */
+	/**
+	 * Test getting a panel that does notexists.
+	 *
+	 * @return void
+	 */
 	public function testViewNotExists() {
 		$this->configRequest([
 			'headers' => ['Accept' => 'application/json']

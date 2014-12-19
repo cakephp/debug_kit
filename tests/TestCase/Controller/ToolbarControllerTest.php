@@ -22,21 +22,21 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class ToolbarControllerTestCase extends IntegrationTestCase {
 
-/**
- * Fixtures.
- *
- * @var array
- */
+	/**
+	 * Fixtures.
+	 *
+	 * @var array
+	 */
 	public $fixtures = [
 		'plugin.debug_kit.requests',
 		'plugin.debug_kit.panels'
 	];
 
-/**
- * Setup method.
- *
- * @return void
- */
+	/**
+	 * Setup method.
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 		Router::plugin('DebugKit', function ($routes) {
@@ -46,22 +46,22 @@ class ToolbarControllerTestCase extends IntegrationTestCase {
 		});
 	}
 
-/**
- * Test clearing the cache does not work with GET
- *
- * @return void
- */
+	/**
+	 * Test clearing the cache does not work with GET
+	 *
+	 * @return void
+	 */
 	public function testClearCacheNoGet() {
 		$this->get('/debug_kit/toolbar/clear_cache?name=testing');
 
 		$this->assertEquals(405, $this->_response->statusCode());
 	}
 
-/**
- * Test clearing the cache.
- *
- * @return void
- */
+	/**
+	 * Test clearing the cache.
+	 *
+	 * @return void
+	 */
 	public function testClearCache() {
 		$mock = $this->getMock('Cake\Cache\CacheEngine');
 		$mock->expects($this->once())

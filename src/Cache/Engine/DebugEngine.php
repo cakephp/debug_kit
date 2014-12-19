@@ -25,25 +25,25 @@ use DebugKit\DebugTimer;
  */
 class DebugEngine extends CacheEngine {
 
-/**
- * Proxied cache engine config.
- *
- * @var mixed
- */
+	/**
+	 * Proxied cache engine config.
+	 *
+	 * @var mixed
+	 */
 	protected $_config;
 
-/**
- * Proxied engine
- *
- * @var mixed
- */
+	/**
+	 * Proxied engine
+	 *
+	 * @var mixed
+	 */
 	protected $_engine;
 
-/**
- * Hit/miss metrics.
- *
- * @var mixed
- */
+	/**
+	 * Hit/miss metrics.
+	 *
+	 * @var mixed
+	 */
 	protected $_metrics = [
 		'write' => 0,
 		'delete' => 0,
@@ -52,21 +52,21 @@ class DebugEngine extends CacheEngine {
 		'miss' => 0,
 	];
 
-/**
- * Constructor
- *
- * @param mixed $config Config data or the proxied adapter.
- */
+	/**
+	 * Constructor
+	 *
+	 * @param mixed $config Config data or the proxied adapter.
+	 */
 	public function __construct($config) {
 		$this->_config = $config;
 	}
 
-/**
- * Initialize the proxied Cache Engine
- *
- * @param array $config Array of setting for the engine.
- * @return bool True, this engine cannot fail to initialize.
- */
+	/**
+	 * Initialize the proxied Cache Engine
+	 *
+	 * @param array $config Array of setting for the engine.
+	 * @return bool True, this engine cannot fail to initialize.
+	 */
 	public function init(array $config = []) {
 		if (is_object($this->_config)) {
 			$this->_engine = $this->_config;
@@ -78,37 +78,37 @@ class DebugEngine extends CacheEngine {
 		return true;
 	}
 
-/**
- * Get the internal engine
- *
- * @return \Cake\Cache\CacheEngine
- */
+	/**
+	 * Get the internal engine
+	 *
+	 * @return \Cake\Cache\CacheEngine
+	 */
 	public function engine() {
 		return $this->_engine;
 	}
 
-/**
- * Get the metrics for this object.
- *
- * @return array
- */
+	/**
+	 * Get the metrics for this object.
+	 *
+	 * @return array
+	 */
 	public function metrics() {
 		return $this->_metrics;
 	}
 
-/**
- * Track a metric.
- *
- * @param string $metric The metric to increment.
- * @return void
- */
+	/**
+	 * Track a metric.
+	 *
+	 * @param string $metric The metric to increment.
+	 * @return void
+	 */
 	protected function _track($metric) {
 		$this->_metrics[$metric]++;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function write($key, $value) {
 		$this->_track('write');
 		DebugTimer::start('Cache.write ' . $key);
@@ -117,9 +117,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function writeMany($data) {
 		$this->_track('write');
 		DebugTimer::start('Cache.writeMany');
@@ -128,9 +128,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function read($key) {
 		$this->_track('read');
 		DebugTimer::start('Cache.read ' . $key);
@@ -144,9 +144,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function readMany($data) {
 		$this->_track('read');
 		DebugTimer::start('Cache.readMany');
@@ -155,9 +155,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function increment($key, $offset = 1) {
 		$this->_track('write');
 		DebugTimer::start('Cache.increment ' . $key);
@@ -166,9 +166,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function decrement($key, $offset = 1) {
 		$this->_track('write');
 		DebugTimer::start('Cache.decrement ' . $key);
@@ -177,9 +177,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function delete($key) {
 		$this->_track('delete');
 		DebugTimer::start('Cache.delete ' . $key);
@@ -188,9 +188,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function deleteMany($data) {
 		$this->_track('delete');
 		DebugTimer::start('Cache.deleteMany');
@@ -199,9 +199,9 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function clear($check) {
 		$this->_track('delete');
 		DebugTimer::start('Cache.clear');
@@ -210,16 +210,16 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function groups() {
 		return $this->_engine->groups();
 	}
 
-/**
- * {@inheritDoc}
- */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function clearGroup($group) {
 		$this->_track('delete');
 		DebugTimer::start('Cache.clearGroup ' . $group);
@@ -228,11 +228,11 @@ class DebugEngine extends CacheEngine {
 		return $result;
 	}
 
-/**
- * Magic __toString() method to get the CacheEngine's name
- *
- * @return string Returns the CacheEngine's name
- */
+	/**
+	 * Magic __toString() method to get the CacheEngine's name
+	 *
+	 * @return string Returns the CacheEngine's name
+	 */
 	public function __toString() {
 		if (!empty($this->_engine)) {
 			list($ns, $class) = namespaceSplit(get_class($this->_engine));

@@ -23,18 +23,18 @@ use DebugKit\DebugPanel;
  */
 class CachePanel extends DebugPanel {
 
-/**
- * The cache spy instances used.
- *
- * @var void
- */
+	/**
+	 * The cache spy instances used.
+	 *
+	 * @var void
+	 */
 	protected $_instances = [];
 
-/**
- * Initialize - install cache spies.
- *
- * @return void
- */
+	/**
+	 * Initialize - install cache spies.
+	 *
+	 * @return void
+	 */
 	public function initialize() {
 		foreach (Cache::configured() as $name) {
 			$config = Cache::config($name);
@@ -49,11 +49,11 @@ class CachePanel extends DebugPanel {
 		}
 	}
 
-/**
- * Get the data for this panel
- *
- * @return array
- */
+	/**
+	 * Get the data for this panel
+	 *
+	 * @return array
+	 */
 	public function data() {
 		$metrics = [];
 		foreach ($this->_instances as $name => $instance) {

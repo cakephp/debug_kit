@@ -22,11 +22,11 @@ use Cake\TestSuite\TestCase;
  */
 class RequestTableTest extends TestCase {
 
-/**
- * test that schema is created on-demand.
- *
- * @return void
- */
+	/**
+	 * test that schema is created on-demand.
+	 *
+	 * @return void
+	 */
 	public function testInitializeCreatesSchema() {
 		$connection = ConnectionManager::get('test');
 		$stmt = $connection->execute('DROP TABLE IF EXISTS requests');
@@ -38,11 +38,11 @@ class RequestTableTest extends TestCase {
 		$this->assertContains('requests', $schema->listTables());
 	}
 
-/**
- * Test the recent finder.
- *
- * @return void
- */
+	/**
+	 * Test the recent finder.
+	 *
+	 * @return void
+	 */
 	public function testFindRecent() {
 		$table = TableRegistry::get('DebugKit.Requests');
 		$query = $table->find('recent');

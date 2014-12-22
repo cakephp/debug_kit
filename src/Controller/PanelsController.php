@@ -20,64 +20,68 @@ use Cake\Network\Exception\NotFoundException;
 /**
  * Provides access to panel data.
  */
-class PanelsController extends Controller {
+class PanelsController extends Controller
+{
 
-/**
- * components
- *
- * @var array
- */
-	public $components = ['RequestHandler'];
+    /**
+     * components
+     *
+     * @var array
+     */
+    public $components = ['RequestHandler'];
 
-/**
- * Layout property.
- *
- * @var string
- */
-	public $layout = 'DebugKit.panel';
+    /**
+     * Layout property.
+     *
+     * @var string
+     */
+    public $layout = 'DebugKit.panel';
 
-/**
- * Before filter handler.
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function beforeFilter(Event $event) {
-		// TODO add config override.
-		if (!Configure::read('debug')) {
-			throw new NotFoundException();
-		}
-	}
+    /**
+     * Before filter handler.
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
+    public function beforeFilter(Event $event)
+    {
+        // TODO add config override.
+        if (!Configure::read('debug')) {
+            throw new NotFoundException();
+        }
+    }
 
-/**
- * Index method that lets you get requests by panelid.
- *
- * @param string $requestId Request id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function index($requestId = null) {
-		$query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
-		$panels = $query->toArray();
-		if (empty($panels)) {
-			throw new NotFoundException();
-		}
-		$this->set([
-			'_serialize' => ['panels'],
-			'panels' => $panels
-		]);
-	}
+    /**
+     * Index method that lets you get requests by panelid.
+     *
+     * @param string $requestId Request id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
+    public function index($requestId = null)
+    {
+        $query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
+        $panels = $query->toArray();
+        if (empty($panels)) {
+            throw new NotFoundException();
+        }
+        $this->set([
+            '_serialize' => ['panels'],
+            'panels' => $panels
+        ]);
+    }
 
-/**
- * View a panel's data.
- *
- * @param string $id The id.
- * @return void
- */
-	public function view($id = null) {
-		$panel = $this->Panels->get($id);
-		$this->set('panel', $panel);
-		$this->set(unserialize($panel->content));
-	}
+    /**
+     * View a panel's data.
+     *
+     * @param string $id The id.
+     * @return void
+     */
+    public function view($id = null)
+    {
+        $panel = $this->Panels->get($id);
+        $this->set('panel', $panel);
+        $this->set(unserialize($panel->content));
+    }
 }

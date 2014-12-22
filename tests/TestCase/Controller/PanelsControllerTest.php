@@ -19,58 +19,61 @@ use Cake\TestSuite\IntegrationTestCase;
 /**
  * Panel controller test.
  */
-class PanelsControllerTestCase extends IntegrationTestCase {
+class PanelsControllerTest extends IntegrationTestCase
+{
 
-/**
- * Fixtures.
- *
- * @var array
- */
-	public $fixtures = [
-		'plugin.debug_kit.requests',
-		'plugin.debug_kit.panels'
-	];
+    /**
+     * Fixtures.
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.debug_kit.requests',
+        'plugin.debug_kit.panels'
+    ];
 
-/**
- * Setup method.
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		Router::plugin('DebugKit', function ($routes) {
-			$routes->connect('/panels/:action/*', ['controller' => 'Panels']);
-		});
-	}
+    /**
+     * Setup method.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        Router::plugin('DebugKit', function ($routes) {
+            $routes->connect('/panels/:action/*', ['controller' => 'Panels']);
+        });
+    }
 
-/**
- * Test getting a panel that exists.
- *
- * @return void
- */
-	public function testView() {
-		$this->configRequest([
-			'headers' => ['Accept' => 'application/json']
-		]);
-		$this->get('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+    /**
+     * Test getting a panel that exists.
+     *
+     * @return void
+     */
+    public function testView()
+    {
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
+        $this->get('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
-		$this->assertResponseOk();
-		$this->assertResponseContains('Request</h2>');
-		$this->assertResponseContains('Routing Params</h4>');
-	}
+        $this->assertResponseOk();
+        $this->assertResponseContains('Request</h2>');
+        $this->assertResponseContains('Routing Params</h4>');
+    }
 
-/**
- * Test getting a panel that does notexists.
- *
- * @return void
- */
-	public function testViewNotExists() {
-		$this->configRequest([
-			'headers' => ['Accept' => 'application/json']
-		]);
-		$this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
-		$this->assertResponseError();
-		$this->assertResponseContains('Error page');
-	}
-
+    /**
+     * Test getting a panel that does notexists.
+     *
+     * @return void
+     */
+    public function testViewNotExists()
+    {
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
+        $this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
+        $this->assertResponseError();
+        $this->assertResponseContains('Error page');
+    }
 }

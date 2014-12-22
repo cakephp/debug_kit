@@ -23,71 +23,75 @@ use DebugKit\DebugPanel;
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
  *
  */
-class SqlLogPanel extends DebugPanel {
+class SqlLogPanel extends DebugPanel
+{
 
-/**
- * Loggers connected
- *
- * @var array
- */
-	protected $_loggers = [];
+    /**
+     * Loggers connected
+     *
+     * @var array
+     */
+    protected $_loggers = [];
 
-/**
- * Initialize hook - configures logger.
- *
- * This will unfortunately build all the connections, but they
- * won't connect until used.
- *
- * @return array
- */
-	public function initialize() {
-		$configs = ConnectionManager::configured();
-		foreach ($configs as $name) {
-			$connection = ConnectionManager::get($name);
-			if ($connection->configName() === 'debug_kit') {
-				continue;
-			}
-			$logger = null;
-			if ($connection->logQueries()) {
-				$logger = $connection->logger();
-			}
+    /**
+     * Initialize hook - configures logger.
+     *
+     * This will unfortunately build all the connections, but they
+     * won't connect until used.
+     *
+     * @return array
+     */
+    public function initialize()
+    {
+        $configs = ConnectionManager::configured();
+        foreach ($configs as $name) {
+            $connection = ConnectionManager::get($name);
+            if ($connection->configName() === 'debug_kit') {
+                continue;
+            }
+            $logger = null;
+            if ($connection->logQueries()) {
+                $logger = $connection->logger();
+            }
 
-			if ($logger instanceof DebugLog) {
-				continue;
-			}
-			$logger = new DebugLog($logger, $name);
+            if ($logger instanceof DebugLog) {
+                continue;
+            }
+            $logger = new DebugLog($logger, $name);
 
-			$connection->logQueries(true);
-			$connection->logger($logger);
-			$this->_loggers[] = $logger;
-		}
-	}
+            $connection->logQueries(true);
+            $connection->logger($logger);
+            $this->_loggers[] = $logger;
+        }
+    }
 
-/**
- * Get the data this panel wants to store.
- *
- * @return array
- */
-	public function data() {
-		return [
-			'tables' => array_map(function ($table) {
-				return $table->alias();
-			}, TableRegistry::genericInstances()),
-			'loggers' => $this->_loggers,
-		];
-	}
+    /**
+     * Get the data this panel wants to store.
+     *
+     * @return array
+     */
+    public function data()
+    {
+        return [
+            'tables' => array_map(function ($table) {
+                return $table->alias();
+            }, TableRegistry::genericInstances()),
+            'loggers' => $this->_loggers,
+        ];
+    }
 
-/**
- * Get summary data from the queries run.
- *
- * @return string
- */
-	public function summary() {
-		$count = $time = 0;
-		foreach ($this->_loggers as $logger) {
-			$count += count($logger->queries());
-			$time += $logger->totalTime();
-		}
-		return "{$count} - $time ms";
-	}
+    /**
+     * Get summary data from the queries run.
+     *
+     * @return string
+     */
+    public function summary()
+    {
+        $count = $time = 0;
+        foreach ($this->_loggers as $logger) {
+            $count += count($logger->queries());
+            $time += $logger->totalTime();
+        }
+        return "{$count} - $time ms";
+    }
 }

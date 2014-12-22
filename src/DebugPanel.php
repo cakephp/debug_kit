@@ -23,88 +23,96 @@ use Cake\Utility\Inflector;
  *
  * @since         DebugKit 0.1
  */
-class DebugPanel implements EventListenerInterface {
+class DebugPanel implements EventListenerInterface
+{
 
-/**
- * Defines which plugin this panel is from so the element can be located.
- *
- * @var string
- */
-	public $plugin = 'DebugKit';
+    /**
+     * Defines which plugin this panel is from so the element can be located.
+     *
+     * @var string
+     */
+    public $plugin = 'DebugKit';
 
-/**
- * The data collected about a given request.
- *
- * @var array
- */
-	protected $_data = [];
+    /**
+     * The data collected about a given request.
+     *
+     * @var array
+     */
+    protected $_data = [];
 
-/**
- * Get the title for the panel.
- *
- * @return string
- */
-	public function title() {
-		list($ns, $name) = namespaceSplit(get_class($this));
-		$name = substr($name, 0, strlen('Panel') * -1);
-		return Inflector::humanize(Inflector::underscore($name));
-	}
+    /**
+     * Get the title for the panel.
+     *
+     * @return string
+     */
+    public function title()
+    {
+        list($ns, $name) = namespaceSplit(get_class($this));
+        $name = substr($name, 0, strlen('Panel') * -1);
+        return Inflector::humanize(Inflector::underscore($name));
+    }
 
-/**
- * Get the element name for the panel.
- *
- * @return string
- */
-	public function elementName() {
-		list($ns, $name) = namespaceSplit(get_class($this));
-		return $this->plugin . '.' . Inflector::underscore($name);
-	}
+    /**
+     * Get the element name for the panel.
+     *
+     * @return string
+     */
+    public function elementName()
+    {
+        list($ns, $name) = namespaceSplit(get_class($this));
+        return $this->plugin . '.' . Inflector::underscore($name);
+    }
 
-/**
- * Get the data a panel has collected.
- *
- * @return array
- */
-	public function data() {
-		return $this->_data;
-	}
+    /**
+     * Get the data a panel has collected.
+     *
+     * @return array
+     */
+    public function data()
+    {
+        return $this->_data;
+    }
 
-/**
- * Get the summary data for a panel.
- *
- * This data is displayed in the toolbar even when the panel is collapsed.
- *
- * @return string
- */
-	public function summary() {
-		return '';
-	}
+    /**
+     * Get the summary data for a panel.
+     *
+     * This data is displayed in the toolbar even when the panel is collapsed.
+     *
+     * @return string
+     */
+    public function summary()
+    {
+        return '';
+    }
 
-/**
- * Initialize hook method.
- *
- * @return void
- */
-	public function initialize() {
-	}
+    /**
+     * Initialize hook method.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+    }
 
-/**
- * Shutdown callback
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- */
-	public function shutdown(Event $event) {
-	}
+    /**
+     * Shutdown callback
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     */
+    public function shutdown(Event $event)
+    {
+    }
 
-/**
- * Get the events this panels supports.
- *
- * @return array
- */
-	public function implementedEvents() {
-		return [
-			'Controller.shutdown' => 'shutdown',
-		];
-	}
+    /**
+     * Get the events this panels supports.
+     *
+     * @return array
+     */
+    public function implementedEvents()
+    {
+        return [
+            'Controller.shutdown' => 'shutdown',
+        ];
+    }
 }

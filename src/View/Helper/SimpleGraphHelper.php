@@ -22,53 +22,54 @@ use Cake\View\Helper;
  *
  * @since         DebugKit 1.0
  */
-class SimpleGraphHelper extends Helper {
+class SimpleGraphHelper extends Helper
+{
 
-/**
- * Default settings to be applied to each Simple Graph
- *
- * Allowed options:
- *
- * - max => (int) Maximum value in the graphs
- * - width => (int)
- * - valueType => string (value, percentage)
- * - style => array
- *
- * @var array
- */
-	protected $_defaultSettings = array(
-		'max' => 100,
-		'width' => 350,
-		'valueType' => 'value',
-	);
+    /**
+     * Default settings to be applied to each Simple Graph
+     *
+     * Allowed options:
+     *
+     * - max => (int) Maximum value in the graphs
+     * - width => (int)
+     * - valueType => string (value, percentage)
+     * - style => array
+     *
+     * @var array
+     */
+    protected $_defaultSettings = array(
+        'max' => 100,
+        'width' => 350,
+        'valueType' => 'value',
+    );
 
-/**
- * bar method
- *
- * @param float $value Value to be graphed
- * @param int $offset how much indentation
- * @param array|\Graph $options Graph options
- * @return string Html graph
- */
-	public function bar($value, $offset, $options = array()) {
-		$settings = array_merge($this->_defaultSettings, $options);
-		extract($settings);
+    /**
+     * bar method
+     *
+     * @param float $value Value to be graphed
+     * @param int $offset how much indentation
+     * @param array|\Graph $options Graph options
+     * @return string Html graph
+     */
+    public function bar($value, $offset, $options = array())
+    {
+        $settings = array_merge($this->_defaultSettings, $options);
+        extract($settings);
 
-		$graphValue = ($value / $max) * $width;
-		$graphValue = max(round($graphValue), 1);
+        $graphValue = ($value / $max) * $width;
+        $graphValue = max(round($graphValue), 1);
 
-		if ($valueType === 'percentage') {
-			$graphOffset = 0;
-		} else {
-			$graphOffset = ($offset / $max) * $width;
-			$graphOffset = round($graphOffset);
-		}
-		return sprintf(
-			'<div class="graph-bar" style="%s"><div class="graph-bar-value" style="%s" title="%s"> </div></div>',
-			"width: {$width}px",
-			"margin-left: {$graphOffset}px; width: {$graphValue}px",
-			__d('debug_kit', "Starting {0}ms into the request, taking {1}ms", $offset, $value)
-		);
-	}
-
+        if ($valueType === 'percentage') {
+            $graphOffset = 0;
+        } else {
+            $graphOffset = ($offset / $max) * $width;
+            $graphOffset = round($graphOffset);
+        }
+        return sprintf(
+            '<div class="graph-bar" style="%s"><div class="graph-bar-value" style="%s" title="%s"> </div></div>',
+            "width: {$width}px",
+            "margin-left: {$graphOffset}px; width: {$graphValue}px",
+            __d('debug_kit', "Starting {0}ms into the request, taking {1}ms", $offset, $value)
+        );
+    }
 }

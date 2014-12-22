@@ -21,22 +21,24 @@ use Cake\Controller\ComponentRegistry;
  *
  * @since         DebugKit 0.1
  */
-class ToolbarComponent extends Component {
+class ToolbarComponent extends Component
+{
 
-/**
- * Constructor
- *
- * If debug is off the component will be disabled and not do any further time tracking
- * or load the toolbar helper.
- *
- * @param \Cake\Controller\ComponentRegistry $registry The ComponentRegistry
- * @param array $settings An array of config
- * @return void
- * @throws \RuntimeException
- */
-	public function __construct(ComponentRegistry $registry, $settings = []) {
-		$msg = 'DebugKit is now loaded through plugin bootstrapping. Make sure you have ' .
-			'`Plugin::load("DebugKit", ["bootstrap" => true]);` in your application\'s bootstrap.php.';
-		throw new \RuntimeException($msg);
-	}
+    /**
+     * Constructor
+     *
+     * If debug is off the component will be disabled and not do any further time tracking
+     * or load the toolbar helper.
+     *
+     * @param \Cake\Controller\ComponentRegistry $registry The ComponentRegistry
+     * @param array $settings An array of config
+     * @return void
+     * @throws \RuntimeException
+     */
+    public function __construct(ComponentRegistry $registry, $settings = [])
+    {
+        $msg = 'DebugKit is now loaded through plugin bootstrapping. Make sure you have ' .
+            '`Plugin::load("DebugKit", ["bootstrap" => true]);` in your application\'s bootstrap.php.';
+        throw new \RuntimeException($msg);
+    }
 }

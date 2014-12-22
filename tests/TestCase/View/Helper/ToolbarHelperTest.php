@@ -28,277 +28,285 @@ use StdClass;
 /**
  * Class ToolbarHelperTestCase
  */
-class ToolbarHelperTestCase extends TestCase {
+class ToolbarHelperTest extends TestCase
+{
 
-/**
- * Setup
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		Router::connect('/:controller/:action');
+    /**
+     * Setup
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        Router::connect('/:controller/:action');
 
-		$request = new Request();
-		$request->addParams(array('controller' => 'pages', 'action' => 'display'));
+        $request = new Request();
+        $request->addParams(array('controller' => 'pages', 'action' => 'display'));
 
-		$this->View = new View($request);
-		$this->Toolbar = new ToolbarHelper($this->View);
-	}
+        $this->View = new View($request);
+        $this->Toolbar = new ToolbarHelper($this->View);
+    }
 
-/**
- * Tear Down
- *
- * @return void
- */
-	public function tearDown() {
-		parent::tearDown();
-		unset($this->Toolbar);
-	}
+    /**
+     * Tear Down
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        unset($this->Toolbar);
+    }
 
-/**
- * Test makeNeatArray with basic types.
- *
- * @return void
- */
-	public function testMakeNeatArrayBasic() {
-		$in = false;
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0', '/strong', '(false)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+    /**
+     * Test makeNeatArray with basic types.
+     *
+     * @return void
+     */
+    public function testMakeNeatArrayBasic()
+    {
+        $in = false;
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', '0', '/strong', '(false)', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = null;
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0', '/strong', '(null)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $in = null;
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', '0', '/strong', '(null)', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = true;
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0', '/strong', '(true)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $in = true;
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', '0', '/strong', '(true)', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = array();
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0', '/strong', '(empty)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-	}
+        $in = array();
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', '0', '/strong', '(empty)', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
+    }
 
-/**
- * Test that cyclic references can be printed.
- *
- * @return void
- */
-	public function testMakeNeatArrayCyclicObjects() {
-		$a = new StdClass;
-		$b = new StdClass;
-		$a->child = $b;
-		$b->parent = $a;
+    /**
+     * Test that cyclic references can be printed.
+     *
+     * @return void
+     */
+    public function testMakeNeatArrayCyclicObjects()
+    {
+        $a = new StdClass;
+        $b = new StdClass;
+        $a->child = $b;
+        $b->parent = $a;
 
-		$in = array('obj' => $a);
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			array('ul' => array('class' => 'neat-array depth-0')),
-			'<li', '<strong', 'obj', '/strong', '(object)',
-			array('ul' => array('class' => 'neat-array depth-1')),
-			'<li', '<strong', 'child', '/strong', '(object)',
-			array('ul' => array('class' => 'neat-array depth-2')),
-			'<li', '<strong', 'parent', '/strong',
-			'(object) - recursion',
-			'/li',
-			'/ul',
-			'/li',
-			'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-	}
+        $in = array('obj' => $a);
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            array('ul' => array('class' => 'neat-array depth-0')),
+            '<li', '<strong', 'obj', '/strong', '(object)',
+            array('ul' => array('class' => 'neat-array depth-1')),
+            '<li', '<strong', 'child', '/strong', '(object)',
+            array('ul' => array('class' => 'neat-array depth-2')),
+            '<li', '<strong', 'parent', '/strong',
+            '(object) - recursion',
+            '/li',
+            '/ul',
+            '/li',
+            '/ul',
+            '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
+    }
 
-/**
- * Test Neat Array formatting
- *
- * @return void
- */
-	public function testMakeNeatArray() {
-		$in = array('key' => 'value');
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+    /**
+     * Test Neat Array formatting
+     *
+     * @return void
+     */
+    public function testMakeNeatArray()
+    {
+        $in = array('key' => 'value');
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = array('key' => null);
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', '(null)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $in = array('key' => null);
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', 'key', '/strong', '(null)', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = array('key' => 'value', 'foo' => 'bar');
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong', 'bar', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $in = array('key' => 'value', 'foo' => 'bar');
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'foo', '/strong', 'bar', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = array(
-			'key' => 'value',
-			'foo' => array(
-				'this' => 'deep',
-				'another' => 'value'
-			)
-		);
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong',
-				'(array)',
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $in = array(
+            'key' => 'value',
+            'foo' => array(
+                'this' => 'deep',
+                'another' => 'value'
+            )
+        );
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'foo', '/strong',
+                '(array)',
+                array('ul' => array('class' => 'neat-array depth-1')),
+                '<li', '<strong', 'this', '/strong', 'deep', '/li',
+                '<li', '<strong', 'another', '/strong', 'value', '/li',
+                '/ul',
+            '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = array(
-			'key' => 'value',
-			'foo' => array(
-				'this' => 'deep',
-				'another' => 'value'
-			),
-			'lotr' => array(
-				'gandalf' => 'wizard',
-				'bilbo' => 'hobbit'
-			)
-		);
-		$result = $this->Toolbar->makeNeatArray($in, 1);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0 expanded'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong',
-				'(array)',
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'<li', '<strong', 'lotr', '/strong',
-				'(array)',
-				array('ul' => array('class' => 'neat-array depth-1')),
-				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
-				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $in = array(
+            'key' => 'value',
+            'foo' => array(
+                'this' => 'deep',
+                'another' => 'value'
+            ),
+            'lotr' => array(
+                'gandalf' => 'wizard',
+                'bilbo' => 'hobbit'
+            )
+        );
+        $result = $this->Toolbar->makeNeatArray($in, 1);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0 expanded'),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'foo', '/strong',
+                '(array)',
+                array('ul' => array('class' => 'neat-array depth-1')),
+                '<li', '<strong', 'this', '/strong', 'deep', '/li',
+                '<li', '<strong', 'another', '/strong', 'value', '/li',
+                '/ul',
+            '/li',
+            '<li', '<strong', 'lotr', '/strong',
+                '(array)',
+                array('ul' => array('class' => 'neat-array depth-1')),
+                '<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
+                '<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
+                '/ul',
+            '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$result = $this->Toolbar->makeNeatArray($in, 2);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0 expanded'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'foo', '/strong',
-				'(array)',
-				array('ul' => array('class' => 'neat-array depth-1 expanded')),
-				'<li', '<strong', 'this', '/strong', 'deep', '/li',
-				'<li', '<strong', 'another', '/strong', 'value', '/li',
-				'/ul',
-			'/li',
-			'<li', '<strong', 'lotr', '/strong',
-				'(array)',
-				array('ul' => array('class' => 'neat-array depth-1 expanded')),
-				'<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
-				'<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
-				'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
+        $result = $this->Toolbar->makeNeatArray($in, 2);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0 expanded'),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'foo', '/strong',
+                '(array)',
+                array('ul' => array('class' => 'neat-array depth-1 expanded')),
+                '<li', '<strong', 'this', '/strong', 'deep', '/li',
+                '<li', '<strong', 'another', '/strong', 'value', '/li',
+                '/ul',
+            '/li',
+            '<li', '<strong', 'lotr', '/strong',
+                '(array)',
+                array('ul' => array('class' => 'neat-array depth-1 expanded')),
+                '<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
+                '<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
+                '/ul',
+            '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
 
-		$in = array('key' => 'value', 'array' => array());
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'array', '/strong', '(empty)', '/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-	}
+        $in = array('key' => 'value', 'array' => array());
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            'ul' => array('class' => 'neat-array depth-0'),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'array', '/strong', '(empty)', '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
+    }
 
-/**
- * Test makeNeatArray with object inputs.
- *
- * @return void
- */
-	public function testMakeNeatArrayObjects() {
-		$in = new StdClass();
-		$in->key = 'value';
-		$in->nested = new StdClass();
-		$in->nested->name = 'mark';
+    /**
+     * Test makeNeatArray with object inputs.
+     *
+     * @return void
+     */
+    public function testMakeNeatArrayObjects()
+    {
+        $in = new StdClass();
+        $in->key = 'value';
+        $in->nested = new StdClass();
+        $in->nested->name = 'mark';
 
-		$result = $this->Toolbar->makeNeatArray($in);
-		$expected = array(
-			array('ul' => array('class' => 'neat-array depth-0')),
-			'<li', '<strong', 'key', '/strong', 'value', '/li',
-			'<li', '<strong', 'nested', '/strong',
-			'(object)',
-			array('ul' => array('class' => 'neat-array depth-1')),
-			'<li', '<strong', 'name', '/strong', 'mark', '/li',
-			'/ul',
-			'/li',
-			'/ul'
-		);
-		$this->assertTags($result, $expected);
-	}
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            array('ul' => array('class' => 'neat-array depth-0')),
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'nested', '/strong',
+            '(object)',
+            array('ul' => array('class' => 'neat-array depth-1')),
+            '<li', '<strong', 'name', '/strong', 'mark', '/li',
+            '/ul',
+            '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
+    }
 
-/**
- * Test Table generation
- *
- * @return void
- */
-	public function testTable() {
-		$rows = array(
-			array(1, 2),
-			array(3, 4),
-		);
-		$result = $this->Toolbar->table($rows);
-		$expected = array(
-			'table' => array('class' => 'debug-table'),
-			'<tr',
-			'<td', '1', '/td',
-			'<td', '2', '/td', '/tr',
-			'<tr',
-			'<td', '3', '/td',
-			'<td', '4', '/td', '/tr',
-			'/table'
-		);
-		$this->assertTags($result, $expected);
-	}
+    /**
+     * Test Table generation
+     *
+     * @return void
+     */
+    public function testTable()
+    {
+        $rows = array(
+            array(1, 2),
+            array(3, 4),
+        );
+        $result = $this->Toolbar->table($rows);
+        $expected = array(
+            'table' => array('class' => 'debug-table'),
+            '<tr',
+            '<td', '1', '/td',
+            '<td', '2', '/td', '/tr',
+            '<tr',
+            '<td', '3', '/td',
+            '<td', '4', '/td', '/tr',
+            '/table'
+        );
+        $this->assertTags($result, $expected);
+    }
 }

@@ -19,47 +19,50 @@ use DebugKit\Model\Table\LazyTableTrait;
 /**
  * The requests table tracks basic information about each request.
  */
-class RequestsTable extends Table {
+class RequestsTable extends Table
+{
 
-	use LazyTableTrait;
+    use LazyTableTrait;
 
-/**
- * initialize method
- *
- * @param array $config Config data.
- * @return void
- */
-	public function initialize(array $config) {
-		$this->hasMany('DebugKit.Panels', [
-			'sort' => 'Panels.title ASC',
-		]);
-		$this->addBehavior('Timestamp', [
-			'events' => [
-				'Model.beforeSave' => ['requested_at' => 'new']
-			]
-		]);
-		$this->ensureTables(['DebugKit.Panels', 'DebugKit.Requests']);
-	}
+    /**
+     * initialize method
+     *
+     * @param array $config Config data.
+     * @return void
+     */
+    public function initialize(array $config)
+    {
+        $this->hasMany('DebugKit.Panels', [
+            'sort' => 'Panels.title ASC',
+        ]);
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => ['requested_at' => 'new']
+            ]
+        ]);
+        $this->ensureTables(['DebugKit.Panels', 'DebugKit.Requests']);
+    }
 
-/**
- * DebugKit tables are special.
- *
- * @return string
- */
-	public static function defaultConnectionName() {
-		return 'debug_kit';
-	}
+    /**
+     * DebugKit tables are special.
+     *
+     * @return string
+     */
+    public static function defaultConnectionName()
+    {
+        return 'debug_kit';
+    }
 
-/**
- * Finder method to get recent requests as a simple array
- *
- * @param Cake\ORM\Query $query The query
- * @param array $options The options
- * @return Query The query.
- */
-	public function findRecent(Query $query, array $options) {
-		return $query->order(['Requests.requested_at' => 'DESC'])
-			->limit(10);
-	}
-
+    /**
+     * Finder method to get recent requests as a simple array
+     *
+     * @param Cake\ORM\Query $query The query
+     * @param array $options The options
+     * @return Query The query.
+     */
+    public function findRecent(Query $query, array $options)
+    {
+        return $query->order(['Requests.requested_at' => 'DESC'])
+            ->limit(10);
+    }
 }

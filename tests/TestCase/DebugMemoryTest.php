@@ -19,45 +19,48 @@ use DebugKit\DebugMemory;
  * Class DebugMemoryTest
  *
  */
-class DebugMemoryTest extends TestCase {
+class DebugMemoryTest extends TestCase
+{
 
-/**
- * test memory usage
- *
- * @return void
- */
-	public function testMemoryUsage() {
-		$result = DebugMemory::getCurrent();
-		$this->assertTrue(is_int($result));
+    /**
+     * test memory usage
+     *
+     * @return void
+     */
+    public function testMemoryUsage()
+    {
+        $result = DebugMemory::getCurrent();
+        $this->assertTrue(is_int($result));
 
-		$result = DebugMemory::getPeak();
-		$this->assertTrue(is_int($result));
-	}
+        $result = DebugMemory::getPeak();
+        $this->assertTrue(is_int($result));
+    }
 
-/**
- * test making memory use markers.
- *
- * @return void
- */
-	public function testMemorySettingAndGetting() {
-		DebugMemory::clear();
-		$result = DebugMemory::record('test marker');
-		$this->assertTrue($result);
+    /**
+     * test making memory use markers.
+     *
+     * @return void
+     */
+    public function testMemorySettingAndGetting()
+    {
+        DebugMemory::clear();
+        $result = DebugMemory::record('test marker');
+        $this->assertTrue($result);
 
-		$result = DebugMemory::getAll(true);
-		$this->assertEquals(count($result), 1);
-		$this->assertTrue(isset($result['test marker']));
-		$this->assertTrue(is_numeric($result['test marker']));
+        $result = DebugMemory::getAll(true);
+        $this->assertEquals(count($result), 1);
+        $this->assertTrue(isset($result['test marker']));
+        $this->assertTrue(is_numeric($result['test marker']));
 
-		$result = DebugMemory::getAll();
-		$this->assertTrue(empty($result));
+        $result = DebugMemory::getAll();
+        $this->assertTrue(empty($result));
 
-		DebugMemory::record('test marker');
-		DebugMemory::record('test marker');
-		$result = DebugMemory::getAll();
+        DebugMemory::record('test marker');
+        DebugMemory::record('test marker');
+        $result = DebugMemory::getAll();
 
-		$this->assertEquals(count($result), 2);
-		$this->assertTrue(isset($result['test marker']));
-		$this->assertTrue(isset($result['test marker #2']));
-	}
+        $this->assertEquals(count($result), 2);
+        $this->assertTrue(isset($result['test marker']));
+        $this->assertTrue(isset($result['test marker #2']));
+    }
 }

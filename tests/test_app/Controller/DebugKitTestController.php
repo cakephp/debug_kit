@@ -24,43 +24,46 @@ use Cake\Controller\Controller;
  *
  * @since         DebugKit 0.1
  */
-class DebugKitTestController extends Controller {
+class DebugKitTestController extends Controller
+{
 
-/**
- * Mame of the Controller
- *
- * @var string
- */
-	public $name = 'DebugKitTest';
+    /**
+     * Mame of the Controller
+     *
+     * @var string
+     */
+    public $name = 'DebugKitTest';
 
-/**
- * Uses no Models
- *
- * @var array
- */
-	public $uses = array();
+    /**
+     * Uses no Models
+     *
+     * @var array
+     */
+    public $uses = array();
 
-/**
- * Uses only DebugKit Toolbar Component
- *
- * @var array
- */
-	public $components = array('DebugKit.Toolbar');
+    /**
+     * Uses only DebugKit Toolbar Component
+     *
+     * @var array
+     */
+    public $components = array('DebugKit.Toolbar');
 
-/**
- * Return Request Action Value
- *
- * @return string
- */
-	public function request_action_return() {
-		$this->autoRender = false;
-		return 'I am some value from requestAction.';
-	}
+    /**
+     * Return Request Action Value
+     *
+     * @return string
+     */
+    public function request_action_return()
+    {
+        $this->autoRender = false;
+        return 'I am some value from requestAction.';
+    }
 
-/**
- * Render Request Action
- */
-	public function request_action_render() {
-		$this->set('test', 'I have been rendered.');
-	}
+    /**
+     * Render Request Action
+     */
+    public function request_action_render()
+    {
+        $this->set('test', 'I have been rendered.');
+    }
 }

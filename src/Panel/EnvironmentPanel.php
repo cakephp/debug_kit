@@ -22,65 +22,68 @@ use DebugKit\DebugPanel;
  * Provides information about your PHP and CakePHP environment to assist with debugging.
  *
  */
-class EnvironmentPanel extends DebugPanel {
+class EnvironmentPanel extends DebugPanel
+{
 
-/**
- * Get necessary data about environment to pass back to controller
- *
- * @param \Cake\Controller\Controller $controller The controller.
- * @return array
- */
-	protected function _prepare(Controller $controller) {
-		$return = [];
+    /**
+     * Get necessary data about environment to pass back to controller
+     *
+     * @param \Cake\Controller\Controller $controller The controller.
+     * @return array
+     */
+    protected function _prepare(Controller $controller)
+    {
+        $return = [];
 
-		// PHP Data
-		$phpVer = phpversion();
-		$return['php'] = array_merge(
-			['PHP_VERSION' => $phpVer],
-			$_SERVER
-		);
-		unset($return['php']['argv']);
+        // PHP Data
+        $phpVer = phpversion();
+        $return['php'] = array_merge(
+            ['PHP_VERSION' => $phpVer],
+            $_SERVER
+        );
+        unset($return['php']['argv']);
 
-		// CakePHP Data
-		$return['cake'] = array(
-			'APP' => APP,
-			'APP_DIR' => APP_DIR,
-			'CACHE' => CACHE,
-			'CAKE' => CAKE,
-			'CAKE_CORE_INCLUDE_PATH' => CAKE_CORE_INCLUDE_PATH,
-			'CORE_PATH' => CORE_PATH,
-			'CAKE_VERSION' => Configure::version(),
-			'DS' => DS,
-			'LOGS' => LOGS,
-			'ROOT' => ROOT,
-			'TESTS' => TESTS,
-			'TMP' => TMP,
-			'WWW_ROOT' => WWW_ROOT
-		);
+        // CakePHP Data
+        $return['cake'] = array(
+            'APP' => APP,
+            'APP_DIR' => APP_DIR,
+            'CACHE' => CACHE,
+            'CAKE' => CAKE,
+            'CAKE_CORE_INCLUDE_PATH' => CAKE_CORE_INCLUDE_PATH,
+            'CORE_PATH' => CORE_PATH,
+            'CAKE_VERSION' => Configure::version(),
+            'DS' => DS,
+            'LOGS' => LOGS,
+            'ROOT' => ROOT,
+            'TESTS' => TESTS,
+            'TMP' => TMP,
+            'WWW_ROOT' => WWW_ROOT
+        );
 
-		$cakeConstants = array_fill_keys(
-			array(
-				'DS', 'ROOT', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
-			), ''
-		);
-		$var = get_defined_constants(true);
-		$return['app'] = array_diff_key($var['user'], $return['cake'], $cakeConstants);
+        $cakeConstants = array_fill_keys(
+            array(
+                'DS', 'ROOT', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
+            ),
+            ''
+        );
+        $var = get_defined_constants(true);
+        $return['app'] = array_diff_key($var['user'], $return['cake'], $cakeConstants);
 
-		if (isset($var['hidef'])) {
-			$return['hidef'] = $var['hidef'];
-		}
+        if (isset($var['hidef'])) {
+            $return['hidef'] = $var['hidef'];
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 
-/**
- * Shutdown callback
- *
- * @param \Cake\Event\Event $event Event
- * @return void
- */
-	public function shutdown(Event $event) {
-		$this->_data = $this->_prepare($event->subject());
-	}
-
+    /**
+     * Shutdown callback
+     *
+     * @param \Cake\Event\Event $event Event
+     * @return void
+     */
+    public function shutdown(Event $event)
+    {
+        $this->_data = $this->_prepare($event->subject());
+    }
 }

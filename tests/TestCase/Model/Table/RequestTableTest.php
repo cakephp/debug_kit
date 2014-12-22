@@ -20,34 +20,36 @@ use Cake\TestSuite\TestCase;
 /**
  * Tests for request table.
  */
-class RequestTableTest extends TestCase {
+class RequestTableTest extends TestCase
+{
 
-/**
- * test that schema is created on-demand.
- *
- * @return void
- */
-	public function testInitializeCreatesSchema() {
-		$connection = ConnectionManager::get('test');
-		$stmt = $connection->execute('DROP TABLE IF EXISTS requests');
-		$stmt->closeCursor();
+    /**
+     * test that schema is created on-demand.
+     *
+     * @return void
+     */
+    public function testInitializeCreatesSchema()
+    {
+        $connection = ConnectionManager::get('test');
+        $stmt = $connection->execute('DROP TABLE IF EXISTS requests');
+        $stmt->closeCursor();
 
-		$table = TableRegistry::get('DebugKit.Requests');
+        $table = TableRegistry::get('DebugKit.Requests');
 
-		$schema = $connection->schemaCollection();
-		$this->assertContains('requests', $schema->listTables());
-	}
+        $schema = $connection->schemaCollection();
+        $this->assertContains('requests', $schema->listTables());
+    }
 
-/**
- * Test the recent finder.
- *
- * @return void
- */
-	public function testFindRecent() {
-		$table = TableRegistry::get('DebugKit.Requests');
-		$query = $table->find('recent');
-		$this->assertEquals(10, $query->clause('limit'));
-		$this->assertNotEmpty($query->clause('order'));
-	}
-
+    /**
+     * Test the recent finder.
+     *
+     * @return void
+     */
+    public function testFindRecent()
+    {
+        $table = TableRegistry::get('DebugKit.Requests');
+        $query = $table->find('recent');
+        $this->assertEquals(10, $query->clause('limit'));
+        $this->assertNotEmpty($query->clause('order'));
+    }
 }

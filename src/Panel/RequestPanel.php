@@ -21,24 +21,26 @@ use DebugKit\DebugPanel;
  * Provides debug information on the Current request params.
  *
  */
-class RequestPanel extends DebugPanel {
+class RequestPanel extends DebugPanel
+{
 
-/**
- * Data collection callback.
- *
- * @param \Cake\Event\Event $event The shutdown event.
- * @return void
- */
-	public function shutdown(Event $event) {
-		$controller = $event->subject();
-		$request = $controller->request;
-		$this->_data = [
-			'params' => $request->params,
-			'query' => $request->query,
-			'data' => $request->data,
-			'cookie' => $request->cookies,
-			'get' => $_GET,
-			'headers' => ['response' => headers_sent($file, $line), 'file' => $file, 'line' => $line],
-		];
-	}
+    /**
+     * Data collection callback.
+     *
+     * @param \Cake\Event\Event $event The shutdown event.
+     * @return void
+     */
+    public function shutdown(Event $event)
+    {
+        $controller = $event->subject();
+        $request = $controller->request;
+        $this->_data = [
+            'params' => $request->params,
+            'query' => $request->query,
+            'data' => $request->data,
+            'cookie' => $request->cookies,
+            'get' => $_GET,
+            'headers' => ['response' => headers_sent($file, $line), 'file' => $file, 'line' => $line],
+        ];
+    }
 }

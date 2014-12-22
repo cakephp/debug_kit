@@ -20,44 +20,47 @@ use DebugKit\DebugTimer;
 /**
  * Class TimedBehavior
  */
-class TimedBehavior extends Behavior {
+class TimedBehavior extends Behavior
+{
 
-/**
- * beforeFind, starts a timer for a find operation.
- *
- * @param \Cake\Event\Event $event The beforeFind event
- * @param \Cake\ORM\Query $query Query
- * @return bool true
- */
-	public function beforeFind(Event $event, $query) {
-		$alias = $event->subject()->alias();
-		DebugTimer::start($alias . '_find', $alias . '->find()');
-		return $query->formatResults(function ($results) use ($alias) {
-			DebugTimer::stop($alias . '_find');
-			return $results;
-		});
-	}
+    /**
+     * beforeFind, starts a timer for a find operation.
+     *
+     * @param \Cake\Event\Event $event The beforeFind event
+     * @param \Cake\ORM\Query $query Query
+     * @return bool true
+     */
+    public function beforeFind(Event $event, $query)
+    {
+        $alias = $event->subject()->alias();
+        DebugTimer::start($alias . '_find', $alias . '->find()');
+        return $query->formatResults(function ($results) use ($alias) {
+            DebugTimer::stop($alias . '_find');
+            return $results;
+        });
+    }
 
-/**
- * beforeSave, starts a time before a save is initiated.
- *
- * @param Cake\Event\Event $event The beforeSave event
- * @return void
- */
-	public function beforeSave(Event $event) {
-		$alias = $event->subject()->alias();
-		DebugTimer::start($alias . '_save', $alias . '->save()');
-	}
+    /**
+     * beforeSave, starts a time before a save is initiated.
+     *
+     * @param Cake\Event\Event $event The beforeSave event
+     * @return void
+     */
+    public function beforeSave(Event $event)
+    {
+        $alias = $event->subject()->alias();
+        DebugTimer::start($alias . '_save', $alias . '->save()');
+    }
 
-/**
- * afterSave, stop the timer started from a save.
- *
- * @param Cake\Event\Event $event The afterSave event
- * @return void
- */
-	public function afterSave(Event $event) {
-		$alias = $event->subject()->alias();
-		DebugTimer::stop($alias . '_save');
-	}
-
+    /**
+     * afterSave, stop the timer started from a save.
+     *
+     * @param Cake\Event\Event $event The afterSave event
+     * @return void
+     */
+    public function afterSave(Event $event)
+    {
+        $alias = $event->subject()->alias();
+        DebugTimer::stop($alias . '_save');
+    }
 }

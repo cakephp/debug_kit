@@ -19,54 +19,57 @@ use Cake\TestSuite\IntegrationTestCase;
 /**
  * Request controller test.
  */
-class RequestsControllerTestCase extends IntegrationTestCase {
+class RequestsControllerTest extends IntegrationTestCase
+{
 
-/**
- * Fixtures.
- *
- * @var array
- */
-	public $fixtures = [
-		'plugin.debug_kit.requests',
-		'plugin.debug_kit.panels'
-	];
+    /**
+     * Fixtures.
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.debug_kit.requests',
+        'plugin.debug_kit.panels'
+    ];
 
-/**
- * Setup method.
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		Router::plugin('DebugKit', function ($routes) {
-			$routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
-		});
-	}
+    /**
+     * Setup method.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        Router::plugin('DebugKit', function ($routes) {
+            $routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
+        });
+    }
 
-/**
- * Test getting a toolbar that exists.
- *
- * @return void
- */
-	public function testView() {
-		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
-		$result = $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+    /**
+     * Test getting a toolbar that exists.
+     *
+     * @return void
+     */
+    public function testView()
+    {
+        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
+        $result = $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
-		$this->assertResponseOk();
-		$this->assertResponseContains('Request', 'Has a panel button');
-		$this->assertResponseContains('/css/toolbar.css', 'Has a CSS file');
-	}
+        $this->assertResponseOk();
+        $this->assertResponseContains('Request', 'Has a panel button');
+        $this->assertResponseContains('/css/toolbar.css', 'Has a CSS file');
+    }
 
-/**
- * Test getting a toolb that does notexists.
- *
- * @return void
- */
-	public function testViewNotExists() {
-		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
-		$this->get('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');
+    /**
+     * Test getting a toolb that does notexists.
+     *
+     * @return void
+     */
+    public function testViewNotExists()
+    {
+        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
+        $this->get('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');
 
-		$this->assertResponseError();
-	}
-
+        $this->assertResponseError();
+    }
 }

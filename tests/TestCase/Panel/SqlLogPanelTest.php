@@ -22,73 +22,77 @@ use DebugKit\Panel\SqlLogPanel;
 /**
  * Class SqlLogPanelTest
  */
-class SqlLogPanelTest extends TestCase {
+class SqlLogPanelTest extends TestCase
+{
 
-/**
- * fixtures.
- *
- * @var array
- */
-	public $fixtures = ['core.articles'];
+    /**
+     * fixtures.
+     *
+     * @var array
+     */
+    public $fixtures = ['core.articles'];
 
-/**
- * Setup
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		$this->panel = new SqlLogPanel();
-	}
+    /**
+     * Setup
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->panel = new SqlLogPanel();
+    }
 
-/**
- * Ensure that subrequests don't double proxy the logger.
- *
- * @return void
- */
-	public function testInitializeTwiceNoDoubleProxy() {
-		$event = new Event('Sample');
+    /**
+     * Ensure that subrequests don't double proxy the logger.
+     *
+     * @return void
+     */
+    public function testInitializeTwiceNoDoubleProxy()
+    {
+        $event = new Event('Sample');
 
-		$this->panel->initialize($event);
-		$db = ConnectionManager::get('test');
-		$logger = $db->logger();
-		$this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
+        $this->panel->initialize($event);
+        $db = ConnectionManager::get('test');
+        $logger = $db->logger();
+        $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
 
-		$this->panel->initialize($event);
-		$second = $db->logger();
-		$this->assertSame($second, $logger);
-	}
+        $this->panel->initialize($event);
+        $second = $db->logger();
+        $this->assertSame($second, $logger);
+    }
 
-/**
- * test the parsing of source list.
- *
- * @return void
- */
-	public function testData() {
-		$event = new Event('Sample');
-		$this->panel->initialize($event);
+    /**
+     * test the parsing of source list.
+     *
+     * @return void
+     */
+    public function testData()
+    {
+        $event = new Event('Sample');
+        $this->panel->initialize($event);
 
-		$articles = TableRegistry::get('Articles');
-		$articles->findById(1)->first();
+        $articles = TableRegistry::get('Articles');
+        $articles->findById(1)->first();
 
-		$result = $this->panel->data();
-		$this->assertArrayHasKey('loggers', $result);
-	}
+        $result = $this->panel->data();
+        $this->assertArrayHasKey('loggers', $result);
+    }
 
-/**
- * Test getting summary data.
- *
- * @return void
- */
-	public function testSummary() {
-		$event = new Event('Sample');
-		$result = $this->panel->initialize($event);
+    /**
+     * Test getting summary data.
+     *
+     * @return void
+     */
+    public function testSummary()
+    {
+        $event = new Event('Sample');
+        $result = $this->panel->initialize($event);
 
-		$articles = TableRegistry::get('Articles');
-		$articles->findById(1)->first();
+        $articles = TableRegistry::get('Articles');
+        $articles->findById(1)->first();
 
-		$result = $this->panel->summary();
-		$this->assertRegExp('/\d+ - \d+ ms/', $result);
-	}
-
+        $result = $this->panel->summary();
+        $this->assertRegExp('/\d+ - \d+ ms/', $result);
+    }
 }

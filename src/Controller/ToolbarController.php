@@ -21,52 +21,54 @@ use Cake\Network\Exception\NotFoundException;
 /**
  * Provides utility features need by the toolbar.
  */
-class ToolbarController extends Controller {
+class ToolbarController extends Controller
+{
 
-/**
- * components
- *
- * @var array
- */
-	public $components = ['RequestHandler'];
+    /**
+     * components
+     *
+     * @var array
+     */
+    public $components = ['RequestHandler'];
 
-/**
- * View class
- *
- * @var string
- */
-	public $viewClass = 'Cake\View\JsonView';
+    /**
+     * View class
+     *
+     * @var string
+     */
+    public $viewClass = 'Cake\View\JsonView';
 
-/**
- * Before filter handler.
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function beforeFilter(Event $event) {
-		// TODO add config override.
-		if (!Configure::read('debug')) {
-			throw new NotFoundException();
-		}
-	}
+    /**
+     * Before filter handler.
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
+    public function beforeFilter(Event $event)
+    {
+        // TODO add config override.
+        if (!Configure::read('debug')) {
+            throw new NotFoundException();
+        }
+    }
 
-/**
- * Clear a named cache.
- *
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function clearCache() {
-		$this->request->allowMethod('post');
-		if (!$this->request->data('name')) {
-			throw new NotFoundException('Invalid cache engine name.');
-		}
-		$result = Cache::clear(false, $this->request->data('name'));
-		$this->set([
-			'_serialize' => ['success'],
-			'success' => $result,
-		]);
-	}
-
+    /**
+     * Clear a named cache.
+     *
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
+    public function clearCache()
+    {
+        $this->request->allowMethod('post');
+        if (!$this->request->data('name')) {
+            throw new NotFoundException('Invalid cache engine name.');
+        }
+        $result = Cache::clear(false, $this->request->data('name'));
+        $this->set([
+            '_serialize' => ['success'],
+            'success' => $result,
+        ]);
+    }
 }

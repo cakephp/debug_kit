@@ -21,44 +21,47 @@ use DebugKit\DebugPanel;
  * Log Panel - Reads log entries made this request.
  *
  */
-class LogPanel extends DebugPanel {
+class LogPanel extends DebugPanel
+{
 
-/**
- * Initialize hook - sets up the log listener.
- *
- * @return \LogPanel
- */
-	public function initialize() {
-		if (Log::config('debug_kit_log_panel')) {
-			return;
-		}
-		Log::config('debug_kit_log_panel', array(
-			'engine' => 'DebugKit.DebugKit',
-		));
-	}
+    /**
+     * Initialize hook - sets up the log listener.
+     *
+     * @return \LogPanel
+     */
+    public function initialize()
+    {
+        if (Log::config('debug_kit_log_panel')) {
+            return;
+        }
+        Log::config('debug_kit_log_panel', array(
+            'engine' => 'DebugKit.DebugKit',
+        ));
+    }
 
-/**
- * Get the panel data
- *
- * @return void
- */
-	public function data() {
-		return [
-			'logger' => Log::engine('debug_kit_log_panel')
-		];
-	}
+    /**
+     * Get the panel data
+     *
+     * @return void
+     */
+    public function data()
+    {
+        return [
+            'logger' => Log::engine('debug_kit_log_panel')
+        ];
+    }
 
-/**
- * Get the summary data.
- *
- * @return string
- */
-	public function summary() {
-		$logger = Log::engine('debug_kit_log_panel');
-		if (!$logger) {
-			return 0;
-		}
-		return $logger->count();
-	}
-
+    /**
+     * Get the summary data.
+     *
+     * @return string
+     */
+    public function summary()
+    {
+        $logger = Log::engine('debug_kit_log_panel');
+        if (!$logger) {
+            return 0;
+        }
+        return $logger->count();
+    }
 }

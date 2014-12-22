@@ -21,47 +21,49 @@ use DebugKit\DebugPanel;
 /**
  * A panel for spying on cache engines.
  */
-class CachePanel extends DebugPanel {
+class CachePanel extends DebugPanel
+{
 
-/**
- * The cache spy instances used.
- *
- * @var void
- */
-	protected $_instances = [];
+    /**
+     * The cache spy instances used.
+     *
+     * @var void
+     */
+    protected $_instances = [];
 
-/**
- * Initialize - install cache spies.
- *
- * @return void
- */
-	public function initialize() {
-		foreach (Cache::configured() as $name) {
-			$config = Cache::config($name);
-			if ($config['className'] instanceof DebugEngine) {
-				$instance = $config['className'];
-			} else {
-				Cache::drop($name);
-				$instance = new DebugEngine($config);
-				Cache::config($name, $instance);
-			}
-			$this->_instances[$name] = $instance;
-		}
-	}
+    /**
+     * Initialize - install cache spies.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        foreach (Cache::configured() as $name) {
+            $config = Cache::config($name);
+            if ($config['className'] instanceof DebugEngine) {
+                $instance = $config['className'];
+            } else {
+                Cache::drop($name);
+                $instance = new DebugEngine($config);
+                Cache::config($name, $instance);
+            }
+            $this->_instances[$name] = $instance;
+        }
+    }
 
-/**
- * Get the data for this panel
- *
- * @return array
- */
-	public function data() {
-		$metrics = [];
-		foreach ($this->_instances as $name => $instance) {
-			$metrics[$name] = $instance->metrics();
-		}
-		return [
-			'metrics' => $metrics
-		];
-	}
-
+    /**
+     * Get the data for this panel
+     *
+     * @return array
+     */
+    public function data()
+    {
+        $metrics = [];
+        foreach ($this->_instances as $name => $instance) {
+            $metrics[$name] = $instance->metrics();
+        }
+        return [
+            'metrics' => $metrics
+        ];
+    }
 }

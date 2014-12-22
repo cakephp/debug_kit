@@ -20,62 +20,66 @@ use Cake\TestSuite\IntegrationTestCase;
 /**
  * Toolbar controller test.
  */
-class ToolbarControllerTestCase extends IntegrationTestCase {
+class ToolbarControllerTest extends IntegrationTestCase
+{
 
-/**
- * Fixtures.
- *
- * @var array
- */
-	public $fixtures = [
-		'plugin.debug_kit.requests',
-		'plugin.debug_kit.panels'
-	];
+    /**
+     * Fixtures.
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.debug_kit.requests',
+        'plugin.debug_kit.panels'
+    ];
 
-/**
- * Setup method.
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		Router::plugin('DebugKit', function ($routes) {
-			$routes->connect(
-				'/toolbar/clear_cache/*',
-				['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']);
-		});
-	}
+    /**
+     * Setup method.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        Router::plugin('DebugKit', function ($routes) {
+            $routes->connect(
+                '/toolbar/clear_cache/*',
+                ['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']
+            );
+        });
+    }
 
-/**
- * Test clearing the cache does not work with GET
- *
- * @return void
- */
-	public function testClearCacheNoGet() {
-		$this->get('/debug_kit/toolbar/clear_cache?name=testing');
+    /**
+     * Test clearing the cache does not work with GET
+     *
+     * @return void
+     */
+    public function testClearCacheNoGet()
+    {
+        $this->get('/debug_kit/toolbar/clear_cache?name=testing');
 
-		$this->assertEquals(405, $this->_response->statusCode());
-	}
+        $this->assertEquals(405, $this->_response->statusCode());
+    }
 
-/**
- * Test clearing the cache.
- *
- * @return void
- */
-	public function testClearCache() {
-		$mock = $this->getMock('Cake\Cache\CacheEngine');
-		$mock->expects($this->once())
-			->method('init')
-			->will($this->returnValue(true));
-		$mock->expects($this->once())
-			->method('clear')
-			->will($this->returnValue(true));
-		Cache::config('testing', $mock);
+    /**
+     * Test clearing the cache.
+     *
+     * @return void
+     */
+    public function testClearCache()
+    {
+        $mock = $this->getMock('Cake\Cache\CacheEngine');
+        $mock->expects($this->once())
+            ->method('init')
+            ->will($this->returnValue(true));
+        $mock->expects($this->once())
+            ->method('clear')
+            ->will($this->returnValue(true));
+        Cache::config('testing', $mock);
 
-		$this->configRequest(['headers' => ['Accept' => 'application/json']]);
-		$this->post('/debug_kit/toolbar/clear_cache', ['name' => 'testing']);
-		$this->assertResponseOk();
-		$this->assertResponseContains('success');
-	}
-
+        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
+        $this->post('/debug_kit/toolbar/clear_cache', ['name' => 'testing']);
+        $this->assertResponseOk();
+        $this->assertResponseContains('success');
+    }
 }

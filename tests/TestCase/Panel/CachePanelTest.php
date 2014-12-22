@@ -20,58 +20,62 @@ use DebugKit\Panel\CachePanel;
 /**
  * Class CachePanelTest
  */
-class CachePanelTest extends TestCase {
+class CachePanelTest extends TestCase
+{
 
-/**
- * set up
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		$this->panel = new CachePanel();
-		Cache::config('debug_kit_test', ['className' => 'Null']);
-	}
+    /**
+     * set up
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->panel = new CachePanel();
+        Cache::config('debug_kit_test', ['className' => 'Null']);
+    }
 
-/**
- * Teardown method.
- *
- * @return void
- */
-	public function tearDown() {
-		parent::tearDown();
-		Cache::drop('debug_kit_test');
-	}
+    /**
+     * Teardown method.
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        Cache::drop('debug_kit_test');
+    }
 
-/**
- * test initialize
- *
- * @return void
- */
-	public function testInitialize() {
-		$event = new Event('Sample');
-		$this->panel->initialize($event);
+    /**
+     * test initialize
+     *
+     * @return void
+     */
+    public function testInitialize()
+    {
+        $event = new Event('Sample');
+        $this->panel->initialize($event);
 
-		$result = $this->panel->data();
-		$this->assertArrayHasKey('debug_kit_test', $result['metrics']);
-		$this->assertArrayHasKey('_cake_model_', $result['metrics']);
-	}
+        $result = $this->panel->data();
+        $this->assertArrayHasKey('debug_kit_test', $result['metrics']);
+        $this->assertArrayHasKey('_cake_model_', $result['metrics']);
+    }
 
-/**
- * Ensure that subrequests don't double proxy the cache engine.
- *
- * @return void
- */
-	public function testInitializeTwiceNoDoubleProxy() {
-		$event = new Event('Sample');
+    /**
+     * Ensure that subrequests don't double proxy the cache engine.
+     *
+     * @return void
+     */
+    public function testInitializeTwiceNoDoubleProxy()
+    {
+        $event = new Event('Sample');
 
-		$this->panel->initialize($event);
-		$result = Cache::engine('debug_kit_test');
-		$this->assertInstanceOf('DebugKit\Cache\Engine\DebugEngine', $result);
+        $this->panel->initialize($event);
+        $result = Cache::engine('debug_kit_test');
+        $this->assertInstanceOf('DebugKit\Cache\Engine\DebugEngine', $result);
 
-		$this->panel->initialize($event);
-		$result2 = Cache::engine('debug_kit_test');
-		$this->assertSame($result2, $result);
-	}
-
+        $this->panel->initialize($event);
+        $result2 = Cache::engine('debug_kit_test');
+        $this->assertSame($result2, $result);
+    }
 }

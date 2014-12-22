@@ -20,33 +20,35 @@ use Cake\Network\Exception\NotFoundException;
 /**
  * Provides access to panel data.
  */
-class RequestsController extends Controller {
+class RequestsController extends Controller
+{
 
-	public $layout = 'DebugKit.toolbar';
+    public $layout = 'DebugKit.toolbar';
 
-/**
- * Before filter handler.
- *
- * @param \Cake\Event\Event $event The event.
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function beforeFilter(Event $event) {
-		// TODO add config override
-		if (!Configure::read('debug')) {
-			throw new NotFoundException();
-		}
-	}
+    /**
+     * Before filter handler.
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
+    public function beforeFilter(Event $event)
+    {
+        // TODO add config override
+        if (!Configure::read('debug')) {
+            throw new NotFoundException();
+        }
+    }
 
-/**
- * View a request's data.
- *
- * @param string $id The id.
- * @return void
- */
-	public function view($id = null) {
-		$toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
-		$this->set('toolbar', $toolbar);
-	}
-
+    /**
+     * View a request's data.
+     *
+     * @param string $id The id.
+     * @return void
+     */
+    public function view($id = null)
+    {
+        $toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
+        $this->set('toolbar', $toolbar);
+    }
 }

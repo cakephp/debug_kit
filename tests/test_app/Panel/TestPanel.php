@@ -25,15 +25,16 @@ use DebugKit\DebugPanel;
  *
  * @since         DebugKit 0.1
  */
-class TestPanel extends DebugPanel {
+class TestPanel extends DebugPanel
+{
 
-/**
- * Startup
- *
- * @param Controller $controller
- */
-	public function startup(Controller $controller) {
-		$controller->testPanel = true;
-	}
-
+    /**
+     * Startup
+     *
+     * @param Controller $controller
+     */
+    public function startup(Controller $controller)
+    {
+        $controller->testPanel = true;
+    }
 }

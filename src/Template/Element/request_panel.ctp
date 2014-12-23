@@ -18,7 +18,7 @@
 ?>
 <?php if (!empty($headers) && $headers['response']): ?>
 <h4>Warning</h4>
-	<?= '<p class="warning">' . __d('debug_kit', 'Headers already sent at file {0} and line {1}.', [$headers['file'], $headers['line']]) . '</p>' ?>
+    <?= '<p class="warning">' . __d('debug_kit', 'Headers already sent at file {0} and line {1}.', [$headers['file'], $headers['line']]) . '</p>' ?>
 <?php endif; ?>
 
 <h4>Routing Params</h4>
@@ -27,24 +27,24 @@
 <h4>Post data</h4>
 <?php
 if (empty($data)):
-	echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
+    echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
 else:
-	echo $this->Toolbar->makeNeatArray($data);
+    echo $this->Toolbar->makeNeatArray($data);
 endif;
 ?>
 
 <h4>Query string</h4>
 <?php
 if (empty($query)):
-	echo '<p class="info">' . __d('debug_kit', 'No querystring data.') . '</p>';
+    echo '<p class="info">' . __d('debug_kit', 'No querystring data.') . '</p>';
 else:
-	echo $this->Toolbar->makeNeatArray($query);
+    echo $this->Toolbar->makeNeatArray($query);
 endif;
 ?>
 
 <h4>Cookie</h4>
 <?php if (isset($cookie)): ?>
-	<?= $this->Toolbar->makeNeatArray($cookie) ?>
+    <?= $this->Toolbar->makeNeatArray($cookie) ?>
 <?php else: ?>
-	<p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
+    <p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
 <?php endif; ?>

@@ -17,66 +17,66 @@
 use Cake\Utility\Inflector;
 ?>
 <?php
-	if (!empty($app)) {
-		$cakeRows = array();
-		foreach ($app as $key => $val) {
-			$cakeRows[] = array(
-				h($key),
-				h($val)
-			);
-		}
-		$headers = array('Constant', 'Value');
-		echo $this->Toolbar->table($cakeRows, $headers);
-	} else {
-		echo "No application environment available.";
-	} ?>
+    if (!empty($app)) {
+        $cakeRows = array();
+        foreach ($app as $key => $val) {
+            $cakeRows[] = array(
+                h($key),
+                h($val)
+            );
+        }
+        $headers = array('Constant', 'Value');
+        echo $this->Toolbar->table($cakeRows, $headers);
+    } else {
+        echo "No application environment available.";
+    } ?>
 
 <h2><?= __d('debug_kit', 'CakePHP Constants') ?></h2>
 <?php
-	if (!empty($cake)) {
-		$cakeRows = array();
-		foreach ($cake as $key => $val) {
-			$cakeRows[] = array(
-				h($key),
-				h($val)
-			);
-		}
-		$headers = array('Constant', 'Value');
-		echo $this->Toolbar->table($cakeRows, $headers);
-	} else {
-		echo "CakePHP environment unavailable.";
-	} ?>
+    if (!empty($cake)) {
+        $cakeRows = array();
+        foreach ($cake as $key => $val) {
+            $cakeRows[] = array(
+                h($key),
+                h($val)
+            );
+        }
+        $headers = array('Constant', 'Value');
+        echo $this->Toolbar->table($cakeRows, $headers);
+    } else {
+        echo "CakePHP environment unavailable.";
+    } ?>
 
 <h2><?= __d('debug_kit', 'PHP Environment') ?></h2>
 <?php
-	$headers = array('Environment Variable', 'Value');
+    $headers = array('Environment Variable', 'Value');
 
-	if (!empty($php)) {
-		$phpRows = array();
-		foreach ($php as $key => $val) {
-			$phpRows[] = array(
-				h($key),
-				h($val)
-			);
-		}
-		echo $this->Toolbar->table($phpRows, $headers);
-	} else {
-		echo "PHP environment unavailable.";
-	}
+    if (!empty($php)) {
+        $phpRows = array();
+        foreach ($php as $key => $val) {
+            $phpRows[] = array(
+                h($key),
+                h($val)
+            );
+        }
+        echo $this->Toolbar->table($phpRows, $headers);
+    } else {
+        echo "PHP environment unavailable.";
+    }
 
-	if (isset($hidef)) {
-		echo '<h2>' . __d('debug_kit', 'Hidef Environment') . '</h2>';
-		if (!empty($hidef)) {
-			$cakeRows = array();
-			foreach ($hidef as $key => $val) {
-				$cakeRows[] = array(
-					h($key),
-					h($val)
-				);
-			}
-			$headers = array('Constant', 'Value');
-			echo $this->Toolbar->table($cakeRows, $headers);
-		} else {
-			echo "No Hidef environment available.";
-		}
-	}
+    if (isset($hidef)) {
+        echo '<h2>' . __d('debug_kit', 'Hidef Environment') . '</h2>';
+        if (!empty($hidef)) {
+            $cakeRows = array();
+            foreach ($hidef as $key => $val) {
+                $cakeRows[] = array(
+                    h($key),
+                    h($val)
+                );
+            }
+            $headers = array('Constant', 'Value');
+            echo $this->Toolbar->table($cakeRows, $headers);
+        } else {
+            echo "No Hidef environment available.";
+        }
+    }

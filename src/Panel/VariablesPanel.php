@@ -16,6 +16,7 @@ use Cake\Controller\Controller;
 use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\Form\Form;
 use Cake\Utility\Hash;
 use Closure;
 use DebugKit\DebugPanel;
@@ -95,6 +96,8 @@ class VariablesPanel extends DebugPanel
             // Get the validation errors for Entity
             if ($v instanceof EntityInterface) {
                 $errors[$k] = $this->_getErrors($v);
+            } elseif ($v instanceof Form) {
+                $errors[$k] = $v->errors();
             }
         }
 

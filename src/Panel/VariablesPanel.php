@@ -97,7 +97,10 @@ class VariablesPanel extends DebugPanel
             if ($v instanceof EntityInterface) {
                 $errors[$k] = $this->_getErrors($v);
             } elseif ($v instanceof Form) {
-                $errors[$k] = $v->errors();
+                $formError = $v->errors();
+                if (!empty($formError)) {
+                    $errors[$k] = $formError;
+                }
             }
         }
 

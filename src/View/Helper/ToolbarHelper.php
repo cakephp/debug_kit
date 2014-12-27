@@ -42,13 +42,20 @@ class ToolbarHelper extends Helper
      * @param int $openDepth Depth to add open class
      * @param int $currentDepth current depth.
      * @param bool $doubleEncode Whether or not to double encode.
+     * @param \SplObjectStorage $currentAncestors Object references found down
+     * the path.
      * @return string
      */
-    public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false)
+    public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false, \SplObjectStorage $currentAncestors = null)
     {
-        static $printedObjects = null;
-        if ($currentDepth === 0) {
-            $printedObjects = new \SplObjectStorage();
+        if ($currentAncestors === null) {
+            $ancestors = new \SplObjectStorage();
+        } elseif (is_object($values)) {
+            $ancestors = new \SplObjectStorage();
+            $ancestors->addAll($currentAncestors);
+            $ancestors->attach($values);
+        } else {
+            $ancestors = $currentAncestors;
         }
         $className = "neat-array depth-$currentDepth";
         if ($openDepth > $currentDepth) {
@@ -94,13 +101,9 @@ class ToolbarHelper extends Helper
             }
 
             $isObject = is_object($value);
-            if ($isObject && $printedObjects->contains($value)) {
+            if ($isObject && $ancestors->contains($value)) {
                 $isObject = false;
                 $value = ' - recursion';
-            }
-
-            if ($isObject) {
-                $printedObjects->attach($value);
             }
 
             if (
@@ -111,7 +114,7 @@ class ToolbarHelper extends Helper
                 $isObject
                 ) && !empty($value)
             ) {
-                $out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
+                $out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode, $ancestors);
             } else {
                 $out .= h($value, $doubleEncode);
             }

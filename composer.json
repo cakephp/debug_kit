@@ -27,7 +27,7 @@
 		"cakephp/plugin-installer": "*"
 	},
 	"require-dev": {
-		"cakephp/cakephp-codesniffer": "2.0.*-dev",
+		"cakephp/cakephp-codesniffer": "dev-master",
 		"phpunit/phpunit": "4.1.*"
 	},
 	"autoload": {

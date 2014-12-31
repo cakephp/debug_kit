@@ -136,6 +136,39 @@ class ToolbarHelperTest extends TestCase
     }
 
     /**
+     * Test that duplicate references can be printed.
+     *
+     * @return void
+     */
+    public function testMakeNeatArrayDuplicateObjects()
+    {
+        $a = new StdClass;
+        $b = new StdClass;
+        $a->first = $b;
+        $a->second = $b;
+
+        $in = array('obj' => $a);
+        $result = $this->Toolbar->makeNeatArray($in);
+        $expected = array(
+            array('ul' => array('class' => 'neat-array depth-0')),
+            '<li', '<strong', 'obj', '/strong', '(object)',
+            array('ul' => array('class' => 'neat-array depth-1')),
+            '<li', '<strong', 'first', '/strong', '(object)',
+            array('ul' => array('class' => 'neat-array depth-2')),
+            '/ul',
+            '/li',
+            '<li', '<strong', 'second', '/strong', '(object)',
+            array('ul' => array('class' => 'neat-array depth-2')),
+            '/ul',
+            '/li',
+            '/ul',
+            '/li',
+            '/ul'
+        );
+        $this->assertTags($result, $expected);
+    }
+
+    /**
      * Test Neat Array formatting
      *
      * @return void

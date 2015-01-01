@@ -123,22 +123,4 @@ class ToolbarHelper extends Helper
         $out .= '</ul>';
         return $out;
     }
-
-    /**
-     * Create a table.
-     *
-     * @param array $rows Rows to make.
-     * @param array $headers Optional header row.
-     * @return string
-     */
-    public function table($rows, $headers = array())
-    {
-        $out = '<table class="debug-table">';
-        if (!empty($headers)) {
-            $out .= $this->Html->tableHeaders($headers);
-        }
-        $out .= $this->Html->tableCells($rows);
-        $out .= '</table>';
-        return $out;
-    }
 }

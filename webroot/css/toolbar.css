@@ -224,7 +224,7 @@ table th {
 }
 .debug-table td:nth-child(n+2) {
 	word-wrap: break-word;
-	word-break: break-word; // Not standard for webkit
+	word-break: break-word; /* Not standard for webkit */
 }
 
 .list {

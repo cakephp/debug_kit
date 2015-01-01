@@ -21,14 +21,17 @@
 
     <table cellspacing="0" cellpadding="0">
         <thead>
-            <tr><th><?= __d('debug_kit', 'Message') ?></th><th><?= __d('debug_kit', 'Memory Use') ?></th></tr>
+            <tr>
+                <th><?= __d('debug_kit', 'Message') ?></th>
+                <th><?= __d('debug_kit', 'Memory Use') ?></th>
+            </tr>
         </thead>
         <tbody>
         <?php foreach ($memory as $key => $value): ?>
-        <tr>
-            <td><?= h($key) ?></td>
-            <td class="right-text"><?= $this->Number->toReadableSize($value) ?></td>
-        </tr>
+            <tr>
+                <td><?= h($key) ?></td>
+                <td class="right-text"><?= $this->Number->toReadableSize($value) ?></td>
+            </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -69,17 +72,19 @@
         ?>
         <tr>
             <td>
-            <?= h($indent . $timeInfo['message']) ?>
+                <?= h($indent . $timeInfo['message']) ?>
             </td>
             <td class="right-text"><?= $this->Number->precision($timeInfo['time'] * 1000, 2) ?></td>
-            <td><?= $this->SimpleGraph->bar(
-                $timeInfo['time'] * 1000,
-                $timeInfo['start'] * 1000,
-                array(
-                    'max' => $maxTime * 1000,
-                    'requestTime' => $requestTime * 1000,
-                )
-            ) ?></td>
+            <td>
+                <?= $this->SimpleGraph->bar(
+                    $timeInfo['time'] * 1000,
+                    $timeInfo['start'] * 1000,
+                    array(
+                        'max' => $maxTime * 1000,
+                        'requestTime' => $requestTime * 1000,
+                    )
+                ) ?>
+            </td>
             <?php
             $i++;
         endforeach;

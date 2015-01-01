@@ -22,13 +22,16 @@
         <span class="inline-message"></span>
         <table cellspacing="0" cellpadding="0" class="debug-table">
             <thead>
-                <tr><th><?= __d('debug_kit', 'Metric') ?></th><th><?= __d('debug_kit', 'Total') ?></th></tr>
+                <tr>
+                    <th><?= __d('debug_kit', 'Metric') ?></th>
+                    <th><?= __d('debug_kit', 'Total') ?></th>
+                </tr>
             </thead>
             <tbody>
             <?php foreach ($counters as $key => $val): ?>
                 <tr>
-                <td><?= h($key) ?></td>
-                <td class="right-text"><?= $val ?></td>
+                    <td><?= h($key) ?></td>
+                    <td class="right-text"><?= $val ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

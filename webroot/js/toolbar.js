@@ -1,20 +1,24 @@
 (function(win, doc) {
 	var iframe;
+	var bodyOverflow;
 
 	var onMessage = function(event) {
 		if (event.data === 'collapse') {
 			iframe.height = 40;
 			iframe.width = 40;
+			doc.body.style.overflow = bodyOverflow;
 			return;
 		}
 		if (event.data === 'toolbar') {
 			iframe.height = 40;
 			iframe.width = '100%';
+			doc.body.style.overflow = bodyOverflow;
 			return;
 		}
 		if (event.data === 'expand') {
 			iframe.width = '100%';
 			iframe.height = '100%';
+			doc.body.style.overflow = 'hidden';
 			return;
 		}
 	};
@@ -23,14 +27,16 @@
 		if (!win.__debug_kit_id) {
 			return;
 		}
-		var body = doc.getElementsByTagName('body');
+		var body = doc.body;
 		iframe = doc.createElement('iframe');
 		iframe.setAttribute('style', 'position: fixed; bottom: 0; right: 0; border: 0; outline: 0; overflow: hidden; z-index: 99999;');
 		iframe.height = 40;
 		iframe.width = 40;
 		iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/' + __debug_kit_id;
 
-		body[0].appendChild(iframe);
+		body.appendChild(iframe);
+
+		bodyOverflow = body.style.overflow;
 
 		window.addEventListener('message', onMessage, false);
 	};

@@ -52,21 +52,24 @@ $noOutput = true;
         ?>
         </h5>
 
-        <?php $sqlLogRows = [];
-            foreach ($queries as $query) {
-                $sqlLogRows[] = [
-                    h($query['query']),
-                    h($query['rows']),
-                    h($query['took']),
-                ];
-            }
-            $headers = [
-                __d('debug_kit', 'Query'),
-                __d('debug_kit', 'Num rows'),
-                __d('debug_kit', 'Took (ms)'),
-            ];
-            echo $this->Toolbar->table($sqlLogRows, $headers);
-        ?>
+        <table cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th><?= __d('debug_kit', 'Query') ?></th>
+                    <th><?= __d('debug_kit', 'Query') ?></th>
+                    <th><?= __d('debug_kit', 'Took (ms)') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($queries as $query): ?>
+                <tr>
+                    <td><?= h($query['query']) ?></td>
+                    <td><?= h($query['rows']) ?></td>
+                    <td><?= h($query['took']) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
     <?php endforeach; ?>
 <?php endif; ?>

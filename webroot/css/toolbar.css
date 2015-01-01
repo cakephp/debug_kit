@@ -212,6 +212,9 @@ table th {
 	font-weight: bold;
 	line-height: 16px;
 }
+table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
 
 .debug-table td {
 	font-family: Monaco, Consolas, mono-space;
@@ -224,7 +227,7 @@ table th {
 }
 .debug-table td:nth-child(n+2) {
 	word-wrap: break-word;
-	word-break: break-word; // Not standard for webkit
+	word-break: break-word; /* Not standard for webkit */
 }
 
 .list {

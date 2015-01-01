@@ -317,29 +317,4 @@ class ToolbarHelperTest extends TestCase
         );
         $this->assertTags($result, $expected);
     }
-
-    /**
-     * Test Table generation
-     *
-     * @return void
-     */
-    public function testTable()
-    {
-        $rows = array(
-            array(1, 2),
-            array(3, 4),
-        );
-        $result = $this->Toolbar->table($rows);
-        $expected = array(
-            'table' => array('class' => 'debug-table'),
-            '<tr',
-            '<td', '1', '/td',
-            '<td', '2', '/td', '/tr',
-            '<tr',
-            '<td', '3', '/td',
-            '<td', '4', '/td', '/tr',
-            '/table'
-        );
-        $this->assertTags($result, $expected);
-    }
 }

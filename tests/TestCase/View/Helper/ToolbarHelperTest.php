@@ -73,7 +73,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', '0', '/strong', '(false)', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = null;
         $result = $this->Toolbar->makeNeatArray($in);
@@ -82,7 +82,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', '0', '/strong', '(null)', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = true;
         $result = $this->Toolbar->makeNeatArray($in);
@@ -91,7 +91,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', '0', '/strong', '(true)', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = array();
         $result = $this->Toolbar->makeNeatArray($in);
@@ -100,7 +100,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', '0', '/strong', '(empty)', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
     }
 
     /**
@@ -132,7 +132,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
     }
 
     /**
@@ -165,7 +165,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
     }
 
     /**
@@ -182,7 +182,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', 'key', '/strong', 'value', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = array('key' => null);
         $result = $this->Toolbar->makeNeatArray($in);
@@ -191,7 +191,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', 'key', '/strong', '(null)', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = array('key' => 'value', 'foo' => 'bar');
         $result = $this->Toolbar->makeNeatArray($in);
@@ -201,7 +201,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', 'foo', '/strong', 'bar', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = array(
             'key' => 'value',
@@ -223,7 +223,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = array(
             'key' => 'value',
@@ -256,7 +256,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $result = $this->Toolbar->makeNeatArray($in, 2);
         $expected = array(
@@ -278,7 +278,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
 
         $in = array('key' => 'value', 'array' => array());
         $result = $this->Toolbar->makeNeatArray($in);
@@ -288,7 +288,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', 'array', '/strong', '(empty)', '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
     }
 
     /**
@@ -315,6 +315,6 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul'
         );
-        $this->assertTags($result, $expected);
+        $this->assertHtml($expected, $result);
     }
 }

@@ -33,7 +33,7 @@ class ToolbarHelper extends Helper
      *
      * @var array
      */
-    public $helpers = array('Html', 'Form', 'Url');
+    public $helpers = ['Html', 'Form', 'Url'];
 
     /**
      * Recursively goes through an array and makes neat HTML out of it.
@@ -65,10 +65,10 @@ class ToolbarHelper extends Helper
         $out = "<ul class=\"$className\">";
         if (!is_array($values)) {
             if (is_bool($values)) {
-                $values = array($values);
+                $values = [$values];
             }
             if ($values === null) {
-                $values = array(null);
+                $values = [null];
             }
             if (is_object($values) && method_exists($values, 'toArray')) {
                 $values = $values->toArray();

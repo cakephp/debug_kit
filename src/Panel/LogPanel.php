@@ -34,9 +34,9 @@ class LogPanel extends DebugPanel
         if (Log::config('debug_kit_log_panel')) {
             return;
         }
-        Log::config('debug_kit_log_panel', array(
+        Log::config('debug_kit_log_panel', [
             'engine' => 'DebugKit.DebugKit',
-        ));
+        ]);
     }
 
     /**

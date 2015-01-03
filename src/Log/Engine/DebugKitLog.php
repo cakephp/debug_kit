@@ -26,7 +26,7 @@ class DebugKitLog extends BaseLog
      *
      * @var array
      */
-    protected $_logs = array();
+    protected $_logs = [];
 
     /**
      * Captures log messages in memory
@@ -39,9 +39,9 @@ class DebugKitLog extends BaseLog
     public function log($type, $message, array $context = [])
     {
         if (!isset($this->logs[$type])) {
-            $this->logs[$type] = array();
+            $this->logs[$type] = [];
         }
-        $this->_logs[$type][] = array(date('Y-m-d H:i:s'), $this->_format($message));
+        $this->_logs[$type][] = [date('Y-m-d H:i:s'), $this->_format($message)];
     }
 
     /**

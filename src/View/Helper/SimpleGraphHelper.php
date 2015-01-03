@@ -37,11 +37,11 @@ class SimpleGraphHelper extends Helper
      *
      * @var array
      */
-    protected $_defaultSettings = array(
+    protected $_defaultSettings = [
         'max' => 100,
         'width' => 350,
         'valueType' => 'value',
-    );
+    ];
 
     /**
      * bar method
@@ -51,7 +51,7 @@ class SimpleGraphHelper extends Helper
      * @param array|\Graph $options Graph options
      * @return string Html graph
      */
-    public function bar($value, $offset, $options = array())
+    public function bar($value, $offset, $options = [])
     {
         $settings = array_merge($this->_defaultSettings, $options);
         extract($settings);

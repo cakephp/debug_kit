@@ -27,7 +27,7 @@ class DebugTimer
      *
      * @var array
      */
-    protected static $_timers = array();
+    protected static $_timers = [];
 
     /**
      * Start an benchmarking timer.
@@ -63,11 +63,11 @@ class DebugTimer
             $message .= ' #' . $i;
         }
 
-        self::$_timers[$name] = array(
+        self::$_timers[$name] = [
             'start' => $start,
             'message' => $message,
             'named' => $named
-        );
+        ];
         return true;
     }
 
@@ -122,32 +122,32 @@ class DebugTimer
         $start = self::requestStartTime();
         $now = microtime(true);
 
-        $times = array();
+        $times = [];
         if (!empty(self::$_timers)) {
             $firstTimer = reset(self::$_timers);
             $_end = $firstTimer['start'];
         } else {
             $_end = $now;
         }
-        $times['Core Processing (Derived from $_SERVER["REQUEST_TIME"])'] = array(
+        $times['Core Processing (Derived from $_SERVER["REQUEST_TIME"])'] = [
             'message' => __d('debug_kit', 'Core Processing (Derived from $_SERVER["REQUEST_TIME"])'),
             'start' => 0,
             'end' => $_end - $start,
             'time' => round($_end - $start, 6),
             'named' => null
-        );
+        ];
         foreach (self::$_timers as $name => $timer) {
             if (!isset($timer['end'])) {
                 $timer['end'] = $now;
             }
-            $times[$name] = array_merge($timer, array(
+            $times[$name] = array_merge($timer, [
                 'start' => $timer['start'] - $start,
                 'end' => $timer['end'] - $start,
                 'time' => self::elapsedTime($name)
-            ));
+            ]);
         }
         if ($clear) {
-            self::$_timers = array();
+            self::$_timers = [];
         }
         return $times;
     }
@@ -159,7 +159,7 @@ class DebugTimer
      */
     public static function clear()
     {
-        self::$_timers = array();
+        self::$_timers = [];
         return true;
     }
 

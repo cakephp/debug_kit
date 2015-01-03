@@ -27,7 +27,7 @@ class RequestsFixture extends TestFixture
      *
      * @var array
      */
-    public $fields = array(
+    public $fields = [
         'id' => ['type' => 'uuid', 'null' => false],
         'url' => ['type' => 'string', 'null' => false],
         'content_type' => ['type' => 'string'],
@@ -37,7 +37,7 @@ class RequestsFixture extends TestFixture
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
         ]
-    );
+    ];
 
     /**
      * Records

@@ -44,7 +44,7 @@ class EnvironmentPanel extends DebugPanel
         unset($return['php']['argv']);
 
         // CakePHP Data
-        $return['cake'] = array(
+        $return['cake'] = [
             'APP' => APP,
             'APP_DIR' => APP_DIR,
             'CACHE' => CACHE,
@@ -58,12 +58,12 @@ class EnvironmentPanel extends DebugPanel
             'TESTS' => TESTS,
             'TMP' => TMP,
             'WWW_ROOT' => WWW_ROOT
-        );
+        ];
 
         $cakeConstants = array_fill_keys(
-            array(
+            [
                 'DS', 'ROOT', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
-            ),
+            ],
             ''
         );
         $var = get_defined_constants(true);

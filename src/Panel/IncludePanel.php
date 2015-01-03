@@ -29,18 +29,18 @@ class IncludePanel extends DebugPanel
      *
      * @var <type>
      */
-    protected $_pluginPaths = array();
+    protected $_pluginPaths = [];
 
     /**
      * File Types
      *
      * @var array
      */
-    protected $_fileTypes = array(
+    protected $_fileTypes = [
         'Cache', 'Config', 'Configure', 'Console', 'Component', 'Controller',
         'Behavior', 'Datasource', 'Model', 'Plugin', 'Test', 'View', 'Utility',
         'Network', 'Routing', 'I18n', 'Log', 'Error'
-    );
+    ];
 
     /**
      * Get a list of plugins on construct for later use
@@ -60,7 +60,7 @@ class IncludePanel extends DebugPanel
      */
     protected function _prepare(Controller $controller)
     {
-        $return = array('core' => array(), 'app' => array(), 'plugins' => array());
+        $return = ['core' => [], 'app' => [], 'plugins' => []];
 
         foreach (get_included_files() as $file) {
             $pluginName = $this->_isPluginFile($file);

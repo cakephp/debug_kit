@@ -38,9 +38,9 @@ class BenchmarkShell extends Shell
     public function main()
     {
         $url = $this->args[0];
-        $defaults = array('t' => 100, 'n' => 10);
+        $defaults = ['t' => 100, 'n' => 10];
         $options = array_merge($defaults, $this->params);
-        $times = array();
+        $times = [];
 
         $this->out(String::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
         $this->out("");
@@ -74,22 +74,22 @@ class BenchmarkShell extends Shell
 
         $this->out("");
 
-        $this->out(String::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), array(
+        $this->out(String::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
                 'rps' => round($requests / $duration, 3)
-        )));
+        ]));
 
-        $this->out(String::insert(__d('debug_kit', 'Average request time: :average-time seconds'), array(
+        $this->out(String::insert(__d('debug_kit', 'Average request time: :average-time seconds'), [
                 'average-time' => round($duration / $requests, 3)
-        )));
+        ]));
 
-        $this->out(String::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), array(
+        $this->out(String::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), [
                 'std-dev' => round($this->_deviation($times, true), 3)
-        )));
+        ]));
 
-        $this->out(String::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), array(
+        $this->out(String::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), [
                 'longest' => round(max($times), 3),
                 'shortest' => round(min($times), 3)
-        )));
+        ]));
 
         $this->out("");
     }
@@ -149,22 +149,22 @@ class BenchmarkShell extends Shell
             'Allows you to obtain some rough benchmarking statistics' .
             'about a fully qualified URL.'
         ))
-        ->addArgument('url', array(
+        ->addArgument('url', [
             'help' => __d('debug_kit', 'The URL to request.'),
             'required' => true
-        ))
-        ->addOption('n', array(
+        ])
+        ->addOption('n', [
             'default' => 10,
             'help' => __d('debug_kit', 'Number of iterations to perform.')
-        ))
-        ->addOption('t', array(
+        ])
+        ->addOption('t', [
             'default' => 100,
             'help' => __d(
                 'debug_kit',
                 'Maximum total time for all iterations, in seconds.' .
                 'If a single iteration takes more than the timeout, only one request will be made'
             )
-        ))
+        ])
         ->epilog(__d(
             'debug_kit',
             'Example Use: `cake benchmark --n 10 --t 100 http://localhost/testsite`. ' .

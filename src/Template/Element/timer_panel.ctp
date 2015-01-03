@@ -79,10 +79,10 @@
                 <?= $this->SimpleGraph->bar(
                     $timeInfo['time'] * 1000,
                     $timeInfo['start'] * 1000,
-                    array(
+                    [
                         'max' => $maxTime * 1000,
                         'requestTime' => $requestTime * 1000,
-                    )
+                    ]
                 ) ?>
             </td>
             <?php

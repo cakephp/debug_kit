@@ -39,14 +39,14 @@ class DebugKitTestController extends Controller
      *
      * @var array
      */
-    public $uses = array();
+    public $uses = [];
 
     /**
      * Uses only DebugKit Toolbar Component
      *
      * @var array
      */
-    public $components = array('DebugKit.Toolbar');
+    public $components = ['DebugKit.Toolbar'];
 
     /**
      * Return Request Action Value

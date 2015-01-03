@@ -35,7 +35,7 @@ class TidyHelper extends Helper
      *
      * @var array
      */
-    public $helpers = array('DebugKit.Toolbar');
+    public $helpers = ['DebugKit.Toolbar'];
 
     /**
      * results property
@@ -57,9 +57,9 @@ class TidyHelper extends Helper
         $errors = $this->tidyErrors($html, $out);
 
         if (!$errors) {
-            return array();
+            return [];
         }
-        $result = array('Error' => array(), 'Warning' => array(), 'Misc' => array());
+        $result = ['Error' => [], 'Warning' => [], 'Misc' => []];
         $errors = explode("\n", $errors);
         $markup = explode("\n", $out);
         foreach ($errors as $error) {
@@ -131,7 +131,7 @@ class TidyHelper extends Helper
 
         // direct access? windows etc
         if (function_exists('tidy_parse_string')) {
-            $tidy = tidy_parse_string($out, array(), 'UTF8');
+            $tidy = tidy_parse_string($out, [], 'UTF8');
             $tidy->cleanRepair();
             $errors = $tidy->errorBuffer . "\n";
             return $errors;
@@ -170,7 +170,7 @@ class TidyHelper extends Helper
         }
 
         if (Configure::read('debug')) {
-            $source = Debugger::trace(array('depth' => 1, 'start' => 2)) . "\n";
+            $source = Debugger::trace(['depth' => 1, 'start' => 2]) . "\n";
             //Log::write('system_calls_' . date('Y-m-d'), "\n" . $source . Debugger::exportVar(compact('cmd','out','return')));
             //Log::write('system_calls', "\n" . $source . Debugger::exportVar(compact('cmd','out','return')));
         }

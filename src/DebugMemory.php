@@ -27,7 +27,7 @@ class DebugMemory
      *
      * @var array
      */
-    protected static $_points = array();
+    protected static $_points = [];
 
     /**
      * Get current memory usage
@@ -87,7 +87,7 @@ class DebugMemory
     {
         $marks = self::$_points;
         if ($clear) {
-            self::$_points = array();
+            self::$_points = [];
         }
         return $marks;
     }
@@ -99,6 +99,6 @@ class DebugMemory
      */
     public static function clear()
     {
-        self::$_points = array();
+        self::$_points = [];
     }
 }

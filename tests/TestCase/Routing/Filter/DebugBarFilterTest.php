@@ -20,7 +20,7 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 use DebugKit\Routing\Filter\DebugBarFilter;
 
 /**

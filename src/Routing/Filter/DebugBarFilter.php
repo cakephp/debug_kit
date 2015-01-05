@@ -18,7 +18,6 @@ use Cake\Event\EventManagerTrait;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\DispatcherFilter;
 use Cake\Routing\Router;
-use Cake\Utility\Text;
 use DebugKit\Panel\DebugPanel;
 use DebugKit\Panel\PanelRegistry;
 

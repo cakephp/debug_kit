@@ -56,7 +56,7 @@ $noOutput = true;
             <thead>
                 <tr>
                     <th><?= __d('debug_kit', 'Query') ?></th>
-                    <th><?= __d('debug_kit', 'Query') ?></th>
+                    <th><?= __d('debug_kit', 'Rows') ?></th>
                     <th><?= __d('debug_kit', 'Took (ms)') ?></th>
                 </tr>
             </thead>

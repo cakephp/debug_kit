@@ -20,11 +20,11 @@ msgstr  "Inicialização de componente"
 
 #: controllers/components/toolbar.php:140
 msgid   "Controller Action"
-msgstr  ""
+msgstr  "Action do Controller"
 
 #: controllers/components/toolbar.php:167
 msgid   "Render Controller Action"
-msgstr  ""
+msgstr  "Renderizar Action do Controller"
 
 #: controllers/components/toolbar.php:231
 msgid   "Could not load DebugToolbar panel %s"

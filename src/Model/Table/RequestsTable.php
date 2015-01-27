@@ -65,4 +65,32 @@ class RequestsTable extends Table
         return $query->order(['Requests.requested_at' => 'DESC'])
             ->limit(10);
     }
+
+    /**
+     * Garbage collect old request data.
+     *
+     * Delete request data that is older than 2 weeks old.
+     * This method will only trigger periodically.
+     *
+     * @return void
+     */
+    public function gc()
+    {
+        if (time() % 100 !== 0) {
+            return;
+        }
+        $query = $this->query()
+            ->delete()
+            ->where(['requested_at <=' => new \DateTime('-2 weeks')]);
+        $statement = $query->execute();
+        $statement->closeCursor();
+
+        $existing = $this->find()->select(['id']);
+
+        $query = $this->Panels->query()
+            ->delete()
+            ->where(['request_id NOT IN' => $existing]);
+        $statement = $query->execute();
+        $statement->closeCursor();
+    }
 }

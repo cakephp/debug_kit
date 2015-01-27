@@ -184,6 +184,8 @@ class DebugBarFilter extends DispatcherFilter
             'panels' => []
         ];
         $requests = TableRegistry::get('DebugKit.Requests');
+        $requests->gc();
+
         $row = $requests->newEntity($data);
         $row->isNew(true);
 

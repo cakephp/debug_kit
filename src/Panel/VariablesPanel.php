@@ -73,8 +73,7 @@ class VariablesPanel extends DebugPanel
             if ($item instanceof Query) {
                 $item = $item->all();
             }
-            if (
-                $item instanceof Closure ||
+            if ($item instanceof Closure ||
                 $item instanceof PDO ||
                 $item instanceof SimpleXmlElement
             ) {

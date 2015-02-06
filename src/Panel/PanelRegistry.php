@@ -77,7 +77,7 @@ class PanelRegistry extends ObjectRegistry
     protected function _create($class, $alias, $config)
     {
         $instance = new $class($this, $config);
-        $this->eventManager()->attach($instance);
+        $this->eventManager()->on($instance);
         return $instance;
     }
 }

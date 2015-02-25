@@ -37,7 +37,12 @@ class PanelsFixture extends TestFixture
         'content' => ['type' => 'text'],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
-            'unique_panel' => ['type' => 'unique', 'columns' => ['request_id', 'panel']]
+            'unique_panel' => ['type' => 'unique', 'columns' => ['request_id', 'panel']],
+            'request_id_fk' => [
+                'type' => 'foreign',
+                'columns' => ['request_id'],
+                'references' => ['requests', 'id']
+            ]
         ]
     ];
 

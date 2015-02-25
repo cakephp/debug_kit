@@ -31,13 +31,19 @@ class RequestTableTest extends TestCase
     public function testInitializeCreatesSchema()
     {
         $connection = ConnectionManager::get('test');
+
+        $stmt = $connection->execute('DROP TABLE IF EXISTS panels');
+        $stmt->closeCursor();
+
         $stmt = $connection->execute('DROP TABLE IF EXISTS requests');
         $stmt->closeCursor();
 
-        $table = TableRegistry::get('DebugKit.Requests');
+        TableRegistry::get('DebugKit.Requests');
+        TableRegistry::get('DebugKit.Panels');
 
         $schema = $connection->schemaCollection();
         $this->assertContains('requests', $schema->listTables());
+        $this->assertContains('panels', $schema->listTables());
     }
 
     /**

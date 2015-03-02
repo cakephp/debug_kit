@@ -171,7 +171,7 @@ the panel.
 ```php
 Configure::write(
 	'DebugKit.panels',
-	array_merge((array)Configure::read('DebugKit.panels'), ['MyCustomPanel'])
+	array_merge((array)Configure::read('DebugKit.panels'), ['MyPlugin.MyCustomPanel'])
 );
 ```
 

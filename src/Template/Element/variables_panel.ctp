@@ -1,0 +1,25 @@
+<?php
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         DebugKit 0.1
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+if (isset($error)):
+    printf('<p class="warning">%s</p>', $error);
+endif;
+
+if (!empty($content)):
+    echo $this->Toolbar->makeNeatArray($content);
+endif;
+
+if (!empty($errors)):
+    echo '<h4>Validation errors</h4>';
+    echo $this->Toolbar->makeNeatArray($errors);
+endif;

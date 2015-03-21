@@ -4,12 +4,16 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
 
 ## Requirements
 
-The 3.0 branch has the following requirements:
+The `master` branch has the following requirements:
 
 * CakePHP 3.0.0 or greater.
 * PHP 5.4.16 or greater.
 * SQLite or another database driver that CakePHP can talk to. By default DebugKit will use SQLite, if you
   need to use a different database see the Database Configuration section below.
+
+## DebugKit for CakePHP 2.x
+
+If you want DebugKit for your 2.x application, you can use the latest `2.2.y` tag or the 2.2 branch.
 
 ## Installation
 

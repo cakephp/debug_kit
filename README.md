@@ -296,4 +296,4 @@ the toolbar in your browser:
 - [FirePHP for chrome](https://chrome.google.com/webstore/detail/firephp-for-chrome/goajlbdffkligccnfgibeilhdnnpaead)
 - [FirePHP for firefox](https://addons.mozilla.org/en-US/firefox/addon/firephp/)
 
-Once you have installed the correct extension, you should see the toolbar data output on each ajax request.
+Once you have installed the correct extension, you should see the toolbar data output on each AJAX request.

@@ -351,6 +351,9 @@
 #sqllog-tab input[type=submit]:hover {
 	color: darkred;
 }
+#debug-kit-toolbar .alert-duplicate {
+	color: red;
+}
 
 /* previous panels */
 #debug-kit-toolbar .panel-history {

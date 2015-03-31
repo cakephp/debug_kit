@@ -51,7 +51,7 @@ if (isset($debugKitInHistoryMode)) {
 					}
 					$duplicate++;
 
-					$queryLog['queries'][$k]['query'] = '<span style="color: red"">' . $v['query'] . '</span>';
+					$queryLog['queries'][$k]['query'] = '<span class="alert-duplicate">' . $v['query'] . '</span>';
 				}
 
 				echo '<h5>';

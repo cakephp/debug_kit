@@ -45,11 +45,12 @@ if (isset($debugKitInHistoryMode)) {
 				$duplicate = 0;
 				foreach ($queryLog['queries'] as $k => $v) {
 					$hash = sha1($v['query']);
-					if (!in_array($hash, $hashes)) {
-						$hashes[] = $hash;
+					if (!isset($hashes[$hash]) || $hashes[$hash] !== $v['affected']) {
+						$hashes[$hash] = $v['affected'];
 						continue;
 					}
 					$duplicate++;
+
 					$queryLog['queries'][$k]['query'] = '<span style="color: red"">' . $v['query'] . '</span>';
 				}
 

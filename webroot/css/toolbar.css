@@ -62,7 +62,7 @@ p {
 }
 .toolbar.open {
 	border-radius: 0;
-	overflow: scroll;
+	overflow: auto;
 }
 
 /* Open close button */

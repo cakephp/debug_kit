@@ -19,7 +19,7 @@ If you want DebugKit for your 2.x application, you can use the latest `2.2.y` ta
 
 * Install the plugin with composer from your CakePHP Project's ROOT directory (where composer.json file is located)
 ```sh
-php composer.phar require cakephp/debug_kit "3.0.*-dev"
+php composer.phar require cakephp/debug_kit "~3.0"
 ```
 
 * Load the plugin

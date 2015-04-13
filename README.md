@@ -141,7 +141,7 @@ You should refer to the built-in panels for some examples on how you can build p
 Each Panel is expected to have a view element that renders the content from the
 panel. The element name must be the underscored inflection of the class name.
 For example `SessionPanel` has an element named `session_panel.ctp`, and
-SqllogPanel has an element named `sqllog_panel.ctp`. These elements should be
+`SqllogPanel` has an element named `sqllog_panel.ctp`. These elements should be
 located in the root of your `View/Elements` directory.
 
 #### Custom Titles and Elements

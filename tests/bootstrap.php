@@ -88,7 +88,7 @@ Cache::config([
 
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite://' . TMP . 'debug_kit_test.sqlite');
+    putenv('db_dsn=sqlite:///' . TMP . 'debug_kit_test.sqlite');
 }
 
 $config = [

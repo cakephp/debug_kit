@@ -11,7 +11,7 @@
  * @since         DebugKit 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Test\TestCase\Model\Behavior;
+namespace DebugKit\Test\TestCase\Model\Table;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;

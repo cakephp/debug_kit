@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\Model\Table;
 
+use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -31,7 +32,10 @@ class RequestTableTest extends TestCase
     public function testInitializeCreatesSchema()
     {
         $connection = ConnectionManager::get('test');
+        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
 
+        TableRegistry::clear();
+        
         $stmt = $connection->execute('DROP TABLE IF EXISTS panels');
         $stmt->closeCursor();
 

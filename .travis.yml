@@ -10,6 +10,7 @@ sudo: false
 env:
   - DB=mysql db_dsn='mysql://travis@0.0.0.0/cakephp_test'
   - DB=pgsql db_dsn='postgres://travis@127.0.0.1/cakephp_test'
+  - DB=sqlite
 
 matrix:
   fast_finish: true

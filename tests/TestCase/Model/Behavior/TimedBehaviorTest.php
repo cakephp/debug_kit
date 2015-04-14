@@ -51,7 +51,6 @@ class TimedBehaviorTest extends TestCase
     {
         parent::tearDown();
         unset($this->Article);
-        TableRegistry::clear();
         DebugTimer::clear();
     }
 

@@ -10,8 +10,8 @@ env:
   - CAKE_VERSION=2.3.10 DB=pgsql
   - CAKE_VERSION=2.4.10 DB=mysql
   - CAKE_VERSION=2.4.10 DB=pgsql
-  - CAKE_VERSION=master DB=mysql
-  - CAKE_VERSION=master DB=pgsql
+  - CAKE_VERSION=2.6 DB=mysql
+  - CAKE_VERSION=2.6 DB=pgsql
 
 install:
   - git clone git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp && git checkout $CAKE_VERSION

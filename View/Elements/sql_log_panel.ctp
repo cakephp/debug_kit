@@ -43,15 +43,15 @@ if (isset($debugKitInHistoryMode)) {
 			else:
 				$hashes = array();
 				$duplicate = 0;
-				foreach ($queryLog['queries'] as $k => $v) {
-					$hash = sha1($v['query']);
-					if (!isset($hashes[$hash]) || $hashes[$hash] !== $v['affected']) {
-						$hashes[$hash] = $v['affected'];
+				foreach ($queryLog['queries'] as $key => $val) {
+					$hash = sha1($val['query']);
+					if (!isset($hashes[$hash]) || $hashes[$hash] !== $val['affected']) {
+						$hashes[$hash] = $val['affected'];
 						continue;
 					}
 					$duplicate++;
 
-					$queryLog['queries'][$k]['query'] = '<span class="alert-duplicate">' . $v['query'] . '</span>';
+					$queryLog['queries'][$key]['query'] = '<span class="alert-duplicate">' . $val['query'] . '</span>';
 				}
 
 				echo '<h5>';

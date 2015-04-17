@@ -41,6 +41,19 @@ if (isset($debugKitInHistoryMode)) {
 					echo ' ' . __d('debug_kit', 'No query logs.');
 				endif;
 			else:
+				$hashes = array();
+				$duplicate = 0;
+				foreach ($queryLog['queries'] as $key => $val) {
+					$hash = sha1($val['query']);
+					if (!isset($hashes[$hash]) || $hashes[$hash] !== $val['affected']) {
+						$hashes[$hash] = $val['affected'];
+						continue;
+					}
+					$duplicate++;
+
+					$queryLog['queries'][$key]['query'] = '<span class="alert-duplicate">' . $val['query'] . '</span>';
+				}
+
 				echo '<h5>';
 				echo __d(
 					'debug_kit',
@@ -50,6 +63,9 @@ if (isset($debugKitInHistoryMode)) {
 				);
 				echo '</h5>';
 				echo $this->Toolbar->table($queryLog['queries'], $headers, array('title' => 'SQL Log ' . $dbName));
+				if ($duplicate) {
+					echo '<p class="alert alert-warning">' . __d('debug_kit', '%s duplicate queries run.', $duplicate) . '</p>';
+				}
 			?>
 		<h4><?php echo __d('debug_kit', 'Query Explain:'); ?></h4>
 		<div id="sql-log-explain-<?php echo $dbName ?>">

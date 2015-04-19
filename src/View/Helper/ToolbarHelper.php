@@ -78,7 +78,7 @@ class ToolbarHelper extends Helper
             $values[] = '(empty)';
         }
         foreach ($values as $key => $value) {
-            $out .= '<li><strong>' . $key . '</strong>';
+            $out .= '<li><strong>' . h($key, $doubleEncode) . '</strong>';
             if (is_array($value) && count($value) > 0) {
                 $out .= '(array)';
             } elseif (is_object($value)) {

@@ -57,6 +57,7 @@ class DebugBarFilter extends DispatcherFilter
             'DebugKit.Environment',
             'DebugKit.Include',
             'DebugKit.History',
+            'DebugKit.Ajax',
         ],
         'forceEnable' => false,
     ];
@@ -209,6 +210,7 @@ class DebugBarFilter extends DispatcherFilter
         $row = $requests->save($row);
 
         $this->_injectScripts($row->id, $response);
+        $response->header(['X-DEBUGKIT-ID' => $row->id]);
     }
 
     /**

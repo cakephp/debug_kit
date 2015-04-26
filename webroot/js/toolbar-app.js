@@ -14,6 +14,7 @@ Toolbar.prototype = {
 	_state: 0,
 	currentRequest: null,
 	originalRequest: null,
+	ajaxRequests: [],
 
 	states: [
 		'collapse',
@@ -158,7 +159,7 @@ Toolbar.prototype = {
 				// Close active panel
 				if (_this.isExpanded()) {
 					return _this.hideContent();
-				} 
+				}
 				// Collapse the toolbar
 				if (_this.state() === "toolbar") {
 					return _this.toggle();
@@ -180,7 +181,7 @@ Toolbar.prototype = {
 				if (nextPanel.hasClass('panel')) {
 					nextPanel.addClass('panel-active');
 					return _this.loadPanel(nextPanel.data('id'));
-				}	
+				}
 			}
 		});
 	},
@@ -221,10 +222,26 @@ Toolbar.prototype = {
 		}
 	},
 
+	onMessage: function(event) {
+		if (event.data.indexOf('ajax-completed$$') === 0) {
+			this.onRequest(JSON.parse(event.data.split('$$')[1]))
+		}
+	},
+
+	onRequest: function(request) {
+		this.ajaxRequests.push(request);
+		$(".panel-summary:contains(xhr)").text("" + this.ajaxRequests.length + ' xhr');
+	},
+
 	initialize: function() {
 		this.windowOrigin();
 		this.mouseListener();
 		this.keyboardListener();
 		this.loadState();
+
+		var self = this;
+		window.addEventListener('message', function (event) {
+			self.onMessage(event);
+		}, false);
 	}
 };

@@ -35,6 +35,7 @@ use Cake\Routing\Router;
         <span class="history-time">{time}</span>
         <span class="history-bubble">{method}</span>
         <span class="history-bubble">{status}</span>
+        <span class="history-bubble">{type}</span>
         <span class="history-url">{url}</span>
     </a>
 </li>
@@ -50,13 +51,14 @@ $(document).ready(function() {
     $('#ajax-history').html($('#list-template').html());
     var listItem = $('#list-item-template').html();
 
-    for (var i = 0; i < toolbar.ajaxRequests.length; i++) {
+    for (var i = toolbar.ajaxRequests.length - 1; i >= 0; i--) {
         var params = {
             id: toolbar.ajaxRequests[i].requestId,
             time: (new Date(toolbar.ajaxRequests[i].date)).toLocaleString(),
             method: toolbar.ajaxRequests[i].method,
             status: toolbar.ajaxRequests[i].status,
-            url: toolbar.ajaxRequests[i].url
+            url: toolbar.ajaxRequests[i].url,
+            type: toolbar.ajaxRequests[i].type
         };
         var content = listItem.replace(/{([^{}]*)}/g, function(a, b) {
             var r = params[b];

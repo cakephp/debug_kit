@@ -224,8 +224,13 @@ Toolbar.prototype = {
 
 	onMessage: function(event) {
 		if (event.data.startsWith('ajax-completed$$')) {
-			this.ajaxRequests.push(JSON.parse(event.data.split('$$')[1]));
+			this.onRequest(JSON.parse(event.data.split('$$')[1]))
 		}
+	},
+
+	onRequest: function(request) {
+		this.ajaxRequests.push(request);
+		$(".panel-summary:contains(xhr)").text("" + this.ajaxRequests.length + ' xhr');
 	},
 
 	initialize: function() {

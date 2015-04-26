@@ -73,10 +73,6 @@ $(document).ready(function() {
     var thisPanel = '<?= h($panel->id) ?>';
     var toolbar = window.toolbar;
 
-    if (toolbar.ajaxRequests.length === 0) {
-        return;
-    }
-
     if (!$('#request-history > ul').length) {
         $('#request-history').html($('#list-template').html());
     }

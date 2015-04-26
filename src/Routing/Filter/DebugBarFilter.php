@@ -57,7 +57,6 @@ class DebugBarFilter extends DispatcherFilter
             'DebugKit.Environment',
             'DebugKit.Include',
             'DebugKit.History',
-            'DebugKit.Ajax',
         ],
         'forceEnable' => false,
     ];

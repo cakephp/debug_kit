@@ -352,6 +352,10 @@ table tbody tr:nth-child(odd) {
 	padding: 2px;
 	border-radius: 4px;
 }
+
+.xhr {
+	background:#7CFF46
+}
 .history-time {
 	font-size: 12px;
 	display: block;

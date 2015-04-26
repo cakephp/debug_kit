@@ -226,7 +226,7 @@ Toolbar.prototype = {
 		if (event.data.startsWith('ajax-completed$$')) {
 			this.ajaxRequests.push(JSON.parse(event.data.split('$$')[1]));
 		}
-    },
+	},
 
 	initialize: function() {
 		this.windowOrigin();

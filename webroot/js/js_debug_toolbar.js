@@ -748,7 +748,7 @@ DEBUGKIT.toolbar = function () {
 			if (this.panels[id] !== undefined && !this.panels[id].active) {
 				var panel = this.panels[id];
 				if (panel.content.length > 0) {
-					panel.content.css('display', 'block');
+					panel.content.show();
 				}
 
 				var contentHeight = panel.content.find('.panel-content-data').height() + 70;

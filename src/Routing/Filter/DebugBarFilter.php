@@ -191,13 +191,7 @@ class DebugBarFilter extends DispatcherFilter
 
         foreach ($this->_registry->loaded() as $name) {
             $panel = $this->_registry->{$name};
-            try {
-                $content = serialize($panel->data());
-            } catch (\Exception $e) {
-                $content = serialize([
-                    'error' => $e->getMessage(),
-                ]);
-            }
+            $content = $this->_serialize($panel->data());
             $row->panels[] = $requests->Panels->newEntity([
                 'panel' => $name,
                 'element' => $panel->elementName(),
@@ -210,6 +204,40 @@ class DebugBarFilter extends DispatcherFilter
 
         $this->_injectScripts($row->id, $response);
         $response->header(['X-DEBUGKIT-ID' => $row->id]);
+    }
+
+    /**
+     * Serialization wrapper for toolbar data
+     *
+     * @param array $data Panel data to serialize.
+     * @return string serialized panel data
+     */
+    protected function _serialize($data)
+    {
+        $response = [];
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $response[$key] = [];
+                foreach ($value as $k => $v) {
+                    try {
+                        serialize($v);
+                        $response[$key][$k] = $v;
+                    } catch (\Exception $e) {
+                        $response[$key][$k] = $e->getMessage();
+                        $response['error'] = $e->getMessage();
+                    }
+                }
+            } else {
+                try {
+                    serialize($value);
+                    $response[$key] = $value;
+                } catch (\Exception $e) {
+                    $response['error'] = $e->getMessage();
+                }
+            }
+        }
+
+        return serialize($response);
     }
 
     /**

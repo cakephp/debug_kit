@@ -73,6 +73,13 @@ class VariablesPanel extends DebugPanel
             if ($item instanceof Query) {
                 $item = $item->all();
             }
+            // Handle forms specifically until they implement __debugInfo
+            if ($item instanceof Form) {
+                $item = [
+                    'form class' => get_class($item),
+                    'errors' => $item->errors()
+                ];
+            }
             if ($item instanceof Closure ||
                 $item instanceof PDO ||
                 $item instanceof SimpleXmlElement
@@ -87,6 +94,9 @@ class VariablesPanel extends DebugPanel
                     $item->getFile(),
                     $item->getLine()
                 );
+            }
+            if (is_object($item) && method_exists($item, '__debugInfo')) {
+                $item = $item->__debugInfo();
             }
             return $item;
         });

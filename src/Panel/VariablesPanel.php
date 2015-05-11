@@ -95,9 +95,6 @@ class VariablesPanel extends DebugPanel
                     $item->getLine()
                 );
             }
-            if (is_object($item) && method_exists($item, '__debugInfo')) {
-                $item = $item->__debugInfo();
-            }
             return $item;
         });
 

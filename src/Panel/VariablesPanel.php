@@ -68,25 +68,14 @@ class VariablesPanel extends DebugPanel
     {
         $controller = $event->subject();
         $errors = [];
-        array_walk_recursive($controller->viewVars, function (&$item) {
-            // Execute queries so we can show the results in the toolbar.
-            if ($item instanceof Query) {
-                $item = $item->all();
-            }
-            // Handle forms specifically until they implement __debugInfo
-            if ($item instanceof Form) {
-                $item = [
-                    'form class' => get_class($item),
-                    'errors' => $item->errors()
-                ];
-            }
+
+        $walker = function (&$item) use (&$walker) {
             if ($item instanceof Closure ||
                 $item instanceof PDO ||
                 $item instanceof SimpleXmlElement
             ) {
                 $item = 'Unserializable object - ' . get_class($item);
-            }
-            if ($item instanceof Exception) {
+            } elseif ($item instanceof Exception) {
                 $item = sprintf(
                     'Unserializable object - %s. Error: %s in %s, line %s',
                     get_class($item),
@@ -94,9 +83,13 @@ class VariablesPanel extends DebugPanel
                     $item->getFile(),
                     $item->getLine()
                 );
+            } elseif (is_object($item) && method_exists($item, '__debugInfo')) {
+                // Convert objects into using __debugInfo.
+                $item = array_map($walker, $item->__debugInfo());
             }
             return $item;
-        });
+        };
+        array_walk_recursive($controller->viewVars, $walker);
 
         foreach ($controller->viewVars as $k => $v) {
             // Get the validation errors for Entity

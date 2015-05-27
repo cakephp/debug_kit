@@ -113,4 +113,17 @@ class VariablesPanel extends DebugPanel
             'errors' => $errors
         ];
     }
+
+    /**
+     * Get summary data for the variables panel.
+     *
+     * @return int
+     */
+    public function summary()
+    {
+        if (!isset($this->_data['content'])) {
+            return 0;
+        }
+        return count($this->_data['content']);
+    }
 }

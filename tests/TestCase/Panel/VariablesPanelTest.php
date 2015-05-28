@@ -24,7 +24,7 @@ use DebugKit\Panel\VariablesPanel;
  */
 class VariablesPanelTest extends TestCase
 {
-    public $fixtures = ['plugin.debug_kit.panels'];
+    public $fixtures = ['plugin.debug_kit.requests'];
 
     /**
      * set up
@@ -55,9 +55,9 @@ class VariablesPanelTest extends TestCase
      */
     public function testShutdown()
     {
-        $panels = TableRegistry::get('DebugKit.Panels');
-        $query = $panels->find('all');
-        $result = $panels->find()->all();
+        $requests = TableRegistry::get('DebugKit.Requests');
+        $query = $requests->find('all');
+        $result = $requests->find()->all();
 
         $controller = new \StdClass();
         $controller->viewVars = [

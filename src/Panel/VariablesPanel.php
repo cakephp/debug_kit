@@ -17,6 +17,7 @@ use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Form\Form;
+use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Closure;
 use DebugKit\DebugPanel;
@@ -70,7 +71,9 @@ class VariablesPanel extends DebugPanel
         $errors = [];
 
         $walker = function (&$item) use (&$walker) {
-            if ($item instanceof Closure ||
+            if ($item instanceof Query || $item instanceof ResultSet) {
+                $item = $item->toArray();
+            } elseif ($item instanceof Closure ||
                 $item instanceof PDO ||
                 $item instanceof SimpleXmlElement
             ) {
@@ -89,9 +92,11 @@ class VariablesPanel extends DebugPanel
             }
             return $item;
         };
-        array_walk_recursive($controller->viewVars, $walker);
+        // Copy so viewVars is not mutated.
+        $vars = $controller->viewVars;
+        array_walk_recursive($vars, $walker);
 
-        foreach ($controller->viewVars as $k => $v) {
+        foreach ($vars as $k => $v) {
             // Get the validation errors for Entity
             if ($v instanceof EntityInterface) {
                 $errors[$k] = $this->_getErrors($v);
@@ -104,8 +109,21 @@ class VariablesPanel extends DebugPanel
         }
 
         $this->_data = [
-            'content' => $controller->viewVars,
+            'content' => $vars,
             'errors' => $errors
         ];
+    }
+
+    /**
+     * Get summary data for the variables panel.
+     *
+     * @return int
+     */
+    public function summary()
+    {
+        if (!isset($this->_data['content'])) {
+            return 0;
+        }
+        return count($this->_data['content']);
     }
 }

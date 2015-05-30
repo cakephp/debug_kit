@@ -29,7 +29,7 @@ Because this plugin has the type `cakephp-plugin` set in it's own `composer.json
 
 _[Manual]_
 
-* Download the [DebugKit archive](https://github.com/cakephp/debug_kit/zipball/master).
+* Download the [DebugKit archive](https://github.com/cakephp/debug_kit/zipball/2.2).
 * Unzip that download.
 * Rename the resulting folder to `DebugKit`
 * Then copy this folder into `app/Plugin/`
@@ -39,7 +39,7 @@ _[GIT Submodule]_
 In your app directory type:
 
 ```bash
-git submodule add git://github.com/cakephp/debug_kit.git Plugin/DebugKit
+git submodule add --branch 2.2 git://github.com/cakephp/debug_kit.git Plugin/DebugKit
 git submodule init
 git submodule update
 ```
@@ -49,7 +49,7 @@ _[GIT Clone]_
 In your plugin directory type
 
 ```bash
-git clone git://github.com/cakephp/debug_kit.git DebugKit
+git clone --single-branch --branch 2.2 git://github.com/cakephp/debug_kit.git DebugKit
 ```
 
 ### Enable plugin

@@ -34,6 +34,17 @@ class ToolbarHelper extends Helper
      * @var array
      */
     public $helpers = ['Html', 'Form', 'Url'];
+    public $sort = false;
+
+    /**
+     * set sorting of variables
+     *
+     * @param $sort
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+    }
 
     /**
      * Recursively goes through an array and makes neat HTML out of it.
@@ -76,6 +87,9 @@ class ToolbarHelper extends Helper
         }
         if (empty($values)) {
             $values[] = '(empty)';
+        }
+        if ($this->sort && is_array($values)) {
+            ksort($values);
         }
         foreach ($values as $key => $value) {
             $out .= '<li><strong>' . h($key, $doubleEncode) . '</strong>';

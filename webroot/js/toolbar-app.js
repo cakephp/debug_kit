@@ -130,6 +130,17 @@ Toolbar.prototype = {
 	},
 
 	bindNeatArray: function() {
+        var sort_button = this.content.find('.neat-array-sort');
+        var _this = this;
+        sort_button.click(function() {
+            if ($(this).attr('checked')) {
+                document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+            } else {
+                document.cookie = 'debugKit_sort=1; path=/';
+            }
+            _this.loadPanel(_this.currentPanel());
+        });
+
 		var lists = this.content.find('.depth-0');
 		lists.find('ul').hide()
 			.parent().addClass('expandable collapsed');

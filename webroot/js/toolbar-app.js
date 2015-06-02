@@ -130,9 +130,9 @@ Toolbar.prototype = {
 	},
 
 	bindNeatArray: function() {
-        var sort_button = this.content.find('.neat-array-sort');
+        var sortButton = this.content.find('.neat-array-sort');
         var _this = this;
-        sort_button.click(function() {
+        sortButton.click(function() {
             if ($(this).attr('checked')) {
                 document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
             } else {

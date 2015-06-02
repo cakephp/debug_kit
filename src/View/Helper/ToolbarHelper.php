@@ -37,9 +37,9 @@ class ToolbarHelper extends Helper
     public $sort = false;
 
     /**
-     * set sorting of variables
+     * set sorting of values
      *
-     * @param $sort
+     * @param bool $sort Whether or not sort values by key
      */
     public function setSort($sort)
     {

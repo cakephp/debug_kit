@@ -131,16 +131,16 @@ Toolbar.prototype = {
 	},
 
 	bindNeatArray: function() {
-        var sortButton = this.content.find('.neat-array-sort');
-        var _this = this;
-        sortButton.click(function() {
-            if ($(this).attr('checked')) {
-                document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=' + _this.baseUrl;
-            } else {
-                document.cookie = 'debugKit_sort=1; path=' + _this.baseUrl;
-            }
-            _this.loadPanel(_this.currentPanel());
-        });
+		var sortButton = this.content.find('.neat-array-sort');
+		var _this = this;
+		sortButton.click(function() {
+			if ($(this).attr('checked')) {
+				document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=' + _this.baseUrl;
+			} else {
+				document.cookie = 'debugKit_sort=1; path=' + _this.baseUrl;
+			}
+			_this.loadPanel(_this.currentPanel());
+		});
 
 		var lists = this.content.find('.depth-0');
 		lists.find('ul').hide()

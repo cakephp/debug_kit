@@ -39,7 +39,7 @@ $(document).ready(function() {
         keyboardScope : $(document),
         currentRequest: '<?= $toolbar->id ?>',
         originalRequest: '<?= $toolbar->id ?>',
-        baseUrl: '<?= $this->Url->build('/') ?>'
+        baseUrl: '<?= json_encode($this->Url->build('/')) ?>'
     });
 
     toolbar.initialize();

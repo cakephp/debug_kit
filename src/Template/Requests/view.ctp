@@ -38,7 +38,8 @@ $(document).ready(function() {
         panelClose: $('#panel-close'),
         keyboardScope : $(document),
         currentRequest: '<?= $toolbar->id ?>',
-        originalRequest: '<?= $toolbar->id ?>'
+        originalRequest: '<?= $toolbar->id ?>',
+        baseUrl: <?= json_encode($this->Url->build('/')) ?>
     });
 
     toolbar.initialize();

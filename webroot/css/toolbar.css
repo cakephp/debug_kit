@@ -292,6 +292,17 @@ table tbody tr:nth-child(odd) {
 	cursor: default;
 }
 
+.toggle-checkbox {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 12px;
+	color: #666;
+}
+.toggle-checkbox input[type=checkbox] {
+	vertical-align: middle;
+	margin-top: 0;
+}
+
 
 /**
  * Graph table.

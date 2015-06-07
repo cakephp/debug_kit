@@ -34,7 +34,13 @@ class ToolbarHelper extends Helper
      * @var array
      */
     public $helpers = ['Html', 'Form', 'Url'];
-    public $sort = false;
+
+    /**
+     * Whether or not the top level keys should be sorted.
+     *
+     * @var bool
+     */
+    protected $sort = false;
 
     /**
      * set sorting of values
@@ -88,7 +94,7 @@ class ToolbarHelper extends Helper
         if (empty($values)) {
             $values[] = '(empty)';
         }
-        if ($this->sort && is_array($values)) {
+        if ($this->sort && is_array($values) && $currentDepth === 0) {
             ksort($values);
         }
         foreach ($values as $key => $value) {

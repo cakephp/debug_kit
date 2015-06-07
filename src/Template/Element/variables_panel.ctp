@@ -16,7 +16,7 @@ if (isset($error)):
 endif;
 
 if (!empty($content)):
-    printf('<p><label><input type="checkbox" class="neat-array-sort"%s>%s</label></p>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables &amp; properties'));
+    printf('<p><label><input type="checkbox" class="neat-array-sort"%s>%s</label></p>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
     $this->Toolbar->setSort($sort);
     echo $this->Toolbar->makeNeatArray($content);
 endif;

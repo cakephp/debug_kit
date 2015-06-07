@@ -317,4 +317,46 @@ class ToolbarHelperTest extends TestCase
         ];
         $this->assertHtml($expected, $result);
     }
+
+    /**
+     * Test makeNeatArray sorted
+     *
+     * @return void
+     */
+    public function testMakeNeatArraySorted()
+    {
+        $in = [
+            'lotr' => [
+                'gandalf' => 'wizard',
+                'bilbo' => 'hobbit'
+            ],
+            'key' => 'value',
+            'foo' => [
+                'this' => 'deep',
+                'another' => 'value'
+            ],
+        ];
+        $this->Toolbar->setSort(true);
+        $result = $this->Toolbar->makeNeatArray($in, 1);
+        $expected = [
+            'ul' => ['class' => 'neat-array depth-0 expanded'],
+            '<li', '<strong', 'foo', '/strong',
+                '(array)',
+                ['ul' => ['class' => 'neat-array depth-1']],
+                '<li', '<strong', 'this', '/strong', 'deep', '/li',
+                '<li', '<strong', 'another', '/strong', 'value', '/li',
+                '/ul',
+            '/li',
+            '<li', '<strong', 'key', '/strong', 'value', '/li',
+            '<li', '<strong', 'lotr', '/strong',
+                '(array)',
+                ['ul' => ['class' => 'neat-array depth-1']],
+                '<li', '<strong', 'gandalf', '/strong', 'wizard', '/li',
+                '<li', '<strong', 'bilbo', '/strong', 'hobbit', '/li',
+                '/ul',
+            '/li',
+            '/ul'
+        ];
+        $this->assertHtml($expected, $result);
+    }
 }

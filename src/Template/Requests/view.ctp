@@ -25,7 +25,7 @@ use Cake\Core\Configure;
     <?php endforeach; ?>
     <li id="panel-button">
         <?= $this->Html->image('DebugKit.cake.icon.png',
-			['alt' => 'Debug Kit', 'title' => 'CakePHP ' . \Cake\Core\Configure::version() . ' Debug Kit']) ?>
+			['alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit']) ?>
     </li>
 </ul>
 <?php $this->start('scripts') ?>

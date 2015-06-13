@@ -1,5 +1,7 @@
 <?php
 use Cake\Routing\Router;
+use Cake\Core\Configure;
+
 ?>
 <div id="panel-content-container">
     <span id="panel-close" class="button-close">&times;</span>
@@ -22,7 +24,8 @@ use Cake\Routing\Router;
     </li>
     <?php endforeach; ?>
     <li id="panel-button">
-        <?= $this->Html->image('DebugKit.cake.icon.png', ['alt' => 'Debug Kit']) ?>
+        <?= $this->Html->image('DebugKit.cake.icon.png',
+			['alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit']) ?>
     </li>
 </ul>
 <?php $this->start('scripts') ?>

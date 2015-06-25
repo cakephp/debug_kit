@@ -41,6 +41,13 @@ class SqlLogPanelTest extends TestCase
     {
         parent::setUp();
         $this->panel = new SqlLogPanel();
+        $this->logger = ConnectionManager::get('test')->logger();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        ConnectionManager::get('test')->logger($this->logger);
     }
 
     /**

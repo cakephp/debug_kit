@@ -23,8 +23,6 @@ use Cake\Network\Exception\NotFoundException;
 class RequestsController extends Controller
 {
 
-    public $layout = 'DebugKit.toolbar';
-
     /**
      * Before filter handler.
      *
@@ -38,6 +36,17 @@ class RequestsController extends Controller
         if (!Configure::read('debug')) {
             throw new NotFoundException();
         }
+    }
+
+    /**
+     * Before render handler.
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     */
+    public function beforeRender(Event $event)
+    {
+        $this->getView()->layout('DebugKit.toolbar');
     }
 
     /**

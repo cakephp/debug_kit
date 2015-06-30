@@ -58,10 +58,13 @@ class VariablesPanelTest extends TestCase
         $requests = TableRegistry::get('Requests');
         $query = $requests->find('all');
         $result = $requests->find()->all();
+        $unbufferedQuery = $requests->find('all')->bufferResults(false);
+        $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
 
         $controller = new \StdClass();
         $controller->viewVars = [
             'query' => $query,
+            'unbufferedQuery' => $unbufferedQuery,
             'result set' => $result,
             'string' => 'yes',
             'array' => ['some' => 'key']
@@ -76,6 +79,7 @@ class VariablesPanelTest extends TestCase
             'Original value should not be mutated'
         );
         $this->assertInternalType('array', $output['content']['query']);
+        $this->assertInternalType('array', $output['content']['unbufferedQuery']);
         $this->assertInternalType('array', $output['content']['result set']);
         $this->assertEquals($controller->viewVars['string'], $output['content']['string']);
         $this->assertEquals($controller->viewVars['array'], $output['content']['array']);

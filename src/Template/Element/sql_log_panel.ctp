@@ -63,7 +63,7 @@ $noOutput = true;
             <tbody>
                 <?php foreach ($queries as $query): ?>
                 <tr>
-                    <td><?= h($query['query']) ?></td>
+                    <td><pre><?= SqlFormatter::format($query['query'], false) ?></pre></td>
                     <td><?= h($query['rows']) ?></td>
                     <td><?= h($query['took']) ?></td>
                 </tr>

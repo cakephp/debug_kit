@@ -119,4 +119,40 @@ class DebugEngineTest extends TestCase
         $this->assertArrayHasKey('Cache.increment key', $result);
         $this->assertArrayHasKey('Cache.decrement key', $result);
     }
+
+    /**
+     * Test that groups proxies
+     *
+     * @return void
+     */
+    public function testGroupsProxies()
+    {
+        $engine = new DebugEngine([
+            'className' => 'File',
+            'path' => TMP,
+            'groups' => ['test', 'test2']
+        ]);
+        $engine->init();
+        $result = $engine->groups();
+        $this->assertEquals(['test', 'test2'], $result);
+    }
+
+    /**
+     * Test that config methods proxy the config data.
+     *
+     * @return void
+     */
+    public function testConfigProxies()
+    {
+        $engine = new DebugEngine([
+            'className' => 'File',
+            'path' => TMP
+        ]);
+        $engine->init();
+
+        $data = $engine->config();
+        $this->assertArrayHasKey('path', $data);
+        $this->assertArrayHasKey('isWindows', $data);
+        $this->assertArrayHasKey('prefix', $data);
+    }
 }

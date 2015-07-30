@@ -243,7 +243,8 @@ class DebugEngine extends CacheEngine
      * @param mixed $value The value to set.
      * @param bool $merge Whether or not configuration should be merged.
      */
-    public function config($key = null, $value = null, $merge = true) {
+    public function config($key = null, $value = null, $merge = true)
+    {
         return call_user_func_array([$this->_engine, 'config'], func_get_args());
     }
 

@@ -72,7 +72,12 @@ class VariablesPanel extends DebugPanel
 
         $walker = function (&$item) use (&$walker) {
             if ($item instanceof Query || $item instanceof ResultSet) {
-                $item = $item->toArray();
+                try {
+                    $item = $item->toArray();
+                } catch (\Cake\Database\Exception $e) {
+                    //Likely issue is unbuffered query; fall back to __debugInfo
+                    $item = array_map($walker, $item->__debugInfo());
+                }
             } elseif ($item instanceof Closure ||
                 $item instanceof PDO ||
                 $item instanceof SimpleXmlElement

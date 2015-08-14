@@ -53,7 +53,7 @@ class PanelsController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->getView()->layout('DebugKit.panel');
+        $this->viewBuilder()->layout('DebugKit.panel');
     }
 
     /**

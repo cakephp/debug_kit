@@ -79,17 +79,23 @@ class RequestsTable extends Table
         if (time() % 100 !== 0) {
             return;
         }
-        $query = $this->query()
-            ->delete()
-            ->where(['requested_at <=' => new \DateTime('-2 weeks')]);
-        $statement = $query->execute();
-        $statement->closeCursor();
-
-        $existing = $this->find()->select(['id']);
+        $purge = $this->find()
+            ->select(['id'])
+            ->hydrate(false)
+            ->where(['requested_at <=' => new \DateTime('-2 weeks')])
+            ->extract('id')
+            ->toArray();
 
         $query = $this->Panels->query()
             ->delete()
-            ->where(['request_id NOT IN' => $existing]);
+            ->where(['request_id IN' => $purge]);
+        $statement = $query->execute();
+        $statement->closeCursor();
+
+        $query = $this->query()
+            ->delete()
+            ->where(['id IN' => $purge]);
+
         $statement = $query->execute();
         $statement->closeCursor();
     }

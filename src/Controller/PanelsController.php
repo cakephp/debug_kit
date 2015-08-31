@@ -31,13 +31,6 @@ class PanelsController extends Controller
     public $components = ['RequestHandler', 'Cookie'];
 
     /**
-     * Layout property.
-     *
-     * @var string
-     */
-    public $layout = 'DebugKit.panel';
-
-    /**
      * Before filter handler.
      *
      * @param \Cake\Event\Event $event The event.
@@ -50,6 +43,17 @@ class PanelsController extends Controller
         if (!Configure::read('debug')) {
             throw new NotFoundException();
         }
+    }
+
+    /**
+     * Before render handler.
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     */
+    public function beforeRender(Event $event)
+    {
+        $this->viewBuilder()->layout('DebugKit.panel');
     }
 
     /**

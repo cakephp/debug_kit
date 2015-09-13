@@ -44,5 +44,6 @@
 	},
 	"suggest": {
 		"ext-sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
-	}
+	},
+	"minimum-stability": "beta"
 }

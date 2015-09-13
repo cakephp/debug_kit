@@ -66,15 +66,10 @@
 	padding: 4px;
 }
 #debug-kit-toolbar .panel-tab a.edit-value {
-		float: none;
-		display: inline;
+	float: none;
+	display: inline;
 }
 
-/* Hovering over link shows tab, useful for no js  */
-#debug-kit-toolbar .panel-tab a:hover + .panel-content,
-#debug-kit-toolbar .panel-tab a + .panel-content:hover {
-	display: block;
-}
 #debug-kit-toolbar .panel-tab.icon a {
 	border-radius: 8px 0 0 8px;
 }

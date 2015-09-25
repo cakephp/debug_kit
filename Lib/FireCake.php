@@ -314,7 +314,7 @@ class FireCake {
 		}
 
 		$args = func_get_args();
-		$type = $label = null;
+		$label = null;
 		switch (count($args)) {
 			case 1:
 				$type = $_this->_levels['log'];
@@ -517,7 +517,6 @@ class FireCake {
  * @return string
  */
 	public static function jsonEncode($object, $skipEncode = false) {
-		$_this = FireCake::getInstance();
 		if (!$skipEncode) {
 			$object = FireCake::stringEncode($object);
 		}

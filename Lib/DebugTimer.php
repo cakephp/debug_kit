@@ -39,7 +39,7 @@ class DebugTimer {
 		if (!$name) {
 			$named = false;
 			$calledFrom = debug_backtrace();
-			$_name = $name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
+			$name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
 		} else {
 			$named = true;
 		}

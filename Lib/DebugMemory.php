@@ -55,7 +55,6 @@ class DebugMemory {
 	public static function record($message = null) {
 		$memoryUse = self::getCurrent();
 		if (!$message) {
-			$named = false;
 			$trace = debug_backtrace();
 			$message = Debugger::trimpath($trace[0]['file']) . ' line ' . $trace[0]['line'];
 		}

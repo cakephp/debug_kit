@@ -34,7 +34,7 @@ class ToolbarHelper extends AppHelper {
 /**
  * flag for whether or not cache is enabled.
  *
- * @var boolean
+ * @var bool
  */
 	protected $_cacheEnabled = false;
 
@@ -117,7 +117,7 @@ class ToolbarHelper extends AppHelper {
  *
  * @param string $name Name of the panel you are replacing.
  * @param string $content Content to write to the panel.
- * @return boolean Success of write.
+ * @return bool Success of write.
  */
 	public function writeCache($name, $content) {
 		if (!$this->_cacheEnabled) {
@@ -132,8 +132,8 @@ class ToolbarHelper extends AppHelper {
  * Read the toolbar
  *
  * @param string $name Name of the panel you want cached data for
- * @param integer $index
- * @return mixed Boolean false on failure, array of data otherwise.
+ * @param int $index
+ * @return mixed|bool false on failure, array of data otherwise.
  */
 	public function readCache($name, $index = 0) {
 		if (!$this->_cacheEnabled) {

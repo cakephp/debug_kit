@@ -19,7 +19,6 @@ App::uses('FireCake', 'DebugKit.Lib');
  * FirePHP Toolbar Helper
  *
  * Injects the toolbar elements into non-HTML layouts via FireCake.
- *
  */
 class FirePhpToolbarHelper extends ToolbarHelper {
 

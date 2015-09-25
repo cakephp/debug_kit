@@ -15,7 +15,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on all timers used in a request.
- *
  */
 class TimerPanel extends DebugPanel {
 

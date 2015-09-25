@@ -114,7 +114,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 /**
  * Status whether component is enable or disable
  *
- * @var boolean
+ * @var bool
  */
 	public $enabled = true;
 
@@ -228,7 +228,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * If automatically disabled, tell component collection about the state.
  *
  * @param Controller $controller
- * @return boolean
+ * @return bool
  */
 	public function initialize(Controller $controller) {
 		if (!$this->enabled) {
@@ -269,7 +269,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * Component Startup
  *
  * @param Controller $controller
- * @return boolean
+ * @return bool
  */
 	public function startup(Controller $controller) {
 		$panels = array_keys($this->panels);
@@ -291,7 +291,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
  * @param Controller $controller
  * @param $url
  * @param null $status
- * @param boolean $exit
+ * @param bool $exit
  * @return void
  */
 	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
@@ -365,7 +365,7 @@ class ToolbarComponent extends Component implements CakeEventListener {
 /**
  * Load a toolbar state from cache
  *
- * @param integer $key
+ * @param int $key
  * @return array
  */
 	public function loadState($key) {

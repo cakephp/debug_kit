@@ -15,7 +15,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on previous requests.
- *
  */
 class HistoryPanel extends DebugPanel {
 

@@ -46,7 +46,7 @@ class TestFireCake extends FireCake {
 /**
  * Skip client detection as headers are not being sent.
  *
- * @return boolean Always true
+ * @return bool Always true
  */
 	public static function detectClientExtension() {
 		return true;

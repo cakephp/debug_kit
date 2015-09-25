@@ -20,7 +20,6 @@ App::uses('Helper', 'View');
  * Class DebugTimerHelper
  *
  * Tracks time and memory usage while rendering view.
- *
  */
 class DebugTimerHelper extends Helper {
 
@@ -28,7 +27,7 @@ class DebugTimerHelper extends Helper {
  * Set to true when rendering is complete.
  * Used to not add timers for rendering the toolbar.
  *
- * @var boolean
+ * @var bool
  */
 	protected $_renderComplete = false;
 

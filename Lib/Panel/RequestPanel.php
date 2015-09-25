@@ -15,14 +15,13 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on the Current request params.
- *
  */
 class RequestPanel extends DebugPanel {
 
 /**
  * beforeRender callback - grabs request params
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

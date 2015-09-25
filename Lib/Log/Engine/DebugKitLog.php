@@ -13,7 +13,6 @@
 
 /**
  * A CakeLog listener which saves having to munge files or other configured loggers.
- *
  */
 class DebugKitLog implements CakeLogInterface {
 

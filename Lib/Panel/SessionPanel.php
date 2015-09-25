@@ -15,7 +15,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on the Session contents.
- *
  */
 class SessionPanel extends DebugPanel {
 

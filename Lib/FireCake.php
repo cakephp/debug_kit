@@ -35,7 +35,6 @@ if (!function_exists('firecake')) {
  * Interoperates with FirePHP extension for Firefox
  *
  * For more information see: http://www.firephp.org/
- *
  */
 class FireCake {
 
@@ -87,7 +86,7 @@ class FireCake {
 /**
  * internal messageIndex counter
  *
- * @var integer
+ * @var int
  */
 	protected $_messageIndex = 1;
 
@@ -108,7 +107,7 @@ class FireCake {
 /**
  * FireCake output status
  *
- * @var boolean
+ * @var bool
  */
 	protected $_enabled = true;
 
@@ -149,9 +148,9 @@ class FireCake {
 	}
 
 /**
- * Return boolean based on presence of FirePHP extension
+ * Return bool based on presence of FirePHP extension
  *
- * @return boolean
+ * @return bool
  */
 	public static function detectClientExtension() {
 		$ua = FireCake::getUserAgent();
@@ -301,7 +300,7 @@ class FireCake {
  * fb($message, $label, $type) - Send a message with a custom label and type.
  *
  * @param mixed $message Message to output. For other parameters see usage above.
- * @return boolean Success
+ * @return bool Success
  */
 	public static function fb($message) {
 		$_this = FireCake::getInstance();
@@ -466,8 +465,8 @@ class FireCake {
  * Filter out recursion, so no errors are raised by json_encode or $javascript->object()
  *
  * @param mixed $object Object or variable to encode to string.
- * @param integer $objectDepth Current Depth in object chains.
- * @param integer $arrayDepth Current Depth in array chains.
+ * @param int $objectDepth Current Depth in object chains.
+ * @param int $arrayDepth Current Depth in array chains.
  * @return string|Object
  */
 	public static function stringEncode($object, $objectDepth = 1, $arrayDepth = 1) {
@@ -512,7 +511,7 @@ class FireCake {
  * Encode an object into JSON
  *
  * @param mixed $object Object or array to json encode
- * @param boolean $skipEncode
+ * @param bool $skipEncode
  * @internal param bool $doIt
  * @static
  * @return string

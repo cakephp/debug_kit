@@ -42,7 +42,6 @@ class TestToolbarComponent extends ToolbarComponent {
 
 /**
  * ToolbarComponentTestCase Test case
- *
  */
 class ToolbarComponentTestCase extends CakeTestCase {
 

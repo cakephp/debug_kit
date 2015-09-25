@@ -9,14 +9,12 @@
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- *
  */
 
 App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides information about your PHP and CakePHP environment to assist with debugging.
- *
  */
 class EnvironmentPanel extends DebugPanel {
 

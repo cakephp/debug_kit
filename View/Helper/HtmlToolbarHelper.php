@@ -43,9 +43,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * Recursively goes through an array and makes neat HTML out of it.
  *
  * @param mixed $values Array to make pretty.
- * @param integer $openDepth Depth to add open class
- * @param integer $currentDepth current depth.
- * @param boolean $doubleEncode
+ * @param int $openDepth Depth to add open class
+ * @param int $currentDepth current depth.
+ * @param bool $doubleEncode
  * @return string
  */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {

@@ -17,7 +17,6 @@
 
 /**
  * Class DebugKitGroupTestCase
- *
  */
 class DebugKitGroupTestCase extends PHPUnit_Framework_TestSuite {
 

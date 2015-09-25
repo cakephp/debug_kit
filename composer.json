@@ -26,6 +26,9 @@
         "php": ">=5.3.0",
         "composer/installers": "*"
     },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "^1.0.0"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.2.x-dev"

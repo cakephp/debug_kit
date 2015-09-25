@@ -17,6 +17,7 @@
  **/
 
 App::uses('DebugKitDebugger', 'DebugKit.Lib');
+App::uses('DebugTimer', 'DebugKit.Lib');
 require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 
 /**

@@ -19,8 +19,9 @@ if (!function_exists('firecake')) {
 /**
  * Procedural version of FireCake::log()
  *
- * @param $message
- * @param null $label
+ * @param string $message The message.
+ * @param null $label The label.
+ * @return void
  */
 	function firecake($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
@@ -284,7 +285,6 @@ class FireCake {
  * Convenience wrapper for GROUPEND messages
  * Closes a group block
  *
- * @internal param string $label Label for group (optional)
  * @return void
  */
 	public static function groupEnd() {
@@ -417,7 +417,7 @@ class FireCake {
  * Parse a debug backtrace
  *
  * @param array $trace Debug backtrace output
- * @param $messageName
+ * @param string $messageName The nae of the message.
  * @return array
  */
 	protected static function _parseTrace($trace, $messageName) {
@@ -511,10 +511,8 @@ class FireCake {
  * Encode an object into JSON
  *
  * @param mixed $object Object or array to json encode
- * @param bool $skipEncode
- * @internal param bool $doIt
- * @static
- * @return string
+ * @param bool $skipEncode Skip encoding, defaults to false.
+ * @return string JSON encoded object.
  */
 	public static function jsonEncode($object, $skipEncode = false) {
 		if (!$skipEncode) {
@@ -526,8 +524,8 @@ class FireCake {
 /**
  * Send Headers - write headers.
  *
- * @param $name
- * @param $value
+ * @param string $name Name of the header.
+ * @param string $value The value of the header.
  * @return void
  */
 	protected function _sendHeader($name, $value) {

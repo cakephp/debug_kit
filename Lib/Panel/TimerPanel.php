@@ -21,7 +21,7 @@ class TimerPanel extends DebugPanel {
 /**
  * startup - add in necessary helpers
  *
- * @param Controller $controller
+ * @param Controller $controller Controller object.
  * @return void
  */
 	public function startup(Controller $controller) {

@@ -40,7 +40,7 @@ class HistoryPanel extends DebugPanel {
 /**
  * beforeRender callback function
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array contents for panel
  */
 	public function beforeRender(Controller $controller) {

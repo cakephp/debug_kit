@@ -56,6 +56,8 @@ class DebugKitTestController extends Controller {
 
 /**
  * Render Request Action
+ *
+ * @return void
  */
 	public function request_action_render() {
 		$this->set('test', 'I have been rendered.');

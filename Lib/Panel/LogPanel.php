@@ -40,7 +40,7 @@ class LogPanel extends DebugPanel {
 /**
  * beforeRender Callback
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

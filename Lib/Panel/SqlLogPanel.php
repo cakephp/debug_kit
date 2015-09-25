@@ -29,7 +29,7 @@ class SqlLogPanel extends DebugPanel {
 /**
  * Gets the connection names that should have logs + dumps generated.
  *
- * @param \Controller|string $controller
+ * @param Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

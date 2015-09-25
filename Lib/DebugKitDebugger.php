@@ -116,8 +116,8 @@ class DebugKitDebugger extends Debugger {
 /**
  * Get the difference in time between the timer start and timer end.
  *
- * @param $name string the name of the timer you want elapsed time for.
- * @param $precision int the number of decimal places to return, defaults to 5.
+ * @param string $name The name of the timer you want elapsed time for.
+ * @param int $precision The number of decimal places to return, defaults to 5.
  * @return float number of seconds elapsed for timer name, 0 on missing key
  * @deprecated use DebugTimer::elapsedTime()
  */
@@ -203,8 +203,8 @@ class DebugKitDebugger extends Debugger {
 /**
  * Create a FirePHP error message
  *
- * @param array $data Data of the error
- * @param array $links  Links for the error
+ * @param array $data Data of the error.
+ * @param array $links Links for the error (unused).
  * @return void
  */
 	public static function fireError($data, $links) {

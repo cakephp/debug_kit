@@ -46,7 +46,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		Configure::write('log', true);
-		DebugKitDebugger::clearTimers();
+		DebugTimer::clear();
 		TestFireCake::reset();
 	}
 

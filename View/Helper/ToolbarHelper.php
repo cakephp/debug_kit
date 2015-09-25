@@ -41,8 +41,8 @@ class ToolbarHelper extends AppHelper {
 /**
  * Construct the helper and make the backend helper.
  *
- * @param $View
- * @param array|string $options
+ * @param View $View The view.
+ * @param array|string $options The options.
  * @return \ToolbarHelper
  */
 	public function __construct($View, $options = array()) {
@@ -75,7 +75,7 @@ class ToolbarHelper extends AppHelper {
 /**
  * afterLayout callback
  *
- * @param string $layoutFile
+ * @param string $layoutFile The layout file.
  * @return void
  */
 	public function afterLayout($layoutFile) {
@@ -95,12 +95,12 @@ class ToolbarHelper extends AppHelper {
 	}
 
 /**
- * call__
+ * __call
  *
  * Allows method calls on backend helper
  *
- * @param string $method
- * @param mixed $params
+ * @param string $method The method to call.
+ * @param mixed $params The parameters to use.
  * @return mixed|void
  */
 	public function __call($method, $params) {
@@ -132,7 +132,7 @@ class ToolbarHelper extends AppHelper {
  * Read the toolbar
  *
  * @param string $name Name of the panel you want cached data for
- * @param int $index
+ * @param int $index The index.
  * @return mixed|bool false on failure, array of data otherwise.
  */
 	public function readCache($name, $index = 0) {

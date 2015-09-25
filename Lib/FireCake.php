@@ -19,8 +19,9 @@ if (!function_exists('firecake')) {
 /**
  * Procedural version of FireCake::log()
  *
- * @param $message
- * @param null $label
+ * @param string $message The message.
+ * @param null $label The label.
+ * @return void
  */
 	function firecake($message, $label = null) {
 		FireCake::fb($message, $label, 'log');
@@ -35,7 +36,6 @@ if (!function_exists('firecake')) {
  * Interoperates with FirePHP extension for Firefox
  *
  * For more information see: http://www.firephp.org/
- *
  */
 class FireCake {
 
@@ -87,7 +87,7 @@ class FireCake {
 /**
  * internal messageIndex counter
  *
- * @var integer
+ * @var int
  */
 	protected $_messageIndex = 1;
 
@@ -108,7 +108,7 @@ class FireCake {
 /**
  * FireCake output status
  *
- * @var boolean
+ * @var bool
  */
 	protected $_enabled = true;
 
@@ -149,9 +149,9 @@ class FireCake {
 	}
 
 /**
- * Return boolean based on presence of FirePHP extension
+ * Return bool based on presence of FirePHP extension
  *
- * @return boolean
+ * @return bool
  */
 	public static function detectClientExtension() {
 		$ua = FireCake::getUserAgent();
@@ -285,7 +285,6 @@ class FireCake {
  * Convenience wrapper for GROUPEND messages
  * Closes a group block
  *
- * @internal param string $label Label for group (optional)
  * @return void
  */
 	public static function groupEnd() {
@@ -301,7 +300,7 @@ class FireCake {
  * fb($message, $label, $type) - Send a message with a custom label and type.
  *
  * @param mixed $message Message to output. For other parameters see usage above.
- * @return boolean Success
+ * @return bool Success
  */
 	public static function fb($message) {
 		$_this = FireCake::getInstance();
@@ -315,7 +314,7 @@ class FireCake {
 		}
 
 		$args = func_get_args();
-		$type = $label = null;
+		$label = null;
 		switch (count($args)) {
 			case 1:
 				$type = $_this->_levels['log'];
@@ -418,7 +417,7 @@ class FireCake {
  * Parse a debug backtrace
  *
  * @param array $trace Debug backtrace output
- * @param $messageName
+ * @param string $messageName The nae of the message.
  * @return array
  */
 	protected static function _parseTrace($trace, $messageName) {
@@ -466,8 +465,8 @@ class FireCake {
  * Filter out recursion, so no errors are raised by json_encode or $javascript->object()
  *
  * @param mixed $object Object or variable to encode to string.
- * @param integer $objectDepth Current Depth in object chains.
- * @param integer $arrayDepth Current Depth in array chains.
+ * @param int $objectDepth Current Depth in object chains.
+ * @param int $arrayDepth Current Depth in array chains.
  * @return string|Object
  */
 	public static function stringEncode($object, $objectDepth = 1, $arrayDepth = 1) {
@@ -512,13 +511,10 @@ class FireCake {
  * Encode an object into JSON
  *
  * @param mixed $object Object or array to json encode
- * @param boolean $skipEncode
- * @internal param bool $doIt
- * @static
- * @return string
+ * @param bool $skipEncode Skip encoding, defaults to false.
+ * @return string JSON encoded object.
  */
 	public static function jsonEncode($object, $skipEncode = false) {
-		$_this = FireCake::getInstance();
 		if (!$skipEncode) {
 			$object = FireCake::stringEncode($object);
 		}
@@ -528,8 +524,8 @@ class FireCake {
 /**
  * Send Headers - write headers.
  *
- * @param $name
- * @param $value
+ * @param string $name Name of the header.
+ * @param string $value The value of the header.
  * @return void
  */
 	protected function _sendHeader($name, $value) {

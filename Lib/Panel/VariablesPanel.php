@@ -15,14 +15,13 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on the View variables.
- *
  */
 class VariablesPanel extends DebugPanel {
 
 /**
  * beforeRender callback
  *
- * @param Controller $controller
+ * @param Controller $controller Controller object.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

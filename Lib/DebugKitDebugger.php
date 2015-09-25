@@ -71,7 +71,7 @@ class DebugKitDebugger extends Debugger {
  *
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
- * @return boolean true
+ * @return bool true
  * @deprecated use DebugTimer::start()
  */
 	public static function startTimer($name = null, $message = null) {
@@ -84,7 +84,7 @@ class DebugKitDebugger extends Debugger {
  * $name should be the same as the $name used in startTimer().
  *
  * @param string $name The name of the timer to end.
- * @return boolean true if timer was ended, false if timer was not started.
+ * @return bool true if timer was ended, false if timer was not started.
  * @deprecated use DebugTimer::stop()
  */
 	public static function stopTimer($name = null) {
@@ -95,7 +95,7 @@ class DebugKitDebugger extends Debugger {
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
- * @param boolean $clear false
+ * @param bool $clear false
  * @return array
  * @deprecated use DebugTimer::getAll()
  */
@@ -106,7 +106,7 @@ class DebugKitDebugger extends Debugger {
 /**
  * Clear all existing timers
  *
- * @return boolean true
+ * @return bool true
  * @deprecated use DebugTimer::clear()
  */
 	public static function clearTimers() {
@@ -116,8 +116,8 @@ class DebugKitDebugger extends Debugger {
 /**
  * Get the difference in time between the timer start and timer end.
  *
- * @param $name string the name of the timer you want elapsed time for.
- * @param $precision int the number of decimal places to return, defaults to 5.
+ * @param string $name The name of the timer you want elapsed time for.
+ * @param int $precision The number of decimal places to return, defaults to 5.
  * @return float number of seconds elapsed for timer name, 0 on missing key
  * @deprecated use DebugTimer::elapsedTime()
  */
@@ -148,7 +148,7 @@ class DebugKitDebugger extends Debugger {
 /**
  * get current memory usage
  *
- * @return integer number of bytes ram currently in use. 0 if memory_get_usage() is not available.
+ * @return int number of bytes ram currently in use. 0 if memory_get_usage() is not available.
  * @deprecated Use DebugMemory::getCurrent() instead.
  */
 	public static function getMemoryUse() {
@@ -158,7 +158,7 @@ class DebugKitDebugger extends Debugger {
 /**
  * Get peak memory use
  *
- * @return integer peak memory use (in bytes). Returns 0 if memory_get_peak_usage() is not available
+ * @return int peak memory use (in bytes). Returns 0 if memory_get_peak_usage() is not available
  * @deprecated Use DebugMemory::getPeak() instead.
  */
 	public static function getPeakMemoryUse() {
@@ -172,7 +172,7 @@ class DebugKitDebugger extends Debugger {
  * If you don't have memory_get_xx methods this will not work.
  *
  * @param string $message Message to identify this memory point.
- * @return boolean
+ * @return bool
  * @deprecated Use DebugMemory::getAll() instead.
  */
 	public static function setMemoryPoint($message = null) {
@@ -182,7 +182,7 @@ class DebugKitDebugger extends Debugger {
 /**
  * Get all the stored memory points
  *
- * @param boolean $clear Whether you want to clear the memory points as well. Defaults to false.
+ * @param bool $clear Whether you want to clear the memory points as well. Defaults to false.
  * @return array Array of memory marks stored so far.
  * @deprecated Use DebugMemory::getAll() instead.
  */
@@ -203,8 +203,8 @@ class DebugKitDebugger extends Debugger {
 /**
  * Create a FirePHP error message
  *
- * @param array $data Data of the error
- * @param array $links  Links for the error
+ * @param array $data Data of the error.
+ * @param array $links Links for the error (unused).
  * @return void
  */
 	public static function fireError($data, $links) {

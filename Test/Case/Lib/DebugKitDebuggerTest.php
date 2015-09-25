@@ -17,6 +17,7 @@
  **/
 
 App::uses('DebugKitDebugger', 'DebugKit.Lib');
+App::uses('DebugTimer', 'DebugKit.Lib');
 require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 
 /**
@@ -46,7 +47,7 @@ class DebugKitDebuggerTest extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		Configure::write('log', true);
-		DebugKitDebugger::clearTimers();
+		DebugTimer::clear();
 		TestFireCake::reset();
 	}
 

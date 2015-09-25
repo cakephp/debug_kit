@@ -15,14 +15,13 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on all timers used in a request.
- *
  */
 class TimerPanel extends DebugPanel {
 
 /**
  * startup - add in necessary helpers
  *
- * @param Controller $controller
+ * @param Controller $controller Controller object.
  * @return void
  */
 	public function startup(Controller $controller) {

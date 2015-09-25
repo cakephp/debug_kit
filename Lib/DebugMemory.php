@@ -16,7 +16,6 @@ App::uses('Debugger', 'Utility');
 
 /**
  * Contains methods for Profiling memory usage.
- *
  */
 class DebugMemory {
 
@@ -30,7 +29,7 @@ class DebugMemory {
 /**
  * Get current memory usage
  *
- * @return integer number of bytes ram currently in use. 0 if memory_get_usage() is not available.
+ * @return int number of bytes ram currently in use. 0 if memory_get_usage() is not available.
  */
 	public static function getCurrent() {
 		return memory_get_usage();
@@ -39,7 +38,7 @@ class DebugMemory {
 /**
  * Get peak memory use
  *
- * @return integer peak memory use (in bytes). Returns 0 if memory_get_peak_usage() is not available
+ * @return int peak memory use (in bytes). Returns 0 if memory_get_peak_usage() is not available
  */
 	public static function getPeak() {
 		return memory_get_peak_usage();
@@ -51,12 +50,11 @@ class DebugMemory {
  * If no message is supplied a debug_backtrace will be done to identify the memory point.
  *
  * @param string $message Message to identify this memory point.
- * @return boolean
+ * @return bool
  */
 	public static function record($message = null) {
 		$memoryUse = self::getCurrent();
 		if (!$message) {
-			$named = false;
 			$trace = debug_backtrace();
 			$message = Debugger::trimpath($trace[0]['file']) . ' line ' . $trace[0]['line'];
 		}
@@ -75,7 +73,7 @@ class DebugMemory {
 /**
  * Get all the stored memory points
  *
- * @param boolean $clear Whether you want to clear the memory points as well. Defaults to false.
+ * @param bool $clear Whether you want to clear the memory points as well. Defaults to false.
  * @return array Array of memory marks stored so far.
  */
 	public static function getAll($clear = false) {

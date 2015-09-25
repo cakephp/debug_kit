@@ -35,8 +35,9 @@ class TestFireCake extends FireCake {
 /**
  * Send header
  *
- * @param $name
- * @param $value
+ * @param string $name Name of the header.
+ * @param string $value The value of the header.
+ * @return void
  */
 	protected function _sendHeader($name, $value) {
 		$_this = FireCake::getInstance();
@@ -46,7 +47,7 @@ class TestFireCake extends FireCake {
 /**
  * Skip client detection as headers are not being sent.
  *
- * @return boolean Always true
+ * @return bool Always true
  */
 	public static function detectClientExtension() {
 		return true;

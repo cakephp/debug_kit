@@ -43,9 +43,9 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * Recursively goes through an array and makes neat HTML out of it.
  *
  * @param mixed $values Array to make pretty.
- * @param integer $openDepth Depth to add open class
- * @param integer $currentDepth current depth.
- * @param boolean $doubleEncode
+ * @param int $openDepth Depth to add open class
+ * @param int $currentDepth current depth.
+ * @param bool $doubleEncode Whether to do double encoding, defaults to false.
  * @return string
  */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
@@ -133,11 +133,12 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	}
 
 /**
- * Start a panel.
+ * Start a panel
+ *
  * Make a link and anchor.
  *
- * @param $title
- * @param $anchor
+ * @param string $title The panel title.
+ * @param string $anchor The panel anchor.
  * @return string
  */
 	public function panelStart($title, $anchor) {
@@ -204,7 +205,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * Generates a SQL explain link for a given query
  *
  * @param string $sql SQL query string you want an explain link for.
- * @param $connection
+ * @param string $connection The connection.
  * @return string Rendered Html link or '' if the query is not a select/describe
  */
 	public function explainLink($sql, $connection) {

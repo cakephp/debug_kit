@@ -16,7 +16,6 @@ App::uses('Debugger', 'Utility');
 
 /**
  * Contains methods for Profiling and creating timers.
- *
  */
 class DebugTimer {
 
@@ -32,7 +31,7 @@ class DebugTimer {
  *
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
- * @return boolean Always true
+ * @return bool Always true
  */
 	public static function start($name = null, $message = null) {
 		$start = microtime(true);
@@ -40,7 +39,7 @@ class DebugTimer {
 		if (!$name) {
 			$named = false;
 			$calledFrom = debug_backtrace();
-			$_name = $name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
+			$name = Debugger::trimpath($calledFrom[0]['file']) . ' line ' . $calledFrom[0]['line'];
 		} else {
 			$named = true;
 		}
@@ -74,7 +73,7 @@ class DebugTimer {
  * $name should be the same as the $name used in startTimer().
  *
  * @param string $name The name of the timer to end.
- * @return boolean true if timer was ended, false if timer was not started.
+ * @return bool true if timer was ended, false if timer was not started.
  */
 	public static function stop($name = null) {
 		$end = microtime(true);
@@ -110,7 +109,7 @@ class DebugTimer {
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
- * @param boolean $clear false
+ * @param bool $clear false
  * @return array
  */
 	public static function getAll($clear = false) {
@@ -150,7 +149,7 @@ class DebugTimer {
 /**
  * Clear all existing timers
  *
- * @return boolean true
+ * @return bool true
  */
 	public static function clear() {
 		self::$_timers = array();
@@ -160,9 +159,9 @@ class DebugTimer {
 /**
  * Get the difference in time between the timer start and timer end.
  *
- * @param $name string the name of the timer you want elapsed time for.
- * @param $precision int the number of decimal places to return, defaults to 5.
- * @return float number of seconds elapsed for timer name, 0 on missing key
+ * @param string $name The name of the timer you want elapsed time for.
+ * @param int $precision The number of decimal places to return, defaults to 5.
+ * @return float Number of seconds elapsed for timer name, 0 on missing key.
  */
 	public static function elapsedTime($name = 'default', $precision = 5) {
 		if (!isset(self::$_timers[$name]['start']) || !isset(self::$_timers[$name]['end'])) {

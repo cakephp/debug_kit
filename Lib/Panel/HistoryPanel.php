@@ -15,7 +15,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on previous requests.
- *
  */
 class HistoryPanel extends DebugPanel {
 
@@ -41,7 +40,7 @@ class HistoryPanel extends DebugPanel {
 /**
  * beforeRender callback function
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array contents for panel
  */
 	public function beforeRender(Controller $controller) {

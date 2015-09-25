@@ -161,10 +161,10 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testTable() {
-		$table[] = array('Col 1 Heading','Col 2 Heading');
-		$table[] = array('Row 1 Col 1','Row 1 Col 2');
-		$table[] = array('Row 2 Col 1','Row 2 Col 2');
-		$table[] = array('Row 3 Col 1','Row 3 Col 2');
+		$table[] = array('Col 1 Heading', 'Col 2 Heading');
+		$table[] = array('Row 1 Col 1', 'Row 1 Col 2');
+		$table[] = array('Row 2 Col 1', 'Row 2 Col 2');
+		$table[] = array('Row 3 Col 1', 'Row 3 Col 2');
 		FireCake::table('myTrace', $table);
 		$expected = '162|[{"Type":"TABLE","Label":"myTrace"},[["Col 1 Heading","Col 2 Heading"],["Row 1 Col 1","Row 1 Col 2"],["Row 2 Col 1","Row 2 Col 2"],["Row 3 Col 1","Row 3 Col 2"]]]|';
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], $expected);
@@ -176,9 +176,9 @@ class FireCakeTestCase extends CakeTestCase {
  * @return void
  */
 	public function testStringEncode() {
-		$vars = array(1,2,3);
+		$vars = array(1, 2, 3);
 		$result = $this->firecake->stringEncode($vars);
-		$this->assertEquals($result, array(1,2,3));
+		$this->assertEquals($result, array(1, 2, 3));
 
 		$this->firecake->setOptions(array('maxArrayDepth' => 3));
 		$deep = array(1 => array(2 => array(3)));
@@ -335,7 +335,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$json = FireCake::jsonEncode(array('one' => 1, 'two' => 2));
 		$this->assertEquals($json, '{"one":1,"two":2}');
 
-		$json = FireCake::jsonEncode(array(1,2,3));
+		$json = FireCake::jsonEncode(array(1, 2, 3));
 		$this->assertEquals($json, '[1,2,3]');
 
 		$json = FireCake::jsonEncode(FireCake::getInstance());

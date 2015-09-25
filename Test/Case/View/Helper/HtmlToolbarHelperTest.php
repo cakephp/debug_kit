@@ -34,6 +34,8 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 
 /**
  * Setup Test Case
+ *
+ * @return void
  */
 	public static function setupBeforeClass() {
 		App::build(array(
@@ -47,6 +49,8 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 
 /**
  * Tear Down Test Case
+ *
+ * @return void
  */
 	public static function tearDownAfterClass() {
 		App::build();
@@ -93,7 +97,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
 			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(false)', '/li',
+			'<li', '<strong', '0', '/strong', '(false)', '/li',
 			'/ul'
 		);
 		$this->assertTags($result, $expected);
@@ -102,7 +106,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
 			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(null)', '/li',
+			'<li', '<strong', '0', '/strong', '(null)', '/li',
 			'/ul'
 		);
 		$this->assertTags($result, $expected);
@@ -111,7 +115,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
 			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(true)', '/li',
+			'<li', '<strong', '0', '/strong', '(true)', '/li',
 			'/ul'
 		);
 		$this->assertTags($result, $expected);
@@ -120,7 +124,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$result = $this->Toolbar->makeNeatArray($in);
 		$expected = array(
 			'ul' => array('class' => 'neat-array depth-0'),
-			'<li', '<strong', '0' , '/strong', '(empty)', '/li',
+			'<li', '<strong', '0', '/strong', '(empty)', '/li',
 			'/ul'
 		);
 		$this->assertTags($result, $expected);
@@ -382,8 +386,8 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  */
 	public function testTable() {
 		$rows = array(
-			array(1,2),
-			array(3,4),
+			array(1, 2),
+			array(3, 4),
 		);
 		$result = $this->Toolbar->table($rows);
 		$expected = array(

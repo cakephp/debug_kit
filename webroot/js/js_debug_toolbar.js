@@ -5,7 +5,6 @@
  * and enhancing the Html toolbar. Includes library agnostic Event, Element,
  * Cookie and Request wrappers.
  *
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *

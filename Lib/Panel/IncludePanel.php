@@ -15,7 +15,6 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides a list of included files for the current request
- *
  */
 class IncludePanel extends DebugPanel {
 
@@ -51,7 +50,7 @@ class IncludePanel extends DebugPanel {
 /**
  * Get a list of files that were included and split them out into the various parts of the app
  *
- * @param Controller $controller
+ * @param Controller $controller The controller.
  * @return array
  */
 	public function beforeRender(Controller $controller) {
@@ -79,6 +78,7 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Get the possible include paths
+ *
  * @return array
  */
 	protected function _includePaths() {
@@ -90,8 +90,9 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Check if a path is part of cake core
- * @param string $file
- * @return boolean
+ *
+ * @param string $file The file.
+ * @return bool True if it is a core path, else false.
  */
 	protected function _isCoreFile($file) {
 		return strstr($file, CAKE);
@@ -99,8 +100,9 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Check if a path is from APP but not a plugin
- * @param string $file
- * @return boolean
+ *
+ * @param string $file The file.
+ * @return bool True if it is an app path, else false.
  */
 	protected function _isAppFile($file) {
 		return strstr($file, APP);
@@ -108,8 +110,9 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Check if a path is from a plugin
- * @param string $file
- * @return boolean
+ *
+ * @param string $file The file.
+ * @return bool True if it is a plugin path, else false.
  */
 	protected function _isPluginFile($file) {
 		foreach ($this->_pluginPaths as $plugin => $path) {
@@ -123,12 +126,10 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Replace the path with APP, CORE or the plugin name
- * @param string $file
- * @param string
- *  - app for app files
- *  - core for core files
- *  - PluginName for the name of a plugin
- * @return boolean
+ *
+ * @param string $file The file path.
+ * @param string $type 'app' for app files, 'core' for core files and PluginName for the name of a plugin.
+ * @return string The replaced string.
  */
 	protected function _niceFileName($file, $type) {
 		switch ($type) {
@@ -145,8 +146,9 @@ class IncludePanel extends DebugPanel {
 
 /**
  * Get the type of file (model, controller etc)
- * @param string $file
- * @return string
+ *
+ * @param string $file The file.
+ * @return string The file type of the given file.
  */
 	protected function _getFileType($file) {
 		foreach ($this->_fileTypes as $type) {

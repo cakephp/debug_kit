@@ -21,9 +21,6 @@ App::uses('String', 'Utility');
  * functionally similar to Apache AB
  *
  * @since         DebugKit 1.0
- * @todo Print/export time detail information
- * @todo Export/graphing of data to .dot format for graphviz visualization
- * @todo Make calculated results round to leading significant digit position of std dev.
  */
 class BenchmarkShell extends Shell {
 
@@ -97,7 +94,7 @@ class BenchmarkShell extends Shell {
  * p. 232. Boston: Addison-Wesley.
  *
  * @param array $times Array of values
- * @param boolean $sample If true, calculates an unbiased estimate of the population
+ * @param bool $sample If true, calculates an unbiased estimate of the population
  * 						  variance from a finite sample.
  * @return float Variance
  */
@@ -122,13 +119,16 @@ class BenchmarkShell extends Shell {
  * Calculate the standard deviation.
  *
  * @param array $times Array of values
- * @param boolean $sample
+ * @param bool $sample Defaults to true.
  * @return float Standard deviation
  */
 	protected function _deviation($times, $sample = true) {
 		return sqrt($this->_variance($times, $sample));
 	}
 
+/**
+ * {@inheritDoc}
+ */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(__d('debug_kit',

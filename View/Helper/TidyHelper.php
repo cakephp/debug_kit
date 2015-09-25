@@ -41,9 +41,9 @@ class TidyHelper extends AppHelper {
  * Return a nested array of errors for the passed html string
  * Fudge the markup slightly so that the tag which is invalid is highlighted
  *
- * @param string $html ''
- * @param string $out ''
- * @return array
+ * @param string $html The HTML to process.
+ * @param string &$out The variable to output the tidied HML into.
+ * @return array The nested array of errors.
  */
 	public function process($html = '', &$out = '') {
 		$errors = $this->tidyErrors($html, $out);
@@ -112,8 +112,8 @@ class TidyHelper extends AppHelper {
  * Run the html string through tidy, and return the (raw) errors. pass back a reference to the
  * normalized string so that the error messages can be linked to the line that caused them.
  *
- * @param string $in ''
- * @param string $out ''
+ * @param string $in The input.
+ * @param string &$out The output variable.
  * @return string
  */
 	public function tidyErrors($in = '', &$out = '') {
@@ -145,11 +145,11 @@ class TidyHelper extends AppHelper {
 	}
 
 /**
- * exec method
+ * Execute
  *
- * @param mixed $cmd
- * @param mixed $out null
- * @return boolean True if successful
+ * @param mixed $cmd The command
+ * @param mixed &$out The variable to put the output into.
+ * @return bool True if successful
  */
 	protected function _exec($cmd, &$out = null) {
 		if (DS === '/') {

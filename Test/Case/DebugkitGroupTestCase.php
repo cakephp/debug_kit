@@ -17,7 +17,6 @@
 
 /**
  * Class DebugKitGroupTestCase
- *
  */
 class DebugKitGroupTestCase extends PHPUnit_Framework_TestSuite {
 
@@ -32,8 +31,8 @@ class DebugKitGroupTestCase extends PHPUnit_Framework_TestSuite {
 /**
  * Get Test Files
  *
- * @param null $directory
- * @param null $excludes
+ * @param null|array|string $directory The test directories.
+ * @param null|array|string $excludes The excludes.
  * @return array
  */
 	public static function getTestFiles($directory = null, $excludes = null) {

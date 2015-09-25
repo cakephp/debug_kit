@@ -34,15 +34,15 @@ class ToolbarHelper extends AppHelper {
 /**
  * flag for whether or not cache is enabled.
  *
- * @var boolean
+ * @var bool
  */
 	protected $_cacheEnabled = false;
 
 /**
  * Construct the helper and make the backend helper.
  *
- * @param $View
- * @param array|string $options
+ * @param View $View The view.
+ * @param array|string $options The options.
  * @return \ToolbarHelper
  */
 	public function __construct($View, $options = array()) {
@@ -75,7 +75,7 @@ class ToolbarHelper extends AppHelper {
 /**
  * afterLayout callback
  *
- * @param string $layoutFile
+ * @param string $layoutFile The layout file.
  * @return void
  */
 	public function afterLayout($layoutFile) {
@@ -95,12 +95,12 @@ class ToolbarHelper extends AppHelper {
 	}
 
 /**
- * call__
+ * __call
  *
  * Allows method calls on backend helper
  *
- * @param string $method
- * @param mixed $params
+ * @param string $method The method to call.
+ * @param mixed $params The parameters to use.
  * @return mixed|void
  */
 	public function __call($method, $params) {
@@ -117,7 +117,7 @@ class ToolbarHelper extends AppHelper {
  *
  * @param string $name Name of the panel you are replacing.
  * @param string $content Content to write to the panel.
- * @return boolean Success of write.
+ * @return bool Success of write.
  */
 	public function writeCache($name, $content) {
 		if (!$this->_cacheEnabled) {
@@ -132,8 +132,8 @@ class ToolbarHelper extends AppHelper {
  * Read the toolbar
  *
  * @param string $name Name of the panel you want cached data for
- * @param integer $index
- * @return mixed Boolean false on failure, array of data otherwise.
+ * @param int $index The index.
+ * @return mixed|bool false on failure, array of data otherwise.
  */
 	public function readCache($name, $index = 0) {
 		if (!$this->_cacheEnabled) {

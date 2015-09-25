@@ -15,14 +15,13 @@ App::uses('DebugPanel', 'DebugKit.Lib');
 
 /**
  * Provides debug information on the Session contents.
- *
  */
 class SessionPanel extends DebugPanel {
 
 /**
  * beforeRender callback
  *
- * @param \Controller|object $controller
+ * @param Controller $controller Controller object.
  * @return array
  */
 	public function beforeRender(Controller $controller) {

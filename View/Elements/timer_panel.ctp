@@ -21,8 +21,8 @@ $this->SimpleGraph = $this->Helpers->load('DebugKit.SimpleGraph');
 
 if (!isset($debugKitInHistoryMode)):
 	$timers = DebugTimer::getAll(true);
-	$currentMemory = DebugKitDebugger::getMemoryUse();
-	$peakMemory = DebugKitDebugger::getPeakMemoryUse();
+	$currentMemory = DebugMemory::getCurrent();
+	$peakMemory = DebugMemory::getPeak();
 	$requestTime = DebugTimer::requestTime();
 else:
 	$content = $this->Toolbar->readCache('timer', $this->request->params['pass'][0]);
@@ -40,7 +40,7 @@ endif;
 
 	<?php
 	$headers = array(__d('debug_kit', 'Message'), __d('debug_kit', 'Memory use'));
-	$memoryPoints = DebugKitDebugger::getMemoryPoints();
+	$memoryPoints = DebugMemory::getAll();
 
 	$rows = array();
 	foreach ($memoryPoints as $key => $value):

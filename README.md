@@ -22,7 +22,7 @@ If you want DebugKit for your 2.x application, you can use the latest `2.2.y` ta
 php composer.phar require --dev cakephp/debug_kit "~3.0"
 ```
 
-* Load the plugin
+* [Load the plugin](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin)
 ```php
 Plugin::load('DebugKit', ['bootstrap' => true]);
 ```

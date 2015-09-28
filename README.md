@@ -11,21 +11,21 @@ The master branch has the following requirements:
 
 ## Installation
 
-_[Using [Composer](http://getcomposer.org/)]_
+_Using Composer_
 
-Add the plugin to your project's `composer.json` - something like this:
+Install the plugin with [Composer](https://getcomposer.org/) from the directory, where
+your project's `composer.json` is located:
 
-```javascript
-{
-  "require": {
-    "cakephp/debug_kit": "2.2.*"
-  }
-}
+```
+php composer.phar require cakephp/debug_kit "^2.2.0"
 ```
 
-Because this plugin has the type `cakephp-plugin` set in it's own `composer.json`, composer knows to install it inside your `/Plugin` directory, rather than in the usual vendors file. It is recommended that you add `/Plugin/DebugKit` to your .gitignore file. (Why? [read this](http://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md).)
+> Consider using "--dev", if you only want to include DebugKit for your development environment.
 
-> Consider using "require-dev" if you only want to include DebugKit for your development environment.
+Because this plugin has the type `cakephp-plugin` set in it's own `composer.json`, composer
+knows to install it inside your `/Plugin` directory, rather than in the usual vendors file.
+It is recommended that you add `/Plugin/DebugKit` to your .gitignore file. (Why?
+[read this](http://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md).)
 
 _[Manual]_
 
@@ -54,16 +54,23 @@ git clone --single-branch --branch 2.2 git://github.com/cakephp/debug_kit.git De
 
 ### Enable plugin
 
-* In 2.x you need to enable the plugin your `app/Config/bootstrap.php` file. If you are already using `CakePlugin::loadAll();`, then the following is not necessary.:
+* In 2.x, you 
+[need to enable the plugin](http://book.cakephp.org/2.0/en/plugins/how-to-install-plugins.html#enable-the-plugin)
+in your `app/Config/bootstrap.php` file. If you are already using
+`CakePlugin::loadAll();`, then the following is not necessary.:
+
 ```php
     CakePlugin::load('DebugKit');
 ```
+
 * Include the toolbar component in your `app/Controller/AppController.php`:
+
 ```php
 class AppController extends Controller {
          public $components = array('DebugKit.Toolbar');
 }
 ```
+
 * Set `Configure::write('debug', 1);` in `app/Config/core.php`.
 * Make sure to remove the 'sql_dump' element from your layout (usually
   `app/View/Layouts/default.ctp`), if you want to experience the awesome that is
@@ -98,10 +105,11 @@ correct branch.
   CakePHP versions.
 * `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with
   older versions of CakePHP as this release uses new API's available in 2.2.
-  You can also use the `master` branch to get the most recent updates.
 * `2.2.x` are compatible with CakePHP 2.2.0 and greater. It is a necessary
   upgrade for people using CakePHP 2.4 as the naming conventions around loggers
   changed in that release.
+* `3.x.x` are compatible with CakePHP 3.0.0 and greater. These versions are developed
+  in the ``master`` branch.
 
 # Documentation
 

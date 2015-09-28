@@ -52,9 +52,6 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
         $this->get('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
         $this->assertResponseOk();
@@ -69,9 +66,6 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public function testViewNotExists()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
         $this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
         $this->assertResponseError();
         $this->assertResponseContains('Error page');

@@ -13,7 +13,7 @@ The `master` branch has the following requirements:
 
 ## DebugKit for CakePHP 2.x
 
-If you want DebugKit for your 2.x application, you can use the latest `2.2.y` tag or the 2.2 branch.
+If you want DebugKit for your 2.x application, you can use the latest `2.2.y` tag or the [2.2 branch](https://github.com/cakephp/debug_kit/tree/2.2).
 
 ## Installation
 

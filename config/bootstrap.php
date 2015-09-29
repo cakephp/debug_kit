@@ -15,7 +15,6 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
-use Cake\Routing\Router;
 use DebugKit\Routing\Filter\DebugBarFilter;
 
 $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
@@ -42,27 +41,6 @@ if (!$hasDebugKitConfig) {
         'quoteIdentifiers' => false,
     ]);
 }
-
-Router::plugin('DebugKit', function ($routes) {
-    $routes->extensions('json');
-    $routes->connect(
-        '/toolbar/clear_cache',
-        ['controller' => 'Toolbar', 'action' => 'clearCache']
-    );
-    $routes->connect(
-        '/toolbar/*',
-        ['controller' => 'Requests', 'action' => 'view']
-    );
-    $routes->connect(
-        '/panels/view/*',
-        ['controller' => 'Panels', 'action' => 'view']
-    );
-    $routes->connect(
-        '/panels/*',
-        ['controller' => 'Panels', 'action' => 'index']
-    );
-});
-
 
 // Setup toolbar
 $debugBar->setup();

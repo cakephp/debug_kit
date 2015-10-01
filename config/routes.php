@@ -20,6 +20,3 @@ Router::plugin('DebugKit', function ($routes) {
         ['controller' => 'Panels', 'action' => 'index']
     );
 });
-
-
-

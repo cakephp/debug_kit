@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
@@ -40,6 +41,10 @@ if (!$hasDebugKitConfig) {
         'cacheMetadata' => true,
         'quoteIdentifiers' => false,
     ]);
+}
+
+if (Plugin::routes('DebugKit') === false) {
+    require __DIR__ . DS . 'routes.php';
 }
 
 // Setup toolbar

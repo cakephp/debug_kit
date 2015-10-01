@@ -11,11 +11,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
-use Cake\Routing\Router;
 use DebugKit\Routing\Filter\DebugBarFilter;
 
 $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
@@ -43,26 +43,9 @@ if (!$hasDebugKitConfig) {
     ]);
 }
 
-Router::plugin('DebugKit', function ($routes) {
-    $routes->extensions('json');
-    $routes->connect(
-        '/toolbar/clear_cache',
-        ['controller' => 'Toolbar', 'action' => 'clearCache']
-    );
-    $routes->connect(
-        '/toolbar/*',
-        ['controller' => 'Requests', 'action' => 'view']
-    );
-    $routes->connect(
-        '/panels/view/*',
-        ['controller' => 'Panels', 'action' => 'view']
-    );
-    $routes->connect(
-        '/panels/*',
-        ['controller' => 'Panels', 'action' => 'index']
-    );
-});
-
+if (Plugin::routes('DebugKit') === false) {
+    require __DIR__ . DS . 'routes.php';
+}
 
 // Setup toolbar
 $debugBar->setup();

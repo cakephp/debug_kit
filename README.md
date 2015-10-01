@@ -24,7 +24,7 @@ php composer.phar require --dev cakephp/debug_kit "~3.0"
 
 * [Load the plugin](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin)
 ```php
-Plugin::load('DebugKit', ['bootstrap' => true]);
+Plugin::load('DebugKit', ['bootstrap' => true, 'routes' => true]);
 ```
 * Set `'debug' => true,` in `config/app.php`.
 

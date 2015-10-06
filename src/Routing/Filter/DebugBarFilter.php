@@ -234,7 +234,6 @@ class DebugBarFilter extends DispatcherFilter
         }
         $url = Router::url('/', true);
         $script = "<script id=\"__debug_kit\" data-id=\"{$id}\" data-url=\"{$url}\" src=\"" . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
-        $script .= '<link rel="stylesheet" href="' . Router::url('/debug_kit/css/iframe.css') . '"/>';
         $body = substr($body, 0, $pos) . $script . substr($body, $pos);
         $response->body($body);
     }

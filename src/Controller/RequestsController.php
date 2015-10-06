@@ -36,6 +36,8 @@ class RequestsController extends Controller
         if (!Configure::read('debug')) {
             throw new NotFoundException();
         }
+
+        $this->response->header(['Content-Security-Policy' => "default-src 'self'; style-src 'self' fonts.googleapis.com; font-src 'self' fonts.gstatic.com"]);
     }
 
     /**

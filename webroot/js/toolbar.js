@@ -1,3 +1,12 @@
+var __debug_kit_id;
+var __debug_kit_base_url;
+var elem = document.getElementById("__debug_kit");
+if (elem) {
+    __debug_kit_id = elem.getAttribute("data-id");
+    __debug_kit_base_url = elem.getAttribute("data-url");
+    elem = null;
+}
+
 (function(win, doc) {
 	var iframe;
 	var bodyOverflow;
@@ -29,7 +38,14 @@
 		}
 		var body = doc.body;
 		iframe = doc.createElement('iframe');
-		iframe.setAttribute('style', 'position: fixed; bottom: 0; right: 0; border: 0; outline: 0; overflow: hidden; z-index: 99999;');
+		//iframe.setAttribute('style', 'position: fixed; bottom: 0; right: 0; border: 0; outline: 0; overflow: hidden; z-index: 99999;');
+        iframe.style.position = 'fixed';
+        iframe.style.bottom = 0;
+        iframe.style.right = 0;
+        iframe.style.border = 0;
+        iframe.style.outline = 0;
+        iframe.style.overflow = 'hidden';
+        iframe.style.zIndex = 99999;
 		iframe.height = 40;
 		iframe.width = 40;
 		iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/' + __debug_kit_id;

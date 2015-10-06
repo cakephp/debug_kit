@@ -1,3 +1,6 @@
+<?php
+use Cake\Routing\Router;
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,5 +16,6 @@
     </body>
     <?= $this->Html->script('DebugKit.jquery') ?>
     <?= $this->Html->script('DebugKit.toolbar-app') ?>
+    <?= $this->Html->script('DebugKit.debug_kit', ['id' => '__debug_kit', 'data-url' => json_encode($this->Url->build('/')), 'data-full-url' => Router::url('/', true)]) ?>
     <?= $this->fetch('scripts') ?>
 </html>

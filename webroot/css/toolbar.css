@@ -65,6 +65,10 @@ p {
 	overflow: auto;
 }
 
+.hidden {
+    display: none;
+}
+
 /* Open close button */
 #panel-button,
 .panel {

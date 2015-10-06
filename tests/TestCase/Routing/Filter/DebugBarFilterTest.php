@@ -146,9 +146,8 @@ class DebugBarFilterTest extends TestCase
         $this->assertEquals('Sql Log', $result->panels[7]->title);
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
-            "<script>var __debug_kit_id = '" . $result->id . "', " .
-            "__debug_kit_base_url = 'http://localhost/';</script>" .
-            '<script src="/debug_kit/js/toolbar.js"></script>' .
+            '<script id="__debug_kit" data-id="' . $result->id . '" ' .
+            'data-url="http://localhost/" src="/debug_kit/js/toolbar.js"></script>' .
             '</body>';
         $this->assertTextEquals($expected, $response->body());
     }

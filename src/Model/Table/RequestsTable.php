@@ -12,6 +12,7 @@
  */
 namespace DebugKit\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use DebugKit\Model\Table\LazyTableTrait;
@@ -79,22 +80,23 @@ class RequestsTable extends Table
         if (time() % 100 !== 0) {
             return;
         }
-        $purge = $this->find()
+        $noPurge = $this->find()
             ->select(['id'])
             ->hydrate(false)
-            ->where(['requested_at <=' => new \DateTime('-2 weeks')])
+            ->order(['requested_at' => 'desc'])
+            ->limit(Configure::read('DebugKit.requestCount') ?: 20)
             ->extract('id')
             ->toArray();
 
         $query = $this->Panels->query()
             ->delete()
-            ->where(['request_id IN' => $purge]);
+            ->where(['request_id NOT IN' => $noPurge]);
         $statement = $query->execute();
         $statement->closeCursor();
 
         $query = $this->query()
             ->delete()
-            ->where(['id IN' => $purge]);
+            ->where(['id NOT IN' => $noPurge]);
 
         $statement = $query->execute();
         $statement->closeCursor();

@@ -24,8 +24,15 @@ use Cake\Core\Configure;
     </li>
     <?php endforeach; ?>
     <li id="panel-button">
-        <?= $this->Html->image('DebugKit.cake.icon.png',
-			['alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit']) ?>
+        <?= $this->Html->image('DebugKit.cake.icon.png', [
+            'alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit'
+        ]) ?>
     </li>
 </ul>
-<?php $this->Html->script('DebugKit.debug_kit', ['block' => true, 'id' => '__debug_kit', 'data-id' => $toolbar->id, 'data-url' => json_encode($this->Url->build('/')), 'data-full-url' => Router::url('/', true)]) ?>
+<?php $this->Html->script('DebugKit.debug_kit', [
+    'block' => true,
+    'id' => '__debug_kit',
+    'data-id' => $toolbar->id,
+    'data-url' => json_encode($this->Url->build('/')),
+    'data-full-url' => Router::url('/', true)
+]) ?>

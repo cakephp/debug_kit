@@ -36,20 +36,21 @@ if (elem) {
 			return;
 		}
 		var body = doc.body;
+
+		// Cannot use css text, because of CSP compatibility.
 		iframe = doc.createElement('iframe');
-        iframe.style.position = 'fixed';
-        iframe.style.bottom = 0;
-        iframe.style.right = 0;
-        iframe.style.border = 0;
-        iframe.style.outline = 0;
-        iframe.style.overflow = 'hidden';
-        iframe.style.zIndex = 99999;
+		iframe.style.position = 'fixed';
+		iframe.style.bottom = 0;
+		iframe.style.right = 0;
+		iframe.style.border = 0;
+		iframe.style.outline = 0;
+		iframe.style.overflow = 'hidden';
+		iframe.style.zIndex = 99999;
 		iframe.height = 40;
 		iframe.width = 40;
 		iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/' + __debug_kit_id;
 
 		body.appendChild(iframe);
-
 		bodyOverflow = body.style.overflow;
 
 		window.addEventListener('message', onMessage, false);

@@ -12,7 +12,7 @@ use Cake\Core\Configure;
 
 <ul id="toolbar" class="toolbar">
     <?php foreach ($toolbar->panels as $panel): ?>
-    <li class="panel" data-id="<?= $panel->id ?>" style="display: none;">
+    <li class="panel hidden" data-id="<?= $panel->id ?>">
         <span class="panel-button">
             <?= h($panel->title) ?>
         </span>
@@ -28,25 +28,4 @@ use Cake\Core\Configure;
 			['alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit']) ?>
     </li>
 </ul>
-<?php $this->start('scripts') ?>
-<script>
-var baseUrl = "<?= Router::url('/', true) ?>";
-var toolbar;
-
-$(document).ready(function() {
-    toolbar = new Toolbar({
-        button: $('#toolbar'),
-        content: $('#panel-content-container'),
-        panelButtons: $('.panel'),
-        panelClose: $('#panel-close'),
-        keyboardScope : $(document),
-        currentRequest: '<?= $toolbar->id ?>',
-        originalRequest: '<?= $toolbar->id ?>',
-        baseUrl: <?= json_encode($this->Url->build('/')) ?>
-    });
-
-    toolbar.initialize();
-
-});
-</script>
-<?php $this->end() ?>
+<?php $this->Html->script('DebugKit.debug_kit', ['block' => true, 'id' => '__debug_kit', 'data-id' => $toolbar->id, 'data-url' => json_encode($this->Url->build('/')), 'data-full-url' => Router::url('/', true)]) ?>

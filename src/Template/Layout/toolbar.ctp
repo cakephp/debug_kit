@@ -13,5 +13,5 @@
     </body>
     <?= $this->Html->script('DebugKit.jquery') ?>
     <?= $this->Html->script('DebugKit.toolbar-app') ?>
-    <?= $this->fetch('scripts') ?>
+    <?= $this->fetch('script') ?>
 </html>

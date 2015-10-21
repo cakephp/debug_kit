@@ -33,9 +33,8 @@ class RequestTableTest extends TestCase
     {
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
-
         TableRegistry::clear();
-        
+
         $stmt = $connection->execute('DROP TABLE IF EXISTS panels');
         $stmt->closeCursor();
 

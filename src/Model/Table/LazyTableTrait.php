@@ -45,7 +45,7 @@ trait LazyTableTrait
             if ($class === false) {
                 throw new \RuntimeException("Unknown fixture '$name'.");
             }
-            $fixture = new $class();
+            $fixture = new $class($this->connection()->configName());
             $table = $fixture->table;
             if (in_array($table, $existing)) {
                 continue;

@@ -73,5 +73,4 @@ class PanelsFixture extends TestFixture
         }
         $this->init();
     }
-
 }

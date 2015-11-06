@@ -1,4 +1,4 @@
-# CakePHP DebugKit [![Build Status](https://secure.travis-ci.org/cakephp/debug_kit.png?branch=3.0)](http://travis-ci.org/cakephp/debug_kit)
+# CakePHP DebugKit [![Build Status](https://secure.travis-ci.org/cakephp/debug_kit.png?branch=master)](http://travis-ci.org/cakephp/debug_kit)
 
 DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP applications.
 

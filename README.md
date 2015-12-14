@@ -28,6 +28,14 @@ Plugin::load('DebugKit', ['bootstrap' => true, 'routes' => true]);
 ```
 * Set `'debug' => true,` in `config/app.php`.
 
+##Troubleshooting
+These steps are shown to work in troubleshooting DebugKit installations in 2.2.x
+* You may need to copy DebugKit from `root/Plugin` to `app/Plugin`
+* If you don't have a config/app.php file, the file you are looking for is `Controller/AppController.php`
+* Add `'DebugKit.Toolbar'` to your `$components` array in `Controller/AppController.php`. If there's not a `$components` array, declare `public $components = array();` inside the `AppController` class and add `'DebugKit.Toolbar'` inside of it.
+* Change the `app/Config/bootstrap.php` entry to `CakePlugin::load('DebugKit');`
+
+
 ## Reporting Issues
 
 If you have a problem with DebugKit please open an issue on [GitHub](https://github.com/cakephp/debug_kit/issues).

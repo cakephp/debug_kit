@@ -14,7 +14,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- **/
+ */
 ?>
 <h4>Include Paths</h4>
 <?= $this->Toolbar->makeNeatArray($paths) ?>

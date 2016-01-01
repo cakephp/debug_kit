@@ -22,8 +22,8 @@ use Cake\Utility\Hash;
 use Closure;
 use DebugKit\DebugPanel;
 use Exception;
-use RuntimeException;
 use PDO;
+use RuntimeException;
 use SimpleXmlElement;
 
 /**

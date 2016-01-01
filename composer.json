@@ -23,7 +23,7 @@
         "source": "https://github.com/cakephp/debug_kit"
     },
     "require": {
-        "cakephp/cakephp": ">=3.1.0",
+        "cakephp/cakephp": ">=3.1.0 <4.0",
         "jdorn/sql-formatter": "~1.2"
     },
     "require-dev": {

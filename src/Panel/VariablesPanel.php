@@ -22,6 +22,7 @@ use Cake\Utility\Hash;
 use Closure;
 use DebugKit\DebugPanel;
 use Exception;
+use RuntimeException;
 use PDO;
 use SimpleXmlElement;
 
@@ -76,6 +77,9 @@ class VariablesPanel extends DebugPanel
                     $item = $item->toArray();
                 } catch (\Cake\Database\Exception $e) {
                     //Likely issue is unbuffered query; fall back to __debugInfo
+                    $item = array_map($walker, $item->__debugInfo());
+                } catch (RuntimeException $e) {
+                    // Likely a non-select query.
                     $item = array_map($walker, $item->__debugInfo());
                 }
             } elseif ($item instanceof Closure ||

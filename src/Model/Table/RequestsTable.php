@@ -34,7 +34,7 @@ class RequestsTable extends Table
     public function initialize(array $config)
     {
         $this->hasMany('DebugKit.Panels', [
-            'sort' => 'Panels.title ASC',
+            'sort' => ['Panels.title' => 'ASC'],
         ]);
         $this->addBehavior('Timestamp', [
             'events' => [

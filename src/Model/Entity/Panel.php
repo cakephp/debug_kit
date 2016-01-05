@@ -25,4 +25,20 @@ class Panel extends Entity
      * @var array
      */
     protected $_hidden = ['content'];
+
+    /**
+     * Read the stream contents.
+     *
+     * Over certain sizes PDO will return file handles.
+     * For backwards compatibility and consistency we smooth over that difference here.
+     *
+     * @return string
+     */
+    protected function _getContent($content)
+    {
+        if (is_resource($content)) {
+            return stream_get_contents($content);
+        }
+        return $content;
+    }
 }

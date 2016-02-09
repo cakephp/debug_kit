@@ -48,7 +48,7 @@ class RequestsController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()->layout('DebugKit.toolbar');
+        $this->viewBuilder()->layout('DebugKit.toolbar')->className('View');
     }
 
     /**

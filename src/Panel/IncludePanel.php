@@ -41,7 +41,7 @@ class IncludePanel extends DebugPanel
         'Auth', 'Cache', 'Collection', 'Config', 'Configure', 'Console', 'Component', 'Controller',
         'Behavior', 'Database', 'Datasource', 'Model', 'Template', 'View', 'Utility',
         'Network', 'Routing', 'I18n', 'Log', 'Error', 'Event', 'Form', 'Filesystem',
-        'ORM', 'Routing', 'Filter', 'Validation'
+        'ORM', 'Filter', 'Validation'
     ];
 
     /**

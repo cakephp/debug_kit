@@ -38,9 +38,10 @@ class IncludePanel extends DebugPanel
      * @var array
      */
     protected $_fileTypes = [
-        'Cache', 'Config', 'Configure', 'Console', 'Component', 'Controller',
-        'Behavior', 'Datasource', 'Model', 'Plugin', 'Test', 'View', 'Utility',
-        'Network', 'Routing', 'I18n', 'Log', 'Error'
+        'Auth', 'Cache', 'Collection', 'Config', 'Configure', 'Console', 'Component', 'Controller',
+        'Behavior', 'Database', 'Datasource', 'Model', 'Template', 'View', 'Utility',
+        'Network', 'Routing', 'I18n', 'Log', 'Error', 'Event', 'Form', 'Filesystem',
+        'ORM', 'Filter', 'Validation'
     ];
 
     /**

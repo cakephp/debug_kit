@@ -25,6 +25,12 @@ class VariablesPanel extends DebugPanel {
  * @return array
  */
 	public function beforeRender(Controller $controller) {
-		return array_merge($controller->viewVars, array('$request->data' => $controller->request->data));
+		$viewVars = $controller->viewVars;
+		unset(
+			$viewVars['debugToolbarPanels'],
+			$viewVars['debugToolbarJavascript'],
+			$viewVars['debugToolbarCss']
+		);
+		return array_merge($viewVars, array('$request->data' => $controller->request->data));
 	}
 }

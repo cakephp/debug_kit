@@ -18,6 +18,13 @@
 		<!-- Add plugin test suites here. -->
 	</testsuites>
 
+	<!-- configure code coverage -->
+	<filter>
+		<whitelist>
+			<directory suffix=".php">./src/</directory>
+		</whitelist>
+	</filter>
+
 	<!-- Setup a listener for fixtures -->
 	<listeners>
 		<listener

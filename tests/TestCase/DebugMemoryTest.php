@@ -37,6 +37,20 @@ class DebugMemoryTest extends TestCase
     }
 
     /**
+     * Test record() automatic naming
+     *
+     * @return void
+     */
+    public function testRecordNoKey()
+    {
+        DebugMemory::clear();
+        DebugMemory::record();
+        $result = DebugMemory::getAll(true);
+        $this->assertCount(1, $result);
+        $this->assertContains('DebugMemoryTest.php line ' . (__LINE__ - 3), array_keys($result)[0]);
+    }
+
+    /**
      * test making memory use markers.
      *
      * @return void

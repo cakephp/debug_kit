@@ -110,14 +110,22 @@ class DebugEngineTest extends TestCase
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
+        $this->engine->writeMany(['key' => 'value']);
+        $this->engine->readMany(['key']);
+        $this->engine->deleteMany(['key']);
+        $this->engine->clearGroup('group');
 
         $result = DebugTimer::getAll();
-        $this->assertCount(6, $result);
+        $this->assertCount(10, $result);
         $this->assertArrayHasKey('Cache.read key', $result);
         $this->assertArrayHasKey('Cache.write key', $result);
         $this->assertArrayHasKey('Cache.delete key', $result);
         $this->assertArrayHasKey('Cache.increment key', $result);
         $this->assertArrayHasKey('Cache.decrement key', $result);
+        $this->assertArrayHasKey('Cache.readMany', $result);
+        $this->assertArrayHasKey('Cache.writeMany', $result);
+        $this->assertArrayHasKey('Cache.deleteMany', $result);
+        $this->assertArrayHasKey('Cache.clearGroup group', $result);
     }
 
     /**
@@ -154,5 +162,20 @@ class DebugEngineTest extends TestCase
         $this->assertArrayHasKey('path', $data);
         $this->assertArrayHasKey('isWindows', $data);
         $this->assertArrayHasKey('prefix', $data);
+    }
+
+    /**
+     * Test to string
+     *
+     * @return void
+     */
+    public function testToString()
+    {
+        $engine = new DebugEngine([
+            'className' => 'File',
+            'path' => TMP,
+            'groups' => ['test', 'test2']
+        ]);
+        $this->assertEquals('File', (string)$engine);
     }
 }

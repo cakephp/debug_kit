@@ -153,6 +153,21 @@ class DebugTimerTest extends TestCase
     }
 
     /**
+     * Test getting all timers with the clear flag.
+     *
+     * @return void
+     */
+    public function testGetTimersWithClear()
+    {
+        DebugTimer::start('test1', 'this is my first test');
+        DebugTimer::stop('test1');
+        $timers = DebugTimer::getAll(true);
+
+        $this->assertCount(2, $timers);
+        $this->assertCount(1, DebugTimer::getAll(), 'Should remove userland timer');
+    }
+
+    /**
      * test getting all the set timers.
      *
      * @return void

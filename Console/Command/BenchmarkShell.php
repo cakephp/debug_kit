@@ -12,7 +12,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('String', 'Utility');
+App::uses('CakeText', 'Utility');
 
 /**
  * Benchmark Shell Class
@@ -35,7 +35,7 @@ class BenchmarkShell extends Shell {
 		$options = array_merge($defaults, $this->params);
 		$times = array();
 
-		$this->out(String::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
+		$this->out(CakeText::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
 		$this->out("");
 		for ($i = 0; $i < $options['n']; $i++) {
 			if (floor($options['t'] - array_sum($times)) <= 0 || $options['n'] <= 1) {
@@ -61,24 +61,24 @@ class BenchmarkShell extends Shell {
 		$duration = array_sum($times);
 		$requests = count($times);
 
-		$this->out(String::insert(__d('debug_kit', 'Total Requests made: :requests'), compact('requests')));
-		$this->out(String::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)'), compact('duration')));
+		$this->out(CakeText::insert(__d('debug_kit', 'Total Requests made: :requests'), compact('requests')));
+		$this->out(CakeText::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)'), compact('duration')));
 
 		$this->out("");
 
-		$this->out(String::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), array(
+		$this->out(CakeText::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), array(
 				'rps' => round($requests / $duration, 3)
 		)));
 
-		$this->out(String::insert(__d('debug_kit', 'Average request time: :average-time seconds'), array(
+		$this->out(CakeText::insert(__d('debug_kit', 'Average request time: :average-time seconds'), array(
 				'average-time' => round($duration / $requests, 3)
 		)));
 
-		$this->out(String::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), array(
+		$this->out(CakeText::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), array(
 				'std-dev' => round($this->_deviation($times, true), 3)
 		)));
 
-		$this->out(String::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), array(
+		$this->out(CakeText::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), array(
 				'longest' => round(max($times), 3),
 				'shortest' => round(min($times), 3)
 		)));

@@ -53,7 +53,9 @@ class PanelsController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()->layout('DebugKit.panel')->className('View');
+        $this->viewBuilder()
+            ->layout('DebugKit.panel')
+            ->className('DebugKit.Ajax');
     }
 
     /**
@@ -87,6 +89,7 @@ class PanelsController extends Controller
         $this->Cookie->configKey('debugKit_sort', 'encryption', false);
         $this->set('sort', $this->Cookie->read('debugKit_sort'));
         $panel = $this->Panels->get($id);
+
         $this->set('panel', $panel);
         $this->set(unserialize($panel->content));
     }

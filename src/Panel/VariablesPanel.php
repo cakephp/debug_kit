@@ -72,7 +72,10 @@ class VariablesPanel extends DebugPanel
         $errors = [];
 
         $walker = function (&$item) use (&$walker) {
-            if ($item instanceof Query || $item instanceof ResultSet) {
+            if ($item instanceof Collection ||
+                $item instanceof Query ||
+                $item instanceof ResultSet 
+            ) {
                 try {
                     $item = $item->toArray();
                 } catch (\Cake\Database\Exception $e) {

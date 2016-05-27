@@ -12,6 +12,7 @@
  */
 namespace DebugKit\Panel;
 
+use Cake\Collection\Collection;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;

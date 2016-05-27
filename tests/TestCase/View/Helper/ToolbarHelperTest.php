@@ -21,7 +21,6 @@ use Cake\TestSuite\TestCase;
 use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use DebugKit\View\Helper\HtmlToolbarHelper;
 use DebugKit\View\Helper\ToolbarHelper;
 use StdClass;
 

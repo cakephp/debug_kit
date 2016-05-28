@@ -7,6 +7,7 @@ function Toolbar(options) {
 	this.currentRequest = options.currentRequest;
 	this.originalRequest = options.originalRequest;
 	this.baseUrl = options.baseUrl;
+	this.webroot = options.webroot;
 }
 
 Toolbar.prototype = {
@@ -102,7 +103,7 @@ Toolbar.prototype = {
 	},
 
 	loadPanel: function(id) {
-		var url = baseUrl + 'debug_kit/panels/view/' + id;
+		var url = this.baseUrl + 'debug_kit/panels/view/' + id;
 		var contentArea = this.content.find('#panel-content');
 		var _this = this;
 		var timer;
@@ -134,10 +135,10 @@ Toolbar.prototype = {
 		var sortButton = this.content.find('.neat-array-sort');
 		var _this = this;
 		sortButton.click(function() {
-			if ($(this).attr('checked')) {
-				document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=' + _this.baseUrl;
+			if (!$(this).prop('checked')) {
+				document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=' + _this.webroot;
 			} else {
-				document.cookie = 'debugKit_sort=1; path=' + _this.baseUrl;
+				document.cookie = 'debugKit_sort=1; path=' + _this.webroot;
 			}
 			_this.loadPanel(_this.currentPanel());
 		});

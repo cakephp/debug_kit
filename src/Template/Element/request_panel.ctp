@@ -48,3 +48,8 @@ endif;
 <?php else: ?>
     <p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
 <?php endif; ?>
+
+<?php if (!empty($matchedRoute)): ?>
+<h4>Matched Route</h4>
+    <p><?= $this->Toolbar->makeNeatArray(['template' => $matchedRoute]) ?></p>
+<?php endif; ?>

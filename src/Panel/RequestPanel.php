@@ -40,6 +40,7 @@ class RequestPanel extends DebugPanel
             'data' => $request->data,
             'cookie' => $request->cookies,
             'get' => $_GET,
+            'matchedRoute' => $request->param('_matchedRoute'),
             'headers' => ['response' => headers_sent($file, $line), 'file' => $file, 'line' => $line],
         ];
     }

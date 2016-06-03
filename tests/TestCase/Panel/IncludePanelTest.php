@@ -46,7 +46,7 @@ class IncludePanelTest extends TestCase
         $this->assertNull($result);
 
         $data = $this->panel->data();
-        $this->assertArrayHasKey('core', $data);
+        $this->assertArrayHasKey('cake', $data);
         $this->assertArrayHasKey('app', $data);
         $this->assertArrayHasKey('plugins', $data);
         $this->assertArrayHasKey('DebugKit', $data['plugins']);

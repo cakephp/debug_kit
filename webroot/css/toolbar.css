@@ -66,7 +66,7 @@ p {
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 /* Open close button */
@@ -218,7 +218,7 @@ table th {
 	line-height: 16px;
 }
 table tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
+	background-color: #f9f9f9;
 }
 
 .debug-table td {
@@ -232,6 +232,7 @@ table tbody tr:nth-child(odd) {
 }
 .debug-table td:nth-child(n+2) {
 	word-wrap: break-word;
+	word-break: break-all;
 	word-break: break-word; /* Not standard for webkit */
 }
 

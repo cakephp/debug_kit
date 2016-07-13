@@ -232,6 +232,7 @@ table tbody tr:nth-child(odd) {
 }
 .debug-table td:nth-child(n+2) {
 	word-wrap: break-word;
+    word-break: break-all;
 	word-break: break-word; /* Not standard for webkit */
 }
 

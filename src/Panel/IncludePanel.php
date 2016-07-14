@@ -80,6 +80,7 @@ class IncludePanel extends DebugPanel
         ksort($return['cake']);
         ksort($return['plugins']);
         ksort($return['app']);
+
         return $return;
     }
 
@@ -93,6 +94,7 @@ class IncludePanel extends DebugPanel
         $paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
 
         unset($paths['.']);
+
         return array_flip($paths);
     }
 
@@ -131,6 +133,7 @@ class IncludePanel extends DebugPanel
                 return $plugin;
             }
         }
+
         return false;
     }
 
@@ -197,6 +200,7 @@ class IncludePanel extends DebugPanel
         if (empty($data)) {
             $data = $this->_prepare();
         }
+
         return count(Hash::flatten($data));
     }
 }

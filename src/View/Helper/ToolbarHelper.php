@@ -140,6 +140,7 @@ class ToolbarHelper extends Helper
             $out .= '</li>';
         }
         $out .= '</ul>';
+
         return $out;
     }
 }

@@ -170,6 +170,7 @@ class BenchmarkShell extends Shell
             'Example Use: `cake benchmark --n 10 --t 100 http://localhost/testsite`. ' .
             '<info>Note:</info> this benchmark does not include browser render times.'
         ));
+
         return $parser;
     }
 }

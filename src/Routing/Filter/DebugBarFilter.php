@@ -108,6 +108,7 @@ class DebugBarFilter extends DispatcherFilter
         if (is_callable($force)) {
             return $force();
         }
+
         return $force;
     }
 

@@ -85,6 +85,7 @@ class TidyHelper extends Helper
             }
         }
         $this->results = $result;
+
         return $result;
     }
 
@@ -114,6 +115,7 @@ class TidyHelper extends Helper
                 }
             }
         }
+
         return $this->Toolbar->makeNeatArray(array_filter($this->results), 0, 0, false);
     }
 
@@ -134,6 +136,7 @@ class TidyHelper extends Helper
             $tidy = tidy_parse_string($out, [], 'UTF8');
             $tidy->cleanRepair();
             $errors = $tidy->errorBuffer . "\n";
+
             return $errors;
         }
 
@@ -151,6 +154,7 @@ class TidyHelper extends Helper
         $Error = new File($errors);
         $errors = $Error->read();
         $Error->delete();
+
         return $errors;
     }
 
@@ -177,6 +181,7 @@ class TidyHelper extends Helper
         if ($return) {
             return false;
         }
+
         return $_out ? $_out : true;
     }
 }

@@ -62,6 +62,7 @@ class CachePanel extends DebugPanel
         foreach ($this->_instances as $name => $instance) {
             $metrics[$name] = $instance->metrics();
         }
+
         return [
             'metrics' => $metrics
         ];

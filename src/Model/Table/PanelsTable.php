@@ -50,6 +50,7 @@ class PanelsTable extends Table
         if (empty($options['requestId'])) {
             throw new \RuntimeException('Missing request id in findByRequest.');
         }
+
         return $query->where(['Panels.request_id' => $options['requestId']])
             ->order(['Panels.title' => 'ASC']);
     }

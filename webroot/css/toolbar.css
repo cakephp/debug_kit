@@ -1,7 +1,7 @@
 /**
  * Colors borrowed from http://www.google.es/design/spec/style/color.html#color-ui-color-palette
  */
-@import url(//fonts.googleapis.com/css?family=Open+Sans:300);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900);
 
 body {
 	padding: 0;
@@ -17,9 +17,9 @@ h1,
 h2,
 h3,
 h4 {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Raleway', sans-serif;
 	margin: 15px 0;
-	font-weight: bold;
+	font-weight: 300;
 	line-height: 20px;
 	text-rendering: optimizelegibility;
 }
@@ -52,7 +52,7 @@ p {
 }
 
 .toolbar {
-	background: #ffc600;
+	background: #D33C44;
 	height: 40px;
 	position: absolute;
 	bottom: 0;
@@ -90,9 +90,12 @@ p {
 #panel-button img {
 	margin: 0;
 }
+.panel-button {
+	color: #fff;
+}
 .panel-summary {
-	background: rgba(255, 255, 255, 0.5);
-	color: #333;
+	background: rgba(60, 60, 60, 0.3);
+	color: #fff;
 	font-size: 12px;
 	line-height: 20px;
 	padding: 4px;
@@ -102,18 +105,21 @@ p {
 
 
 .panel {
-	border-left: 1px solid #ffb400;
+	border-left: 1px solid rgba(0, 0, 0, 0.075);
 	padding: 0px 9px;
 }
 .panel:first-child {
 	border-left: 0;
 }
 .panel-active {
-	color: #fff;
-	background-color: #009688;
+	background: #fff;
+	color: #D33C44;
 	transition: background-color 300ms linear;
-
 }
+.panel-active .panel-button {
+	color: #D33C44;
+}
+
 .history-mode .panel-active {
 	background: #ab47bc;
 }
@@ -148,8 +154,9 @@ p {
 
 .panel-title {
 	color: #fff;
+	font-family: Raleway, sans-serif;
 	font-weight: normal;
-	background: #009688;
+	background: #D33C44;
 	padding: 10px;
 	margin: 0;
 	transition: background-color 300ms linear;

@@ -413,6 +413,8 @@ table th {
 	padding: 8px;
 	line-height: 12px;
 	font-size: 20px;
+	font-family: "Raleway";
+	font-weight: bold;
 	height: 12px;
 	width: 12px;
 	border-radius: 15px;
@@ -428,11 +430,11 @@ table th {
 }
 
 .warning:before {
-	color: #ffab91;
+	color: #f2dede;
 	content: '!';
 }
 .info:before {
-	color: #80deea;
+	color: #d9edf7;
 	content: 'i';
 }
 

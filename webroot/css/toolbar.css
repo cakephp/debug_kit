@@ -80,9 +80,8 @@ p {
 }
 #panel-button {
 	line-height: 20px;
-	height: 30px;
-	width: 30px;
-	padding: 5px;
+	height: 40px;
+	width: 40px;
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -92,6 +91,7 @@ p {
 }
 .panel-button {
 	color: #fff;
+	font-family: Raleway, Helvetica, Arial, sans-serif;
 }
 .panel-summary {
 	background: rgba(60, 60, 60, 0.3);

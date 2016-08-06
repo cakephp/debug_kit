@@ -1,8 +1,13 @@
-/**
- * Colors borrowed from http://www.google.es/design/spec/style/color.html#color-ui-color-palette
- */
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900);
-@import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400);
+@font-face {
+	font-family: 'CakeFont';
+	src: url('./raleway-medium.eot');
+	src: url('./raleway-regular.eot?#iefix') format('embedded-opentype'),
+		url('./raleway-regular.woff') format('woff'),
+		url('./raleway-regular.ttf') format('truetype'),
+		url('./raleway-regular.svg#ralewayregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
 body {
 	padding: 0;
@@ -18,7 +23,7 @@ h1,
 h2,
 h3,
 h4 {
-	font-family: 'Raleway', sans-serif;
+	font-family: 'CakeFont', sans-serif;
 	margin: 15px 0;
 	font-weight: 300;
 	line-height: 20px;
@@ -91,7 +96,7 @@ p {
 }
 .panel-button {
 	color: #fff;
-	font-family: Raleway, Helvetica, Arial, sans-serif;
+	font-family: CakeFont, Helvetica, Arial, sans-serif;
 }
 .panel-summary {
 	background: rgba(60, 60, 60, 0.3);
@@ -154,7 +159,7 @@ p {
 
 .panel-title {
 	color: #fff;
-	font-family: Raleway, sans-serif;
+	font-family: CakeFont, sans-serif;
 	font-weight: normal;
 	background: #D33C44;
 	padding: 10px;
@@ -225,8 +230,9 @@ table th {
 	line-height: 16px;
 }
 
+pre,
 .debug-table td {
-	font-family: "Roboto-Mono", Monaco, Consolas, mono-space;
+	font-family: Monaco, Consolas, mono-space;
 }
 
 /* X column tables have the 2nd+ cell right aligned */
@@ -387,7 +393,7 @@ table th {
 }
 .history-url {
 	font-size: 14px;
-	font-family: "Roboto-Mono", Monaco, Consolas, mono-space;
+	font-family: Monaco, Consolas, mono-space;
 }
 
 
@@ -412,7 +418,7 @@ table th {
 	padding: 8px;
 	line-height: 12px;
 	font-size: 20px;
-	font-family: "Raleway";
+	font-family: "CakeFont";
 	font-weight: bold;
 	height: 12px;
 	width: 12px;

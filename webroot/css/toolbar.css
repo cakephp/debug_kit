@@ -1,12 +1,18 @@
-/**
- * Colors borrowed from http://www.google.es/design/spec/style/color.html#color-ui-color-palette
- */
-@import url(//fonts.googleapis.com/css?family=Open+Sans:300);
+@font-face {
+	font-family: 'CakeFont';
+	src: url('./raleway-medium.eot');
+	src: url('./raleway-regular.eot?#iefix') format('embedded-opentype'),
+		url('./raleway-regular.woff') format('woff'),
+		url('./raleway-regular.ttf') format('truetype'),
+		url('./raleway-regular.svg#ralewayregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
 body {
 	padding: 0;
 	margin: 0;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica-Neue", Helvetica, Arial, sans-serif;
 	overflow: hidden;
 }
 
@@ -17,9 +23,9 @@ h1,
 h2,
 h3,
 h4 {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'CakeFont', sans-serif;
 	margin: 15px 0;
-	font-weight: bold;
+	font-weight: 300;
 	line-height: 20px;
 	text-rendering: optimizelegibility;
 }
@@ -52,13 +58,12 @@ p {
 }
 
 .toolbar {
-	background: #ffc600;
+	background: #D33C44;
 	height: 40px;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	border-radius: 8px 0 0 0;
 }
 .toolbar.open {
 	border-radius: 0;
@@ -80,9 +85,8 @@ p {
 }
 #panel-button {
 	line-height: 20px;
-	height: 30px;
-	width: 30px;
-	padding: 5px;
+	height: 40px;
+	width: 40px;
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -90,9 +94,13 @@ p {
 #panel-button img {
 	margin: 0;
 }
+.panel-button {
+	color: #fff;
+	font-family: CakeFont, Helvetica, Arial, sans-serif;
+}
 .panel-summary {
-	background: rgba(255, 255, 255, 0.5);
-	color: #333;
+	background: rgba(60, 60, 60, 0.3);
+	color: #fff;
 	font-size: 12px;
 	line-height: 20px;
 	padding: 4px;
@@ -102,20 +110,23 @@ p {
 
 
 .panel {
-	border-left: 1px solid #ffb400;
+	border-left: 1px solid rgba(0, 0, 0, 0.075);
 	padding: 0px 9px;
 }
 .panel:first-child {
 	border-left: 0;
 }
 .panel-active {
-	color: #fff;
-	background-color: #009688;
+	background: #fff;
+	color: #D33C44;
 	transition: background-color 300ms linear;
-
 }
-.history-mode .panel-active {
-	background: #ab47bc;
+.panel-active .panel-button {
+	color: #D33C44;
+}
+
+.history-mode .panel-active .panel-button {
+	color: #ab47bc;
 }
 
 /**
@@ -148,8 +159,9 @@ p {
 
 .panel-title {
 	color: #fff;
+	font-family: CakeFont, sans-serif;
 	font-weight: normal;
-	background: #009688;
+	background: #D33C44;
 	padding: 10px;
 	margin: 0;
 	transition: background-color 300ms linear;
@@ -205,22 +217,20 @@ table td,
 table th {
 	text-align: left;
 	border: 0;
-	padding: 6px;
+	padding: 9px;
 	margin: 0;
 }
 table td {
 	border-bottom: 1px solid #ccc;
 }
 table th {
-	border-bottom: 3px solid #004d40;
+	border-bottom: 3px solid #2a6496;
 	color: #111;
 	font-weight: bold;
 	line-height: 16px;
 }
-table tbody tr:nth-child(odd) {
-	background-color: #f9f9f9;
-}
 
+pre,
 .debug-table td {
 	font-family: Monaco, Consolas, mono-space;
 }
@@ -251,18 +261,18 @@ table tbody tr:nth-child(odd) {
 }
 .neat-array {
 	padding: 1px 2px 1px 20px;
-	background: #B3E5FC;
+	background: #eaeae7;
 	list-style: none;
 	margin: 0 0 1em 0;
 }
 .neat-array .neat-array {
 	padding: 0 0 0 20px;
 	margin: 0;
-	border-top: 1px solid #B3E5FC;
+	border-top: 1px solid #eaeae7;
 }
 .neat-array li {
-	border-top: 1px solid #B3E5FC;
-	border-bottom: 1px solid #B3E5FC;
+	border-top: 1px solid #eaeae7;
+	border-bottom: 1px solid #eaeae7;
 	background: rgba(255, 255, 255, 0.95);
 	margin: 0;
 	line-height: 1.5em;
@@ -329,7 +339,7 @@ table tbody tr:nth-child(odd) {
 	background: #ddd;
 }
 .graph-bar-value {
-	background: #259b24;
+	background: #428bca;
 }
 
 
@@ -397,17 +407,19 @@ table tbody tr:nth-child(odd) {
 }
 
 .warning {
-	background: #ffab91;
+	background: #f2dede;
 }
 
 .info {
-	background: #80deea;
+	background: #d9edf7;
 }
 .warning:before,
 .info:before {
 	padding: 8px;
 	line-height: 12px;
 	font-size: 20px;
+	font-family: "CakeFont";
+	font-weight: bold;
 	height: 12px;
 	width: 12px;
 	border-radius: 15px;
@@ -423,11 +435,11 @@ table tbody tr:nth-child(odd) {
 }
 
 .warning:before {
-	color: #ffab91;
+	color: #f2dede;
 	content: '!';
 }
 .info:before {
-	color: #80deea;
+	color: #d9edf7;
 	content: 'i';
 }
 
@@ -436,12 +448,11 @@ table tbody tr:nth-child(odd) {
  */
 .btn-primary {
 	font-size: 14px;
-	border: 1px solid #8bc34a;
-	background-color: #9ccc65;
+	border: 1px solid #2a6496;
+	background-color: #428bca;
 	color: #fff;
 	border-radius: 4px;
-	text-shadow: 0 1px 0 #689f38;
-	box-shadow: 0 2px 0 #689f38;
+	box-shadow: 0 2px 0 #2a6496;
 }
 .btn-primary:active {
 	box-shadow: none;

@@ -93,6 +93,7 @@ p {
 }
 #panel-button img {
 	margin: 0;
+	display: block;
 }
 .panel-button {
 	color: #fff;

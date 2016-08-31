@@ -20,7 +20,7 @@ use DebugKit\Routing\Filter\DebugBarFilter;
 
 $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
 
-if (!$debugBar->isEnabled() || php_sapi_name() === 'cli') {
+if (!$debugBar->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
     return;
 }
 

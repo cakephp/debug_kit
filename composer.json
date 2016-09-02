@@ -24,6 +24,7 @@
     },
     "require": {
         "cakephp/cakephp": ">=3.1.0 <4.0",
+        "cakephp/plugin-installer": "*",
         "jdorn/sql-formatter": "~1.2"
     },
     "require-dev": {

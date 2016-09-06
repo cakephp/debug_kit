@@ -15,8 +15,11 @@ namespace DebugKit\Controller;
 use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
+use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Utility\Security;
 
 /**
  * Provides utility features need by the toolbar.
@@ -69,6 +72,59 @@ class ToolbarController extends Controller
         $this->set([
             '_serialize' => ['success'],
             'success' => $result,
+        ]);
+    }
+
+    /**
+     * Explain query.
+     *
+     * @return void
+     * @throws \Cake\Network\Exception\BadRequestException
+     */
+    public function sqlExplain()
+    {
+        $this->request->allowMethod('post');
+
+        $data = $this->request->data('data');
+        $hash = $this->request->data('hash');
+
+        if (Security::hash($data, null, true) !== $hash) {
+            throw new BadRequestException('Invalid hash');
+        }
+
+        $data = json_decode($data, true);
+        if (!$data) {
+            throw new BadRequestException('Invalid json');
+        }
+
+        $connection = ConnectionManager::get($data['connection']);
+        $query = $data['query'];
+        $params = $data['params'];
+
+        // Annonymous parameters in LoggedQuery are indexed starting with 1.
+        // However, PDOStatement::execute() cannot bind such annoymous parameters.
+        if (is_int(key($params))) {
+            ksort($params);
+            $params = array_values($params);
+        }
+
+        $types = array_map(function ($param) {
+            return is_int($param) ? 'integer' : 'string';
+        }, $params);
+
+        $statement = $connection->explain($query, $params, $types);
+
+        $result = [];
+        while ($row = $statement->fetch('assoc')) {
+            if (!$result) {
+                $result[] = array_keys($row);
+            }
+            $result[] = array_values($row);
+        }
+
+        $this->set([
+            '_serialize' => ['result'],
+            'result' => $result,
         ]);
     }
 }

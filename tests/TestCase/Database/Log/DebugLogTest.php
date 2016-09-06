@@ -41,7 +41,7 @@ class DebugLogTest extends TestCase
     public function testLog()
     {
         $query = new LoggedQuery();
-        $query->sql = 'SELECT * FROM posts';
+        $query->query = 'SELECT * FROM posts';
         $query->took = 10;
         $query->numRows = 5;
 
@@ -72,5 +72,46 @@ class DebugLogTest extends TestCase
         $query = new LoggedQuery();
         $logger = new DebugLog($orig, 'test');
         $logger->log($query);
+    }
+
+    /**
+     * Test logs contain extra information if queryString is present.
+     *
+     * @return void
+     */
+    public function testLoggedQueryFormatWithExtra()
+    {
+        $query = new LoggedQuery();
+        $query->query = 'SELECT * FROM posts WHERE id = :id';
+        $query->params = ['id' => 1];
+        $query->took = 10;
+        $query->numRows = 1;
+
+        $this->logger->log($query);
+
+        $query = new LoggedQuery();
+        $query->query = $query->queryString = 'SELECT * FROM posts WHERE id = :id';
+        $query->params = ['id' => 2];
+        $query->took = 10;
+        $query->numRows = 1;
+
+        $this->logger->log($query);
+
+        $expected = [
+            [
+                'query' => 'SELECT * FROM posts WHERE id = 1',
+                'took' => 10,
+                'rows' => 1,
+            ],
+            [
+                'query' => 'SELECT * FROM posts WHERE id = 2',
+                'took' => 10,
+                'rows' => 1,
+                'queryString' => 'SELECT * FROM posts WHERE id = :id',
+                'params' => ['id' => 2],
+            ],
+        ];
+
+        $this->assertEquals($expected, $this->logger->queries());
     }
 }

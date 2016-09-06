@@ -8,6 +8,10 @@ Router::plugin('DebugKit', function ($routes) {
         ['controller' => 'Toolbar', 'action' => 'clearCache']
     );
     $routes->connect(
+        '/toolbar/sql_explain',
+        ['controller' => 'Toolbar', 'action' => 'sqlExplain']
+    );
+    $routes->connect(
         '/toolbar/*',
         ['controller' => 'Requests', 'action' => 'view']
     );

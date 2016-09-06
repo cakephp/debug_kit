@@ -122,7 +122,11 @@ class DebugLog extends QueryLogger
     public function log(LoggedQuery $query)
     {
         if ($this->_logger) {
-            $this->_logger->log($query);
+            if ($this->_logger instanceof \Psr\Log\AbstractLogger) {
+                $this->_logger->log($query, $query->error);
+            } else {
+                $this->_logger->log($query);
+            }
         }
         if (!empty($query->params)) {
             $query->query = $this->_interpolate($query);

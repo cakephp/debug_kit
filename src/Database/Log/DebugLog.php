@@ -15,6 +15,7 @@ namespace DebugKit\Database\Log;
 
 use Cake\Database\Log\LoggedQuery;
 use Cake\Database\Log\QueryLogger;
+use Psr\Log\AbstractLogger as PsrAbstractLogger;
 
 /**
  * DebugKit Query logger.
@@ -122,7 +123,11 @@ class DebugLog extends QueryLogger
     public function log(LoggedQuery $query)
     {
         if ($this->_logger) {
-            $this->_logger->log($query);
+            if ($this->_logger instanceof PsrAbstractLogger) {
+                $this->_logger->log($query, $query->error);
+            } else {
+                $this->_logger->log($query);
+            }
         }
         if (!empty($query->params)) {
             $query->query = $this->_interpolate($query);

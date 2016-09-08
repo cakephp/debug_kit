@@ -53,11 +53,9 @@ class PanelsController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $builder = $this->viewBuilder();
-        if (!$builder->className()) {
-            $builder->layout('DebugKit.panel')
-                ->className('DebugKit.Ajax');
-        }
+        $this->viewBuilder()
+            ->layout('DebugKit.panel')
+            ->className('DebugKit.Ajax');
     }
 
     /**

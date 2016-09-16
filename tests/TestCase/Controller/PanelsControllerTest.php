@@ -46,6 +46,25 @@ class PanelsControllerTest extends IntegrationTestCase
     }
 
     /**
+     * tests index page returns as JSON
+     *
+     * @return void
+     */
+    public function testIndex()
+    {
+        $this->configRequest([
+            'headers' => [
+                'accept' => 'application/json, text/javascript, */*; q=0.01',
+            ]
+        ]);
+
+        $this->get('/debug_kit/panels/index/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+
+        $this->assertResponseOk();
+        $this->assertContentType('application/json');
+    }
+
+    /**
      * Test getting a panel that exists.
      *
      * @return void

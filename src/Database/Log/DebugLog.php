@@ -135,10 +135,18 @@ class DebugLog extends QueryLogger
         $this->_totalTime += $query->took;
         $this->_totalRows += $query->numRows;
 
+        $extra = [];
+        if (isset($query->queryString)) {
+            $extra = [
+                'queryString' => $query->queryString,
+                'params' => $query->params,
+            ];
+        }
+
         $this->_queries[] = [
             'query' => $query->query,
             'took' => $query->took,
-            'rows' => $query->numRows
-        ];
+            'rows' => $query->numRows,
+        ] + $extra;
     }
 }

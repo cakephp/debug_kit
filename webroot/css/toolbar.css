@@ -397,6 +397,45 @@ pre,
 	font-family: Monaco, Consolas, mono-space;
 }
 
+/**
+ * Sql Log panel
+ */
+.sql-log td {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.sql-explain {
+	border-top: none;
+}
+
+.sql-explain > td {
+	padding-top: 0;
+}
+
+.sql-explain table {
+	display: none;
+	margin: 0;
+	margin-top: 9px;
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+
+.sql-explain p {
+	margin: 0;
+	margin-top: 9px;
+}
+
+.sql-explain table th {
+	border: none;
+	background: #eaeae7;
+	line-height: 16px;
+}
+
+.sql-explain table td {
+	background: #fafafa;
+	border: none;
+}
 
 /**
  * Warnings and info boxes.

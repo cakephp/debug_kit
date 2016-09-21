@@ -1,7 +1,8 @@
 <?php
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('DebugKit', function ($routes) {
+Router::plugin('DebugKit', function (RouteBuilder $routes) {
     $routes->extensions('json');
     $routes->connect(
         '/toolbar/clear_cache',

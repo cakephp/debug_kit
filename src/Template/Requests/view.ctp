@@ -1,4 +1,8 @@
 <?php
+/**
+ * @type \DebugKit\View\AjaxView $this
+ */
+
 use Cake\Routing\Router;
 use Cake\Core\Configure;
 

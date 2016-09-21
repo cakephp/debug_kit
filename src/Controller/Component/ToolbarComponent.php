@@ -20,6 +20,7 @@ use Cake\Controller\ComponentRegistry;
  * Class ToolbarComponent
  *
  * @since         DebugKit 0.1
+ * @deprecated
  */
 class ToolbarComponent extends Component
 {
@@ -32,11 +33,12 @@ class ToolbarComponent extends Component
      *
      * @param \Cake\Controller\ComponentRegistry $registry The ComponentRegistry
      * @param array $settings An array of config
-     * @return void
      * @throws \RuntimeException
      */
     public function __construct(ComponentRegistry $registry, $settings = [])
     {
+        parent::__construct($registry, $settings);
+
         $msg = 'DebugKit is now loaded through plugin bootstrapping. Make sure you have ' .
             '`Plugin::load("DebugKit", ["bootstrap" => true]);` in your application\'s bootstrap.php.';
         throw new \RuntimeException($msg);

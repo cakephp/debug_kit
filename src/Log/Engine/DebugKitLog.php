@@ -38,8 +38,8 @@ class DebugKitLog extends BaseLog
      */
     public function log($type, $message, array $context = [])
     {
-        if (!isset($this->logs[$type])) {
-            $this->logs[$type] = [];
+        if (!isset($this->_logs[$type])) {
+            $this->_logs[$type] = [];
         }
         $this->_logs[$type][] = [date('Y-m-d H:i:s'), $this->_format($message)];
     }
@@ -55,7 +55,7 @@ class DebugKitLog extends BaseLog
     }
 
     /**
-     * Get the number of log entires.
+     * Get the number of log entries.
      *
      * @return int
      */

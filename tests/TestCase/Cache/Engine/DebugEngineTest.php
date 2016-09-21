@@ -13,6 +13,8 @@
  */
 namespace DebugKit\Test\TestCase\Cache\Engine;
 
+use BadMethodCallException;
+use Cake\Cache\CacheEngine;
 use Cake\TestSuite\TestCase;
 use DebugKit\Cache\Engine\DebugEngine;
 use DebugKit\DebugTimer;
@@ -22,6 +24,15 @@ use DebugKit\DebugTimer;
  */
 class DebugEngineTest extends TestCase
 {
+    /**
+     * @var DebugEngine
+     */
+    protected $engine;
+
+    /**
+     * @var CacheEngine
+     */
+    private $mock;
 
     /**
      * setup

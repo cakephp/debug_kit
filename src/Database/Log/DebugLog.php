@@ -37,7 +37,7 @@ class DebugLog extends QueryLogger
     /**
      * Decorated logger.
      *
-     * @var Cake\Database\Log\LoggedQuery
+     * @var \Cake\Database\Log\LoggedQuery
      */
     protected $_logger;
 
@@ -65,7 +65,7 @@ class DebugLog extends QueryLogger
     /**
      * Constructor
      *
-     * @param Cake\Database\Log\QueryLogger $logger The logger to decorate and spy on.
+     * @param \Cake\Database\Log\QueryLogger $logger The logger to decorate and spy on.
      * @param string $name The name of the connection being logged.
      */
     public function __construct($logger, $name)

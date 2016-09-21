@@ -14,6 +14,7 @@
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -41,7 +42,7 @@ class ToolbarControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
-        Router::plugin('DebugKit', function ($routes) {
+        Router::plugin('DebugKit', function (RouteBuilder $routes) {
             $routes->connect(
                 '/toolbar/clear_cache/*',
                 ['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']

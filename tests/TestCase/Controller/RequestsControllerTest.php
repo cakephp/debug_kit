@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -40,7 +41,7 @@ class RequestsControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
-        Router::plugin('DebugKit', function ($routes) {
+        Router::plugin('DebugKit', function (RouteBuilder $routes) {
             $routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
         });
     }

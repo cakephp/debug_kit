@@ -12,9 +12,9 @@
  */
 namespace DebugKit\Test\TestCase\Panel;
 
-use Cake\Controller\Controller;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\SqlLogPanel;
@@ -31,6 +31,16 @@ class SqlLogPanelTest extends TestCase
      * @var array
      */
     public $fixtures = ['core.articles'];
+
+    /**
+     * @var SqlLogPanel
+     */
+    protected $panel;
+
+    /**
+     * @var
+     */
+    protected $logger;
 
     /**
      * Setup
@@ -57,14 +67,12 @@ class SqlLogPanelTest extends TestCase
      */
     public function testInitializeTwiceNoDoubleProxy()
     {
-        $event = new Event('Sample');
-
-        $this->panel->initialize($event);
+        $this->panel->initialize();
         $db = ConnectionManager::get('test');
         $logger = $db->logger();
         $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
 
-        $this->panel->initialize($event);
+        $this->panel->initialize();
         $second = $db->logger();
         $this->assertSame($second, $logger);
     }
@@ -76,9 +84,11 @@ class SqlLogPanelTest extends TestCase
      */
     public function testData()
     {
-        $event = new Event('Sample');
-        $this->panel->initialize($event);
+        $this->panel->initialize();
 
+        /**
+         * @var Table $articles
+         */
         $articles = TableRegistry::get('Articles');
         $articles->findById(1)->first();
 
@@ -93,9 +103,11 @@ class SqlLogPanelTest extends TestCase
      */
     public function testSummary()
     {
-        $event = new Event('Sample');
-        $result = $this->panel->initialize($event);
+        $this->panel->initialize();
 
+        /**
+         * @var Table $articles
+         */
         $articles = TableRegistry::get('Articles');
         $articles->findById(1)->first();
 

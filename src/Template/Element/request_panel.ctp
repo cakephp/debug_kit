@@ -15,6 +15,10 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+/**
+ * @type \DebugKit\View\AjaxView $this
+ */
 ?>
 <?php if (!empty($headers) && $headers['response']): ?>
 <h4>Warning</h4>

@@ -39,6 +39,11 @@ class DebugBarFilterTest extends TestCase
     ];
 
     /**
+     * @var EventManager
+     */
+    protected $events;
+
+    /**
      * setup
      *
      * @return void

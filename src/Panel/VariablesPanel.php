@@ -13,7 +13,6 @@
 namespace DebugKit\Panel;
 
 use Cake\Collection\Collection;
-use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Form\Form;
@@ -134,14 +133,14 @@ class VariablesPanel extends DebugPanel
     /**
      * Get summary data for the variables panel.
      *
-     * @return int
+     * @return string
      */
     public function summary()
     {
         if (!isset($this->_data['content'])) {
-            return 0;
+            return '0';
         }
 
-        return count($this->_data['content']);
+        return (string)count($this->_data['content']);
     }
 }

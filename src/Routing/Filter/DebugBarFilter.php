@@ -13,12 +13,13 @@ namespace DebugKit\Routing\Filter;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
-use Cake\Event\EventManagerTrait;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\DispatcherFilter;
 use Cake\Routing\Router;
-use DebugKit\Panel\DebugPanel;
 use DebugKit\Panel\PanelRegistry;
 
 /**
@@ -30,8 +31,7 @@ use DebugKit\Panel\PanelRegistry;
  */
 class DebugBarFilter extends DispatcherFilter
 {
-
-    use EventManagerTrait;
+    use EventDispatcherTrait;
 
     /**
      * The panel registry.
@@ -69,8 +69,9 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function __construct(EventManager $events, array $config)
     {
+        parent::__construct($config);
+
         $this->eventManager($events);
-        $this->config($config);
         $this->_registry = new PanelRegistry($events);
     }
 
@@ -126,7 +127,7 @@ class DebugBarFilter extends DispatcherFilter
      * Get the list of loaded panels
      *
      * @param string $name The name of the panel you want to get.
-     * @return DebugKit\Panel\DebugPanel|null The panel or null.
+     * @return \DebugKit\DebugPanel|null The panel or null.
      */
     public function panel($name)
     {
@@ -169,11 +170,17 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function afterDispatch(Event $event)
     {
+        /**
+         * @var Request $request
+         */
         $request = $event->data['request'];
         // Skip debugkit requests and requestAction()
         if ($request->param('plugin') === 'DebugKit' || $request->is('requested')) {
             return;
         }
+        /**
+         * @var Response $response
+         */
         $response = $event->data['response'];
 
         $data = [
@@ -184,6 +191,9 @@ class DebugBarFilter extends DispatcherFilter
             'requested_at' => $request->env('REQUEST_TIME'),
             'panels' => []
         ];
+        /**
+         * @var \Debugkit\Model\Table\RequestsTable $requests
+         */
         $requests = TableRegistry::get('DebugKit.Requests');
         $requests->gc();
 

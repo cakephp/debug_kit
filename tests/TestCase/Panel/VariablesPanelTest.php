@@ -13,7 +13,6 @@
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Event\Event;
-use Cake\Form\Form;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\VariablesPanel;
@@ -25,6 +24,11 @@ use DebugKit\Panel\VariablesPanel;
 class VariablesPanelTest extends TestCase
 {
     public $fixtures = ['plugin.debug_kit.requests', 'plugin.debug_kit.panels'];
+
+    /**
+     * @var VariablesPanel
+     */
+    protected $panel;
 
     /**
      * set up
@@ -62,7 +66,7 @@ class VariablesPanelTest extends TestCase
         $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
         $update = $requests->query()->update();
 
-        $controller = new \StdClass();
+        $controller = new \stdClass();
         $controller->viewVars = [
             'updateQuery' => $update,
             'query' => $query,

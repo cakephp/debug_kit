@@ -14,7 +14,6 @@ namespace DebugKit\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Table\LazyTableTrait;
 
 /**
  * The panels table collects the information for each panel on
@@ -40,9 +39,9 @@ class PanelsTable extends Table
     /**
      * Find panels by requestid
      *
-     * @param Cake\ORM\Query $query The query
+     * @param \Cake\ORM\Query $query The query
      * @param array $options The options to use.
-     * @return Cake\ORM\Query The query.
+     * @return \Cake\ORM\Query The query.
      * @throws \RuntimeException
      */
     public function findByRequest(Query $query, array $options)

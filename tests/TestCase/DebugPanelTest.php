@@ -28,6 +28,14 @@ class SimplePanel extends DebugPanel
  */
 class DebugPanelTest extends TestCase
 {
+    /**
+     * @var SimplePanel
+     */
+    protected $panel;
+
+    /**
+     *
+     */
     public function setUp()
     {
         parent::setUp();

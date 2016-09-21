@@ -15,7 +15,6 @@ namespace DebugKit\Model\Table;
 use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Table\LazyTableTrait;
 
 /**
  * The requests table tracks basic information about each request.
@@ -57,7 +56,7 @@ class RequestsTable extends Table
     /**
      * Finder method to get recent requests as a simple array
      *
-     * @param Cake\ORM\Query $query The query
+     * @param \Cake\ORM\Query $query The query
      * @param array $options The options
      * @return Query The query.
      */

@@ -15,7 +15,6 @@ namespace DebugKit\Cache\Engine;
 
 use Cake\Cache\CacheEngine;
 use Cake\Cache\CacheRegistry;
-use Cake\Core\App;
 use DebugKit\DebugTimer;
 
 /**
@@ -253,6 +252,7 @@ class DebugEngine extends CacheEngine
      * @param string $key The key to set/read.
      * @param mixed $value The value to set.
      * @param bool $merge Whether or not configuration should be merged.
+     * @return mixed
      */
     public function config($key = null, $value = null, $merge = true)
     {

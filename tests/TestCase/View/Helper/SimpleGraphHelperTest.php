@@ -13,9 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-use Cake\Core\App;
 use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
@@ -26,6 +24,15 @@ use DebugKit\View\Helper\SimpleGraphHelper;
  */
 class SimpleGraphHelperTest extends TestCase
 {
+    /**
+     * @var View
+     */
+    protected $View;
+
+    /**
+     * @var SimpleGraphHelper
+     */
+    protected $Graph;
 
     /**
      * Setup

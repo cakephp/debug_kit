@@ -1,3 +1,8 @@
+<?php
+/**
+ * @type \DebugKit\View\AjaxView $this
+ */
+?>
 <!DOCTYPE html>
 <html>
     <head>

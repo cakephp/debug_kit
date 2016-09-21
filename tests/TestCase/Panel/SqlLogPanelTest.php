@@ -86,9 +86,7 @@ class SqlLogPanelTest extends TestCase
     {
         $this->panel->initialize();
 
-        /**
-         * @var Table $articles
-         */
+        /* @var Table $articles */
         $articles = TableRegistry::get('Articles');
         $articles->findById(1)->first();
 
@@ -105,9 +103,7 @@ class SqlLogPanelTest extends TestCase
     {
         $this->panel->initialize();
 
-        /**
-         * @var Table $articles
-         */
+        /* @var Table $articles */
         $articles = TableRegistry::get('Articles');
         $articles->findById(1)->first();
 

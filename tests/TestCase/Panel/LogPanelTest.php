@@ -77,9 +77,7 @@ class LogPanelTest extends TestCase
         $result = $this->panel->data();
 
         $this->assertArrayHasKey('logger', $result);
-        /**
-         * @var DebugKitLog $logger
-         */
+        /* @var DebugKitLog $logger */
         $logger = $result['logger'];
 
         $this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $logger);

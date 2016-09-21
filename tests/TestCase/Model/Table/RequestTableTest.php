@@ -32,9 +32,7 @@ class RequestTableTest extends TestCase
      */
     public function testInitializeCreatesSchema()
     {
-        /**
-         * @var Connection $connection
-         */
+        /* @var Connection $connection */
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
         TableRegistry::clear();

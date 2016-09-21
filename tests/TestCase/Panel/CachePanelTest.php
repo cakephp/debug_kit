@@ -22,6 +22,10 @@ use DebugKit\Panel\CachePanel;
  */
 class CachePanelTest extends TestCase
 {
+    /**
+     * @var CachePanel
+     */
+    protected $panel;
 
     /**
      * set up
@@ -53,8 +57,7 @@ class CachePanelTest extends TestCase
      */
     public function testInitialize()
     {
-        $event = new Event('Sample');
-        $this->panel->initialize($event);
+        $this->panel->initialize();
 
         $result = $this->panel->data();
         $this->assertArrayHasKey('debug_kit_test', $result['metrics']);
@@ -68,13 +71,11 @@ class CachePanelTest extends TestCase
      */
     public function testInitializeTwiceNoDoubleProxy()
     {
-        $event = new Event('Sample');
-
-        $this->panel->initialize($event);
+        $this->panel->initialize();
         $result = Cache::engine('debug_kit_test');
         $this->assertInstanceOf('DebugKit\Cache\Engine\DebugEngine', $result);
 
-        $this->panel->initialize($event);
+        $this->panel->initialize();
         $result2 = Cache::engine('debug_kit_test');
         $this->assertSame($result2, $result);
     }

@@ -21,6 +21,10 @@ use Cake\View\View;
  *
  * Currently only switches the default layout and sets the response type
  * which just maps to text/html by default.
+ *
+ * @property \DebugKit\View\Helper\SimpleGraphHelper $SimpleGraph
+ * @property \DebugKit\View\Helper\ToolbarHelper $Toolbar
+ * @property \DebugKit\View\Helper\TidyHelper $Tidy
  */
 class AjaxView extends View
 {

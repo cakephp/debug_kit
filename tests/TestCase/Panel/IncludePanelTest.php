@@ -13,7 +13,6 @@
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Event\Event;
-use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\IncludePanel;
 
@@ -23,6 +22,10 @@ use DebugKit\Panel\IncludePanel;
  */
 class IncludePanelTest extends TestCase
 {
+    /**
+     * @var IncludePanel
+     */
+    protected $panel;
 
     /**
      * set up
@@ -42,8 +45,7 @@ class IncludePanelTest extends TestCase
      */
     public function testShutdown()
     {
-        $result = $this->panel->shutdown(new Event('Controller.shutdown'));
-        $this->assertNull($result);
+        $this->panel->shutdown(new Event('Controller.shutdown'));
 
         $data = $this->panel->data();
         $this->assertArrayHasKey('cake', $data);

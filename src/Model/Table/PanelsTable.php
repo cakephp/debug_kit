@@ -14,11 +14,19 @@ namespace DebugKit\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Table\LazyTableTrait;
+use DebugKit\Model\Entity\Panel;
 
 /**
  * The panels table collects the information for each panel on
  * each request.
+ *
+ * @method Panel get($primaryKey, $options = [])
+ * @method Panel newEntity($data = null, array $options = [])
+ * @method Panel[] newEntities(array $data, array $options = [])
+ * @method Panel save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method Panel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method Panel[] patchEntities($entities, array $data, array $options = [])
+ * @method Panel findOrCreate($search, callable $callback = null)
  */
 class PanelsTable extends Table
 {
@@ -40,9 +48,9 @@ class PanelsTable extends Table
     /**
      * Find panels by requestid
      *
-     * @param Cake\ORM\Query $query The query
+     * @param \Cake\ORM\Query $query The query
      * @param array $options The options to use.
-     * @return Cake\ORM\Query The query.
+     * @return \Cake\ORM\Query The query.
      * @throws \RuntimeException
      */
     public function findByRequest(Query $query, array $options)

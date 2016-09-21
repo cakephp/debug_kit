@@ -54,6 +54,9 @@ class SimpleGraphHelper extends Helper
     public function bar($value, $offset, $options = [])
     {
         $settings = array_merge($this->_defaultSettings, $options);
+        /* @var int $max */
+        /* @var int $width */
+        /* @var string $valueType */
         extract($settings);
 
         $graphValue = ($value / $max) * $width;

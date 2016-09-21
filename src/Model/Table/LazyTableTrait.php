@@ -13,6 +13,8 @@
 namespace DebugKit\Model\Table;
 
 use Cake\Core\App;
+use Cake\Database\Connection;
+use Cake\Datasource\FixtureInterface;
 
 /**
  * A set of methods for building a database table when it is missing.
@@ -36,6 +38,7 @@ trait LazyTableTrait
      */
     public function ensureTables(array $fixtures)
     {
+        /* @var Connection $connection */
         $connection = $this->connection();
         $schema = $connection->schemaCollection();
         $existing = $schema->listTables();
@@ -45,9 +48,9 @@ trait LazyTableTrait
             if ($class === false) {
                 throw new \RuntimeException("Unknown fixture '$name'.");
             }
-            $fixture = new $class($this->connection()->configName());
-            $table = $fixture->table;
-            if (in_array($table, $existing)) {
+            /* @var FixtureInterface $fixture */
+            $fixture = new $class($connection->configName());
+            if (in_array($fixture->table, $existing)) {
                 continue;
             }
             $fixture->create($connection);

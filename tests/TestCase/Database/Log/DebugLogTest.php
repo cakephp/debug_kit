@@ -21,6 +21,10 @@ use DebugKit\Database\Log\DebugLog;
  */
 class DebugLogTest extends TestCase
 {
+    /**
+     * @var DebugLog
+     */
+    protected $logger;
 
     /**
      * setup

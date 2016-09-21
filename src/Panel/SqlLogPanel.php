@@ -12,9 +12,8 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Controller\Controller;
 use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use DebugKit\Database\Log\DebugLog;
 use DebugKit\DebugPanel;
@@ -39,7 +38,7 @@ class SqlLogPanel extends DebugPanel
      * This will unfortunately build all the connections, but they
      * won't connect until used.
      *
-     * @return array
+     * @return void
      */
     public function initialize()
     {
@@ -73,7 +72,7 @@ class SqlLogPanel extends DebugPanel
     public function data()
     {
         return [
-            'tables' => array_map(function ($table) {
+            'tables' => array_map(function (Table $table) {
                 return $table->alias();
             }, TableRegistry::genericInstances()),
             'loggers' => $this->_loggers,

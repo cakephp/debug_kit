@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\Model\Behavior;
 
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugTimer;
@@ -29,6 +30,11 @@ class TimedBehaviorTest extends TestCase
      * @var array
      */
     public $fixtures = ['core.articles'];
+
+    /**
+     * @var Table
+     */
+    protected $Article;
 
     /**
      * Start Test callback

@@ -13,22 +13,27 @@
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-use Cake\Core\App;
 use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
-use Cake\View\Helper\FormHelper;
-use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 use DebugKit\View\Helper\ToolbarHelper;
-use StdClass;
+use stdClass;
 
 /**
  * Class ToolbarHelperTestCase
  */
 class ToolbarHelperTest extends TestCase
 {
+    /**
+     * @var View
+     */
+    protected $View;
+
+    /**
+     * @var ToolbarHelper
+     */
+    protected $Toolbar;
 
     /**
      * Setup
@@ -109,8 +114,8 @@ class ToolbarHelperTest extends TestCase
      */
     public function testMakeNeatArrayCyclicObjects()
     {
-        $a = new StdClass;
-        $b = new StdClass;
+        $a = new stdClass;
+        $b = new stdClass;
         $a->child = $b;
         $b->parent = $a;
 
@@ -141,8 +146,8 @@ class ToolbarHelperTest extends TestCase
      */
     public function testMakeNeatArrayDuplicateObjects()
     {
-        $a = new StdClass;
-        $b = new StdClass;
+        $a = new stdClass;
+        $b = new stdClass;
         $a->first = $b;
         $a->second = $b;
 
@@ -297,9 +302,9 @@ class ToolbarHelperTest extends TestCase
      */
     public function testMakeNeatArrayObjects()
     {
-        $in = new StdClass();
+        $in = new stdClass();
         $in->key = 'value';
-        $in->nested = new StdClass();
+        $in->nested = new stdClass();
         $in->nested->name = 'mark';
 
         $result = $this->Toolbar->makeNeatArray($in);

@@ -13,11 +13,10 @@
  */
 namespace DebugKit\View\Helper;
 
-use Cake\Cache\Cache;
-use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
+use ArrayAccess;
 use Cake\View\Helper;
-use DebugKit\DebugKitDebugger;
+use Closure;
+use Iterator;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.

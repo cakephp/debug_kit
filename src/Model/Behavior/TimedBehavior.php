@@ -28,7 +28,7 @@ class TimedBehavior extends Behavior
      *
      * @param \Cake\Event\Event $event The beforeFind event
      * @param \Cake\ORM\Query $query Query
-     * @return bool true
+     * @return \Cake\ORM\Query
      */
     public function beforeFind(Event $event, $query)
     {
@@ -45,7 +45,7 @@ class TimedBehavior extends Behavior
     /**
      * beforeSave, starts a time before a save is initiated.
      *
-     * @param Cake\Event\Event $event The beforeSave event
+     * @param \Cake\Event\Event $event The beforeSave event
      * @return void
      */
     public function beforeSave(Event $event)
@@ -57,7 +57,7 @@ class TimedBehavior extends Behavior
     /**
      * afterSave, stop the timer started from a save.
      *
-     * @param Cake\Event\Event $event The afterSave event
+     * @param \Cake\Event\Event $event The afterSave event
      * @return void
      */
     public function afterSave(Event $event)

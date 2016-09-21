@@ -11,6 +11,16 @@
  * @since         DebugKit 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+/**
+ * @type \DebugKit\View\AjaxView $this
+ * @type string $cake
+ * @type string $core
+ * @type array $paths
+ * @type string $app
+ * @type string $plugins
+ */
+
 // Backwards compat for old DebugKit data.
 if (!isset($cake) && isset($core)) {
     $cake = $core;

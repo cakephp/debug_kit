@@ -12,9 +12,9 @@
  **/
 namespace DebugKit\Test\TestCase\Panel;
 
-use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
+use DebugKit\Log\Engine\DebugKitLog;
 use DebugKit\Panel\LogPanel;
 
 /**
@@ -23,6 +23,10 @@ use DebugKit\Panel\LogPanel;
  */
 class LogPanelTest extends TestCase
 {
+    /**
+     * @var LogPanel
+     */
+    protected $panel;
 
     /**
      * set up
@@ -73,6 +77,7 @@ class LogPanelTest extends TestCase
         $result = $this->panel->data();
 
         $this->assertArrayHasKey('logger', $result);
+        /* @var DebugKitLog $logger */
         $logger = $result['logger'];
 
         $this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $logger);

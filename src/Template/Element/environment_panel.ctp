@@ -15,7 +15,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 use Cake\Error\Debugger;
-use Cake\Utility\Inflector;
+
+/**
+ * @type \DebugKit\View\AjaxView $this
+ * @type array $app
+ * @type array $cake
+ * @type array $php
+ * @type array $hidef
+ */
 ?>
 
 <h2><?= __d('debug_kit', 'Application Constants') ?></h2>

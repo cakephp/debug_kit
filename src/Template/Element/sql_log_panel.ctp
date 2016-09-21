@@ -18,6 +18,8 @@
 
 /**
  * @type \DebugKit\View\AjaxView $this
+ * @type array $tables
+ * @type \DebugKit\Database\Log\DebugLog[] $loggers
  */
 $noOutput = true;
 

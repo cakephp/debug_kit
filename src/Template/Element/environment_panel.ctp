@@ -18,6 +18,10 @@ use Cake\Error\Debugger;
 
 /**
  * @type \DebugKit\View\AjaxView $this
+ * @type array $app
+ * @type array $cake
+ * @type array $php
+ * @type array $hidef
  */
 ?>
 

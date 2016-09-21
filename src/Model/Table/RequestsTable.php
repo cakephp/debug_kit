@@ -15,9 +15,18 @@ namespace DebugKit\Model\Table;
 use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use DebugKit\Model\Entity\Request;
 
 /**
  * The requests table tracks basic information about each request.
+ *
+ * @method Request get($primaryKey, $options = [])
+ * @method Request newEntity($data = null, array $options = [])
+ * @method Request[] newEntities(array $data, array $options = [])
+ * @method Request save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method Request patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method Request[] patchEntities($entities, array $data, array $options = [])
+ * @method Request findOrCreate($search, callable $callback = null)
  */
 class RequestsTable extends Table
 {

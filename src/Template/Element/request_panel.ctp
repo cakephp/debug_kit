@@ -18,6 +18,12 @@
 
 /**
  * @type \DebugKit\View\AjaxView $this
+ * @type array $headers
+ * @type array $params
+ * @type array $data
+ * @type array $query
+ * @type array $cookie
+ * @type string $matchedRoute
  */
 ?>
 <?php if (!empty($headers) && $headers['response']): ?>

@@ -14,6 +14,8 @@
 
 /**
  * @type \DebugKit\View\AjaxView $this
+ * @type \DebugKit\Model\Entity\Panel $panel
+ * @type array $requests
  */
 ?>
 <div id="request-history">

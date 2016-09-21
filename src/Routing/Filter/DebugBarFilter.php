@@ -187,7 +187,7 @@ class DebugBarFilter extends DispatcherFilter
             'requested_at' => $request->env('REQUEST_TIME'),
             'panels' => []
         ];
-        /* @var \Debugkit\Model\Table\RequestsTable $requests */
+        /* @var \DebugKit\Model\Table\RequestsTable $requests */
         $requests = TableRegistry::get('DebugKit.Requests');
         $requests->gc();
 

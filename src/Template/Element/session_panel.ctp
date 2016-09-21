@@ -14,6 +14,7 @@
 
 /**
  * @type \DebugKit\View\AjaxView $this
+ * @type array $content
  */
 ?>
 <?= $this->Toolbar->makeNeatArray($content);

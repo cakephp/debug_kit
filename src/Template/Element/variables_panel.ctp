@@ -14,6 +14,10 @@
 
 /**
  * @type \DebugKit\View\AjaxView $this
+ * @type string $error
+ * @type bool $sort
+ * @type array $content
+ * @type array $errors
  */
 
 if (isset($error)):

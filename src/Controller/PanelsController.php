@@ -20,7 +20,7 @@ use Cake\Network\Exception\NotFoundException;
 /**
  * Provides access to panel data.
  *
- * @property \Debugkit\Model\Table\PanelsTable $Panels
+ * @property \DebugKit\Model\Table\PanelsTable $Panels
  */
 class PanelsController extends Controller
 {

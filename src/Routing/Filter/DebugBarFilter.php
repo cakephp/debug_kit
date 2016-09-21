@@ -170,17 +170,13 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function afterDispatch(Event $event)
     {
-        /**
-         * @var Request $request
-         */
+        /* @var Request $request */
         $request = $event->data['request'];
         // Skip debugkit requests and requestAction()
         if ($request->param('plugin') === 'DebugKit' || $request->is('requested')) {
             return;
         }
-        /**
-         * @var Response $response
-         */
+        /* @var Response $response */
         $response = $event->data['response'];
 
         $data = [
@@ -191,9 +187,7 @@ class DebugBarFilter extends DispatcherFilter
             'requested_at' => $request->env('REQUEST_TIME'),
             'panels' => []
         ];
-        /**
-         * @var \Debugkit\Model\Table\RequestsTable $requests
-         */
+        /* @var \Debugkit\Model\Table\RequestsTable $requests */
         $requests = TableRegistry::get('DebugKit.Requests');
         $requests->gc();
 

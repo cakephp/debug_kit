@@ -30,9 +30,7 @@ class SessionPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        /**
-         * @var Request $request
-         */
+        /* @var Request $request */
         $request = $event->subject()->request;
         if ($request) {
             $this->_data = ['content' => $request->session()->read()];

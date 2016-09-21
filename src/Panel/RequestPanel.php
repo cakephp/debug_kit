@@ -31,9 +31,7 @@ class RequestPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        /**
-         * @var Controller $controller
-         */
+        /* @var Controller $controller */
         $controller = $event->subject();
         $request = $controller->request;
         $this->_data = [

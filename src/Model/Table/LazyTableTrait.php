@@ -38,9 +38,7 @@ trait LazyTableTrait
      */
     public function ensureTables(array $fixtures)
     {
-        /**
-         * @var Connection $connection
-         */
+        /* @var Connection $connection */
         $connection = $this->connection();
         $schema = $connection->schemaCollection();
         $existing = $schema->listTables();
@@ -50,9 +48,7 @@ trait LazyTableTrait
             if ($class === false) {
                 throw new \RuntimeException("Unknown fixture '$name'.");
             }
-            /**
-             * @var FixtureInterface $fixture
-             */
+            /* @var FixtureInterface $fixture */
             $fixture = new $class($connection->configName());
             if (in_array($fixture->table, $existing)) {
                 continue;

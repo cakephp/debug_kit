@@ -13,7 +13,6 @@
 namespace DebugKit\Controller;
 
 use Cake\Event\Event;
-use DebugKit\View\AjaxView;
 
 /**
  * Provides access to panel data.
@@ -33,6 +32,8 @@ class RequestsController extends DebugKitController
     public function beforeFilter(Event $event)
     {
         $this->response->header(['Content-Security-Policy' => '']);
+
+        parent::beforeFilter($event);
     }
 
     /**
@@ -43,9 +44,12 @@ class RequestsController extends DebugKitController
      */
     public function beforeRender(Event $event)
     {
+        $this->response->type('html');
         $this->viewBuilder()
             ->layout('DebugKit.toolbar')
             ->className('DebugKit.Ajax');
+
+        parent::beforeRender($event);
     }
 
     /**

@@ -14,7 +14,6 @@ namespace DebugKit\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Network\Exception\NotFoundException;
-use Cake\View\JsonView;
 
 /**
  * Provides utility features need by the toolbar.

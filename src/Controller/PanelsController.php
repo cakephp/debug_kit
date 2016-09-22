@@ -36,6 +36,8 @@ class PanelsController extends DebugKitController
         if (!$this->request->is('json')) {
             $this->viewBuilder()->className('DebugKit.Ajax');
         }
+
+        parent::beforeRender($event);
     }
 
     /**

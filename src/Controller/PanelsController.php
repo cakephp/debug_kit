@@ -12,41 +12,18 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
+use DebugKit\View\AjaxView;
 
 /**
  * Provides access to panel data.
  *
  * @property \DebugKit\Model\Table\PanelsTable $Panels
  */
-class PanelsController extends Controller
+class PanelsController extends DebugKitController
 {
-
-    /**
-     * components
-     *
-     * @var array
-     */
-    public $components = ['RequestHandler', 'Cookie'];
-
-    /**
-     * Before filter handler.
-     *
-     * @param \Cake\Event\Event $event The event.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException
-     */
-    public function beforeFilter(Event $event)
-    {
-        // TODO add config override.
-        if (!Configure::read('debug')) {
-            throw new NotFoundException();
-        }
-    }
-
     /**
      * Before render handler.
      *
@@ -58,7 +35,7 @@ class PanelsController extends Controller
         $this->viewBuilder()->layout('DebugKit.toolbar');
 
         if (!$this->request->is('json')) {
-            $this->viewBuilder()->className('DebugKit.Ajax');
+            $this->viewBuilder()->className(AjaxView::class);
         }
     }
 
@@ -71,8 +48,7 @@ class PanelsController extends Controller
      */
     public function index($requestId = null)
     {
-        $query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
-        $panels = $query->toArray();
+        $panels = $this->Panels->find('byRequest', ['requestId' => $requestId])->toArray();
         if (empty($panels)) {
             throw new NotFoundException();
         }
@@ -92,9 +68,10 @@ class PanelsController extends Controller
     {
         $this->Cookie->configKey('debugKit_sort', 'encryption', false);
         $this->set('sort', $this->Cookie->read('debugKit_sort'));
-        $panel = $this->Panels->get($id);
 
+        $panel = $this->Panels->get($id);
         $this->set('panel', $panel);
+
         $this->set(unserialize($panel->content));
     }
 }

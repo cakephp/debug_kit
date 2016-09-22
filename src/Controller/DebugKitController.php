@@ -12,38 +12,39 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Cache\Cache;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
-use Cake\View\JsonView;
 
 /**
- * Provides utility features need by the toolbar.
+ * Provides common controller functionality for the DebugKit.
  */
-class ToolbarController extends DebugKitController
+abstract class DebugKitController extends Controller
 {
     /**
-     * View class
-     *
-     * @var string
+     * @return void
      */
-    public $viewClass = JsonView::class;
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Cookie');
+    }
 
     /**
-     * Clear a named cache.
+     * Before filter handler.
      *
+     * @param \Cake\Event\Event $event The event.
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException
      */
-    public function clearCache()
+    public function beforeFilter(Event $event)
     {
-        $this->request->allowMethod('post');
-        if (!$this->request->data('name')) {
-            throw new NotFoundException('Invalid cache engine name.');
+        // TODO add config override
+        if (!Configure::read('debug')) {
+            throw new NotFoundException();
         }
-        $result = Cache::clear(false, $this->request->data('name'));
-        $this->set([
-            '_serialize' => ['success'],
-            'success' => $result,
-        ]);
     }
 }

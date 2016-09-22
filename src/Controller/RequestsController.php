@@ -45,7 +45,7 @@ class RequestsController extends DebugKitController
     {
         $this->viewBuilder()
             ->layout('DebugKit.toolbar')
-            ->className(AjaxView::class);
+            ->className('DebugKit.Ajax');
     }
 
     /**

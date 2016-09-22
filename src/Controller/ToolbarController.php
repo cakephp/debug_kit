@@ -26,7 +26,7 @@ class ToolbarController extends DebugKitController
      *
      * @var string
      */
-    public $viewClass = JsonView::class;
+    public $viewClass = 'Cake\View\JsonView';
 
     /**
      * Clear a named cache.

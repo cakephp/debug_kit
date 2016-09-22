@@ -12,7 +12,6 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use DebugKit\View\AjaxView;
@@ -35,7 +34,7 @@ class PanelsController extends DebugKitController
         $this->viewBuilder()->layout('DebugKit.toolbar');
 
         if (!$this->request->is('json')) {
-            $this->viewBuilder()->className(AjaxView::class);
+            $this->viewBuilder()->className('DebugKit.Ajax');
         }
     }
 

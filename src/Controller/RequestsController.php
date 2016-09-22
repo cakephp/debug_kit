@@ -37,6 +37,15 @@ class RequestsController extends DebugKitController
     }
 
     /**
+     * Do not load components for this controller.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+    }
+
+    /**
      * Before render handler.
      *
      * @param \Cake\Event\Event $event The event.
@@ -44,7 +53,6 @@ class RequestsController extends DebugKitController
      */
     public function beforeRender(Event $event)
     {
-        $this->response->type('html');
         $this->viewBuilder()
             ->layout('DebugKit.toolbar')
             ->className('DebugKit.Ajax');

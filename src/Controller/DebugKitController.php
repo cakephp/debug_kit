@@ -42,7 +42,6 @@ abstract class DebugKitController extends Controller
      */
     public function beforeFilter(Event $event)
     {
-        // TODO add config override
         if (!Configure::read('debug')) {
             throw new NotFoundException();
         }

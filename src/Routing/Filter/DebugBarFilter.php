@@ -233,6 +233,9 @@ class DebugBarFilter extends DispatcherFilter
             return;
         }
         $body = $response->body();
+        if (!is_string($body)) {
+            return;
+        }
         $pos = strrpos($body, '</body>');
         if ($pos === false) {
             return;

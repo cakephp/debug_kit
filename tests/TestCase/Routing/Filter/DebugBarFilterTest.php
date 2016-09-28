@@ -110,6 +110,31 @@ class DebugBarFilterTest extends TestCase
     }
 
     /**
+     * Test that afterDispatch ignores streaming bodies
+     *
+     * @return void
+     */
+    public function testAfterDispatchIgnoreStreamBodies()
+    {
+        $request = new Request([
+            'url' => '/articles',
+            'params' => ['plugin' => null]
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+        ]);
+        $response->body(function () {
+            echo 'I am a teapot!';
+        });
+
+        $bar = new DebugBarFilter($this->events, []);
+        $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
+        $this->assertNull($bar->afterDispatch($event));
+        $this->assertInstanceOf('Closure', $response->body());
+    }
+
+    /**
      * Test that afterDispatch saves panel data.
      *
      * @return void

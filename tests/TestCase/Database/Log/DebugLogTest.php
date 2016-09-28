@@ -69,7 +69,7 @@ class DebugLogTest extends TestCase
      */
     public function testLogDecorates()
     {
-        $orig = $this->getMock('Cake\Database\Log\QueryLogger');
+        $orig = $this->getMockBuilder('Cake\Database\Log\QueryLogger')->getMock();
         $orig->expects($this->once())
             ->method('log');
 

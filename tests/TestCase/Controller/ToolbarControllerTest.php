@@ -69,7 +69,7 @@ class ToolbarControllerTest extends IntegrationTestCase
      */
     public function testClearCache()
     {
-        $mock = $this->getMock('Cake\Cache\CacheEngine');
+        $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
         $mock->expects($this->once())
             ->method('init')
             ->will($this->returnValue(true));

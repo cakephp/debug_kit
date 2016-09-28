@@ -42,7 +42,7 @@ class DebugEngineTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $mock = $this->getMock('Cake\Cache\CacheEngine');
+        $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
         $this->mock = $mock;
         $this->engine = new DebugEngine($mock);
         $this->engine->init();

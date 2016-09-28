@@ -124,7 +124,7 @@ class DebugBarFilterTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response->body(function() {
+        $response->body(function () {
             echo 'I am a teapot!';
         });
 

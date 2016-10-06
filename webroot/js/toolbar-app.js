@@ -126,7 +126,7 @@ Toolbar.prototype = {
 
 			// Slide panel into place - css transitions.
 			_this.content.addClass('enabled');
-			contentArea.html(response);
+			contentArea.html(response.content);
 			_this.bindNeatArray();
 		});
 	},

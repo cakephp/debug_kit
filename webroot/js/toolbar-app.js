@@ -14,6 +14,7 @@ Toolbar.prototype = {
 	_currentPanel: null,
 	_lastPanel: null,
 	_state: 0,
+	_localStorageAvailable: null,
 	currentRequest: null,
 	originalRequest: null,
 	ajaxRequests: [],
@@ -43,15 +44,33 @@ Toolbar.prototype = {
 		return this.state();
 	},
 
+	localStorageAvailable: function() {
+		if (this._localStorageAvailable === null) {
+			if (!window.localStorage) {
+				this._localStorageAvailable = false;
+			} else {
+				try {
+					window.localStorage.setItem('testKey', '1');
+					window.localStorage.removeItem('testKey');
+					this._localStorageAvailable = true;
+				} catch (error) {
+					this._localStorageAvailable = false;
+				}
+			}
+		}
+
+		return this._localStorageAvailable;
+	},
+
 	saveState: function() {
-		if (!window.localStorage) {
+		if (!this.localStorageAvailable()) {
 			return;
 		}
 		window.localStorage.setItem('toolbar_state', this._state);
 	},
 
 	loadState: function() {
-		if (!window.localStorage) {
+		if (!this.localStorageAvailable()) {
 			return;
 		}
 		var old = window.localStorage.getItem('toolbar_state');

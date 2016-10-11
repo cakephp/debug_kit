@@ -49,14 +49,11 @@ Toolbar.prototype = {
 			if (!window.localStorage) {
 				this._localStorageAvailable = false;
 			} else {
-				try
-				{
+				try {
 					window.localStorage.setItem('testKey', '1');
 					window.localStorage.removeItem('testKey');
 					this._localStorageAvailable = true;
-				}
-				catch (error)
-				{
+				} catch (error) {
 					this._localStorageAvailable = false;
 				}
 			}

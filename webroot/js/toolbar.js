@@ -1,9 +1,9 @@
-var __debug_kit_id,
-  __debug_kit_base_url;
+var __debugKitId,
+  __debugKitBaseUrl;
 var elem = document.getElementById('__debug_kit');
 if (elem) {
-  __debug_kit_id = elem.getAttribute('data-id');
-  __debug_kit_base_url = elem.getAttribute('data-url');
+  __debugKitId = elem.getAttribute('data-id');
+  __debugKitBaseUrl = elem.getAttribute('data-url');
   elem = null;
 }
 
@@ -33,7 +33,7 @@ if (elem) {
   };
 
   var onReady = function() {
-    if (!win.__debug_kit_id) {
+    if (!win.__debugKitId) {
       return;
     }
     var body = doc.body;
@@ -49,7 +49,7 @@ if (elem) {
     iframe.style.zIndex = 99999;
     iframe.height = 40;
     iframe.width = 40;
-    iframe.src = __debug_kit_base_url + 'debug_kit/toolbar/' + __debug_kit_id;
+    iframe.src = __debugKitBaseUrl + 'debug_kit/toolbar/' + __debugKitId;
 
     body.appendChild(iframe);
     bodyOverflow = body.style.overflow;

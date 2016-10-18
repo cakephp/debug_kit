@@ -95,6 +95,8 @@ class PanelsController extends Controller
         $panel = $this->Panels->get($id);
 
         $this->set('panel', $panel);
+        // @codingStandardsIgnoreStart
         $this->set(@unserialize($panel->content));
+        // @codingStandardsIgnoreEnd
     }
 }

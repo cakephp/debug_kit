@@ -13,6 +13,8 @@
 namespace DebugKit\Test\Routing\Filter;
 
 use Cake\Core\Configure;
+use Cake\Database\Driver\Sqlite;
+use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
@@ -52,6 +54,9 @@ class DebugBarFilterTest extends TestCase
     {
         parent::setUp();
         $this->events = new EventManager();
+
+        $connection = ConnectionManager::get('test');
+        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
     }
 
     /**

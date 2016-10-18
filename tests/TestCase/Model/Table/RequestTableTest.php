@@ -24,6 +24,30 @@ use Cake\TestSuite\TestCase;
  */
 class RequestTableTest extends TestCase
 {
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.debug_kit.requests',
+        'plugin.debug_kit.panels'
+    ];
+
+    /**
+     * Setup
+     *
+     * Skip tests on SQLite as SQLite complains when tables are changed while a connection is open.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $connection = ConnectionManager::get('test');
+        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+    }
+
 
     /**
      * test that schema is created on-demand.
@@ -32,11 +56,7 @@ class RequestTableTest extends TestCase
      */
     public function testInitializeCreatesSchema()
     {
-        /* @var Connection $connection */
         $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
-        TableRegistry::clear();
-
         $stmt = $connection->execute('DROP TABLE IF EXISTS panels');
         $stmt->closeCursor();
 

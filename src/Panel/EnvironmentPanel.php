@@ -33,12 +33,11 @@ class EnvironmentPanel extends DebugPanel
     protected function _prepare()
     {
         $return = [];
-
         // PHP Data
         $phpVer = phpversion();
         $return['php'] = array_merge(
             ['PHP_VERSION' => $phpVer],
-            $_SERVER
+            $this->_getServer()
         );
         unset($return['php']['argv']);
 
@@ -84,5 +83,15 @@ class EnvironmentPanel extends DebugPanel
     public function shutdown(Event $event)
     {
         $this->_data = $this->_prepare();
+    }
+
+    /**
+     * To be mocked elsewhere
+     *
+     * @return array
+     */
+    protected function _getServer()
+    {
+        return $_SERVER;
     }
 }

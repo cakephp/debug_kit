@@ -514,3 +514,8 @@ pre,
 		transform: rotate(360deg);
 	}
 }
+
+.panel-content .filtered-credentials {
+    text-decoration: underline;
+    cursor:pointer;
+}

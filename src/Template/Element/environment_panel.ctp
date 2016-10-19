@@ -89,7 +89,7 @@ use Cake\Error\Debugger;
         <?php foreach ($php as $key => $val): ?>
         <tr>
             <td><?= h($key) ?></td>
-            <td><?= h($val) ?></td>
+            <td><?= $this->Credentials->filter($val) ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>

@@ -25,16 +25,6 @@ use Cake\TestSuite\TestCase;
 class RequestTableTest extends TestCase
 {
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.debug_kit.requests',
-        'plugin.debug_kit.panels'
-    ];
-
-    /**
      * Setup
      *
      * Skip tests on SQLite as SQLite complains when tables are changed while a connection is open.

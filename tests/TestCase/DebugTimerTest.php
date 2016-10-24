@@ -8,7 +8,7 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @since         debug_kit 2.0
+ * @since         2.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\Test\TestCase;

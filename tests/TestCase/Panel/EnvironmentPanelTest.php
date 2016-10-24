@@ -36,9 +36,7 @@ class EnvironmentPanelTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->panel = $this->getMockBuilder('\DebugKit\Panel\EnvironmentPanel')
-            ->setMethods(['_getServer'])
-            ->getMock();
+        $this->panel = new EnvironmentPanel();
     }
 
     /**
@@ -61,12 +59,8 @@ class EnvironmentPanelTest extends TestCase
     {
         $controller = new \stdClass();
         $event = new Event('Controller.shutdown', $controller);
-        $serverData = [
-            'TEST_URL_1' => 'mysql://user:password@localhost/my_db',
-        ];
-        $this->panel->expects($this->once())
-            ->method('_getServer')
-            ->will($this->returnValue($serverData));
+        $_SERVER['TEST_URL_1'] = 'mysql://user:password@localhost/my_db';
+
         $this->panel->shutdown($event);
         $output = $this->panel->data();
         $this->assertInternalType('array', $output);

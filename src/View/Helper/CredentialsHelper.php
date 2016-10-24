@@ -8,7 +8,7 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @since         v 1.0 (22-Jun-2009)
+ * @since         3.3.7
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\View\Helper;
@@ -20,18 +20,15 @@ use Cake\Utility\Hash;
 use Cake\View\Helper;
 
 /**
- * CredentialsHelper class
+ * CredentialsHelper
  *
  * Filter sensitive data in screen, data will be displayed on mouse click
- *
- * @uses          AppHelper
- *
  */
 class CredentialsHelper extends Helper
 {
 
     /**
-     * helpers property
+     * Helpers property
      *
      * @var array
      */
@@ -44,7 +41,7 @@ class CredentialsHelper extends Helper
      * @param string $in variable to filter
      * @return string
      */
-    public function filter($in = '')
+    public function filter($in)
     {
         $regexp = '/^([^:;]+:\/\/)([^:;]+:?.*?)@(.*)$/i';
         if (!is_string($in) || empty($in)) {

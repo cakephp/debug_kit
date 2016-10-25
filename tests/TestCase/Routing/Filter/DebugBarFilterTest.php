@@ -170,10 +170,10 @@ class DebugBarFilterTest extends TestCase
         $this->assertEquals(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertEquals('SqlLog', $result->panels[7]->panel);
-        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[7]->element);
-        $this->assertSame('0', $result->panels[7]->summary);
-        $this->assertEquals('Sql Log', $result->panels[7]->title);
+        $this->assertEquals('SqlLog', $result->panels[8]->panel);
+        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[8]->element);
+        $this->assertSame('0', $result->panels[8]->summary);
+        $this->assertEquals('Sql Log', $result->panels[8]->title);
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit" data-id="' . $result->id . '" ' .

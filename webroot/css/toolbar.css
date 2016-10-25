@@ -246,6 +246,9 @@ pre,
 	word-break: break-all;
 	word-break: break-word; /* Not standard for webkit */
 }
+.debug-table .highlighted td {
+	background: #e7e9fd;
+}
 
 .list {
 	list-style: disc;

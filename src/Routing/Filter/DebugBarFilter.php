@@ -57,6 +57,7 @@ class DebugBarFilter extends DispatcherFilter
             'DebugKit.Environment',
             'DebugKit.Include',
             'DebugKit.History',
+            'DebugKit.Routes',
         ],
         'forceEnable' => false,
     ];

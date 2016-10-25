@@ -13,7 +13,6 @@
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Event\Event;
-use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
@@ -71,7 +70,6 @@ class RoutesPanelTest extends TestCase
             '/:controller',
             '/:controller/:action/*',
         ], Hash::extract($result['routes'], '{n}.template'));
-
     }
 
     /**

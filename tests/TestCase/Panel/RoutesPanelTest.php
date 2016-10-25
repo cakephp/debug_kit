@@ -40,11 +40,11 @@ class RoutesPanelTest extends TestCase
     {
         parent::setUp();
 
-        Router::defaultRouteClass(DashedRoute::class);
+        Router::defaultRouteClass('DashedRoute');
         Router::scope('/', function (RouteBuilder $routes) {
             $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
             $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-            $routes->fallbacks(DashedRoute::class);
+            $routes->fallbacks('DashedRoute');
         });
 
         $this->panel = new RoutesPanel();

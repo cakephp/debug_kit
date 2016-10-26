@@ -15,8 +15,8 @@
     <tbody>
     <?php foreach ($routes as $route): ?>
         <tr class="<?= ($matchedRoute === $route->template) ? 'highlighted' : '' ?>">
-            <td><?= \Cake\Utility\Hash::get($route->options, '_name', $route->getName()) ?></td>
-            <td><?= $route->template ?></td>
+            <td><?= h(\Cake\Utility\Hash::get($route->options, '_name', $route->getName())) ?></td>
+            <td><?= h($route->template) ?></td>
             <td><?= json_encode($route->defaults) ?></td>
         </tr>
     <?php endforeach; ?>

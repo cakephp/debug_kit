@@ -50,29 +50,6 @@ class RoutesPanelTest extends TestCase
     }
 
     /**
-     * Test data
-     *
-     * @return void
-     */
-    public function testData()
-    {
-        $this->panel->shutdown(new Event('Controller.shutdown'));
-
-        $result = $this->panel->data();
-
-        $this->assertArrayHasKey('matchedRoute', $result);
-        $this->assertNull($result['matchedRoute']);
-
-        $this->assertArrayHasKey('routes', $result);
-        $this->assertEquals([
-            '/',
-            '/pages/*',
-            '/:controller',
-            '/:controller/:action/*',
-        ], Hash::extract($result['routes'], '{n}.template'));
-    }
-
-    /**
      * Test that the log panel outputs a summary.
      *
      * @return void

@@ -45,7 +45,6 @@ class RoutesPanel extends DebugPanel
         /* @var \Cake\Network\Request $request */
         $request = $controller ? $controller->request : null;
         $this->_data = [
-            'routes' => Router::routes(),
             'matchedRoute' => $request ? $request->param('_matchedRoute') : null,
         ];
     }

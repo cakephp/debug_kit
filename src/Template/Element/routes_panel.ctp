@@ -3,6 +3,7 @@
  * @var \Cake\Routing\Route\Route[] $routes
  * @var string $matchedRoute
  */
+$routes = Cake\Routing\Router::routes();
 ?>
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>

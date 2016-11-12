@@ -105,6 +105,7 @@ There are several built-in panels, they are:
  * **Log** Display any entries made to the log files this request.
  * **Variables** Display View variables set in controller.
  * **Environment** Display environment variables related to PHP + CakePHP.
+ * **Routes** Display all the routes connected in your application, highlighting the current route.
 
 ## Configuration
 

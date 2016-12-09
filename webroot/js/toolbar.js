@@ -64,8 +64,8 @@ if (elem) {
           requestId: this.getResponseHeader('X-DEBUGKIT-ID'),
           status: this.status,
           date: new Date,
-          method: this._arguments[0],
-          url: this._arguments[1],
+          method: this._arguments && this._arguments[0],
+          url: this._arguments && this._arguments[1],
           type: this.getResponseHeader('Content-Type')
         };
         iframe.contentWindow.postMessage('ajax-completed$$' + JSON.stringify(params), window.location.origin);

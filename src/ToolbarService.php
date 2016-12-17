@@ -123,10 +123,7 @@ class ToolbarService
     }
 
     /**
-     * Do the required setup work.
-     *
-     * - Build panels.
-     * - Connect events
+     * Load all the panels being used
      *
      * @return void
      */
@@ -140,7 +137,6 @@ class ToolbarService
     /**
      * Call the initialize method onl all the loaded panels.
      *
-     * @param \Cake\Event\Event $event The beforeDispatch event.
      * @return void
      */
     public function initializePanels()

@@ -81,6 +81,7 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInitializePanels()
     {
+        Log::drop('debug_kit_log_panel');
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
 

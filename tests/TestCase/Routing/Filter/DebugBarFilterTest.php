@@ -135,7 +135,7 @@ class DebugBarFilterTest extends TestCase
 
         $bar = new DebugBarFilter($this->events, []);
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
-        $this->assertNull($bar->afterDispatch($event));
+        $bar->afterDispatch($event);
         $this->assertInstanceOf('Closure', $response->body());
     }
 

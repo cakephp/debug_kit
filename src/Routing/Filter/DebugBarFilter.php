@@ -12,6 +12,7 @@
 namespace DebugKit\Routing\Filter;
 
 use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Routing\DispatcherFilter;
@@ -95,7 +96,7 @@ class DebugBarFilter extends DispatcherFilter
     public function panel($name)
     {
         $registry = $this->service->registry();
-        return $regisrty->{$name};
+        return $registry->{$name};
     }
 
     /**

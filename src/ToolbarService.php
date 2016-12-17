@@ -14,6 +14,7 @@ namespace DebugKit;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
@@ -62,13 +63,12 @@ class ToolbarService
     /**
      * Constructor
      *
-     * @param \Cake\Event\EventManager $events The event manager to use.
      * @param array $config The configuration data for DebugKit.
+     * @param \Cake\Event\EventManager $events The event manager to use defaults to the global manager
      */
     public function __construct(EventManager $events, array $config)
     {
-        parent::__construct($config);
-
+        $this->config($config);
         $this->registry = new PanelRegistry($events);
     }
 
@@ -224,7 +224,12 @@ class ToolbarService
         $response->header(['X-DEBUGKIT-ID' => $row->id]);
 
         $url = Router::url('/', true);
-        $script = "<script id=\"__debug_kit\" data-id=\"{$id}\" data-url=\"{$url}\" src=\"" . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
+        $script = sprintf(
+            '<script id="__debug_kit" data-id="%s" data-url="%s" src="%s"></script>',
+            $row->id,
+            $url,
+            Router::url('/debug_kit/js/toolbar.js')
+        );
 
         $body = substr($body, 0, $pos) . $script . substr($body, $pos);
         $response->body($body);

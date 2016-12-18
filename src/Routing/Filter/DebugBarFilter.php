@@ -96,6 +96,7 @@ class DebugBarFilter extends DispatcherFilter
     public function panel($name)
     {
         $registry = $this->service->registry();
+
         return $registry->{$name};
     }
 

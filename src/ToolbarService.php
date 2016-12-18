@@ -63,8 +63,8 @@ class ToolbarService
     /**
      * Constructor
      *
-     * @param array $config The configuration data for DebugKit.
      * @param \Cake\Event\EventManager $events The event manager to use defaults to the global manager
+     * @param array $config The configuration data for DebugKit.
      */
     public function __construct(EventManager $events, array $config)
     {
@@ -149,8 +149,8 @@ class ToolbarService
     /**
      * Save the toolbar state.
      *
-     * @param \Cake\Network\Request $request
-     * @param \Cake\Network\Response $respone
+     * @param \Cake\Network\Request $request The request
+     * @param \Cake\Network\Response $response The response
      * @return null|\DebugKit\Model\Entity\Request Saved request data.
      */
     public function saveData(Request $request, Response $response)
@@ -191,6 +191,7 @@ class ToolbarService
                 'content' => $content,
             ]);
         }
+
         return $requests->save($row);
     }
 
@@ -229,6 +230,7 @@ class ToolbarService
 
         $body = substr($body, 0, $pos) . $script . substr($body, $pos);
         $response->body($body);
+
         return $response;
     }
 }

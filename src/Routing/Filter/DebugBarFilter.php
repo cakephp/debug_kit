@@ -140,6 +140,7 @@ class DebugBarFilter extends DispatcherFilter
         if (!$row) {
             return;
         }
+
         return $this->service->injectScripts($row, $response);
     }
 }

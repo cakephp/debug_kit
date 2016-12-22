@@ -10,24 +10,24 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Test\Routing\Filter;
+namespace DebugKit\Test;
 
 use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use DebugKit\Routing\Filter\DebugBarFilter;
+use DebugKit\Model\Entity\Request as RequestEntity;
+use DebugKit\ToolbarService;
 
 /**
  * Test the debug bar
  */
-class DebugBarFilterTest extends TestCase
+class ToolbarServiceTest extends TestCase
 {
 
     /**
@@ -64,10 +64,10 @@ class DebugBarFilterTest extends TestCase
      *
      * @return void
      */
-    public function testSetupLoadingPanels()
+    public function testLoadPanels()
     {
-        $bar = new DebugBarFilter($this->events, []);
-        $bar->setup();
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
 
         $this->assertContains('SqlLog', $bar->loadedPanels());
         $this->assertGreaterThan(1, $this->events->listeners('Controller.shutdown'));
@@ -79,24 +79,24 @@ class DebugBarFilterTest extends TestCase
      *
      * @return void
      */
-    public function testBeforeDispatch()
+    public function testInitializePanels()
     {
-        $bar = new DebugBarFilter($this->events, []);
-        $bar->setup();
+        Log::drop('debug_kit_log_panel');
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
 
         $this->assertNull(Log::config('debug_kit_log_panel'));
-        $event = new Event('Dispatcher.beforeDispatch');
-        $bar->beforeDispatch($event);
+        $bar->initializePanels();
 
         $this->assertNotEmpty(Log::config('debug_kit_log_panel'), 'Panel attached logger.');
     }
 
     /**
-     * Test that afterDispatch ignores requestAction
+     * Test that saveData ignores requestAction
      *
      * @return void
      */
-    public function testAfterDispatchIgnoreRequestAction()
+    public function testSaveDataIgnoreRequestAction()
     {
         $request = new Request([
             'url' => '/articles',
@@ -108,43 +108,16 @@ class DebugBarFilterTest extends TestCase
             'body' => '<html><title>test</title><body><p>some text</p></body>'
         ]);
 
-        $bar = new DebugBarFilter($this->events, []);
-        $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
-        $this->assertNull($bar->afterDispatch($event));
-        $this->assertNotContains('<script>', $response->body());
+        $bar = new ToolbarService($this->events, []);
+        $this->assertNull($bar->saveData($request, $response));
     }
 
     /**
-     * Test that afterDispatch ignores streaming bodies
+     * Test that saveData works
      *
      * @return void
      */
-    public function testAfterDispatchIgnoreStreamBodies()
-    {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null]
-        ]);
-        $response = new Response([
-            'statusCode' => 200,
-            'type' => 'text/html',
-        ]);
-        $response->body(function () {
-            echo 'I am a teapot!';
-        });
-
-        $bar = new DebugBarFilter($this->events, []);
-        $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
-        $bar->afterDispatch($event);
-        $this->assertInstanceOf('Closure', $response->body());
-    }
-
-    /**
-     * Test that afterDispatch saves panel data.
-     *
-     * @return void
-     */
-    public function testAfterDispatchSavesData()
+    public function testSaveData()
     {
         $request = new Request([
             'url' => '/articles',
@@ -156,11 +129,10 @@ class DebugBarFilterTest extends TestCase
             'body' => '<html><title>test</title><body><p>some text</p></body>'
         ]);
 
-        $bar = new DebugBarFilter($this->events, []);
-        $bar->setup();
-
-        $event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
-        $bar->afterDispatch($event);
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
+        $row = $bar->saveData($request, $response);
+        $this->assertNotEmpty($row);
 
         $requests = TableRegistry::get('DebugKit.Requests');
         $result = $requests->find()
@@ -179,20 +151,72 @@ class DebugBarFilterTest extends TestCase
         $this->assertEquals('DebugKit.sql_log_panel', $result->panels[8]->element);
         $this->assertSame('0', $result->panels[8]->summary);
         $this->assertEquals('Sql Log', $result->panels[8]->title);
+    }
+
+    /**
+     * Test injectScripts()
+     *
+     * @return void
+     */
+    public function testInjectScriptsLastBodyTag()
+    {
+        $request = new Request([
+            'url' => '/articles',
+            'environment' => ['REQUEST_METHOD' => 'GET']
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>'
+        ]);
+
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
+        $row = $bar->saveData($request, $response);
+        $response = $bar->injectScripts($row, $response);
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
-            '<script id="__debug_kit" data-id="' . $result->id . '" ' .
+            '<script id="__debug_kit" data-id="' . $row->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js"></script>' .
             '</body>';
         $this->assertTextEquals($expected, $response->body());
     }
 
     /**
+     * Test that saveData ignores streaming bodies
+     *
+     * @return void
+     */
+    public function testInjectScriptsStreamBodies()
+    {
+        $request = new Request([
+            'url' => '/articles',
+            'params' => ['plugin' => null]
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+        ]);
+        $response->body(function () {
+            echo 'I am a teapot!';
+        });
+
+        $bar = new ToolbarService($this->events, []);
+        $row = new RequestEntity(['id' => 'abc123']);
+
+        $result = $bar->injectScripts($row, $response);
+        $this->assertInstanceOf('Cake\Network\Response', $result);
+        $this->assertInstanceOf('Closure', $result->body());
+        $this->assertInstanceOf('Closure', $response->body());
+    }
+
+
+    /**
      * Test that afterDispatch does not modify response
      *
      * @return void
      */
-    public function testAfterDispatchNoModifyResponse()
+    public function testInjectScriptsNoModifyResponse()
     {
         $request = new Request(['url' => '/articles']);
 
@@ -202,11 +226,11 @@ class DebugBarFilterTest extends TestCase
             'body' => '{"some":"json"}'
         ]);
 
-        $bar = new DebugBarFilter($this->events, []);
-        $bar->setup();
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
 
-        $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
-        $bar->afterDispatch($event);
+        $row = $bar->saveData($request, $response);
+        $response = $bar->injectScripts($row, $response);
         $this->assertTextEquals('{"some":"json"}', $response->body());
     }
 
@@ -218,11 +242,11 @@ class DebugBarFilterTest extends TestCase
     public function testIsEnabled()
     {
         Configure::write('debug', true);
-        $bar = new DebugBarFilter($this->events, []);
+        $bar = new ToolbarService($this->events, []);
         $this->assertTrue($bar->isEnabled(), 'debug is on, panel is enabled');
 
         Configure::write('debug', false);
-        $bar = new DebugBarFilter($this->events, []);
+        $bar = new ToolbarService($this->events, []);
         $this->assertFalse($bar->isEnabled(), 'debug is off, panel is disabled');
     }
 
@@ -234,7 +258,7 @@ class DebugBarFilterTest extends TestCase
     public function testIsEnabledForceEnable()
     {
         Configure::write('debug', false);
-        $bar = new DebugBarFilter($this->events, ['forceEnable' => true]);
+        $bar = new ToolbarService($this->events, ['forceEnable' => true]);
         $this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
     }
 
@@ -246,7 +270,7 @@ class DebugBarFilterTest extends TestCase
     public function testIsEnabledForceEnableCallable()
     {
         Configure::write('debug', false);
-        $bar = new DebugBarFilter($this->events, [
+        $bar = new ToolbarService($this->events, [
             'forceEnable' => function () {
                 return true;
             }

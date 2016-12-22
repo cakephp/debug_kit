@@ -28,8 +28,8 @@
         "jdorn/sql-formatter": "~1.2"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "dev-master",
-        "phpunit/phpunit": "4.1.*"
+        "cakephp/cakephp-codesniffer": "~2.1",
+        "phpunit/phpunit": "~4.1"
     },
     "autoload": {
         "psr-4": {

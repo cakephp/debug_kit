@@ -11,16 +11,12 @@
  */
 namespace DebugKit\Routing\Filter;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Response;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\DispatcherFilter;
-use Cake\Routing\Router;
-use DebugKit\Panel\PanelRegistry;
+use DebugKit\ToolbarService;
 
 /**
  * Toolbar injector filter.
@@ -28,39 +24,16 @@ use DebugKit\Panel\PanelRegistry;
  * This class loads all the panels into the registry
  * and binds the correct events into the provided event
  * manager
+ *
+ * @deprecated Dispatch filters are deprecated. Long term this filter
+ * will be removed and replaced with middleware.
  */
 class DebugBarFilter extends DispatcherFilter
 {
-    use EventDispatcherTrait;
-
     /**
-     * The panel registry.
-     *
-     * @var \DebugKit\Panel\PanelRegistry
+     * @var \DebugKit\ToolbarService
      */
-    protected $_registry;
-
-    /**
-     * Default configuration.
-     *
-     * @var array
-     */
-    protected $_defaultConfig = [
-        'panels' => [
-            'DebugKit.Cache',
-            'DebugKit.Session',
-            'DebugKit.Request',
-            'DebugKit.SqlLog',
-            'DebugKit.Timer',
-            'DebugKit.Log',
-            'DebugKit.Variables',
-            'DebugKit.Environment',
-            'DebugKit.Include',
-            'DebugKit.History',
-            'DebugKit.Routes',
-        ],
-        'forceEnable' => false,
-    ];
+    protected $service;
 
     /**
      * Constructor
@@ -72,8 +45,7 @@ class DebugBarFilter extends DispatcherFilter
     {
         parent::__construct($config);
 
-        $this->eventManager($events);
-        $this->_registry = new PanelRegistry($events);
+        $this->service = new ToolbarService($events, $config);
     }
 
     /**
@@ -102,16 +74,7 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function isEnabled()
     {
-        $enabled = (bool)Configure::read('debug');
-        if ($enabled) {
-            return true;
-        }
-        $force = $this->config('forceEnable');
-        if (is_callable($force)) {
-            return $force();
-        }
-
-        return $force;
+        return $this->service->isEnabled();
     }
 
     /**
@@ -121,7 +84,7 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function loadedPanels()
     {
-        return $this->_registry->loaded();
+        return $this->service->registry()->loaded();
     }
 
     /**
@@ -132,7 +95,9 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function panel($name)
     {
-        return $this->_registry->{$name};
+        $registry = $this->service->registry();
+
+        return $registry->{$name};
     }
 
     /**
@@ -145,9 +110,7 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function setup()
     {
-        foreach ($this->config('panels') as $panel) {
-            $this->_registry->load($panel);
-        }
+        $this->service->loadPanels();
     }
 
     /**
@@ -158,9 +121,7 @@ class DebugBarFilter extends DispatcherFilter
      */
     public function beforeDispatch(Event $event)
     {
-        foreach ($this->_registry->loaded() as $panel) {
-            $this->_registry->{$panel}->initialize();
-        }
+        $this->service->initializePanels();
     }
 
     /**
@@ -173,77 +134,13 @@ class DebugBarFilter extends DispatcherFilter
     {
         /* @var Request $request */
         $request = $event->data['request'];
-        // Skip debugkit requests and requestAction()
-        if ($request->param('plugin') === 'DebugKit' || $request->is('requested')) {
-            return;
-        }
         /* @var Response $response */
         $response = $event->data['response'];
-
-        $data = [
-            'url' => $request->here(),
-            'content_type' => $response->type(),
-            'method' => $request->method(),
-            'status_code' => $response->statusCode(),
-            'requested_at' => $request->env('REQUEST_TIME'),
-            'panels' => []
-        ];
-        /* @var \DebugKit\Model\Table\RequestsTable $requests */
-        $requests = TableRegistry::get('DebugKit.Requests');
-        $requests->gc();
-
-        $row = $requests->newEntity($data);
-        $row->isNew(true);
-
-        foreach ($this->_registry->loaded() as $name) {
-            $panel = $this->_registry->{$name};
-            try {
-                $content = serialize($panel->data());
-            } catch (\Exception $e) {
-                $content = serialize([
-                    'error' => $e->getMessage(),
-                ]);
-            }
-            $row->panels[] = $requests->Panels->newEntity([
-                'panel' => $name,
-                'element' => $panel->elementName(),
-                'title' => $panel->title(),
-                'summary' => $panel->summary(),
-                'content' => $content,
-            ]);
-        }
-        $row = $requests->save($row);
-
-        $this->_injectScripts($row->id, $response);
-        $response->header(['X-DEBUGKIT-ID' => $row->id]);
-    }
-
-    /**
-     * Injects the JS to build the toolbar.
-     *
-     * The toolbar will only be injected if the response's content type
-     * contains HTML and there is a </body> tag.
-     *
-     * @param string $id ID to fetch data from.
-     * @param \Cake\Network\Response $response The response to augment.
-     * @return void
-     */
-    protected function _injectScripts($id, $response)
-    {
-        if (strpos($response->type(), 'html') === false) {
+        $row = $this->service->saveData($request, $response);
+        if (!$row) {
             return;
         }
-        $body = $response->body();
-        if (!is_string($body)) {
-            return;
-        }
-        $pos = strrpos($body, '</body>');
-        if ($pos === false) {
-            return;
-        }
-        $url = Router::url('/', true);
-        $script = "<script id=\"__debug_kit\" data-id=\"{$id}\" data-url=\"{$url}\" src=\"" . Router::url('/debug_kit/js/toolbar.js') . '"></script>';
-        $body = substr($body, 0, $pos) . $script . substr($body, $pos);
-        $response->body($body);
+
+        return $this->service->injectScripts($row, $response);
     }
 }

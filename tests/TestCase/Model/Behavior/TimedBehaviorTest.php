@@ -68,15 +68,15 @@ class TimedBehaviorTest extends TestCase
     public function testFindTimers()
     {
         $timers = DebugTimer::getAll();
-        $this->assertEquals(count($timers), 1);
+        $this->assertCount(1, $timers);
 
         $this->Article->find('all')->first();
         $result = DebugTimer::getAll();
-        $this->assertEquals(count($result), 2);
+        $this->assertCount(2, $result);
 
         $this->Article->find('all')->first();
         $result = DebugTimer::getAll();
-        $this->assertEquals(count($result), 3);
+        $this->assertCount(3, $result);
     }
 
     /**
@@ -87,11 +87,11 @@ class TimedBehaviorTest extends TestCase
     public function testSaveTimers()
     {
         $timers = DebugTimer::getAll();
-        $this->assertEquals(count($timers), 1);
+        $this->assertCount(1, $timers);
 
         $article = $this->Article->newEntity(['user_id' => 1, 'title' => 'test', 'body' => 'test']);
         $this->Article->save($article);
         $result = DebugTimer::getAll();
-        $this->assertEquals(count($result), 2);
+        $this->assertCount(2, $result);
     }
 }

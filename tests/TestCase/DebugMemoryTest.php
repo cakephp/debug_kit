@@ -62,18 +62,18 @@ class DebugMemoryTest extends TestCase
         $this->assertTrue($result);
 
         $result = DebugMemory::getAll(true);
-        $this->assertEquals(count($result), 1);
+        $this->assertCount(1, $result);
         $this->assertTrue(isset($result['test marker']));
         $this->assertTrue(is_numeric($result['test marker']));
 
         $result = DebugMemory::getAll();
-        $this->assertTrue(empty($result));
+        $this->assertEmpty($result);
 
         DebugMemory::record('test marker');
         DebugMemory::record('test marker');
         $result = DebugMemory::getAll();
 
-        $this->assertEquals(count($result), 2);
+        $this->assertCount(2, $result);
         $this->assertTrue(isset($result['test marker']));
         $this->assertTrue(isset($result['test marker #2']));
     }

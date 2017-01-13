@@ -210,8 +210,8 @@ class ToolbarService
         if (strpos($response->type(), 'html') === false) {
             return $response;
         }
-        $body = $response->body();
-        if (!is_string($body)) {
+        $body = $response->getBody();
+        if (!$body->isSeekable()) {
             return $response;
         }
         $pos = strrpos($body, '</body>');

@@ -130,13 +130,13 @@ class DebugBarFilterTest extends TestCase
             'type' => 'text/html',
         ]);
         $response->body(function () {
-            echo 'I am a teapot!';
+            return 'I am a teapot!';
         });
 
         $bar = new DebugBarFilter($this->events, []);
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
         $bar->afterDispatch($event);
-        $this->assertInstanceOf('Closure', $response->body());
+        $this->assertEquals('I am a teapot!', $response->body());
     }
 
     /**

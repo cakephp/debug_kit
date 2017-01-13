@@ -198,7 +198,7 @@ class ToolbarServiceTest extends TestCase
             'type' => 'text/html',
         ]);
         $response->body(function () {
-            echo 'I am a teapot!';
+            return 'I am a teapot!';
         });
 
         $bar = new ToolbarService($this->events, []);
@@ -206,8 +206,7 @@ class ToolbarServiceTest extends TestCase
 
         $result = $bar->injectScripts($row, $response);
         $this->assertInstanceOf('Cake\Network\Response', $result);
-        $this->assertInstanceOf('Closure', $result->body());
-        $this->assertInstanceOf('Closure', $response->body());
+        $this->assertEquals('I am a teapot!', $result->body());
     }
 
 

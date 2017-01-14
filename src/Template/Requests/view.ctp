@@ -28,6 +28,9 @@ use Cake\Core\Configure;
         <?php endif ?>
     </li>
     <?php endforeach; ?>
+    <li id="cake-version" class="panel">
+        <span class="panel-summary"><?= Configure::version() ?></span>
+    </li>
     <li id="panel-button">
         <?= $this->Html->image('DebugKit.cake.icon.png', [
             'alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit'

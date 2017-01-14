@@ -68,6 +68,7 @@ p {
 .toolbar.open {
 	border-radius: 0;
 	overflow: auto;
+	padding-right: 100px;
 }
 
 .hidden {
@@ -128,6 +129,13 @@ p {
 
 .history-mode .panel-active .panel-button {
 	color: #ab47bc;
+}
+
+#cake-version {
+	position:absolute;
+	right:40px;
+	cursor: default;
+	padding-right: 0;
 }
 
 /**

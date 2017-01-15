@@ -136,7 +136,11 @@ class DebugBarFilterTest extends TestCase
         $bar = new DebugBarFilter($this->events, []);
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
         $bar->afterDispatch($event);
-        $this->assertEquals('I am a teapot!', $response->body());
+        if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
+            $this->assertEquals('I am a teapot!', $response->body());
+        } else {
+            $this->assertInstanceOf('Closure', $response->body());
+        }
     }
 
     /**

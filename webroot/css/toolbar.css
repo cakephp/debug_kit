@@ -131,7 +131,7 @@ p {
 	color: #ab47bc;
 }
 
-#cake-version {
+.cake-version {
 	position:absolute;
 	right:40px;
 	cursor: default;

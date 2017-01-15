@@ -28,7 +28,7 @@ use Cake\Core\Configure;
         <?php endif ?>
     </li>
     <?php endforeach; ?>
-    <li id="cake-version" class="panel">
+    <li class="panel cake-version">
         <span class="panel-summary"><?= Configure::version() ?></span>
     </li>
     <li id="panel-button">

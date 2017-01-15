@@ -11,8 +11,8 @@ if (elem) {
 $(document).ready(function() {
   toolbar = new Toolbar({
     button: $('#toolbar'),
-    content: $('#panel-content-container').not('#cake-version'),
-    panelButtons: $('.panel'),
+    content: $('#panel-content-container'),
+    panelButtons: $('.panel').not('.cake-version'),
     panelClose: $('#panel-close'),
     keyboardScope : $(document),
     currentRequest: __debugKitId,

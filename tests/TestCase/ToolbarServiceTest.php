@@ -206,7 +206,11 @@ class ToolbarServiceTest extends TestCase
 
         $result = $bar->injectScripts($row, $response);
         $this->assertInstanceOf('Cake\Network\Response', $result);
-        $this->assertEquals('I am a teapot!', $result->body());
+        if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
+            $this->assertEquals('I am a teapot!', $response->body());
+        } else {
+            $this->assertInstanceOf('Closure', $response->body());
+        }
     }
 
 

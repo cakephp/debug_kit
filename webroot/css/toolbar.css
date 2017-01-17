@@ -412,6 +412,26 @@ pre,
 	font-family: Monaco, Consolas, mono-space;
 }
 
+/**
+ * Packages panel
+ */
+.package-version {
+    background: #D33C44;
+    border-radius: 4px;
+    line-height: 20px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.package-btn {
+    text-decoration: none;
+    padding: 2px 6px;
+}
+
+.package-link {
+    color: #000000;
+    text-decoration: none;
+}
 
 /**
  * Warnings and info boxes.

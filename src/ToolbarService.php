@@ -56,6 +56,7 @@ class ToolbarService
             'DebugKit.Include',
             'DebugKit.History',
             'DebugKit.Routes',
+            'DebugKit.Packages',
         ],
         'forceEnable' => false,
     ];

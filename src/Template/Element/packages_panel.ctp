@@ -17,36 +17,61 @@
  * @type array $packages
  */
 ?>
-
-<?php if (!empty($packages)): ?>
-    <?php foreach ($packages as $title => $requirements): ?>
-    <section class="section-tile">
-        <h3><?= __d('debug_kit', $title) ?> </h3>
-        <table cellspacing="0" cellpadding="0" class="debug-table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Version</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($requirements as $package): ?>
-                <?php extract($package); ?>
-                <tr>
-                    <td title="<?= $description ?>">
-                        <a href="https://packagist.org/packages/<?= $name ?>" title="<?= $description ?>" target="_blank" class="package-link"><?= $name ?></a>
-                    </td>
-                    <td>
-                        <span class="package-version"><span class="panel-summary"><?= $version ?></span></span>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </section>
-    <?php endforeach; ?>
-<?php else: ?>
+<?php if (empty($packages) && empty($devPackages)): ?>
     <div class="warning">
-        <?= __d('debug_kit', "'composer.lock' not found"); ?>
+        <?= __d('debug_kit', '{0} not found', "'composer.lock'"); ?>
     </div>
+<?php else: ?>
+    <?php if (!empty($packages)): ?>
+        <section class="section-tile">
+            <h3><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h3>
+            <table cellspacing="0" cellpadding="0" class="debug-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Version</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($packages as $package): ?>
+                    <?php extract($package); ?>
+                    <tr>
+                        <td title="<?= h($description) ?>">
+                            <a href="https://packagist.org/packages/<?= h($name) ?>" title="<?= h($description) ?>" target="_blank" class="package-link"><?= h($name) ?></a>
+                        </td>
+                        <td>
+                            <span class="package-version"><span class="panel-summary"><?= h($version) ?></span></span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+    <?php endif; ?>
+    <?php if (!empty($devPackages)): ?>
+        <section class="section-tile">
+            <h3><?= __d('debug_kit', 'Dev Requirements ({0})', count($devPackages)) ?> </h3>
+            <table cellspacing="0" cellpadding="0" class="debug-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Version</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($devPackages as $package): ?>
+                    <?php extract($package); ?>
+                    <tr>
+                        <td title="<?= h($description) ?>">
+                            <a href="https://packagist.org/packages/<?= h($name) ?>" title="<?= h($description) ?>" target="_blank" class="package-link"><?= h($name) ?></a>
+                        </td>
+                        <td>
+                            <span class="package-version"><span class="panel-summary"><?= h($version) ?></span></span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+    <?php endif; ?>
 <?php endif; ?>

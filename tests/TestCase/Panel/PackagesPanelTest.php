@@ -39,18 +39,28 @@ class PackagesPanelTest extends TestCase
     }
 
     /**
+     * Packages view variables provider
+     * @return array
+     */
+    public function packagesProvider()
+    {
+        return [
+            'requirements' => ['packages'],
+            'dev requirements' => ['devPackages'],
+        ];
+    }
+    /**
      * test data
      *
+     * @dataProvider packagesProvider
      * @return void
      */
-    public function testData()
+    public function testData($package)
     {
         $data = $this->panel->data();
-        $this->assertArrayHasKey('packages', $data);
-        $this->assertArrayHasKey('Requirements', $data['packages']);
-        $this->assertArrayHasKey('Dev Requirements', $data['packages']);
+        $this->assertArrayHasKey($package, $data);
 
-        $singlePackage = current($data['packages']['Requirements']);
+        $singlePackage = current($data[$package]);
         $this->assertArrayHasKey('name', $singlePackage);
         $this->assertArrayHasKey('description', $singlePackage);
         $this->assertArrayHasKey('version', $singlePackage);

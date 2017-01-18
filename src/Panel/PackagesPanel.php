@@ -22,10 +22,6 @@ use DebugKit\DebugPanel;
  */
 class PackagesPanel extends DebugPanel
 {
-    const REQUIREMENT = 'Requirements';
-
-    const DEV_REQUIREMENT = 'Dev Requirements';
-
     /**
      * Get the panel data
      *
@@ -33,15 +29,18 @@ class PackagesPanel extends DebugPanel
      */
     public function data()
     {
-        $packages = [];
+        $packages = $devPackages = [];
 
         $lockFile = new JsonFile(ROOT . DIRECTORY_SEPARATOR . 'composer.lock');
         if ($lockFile->exists()) {
             $lockContent = $lockFile->read();
-            $packages[self::REQUIREMENT] = $lockContent['packages'];
-            $packages[self::DEV_REQUIREMENT] = $lockContent['packages-dev'];
+            $packages = $lockContent['packages'];
+            $devPackages = $lockContent['packages-dev'];
         }
 
-        return compact('packages');
+        return [
+            'packages' => $packages,
+            'devPackages' => $devPackages,
+        ];
     }
 }

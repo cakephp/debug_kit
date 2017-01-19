@@ -68,7 +68,7 @@ p {
 .toolbar.open {
 	border-radius: 0;
 	overflow: auto;
-	padding-right: 100px;
+	padding-right: 40px;
 }
 
 .hidden {
@@ -129,13 +129,6 @@ p {
 
 .history-mode .panel-active .panel-button {
 	color: #ab47bc;
-}
-
-.cake-version {
-	position:absolute;
-	right:40px;
-	cursor: default;
-	padding-right: 0;
 }
 
 /**
@@ -412,6 +405,21 @@ pre,
 	font-family: Monaco, Consolas, mono-space;
 }
 
+/**
+ * Packages panel
+ */
+.package-version {
+    background: #D33C44;
+    border-radius: 4px;
+    line-height: 20px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.package-link {
+    color: #000000;
+    text-decoration: none;
+}
 
 /**
  * Warnings and info boxes.

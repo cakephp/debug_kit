@@ -1,8 +1,3 @@
-<?php
-if (empty($email)) {
-return;
-}
-?>
 <style type="text/css">
     html, body {
         height: 100%;

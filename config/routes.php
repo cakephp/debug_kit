@@ -20,4 +20,14 @@ Router::plugin('DebugKit', function (RouteBuilder $routes) {
         '/panels/*',
         ['controller' => 'Panels', 'action' => 'index']
     );
+
+    $routes->scope(
+        '/mail_preview',
+        ['controller' => 'MailPreview'],
+        function ($routes) {
+            $routes->connect('/', ['action' => 'index']);
+            $routes->connect('/preview', ['action' => 'email']);
+            $routes->connect('/preview/*', ['action' => 'email']);
+        }
+    );
 });

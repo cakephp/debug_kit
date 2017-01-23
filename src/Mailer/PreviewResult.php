@@ -8,7 +8,6 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\Mailer;
@@ -16,37 +15,40 @@ namespace DebugKit\Mailer;
 use Cake\Mailer\Mailer;
 use ReflectionClass;
 
-class PreviewResult
+/**
+ * Represents the result of a preview for a given mailer
+ *
+ */
+class PreviewResult extends AbstractResult
 {
 
-    protected $mailer;
-
-    protected $method;
-
-    protected $reflection;
-
-    protected $headers = [];
-
-    protected $parts = [];
-
+    /**
+     * Processes the mailer to extract the headers and parts
+     *
+     * @param Mailer $mailer The mailer instance to execute and extract the email data from
+     * @param string $method The method to execute in the mailer
+     */
     public function __construct(Mailer $mailer, $method)
     {
-        $this->mailer = clone $mailer;
-        $this->method = $method;
-        $this->reflection = new ReflectionClass($this->mailer);
-        $this->processMailer();
+        $this->processMailer(clone $mailer, $method);
         $mailer->reset();
     }
 
-    protected function processMailer()
+    /**
+     * Executes the mailer and extracts the relevant information from the generated email
+     *
+     * @param Mailer $mailer The mailer instance to execute and extract the email data from
+     * @param string $method The method to execute in the mailer
+     * @return void
+     */
+    protected function processMailer(Mailer $mailer, $method)
     {
-        $mailer = $this->mailer;
-
         if (!$mailer->template()) {
             $mailer->template($this->method);
         }
 
-        $prop = $this->reflection->getProperty('_email');
+        $reflection = new ReflectionClass($mailer);
+        $prop = $reflection->getProperty('_email');
         $prop->setAccessible(true);
         $email = $prop->getValue($mailer);
 
@@ -58,15 +60,5 @@ class PreviewResult
 
         $extra = ['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'];
         $this->headers = array_filter($email->getHeaders($extra));
-    }
-
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    public function getParts()
-    {
-        return $this->parts;
     }
 }

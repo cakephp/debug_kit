@@ -21,7 +21,9 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Utility\Inflector;
+use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
+use DebugKit\Mailer\SentMailResult;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -66,6 +68,33 @@ class MailPreviewController extends Controller
         $this->set('mailPreviews', $this->getMailPreviews()->toArray());
     }
 
+
+    public function sent($panelId, $number)
+    {
+        $this->loadModel('DebugKit.Panels');
+        $panel = $this->Panels->get($panelId);
+        // @codingStandardsIgnoreStart
+        $content = @unserialize($panel->content);
+        // @codingStandardsIgnoreEnd
+
+        if (empty($content['emails'][$number])) {
+            throw new NotFoundException('No emails found in this request');
+        }
+
+        $email = $content['emails'][$number];
+        $email = new SentMailResult(array_filter($email['headers']), $email['message']);
+        $partType = $this->request->query('part');
+
+        if ($partType) {
+            return $this->respondWithPart($email, $partType);
+        }
+
+        $this->set('noHeader', true);
+        $this->set('email', $email);
+        $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
+        $this->viewBuilder()->template('email');
+    }
+
     /**
      * Handles mail-preview/email
      *
@@ -77,30 +106,33 @@ class MailPreviewController extends Controller
     {
         $plugin = $this->request->query('plugin');
         $email = $this->findPreview($name, $method, $plugin);
-        $partType = $this->request->query('part', null);
+        $partType = $this->request->query('part');
 
         $this->viewBuilder()->layout(false);
 
         if ($partType) {
-            if ($part = $this->findPart($email, $partType)) {
-                $this->response->type($partType);
-                $this->response->body($part);
-
-                return $this->response;
-            }
-
-            throw new NotFoundException(sprintf(
-                "Email part '%s' not found in %s::%s",
-                $partType,
-                $name,
-                $method
-            ));
+            return $this->respondWithPart($email, $partType);
         }
 
         $humanName = Inflector::humanize(Inflector::underscore($name) . "_$method");
         $this->set('title', $humanName);
         $this->set('email', $email);
         $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
+    }
+
+    protected function respondWithPart($email, $partType)
+    {
+        if ($part = $this->findPart($email, $partType)) {
+            $this->response->type($partType);
+            $this->response->body($part);
+
+            return $this->response;
+        }
+
+        throw new NotFoundException(sprintf(
+            "Email part '%s' not found in email",
+            $partType
+        ));
     }
 
     /**
@@ -151,11 +183,11 @@ class MailPreviewController extends Controller
     /**
      * Finds a specified email part
      *
-     * @param PreviewResult $email The result of the email preview
+     * @param AbstractResult $email The result of the email preview
      * @param string $partType The name of a part
      * @return null|string
      **/
-    protected function findPart(PreviewResult $email, $partType)
+    protected function findPart(AbstractResult $email, $partType)
     {
         foreach ($email->getParts() as $part => $content) {
             if ($part === $partType) {
@@ -169,11 +201,11 @@ class MailPreviewController extends Controller
     /**
      * Finds a specified email part or the first part available
      *
-     * @param PreviewResult $email The result of the email preview
+     * @param AbstractResult $email The result of the email preview
      * @param string $partType The name of a part
      * @return null|string
      **/
-    protected function findPreferredPart(PreviewResult $email, $partType)
+    protected function findPreferredPart(AbstractResult $email, $partType)
     {
         if (empty($partType)) {
             foreach ($email->getParts() as $part => $content) {

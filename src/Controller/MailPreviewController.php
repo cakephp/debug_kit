@@ -73,7 +73,7 @@ class MailPreviewController extends Controller
      *
      * @param string $panelId The Mail panel id where the email data is stored
      * @param string $number The email number as stored in the logs
-     * @return void|ResponseInterface
+     * @return ResponseInterface|null
      */
     public function sent($panelId, $number)
     {

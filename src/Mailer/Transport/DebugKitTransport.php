@@ -38,6 +38,7 @@ class DebugKitTransport extends AbstractTransport
 
         if ($originalTransport !== null) {
             $this->originalTransport = $originalTransport;
+
             return;
         }
 

@@ -26,7 +26,7 @@ class MailPreview
      * Returns the name of an email if it is valid
      *
      * @param string $email Email name
-     * @return bool|string
+     * @return null|string
      **/
     public function find($email)
     {
@@ -34,7 +34,7 @@ class MailPreview
             return $email;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -65,6 +65,7 @@ class MailPreview
     {
         $classname = get_class($this);
         $pos = strrpos($classname, '\\');
+
         return substr($classname, $pos + 1);
     }
 

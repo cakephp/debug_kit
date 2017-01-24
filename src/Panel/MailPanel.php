@@ -88,6 +88,7 @@ class MailPanel extends DebugPanel
         if (count($this->emailLog) === 0) {
             return '';
         }
+
         return (string)count($this->emailLog);
     }
 }

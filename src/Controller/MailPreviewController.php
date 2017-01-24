@@ -226,6 +226,12 @@ class MailPreviewController extends Controller
      **/
     protected function findPreferredPart(AbstractResult $email, $partType)
     {
+        $parts = $email->getParts();
+
+        if (empty($partType) && !empty($parts['html'])) {
+            return 'html';
+        }
+
         if (empty($partType)) {
             foreach ($email->getParts() as $part => $content) {
                 return $part;

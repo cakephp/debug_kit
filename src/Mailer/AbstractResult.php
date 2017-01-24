@@ -36,7 +36,7 @@ abstract class AbstractResult
     /**
      * Returns the list of headers included in th email
      *
-     * @return void
+     * @return array
      */
     public function getHeaders()
     {
@@ -46,7 +46,7 @@ abstract class AbstractResult
     /**
      * Returns the rendered parts in th email
      *
-     * @return void
+     * @return array
      */
     public function getParts()
     {

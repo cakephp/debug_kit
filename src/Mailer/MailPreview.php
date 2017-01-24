@@ -64,11 +64,8 @@ class MailPreview
     public function name()
     {
         $classname = get_class($this);
-        if ($pos = strrpos($classname, '\\')) {
-            return substr($classname, $pos + 1);
-        }
-
-        return $pos;
+        $pos = strrpos($classname, '\\');
+        return substr($classname, $pos + 1);
     }
 
     /**

@@ -180,6 +180,7 @@ class MailPreviewController extends Controller
             });
 
         $appPaths = [App::path('Mailer/Preview'), ''];
+
         return collection([$appPaths])
             ->append($pluginPaths)
             ->unfold(function ($pairs) {
@@ -246,7 +247,7 @@ class MailPreviewController extends Controller
      *
      * @param string $previewName The Mailer name
      * @param string $emailName The mailer preview method
-     * @param string $plugin The plugin where the mailer preview should be found
+     * @param string|null $plugin The plugin where the mailer preview should be found
      * @return PreviewResult The result of the email preview
      * @throws NotFoundException
      **/
@@ -256,7 +257,7 @@ class MailPreviewController extends Controller
             $plugin = "$plugin.";
         }
 
-        $realClass = App::className($plugin.$previewName, "Mailer/Preview");
+        $realClass = App::className($plugin . $previewName, "Mailer/Preview");
 
         if (!$realClass) {
             throw new NotFoundException("Mailer preview ${previewName} not found");

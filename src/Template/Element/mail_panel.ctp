@@ -20,7 +20,8 @@
             </tr>
             <?php foreach ($emails as $k => $email) : ?>
             <tr onclick="loadSentEmail(this, <?= $k ?>)" class="<?= $k == 0 ? 'highlighted' : '' ?>">
-                <td style="cursor:pointer;padding:20px 10px;line-height:20px">✉️
+                <td style="cursor:pointer;padding:20px 10px;line-height:20px">
+                    <?= "\u{2709}\u{FE0F}" ?>
                     <?= !empty($email['headers']['Subject']) ?
                         h($this->Text->truncate($email['headers']['Subject'])) :
                         '(No Subject)'
@@ -32,7 +33,7 @@
     </div>
     <iframe seamless
         name="sent-email"
-        src="<?= $url ?>"
+        src="<?= h($url) ?>"
         style="height:calc(100vh - 128px);flex:1;margin-left:20px;padding-left:10px;border-left:1px solid #ccc"
     >
     </iframe>

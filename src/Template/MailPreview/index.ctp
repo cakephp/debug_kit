@@ -2,7 +2,7 @@
 <h3><?= $plugin ?></h3>
     <?php foreach ($previews as $preview) : ?>
         <?php $mailPreview = $preview['class'] ?>
-        <h4>✉️ <?= $mailPreview->name() ?></h4>
+        <h4><?= "\u{2709}\u{FE0F}" ?> <?= h($mailPreview->name()) ?></h4>
         <table cellpadding="0" cellspacing="0">
             <tbody>
             <?php foreach ($mailPreview->getEmails() as $email) : ?>
@@ -27,10 +27,10 @@
 
 <div style="font-weight:300;margin-top:100px">
     <h3>How to use this feature?</h3>
-    <p>Testing emails can be very time consuming⌛️ </p>
+    <p>Testing emails can be very time consuming &#8987;</p>
     <p> Specially when you need to click a bunch of times on an interface to trigger them.</p>
     <p>Wouldn't it be better to just change the templates and refresh the browser to see the result?</p>
-    <p>Just the way you work on the web interface! 🏃  </p>
+    <p>Just the way you work on the web interface! &#127939;</p>
 
     <h4>Example</h4>
     <p>MailPreview integrates with CakePHP’s Mailer class. Here's an example of such a mailer:</p>
@@ -86,5 +86,5 @@
 
     <p>Note that the function MUST return the UserMailer object at the end.</p>
     <p>Since Mailers have a fluent interface, you just need to return the result of the chain of calls.</p>
-    <p style="margin:20px 0">That's it, now refresh this page! 🙃 </p>
+    <p style="margin:20px 0">That's it, now refresh this page! &#128579;</p>
 </div>

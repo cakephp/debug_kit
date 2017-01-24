@@ -7,7 +7,7 @@ use Cake\Mailer\Email;
 
 /**
  * Debug Transport class, useful for emulating the email sending process and inspecting
- * the resultant email message before actually sending it during development
+ * the resulting email message before actually sending it during development
  */
 class DebugKitTransport extends AbstractTransport
 {

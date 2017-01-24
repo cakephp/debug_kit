@@ -73,7 +73,7 @@ class MailPreviewController extends Controller
      *
      * @param string $panelId The Mail panel id where the email data is stored
      * @param string $number The email number as stored in the logs
-     * @return ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function sent($panelId, $number)
     {
@@ -106,7 +106,7 @@ class MailPreviewController extends Controller
      *
      * @param string $name The Mailer name
      * @param string $method The mailer preview method
-     * @return void|ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function email($name, $method)
     {
@@ -132,7 +132,7 @@ class MailPreviewController extends Controller
      *
      * @param AbstractResult $email the email to preview
      * @param string $partType The email part to retrieve
-     * @return ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface
      */
     protected function respondWithPart($email, $partType)
     {

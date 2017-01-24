@@ -35,13 +35,12 @@ class MailPreviewController extends Controller
     /**
      * Before filter callback.
      *
-     * @param \Cake\Event\Event $event The beforeRender event.
+     * @param \Cake\Event\Event $event The beforeFilter event.
      * @return void
-     * @throws Cake\Network\Exception\ForbiddenException
+     * @throws Cake\Network\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
-        // TODO add config override.
         if (!Configure::read('debug')) {
             throw new NotFoundException();
         }
@@ -68,7 +67,14 @@ class MailPreviewController extends Controller
         $this->set('mailPreviews', $this->getMailPreviews()->toArray());
     }
 
-
+    /**
+     * Handles the viewing of an already sent email that was logged in the Mail panel
+     * for DebugKit
+     *
+     * @param string $panelId The Mail panel id where the email data is stored
+     * @param string $number The email number as stored in the logs
+     * @return void|ResponseInterface
+     */
     public function sent($panelId, $number)
     {
         $this->loadModel('DebugKit.Panels');
@@ -120,19 +126,32 @@ class MailPreviewController extends Controller
         $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
     }
 
+    /**
+     * Returns a response object with the requested part type for the
+     * email or throws an exception if no such part exists.
+     *
+     * @param AbstractResult $email the email to preview
+     * @param string $partType The email part to retrieve
+     * @return ResponseInterface
+     */
     protected function respondWithPart($email, $partType)
     {
-        if ($part = $this->findPart($email, $partType)) {
-            $this->response->type($partType);
-            $this->response->body($part);
+        $part = $this->findPart($email, $partType);
 
-            return $this->response;
+        if ($part === false) {
+            throw new NotFoundException(sprintf(
+                "Email part '%s' not found in email",
+                $partType
+            ));
         }
 
-        throw new NotFoundException(sprintf(
-            "Email part '%s' not found in email",
-            $partType
-        ));
+        $this->response->type($partType);
+        if ($part === 'text') {
+            $part = '<pre>' . $part . "</pre>";
+        }
+        $this->response->body($part);
+
+        return $this->response;
     }
 
     /**
@@ -213,9 +232,7 @@ class MailPreviewController extends Controller
             }
         }
 
-        $part = $this->findPart($email, $partType);
-
-        return $part ?: null;
+        return $this->findPart($email, $partType) ?: null;
     }
 
     /**

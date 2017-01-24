@@ -1,3 +1,10 @@
+<p class="info">
+    Why not test your emails interactively instead? Go to the
+    <?= $this->Html->link('Email previews page',
+        ['controller' => 'MailPreview', 'action' => 'index'],
+        ['target' => '_blank']);
+    ?>
+</p>
 <?php
     if (empty($emails)) {
         echo "<p>No emails were sent during this request</p>";
@@ -13,14 +20,21 @@
             </tr>
             <?php foreach ($emails as $k => $email) : ?>
             <tr onclick="loadSentEmail(this, <?= $k ?>)" class="<?= $k == 0 ? 'highlighted' : '' ?>">
-                <td style="cursor:pointer;padding:20px 0">
-                    <?= !empty($email['headers']['Subject']) ? h($this->Text->truncate($email['headers']['Subject'])) : '(No Subject)' ?>
+                <td style="cursor:pointer;padding:20px 10px;line-height:20px">✉️
+                    <?= !empty($email['headers']['Subject']) ?
+                        h($this->Text->truncate($email['headers']['Subject'])) :
+                        '(No Subject)'
+                    ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </table>
     </div>
-    <iframe name="sent-email" seamless src="<?= $url ?>" style="height:calc(100vh - 70px);flex:1;margin-left:20px;padding-left:10px;border-left:1px solid #ccc">
+    <iframe seamless
+        name="sent-email"
+        src="<?= $url ?>"
+        style="height:calc(100vh - 128px);flex:1;margin-left:20px;padding-left:10px;border-left:1px solid #ccc"
+    >
     </iframe>
 </div>
 <script>

@@ -64,12 +64,13 @@ class DebugKitTransport extends AbstractTransport
      */
     public function send(Email $email)
     {
-        $headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject']);
+        $headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc']);
         $parts = [
             'text' => $email->message(Email::MESSAGE_TEXT),
             'html' => $email->message(Email::MESSAGE_HTML)
         ];
 
+        $headers['Subject'] = $email->getOriginalSubject();
         $result = ['headers' => $headers, 'message' => $parts];
         $this->emailLog[] = $result;
 

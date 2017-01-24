@@ -74,7 +74,7 @@ class MailPanel extends DebugPanel
     public function data()
     {
         return [
-            'emails' => $this->emailLog->getArrayCopy()
+            'emails' => isset($this->emailLog) ? $this->emailLog->getArrayCopy() : []
         ];
     }
 

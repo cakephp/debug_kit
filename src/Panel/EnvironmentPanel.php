@@ -48,6 +48,7 @@ class EnvironmentPanel extends DebugPanel
             'CACHE' => CACHE,
             'CAKE' => CAKE,
             'CAKE_CORE_INCLUDE_PATH' => CAKE_CORE_INCLUDE_PATH,
+            'CONFIG' => CONFIG,
             'CORE_PATH' => CORE_PATH,
             'CAKE_VERSION' => Configure::version(),
             'DS' => DS,

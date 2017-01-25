@@ -59,14 +59,14 @@ class EnvironmentPanel extends DebugPanel
             'WWW_ROOT' => WWW_ROOT
         ];
 
-        $cakeConstants = array_fill_keys(
+        $hiddenCakeConstants = array_fill_keys(
             [
-                'DS', 'ROOT', 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
+                'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
             ],
             ''
         );
         $var = get_defined_constants(true);
-        $return['app'] = array_diff_key($var['user'], $return['cake'], $cakeConstants);
+        $return['app'] = array_diff_key($var['user'], $return['cake'], $hiddenCakeConstants);
 
         if (isset($var['hidef'])) {
             $return['hidef'] = $var['hidef'];

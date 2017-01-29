@@ -26,7 +26,7 @@
         <button class="btn-primary">Check for Updates</button>
         <label><input type="checkbox" class="direct-dependency"><?= __d('debug_kit', 'Direct dependencies only') ?></label>
     </div>
-    <div class="console"></div>
+    <div class="terminal"></div>
     <?php if (!empty($packages)): ?>
         <section class="section-tile">
             <h3><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h3>
@@ -89,7 +89,7 @@
             'action' => 'checkDependencies'
         ]); ?>';
 
-        var console = $('.console');
+        var terminal = $('.terminal');
 
         function showMessage(el, html) {
             el.show().html(html);
@@ -105,11 +105,11 @@
                 return '<pre class="success-message">All dependencies are up to date</pre>';
             }
             if (response.packages.bcBreaks !== undefined) {
-                html += '<h4>Update with potential BC break</h4>';
+                html += '<h4 class="section-header">Update with potential BC break</h4>';
                 html += '<pre>' + response.packages.bcBreaks + '</pre>';
             }
             if (response.packages.semverCompatible !== undefined) {
-                html += '<h4>Update semver compatible</h4>';
+                html += '<h4 class="section-header">Update semver compatible</h4>';
                 html += '<pre>' + response.packages.semverCompatible + '</pre>';
             }
             return html;
@@ -120,7 +120,7 @@
         }
 
         $('.check-update button').on('click', function(e) {
-            showMessage(console, buildLoader());
+            showMessage(terminal, buildLoader());
             var direct = $('.direct-dependency')[0].checked;
             var xhr = $.ajax({
                 url: baseUrl,
@@ -129,9 +129,9 @@
                 type: 'POST'
             });
             xhr.done(function(response) {
-                showMessage(console, buildSuccessfulMessage(response));
+                showMessage(terminal, buildSuccessfulMessage(response));
             }).error(function(response) {
-                showMessage(console, buildErrorMessage(response));
+                showMessage(terminal, buildErrorMessage(response));
             });
             e.preventDefault();
         });

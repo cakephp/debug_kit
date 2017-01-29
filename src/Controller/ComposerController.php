@@ -18,7 +18,6 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\JsonView;
-use Composer\Command\OutdatedCommand;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;

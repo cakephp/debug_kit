@@ -543,7 +543,7 @@ pre,
     cursor: pointer;
 }
 
-.console {
+.terminal {
 	margin: 20px 0;
 	padding: 20px;
 	background-color: #1a1a1a;
@@ -552,23 +552,23 @@ pre,
 	display: none;
 }
 
-.console h4 {
+.terminal .section-header {
 	color: #428bca;
 }
 
-.console h4:first-of-type {
+.terminal .section-header:nth-of-type(1) {
 	margin-top: 0;
 }
 
-.console highlight {
+.terminal highlight {
 	color: #D33C44;
 }
 
-.console .loading {
+.terminal .loading {
 	margin: 0;
 }
 
-.console .indicator {
+.terminal .indicator {
 	vertical-align: middle;
 	width: 30px;
 	height: 30px;
@@ -577,10 +577,10 @@ pre,
 	animation: spin 4s linear infinite;
 }
 
-.console .warning-message {
+.terminal .warning-message {
 	color: #ffcc00;
 }
 
-.console .success-message {
+.terminal .success-message {
 	color: #42bd41;
 }

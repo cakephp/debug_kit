@@ -20,7 +20,7 @@ Router::plugin('DebugKit', function (RouteBuilder $routes) {
         '/panels/*',
         ['controller' => 'Panels', 'action' => 'index']
     );
-  
+
     $routes->connect(
         '/composer/check_dependencies',
         ['controller' => 'Composer', 'action' => 'checkDependencies']

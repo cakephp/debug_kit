@@ -22,6 +22,11 @@
         <?= __d('debug_kit', '{0} not found', "'composer.lock'"); ?>
     </div>
 <?php else: ?>
+    <div class="check-update">
+        <button class="btn-primary">Check for Updates</button>
+        <label><input type="checkbox" class="direct-dependency"><?= __d('debug_kit', 'Direct dependencies only') ?></label>
+    </div>
+    <div class="terminal"></div>
     <?php if (!empty($packages)): ?>
         <section class="section-tile">
             <h3><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h3>
@@ -75,3 +80,60 @@
         </section>
     <?php endif; ?>
 <?php endif; ?>
+
+<script>
+    $(document).ready(function() {
+        var baseUrl = '<?= $this->Url->build([
+            'plugin' => 'DebugKit',
+            'controller' => 'Composer',
+            'action' => 'checkDependencies'
+        ]); ?>';
+
+        var terminal = $('.terminal');
+
+        function showMessage(el, html) {
+            el.show().html(html);
+        }
+
+        function buildLoader() {
+            return '<div class="loading">Loading <?= $this->Html->image('DebugKit.cake.icon.png', ['class' => 'indicator'])?></div>';
+        }
+
+        function buildSuccessfulMessage(response) {
+            var html = '';
+            if (response.packages.bcBreaks === undefined && response.packages.semverCompatible === undefined) {
+                return '<pre class="success-message">All dependencies are up to date</pre>';
+            }
+            if (response.packages.bcBreaks !== undefined) {
+                html += '<h4 class="section-header">Update with potential BC break</h4>';
+                html += '<pre>' + response.packages.bcBreaks + '</pre>';
+            }
+            if (response.packages.semverCompatible !== undefined) {
+                html += '<h4 class="section-header">Update semver compatible</h4>';
+                html += '<pre>' + response.packages.semverCompatible + '</pre>';
+            }
+            return html;
+        }
+
+        function buildErrorMessage(response) {
+            return '<pre class="warning-message">' + JSON.parse(response.responseText).message + '</pre>';
+        }
+
+        $('.check-update button').on('click', function(e) {
+            showMessage(terminal, buildLoader());
+            var direct = $('.direct-dependency')[0].checked;
+            var xhr = $.ajax({
+                url: baseUrl,
+                data: {direct: direct},
+                dataType: 'json',
+                type: 'POST'
+            });
+            xhr.done(function(response) {
+                showMessage(terminal, buildSuccessfulMessage(response));
+            }).error(function(response) {
+                showMessage(terminal, buildErrorMessage(response));
+            });
+            e.preventDefault();
+        });
+    });
+</script>

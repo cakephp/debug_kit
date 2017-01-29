@@ -26,7 +26,7 @@ class MailPreview
      *
      * @param string $email Email name
      * @return null|string
-     **/
+     */
     public function find($email)
     {
         if ($this->validEmail($email)) {
@@ -40,7 +40,7 @@ class MailPreview
      * Returns a list of valid emails
      *
      * @return array
-     **/
+     */
     public function getEmails()
     {
         $emails = [];
@@ -59,7 +59,7 @@ class MailPreview
      * Returns the name of this preview
      *
      * @return string
-     **/
+     */
     public function name()
     {
         $classname = get_class($this);
@@ -74,7 +74,7 @@ class MailPreview
      *
      * @param string $email Name of email
      * @return bool
-     **/
+     */
     protected function validEmail($email)
     {
         if (empty($email)) {

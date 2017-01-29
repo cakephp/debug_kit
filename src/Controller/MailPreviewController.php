@@ -37,7 +37,7 @@ class MailPreviewController extends Controller
      *
      * @param \Cake\Event\Event $event The beforeFilter event.
      * @return void
-     * @throws Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
@@ -130,7 +130,7 @@ class MailPreviewController extends Controller
      * Returns a response object with the requested part type for the
      * email or throws an exception if no such part exists.
      *
-     * @param AbstractResult $email the email to preview
+     * @param \Debugkit\Mailer\AbstractResult $email the email to preview
      * @param string $partType The email part to retrieve
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -157,8 +157,8 @@ class MailPreviewController extends Controller
     /**
      * Retrieves an array of MailPreview objects
      *
-     * @return CollectionInterface
-     **/
+     * @return \Cake\Core\CollectionInterface
+     */
     protected function getMailPreviews()
     {
         return $this->getMailPreviewClasses()->groupBy('plugin');
@@ -167,8 +167,8 @@ class MailPreviewController extends Controller
     /**
      * Returns an array of MailPreview class names for the app and plugins
      *
-     * @return CollectionInterface
-     **/
+     * @return \Cake\Core\CollectionInterface
+     */
     protected function getMailPreviewClasses()
     {
         $pluginPaths = collection(Plugin::loaded())
@@ -203,10 +203,10 @@ class MailPreviewController extends Controller
     /**
      * Finds a specified email part
      *
-     * @param AbstractResult $email The result of the email preview
+     * @param \DebugKit\Mailer\AbstractResult $email The result of the email preview
      * @param string $partType The name of a part
      * @return null|string
-     **/
+     */
     protected function findPart(AbstractResult $email, $partType)
     {
         foreach ($email->getParts() as $part => $content) {
@@ -221,10 +221,10 @@ class MailPreviewController extends Controller
     /**
      * Finds a specified email part or the first part available
      *
-     * @param AbstractResult $email The result of the email preview
+     * @param \DebugKit\Mailer\AbstractResult $email The result of the email preview
      * @param string $partType The name of a part
      * @return null|string
-     **/
+     */
     protected function findPreferredPart(AbstractResult $email, $partType)
     {
         $parts = $email->getParts();
@@ -248,9 +248,9 @@ class MailPreviewController extends Controller
      * @param string $previewName The Mailer name
      * @param string $emailName The mailer preview method
      * @param string|null $plugin The plugin where the mailer preview should be found
-     * @return PreviewResult The result of the email preview
-     * @throws NotFoundException
-     **/
+     * @return \DebugKit\Mailer\PreviewResult The result of the email preview
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     protected function findPreview($previewName, $emailName, $plugin = null)
     {
         if ($plugin) {

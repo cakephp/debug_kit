@@ -17,7 +17,6 @@ use ReflectionClass;
 
 /**
  * Represents the result of a preview for a given mailer
- *
  */
 class PreviewResult extends AbstractResult
 {

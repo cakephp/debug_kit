@@ -28,7 +28,6 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Provides access to the MailPreview classes for visually debugging email sending
- *
  */
 class MailPreviewController extends Controller
 {
@@ -71,9 +70,9 @@ class MailPreviewController extends Controller
      * Handles the viewing of an already sent email that was logged in the Mail panel
      * for DebugKit
      *
-     * @param string $panelId The Mail panel id where the email data is stored
-     * @param string $number The email number as stored in the logs
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @param string $panelId The Mail panel id where the email data is stored.
+     * @param string $number The email number as stored in the logs.
+     * @return \Psr\Http\Message\ResponseInterface|null.
      */
     public function sent($panelId, $number)
     {
@@ -89,8 +88,8 @@ class MailPreviewController extends Controller
 
         $email = $content['emails'][$number];
         $email = new SentMailResult(array_filter($email['headers']), $email['message']);
-        $partType = $this->request->query('part');
 
+        $partType = $this->request->query('part');
         if ($partType) {
             return $this->respondWithPart($email, $partType);
         }
@@ -128,7 +127,7 @@ class MailPreviewController extends Controller
 
     /**
      * Returns a response object with the requested part type for the
-     * email or throws an exception if no such part exists.
+     * email or throws an exception, if no such part exists.
      *
      * @param \Debugkit\Mailer\AbstractResult $email the email to preview
      * @param string $partType The email part to retrieve
@@ -258,14 +257,12 @@ class MailPreviewController extends Controller
         }
 
         $realClass = App::className($plugin . $previewName, "Mailer/Preview");
-
         if (!$realClass) {
             throw new NotFoundException("Mailer preview ${previewName} not found");
         }
-
         $mailPreview = new $realClass;
-        $email = $mailPreview->find($emailName);
 
+        $email = $mailPreview->find($emailName);
         if (!$email) {
             throw new NotFoundException("Mailer preview ${previewName}::${emailName} not found");
         }

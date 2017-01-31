@@ -14,7 +14,6 @@ namespace DebugKit\Mailer;
 
 /**
  * A simple structure for representing the results of a sent email
- *
  */
 abstract class AbstractResult
 {

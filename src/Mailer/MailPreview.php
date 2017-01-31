@@ -17,6 +17,9 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 
+/**
+ * Base class for Mailer Previews.
+ */
 class MailPreview
 {
     use MailerAwareTrait;

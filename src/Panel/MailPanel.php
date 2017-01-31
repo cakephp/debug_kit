@@ -21,7 +21,6 @@ use ReflectionClass;
 
 /**
  * Provides debug information on the Emails sent during the request
- *
  */
 class MailPanel extends DebugPanel
 {

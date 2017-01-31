@@ -20,8 +20,20 @@ Router::plugin('DebugKit', function (RouteBuilder $routes) {
         '/panels/*',
         ['controller' => 'Panels', 'action' => 'index']
     );
+
     $routes->connect(
         '/composer/check_dependencies',
         ['controller' => 'Composer', 'action' => 'checkDependencies']
+    );
+
+    $routes->scope(
+        '/mail_preview',
+        ['controller' => 'MailPreview'],
+        function ($routes) {
+            $routes->connect('/', ['action' => 'index']);
+            $routes->connect('/preview', ['action' => 'email']);
+            $routes->connect('/preview/*', ['action' => 'email']);
+            $routes->connect('/sent/:panel/:id', ['action' => 'sent'], ['pass' => ['panel', 'id']]);
+        }
     );
 });

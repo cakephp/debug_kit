@@ -57,6 +57,7 @@ class ToolbarService
             'DebugKit.History',
             'DebugKit.Routes',
             'DebugKit.Packages',
+            'DebugKit.Mail',
         ],
         'forceEnable' => false,
     ];

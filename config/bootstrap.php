@@ -17,6 +17,9 @@ use Cake\Event\EventManager;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
 use DebugKit\Routing\Filter\DebugBarFilter;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\VarDumper;
 
 $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
 
@@ -50,3 +53,23 @@ if (Plugin::routes('DebugKit') === false) {
 // Setup toolbar
 $debugBar->setup();
 DispatcherFactory::add($debugBar);
+
+$dumper = new HtmlDumper();
+$dumper->setStyles([
+    'default' => 'background-color:#ededed; color:#a0a0a0; line-height:1.2em; font:12px Menlo, Monaco, Consolas, monospace; word-wrap: break-word; white-space: pre-wrap; position:relative; z-index:99999; word-break: normal',
+    'num' => 'font-weight:bold; color:#2a6496',
+    'const' => 'font-weight:bold; color:#9c27b0',
+    'str' => 'font-weight:bold; color:#26a69a',
+    'note' => 'color:#d33c44',
+    'ref' => 'color:#a0a0a0',
+    'public' => 'color:#2a6496',
+    'protected' => 'color:#2a6496',
+    'private' => 'color:#2a6496',
+    'meta' => 'color:#2a6496',
+    'key' => 'color:#2a6496',
+    'index' => 'color:#2a6496',
+]);
+$cloner = new VarCloner();
+VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
+    $dumper->dump($cloner->cloneVar($var));
+});

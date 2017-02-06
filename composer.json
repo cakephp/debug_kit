@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "~2.1",
-        "phpunit/phpunit": "5.*"
+        "phpunit/phpunit": "<6.0"
     },
     "autoload": {
         "psr-4": {

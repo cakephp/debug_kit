@@ -131,8 +131,11 @@ class ToolbarService
      */
     public function loadPanels()
     {
-        foreach ($this->config('panels') as $panel) {
-            $this->registry->load($panel);
+        foreach ($this->config('panels') as $panel => $enabled) {
+            list($panel, $enabled) = (is_numeric($panel)) ? [$enabled, true] : [$panel, $enabled];
+            if ($enabled) {
+                $this->registry->load($panel);
+            }
         }
     }
 

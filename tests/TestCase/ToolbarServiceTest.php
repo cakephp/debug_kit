@@ -83,7 +83,7 @@ class ToolbarServiceTest extends TestCase
     {
         $bar = new ToolbarService($this->events, ['panels' => [
             'DebugKit.SqlLog' => false,
-            'DebugKit.SqlLog' => true,
+            'DebugKit.Cache' => true,
             'DebugKit.Session'
         ]]);
         $bar->loadPanels();

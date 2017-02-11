@@ -8,7 +8,7 @@ DebugKit provides a debugging toolbar and enhanced debugging tools for CakePHP a
 
 The `master` branch has the following requirements:
 
-* CakePHP 3.0.0 or greater.
+* CakePHP 3.1.0 or greater.
 * PHP 5.4.16 or greater.
 * SQLite or another database driver that CakePHP can talk to. By default DebugKit will use SQLite, if you
   need to use a different database see the Database Configuration section below.
@@ -29,14 +29,6 @@ php composer.phar require --dev cakephp/debug_kit "~3.0"
 Plugin::load('DebugKit', ['bootstrap' => true, 'routes' => true]);
 ```
 * Set `'debug' => true,` in `config/app.php`.
-
-##Troubleshooting
-These steps are shown to work in troubleshooting DebugKit installations in 2.2.x
-* You may need to copy DebugKit from `root/Plugin` to `app/Plugin`
-* If you don't have a config/app.php file, the file you are looking for is `Controller/AppController.php`
-* Add `'DebugKit.Toolbar'` to your `$components` array in `Controller/AppController.php`. If there's not a `$components` array, declare `public $components = array();` inside the `AppController` class and add `'DebugKit.Toolbar'` inside of it.
-* Change the `app/Config/bootstrap.php` entry to `CakePlugin::load('DebugKit');`
-
 
 ## Reporting Issues
 
@@ -63,15 +55,10 @@ correct branch.
 * `1.3.0` is compatible with CakePHP 1.3.x only. It will not work with CakePHP
   1.2. You can also use the `1.3` branch to get the most recent updates and
   bugfixes.
-* `2.0.0` is compatible with CakePHP 2.0.x only. It will not work with previous
-  CakePHP versions.
-* `2.2.0` is compatible with CakePHP 2.2.0 and greater. It will not work with
-  older versions of CakePHP as this release uses new API's available in 2.2.
-  You can also use the `master` branch to get the most recent updates.
 * `2.2.x` are compatible with CakePHP 2.2.0 and greater. It is a necessary
   upgrade for people using CakePHP 2.4 as the naming conventions around loggers
-  changed in that release.
-* `3.0.x` is compatible with CakePHP 3.0.x and is still under active development.
+  changed in that release. 2.2.x is not actively being developed.
+* `3.x` is compatible with CakePHP 3.x and is still under active development.
 
 # Documentation
 
@@ -94,22 +81,32 @@ your own custom panels.
 
 There are several built-in panels, they are:
 
- * **Request** Displays information about the current request, GET, POST, Cake
-   Parameters, Current Route information and Cookies if the `CookieComponent`
-   is in you controller's components.
- * **Session** Display the information currently in the Session.
- * **Timer** Display any timers that were set during the request see
-   `DebugKitDebugger` for more information. Also displays
-   memory use at component callbacks as well as peak memory used.
- * **Sql Logs** Displays sql logs for each database connection.
- * **Log** Display any entries made to the log files this request.
- * **Variables** Display View variables set in controller.
- * **Environment** Display environment variables related to PHP + CakePHP.
- * **Routes** Display all the routes connected in your application, highlighting the current route.
+* **Request** Displays information about the current request, GET, POST, Cake
+  Parameters, Current Route information and Cookies if the `CookieComponent`
+  is in you controller's components.
+* **Session** Display the information currently in the Session.
+* **Timer** Display any timers that were set during the request see
+  `DebugKitDebugger` for more information. Also displays
+  memory use at component callbacks as well as peak memory used.
+* **Sql Logs** Displays sql logs for each database connection.
+* **Log** Display any entries made to the log files this request.
+* **Variables** Display View variables set in controller.
+* **Environment** Display environment variables related to PHP + CakePHP.
+* **Routes** Display all the routes connected in your application, highlighting
+  the current route.
+* **Packages** Display the packages your application depends on, and view which
+  ones are out-dated.
+* **Mail** After building `MailPreview` classes you can preview your
+  application's email messages inside DebugKit.
 
 ## Configuration
 
-There is no configuration at this time. Configuration options will be coming soon.
+* `DebugKit.panels` - Enable or disable panels for DebugKit. You can disable any of the
+  standard panels by:
+  ```php
+  // Before loading DebugKit
+  Configure::write('DebugKit.panels', ['DebugKit.Packages' => false]);
+  ```
 
 ## Developing Your Own Panels
 

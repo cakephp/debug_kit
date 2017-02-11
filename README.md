@@ -103,10 +103,10 @@ There are several built-in panels, they are:
 
 * `DebugKit.panels` - Enable or disable panels for DebugKit. You can disable any of the
   standard panels by:
-  ```php
-  // Before loading DebugKit
-  Configure::write('DebugKit.panels', ['DebugKit.Packages' => false]);
-  ```
+```php
+// Before loading DebugKit
+Configure::write('DebugKit.panels', ['DebugKit.Packages' => false]);
+```
 
 ## Developing Your Own Panels
 

@@ -73,7 +73,7 @@ class ToolbarServiceTest extends TestCase
         $this->assertGreaterThan(1, $this->events->listeners('Controller.shutdown'));
         $this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
     }
-    
+
     /**
      * Test disabling panels.
      *

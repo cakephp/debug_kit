@@ -45,19 +45,19 @@ class ToolbarService
      */
     protected $_defaultConfig = [
         'panels' => [
-            'DebugKit.Cache',
-            'DebugKit.Session',
-            'DebugKit.Request',
-            'DebugKit.SqlLog',
-            'DebugKit.Timer',
-            'DebugKit.Log',
-            'DebugKit.Variables',
-            'DebugKit.Environment',
-            'DebugKit.Include',
-            'DebugKit.History',
-            'DebugKit.Routes',
-            'DebugKit.Packages',
-            'DebugKit.Mail',
+            'DebugKit.Cache' => true,
+            'DebugKit.Session' => true,
+            'DebugKit.Request' => true,
+            'DebugKit.SqlLog' => true,
+            'DebugKit.Timer' => true,
+            'DebugKit.Log' => true,
+            'DebugKit.Variables' => true,
+            'DebugKit.Environment' => true,
+            'DebugKit.Include' => true,
+            'DebugKit.History' => true,
+            'DebugKit.Routes' => true,
+            'DebugKit.Packages' => true,
+            'DebugKit.Mail' => true,
         ],
         'forceEnable' => false,
     ];
@@ -131,8 +131,11 @@ class ToolbarService
      */
     public function loadPanels()
     {
-        foreach ($this->config('panels') as $panel) {
-            $this->registry->load($panel);
+        foreach ($this->config('panels') as $panel => $enabled) {
+            list($panel, $enabled) = (is_numeric($panel)) ? [$enabled, true] : [$panel, $enabled];
+            if ($enabled) {
+                $this->registry->load($panel);
+            }
         }
     }
 

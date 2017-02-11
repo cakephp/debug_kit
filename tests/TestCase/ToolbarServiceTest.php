@@ -75,6 +75,25 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
+     * Test disabling panels.
+     *
+     * @return void
+     */
+    public function testDisablePanels()
+    {
+        $bar = new ToolbarService($this->events, ['panels' => [
+            'DebugKit.SqlLog' => false,
+            'DebugKit.Cache' => true,
+            'DebugKit.Session'
+        ]]);
+        $bar->loadPanels();
+
+        $this->assertNotContains('SqlLog', $bar->loadedPanels());
+        $this->assertContains('Cache', $bar->loadedPanels());
+        $this->assertContains('Session', $bar->loadedPanels());
+    }
+
+    /**
      * Test that beforeDispatch call initialize on each panel
      *
      * @return void

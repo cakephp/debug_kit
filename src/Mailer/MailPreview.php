@@ -12,8 +12,8 @@
  */
 namespace DebugKit\Mailer;
 
-use Cake\Mailer\MailerAwareTrait;
 use Cake\Datasource\ModelAwareTrait;
+use Cake\Mailer\MailerAwareTrait;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;

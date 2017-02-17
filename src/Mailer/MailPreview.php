@@ -12,6 +12,7 @@
  */
 namespace DebugKit\Mailer;
 
+use Cake\Datasource\ModelAwareTrait;
 use Cake\Mailer\MailerAwareTrait;
 use ReflectionClass;
 use ReflectionException;
@@ -23,6 +24,7 @@ use ReflectionMethod;
 class MailPreview
 {
     use MailerAwareTrait;
+    use ModelAwareTrait;
 
     /**
      * Returns the name of an email if it is valid

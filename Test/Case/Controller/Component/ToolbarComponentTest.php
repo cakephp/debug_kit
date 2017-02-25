@@ -160,7 +160,7 @@ class ToolbarComponentTestCase extends CakeTestCase {
  * @return void
  */
 	public function testLoadPluginPanels() {
-		$debugKitPath = App::pluginPath('DebugKit');
+		$debugKitPath = CakePlugin::path('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
 		if ($noDir) {
 			$this->markTestAsSkipped('Could not find DebugKit in plugin paths');
@@ -185,7 +185,7 @@ class ToolbarComponentTestCase extends CakeTestCase {
  * @return void
  */
 	public function testLibPanels() {
-		$debugKitPath = App::pluginPath('DebugKit');
+		$debugKitPath = CakePlugin::path('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
 		if ($noDir) {
 			$this->markTestAsSkipped('Could not find DebugKit in plugin paths');
@@ -498,7 +498,7 @@ class ToolbarComponentTestCase extends CakeTestCase {
  * @return void
  */
 	public function testNoRequestActionInterference() {
-		$debugKitPath = App::pluginPath('DebugKit');
+		$debugKitPath = CakePlugin::path('DebugKit');
 		$noDir = (empty($debugKitPath) || !file_exists($debugKitPath));
 		if ($noDir) {
 			$this->markTestAsSkipped('Could not find DebugKit in plugin paths');

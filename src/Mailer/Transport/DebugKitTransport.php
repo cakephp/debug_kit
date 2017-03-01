@@ -22,7 +22,7 @@ class DebugKitTransport extends AbstractTransport
      * A reference to the object were emails will be pushed to
      * for logging.
      *
-     * @var ArrayObject
+     * @var \ArrayObject
      */
     protected $emailLog;
 

@@ -232,7 +232,6 @@ class ToolbarServiceTest extends TestCase
         }
     }
 
-
     /**
      * Test that afterDispatch does not modify response
      *

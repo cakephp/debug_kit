@@ -99,7 +99,6 @@ $config = [
 ConnectionManager::config('test', $config);
 ConnectionManager::config('test_debug_kit', $config);
 
-
 Log::config([
     'debug' => [
         'engine' => 'Cake\Log\Engine\FileLog',

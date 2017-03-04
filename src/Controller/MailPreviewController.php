@@ -122,6 +122,7 @@ class MailPreviewController extends Controller
         $humanName = Inflector::humanize(Inflector::underscore($name) . "_$method");
         $this->set('title', $humanName);
         $this->set('email', $email);
+        $this->set('plugin', $plugin);
         $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
     }
 

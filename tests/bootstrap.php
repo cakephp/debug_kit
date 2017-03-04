@@ -39,6 +39,7 @@ $loader->register();
 
 $loader->addNamespace('TestApp', APP);
 $loader->addNamespace('DebugkitTestPlugin', APP . 'Plugin' . DS . 'TestPlugin' . DS . 'src');
+$loader->addNamespace('DebugkitTestPlugin\\Mailer', APP . 'Plugin' . DS . 'DebugkitTestPlugin' . DS . 'src' . DS . 'Mailer');
 
 require_once CORE_PATH . 'config/bootstrap.php';
 

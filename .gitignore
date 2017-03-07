@@ -1,5 +1,6 @@
 *.diff
 *.err
+*.log
 *.orig
 *.rej
 *.swo

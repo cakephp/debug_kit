@@ -28,6 +28,6 @@
     function formatChanged(form) {
         var part_name = form.options[form.selectedIndex].value
         var iframe = document.getElementsByName('messageBody')[0];
-        iframe.contentWindow.location.replace('?part=' + part_name);
+        iframe.contentWindow.location.replace('?part=' + part_name + '&plugin=<?= h($plugin); ?>');
     }
 </script>

@@ -53,6 +53,17 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('&plugin=DebugkitTestPlugin');
+        $this->assertResponseContains('src="?part=text&plugin=DebugkitTestPlugin');
+    }
+    /**
+     * Test that onChange js function passes plugin to iframe
+     *
+     * @return void
+     */
+    public function testOnChangeJsPluginPassedToview()
+    {
+        $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
+
+        $this->assertResponseContains("iframe.contentWindow.location.replace('?part=' + part_name + '&plugin=DebugkitTestPlugin');");
     }
 }

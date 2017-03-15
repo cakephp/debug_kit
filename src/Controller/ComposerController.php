@@ -69,8 +69,8 @@ class ComposerController extends Controller
         ]);
 
         $output = $this->executeComposerCommand($input);
-
         $dependencies = array_filter(explode("\n", $output->fetch()));
+        $packages = [];
         foreach ($dependencies as $dependency) {
             if (strpos($dependency, 'php_network_getaddresses') !== false) {
                 throw new \RuntimeException('You have to be connected to the internet');

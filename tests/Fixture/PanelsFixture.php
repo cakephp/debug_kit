@@ -12,7 +12,7 @@
  */
 namespace Debugkit\Test\Fixture;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\Table as TableSchema;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**

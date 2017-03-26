@@ -24,6 +24,7 @@
     },
     "require": {
         "cakephp/cakephp": ">=3.2.7 <4.0",
+        "cakephp/chronos": "~1.0",
         "cakephp/plugin-installer": "*",
         "composer/composer": "^1.3",
         "jdorn/sql-formatter": "~1.2"

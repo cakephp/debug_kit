@@ -71,6 +71,13 @@ p {
 	padding-right: 40px;
 }
 
+.toolbar-inner {
+	position: relative;
+	overflow: hidden;
+	white-space: nowrap;
+	display: flex;
+}
+
 .hidden {
 	display: none;
 }
@@ -110,10 +117,14 @@ p {
 	vertical-align: middle;
 }
 
+#panel-button-right {
+	border-right: 1px solid rgba(0, 0, 0, 0.075);
+}
 
 .panel {
 	border-left: 1px solid rgba(0, 0, 0, 0.075);
 	padding: 0px 9px;
+	position: relative;
 }
 .panel:first-child {
 	border-left: 0;

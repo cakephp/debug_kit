@@ -237,8 +237,14 @@ Toolbar.prototype = {
       _this.loadPanel(id);
     });
 
-    this.button.on('click', function(e) {
+    this.button.not('#panel-button-left, #panel-button-right').on('click', function(e) {
       _this.toggle();
+    });
+    $('#panel-button-left', this.button).on('click', function(e) {
+        _this.scroll('left');
+    });
+    $('#panel-button-right', this.button).on('click', function(e) {
+        _this.scroll('right');
     });
 
     toolbar.panelClose.on('click', function(e) {
@@ -265,6 +271,13 @@ Toolbar.prototype = {
   onRequest: function(request) {
     this.ajaxRequests.push(request);
     $('.panel-summary:contains(xhr)').text("" + this.ajaxRequests.length + ' xhr');
+  },
+
+  scroll: function(direction) {
+      var scrollValue = 300;
+      var operator = direction === 'left' ? '-=' : '+=';
+      var css = {left: operator + scrollValue}
+      $('.toolbar-inner li', this.button).animate(css)
   },
 
   initialize: function() {

@@ -71,6 +71,13 @@ p {
 	padding-right: 40px;
 }
 
+.toolbar-inner {
+	position: relative;
+	overflow: hidden;
+	white-space: nowrap;
+	display: flex;
+}
+
 .hidden {
 	display: none;
 }
@@ -96,6 +103,23 @@ p {
 	margin: 0;
 	display: block;
 }
+.panel {
+	border-left: 1px solid rgba(0, 0, 0, 0.075);
+	padding: 0px 9px;
+	position: relative;
+}
+.panel:first-child {
+	border-left: 0;
+}
+.panel-active {
+	background: #fff;
+	color: #D33C44;
+	transition: background-color 300ms linear;
+}
+.panel-active .panel-button {
+	color: #D33C44;
+}
+
 .panel-button {
 	color: #fff;
 	font-family: CakeFont, Helvetica, Arial, sans-serif;
@@ -110,21 +134,12 @@ p {
 	vertical-align: middle;
 }
 
-
-.panel {
-	border-left: 1px solid rgba(0, 0, 0, 0.075);
-	padding: 0px 9px;
+.panel-button-left {
+	padding-left: 0;
 }
-.panel:first-child {
-	border-left: 0;
-}
-.panel-active {
-	background: #fff;
-	color: #D33C44;
-	transition: background-color 300ms linear;
-}
-.panel-active .panel-button {
-	color: #D33C44;
+.panel-button-right {
+	padding-right: 0;
+	border-right: 1px solid rgba(0, 0, 0, 0.075);
 }
 
 .history-mode .panel-active .panel-button {

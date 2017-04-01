@@ -16,6 +16,17 @@ use Cake\Core\Configure;
 </div>
 
 <ul id="toolbar" class="toolbar">
+     <li class="panel-button-left panel hidden">
+        <span class="panel-button">
+            &#x3008;
+        </span>
+    </li>
+    <li class="panel-button-right panel hidden">
+        <span class="panel-button">
+            &#x3009;
+        </span>
+    </li>
+    <div class="toolbar-inner">
     <?php foreach ($toolbar->panels as $panel): ?>
     <li class="panel hidden" data-id="<?= $panel->id ?>">
         <span class="panel-button">
@@ -28,6 +39,7 @@ use Cake\Core\Configure;
         <?php endif ?>
     </li>
     <?php endforeach; ?>
+    </div>
     <li id="panel-button">
         <?= $this->Html->image('DebugKit.cake.icon.png', [
             'alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit'

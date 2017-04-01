@@ -10,7 +10,7 @@ if (elem) {
 
 $(document).ready(function() {
   toolbar = new Toolbar({
-    button: $('#toolbar'),
+    toolbar: $('#toolbar'),
     content: $('#panel-content-container'),
     panelButtons: $('.panel'),
     panelClose: $('#panel-close'),

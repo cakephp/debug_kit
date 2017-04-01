@@ -237,17 +237,17 @@ Toolbar.prototype = {
       _this.loadPanel(id);
     });
 
-    this.button.not('#panel-button-left, #panel-button-right').on('click', function(e) {
+    this.button.not('.panel-button-left, .panel-button-right').on('click', function(e) {
       _this.toggle();
     });
-    $('.panel-button-left', this.button).on('click', function(e) {
+    this.button.find('.panel-button-left').on('click', function(e) {
         _this.scroll('left');
     });
-    $('.panel-button-right', this.button).on('click', function(e) {
+    this.button.find('.panel-button-right').on('click', function(e) {
         _this.scroll('right');
     });
 
-    toolbar.panelClose.on('click', function(e) {
+    this.panelClose.on('click', function(e) {
       _this.hideContent();
       return false;
     });
@@ -274,10 +274,25 @@ Toolbar.prototype = {
   },
 
   scroll: function(direction) {
-      var scrollValue = 300;
-      var operator = direction === 'left' ? '-=' : '+=';
-      var css = {left: operator + scrollValue}
-      $('.toolbar-inner li', this.button).animate(css)
+    var scrollValue = 300;
+    var operator = direction === 'left' ? '-=' : '+=';
+    var buttons = this.button.find('.toolbar-inner li');
+    var cakeButton = this.button.find('#panel-button');
+    var firstButton = buttons.first();
+    var lastButton = buttons.last();
+
+    // If the toolbar is scrolled to the left, don't go farther.
+    if (direction === 'right' && firstButton.position().left == 0) {
+      return;
+    }
+
+    var buttonWidth = lastButton.width();
+    // If the last button's right side is left of the cake button, don't scroll further.
+    if (direction === 'left' && lastButton.offset().left + buttonWidth < cakeButton.offset().left) {
+      return;
+    }
+    var css = {left: operator + scrollValue}
+    $('.toolbar-inner li', this.button).animate(css)
   },
 
   initialize: function() {

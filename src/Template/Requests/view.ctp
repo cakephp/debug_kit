@@ -16,14 +16,14 @@ use Cake\Core\Configure;
 </div>
 
 <ul id="toolbar" class="toolbar">
-     <li id="panel-button-left" class="panel hidden">
+     <li class="panel-button-left panel hidden">
         <span class="panel-button">
-            &lsaquo;
+            &#x3008;
         </span>
     </li>
-    <li id="panel-button-right" class="panel hidden">
+    <li class="panel-button-right panel hidden">
         <span class="panel-button">
-            &rsaquo;
+            &#x3009;
         </span>
     </li>
     <div class="toolbar-inner">

@@ -103,24 +103,6 @@ p {
 	margin: 0;
 	display: block;
 }
-.panel-button {
-	color: #fff;
-	font-family: CakeFont, Helvetica, Arial, sans-serif;
-}
-.panel-summary {
-	background: rgba(60, 60, 60, 0.3);
-	color: #fff;
-	font-size: 12px;
-	line-height: 20px;
-	padding: 4px;
-	border-radius: 4px;
-	vertical-align: middle;
-}
-
-#panel-button-right {
-	border-right: 1px solid rgba(0, 0, 0, 0.075);
-}
-
 .panel {
 	border-left: 1px solid rgba(0, 0, 0, 0.075);
 	padding: 0px 9px;
@@ -136,6 +118,28 @@ p {
 }
 .panel-active .panel-button {
 	color: #D33C44;
+}
+
+.panel-button {
+	color: #fff;
+	font-family: CakeFont, Helvetica, Arial, sans-serif;
+}
+.panel-summary {
+	background: rgba(60, 60, 60, 0.3);
+	color: #fff;
+	font-size: 12px;
+	line-height: 20px;
+	padding: 4px;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+.panel-button-left {
+	padding-left: 0;
+}
+.panel-button-right {
+	padding-right: 0;
+	border-right: 1px solid rgba(0, 0, 0, 0.075);
 }
 
 .history-mode .panel-active .panel-button {

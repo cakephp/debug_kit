@@ -240,10 +240,10 @@ Toolbar.prototype = {
     this.button.not('#panel-button-left, #panel-button-right').on('click', function(e) {
       _this.toggle();
     });
-    $('#panel-button-left', this.button).on('click', function(e) {
+    $('.panel-button-left', this.button).on('click', function(e) {
         _this.scroll('left');
     });
-    $('#panel-button-right', this.button).on('click', function(e) {
+    $('.panel-button-right', this.button).on('click', function(e) {
         _this.scroll('right');
     });
 

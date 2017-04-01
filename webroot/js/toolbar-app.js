@@ -1,5 +1,5 @@
 function Toolbar(options) {
-  this.button = options.button;
+  this.toolbar = options.toolbar;
   this.panelButtons = options.panelButtons;
   this.content = options.content;
   this.panelClose = options.panelClose;
@@ -87,10 +87,10 @@ Toolbar.prototype = {
 
   updateToolbarState: function(state) {
     if (state === 'toolbar') {
-      this.button.addClass('open');
+      this.toolbar.addClass('open');
     }
     if (state === 'collapse') {
-      this.button.removeClass('open');
+      this.toolbar.removeClass('open');
     }
   },
 
@@ -180,7 +180,7 @@ Toolbar.prototype = {
   },
 
   currentPanelButton: function() {
-    return this.button.find("[data-id='" + this.currentPanel() + "']");
+    return this.toolbar.find("[data-id='" + this.currentPanel() + "']");
   },
 
   keyboardListener: function() {
@@ -237,14 +237,17 @@ Toolbar.prototype = {
       _this.loadPanel(id);
     });
 
-    this.button.not('.panel-button-left, .panel-button-right').on('click', function(e) {
+    this.toolbar.on('click', function(e) {
       _this.toggle();
+      return false;
     });
-    this.button.find('.panel-button-left').on('click', function(e) {
-        _this.scroll('left');
+    this.toolbar.find('.panel-button-left').on('click', function(e) {
+      _this.scroll('left');
+      return false;
     });
-    this.button.find('.panel-button-right').on('click', function(e) {
-        _this.scroll('right');
+    this.toolbar.find('.panel-button-right').on('click', function(e) {
+      _this.scroll('right');
+      return false;
     });
 
     this.panelClose.on('click', function(e) {
@@ -276,8 +279,8 @@ Toolbar.prototype = {
   scroll: function(direction) {
     var scrollValue = 300;
     var operator = direction === 'left' ? '-=' : '+=';
-    var buttons = this.button.find('.toolbar-inner li');
-    var cakeButton = this.button.find('#panel-button');
+    var buttons = this.toolbar.find('.toolbar-inner li');
+    var cakeButton = this.toolbar.find('#panel-button');
     var firstButton = buttons.first();
     var lastButton = buttons.last();
 

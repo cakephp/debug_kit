@@ -37,7 +37,7 @@ class RequestsFixture extends TestFixture
      */
     public $fields = [
         'id' => ['type' => 'uuid', 'null' => false],
-        'url' => ['type' => 'string', 'null' => false],
+        'url' => ['type' => 'text', 'null' => false],
         'content_type' => ['type' => 'string'],
         'status_code' => ['type' => 'integer'],
         'method' => ['type' => 'string'],

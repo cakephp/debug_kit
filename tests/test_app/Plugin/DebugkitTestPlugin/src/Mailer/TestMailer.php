@@ -33,4 +33,16 @@ class TestMailer extends Mailer
 
         return $this;
     }
+
+    public function contain_app_array_url()
+    {
+        return $this->template("contain_app_array_url")
+            ->setLayout(false);
+    }
+
+    public function contain_plugin_array_url()
+    {
+        return $this->template("contain_plugin_array_url")
+            ->setLayout(false);
+    }
 }

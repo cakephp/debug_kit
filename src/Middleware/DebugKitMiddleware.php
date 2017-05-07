@@ -27,12 +27,12 @@ class DebugKitMiddleware
     /**
      * Constructor
      *
-     * @param array $config The configuration data for DebugKit.
+     * @param DebugKit\ToolbarService $service The configured service, or null.
      */
-    public function __construct(array $config = [])
+    public function __construct(ToolbarService $service = null)
     {
-        $events = EventManager::instance();
-        $this->service = new ToolbarService($events, $config);
+        $service = $service ?: new ToolbarService(EventManager::instance(), []);
+        $this->service = $service;
     }
 
     /**

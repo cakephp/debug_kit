@@ -15,8 +15,8 @@ use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\ServerRequest;
+use Cake\Http\Response;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
@@ -154,11 +154,11 @@ class ToolbarService
     /**
      * Save the toolbar state.
      *
-     * @param \Cake\Network\Request $request The request
-     * @param \Cake\Network\Response $response The response
+     * @param \Cake\Http\ServerRequest $request The request
+     * @param \Cake\Http\Response $response The response
      * @return null|\DebugKit\Model\Entity\Request Saved request data.
      */
-    public function saveData(Request $request, Response $response)
+    public function saveData(ServerRequest $request, Response $response)
     {
         // Skip debugkit requests and requestAction()
         if ($request->param('plugin') === 'DebugKit' || $request->is('requested')) {
@@ -207,8 +207,8 @@ class ToolbarService
      * contains HTML and there is a </body> tag.
      *
      * @param \DebugKit\Model\Entity\Request $row The request data to inject.
-     * @param \Cake\Network\Response $response The response to augment.
-     * @return \Cake\Network\Response The modified response
+     * @param \Cake\Http\Response $response The response to augment.
+     * @return \Cake\Http\Response The modified response
      */
     public function injectScripts($row, $response)
     {

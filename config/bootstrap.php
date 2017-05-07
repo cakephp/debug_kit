@@ -16,8 +16,9 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
-use DebugKit\ToolbarService;
+use DebugKit\Middleware\DebugKitMiddleware;
 use DebugKit\Routing\Filter\DebugBarFilter;
+use DebugKit\ToolbarService;
 
 $service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
 
@@ -56,7 +57,7 @@ if (class_exists($appClass)) {
     });
 } else {
     // Setup dispatch filter
-    $service = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
+    $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
     $debugBar->setup();
     DispatcherFactory::add($debugBar);
 }

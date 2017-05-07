@@ -54,6 +54,7 @@ class SqlLogPanel extends DebugPanel
             }
 
             if ($logger instanceof DebugLog) {
+                $this->_loggers[] = $logger;
                 continue;
             }
             $logger = new DebugLog($logger, $name);

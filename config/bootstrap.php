@@ -50,7 +50,7 @@ if (Plugin::routes('DebugKit') === false) {
 
 $appClass = Configure::read('App.namespace') . '\Application';
 if (class_exists($appClass)) {
-    EventManager::instance()->on('Server.buildMiddleware', function ($event, $queue) {
+    EventManager::instance()->on('Server.buildMiddleware', function ($event, $queue) use ($service) {
         $middleware = new DebugKitMiddleware($service);
         $queue->insertBefore('Cake\Error\Middleware\ErrorHandlerMiddleware', $middleware);
     });

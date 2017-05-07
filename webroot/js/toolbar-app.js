@@ -220,6 +220,15 @@ Toolbar.prototype = {
 
   mouseListener: function() {
     var _this = this;
+    this.toolbar.find('.panel-button-left').on('click', function(e) {
+      _this.scroll('left');
+      return false;
+    });
+    this.toolbar.find('.panel-button-right').on('click', function(e) {
+      _this.scroll('right');
+      return false;
+    });
+
     this.panelButtons.on('click', function(e) {
       _this.panelButtons.removeClass('panel-active');
       e.preventDefault();
@@ -239,14 +248,6 @@ Toolbar.prototype = {
 
     this.toolbar.on('click', function(e) {
       _this.toggle();
-      return false;
-    });
-    this.toolbar.find('.panel-button-left').on('click', function(e) {
-      _this.scroll('left');
-      return false;
-    });
-    this.toolbar.find('.panel-button-right').on('click', function(e) {
-      _this.scroll('right');
       return false;
     });
 

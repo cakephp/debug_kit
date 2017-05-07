@@ -39,6 +39,11 @@ class DebugKitMiddleware
      * Invoke the middleware.
      *
      * DebugKit will augment the response and add the toolbar if possible.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @param \Psr\Http\Message\ResponseInterface $response The response.
+     * @param callable $next Callback to invoke the next middleware.
+     * @return \Psr\Http\Message\ResponseInterface A response
      */
     public function __invoke($request, $response, $next)
     {

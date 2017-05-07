@@ -122,6 +122,7 @@ class DebugKitMiddlewareTest extends TestCase
             $stream = new CallbackStream(function () {
                 return 'hi!';
             });
+
             return $res->withBody($stream);
         };
         $result = $layer($request, $response, $next);

@@ -30,7 +30,7 @@
         "jdorn/sql-formatter": "^1.2.0"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "^2.1.0",
+        "cakephp/cakephp-codesniffer": "^3.0",
         "phpunit/phpunit": "<6.0"
     },
     "autoload": {

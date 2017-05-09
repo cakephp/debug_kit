@@ -168,10 +168,10 @@ class ToolbarService
             return null;
         }
         $data = [
-            'url' => $request->here(),
-            'content_type' => $response->type(),
-            'method' => $request->method(),
-            'status_code' => $response->statusCode(),
+            'url' => $request->getUri()->getPath(),
+            'content_type' => $response->getHeaderLine('Content-Type'),
+            'method' => $request->getMethod(),
+            'status_code' => $response->getStatusCode(),
             'requested_at' => $request->env('REQUEST_TIME'),
             'panels' => []
         ];
@@ -215,25 +215,21 @@ class ToolbarService
      */
     public function injectScripts($row, $response)
     {
-        if (strpos($response->type(), 'html') === false) {
+        if (strpos($response->getHeaderLine('Content-Type'), 'html') === false) {
             return $response;
         }
-        if (method_exists($response, 'getBody')) {
-            $body = $response->getBody();
-            if (!$body->isSeekable()) {
-                return $response;
-            }
-        } else {
-            $body = $response->body();
-            if (!is_string($body)) {
-                return $response;
-            }
+        $body = $response->getBody();
+        if (!$body->isSeekable()) {
+            return $response;
         }
+        $body->rewind();
+        $body = $body->getContents();
+
         $pos = strrpos($body, '</body>');
         if ($pos === false) {
             return $response;
         }
-        $response->header(['X-DEBUGKIT-ID' => $row->id]);
+        $response = $response->withHeader('X-DEBUGKIT-ID', $row->id);
 
         $url = Router::url('/', true);
         $script = sprintf(
@@ -242,10 +238,8 @@ class ToolbarService
             $url,
             Router::url('/debug_kit/js/toolbar.js')
         );
-
         $body = substr($body, 0, $pos) . $script . substr($body, $pos);
-        $response->body($body);
 
-        return $response;
+        return $response->withStringBody($body);
     }
 }

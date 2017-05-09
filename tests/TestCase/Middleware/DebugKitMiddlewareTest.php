@@ -73,8 +73,8 @@ class DebugKitMiddlewareTest extends TestCase
             return $res;
         };
 
-        $result = $layer($request, $response, $next);
-        $this->assertSame($result, $response, 'Should return the response');
+        $response = $layer($request, $response, $next);
+        $this->assertInstanceOf(Response::class, $response, 'Should return the response');
 
         $requests = TableRegistry::get('DebugKit.Requests');
         $result = $requests->find()
@@ -98,7 +98,8 @@ class DebugKitMiddlewareTest extends TestCase
             '<script id="__debug_kit" data-id="' . $result->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js"></script>' .
             '</body>';
-        $this->assertTextEquals($expected, $response->body());
+        $body = $response->getBody();
+        $this->assertTextEquals($expected, '' . $body);
     }
 
     /**

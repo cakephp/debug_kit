@@ -194,3 +194,6 @@ The above would load all the default panels as well as the custom panel from `My
 By default, DebugKit uses a small SQLite database in you application's `/tmp` directory to store
 the panel data. If you'd like DebugKit to store its data elsewhere, you should define a `debug_kit`
 connection.
+
+## Cleaning Storage
+You can safely remove the file tmp/debug_kit.sqlite, the plugin is able to regenerate it.

@@ -132,6 +132,27 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
+     * Test that saveData ignores debugkit paths
+     *
+     * @return void
+     */
+    public function testSaveDataIgnoreDebugKit()
+    {
+        $request = new Request([
+            'url' => '/debug_kit/panel/abc123',
+            'params' => []
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>'
+        ]);
+
+        $bar = new ToolbarService($this->events, []);
+        $this->assertNull($bar->saveData($request, $response));
+    }
+
+    /**
      * Test that saveData works
      *
      * @return void

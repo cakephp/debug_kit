@@ -164,7 +164,7 @@ class DebugBarFilterTest extends TestCase
         $bar->setup();
 
         $event = new Event('Dispatcher.afterDispatch', $this, compact('request', 'response'));
-        $bar->afterDispatch($event);
+        $response = $bar->afterDispatch($event);
 
         $requests = TableRegistry::get('DebugKit.Requests');
         $result = $requests->find()

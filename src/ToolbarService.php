@@ -15,8 +15,8 @@ use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
@@ -154,21 +154,24 @@ class ToolbarService
     /**
      * Save the toolbar state.
      *
-     * @param \Cake\Network\Request $request The request
-     * @param \Cake\Network\Response $response The response
+     * @param \Cake\Http\ServerRequest $request The request
+     * @param \Cake\Http\Response $response The response
      * @return null|\DebugKit\Model\Entity\Request Saved request data.
      */
-    public function saveData(Request $request, Response $response)
+    public function saveData(ServerRequest $request, Response $response)
     {
         // Skip debugkit requests and requestAction()
-        if ($request->param('plugin') === 'DebugKit' || $request->is('requested')) {
+        if ($request->param('plugin') === 'DebugKit' ||
+            strpos($request->getUri()->getPath(), 'debug_kit') !== false ||
+            $request->is('requested')
+        ) {
             return null;
         }
         $data = [
-            'url' => $request->here(),
-            'content_type' => $response->type(),
-            'method' => $request->method(),
-            'status_code' => $response->statusCode(),
+            'url' => $request->getUri()->getPath(),
+            'content_type' => $response->getHeaderLine('Content-Type'),
+            'method' => $request->getMethod(),
+            'status_code' => $response->getStatusCode(),
             'requested_at' => $request->env('REQUEST_TIME'),
             'panels' => []
         ];
@@ -207,30 +210,26 @@ class ToolbarService
      * contains HTML and there is a </body> tag.
      *
      * @param \DebugKit\Model\Entity\Request $row The request data to inject.
-     * @param \Cake\Network\Response $response The response to augment.
-     * @return \Cake\Network\Response The modified response
+     * @param \Cake\Http\Response $response The response to augment.
+     * @return \Cake\Http\Response The modified response
      */
     public function injectScripts($row, $response)
     {
-        if (strpos($response->type(), 'html') === false) {
+        if (strpos($response->getHeaderLine('Content-Type'), 'html') === false) {
             return $response;
         }
-        if (method_exists($response, 'getBody')) {
-            $body = $response->getBody();
-            if (!$body->isSeekable()) {
-                return $response;
-            }
-        } else {
-            $body = $response->body();
-            if (!is_string($body)) {
-                return $response;
-            }
+        $body = $response->getBody();
+        if (!$body->isSeekable()) {
+            return $response;
         }
+        $body->rewind();
+        $body = $body->getContents();
+
         $pos = strrpos($body, '</body>');
         if ($pos === false) {
             return $response;
         }
-        $response->header(['X-DEBUGKIT-ID' => $row->id]);
+        $response = $response->withHeader('X-DEBUGKIT-ID', $row->id);
 
         $url = Router::url('/', true);
         $script = sprintf(
@@ -239,10 +238,8 @@ class ToolbarService
             $url,
             Router::url('/debug_kit/js/toolbar.js')
         );
-
         $body = substr($body, 0, $pos) . $script . substr($body, $pos);
-        $response->body($body);
 
-        return $response;
+        return $response->withStringBody($body);
     }
 }

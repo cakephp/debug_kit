@@ -16,11 +16,13 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
+use DebugKit\Middleware\DebugKitMiddleware;
 use DebugKit\Routing\Filter\DebugBarFilter;
+use DebugKit\ToolbarService;
 
-$debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
+$service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
 
-if (!$debugBar->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
+if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
     return;
 }
 
@@ -47,6 +49,15 @@ if (Plugin::routes('DebugKit') === false) {
     require __DIR__ . DS . 'routes.php';
 }
 
-// Setup toolbar
-$debugBar->setup();
-DispatcherFactory::add($debugBar);
+$appClass = Configure::read('App.namespace') . '\Application';
+if (class_exists($appClass)) {
+    EventManager::instance()->on('Server.buildMiddleware', function ($event, $queue) use ($service) {
+        $middleware = new DebugKitMiddleware($service);
+        $queue->insertAt(0, $middleware);
+    });
+} else {
+    // Setup dispatch filter
+    $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
+    $debugBar->setup();
+    DispatcherFactory::add($debugBar);
+}

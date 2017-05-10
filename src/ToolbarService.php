@@ -20,6 +20,7 @@ use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Used to create the panels and inject a toolbar into
@@ -155,10 +156,10 @@ class ToolbarService
      * Save the toolbar state.
      *
      * @param \Cake\Http\ServerRequest $request The request
-     * @param \Cake\Http\Response $response The response
+     * @param \Psr\Http\Message\ResponseInterface $response The response
      * @return null|\DebugKit\Model\Entity\Request Saved request data.
      */
-    public function saveData(ServerRequest $request, Response $response)
+    public function saveData(ServerRequest $request, ResponseInterface $response)
     {
         // Skip debugkit requests and requestAction()
         if ($request->param('plugin') === 'DebugKit' ||
@@ -210,10 +211,10 @@ class ToolbarService
      * contains HTML and there is a </body> tag.
      *
      * @param \DebugKit\Model\Entity\Request $row The request data to inject.
-     * @param \Cake\Http\Response $response The response to augment.
-     * @return \Cake\Http\Response The modified response
+     * @param \Psr\Http\Message\ResponseInterface $response The response to augment.
+     * @return \Psr\Http\Message\ResponseInterface The modified response
      */
-    public function injectScripts($row, $response)
+    public function injectScripts($row, ResponseInterface $response)
     {
         if (strpos($response->getHeaderLine('Content-Type'), 'html') === false) {
             return $response;
@@ -223,13 +224,12 @@ class ToolbarService
             return $response;
         }
         $body->rewind();
-        $body = $body->getContents();
+        $contents = $body->getContents();
 
-        $pos = strrpos($body, '</body>');
+        $pos = strrpos($contents, '</body>');
         if ($pos === false) {
             return $response;
         }
-        $response = $response->withHeader('X-DEBUGKIT-ID', $row->id);
 
         $url = Router::url('/', true);
         $script = sprintf(
@@ -238,8 +238,12 @@ class ToolbarService
             $url,
             Router::url('/debug_kit/js/toolbar.js')
         );
-        $body = substr($body, 0, $pos) . $script . substr($body, $pos);
+        $contents = substr($contents, 0, $pos) . $script . substr($contents, $pos);
+        $body->rewind();
+        $body->write($contents);
 
-        return $response->withStringBody($body);
+        return $response
+            ->withHeader('X-DEBUGKIT-ID', $row->id)
+            ->withBody($body);
     }
 }

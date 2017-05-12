@@ -223,6 +223,31 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
+     * Test that saveData ignores file bodies.
+     *
+     * @return void
+     */
+    public function testInjectScriptsFileBodies()
+    {
+        $request = new Request([
+            'url' => '/articles',
+            'params' => ['plugin' => null]
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+        ]);
+        $response = $response->withFile(__FILE__);
+
+        $bar = new ToolbarService($this->events, []);
+        $row = new RequestEntity(['id' => 'abc123']);
+
+        $result = $bar->injectScripts($row, $response);
+        $this->assertInstanceOf('Cake\Network\Response', $result);
+        $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
+    }
+
+    /**
      * Test that saveData ignores streaming bodies
      *
      * @return void

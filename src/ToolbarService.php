@@ -220,7 +220,7 @@ class ToolbarService
             return $response;
         }
         $body = $response->getBody();
-        if (!$body->isSeekable()) {
+        if (!$body->isSeekable() || !$body->isWritable()) {
             return $response;
         }
         $body->rewind();

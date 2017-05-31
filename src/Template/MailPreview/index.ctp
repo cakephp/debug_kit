@@ -58,7 +58,7 @@
         highlight_string($code);
     ?>
     </pre>
-    <p>Now you create a MailPreview class where tou can pass some dummy values.</p>
+    <p>Now you create a MailPreview class where you can pass some dummy values.</p>
 
     <pre style="background-color:#f8f8f8;font-familiy:Monaco,sans-serif;overflow:scroll;margin:10px 0;line-height:25px;">
     <?php

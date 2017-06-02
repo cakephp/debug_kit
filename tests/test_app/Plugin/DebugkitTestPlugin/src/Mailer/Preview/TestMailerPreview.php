@@ -28,4 +28,14 @@ class TestMailerPreview extends MailPreview
     {
         return $this->getMailer('DebugkitTestPlugin.Test')->test_email();
     }
+
+    public function contain_app_array_url()
+    {
+        return $this->getMailer('DebugkitTestPlugin.Test')->contain_app_array_url();
+    }
+
+    public function contain_plugin_array_url()
+    {
+        return $this->getMailer('DebugkitTestPlugin.Test')->contain_plugin_array_url();
+    }
 }

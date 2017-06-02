@@ -13,6 +13,7 @@
 namespace DebugKit\Mailer;
 
 use Cake\Mailer\Mailer;
+use Cake\Routing\Router;
 use ReflectionClass;
 
 /**
@@ -55,7 +56,9 @@ class PreviewResult extends AbstractResult
             ->getMethod('_renderTemplates')
             ->getClosure($email);
 
+        Router::setRequestInfo(['plugin' => null]);
         $this->parts = $render('');
+        Router::popRequest();
 
         $extra = ['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'];
         $this->headers = array_filter($email->getHeaders($extra));

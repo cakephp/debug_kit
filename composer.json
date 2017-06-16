@@ -23,6 +23,7 @@
         "source": "https://github.com/cakephp/debug_kit"
     },
     "require": {
+        "php": ">=5.6.0",
         "cakephp/cakephp": "^3.4.0",
         "cakephp/chronos": "^1.0.0",
         "cakephp/plugin-installer": "^1.0.0",

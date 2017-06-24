@@ -96,6 +96,7 @@ class MailPreviewController extends Controller
 
         $this->set('noHeader', true);
         $this->set('email', $email);
+        $this->set('plugin', '');
         $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
         $this->viewBuilder()->template('email');
     }

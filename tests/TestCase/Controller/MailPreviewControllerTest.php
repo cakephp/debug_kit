@@ -14,6 +14,7 @@
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Core\Plugin;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
@@ -38,11 +39,13 @@ class MailPreviewControllerTest extends IntegrationTestCase
                 '/mail_preview',
                 ['controller' => 'MailPreview'],
                 function ($routes) {
+                    $routes->connect('/sent/*', ['action' => 'sent']);
                     $routes->connect('/preview/*', ['action' => 'email']);
                 }
             );
         });
     }
+
     /**
      * Test that plugin is passed to the view in email action
      *
@@ -55,6 +58,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
         $this->assertResponseContains('src="?part=text&plugin=DebugkitTestPlugin');
     }
+
     /**
      * Test that onChange js function passes plugin to iframe
      *
@@ -65,5 +69,67 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
         $this->assertResponseContains("iframe.contentWindow.location.replace('?part=' + part_name + '&plugin=DebugkitTestPlugin');");
+    }
+
+    /**
+     * Test sent() with invalid data.
+     *
+     * @return void
+     */
+    public function testSentInvalidData()
+    {
+        $this->get('/debug_kit/mail_preview/sent/bad-data/0');
+        $this->assertResponseCode(404);
+    }
+
+    /**
+     * Test sent() with valid data.
+     *
+     * @return void
+     */
+    public function testSentValidData()
+    {
+        $panels = TableRegistry::get('Panels');
+        $panel = $panels->newEntity(['request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']);
+        $data = [
+            'emails' => [
+                [
+                    'headers' => ['To' => 'test@example.com'],
+                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi']
+                ]
+            ]
+        ];
+        $panel->content = serialize($data);
+        $panels->save($panel);
+
+        $this->get("/debug_kit/mail_preview/sent/{$panel->id}/0");
+        $this->assertResponseCode(200);
+        $this->assertResponseContains('test@example.com');
+        $this->assertResponseContains('<iframe');
+    }
+
+    /**
+     * Test sent() with valid data rendering a part
+     *
+     * @return void
+     */
+    public function testSentValidDataRenderPart()
+    {
+        $panels = TableRegistry::get('Panels');
+        $panel = $panels->newEntity(['request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']);
+        $data = [
+            'emails' => [
+                [
+                    'headers' => ['To' => 'test@example.com'],
+                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi']
+                ]
+            ]
+        ];
+        $panel->content = serialize($data);
+        $panels->save($panel);
+
+        $this->get("/debug_kit/mail_preview/sent/{$panel->id}/0?part=html");
+        $this->assertResponseCode(200);
+        $this->assertResponseContains('<h1>Hi</h1>');
     }
 }

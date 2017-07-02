@@ -78,7 +78,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testSentInvalidData()
     {
-        $this->get('/debug_kit/mail_preview/sent/bad-data/0');
+        $this->get('/debug_kit/mail_preview/sent/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/0');
         $this->assertResponseCode(404);
     }
 

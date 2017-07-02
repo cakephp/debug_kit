@@ -13,6 +13,8 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
+use Cake\Database\Driver\Sqlite;
+use Cake\Datasource\ConnectionManager;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;

@@ -54,7 +54,6 @@ trait LazyTableTrait
             }
         }
 
-
         foreach ($fixtures as $name) {
             $class = App::className($name, 'Test/Fixture', 'Fixture');
             if ($class === false) {

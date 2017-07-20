@@ -107,6 +107,8 @@ There are several built-in panels, they are:
 // Before loading DebugKit
 Configure::write('DebugKit.panels', ['DebugKit.Packages' => false]);
 ```
+* `DebugKit.includeSchemaReflection` - Set to true to enable logging of schema
+  reflection queries. Disabled by default.
 
 ## Developing Your Own Panels
 

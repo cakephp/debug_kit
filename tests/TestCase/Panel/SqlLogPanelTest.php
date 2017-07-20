@@ -12,6 +12,7 @@
  */
 namespace DebugKit\Test\TestCase\Panel;
 
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\ORM\Table;
@@ -75,6 +76,21 @@ class SqlLogPanelTest extends TestCase
         $this->panel->initialize();
         $second = $db->logger();
         $this->assertSame($second, $logger);
+    }
+
+    /**
+     * Ensure that subrequests don't double proxy the logger.
+     *
+     * @return void
+     */
+    public function testInitializePassesIncludeSchema()
+    {
+        Configure::write('DebugKit.includeSchemaReflection', true);
+        $this->panel->initialize();
+        $db = ConnectionManager::get('test');
+        $logger = $db->logger();
+        $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
+        $this->assertAttributeEquals(true, '_includeSchema', $logger);
     }
 
     /**

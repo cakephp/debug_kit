@@ -166,13 +166,14 @@ class DebugLog extends QueryLogger
     protected function isSchemaQuery(LoggedQuery $query)
     {
         $querystring = $query->query;
+
         return (
             // Multiple engines
             strpos($querystring, 'FROM information_schema') !== false ||
             // Postgres
             strpos($querystring, 'FROM pg_catalog') !== false ||
             // MySQL
-            strpos($querystring, 'SHOW TABLE') ===  0 ||
+            strpos($querystring, 'SHOW TABLE') === 0 ||
             strpos($querystring, 'SHOW FULL COLUMNS') === 0 ||
             strpos($querystring, 'SHOW INDEXES') === 0 ||
             // Sqlite

@@ -45,7 +45,7 @@ class DebugLogTest extends TestCase
     public function testLog()
     {
         $query = new LoggedQuery();
-        $query->sql = 'SELECT * FROM posts';
+        $query->query = 'SELECT * FROM posts';
         $query->took = 10;
         $query->numRows = 5;
 
@@ -60,6 +60,62 @@ class DebugLogTest extends TestCase
         $this->assertCount(2, $this->logger->queries());
         $this->assertEquals(20, $this->logger->totalTime());
         $this->assertEquals(10, $this->logger->totalRows());
+    }
+
+    /**
+     * Test log ignores schema reflection
+     *
+     * @dataProvider schemaQueryProvider
+     * @return void
+     */
+    public function testLogIgnoreReflection($sql)
+    {
+        $query = new LoggedQuery();
+        $query->query = $sql;
+        $query->took = 10;
+        $query->numRows = 5;
+
+        $this->assertCount(0, $this->logger->queries());
+
+        $this->logger->log($query);
+        $this->assertCount(0, $this->logger->queries());
+    }
+
+    /**
+     * Test config setting turns off schema ignores
+     *
+     * @dataProvider schemaQueryProvider
+     * @return void
+     */
+    public function testLogIgnoreReflectionDisabled($sql)
+    {
+        $query = new LoggedQuery();
+        $query->query = $sql;
+        $query->took = 10;
+        $query->numRows = 5;
+
+        $logger = new DebugLog(null, 'test', true);
+        $this->assertCount(0, $logger->queries());
+
+        $logger->log($query);
+        $this->assertCount(1, $logger->queries());
+    }
+
+    public function schemaQueryProvider()
+    {
+        return [
+            // MySQL
+            ['SHOW TABLES FROM database'],
+            ['SHOW FULL COLUMNS FROM database.articles'],
+            // general
+            ['SELECT * FROM information_schema'],
+            // sqlserver
+            ['SELECT I.[name] FROM sys.[tables]'],
+            ['SELECT [name] FROM sys.foreign_keys'],
+            ['SELECT [name] FROM INFORMATION_SCHEMA.TABLES'],
+            // sqlite
+            ['PRAGMA index_info()'],
+        ];
     }
 
     /**

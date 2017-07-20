@@ -63,15 +63,25 @@ class DebugLog extends QueryLogger
     protected $_totalRows = 0;
 
     /**
+     * Set to true to capture schema reflection queries
+     * in the SQL log panel.
+     *
+     * @var bool
+     */
+    protected $_includeSchema = false;
+
+    /**
      * Constructor
      *
      * @param \Cake\Database\Log\QueryLogger $logger The logger to decorate and spy on.
      * @param string $name The name of the connection being logged.
+     * @param bool $includeSchema Whether or not schema reflection should be included.
      */
-    public function __construct($logger, $name)
+    public function __construct($logger, $name, $includeSchema = false)
     {
         $this->_logger = $logger;
         $this->_connectionName = $name;
+        $this->_includeSchema = $includeSchema;
     }
 
     /**
@@ -129,6 +139,11 @@ class DebugLog extends QueryLogger
                 $this->_logger->log($query);
             }
         }
+
+        if ($this->_includeSchema === false && $this->isSchemaQuery($query)) {
+            return;
+        }
+
         if (!empty($query->params)) {
             $query->query = $this->_interpolate($query);
         }
@@ -140,5 +155,33 @@ class DebugLog extends QueryLogger
             'took' => $query->took,
             'rows' => $query->numRows
         ];
+    }
+
+    /**
+     * Sniff SQL statements for things only found in schema reflection.
+     *
+     * @param \Cake\Database\Log\LoggedQuery $query The query to check.
+     * @return bool
+     */
+    protected function isSchemaQuery(LoggedQuery $query)
+    {
+        $querystring = $query->query;
+
+        return (
+            // Multiple engines
+            strpos($querystring, 'FROM information_schema') !== false ||
+            // Postgres
+            strpos($querystring, 'FROM pg_catalog') !== false ||
+            // MySQL
+            strpos($querystring, 'SHOW TABLE') === 0 ||
+            strpos($querystring, 'SHOW FULL COLUMNS') === 0 ||
+            strpos($querystring, 'SHOW INDEXES') === 0 ||
+            // Sqlite
+            strpos($querystring, 'FROM sqlite_master') !== false ||
+            strpos($querystring, 'PRAGMA') === 0 ||
+            // Sqlserver
+            strpos($querystring, 'FROM INFORMATION_SCHEMA') !== false ||
+            strpos($querystring, 'FROM sys.') !== false
+        );
     }
 }

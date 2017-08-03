@@ -42,14 +42,14 @@ class PreviewResult extends AbstractResult
      */
     protected function processMailer(Mailer $mailer, $method)
     {
-        if (!$mailer->template()) {
-            $mailer->template($this->method);
-        }
-
         $reflection = new ReflectionClass($mailer);
         $prop = $reflection->getProperty('_email');
         $prop->setAccessible(true);
         $email = $prop->getValue($mailer);
+
+        if (!$email->getTemplate()) {
+            $email->setTemplate($method);
+        }
 
         $render = (new ReflectionClass($email))
             ->getMethod('_renderTemplates')

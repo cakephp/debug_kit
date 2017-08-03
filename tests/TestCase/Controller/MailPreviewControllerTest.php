@@ -59,6 +59,18 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $this->assertResponseContains('src="?part=text&plugin=DebugkitTestPlugin');
     }
 
+    /** Test email template content
+     *
+     * @return void
+     */
+    public function testEmailPartTextContent()
+    {
+        $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?part=text&plugin=DebugkitTestPlugin');
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('Testing email action.');
+    }
+
     /**
      * Test that onChange js function passes plugin to iframe
      *

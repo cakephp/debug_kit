@@ -85,7 +85,20 @@ class DebugLog extends QueryLogger
     }
 
     /**
-     * Get the stored logs.
+     * Set the schema include flag.
+     *
+     * @param bool $value Set
+     * @return $this
+     */
+    public function setIncludeSchema($value)
+    {
+        $this->_includeSchema = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get the connection name.
      *
      * @return array
      */

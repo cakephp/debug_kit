@@ -57,6 +57,7 @@ class SqlLogPanel extends DebugPanel
             }
 
             if ($logger instanceof DebugLog) {
+                $logger->setIncludeSchema($includeSchemaReflection);
                 $this->_loggers[] = $logger;
                 continue;
             }

@@ -220,6 +220,7 @@ class ToolbarServiceTest extends TestCase
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js"></script>' .
             '</body>';
         $this->assertTextEquals($expected, $response->body());
+        $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
     /**
@@ -245,6 +246,7 @@ class ToolbarServiceTest extends TestCase
         $result = $bar->injectScripts($row, $response);
         $this->assertInstanceOf('Cake\Network\Response', $result);
         $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
+        $this->assertTrue($result->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
     /**
@@ -299,6 +301,7 @@ class ToolbarServiceTest extends TestCase
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
         $this->assertTextEquals('{"some":"json"}', $response->body());
+        $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
     /**

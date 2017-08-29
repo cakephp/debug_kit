@@ -216,6 +216,7 @@ class ToolbarService
      */
     public function injectScripts($row, ResponseInterface $response)
     {
+        $response = $response->withHeader('X-DEBUGKIT-ID', $row->id);
         if (strpos($response->getHeaderLine('Content-Type'), 'html') === false) {
             return $response;
         }
@@ -242,8 +243,6 @@ class ToolbarService
         $body->rewind();
         $body->write($contents);
 
-        return $response
-            ->withHeader('X-DEBUGKIT-ID', $row->id)
-            ->withBody($body);
+        return $response->withBody($body);
     }
 }

@@ -27,7 +27,7 @@ use Cake\Core\Configure;
         </span>
     </li>
     <li class="toolbar-inner">
-        <ul>
+        <ul class="toolbar-inner">
         <?php foreach ($toolbar->panels as $panel): ?>
         <li class="panel hidden" data-id="<?= $panel->id ?>">
             <span class="panel-button">

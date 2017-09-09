@@ -10,7 +10,7 @@ sudo: false
 env:
   matrix:
     - DB=mysql db_dsn='mysql://root@127.0.0.1/cakephp_test'
-    - DB=pgsql db_dsn='postgres://travis@127.0.0.1/cakephp_test'
+    - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
     - DB=sqlite
   global:
     - DEFAULT=1

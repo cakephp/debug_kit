@@ -26,20 +26,22 @@ use Cake\Core\Configure;
             &#x3009;
         </span>
     </li>
-    <div class="toolbar-inner">
-    <?php foreach ($toolbar->panels as $panel): ?>
-    <li class="panel hidden" data-id="<?= $panel->id ?>">
-        <span class="panel-button">
-            <?= h($panel->title) ?>
-        </span>
-        <?php if (strlen($panel->summary)): ?>
-        <span class="panel-summary">
-            <?= h($panel->summary) ?>
-        </span>
-        <?php endif ?>
+    <li class="toolbar-inner">
+        <ul>
+        <?php foreach ($toolbar->panels as $panel): ?>
+        <li class="panel hidden" data-id="<?= $panel->id ?>">
+            <span class="panel-button">
+                <?= h($panel->title) ?>
+            </span>
+            <?php if (strlen($panel->summary)): ?>
+            <span class="panel-summary">
+                <?= h($panel->summary) ?>
+            </span>
+            <?php endif ?>
+        </li>
+        <?php endforeach; ?>
+        </ul>
     </li>
-    <?php endforeach; ?>
-    </div>
     <li id="panel-button">
         <?= $this->Html->image('DebugKit.cake.icon.png', [
             'alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit'

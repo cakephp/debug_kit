@@ -2,10 +2,10 @@
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('DebugKit', function (RouteBuilder $routes) {
+Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {
     $routes->extensions('json');
     $routes->connect(
-        '/toolbar/clear_cache',
+        '/toolbar/clear-cache',
         ['controller' => 'Toolbar', 'action' => 'clearCache']
     );
     $routes->connect(
@@ -22,14 +22,14 @@ Router::plugin('DebugKit', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/composer/check_dependencies',
+        '/composer/check-dependencies',
         ['controller' => 'Composer', 'action' => 'checkDependencies']
     );
 
     $routes->scope(
-        '/mail_preview',
+        '/mail-preview',
         ['controller' => 'MailPreview'],
-        function ($routes) {
+        function (RouteBuilder $routes) {
             $routes->connect('/', ['action' => 'index']);
             $routes->connect('/preview', ['action' => 'email']);
             $routes->connect('/preview/*', ['action' => 'email']);

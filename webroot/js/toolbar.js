@@ -49,7 +49,7 @@ if (elem) {
     iframe.style.zIndex = 99999;
     iframe.height = 40;
     iframe.width = 40;
-    iframe.src = __debugKitBaseUrl + 'debug_kit/toolbar/' + __debugKitId;
+    iframe.src = __debugKitBaseUrl + 'debug-kit/toolbar/' + __debugKitId;
 
     body.appendChild(iframe);
     bodyOverflow = body.style.overflow;

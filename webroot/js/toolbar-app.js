@@ -122,7 +122,7 @@ Toolbar.prototype = {
   },
 
   loadPanel: function(id) {
-    var url = this.baseUrl + 'debug_kit/panels/view/' + id;
+    var url = this.baseUrl + 'debug-kit/panels/view/' + id;
     var contentArea = this.content.find('#panel-content');
     var _this = this;
     var timer;
@@ -295,7 +295,7 @@ Toolbar.prototype = {
     if (direction === 'left' && lastButton.offset().left + buttonWidth < cakeButton.offset().left) {
       return;
     }
-    var css = {left: operator + scrollValue}
+    var css = {left: operator + scrollValue};
     $('.toolbar-inner li', this.button).animate(css)
   },
 

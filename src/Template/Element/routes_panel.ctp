@@ -15,6 +15,9 @@ $routes = Cake\Routing\Router::routes();
     </thead>
     <tbody>
     <?php foreach ($routes as $route): ?>
+        <?php if (strpos($route->getName(), 'debugkit.') === 0) {
+            continue;
+        }?>
         <tr class="<?= ($matchedRoute === $route->template) ? 'highlighted' : '' ?>">
             <td><?= h(\Cake\Utility\Hash::get($route->options, '_name', $route->getName())) ?></td>
             <td class="left"><?= h($route->template) ?></td>

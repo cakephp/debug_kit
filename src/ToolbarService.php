@@ -162,8 +162,9 @@ class ToolbarService
     public function saveData(ServerRequest $request, ResponseInterface $response)
     {
         // Skip debugkit requests and requestAction()
-        if ($request->param('plugin') === 'DebugKit' ||
-            strpos($request->getUri()->getPath(), 'debug_kit') !== false ||
+        $path = $request->getUri()->getPath();
+        if (strpos($path, 'debug_kit') !== false ||
+            strpos($path, 'debug-kit') !== false ||
             $request->is('requested')
         ) {
             return null;

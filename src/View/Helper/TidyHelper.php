@@ -26,7 +26,7 @@ use Cake\View\Helper;
  * @uses          AppHelper
  * @since         v 1.0 (22-Jun-2009)
  *
- * @property ToolbarHelper $Toolbar
+ * @property \DebugKit\View\Helper\ToolbarHelper $Toolbar
  */
 class TidyHelper extends Helper
 {

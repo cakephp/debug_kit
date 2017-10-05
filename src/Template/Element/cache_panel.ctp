@@ -13,8 +13,8 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type array $metrics
+ * @var \DebugKit\View\AjaxView $this
+ * @var array $metrics
  */
 ?>
 <?php if (empty($metrics)): ?>

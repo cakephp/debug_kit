@@ -13,8 +13,8 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type array $content
+ * @var \DebugKit\View\AjaxView $this
+ * @var array $content
  */
 ?>
 <?= $this->Toolbar->makeNeatArray($content);

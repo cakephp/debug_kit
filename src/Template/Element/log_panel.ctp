@@ -13,8 +13,8 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type \DebugKit\Log\Engine\DebugKitLog $logger
+ * @var \DebugKit\View\AjaxView $this
+ * @var \DebugKit\Log\Engine\DebugKitLog $logger
  */
 ?>
 <?php if ($logger->noLogs()): ?>

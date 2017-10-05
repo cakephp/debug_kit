@@ -13,12 +13,12 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type string $cake
- * @type string $core
- * @type array $paths
- * @type string $app
- * @type string $plugins
+ * @var \DebugKit\View\AjaxView $this
+ * @var string $cake
+ * @var string $core
+ * @var array $paths
+ * @var string $app
+ * @var string $plugins
  */
 
 // Backwards compat for old DebugKit data.

@@ -17,9 +17,9 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type array $tables
- * @type \DebugKit\Database\Log\DebugLog[] $loggers
+ * @var \DebugKit\View\AjaxView $this
+ * @var array $tables
+ * @var \DebugKit\Database\Log\DebugLog[] $loggers
  */
 $noOutput = true;
 

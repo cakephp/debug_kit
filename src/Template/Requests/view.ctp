@@ -1,7 +1,7 @@
 <?php
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type \DebugKit\Model\Entity\Request $toolbar
+ * @var \DebugKit\View\AjaxView $this
+ * @var \DebugKit\Model\Entity\Request $toolbar
  */
 
 use Cake\Routing\Router;

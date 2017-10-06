@@ -17,11 +17,11 @@
 use Cake\Error\Debugger;
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type array $app
- * @type array $cake
- * @type array $php
- * @type array $hidef
+ * @var \DebugKit\View\AjaxView $this
+ * @var array $app
+ * @var array $cake
+ * @var array $php
+ * @var array $hidef
  */
 ?>
 

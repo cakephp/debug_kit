@@ -13,8 +13,8 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type array $packages
+ * @var \DebugKit\View\AjaxView $this
+ * @var array $packages
  */
 ?>
 <?php if (empty($packages) && empty($devPackages)): ?>

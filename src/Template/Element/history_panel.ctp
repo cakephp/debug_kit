@@ -13,9 +13,9 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type \DebugKit\Model\Entity\Panel $panel
- * @type array $requests
+ * @var \DebugKit\View\AjaxView $this
+ * @var \DebugKit\Model\Entity\Panel $panel
+ * @var array $requests
  */
 ?>
 <div id="request-history">

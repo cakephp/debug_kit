@@ -29,6 +29,8 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Provides access to the MailPreview classes for visually debugging email sending
+ *
+ * @property \DebugKit\Model\Table\PanelsTable $Panels
  */
 class MailPreviewController extends Controller
 {

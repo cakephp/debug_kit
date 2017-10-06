@@ -13,11 +13,11 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type string $error
- * @type bool $sort
- * @type array $content
- * @type array $errors
+ * @var \DebugKit\View\AjaxView $this
+ * @var string $error
+ * @var bool $sort
+ * @var array $content
+ * @var array $errors
  */
 
 if (isset($error)):

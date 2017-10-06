@@ -1,6 +1,6 @@
 <?php
 /**
- * @type \DebugKit\View\AjaxView $this
+ * @var \DebugKit\View\AjaxView $this
  */
 ?>
 <!DOCTYPE html>

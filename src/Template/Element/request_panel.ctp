@@ -17,13 +17,13 @@
  */
 
 /**
- * @type \DebugKit\View\AjaxView $this
- * @type array $headers
- * @type array $params
- * @type array $data
- * @type array $query
- * @type array $cookie
- * @type string $matchedRoute
+ * @var \DebugKit\View\AjaxView $this
+ * @var array $headers
+ * @var array $params
+ * @var array $data
+ * @var array $query
+ * @var array $cookie
+ * @var string $matchedRoute
  */
 ?>
 <?php if (!empty($headers) && $headers['response']): ?>

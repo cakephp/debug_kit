@@ -13,7 +13,6 @@
  */
 namespace DebugKit\Test\TestCase\Model\Table;
 
-use Cake\Database\Connection;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
@@ -37,7 +36,6 @@ class RequestTableTest extends TestCase
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
     }
-
 
     /**
      * test that schema is created on-demand.

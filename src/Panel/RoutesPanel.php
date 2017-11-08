@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Panel;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use DebugKit\DebugPanel;
@@ -30,6 +31,11 @@ class RoutesPanel extends DebugPanel
      */
     public function summary()
     {
+        $appClass = Configure::read('App.namespace') . '\Application';
+        if (class_exists($appClass, false) && !Router::$initialized) {
+            return 0;
+        }
+
         return count(Router::routes());
     }
 

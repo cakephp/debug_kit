@@ -127,25 +127,25 @@ class VariablesPanel extends DebugPanel
                     $item->getFile(),
                     $item->getLine()
                 );
-            } elseif (is_object($item) && method_exists($item, '__debugInfo')) {
-                // Convert objects into using __debugInfo.
-                $item = $this->_walkDebugInfo($walker, $item);
-            }
-
-            if (is_object($item) ||
-                is_resource($item)
-            ) {
-                try {
-                    serialize($item);
-                } catch (\Exception $e) {
-                    $item = sprintf(
-                        'Unserializable object - %s. Error: %s in %s, line %s',
-                        get_class($item),
-                        $e->getMessage(),
-                        $e->getFile(),
-                        $e->getLine()
-                    );
+            } elseif (is_object($item)) {
+                if (method_exists($item, '__debugInfo')) {
+                    // Convert objects into using __debugInfo.
+                    $item = $this->_walkDebugInfo($walker, $item);
+                } else {
+                    try {
+                        serialize($item);
+                    } catch (\Exception $e) {
+                        $item = sprintf(
+                            'Unserializable object - %s. Error: %s in %s, line %s',
+                            get_class($item),
+                            $e->getMessage(),
+                            $e->getFile(),
+                            $e->getLine()
+                        );
+                    }
                 }
+            } elseif (is_resource($item)) {
+                $item = sprintf('[%s] %s', get_resource_type($item), $item);
             }
 
             return $item;

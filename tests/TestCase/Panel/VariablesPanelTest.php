@@ -78,8 +78,11 @@ class VariablesPanelTest extends TestCase
             'unserializable' => $unserializable
         ]);
 
+        $resource = fopen('data:text/plain;base64,', 'r');
+
         $controller = new \stdClass();
         $controller->viewVars = [
+            'resource' => $resource,
             'unserializableDebugInfo' => $unserializableDebugInfo,
             'debugInfoException' => $debugInfoException,
             'updateQuery' => $update,
@@ -93,6 +96,7 @@ class VariablesPanelTest extends TestCase
         $this->panel->shutdown($event);
         $output = $this->panel->data();
 
+        $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
         $this->assertInternalType('array', $output['content']['unserializableDebugInfo']);
         $this->assertStringStartsWith(
             'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances',

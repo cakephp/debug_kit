@@ -65,9 +65,26 @@ class VariablesPanelTest extends TestCase
         $unbufferedQuery = $requests->find('all')->bufferResults(false);
         $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
         $update = $requests->query()->update();
+        $debugInfoException = $requests->query()->contain('NonExistentAssociation');
+
+        $unserializable = new \stdClass();
+        $unserializable->pdo = $requests->connection()->driver()->connection();
+
+        $unserializableDebugInfo = $this
+            ->getMockBuilder('\stdClass')
+            ->setMethods(['__debugInfo'])
+            ->getMock();
+        $unserializableDebugInfo->expects($this->once())->method('__debugInfo')->willReturn([
+            'unserializable' => $unserializable
+        ]);
+
+        $resource = fopen('data:text/plain;base64,', 'r');
 
         $controller = new \stdClass();
         $controller->viewVars = [
+            'resource' => $resource,
+            'unserializableDebugInfo' => $unserializableDebugInfo,
+            'debugInfoException' => $debugInfoException,
             'updateQuery' => $update,
             'query' => $query,
             'unbufferedQuery' => $unbufferedQuery,
@@ -79,6 +96,16 @@ class VariablesPanelTest extends TestCase
         $this->panel->shutdown($event);
         $output = $this->panel->data();
 
+        $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
+        $this->assertInternalType('array', $output['content']['unserializableDebugInfo']);
+        $this->assertStringStartsWith(
+            'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances',
+            $output['content']['unserializableDebugInfo']['unserializable']
+        );
+        $this->assertStringStartsWith(
+            'Could not retrieve debug info - Cake\ORM\Query. Error: Requests is not associated with NonExistentAssociation',
+            $output['content']['debugInfoException']
+        );
         $this->assertInstanceOf(
             'Cake\ORM\Query',
             $controller->viewVars['query'],

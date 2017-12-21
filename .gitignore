@@ -7,6 +7,9 @@
 *.swp
 *.vi
 *~
+.idea/*
+nbproject/*
+.vscode
 .DS_Store
 .cache
 .project

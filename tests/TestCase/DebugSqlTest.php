@@ -12,6 +12,7 @@
  */
 namespace DebugKit\Test\TestCase;
 
+use Cake\Database\Driver\Mysql;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
@@ -52,11 +53,12 @@ class DebugSqlTest extends TestCase
         $expectedText = <<<EXPECTED
 %s (line %d)
 ########## DEBUG ##########
-SELECT panels.id AS "panels__id" FROM panels panels
+SELECT panels.id AS %s FROM panels panels
 ###########################
 
 EXPECTED;
-        $expected = sprintf($expectedText, str_replace(ROOT, '', __FILE__), __LINE__ - 10);
+        $fieldName = $this->connection->getDriver() instanceof Mysql ? '`panels__id`' : '"panels_id"';
+        $expected = sprintf($expectedText, str_replace(ROOT, '', __FILE__), __LINE__ - 11, $fieldName);
         $this->assertEquals($expected, $result);
     }
 
@@ -76,13 +78,14 @@ EXPECTED;
 <span><strong>%s</strong> (line <strong>%d</strong>)</span>
 <pre class="cake-debug">
 SELECT 
-  panels.id AS "panels__id" 
+  panels.id AS %s 
 FROM 
   panels panels
 </pre>
 </div>
 EXPECTED;
-        $expected = sprintf($expectedHtml, str_replace(ROOT, '', __FILE__), __LINE__ - 14);
+        $fieldName = $this->connection->getDriver() instanceof Mysql ? '`panels__id`' : '"panels_id"';
+        $expected = sprintf($expectedHtml, str_replace(ROOT, '', __FILE__), __LINE__ - 15, $fieldName);
         $this->assertEquals(str_replace("\r", '', $expected), str_replace("\r", '', $result));
     }
 

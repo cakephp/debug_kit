@@ -13,6 +13,7 @@
 namespace DebugKit\Test;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
@@ -236,9 +237,11 @@ class ToolbarServiceTest extends TestCase
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
 
+        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'toolbar.js');
+
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit" data-id="' . $row->id . '" ' .
-            'data-url="http://localhost/" src="/debug_kit/js/toolbar.js"></script>' .
+            'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
         $this->assertTextEquals($expected, $response->body());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');

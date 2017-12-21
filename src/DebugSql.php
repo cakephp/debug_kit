@@ -69,9 +69,12 @@ TEXT;
             return $query;
         }
 
-        $sql = $showValues
-            ? static::interpolate((string)$query, $query->getValueBinder()->bindings())
-            : (string)$query;
+        $sql = (string)$query;
+        if ($showValues) {
+            $sql = method_exists($query, 'getValueBinder')
+                ? static::interpolate($sql, $query->getValueBinder()->bindings())
+                : static::interpolate($sql, $query->valueBinder()->bindings());
+        }
 
         $trace = Debugger::trace(['start' => 1, 'depth' => $stackDepth + 2, 'format' => 'array']);
         $file = $trace[$stackDepth]['file'];

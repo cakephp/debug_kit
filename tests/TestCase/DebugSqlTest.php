@@ -56,7 +56,7 @@ SELECT panels.id AS "panels__id" FROM panels panels
 ###########################
 
 EXPECTED;
-        $expected = sprintf($expectedText,  str_replace(ROOT, '', __FILE__), __LINE__ - 10);
+        $expected = sprintf($expectedText, str_replace(ROOT, '', __FILE__), __LINE__ - 10);
         $this->assertEquals($expected, $result);
     }
 
@@ -82,8 +82,8 @@ FROM
 </pre>
 </div>
 EXPECTED;
-        $expected = sprintf($expectedHtml,  str_replace(ROOT, '', __FILE__), __LINE__ - 14);
-        $this->assertEquals(str_replace("\r",'', $expected), str_replace("\r",'', $result));
+        $expected = sprintf($expectedHtml, str_replace(ROOT, '', __FILE__), __LINE__ - 14);
+        $this->assertEquals(str_replace("\r", '', $expected), str_replace("\r", '', $result));
     }
 
     /**

@@ -218,12 +218,13 @@ class ToolbarService
             str_replace('/', DIRECTORY_SEPARATOR, WWW_ROOT . 'debug_kit/' . $url),
             str_replace('/', DIRECTORY_SEPARATOR, Plugin::path('DebugKit') . 'webroot/' . $url)
         ];
-        $url = '/debug_kit/'.$url;
-        foreach($filePaths as $filePath) {
+        $url = '/debug_kit/' . $url;
+        foreach ($filePaths as $filePath) {
             if (file_exists($filePath)) {
                 return $url . '?' . filemtime($filePath);
             }
         }
+
         return $url;
     }
 

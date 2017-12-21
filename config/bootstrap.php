@@ -73,11 +73,13 @@ if (!function_exists('sql')) {
      *
      * @param Query $query Query to show SQL statements for.
      * @param bool $showValues Renders the SQL statement with bound variables.
+     * @param bool|null $showHtml If set to true, the method prints the debug
+     *    data in a browser-friendly way.
      * @return Query
      */
-    function sql(Query $query, $showValues = true)
+    function sql(Query $query, $showValues = true, $showHtml = null)
     {
-        return DebugSql::sql($query, $showValues, 1);
+        return DebugSql::sql($query, $showValues, $showHtml, 1);
     }
 }
 
@@ -90,10 +92,12 @@ if (!function_exists('sqld')) {
      *
      * @param Query $query Query to show SQL statements for.
      * @param bool $showValues Renders the SQL statement with bound variables.
+     * @param bool|null $showHtml If set to true, the method prints the debug
+     *    data in a browser-friendly way.
      * @return void
      */
-    function sqld(Query $query, $showValues = true)
+    function sqld(Query $query, $showValues = true, $showHtml = null)
     {
-        DebugSql::sqld($query, $showValues, 2);
+        DebugSql::sqld($query, $showValues, $showHtml, 2);
     }
 }

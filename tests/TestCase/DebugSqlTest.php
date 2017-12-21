@@ -57,7 +57,7 @@ SELECT panels.id AS %s FROM panels panels
 ###########################
 
 EXPECTED;
-        $fieldName = $this->connection->getDriver() instanceof Mysql ? '`panels__id`' : '"panels_id"';
+        $fieldName = $this->connection->getDriver() instanceof Mysql ? '`panels__id`' : '"panels__id"';
         $expected = sprintf($expectedText, str_replace(ROOT, '', __FILE__), __LINE__ - 11, $fieldName);
         $this->assertEquals($expected, $result);
     }
@@ -84,7 +84,7 @@ FROM
 </pre>
 </div>
 EXPECTED;
-        $fieldName = $this->connection->getDriver() instanceof Mysql ? '`panels__id`' : '"panels_id"';
+        $fieldName = $this->connection->getDriver() instanceof Mysql ? '`panels__id`' : '"panels__id"';
         $expected = sprintf($expectedHtml, str_replace(ROOT, '', __FILE__), __LINE__ - 15, $fieldName);
         $this->assertEquals(str_replace("\r", '', $expected), str_replace("\r", '', $result));
     }

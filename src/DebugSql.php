@@ -77,8 +77,8 @@ TEXT;
         }
 
         $trace = Debugger::trace(['start' => 1, 'depth' => $stackDepth + 2, 'format' => 'array']);
-        $file = $trace[$stackDepth]['file'];
-        $line = $trace[$stackDepth]['line'];
+        $file = isset($trace[$stackDepth]) ? $trace[$stackDepth]['file'] : 'n/a';
+        $line = isset($trace[$stackDepth]) ? $trace[$stackDepth]['line'] : 0;
         $lineInfo = '';
         if ($file) {
             $search = [];

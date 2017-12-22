@@ -30,26 +30,24 @@ trait SqlTraceTrait
     public function query()
     {
         $query = parent::query();
-        if (!Configure::read('debug')) {
+
+        if (!Configure::read('debug') || $query->clause('epilog') !== null) {
             return $query;
         }
 
         $traces = Debugger::trace(['start' => 2, 'depth' => 3, 'format' => 'array']);
-        $file = null;
-        $line = null;
+        $file = 'n/a';
+        $line = 0;
 
         foreach ($traces as $trace) {
-            $fullPath = $trace['file'];
-            $file = Debugger::trimPath($trace['file']);
+            $path = $trace['file'];
             $line = $trace['line'];
-            if (defined('CAKE_CORE_INCLUDE_PATH') && strpos($fullPath, CAKE_CORE_INCLUDE_PATH) !== 0) {
+            $file = Debugger::trimPath($path);
+            if (defined('CAKE_CORE_INCLUDE_PATH') && strpos($path, CAKE_CORE_INCLUDE_PATH) !== 0) {
                 break;
             }
         }
 
-        $comment = sprintf('/* %s (line %s) */', $file, $line);
-        $query->epilog($query->newExpr($comment));
-
-        return $query;
+        return $query->epilog($query->newExpr(sprintf('/* %s (line %s) */', $file, $line)));
     }
 }

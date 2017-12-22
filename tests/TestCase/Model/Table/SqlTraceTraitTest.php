@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\Model\Table;
 
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -21,11 +22,35 @@ use Cake\TestSuite\TestCase;
 class SqlTraceTraitTest extends TestCase
 {
     /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.debug_kit.panels',
+        'plugin.debug_kit.requests'
+    ];
+
+    /**
+     * Table names.
+     *
+     * @var array
+     */
+    public $tables = [
+        'debug_kit.panels',
+        'debug_kit.requests'
+    ];
+
+    /**
      * Verify file name when calling find()
      */
     public function testFind()
     {
-
+        foreach ($this->tables as $table) {
+            $table = TableRegistry::get($table);
+            $sql = (string)$table->find()->select(['id']);
+            $this->assertTrue(strpos($sql, basename(__FILE__)) !== false, 'Expected file: ' . $sql);
+        }
     }
 
     /**
@@ -33,15 +58,11 @@ class SqlTraceTraitTest extends TestCase
      */
     public function testQuery()
     {
-
-    }
-
-    /**
-     * Verify file name is correct when the table object calls the query() method on itself.
-     */
-    public function testShortCallStack()
-    {
-
+        foreach ($this->tables as $table) {
+            $table = TableRegistry::get($table);
+            $sql = (string)$table->query();
+            $this->assertTrue(strpos($sql, basename(__FILE__)) !== false, 'Expected file: ' . $sql);
+        }
     }
 
     /**
@@ -49,6 +70,10 @@ class SqlTraceTraitTest extends TestCase
      */
     public function testUpdate()
     {
-
+        foreach ($this->tables as $table) {
+            $table = TableRegistry::get($table);
+            $sql = (string)$table->query()->update()->set(['title' => 'fooBar']);
+            $this->assertTrue(strpos($sql, basename(__FILE__)) !== false, 'Expected file: ' . $sql);
+        }
     }
 }

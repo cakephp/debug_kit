@@ -13,8 +13,7 @@
  */
 namespace DebugKit\Model\Table;
 
-use Cake\Core\Configure;
-use Cake\Error\Debugger;
+use DebugKit\DebugSqlTemp;
 
 /**
  * Add this trait to your Table class to append the file reference of where a Query object was created.
@@ -30,25 +29,6 @@ trait SqlTraceTrait
      */
     public function query()
     {
-        $query = parent::query();
-
-        if (!Configure::read('debug') || $query->clause('epilog') !== null) {
-            return $query;
-        }
-
-        $traces = Debugger::trace(['start' => 2, 'depth' => 3, 'format' => 'array']);
-        $file = 'n/a';
-        $line = 0;
-
-        foreach ($traces as $trace) {
-            $path = $trace['file'];
-            $line = $trace['line'];
-            $file = Debugger::trimPath($path);
-            if (defined('CAKE_CORE_INCLUDE_PATH') && strpos($path, CAKE_CORE_INCLUDE_PATH) !== 0) {
-                break;
-            }
-        }
-
-        return $query->epilog($query->newExpr(sprintf('/* %s (line %s) */', $file, $line)));
+        return DebugSqlTemp::fileStamp(parent::query(), 2);
     }
 }

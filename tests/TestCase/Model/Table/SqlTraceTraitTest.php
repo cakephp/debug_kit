@@ -13,32 +13,13 @@
  */
 namespace DebugKit\Test\TestCase\Model\Table;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use DebugKit\Model\Table\PanelsTable;
 
 /**
  * Tests for SqlTraceTrait debugging comments.
  */
 class SqlTraceTraitTest extends TestCase
 {
-    /**
-     * No epilog should be set when debug is off.
-     */
-    public function testDebugOff()
-    {
-
-    }
-
-    /**
-     * Do not overwrite elipog is already set.
-     */
-    public function testEpilogAlreadySet()
-    {
-        /** @var PanelsTable $panels */
-        $panels = TableRegistry::get('Panels');
-    }
-
     /**
      * Verify file name when calling find()
      */

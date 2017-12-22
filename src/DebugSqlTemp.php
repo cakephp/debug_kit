@@ -51,6 +51,13 @@ class DebugSqlTemp
             }
         }
 
-        return $query->modifier(sprintf('/* %s (line %s) */', $file, $line));
+        $comment = sprintf('/* %s (line %s) */', $file, $line);
+
+        $sqlFileNamePlacement = (string)Configure::read('DebugKit.sqlFileNamePlacement', 'modifier');
+        if ($sqlFileNamePlacement === 'epilog' && $query->clause('epilog') === null) {
+            return $query->epilog($query->newExpr($comment));
+        }
+
+        return $query->modifier($comment);
     }
 }

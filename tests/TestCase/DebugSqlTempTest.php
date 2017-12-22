@@ -49,6 +49,23 @@ class DebugSqlTestTemp extends TestCase
     }
 
     /**
+     * Tests placement of the file comment.
+     */
+    public function testFileStampEpilog()
+    {
+        $query = $this->newQuery()->select(['id']);
+        $mode = Configure::read('DebugKit.sqlFileNamePlacement');
+        Configure::write('DebugKit.sqlFileNamePlacement', 'epilog');
+        $this->assertSame($query, DebugSqlTemp::fileStamp($query));
+        // missing backslash on ROOT is an issue with test bootstrap, and not a bug
+        $comment = sprintf('/* ROOTtests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 2);
+        Configure::write('DebugKit.sqlFileNamePlacement', $mode);
+        $sql = (string)$query;
+        // verify SQL ends with comment
+        $this->assertTrue(substr($sql, -strlen($comment)) === $comment, 'Expected: ' . $comment . ' Found: ' . $sql);
+    }
+
+    /**
      * Test that a file name is found when a closure is used.
      */
     public function testFileStampClosure()

@@ -32,6 +32,7 @@ class PanelsTable extends Table
 {
 
     use LazyTableTrait;
+    use SqlTraceTrait;
 
     /**
      * initialize method

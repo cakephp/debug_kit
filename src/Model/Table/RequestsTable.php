@@ -32,6 +32,7 @@ class RequestsTable extends Table
 {
 
     use LazyTableTrait;
+    use SqlTraceTrait;
 
     /**
      * initialize method

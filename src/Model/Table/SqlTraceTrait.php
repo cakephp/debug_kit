@@ -23,7 +23,9 @@ use Cake\Error\Debugger;
 trait SqlTraceTrait
 {
     /**
-     * {@inheritDoc}
+     * Creates a new Query instance for this repository
+     *
+     * @return \Cake\ORM\Query
      */
     public function query()
     {

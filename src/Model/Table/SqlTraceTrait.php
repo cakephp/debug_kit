@@ -14,11 +14,9 @@ namespace DebugKit\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
-use Cake\ORM\Query;
 
 /**
- * This trait modifies a Table class to inject metadata into a Query object that can be used to provide a call track
- * in the SQL log panel.
+ * Add this trait to your Table class to append the file reference of where a Query object was created.
  *
  * @mixin \Cake\ORM\Table
  */
@@ -29,7 +27,6 @@ trait SqlTraceTrait
      */
     public function query()
     {
-        /** @var Query $query */
         $query = parent::query();
         if (!Configure::read('debug')) {
             return $query;

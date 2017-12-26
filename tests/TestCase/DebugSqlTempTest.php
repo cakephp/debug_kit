@@ -60,7 +60,7 @@ class DebugSqlTestTemp extends TestCase
             return $query;
         };
         $query = $func($query);
-        $comment = sprintf('/* ROOT\tests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 5);
+        $comment = sprintf(str_replace(DS, '\\', '/* ROOT\tests\TestCase\DebugSqlTempTest.php (line %d) */'), __LINE__ - 5);
         $sql = (string)$query;
         $this->assertTrue(strpos($sql, $comment) !== false, 'Expected: ' . $comment . ' Found: ' . $sql);
     }
@@ -72,13 +72,12 @@ class DebugSqlTestTemp extends TestCase
     public function testFileStampDebugOff()
     {
         $query = $this->newQuery()->select(['id']);
-        // @todo Remove this when TestCase restoring of config is fixed.
         $debug = Configure::read('debug');
         Configure::write('debug', false);
         $sql = (string)$query;
         $this->assertSame($query, DebugSqlTemp::fileStamp($query, 1, true));
         $this->assertEquals($sql, (string)$query);
-        Configure::write('debug', true);
+        Configure::write('debug', $debug);
     }
 
     /**
@@ -88,7 +87,7 @@ class DebugSqlTestTemp extends TestCase
     {
         $query = $this->newQuery()->select(['id']);
         $this->assertSame($query, DebugSqlTemp::fileStamp($query));
-        $comment = sprintf('/* ROOT\tests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 1);
+        $comment = sprintf(str_replace(DS, '\\', '/* ROOT\tests\TestCase\DebugSqlTempTest.php (line %d) */'), __LINE__ - 1);
         $sql = (string)$query;
         $this->assertTrue(strpos($sql, $comment) !== false, 'Expected: ' . $comment . ' Found: ' . $sql);
     }

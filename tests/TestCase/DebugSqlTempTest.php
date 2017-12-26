@@ -49,23 +49,6 @@ class DebugSqlTestTemp extends TestCase
     }
 
     /**
-     * Tests placement of the file comment.
-     */
-    public function testFileStampEpilog()
-    {
-        $query = $this->newQuery()->select(['id']);
-        $mode = Configure::read('DebugKit.sqlFileNamePlacement');
-        Configure::write('DebugKit.sqlFileNamePlacement', 'epilog');
-        $this->assertSame($query, DebugSqlTemp::fileStamp($query));
-        // missing backslash on ROOT is an issue with test bootstrap, and not a bug
-        $comment = sprintf('/* ROOTtests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 2);
-        Configure::write('DebugKit.sqlFileNamePlacement', $mode);
-        $sql = (string)$query;
-        // verify SQL ends with comment
-        $this->assertTrue(substr($sql, -strlen($comment)) === $comment, 'Expected: ' . $comment . ' Found: ' . $sql);
-    }
-
-    /**
      * Test that a file name is found when a closure is used.
      */
     public function testFileStampClosure()
@@ -77,8 +60,7 @@ class DebugSqlTestTemp extends TestCase
             return $query;
         };
         $query = $func($query);
-        // missing backslash on ROOT is an issue with test bootstrap, and not a bug
-        $comment = sprintf('/* ROOTtests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 6);
+        $comment = sprintf('/* ROOT\tests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 5);
         $sql = (string)$query;
         $this->assertTrue(strpos($sql, $comment) !== false, 'Expected: ' . $comment . ' Found: ' . $sql);
     }
@@ -90,12 +72,13 @@ class DebugSqlTestTemp extends TestCase
     public function testFileStampDebugOff()
     {
         $query = $this->newQuery()->select(['id']);
+        // @todo Remove this when TestCase restoring of config is fixed.
         $debug = Configure::read('debug');
         Configure::write('debug', false);
         $sql = (string)$query;
         $this->assertSame($query, DebugSqlTemp::fileStamp($query, 1, true));
         $this->assertEquals($sql, (string)$query);
-        Configure::write('debug', $debug);
+        Configure::write('debug', true);
     }
 
     /**
@@ -105,8 +88,7 @@ class DebugSqlTestTemp extends TestCase
     {
         $query = $this->newQuery()->select(['id']);
         $this->assertSame($query, DebugSqlTemp::fileStamp($query));
-        // missing backslash on ROOT is an issue with test bootstrap, and not a bug
-        $comment = sprintf('/* ROOTtests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 2);
+        $comment = sprintf('/* ROOT\tests\TestCase\DebugSqlTempTest.php (line %d) */', __LINE__ - 1);
         $sql = (string)$query;
         $this->assertTrue(strpos($sql, $comment) !== false, 'Expected: ' . $comment . ' Found: ' . $sql);
     }

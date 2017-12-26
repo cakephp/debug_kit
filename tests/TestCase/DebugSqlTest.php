@@ -99,3 +99,4 @@ EXPECTED;
         return new Query($this->connection, TableRegistry::get('panels'));
     }
 }
+

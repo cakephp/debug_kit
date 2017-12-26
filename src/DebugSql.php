@@ -186,4 +186,3 @@ TEXT;
         return preg_replace($keys, $params, $sql, $limit);
     }
 }
-

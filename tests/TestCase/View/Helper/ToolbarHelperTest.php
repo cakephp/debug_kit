@@ -114,8 +114,8 @@ class ToolbarHelperTest extends TestCase
      */
     public function testMakeNeatArrayCyclicObjects()
     {
-        $a = new stdClass;
-        $b = new stdClass;
+        $a = new stdClass();
+        $b = new stdClass();
         $a->child = $b;
         $b->parent = $a;
 
@@ -123,12 +123,12 @@ class ToolbarHelperTest extends TestCase
         $result = $this->Toolbar->makeNeatArray($in);
         $expected = [
             ['ul' => ['class' => 'neat-array depth-0']],
-            '<li', '<strong', 'obj', '/strong', ' (object)',
+            '<li', '<strong', 'obj', '/strong', ' (stdClass)',
             ['ul' => ['class' => 'neat-array depth-1']],
-            '<li', '<strong', 'child', '/strong', ' (object)',
+            '<li', '<strong', 'child', '/strong', ' (stdClass)',
             ['ul' => ['class' => 'neat-array depth-2']],
             '<li', '<strong', 'parent', '/strong',
-            ' (object) - recursion',
+            ' (stdClass) - recursion',
             '/li',
             '/ul',
             '/li',
@@ -146,8 +146,8 @@ class ToolbarHelperTest extends TestCase
      */
     public function testMakeNeatArrayDuplicateObjects()
     {
-        $a = new stdClass;
-        $b = new stdClass;
+        $a = new stdClass();
+        $b = new stdClass();
         $a->first = $b;
         $a->second = $b;
 
@@ -155,13 +155,13 @@ class ToolbarHelperTest extends TestCase
         $result = $this->Toolbar->makeNeatArray($in);
         $expected = [
             ['ul' => ['class' => 'neat-array depth-0']],
-            '<li', '<strong', 'obj', '/strong', ' (object)',
+            '<li', '<strong', 'obj', '/strong', ' (stdClass)',
             ['ul' => ['class' => 'neat-array depth-1']],
-            '<li', '<strong', 'first', '/strong', ' (object)',
+            '<li', '<strong', 'first', '/strong', ' (stdClass)',
             ['ul' => ['class' => 'neat-array depth-2']],
             '/ul',
             '/li',
-            '<li', '<strong', 'second', '/strong', ' (object)',
+            '<li', '<strong', 'second', '/strong', ' (stdClass)',
             ['ul' => ['class' => 'neat-array depth-2']],
             '/ul',
             '/li',
@@ -312,7 +312,7 @@ class ToolbarHelperTest extends TestCase
             ['ul' => ['class' => 'neat-array depth-0']],
             '<li', '<strong', 'key', '/strong', ' value', '/li',
             '<li', '<strong', 'nested', '/strong',
-            ' (object)',
+            ' (stdClass)',
             ['ul' => ['class' => 'neat-array depth-1']],
             '<li', '<strong', 'name', '/strong', ' mark', '/li',
             '/ul',

@@ -267,7 +267,7 @@ Toolbar.prototype = {
   },
 
   onMessage: function(event) {
-    if (event.data.indexOf('ajax-completed$$') === 0) {
+    if (typeof(event.data) === 'string' && event.data.indexOf('ajax-completed$$') === 0) {
       this.onRequest(JSON.parse(event.data.split('$$')[1]));
     }
   },

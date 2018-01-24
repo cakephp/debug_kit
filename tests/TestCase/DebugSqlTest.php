@@ -14,7 +14,6 @@ namespace DebugKit\Test\TestCase;
 
 use Cake\Database\Driver\Mysql;
 use Cake\Datasource\ConnectionManager;
-use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugSql;
@@ -36,6 +35,7 @@ class DebugSqlTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->connection = ConnectionManager::get('test');
     }
 
@@ -96,6 +96,6 @@ EXPECTED;
      */
     private function newQuery()
     {
-        return new Query($this->connection, TableRegistry::get('panels'));
+        return TableRegistry::get('panels')->query();
     }
 }

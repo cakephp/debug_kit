@@ -205,4 +205,10 @@ the panel data. If you'd like DebugKit to store its data elsewhere, you should d
 connection.
 
 ## Cleaning Storage
+
 You can safely remove the file tmp/debug_kit.sqlite, the plugin is able to regenerate it.
+
+## Helper Functions
+
+* `sql()` Dumps out the SQL from an ORM query.
+* `sqld()` Dumps out the SQL from an ORM query, and exits.

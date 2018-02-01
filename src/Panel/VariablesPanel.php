@@ -95,7 +95,7 @@ class VariablesPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        $controller = $event->subject();
+        $controller = $event->getSubject();
         $errors = [];
 
         $walker = function (&$item) use (&$walker) {

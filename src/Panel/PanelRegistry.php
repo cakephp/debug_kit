@@ -32,7 +32,7 @@ class PanelRegistry extends ObjectRegistry
      */
     public function __construct(EventManager $events)
     {
-        $this->eventManager($events);
+        $this->setEventManager($events);
     }
 
     /**
@@ -76,7 +76,7 @@ class PanelRegistry extends ObjectRegistry
     protected function _create($class, $alias, $config)
     {
         $instance = new $class($this, $config);
-        $this->eventManager()->on($instance);
+        $this->getEventManager()->on($instance);
 
         return $instance;
     }

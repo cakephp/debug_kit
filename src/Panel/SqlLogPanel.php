@@ -53,7 +53,7 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = null;
             if ($connection->logQueries()) {
-                $logger = $connection->logger();
+                $logger = $connection->getLogger();
             }
 
             if ($logger instanceof DebugLog) {

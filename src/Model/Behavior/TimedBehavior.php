@@ -32,7 +32,7 @@ class TimedBehavior extends Behavior
      */
     public function beforeFind(Event $event, $query)
     {
-        $alias = $event->subject()->alias();
+        $alias = $event->getSubject()->getAlias();
         DebugTimer::start($alias . '_find', $alias . '->find()');
 
         return $query->formatResults(function ($results) use ($alias) {
@@ -50,7 +50,7 @@ class TimedBehavior extends Behavior
      */
     public function beforeSave(Event $event)
     {
-        $alias = $event->subject()->alias();
+        $alias = $event->getSubject()->getAlias();
         DebugTimer::start($alias . '_save', $alias . '->save()');
     }
 
@@ -62,7 +62,7 @@ class TimedBehavior extends Behavior
      */
     public function afterSave(Event $event)
     {
-        $alias = $event->subject()->alias();
+        $alias = $event->getSubject()->getAlias();
         DebugTimer::stop($alias . '_save');
     }
 }

@@ -34,7 +34,7 @@ class RequestTableTest extends TestCase
     {
         parent::setUp();
         $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
     }
 
     /**

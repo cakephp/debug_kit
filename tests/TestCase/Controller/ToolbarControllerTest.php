@@ -59,7 +59,7 @@ class ToolbarControllerTest extends IntegrationTestCase
     {
         $this->get('/debug_kit/toolbar/clear_cache?name=testing');
 
-        $this->assertEquals(405, $this->_response->statusCode());
+        $this->assertEquals(405, $this->_response->getStatusCode());
     }
 
     /**

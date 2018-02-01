@@ -62,13 +62,13 @@ class VariablesPanelTest extends TestCase
         $requests = TableRegistry::get('Requests');
         $query = $requests->find('all');
         $result = $requests->find()->all();
-        $unbufferedQuery = $requests->find('all')->bufferResults(false);
+        $unbufferedQuery = $requests->find('all')->enableBufferedResults(false);
         $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
         $update = $requests->query()->update();
         $debugInfoException = $requests->query()->contain('NonExistentAssociation');
 
         $unserializable = new \stdClass();
-        $unserializable->pdo = $requests->connection()->driver()->connection();
+        $unserializable->pdo = $requests->getConnection()->getDriver()->connection();
 
         $unserializableDebugInfo = $this
             ->getMockBuilder('\stdClass')

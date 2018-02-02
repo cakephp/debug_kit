@@ -105,10 +105,10 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
 
-        $this->assertNull(Log::config('debug_kit_log_panel'));
+        $this->assertNull(Log::getConfig('debug_kit_log_panel'));
         $bar->initializePanels();
 
-        $this->assertNotEmpty(Log::config('debug_kit_log_panel'), 'Panel attached logger.');
+        $this->assertNotEmpty(Log::getConfig('debug_kit_log_panel'), 'Panel attached logger.');
     }
 
     /**
@@ -243,7 +243,7 @@ class ToolbarServiceTest extends TestCase
             '<script id="__debug_kit" data-id="' . $row->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
-        $this->assertTextEquals($expected, $response->body());
+        $this->assertTextEquals($expected, $response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
@@ -288,7 +288,7 @@ class ToolbarServiceTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response->body(function () {
+        $response = $response->withBody(function () {
             return 'I am a teapot!';
         });
 
@@ -324,7 +324,7 @@ class ToolbarServiceTest extends TestCase
 
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
-        $this->assertTextEquals('{"some":"json"}', $response->body());
+        $this->assertTextEquals('{"some":"json"}', $response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 

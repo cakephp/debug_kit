@@ -89,7 +89,7 @@ class DebugBarFilterTest extends TestCase
         $event = new Event('Dispatcher.beforeDispatch');
         $bar->beforeDispatch($event);
 
-        $this->assertNotEmpty(Log::config('debug_kit_log_panel'), 'Panel attached logger.');
+        $this->assertNotEmpty(Log::getConfig('debug_kit_log_panel'), 'Panel attached logger.');
     }
 
     /**
@@ -130,7 +130,7 @@ class DebugBarFilterTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response->body(function () {
+        $response = $response->withBody(function () {
             return 'I am a teapot!';
         });
 

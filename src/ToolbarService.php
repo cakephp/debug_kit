@@ -97,7 +97,7 @@ class ToolbarService
         if ($enabled) {
             return true;
         }
-        $force = $this->config('forceEnable');
+        $force = $this->getConfig('forceEnable');
         if (is_callable($force)) {
             return $force();
         }

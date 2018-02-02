@@ -44,6 +44,7 @@ class RequestsControllerTest extends IntegrationTestCase
         Router::plugin('DebugKit', function (RouteBuilder $routes) {
             $routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
         });
+        $this->useHttpServer(true);
     }
 
     /**

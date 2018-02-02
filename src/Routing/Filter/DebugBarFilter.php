@@ -133,9 +133,9 @@ class DebugBarFilter extends DispatcherFilter
     public function afterDispatch(Event $event)
     {
         /* @var Request $request */
-        $request = $event->data['request'];
+        $request = $event->getData('request');
         /* @var Response $response */
-        $response = $event->data['response'];
+        $response = $event->getData('response');
         $row = $this->service->saveData($request, $response);
         if (!$row) {
             return;

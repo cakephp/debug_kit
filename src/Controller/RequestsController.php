@@ -39,7 +39,7 @@ class RequestsController extends Controller
             throw new NotFoundException();
         }
 
-        $this->response->header(['Content-Security-Policy' => '']);
+        $this->response = $this->response->withHeader('Content-Security-Policy', '');
     }
 
     /**

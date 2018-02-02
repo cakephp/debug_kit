@@ -54,7 +54,7 @@ class RequestTableTest extends TestCase
         TableRegistry::get('DebugKit.Requests');
         TableRegistry::get('DebugKit.Panels');
 
-        $schema = $connection->schemaCollection();
+        $schema = $connection->getSchemaCollection();
         $this->assertContains('requests', $schema->listTables());
         $this->assertContains('panels', $schema->listTables());
     }

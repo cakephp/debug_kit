@@ -44,6 +44,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
                 }
             );
         });
+        $this->useHttpServer(true);
     }
 
     /**

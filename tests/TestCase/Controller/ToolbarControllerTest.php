@@ -48,6 +48,7 @@ class ToolbarControllerTest extends IntegrationTestCase
                 ['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']
             );
         });
+        $this->useHttpServer(true);
     }
 
     /**

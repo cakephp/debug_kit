@@ -288,7 +288,7 @@ class ToolbarServiceTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response = $response->withBody(function () {
+        $response = $response->withStringBody(function () {
             return 'I am a teapot!';
         });
 
@@ -298,9 +298,9 @@ class ToolbarServiceTest extends TestCase
         $result = $bar->injectScripts($row, $response);
         $this->assertInstanceOf('Cake\Network\Response', $result);
         if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
-            $this->assertEquals('I am a teapot!', $response->body());
+            $this->assertEquals('I am a teapot!', $response->getBody());
         } else {
-            $this->assertInstanceOf('Closure', $response->body());
+            $this->assertInstanceOf('Closure', $response->getBody());
         }
     }
 

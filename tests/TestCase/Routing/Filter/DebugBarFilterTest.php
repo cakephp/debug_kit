@@ -85,7 +85,7 @@ class DebugBarFilterTest extends TestCase
         $bar = new DebugBarFilter($this->events, []);
         $bar->setup();
 
-        $this->assertNull(Log::config('debug_kit_log_panel'));
+        $this->assertNull(Log::getConfig('debug_kit_log_panel'));
         $event = new Event('Dispatcher.beforeDispatch');
         $bar->beforeDispatch($event);
 
@@ -112,7 +112,7 @@ class DebugBarFilterTest extends TestCase
         $bar = new DebugBarFilter($this->events, []);
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
         $this->assertNull($bar->afterDispatch($event));
-        $this->assertNotContains('<script>', $response->body());
+        $this->assertNotContains('<script>', $response->getBody());
     }
 
     /**
@@ -130,7 +130,7 @@ class DebugBarFilterTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response = $response->withBody(function () {
+        $response = $response->withStringBody(function () {
             return 'I am a teapot!';
         });
 
@@ -138,9 +138,9 @@ class DebugBarFilterTest extends TestCase
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
         $bar->afterDispatch($event);
         if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
-            $this->assertEquals('I am a teapot!', $response->body());
+            $this->assertEquals('I am a teapot!', $response->getBody());
         } else {
-            $this->assertInstanceOf('Closure', $response->body());
+            $this->assertInstanceOf('Closure', $response->getBody());
         }
     }
 
@@ -191,7 +191,7 @@ class DebugBarFilterTest extends TestCase
             '<script id="__debug_kit" data-id="' . $result->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
-        $this->assertTextEquals($expected, $response->body());
+        $this->assertTextEquals($expected, $response->getBody());
     }
 
     /**
@@ -214,7 +214,7 @@ class DebugBarFilterTest extends TestCase
 
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
         $bar->afterDispatch($event);
-        $this->assertTextEquals('{"some":"json"}', $response->body());
+        $this->assertTextEquals('{"some":"json"}', $response->getBody());
     }
 
     /**

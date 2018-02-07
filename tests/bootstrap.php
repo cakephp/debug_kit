@@ -48,7 +48,7 @@ mb_internal_encoding('UTF-8');
 
 Configure::write('debug', true);
 Configure::write('App', [
-    'namespace' => 'App',
+    'namespace' => 'DebugKit\TestApp',
     'encoding' => 'UTF-8',
     'base' => false,
     'baseUrl' => false,
@@ -114,6 +114,3 @@ Log::setConfig([
 ]);
 
 Plugin::load('DebugKit', ['path' => ROOT, 'bootstrap' => true]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');

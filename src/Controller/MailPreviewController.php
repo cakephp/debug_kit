@@ -93,7 +93,7 @@ class MailPreviewController extends Controller
         $email = $content['emails'][$number];
         $email = new SentMailResult(array_filter($email['headers']), $email['message']);
 
-        $partType = $this->request->query('part');
+        $partType = $this->request->getQuery('part');
         if ($partType) {
             return $this->respondWithPart($email, $partType);
         }
@@ -101,7 +101,7 @@ class MailPreviewController extends Controller
         $this->set('noHeader', true);
         $this->set('email', $email);
         $this->set('plugin', '');
-        $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
         $this->viewBuilder()->template('email');
     }
 
@@ -114,9 +114,9 @@ class MailPreviewController extends Controller
      */
     public function email($name, $method)
     {
-        $plugin = $this->request->query('plugin');
+        $plugin = $this->request->getQuery('plugin');
         $email = $this->findPreview($name, $method, $plugin);
-        $partType = $this->request->query('part');
+        $partType = $this->request->getQuery('part');
 
         $this->viewBuilder()->layout(false);
 
@@ -128,7 +128,7 @@ class MailPreviewController extends Controller
         $this->set('title', $humanName);
         $this->set('email', $email);
         $this->set('plugin', $plugin);
-        $this->set('part', $this->findPreferredPart($email, $this->request->query('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
     }
 
     /**
@@ -150,13 +150,13 @@ class MailPreviewController extends Controller
             ));
         }
 
-        $this->response->type($partType);
+        $response = $this->response->withType($partType);
         if ($part === 'text') {
             $part = '<pre>' . $part . "</pre>";
         }
-        $this->response->body($part);
+        $response = $response->withStringBody($part);
 
-        return $this->response;
+        return $response;
     }
 
     /**

@@ -55,7 +55,7 @@ class RequestsControllerTest extends IntegrationTestCase
     public function testView()
     {
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $result = $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request', 'Has a panel button');

@@ -69,9 +69,9 @@ $(document).ready(function() {
             type: 'POST'
         });
         xhr.done(function(response) {
-            showMessage(messageEl, name + ' ' . __d('debug_kit', 'cache cleared.'))
+            showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache cleared.' ?>'))
         }).error(function(response) {
-            showMessage(messageEl, name + ' ' . __d('debug_kit', 'cache could not be cleared.'));
+            showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache could not be cleared.') ?>');
         });
         e.preventDefault();
     });

@@ -27,14 +27,14 @@
  */
 ?>
 <?php if (!empty($headers) && $headers['response']): ?>
-<h4>Warning</h4>
+<h4><?= __d('debug_kit', 'Warning') ?></h4>
     <?= '<p class="warning">' . __d('debug_kit', 'Headers already sent at file {0} and line {1}.', [$headers['file'], $headers['line']]) . '</p>' ?>
 <?php endif; ?>
 
-<h4>Routing Params</h4>
+<h4><?= __d('debug_kit', 'Routing Params') ?></h4>
 <?= $this->Toolbar->makeNeatArray($params) ?>
 
-<h4>Post data</h4>
+<h4><?= __d('debug_kit', 'Post data') ?></h4>
 <?php
 if (empty($data)):
     echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
@@ -60,6 +60,6 @@ endif;
 <?php endif; ?>
 
 <?php if (!empty($matchedRoute)): ?>
-<h4>Matched Route</h4>
+<h4><?= __d('debug_kit', 'Matched Route') ?></h4>
     <p><?= $this->Toolbar->makeNeatArray(['template' => $matchedRoute]) ?></p>
 <?php endif; ?>

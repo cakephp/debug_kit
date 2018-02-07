@@ -31,6 +31,6 @@ if (!empty($content)):
 endif;
 
 if (!empty($errors)):
-    echo '<h4>Validation errors</h4>';
+    echo '<h4>' . __d('debug_kit', 'Validation errors') . '</h4>';
     echo $this->Toolbar->makeNeatArray($errors);
 endif;

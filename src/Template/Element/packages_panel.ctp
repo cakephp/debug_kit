@@ -23,7 +23,7 @@
     </div>
 <?php else: ?>
     <div class="check-update">
-        <button class="btn-primary">Check for Updates</button>
+        <button class="btn-primary"><?= __d('debug_kit', 'Check for Updates') ?></button>
         <label><input type="checkbox" class="direct-dependency"><?= __d('debug_kit', 'Direct dependencies only') ?></label>
     </div>
     <div class="terminal"></div>
@@ -33,8 +33,8 @@
             <table cellspacing="0" cellpadding="0" class="debug-table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Version</th>
+                    <th><?= __d('debug_kit', 'Name') ?></th>
+                    <th><?= __d('debug_kit', 'Version') ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,8 +59,8 @@
             <table cellspacing="0" cellpadding="0" class="debug-table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Version</th>
+                    <th><?= __d('debug_kit', 'Name') ?></th>
+                    <th><?= __d('debug_kit', 'Version') ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,7 +96,7 @@
         }
 
         function buildLoader() {
-            return '<div class="loading">Loading <?= $this->Html->image('DebugKit.cake.icon.png', ['class' => 'indicator'])?></div>';
+            return '<div class="loading"><?= __d('debug_kit', 'Loading') . ' ' . $this->Html->image('DebugKit.cake.icon.png', ['class' => 'indicator'])?></div>';
         }
 
         function buildSuccessfulMessage(response) {

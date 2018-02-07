@@ -75,13 +75,7 @@ class VariablesPanel extends DebugPanel
         try {
             $info = $item->__debugInfo();
         } catch (\Exception $exception) {
-            return sprintf(
-                'Could not retrieve debug info - %s. Error: %s in %s, line %s',
-                get_class($item),
-                $exception->getMessage(),
-                $exception->getFile(),
-                $exception->getLine()
-            );
+            return __d('debug_kit', 'Could not retrieve debug info - {0}. Error: {1} in {2}, line {3}', get_class($item), $exception->getMessage(), $exception->getFile(), $exception->getLine());
         }
 
         return array_map($walker, $info);
@@ -135,13 +129,7 @@ class VariablesPanel extends DebugPanel
                     try {
                         serialize($item);
                     } catch (\Exception $e) {
-                        $item = sprintf(
-                            'Unserializable object - %s. Error: %s in %s, line %s',
-                            get_class($item),
-                            $e->getMessage(),
-                            $e->getFile(),
-                            $e->getLine()
-                        );
+                        $item = __d('debug_kit', 'Unserializable object - {0}. Error: {1} in {2}, line {3}', get_class($item), $e->getMessage(), $e->getFile(), $e->getLine());
                     }
                 }
             } elseif (is_resource($item)) {

@@ -130,9 +130,7 @@ class DebugBarFilterTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response = $response->withStringBody(function () {
-            return 'I am a teapot!';
-        });
+        $response = $response->withStringBody('I am a teapot!');
 
         $bar = new DebugBarFilter($this->events, []);
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));

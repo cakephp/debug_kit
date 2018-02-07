@@ -288,9 +288,7 @@ class ToolbarServiceTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response = $response->withStringBody(function () {
-            return 'I am a teapot!';
-        });
+        $response = $response->withStringBody('I am a teapot!');
 
         $bar = new ToolbarService($this->events, []);
         $row = new RequestEntity(['id' => 'abc123']);

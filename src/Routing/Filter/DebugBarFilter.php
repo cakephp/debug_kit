@@ -13,8 +13,8 @@ namespace DebugKit\Routing\Filter;
 
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest as Request;
 use Cake\Routing\DispatcherFilter;
 use DebugKit\ToolbarService;
 

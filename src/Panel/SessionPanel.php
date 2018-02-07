@@ -13,7 +13,7 @@
 namespace DebugKit\Panel;
 
 use Cake\Event\Event;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use DebugKit\DebugPanel;
 
 /**

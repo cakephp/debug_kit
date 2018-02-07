@@ -19,7 +19,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
@@ -39,7 +39,7 @@ class MailPreviewController extends Controller
      *
      * @param \Cake\Event\Event $event The beforeFilter event.
      * @return void
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
@@ -254,7 +254,7 @@ class MailPreviewController extends Controller
      * @param string $emailName The mailer preview method
      * @param string|null $plugin The plugin where the mailer preview should be found
      * @return \DebugKit\Mailer\PreviewResult The result of the email preview
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     protected function findPreview($previewName, $emailName, $plugin = null)
     {

@@ -17,9 +17,9 @@ use Cake\Core\Plugin;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest as Request;
 use Cake\Log\Log;
-use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
@@ -268,7 +268,7 @@ class ToolbarServiceTest extends TestCase
         $row = new RequestEntity(['id' => 'abc123']);
 
         $result = $bar->injectScripts($row, $response);
-        $this->assertInstanceOf('Cake\Network\Response', $result);
+        $this->assertInstanceOf('Cake\Http\Response', $result);
         $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
         $this->assertTrue($result->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
@@ -294,7 +294,7 @@ class ToolbarServiceTest extends TestCase
         $row = new RequestEntity(['id' => 'abc123']);
 
         $result = $bar->injectScripts($row, $response);
-        $this->assertInstanceOf('Cake\Network\Response', $result);
+        $this->assertInstanceOf('Cake\Http\Response', $result);
         if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
             $this->assertEquals('I am a teapot!', $response->getBody());
         } else {

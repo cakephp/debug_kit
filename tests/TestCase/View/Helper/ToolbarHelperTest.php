@@ -13,7 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;

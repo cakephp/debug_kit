@@ -112,7 +112,7 @@ class DebugBarFilterTest extends TestCase
         $bar = new DebugBarFilter($this->events, []);
         $event = new Event('Dispatcher.afterDispatch', $bar, compact('request', 'response'));
         $this->assertNull($bar->afterDispatch($event));
-        $this->assertNotContains('<script>', $response->getBody());
+        $this->assertNotContains('<script>', (string)$response->getBody());
     }
 
     /**

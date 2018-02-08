@@ -46,6 +46,9 @@ class RoutesPanelTest extends TestCase
             $routes->fallbacks('DashedRoute');
         });
 
+        // Force Router::$initialized to be true.
+        Router::url(['controller' => 'Pages', 'action' => 'display', 'contact']);
+
         $this->panel = new RoutesPanel();
     }
 
@@ -57,7 +60,6 @@ class RoutesPanelTest extends TestCase
     public function testSummary()
     {
         $this->panel->initialize();
-
         $this->assertEquals(4, $this->panel->summary());
 
         Router::connect('/test', ['controller' => 'Pages', 'action' => 'display', 'home']);

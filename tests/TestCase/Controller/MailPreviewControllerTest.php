@@ -26,6 +26,16 @@ class MailPreviewControllerTest extends IntegrationTestCase
 {
 
     /**
+     * Fixtures.
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'plugin.debug_kit.requests',
+        'plugin.debug_kit.panels'
+    ];
+
+    /**
      * Setup method.
      *
      * @return void
@@ -44,6 +54,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
                 }
             );
         });
+        $this->useHttpServer(true);
     }
 
     /**

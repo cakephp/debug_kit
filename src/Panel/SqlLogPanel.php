@@ -53,7 +53,7 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = null;
             if ($connection->logQueries()) {
-                $logger = $connection->logger();
+                $logger = $connection->getLogger();
             }
 
             if ($logger instanceof DebugLog) {
@@ -64,7 +64,7 @@ class SqlLogPanel extends DebugPanel
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
             $connection->logQueries(true);
-            $connection->logger($logger);
+            $connection->setLogger($logger);
             $this->_loggers[] = $logger;
         }
     }
@@ -78,7 +78,7 @@ class SqlLogPanel extends DebugPanel
     {
         return [
             'tables' => array_map(function (Table $table) {
-                return $table->alias();
+                return $table->getAlias();
             }, TableRegistry::genericInstances()),
             'loggers' => $this->_loggers,
         ];

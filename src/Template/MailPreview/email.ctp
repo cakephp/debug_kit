@@ -14,7 +14,7 @@
     }
 </style>
 
-<?php if (!$this->request->query('part')) : ?>
+<?php if (!$this->request->getQuery('part')) : ?>
     <?= $this->element('preview_header'); ?>
 <?php endif; ?>
 

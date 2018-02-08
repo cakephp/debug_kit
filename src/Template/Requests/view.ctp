@@ -53,5 +53,5 @@ use Cake\Core\Configure;
     'id' => '__debug_kit_app',
     'data-id' => $toolbar->id,
     'data-url' => Router::url('/', true),
-    'data-webroot' => $this->request->webroot,
+    'data-webroot' => $this->request->getAttribute("webroot"),
 ]) ?>

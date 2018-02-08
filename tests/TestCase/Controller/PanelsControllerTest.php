@@ -46,6 +46,7 @@ class PanelsControllerTest extends IntegrationTestCase
         Router::plugin('DebugKit', function (RouteBuilder $routes) {
             $routes->connect('/panels/:action/*', ['controller' => 'Panels']);
         });
+        $this->useHttpServer(true);
     }
 
     /**

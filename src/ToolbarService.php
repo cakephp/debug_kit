@@ -72,7 +72,7 @@ class ToolbarService
      */
     public function __construct(EventManager $events, array $config)
     {
-        $this->config($config);
+        $this->setConfig($config);
         $this->registry = new PanelRegistry($events);
     }
 
@@ -97,7 +97,7 @@ class ToolbarService
         if ($enabled) {
             return true;
         }
-        $force = $this->config('forceEnable');
+        $force = $this->getConfig('forceEnable');
         if (is_callable($force)) {
             return $force();
         }
@@ -133,7 +133,7 @@ class ToolbarService
      */
     public function loadPanels()
     {
-        foreach ($this->config('panels') as $panel => $enabled) {
+        foreach ($this->getConfig('panels') as $panel => $enabled) {
             list($panel, $enabled) = (is_numeric($panel)) ? [$enabled, true] : [$panel, $enabled];
             if ($enabled) {
                 $this->registry->load($panel);
@@ -175,7 +175,7 @@ class ToolbarService
             'content_type' => $response->getHeaderLine('Content-Type'),
             'method' => $request->getMethod(),
             'status_code' => $response->getStatusCode(),
-            'requested_at' => $request->env('REQUEST_TIME'),
+            'requested_at' => $request->getEnv('REQUEST_TIME'),
             'panels' => []
         ];
         /* @var \DebugKit\Model\Table\RequestsTable $requests */

@@ -43,12 +43,12 @@ use Cake\Core\Configure;
         </ul>
     </li>
     <li id="panel-button">
-        <?= $this->Html->image('DebugKit.cake.icon.png', [
+        <?= $this->Html->image('DebugKit./img/cake.icon.png', [
             'alt' => 'Debug Kit', 'title' => 'CakePHP ' . Configure::version() . ' Debug Kit'
         ]) ?>
     </li>
 </ul>
-<?php $this->Html->script('DebugKit.debug_kit', [
+<?php $this->Html->script('DebugKit./js/debug_kit', [
     'block' => true,
     'id' => '__debug_kit_app',
     'data-id' => $toolbar->id,

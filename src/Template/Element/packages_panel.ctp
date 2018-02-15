@@ -96,7 +96,7 @@
         }
 
         function buildLoader() {
-            return '<div class="loading">Loading <?= $this->Html->image('DebugKit.cake.icon.png', ['class' => 'indicator'])?></div>';
+            return '<div class="loading">Loading <?= $this->Html->image('DebugKit./img/cake.icon.png', ['class' => 'indicator'])?></div>';
         }
 
         function buildSuccessfulMessage(response) {

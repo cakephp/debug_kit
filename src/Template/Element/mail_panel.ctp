@@ -1,7 +1,7 @@
 <p class="info">
     <?= __d('debug_kit',
             'Why not test your emails interactively instead? Go to the {0}',
-            $this->Html->link(__d('debug_kit', 'Email previews page'), ['controller' => 'MailPreview', 'action' => 'index'], ['target' => '_blank']);) ?>
+            $this->Html->link(__d('debug_kit', 'Email previews page'), ['controller' => 'MailPreview', 'action' => 'index'], ['target' => '_blank'])) ?>
 </p>
 <?php
     if (empty($emails)) {

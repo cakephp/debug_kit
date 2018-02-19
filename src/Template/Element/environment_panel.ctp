@@ -75,6 +75,31 @@ use Cake\Error\Debugger;
 </div>
 <?php endif; ?>
 
+<h2><?= __d('debug_kit', 'INI Environment') ?></h2>
+
+<?php if (!empty($ini)): ?>
+<table cellspacing="0" cellpadding="0" class="debug-table">
+    <thead>
+        <tr>
+            <th>INI Variable</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($ini as $key => $val): ?>
+        <tr>
+            <td><?= h($key) ?></td>
+            <td><?= $this->Credentials->filter($val) ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else: ?>
+<div class="warning">
+    <?= __d('debug_kit', 'ini environment unavailable.'); ?>
+</div>
+<?php endif; ?>
+
 <h2><?= __d('debug_kit', 'PHP Environment') ?></h2>
 
 <?php if (!empty($php)): ?>

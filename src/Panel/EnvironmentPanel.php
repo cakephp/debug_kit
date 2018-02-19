@@ -41,6 +41,15 @@ class EnvironmentPanel extends DebugPanel
         );
         unset($return['php']['argv']);
 
+        // ini Data
+        $return['ini'] = [
+            'intl.default_locale' => ini_get('intl.default_locale'),
+            'memory_limit' => ini_get('memory_limit'),
+            'error_reporting' => ini_get('error_reporting'),
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'post_max_size' => ini_get('post_max_size'),
+        ];
+
         // CakePHP Data
         $return['cake'] = [
             'APP' => APP,

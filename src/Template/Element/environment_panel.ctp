@@ -31,8 +31,8 @@ use Cake\Error\Debugger;
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
         <tr>
-            <th>Constant</th>
-            <th>Value</th>
+            <th><?= __d('debug_kit', 'Constant') ?></th>
+            <th><?= __d('debug_kit', 'Value') ?></th>
         </tr>
     </thead>
     <tbody>
@@ -56,8 +56,8 @@ use Cake\Error\Debugger;
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
         <tr>
-            <th>Constant</th>
-            <th>Value</th>
+            <th><?= __d('debug_kit', 'Constant') ?></th>
+            <th><?= __d('debug_kit', 'Value') ?></th>
         </tr>
     </thead>
     <tbody>
@@ -106,8 +106,8 @@ use Cake\Error\Debugger;
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
         <tr>
-            <th>Environment Variable</th>
-            <th>Value</th>
+            <th><?= __d('debug_kit', 'Environment Variable') ?></th>
+            <th><?= __d('debug_kit', 'Value') ?></th>
         </tr>
     </thead>
     <tbody>
@@ -132,8 +132,8 @@ use Cake\Error\Debugger;
     <table cellspacing="0" cellpadding="0" class="debug-table">
         <thead>
             <tr>
-                <th>Constant</th>
-                <th>Value</th>
+                <th><?= __d('debug_kit', 'Constant') ?></th>
+                <th><?= __d('debug_kit', 'Value') ?></th>
             </tr>
         </thead>
         <tbody>

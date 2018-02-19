@@ -63,7 +63,7 @@ class ToolbarController extends Controller
     {
         $this->request->allowMethod('post');
         if (!$this->request->data('name')) {
-            throw new NotFoundException('Invalid cache engine name.');
+            throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
         $result = Cache::clear(false, $this->request->data('name'));
         $this->set([

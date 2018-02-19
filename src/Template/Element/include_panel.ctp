@@ -26,8 +26,8 @@ if (!isset($cake) && isset($core)) {
     $cake = $core;
 }
 ?>
-<h4>Include Paths</h4>
+<h4><?= __d('debug_kit', 'Include Paths') ?></h4>
 <?= $this->Toolbar->makeNeatArray($paths) ?>
 
-<h4>Included Files</h4>
+<h4><?= __d('debug_kit', 'Included Files') ?></h4>
 <?= $this->Toolbar->makeNeatArray(['cake' => $cake, 'app' => $app, 'plugins' => $plugins]) ?>

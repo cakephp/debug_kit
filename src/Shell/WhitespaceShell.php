@@ -95,7 +95,7 @@ class WhitespaceShell extends Shell
 
         return $parser->addOption('path', [
             'short' => 'p',
-            'help' => __d('cake_console', 'Absolute path or relative to APP.')
+            'help' => __d('debug_kit', 'Absolute path or relative to {0}.', 'APP')
         ]);
     }
 }

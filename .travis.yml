@@ -32,7 +32,6 @@ matrix:
       env: PREFER_LOWEST=1
 
 install:
-  - composer self-update
   - sh -c "if [ '$PREFER_LOWEST' != '1' ]; then composer install --prefer-dist --no-interaction; fi"
   - sh -c "if [ '$PREFER_LOWEST' = '1' ]; then composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi"
 

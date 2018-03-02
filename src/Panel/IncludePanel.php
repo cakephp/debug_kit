@@ -71,6 +71,8 @@ class IncludePanel extends DebugPanel
                 $return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
             } elseif ($this->_isCakeFile($file)) {
                 $return['cake'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'cake');
+            } else {
+                $return['other'][] = $this->_niceFileName($file, 'root');
             }
         }
 
@@ -137,7 +139,7 @@ class IncludePanel extends DebugPanel
     }
 
     /**
-     * Replace the path with APP, CORE or the plugin name
+     * Replace the path with APP, CAKE, ROOT or the plugin name
      *
      * @param string $file File to check
      * @param string $type The file type
@@ -154,6 +156,9 @@ class IncludePanel extends DebugPanel
 
             case 'cake':
                 return str_replace(CAKE, 'CAKE' . DIRECTORY_SEPARATOR, $file);
+
+            case 'root':
+                return str_replace(ROOT, 'ROOT', $file);
 
             default:
                 return str_replace($this->_pluginPaths[$type], $type . DIRECTORY_SEPARATOR, $file);

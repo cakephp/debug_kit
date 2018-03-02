@@ -49,7 +49,7 @@ class IncludePanel extends DebugPanel
     public function __construct()
     {
         foreach (Plugin::loaded() as $plugin) {
-            $this->_pluginPaths[$plugin] = Plugin::path($plugin);
+            $this->_pluginPaths[$plugin] = str_replace('/', DIRECTORY_SEPARATOR, Plugin::path($plugin));
         }
     }
 

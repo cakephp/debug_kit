@@ -196,7 +196,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$result = $this->firecake->stringEncode($obj);
 
 		$this->assertTrue(is_array($result));
-		$this->assertEquals($result['_defaultOptions']['useNativeJsonEncode'], true);
+		$this->assertTrue($result['_defaultOptions']['useNativeJsonEncode']);
 		$this->assertEquals($result['_encodedObjects'][0], '** Recursion (TestFireCake) **');
 	}
 
@@ -223,7 +223,7 @@ class FireCakeTestCase extends CakeTestCase {
 	public function testEnableDisable() {
 		FireCake::disable();
 		FireCake::trace('myTrace');
-		$this->assertTrue(empty($this->firecake->sentHeaders));
+		$this->assertEmpty($this->firecake->sentHeaders);
 
 		FireCake::enable();
 		FireCake::trace('myTrace');

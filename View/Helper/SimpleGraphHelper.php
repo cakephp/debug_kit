@@ -61,13 +61,13 @@ class SimpleGraphHelper extends AppHelper {
 		$settings = array_merge($this->_defaultSettings, $options);
 		extract($settings);
 
-		$graphValue = ($value / $max) * $width;
+		$graphValue = ((float)$value / $max) * $width;
 		$graphValue = max(round($graphValue), 1);
 
 		if ($valueType === 'percentage') {
 			$graphOffset = 0;
 		} else {
-			$graphOffset = ($offset / $max) * $width;
+			$graphOffset = ((float)$offset / $max) * $width;
 			$graphOffset = round($graphOffset);
 		}
 		return $this->Html->div(

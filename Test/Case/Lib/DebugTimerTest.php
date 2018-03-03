@@ -69,7 +69,7 @@ class DebugTimerTest extends CakeTestCase {
 		$this->assertTrue(DebugTimer::stop());
 		$timers = DebugTimer::getAll();
 
-		$this->assertEquals(2, count($timers));
+		$this->assertCount(2, $timers);
 		end($timers);
 		$key = key($timers);
 		$lineNo = __LINE__ - 8;
@@ -161,7 +161,7 @@ class DebugTimerTest extends CakeTestCase {
 		DebugTimer::stop('test2');
 		$timers = DebugTimer::getAll();
 
-		$this->assertEquals(3, count($timers));
+		$this->assertCount(3, $timers);
 		$this->assertTrue(is_float($timers['test1']['time']));
 		$this->assertTrue(isset($timers['test1']['message']));
 		$this->assertTrue(isset($timers['test2']['message']));

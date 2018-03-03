@@ -16,6 +16,7 @@ use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
+use RuntimeException;
 
 /**
  * Registry object for panels.
@@ -60,7 +61,7 @@ class PanelRegistry extends ObjectRegistry
      */
     protected function _throwMissingClassError($class, $plugin)
     {
-        throw new \RuntimeException("Unable to find '$class' panel.");
+        throw new RuntimeException(__d('debug_kit', "Unable to find '{0}' panel.", $class));
     }
 
     /**

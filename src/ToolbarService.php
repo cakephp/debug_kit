@@ -115,7 +115,7 @@ class ToolbarService
      */
     protected function isNotSuspiciouslyProduction()
     {
-        $host = explode('.', parse_url('http://'. env('HTTP_HOST'), PHP_URL_HOST));
+        $host = explode('.', parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST));
         $first = current($host);
         $isIP = is_numeric(implode('', $host));
 

@@ -376,7 +376,9 @@ class ToolbarServiceTest extends TestCase
         return [
             ['localhost', true],
             ['192.168.1.34', true],
+            ['127.0.0.1:8765', true],
             ['10.14.34.5', true],
+            ['10.14.34.5:80', true],
             ['myapp.localhost', true],
             ['myapp.local', true],
             ['myapp.dev', true],

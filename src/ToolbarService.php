@@ -115,7 +115,7 @@ class ToolbarService
      */
     protected function isNotSuspiciouslyProduction()
     {
-        $host = explode('.', env('HTTP_HOST'));
+        $host = explode('.', parse_url('http://'. env('HTTP_HOST'), PHP_URL_HOST));
         $first = current($host);
         $isIP = is_numeric(implode('', $host));
 
@@ -123,7 +123,7 @@ class ToolbarService
             return false;
         }
 
-        if ($isIP && in_array($first, ['192', '10'])) {
+        if ($isIP && in_array($first, ['192', '10', '127'])) {
             // Accessing the app by private IP, this is safe
             return false;
         }

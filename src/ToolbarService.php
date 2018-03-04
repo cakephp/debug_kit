@@ -94,15 +94,43 @@ class ToolbarService
     public function isEnabled()
     {
         $enabled = (bool)Configure::read('debug');
-        if ($enabled) {
+
+        if ($enabled && !$this->isNotSuspiciouslyProduction()) {
             return true;
         }
+
         $force = $this->config('forceEnable');
         if (is_callable($force)) {
             return $force();
         }
 
         return $force;
+    }
+
+    /**
+     * Returns true if this applications is being executed on a domain with a TLD
+     * that is commonly associated with a production environment.
+     *
+     * @return bool
+     */
+    protected function isNotSuspiciouslyProduction()
+    {
+        $host = explode('.', env('HTTP_HOST'));
+        $first = current($host);
+        $isIP = is_numeric(implode('', $host));
+
+        if (count($host) === 1) {
+            return false;
+        }
+
+        if ($isIP && in_array($first, ['192', '10'])) {
+            // Accessing the app by private IP, this is safe
+            return false;
+        }
+
+        $tld = end($host);
+        $safeTLD = ["localhost", "dev", "invalid", "test", "example"];
+        return !in_array($tld, $safeTLD);
     }
 
     /**

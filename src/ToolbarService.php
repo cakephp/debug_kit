@@ -130,6 +130,7 @@ class ToolbarService
 
         $tld = end($host);
         $safeTLD = ["localhost", "dev", "invalid", "test", "example"];
+
         return !in_array($tld, $safeTLD);
     }
 

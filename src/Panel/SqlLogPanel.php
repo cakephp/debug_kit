@@ -14,8 +14,8 @@ namespace DebugKit\Panel;
 
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Locator\TableLocator;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use DebugKit\Database\Log\DebugLog;
 use DebugKit\DebugPanel;
 
@@ -79,7 +79,7 @@ class SqlLogPanel extends DebugPanel
         return [
             'tables' => array_map(function (Table $table) {
                 return $table->getAlias();
-            }, TableRegistry::genericInstances()),
+            }, (new TableLocator)->genericInstances()),
             'loggers' => $this->_loggers,
         ];
     }

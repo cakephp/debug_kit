@@ -136,7 +136,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	public function testPanelStart() {
 		$this->Toolbar->panelStart('My Panel', 'my_panel');
 		$result = $this->firecake->sentHeaders;
-		$this->assertPattern('/GROUP_START.+My Panel/', $result['X-Wf-1-1-1-1']);
+		$this->assertRegexp('/GROUP_START.+My Panel/', $result['X-Wf-1-1-1-1']);
 	}
 
 /**
@@ -147,6 +147,6 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 	public function testPanelEnd() {
 		$this->Toolbar->panelEnd();
 		$result = $this->firecake->sentHeaders;
-		$this->assertPattern('/GROUP_END/', $result['X-Wf-1-1-1-1']);
+		$this->assertRegexp('/GROUP_END/', $result['X-Wf-1-1-1-1']);
 	}
 }

@@ -62,15 +62,15 @@ class TimedBehaviorTestCase extends CakeTestCase {
  */
 	public function testFindTimers() {
 		$timers = DebugKitDebugger::getTimers(false);
-		$this->assertEquals(count($timers), 1);
+		$this->assertCount(1, $timers);
 
 		$this->Article->find('all');
 		$result = DebugKitDebugger::getTimers(false);
-		$this->assertEquals(count($result), 2);
+		$this->assertCount(2, $result);
 
 		$this->Article->find('all');
 		$result = DebugKitDebugger::getTimers(false);
-		$this->assertEquals(count($result), 3);
+		$this->assertCount(3, $result);
 	}
 
 /**
@@ -80,10 +80,10 @@ class TimedBehaviorTestCase extends CakeTestCase {
  */
 	public function testSaveTimers() {
 		$timers = DebugKitDebugger::getTimers(false);
-		$this->assertEquals(count($timers), 1);
+		$this->assertCount(1, $timers);
 
 		$this->Article->save(array('user_id' => 1, 'title' => 'test', 'body' => 'test'));
 		$result = DebugKitDebugger::getTimers(false);
-		$this->assertEquals(count($result), 2);
+		$this->assertCount(2, $result);
 	}
 }

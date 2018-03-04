@@ -333,7 +333,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div>.*</body>#', $result);
+		$this->assertRegexp('#<div id\="debug-kit-toolbar">.+</div>.*</body>#', $result);
 	}
 
 /**
@@ -360,7 +360,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Components->trigger('beforeRender', array($this->Controller));
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js(?:\?\d*?)?"\s*>\s?</script>#', $result);
+		$this->assertRegexp('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js(?:\?\d*?)?"\s*>\s?</script>#', $result);
 	}
 
 /**

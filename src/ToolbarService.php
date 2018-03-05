@@ -95,7 +95,7 @@ class ToolbarService
     {
         $enabled = (bool)Configure::read('debug');
 
-        if ($enabled && !$this->isNotSuspiciouslyProduction()) {
+        if ($enabled && !$this->isSuspiciouslyProduction()) {
             return true;
         }
 
@@ -113,7 +113,7 @@ class ToolbarService
      *
      * @return bool
      */
-    protected function isNotSuspiciouslyProduction()
+    protected function isSuspiciouslyProduction()
     {
         $host = explode('.', parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST));
         $first = current($host);

@@ -57,7 +57,7 @@ class FireCakeTestCase extends CakeTestCase {
 	public function testGetInstanceOverride() {
 		$instance = FireCake::getInstance();
 		$instance2 = FireCake::getInstance();
-		$this->assertReference($instance, $instance2);
+		$this->assertSame($instance, $instance2);
 		$this->assertIsA($instance, 'FireCake');
 		$this->assertIsA($instance, 'TestFireCake', 'Stored instance is not a copy of TestFireCake, test case is broken.');
 	}
@@ -211,8 +211,8 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Plugin-1']));
 		$this->assertTrue(isset($this->firecake->sentHeaders['X-Wf-1-Structure-1']));
 		$dump = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
-		$this->assertPattern('/"Message":"myTrace"/', $dump);
-		$this->assertPattern('/"Trace":\[/', $dump);
+		$this->assertRegexp('/"Message":"myTrace"/', $dump);
+		$this->assertRegexp('/"Trace":\[/', $dump);
 	}
 
 /**
@@ -255,8 +255,8 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::setOptions(array('includeLineNumbers' => true));
 		FireCake::info('Testing');
 		$result = $this->firecake->sentHeaders['X-Wf-1-1-1-1'];
-		$this->assertPattern('/"File"\:".*FireCakeTest.php/', $result);
-		$this->assertPattern('/"Line"\:\d+/', $result);
+		$this->assertRegexp('/"File"\:".*FireCakeTest.php/', $result);
+		$this->assertRegexp('/"Line"\:\d+/', $result);
 	}
 
 /**
@@ -290,7 +290,7 @@ class FireCakeTestCase extends CakeTestCase {
 		FireCake::fb('Test', 'Custom label', 'warn');
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-3'], '47|[{"Type":"WARN","Label":"Custom label"},"Test"]|');
 
-		$this->expectError('PHPUnit_Framework_Error');
+		$this->setExpectedException('PHPUnit_Framework_Error');
 		$this->assertFalse(FireCake::fb('Test', 'Custom label', 'warn', 'more parameters'));
 
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-Index'], 3);
@@ -339,7 +339,7 @@ class FireCakeTestCase extends CakeTestCase {
 		$this->assertEquals($json, '[1,2,3]');
 
 		$json = FireCake::jsonEncode(FireCake::getInstance());
-		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:\d*,/', $json);
+		$this->assertRegexp('/"options"\:\{"maxObjectDepth"\:\d*,/', $json);
 	}
 
 }

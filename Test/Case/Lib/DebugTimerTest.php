@@ -54,7 +54,7 @@ class DebugTimerTest extends CakeTestCase {
 		$this->assertTrue($elapsed >= $expected);
 
 		DebugTimer::start('test3');
-		$this->assertIdentical(DebugTimer::elapsedTime('test3'), 0);
+		$this->assertEquals(DebugTimer::elapsedTime('test3'), 0);
 		$this->assertFalse(DebugTimer::stop('wrong'));
 	}
 

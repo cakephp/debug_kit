@@ -68,7 +68,7 @@ class VariablesPanelTest extends TestCase
         $debugInfoException = $requests->query()->contain('NonExistentAssociation');
 
         $unserializable = new \stdClass();
-        $unserializable->pdo = $requests->getConnection()->getDriver()->connection();
+        $unserializable->pdo = $requests->getConnection()->getDriver()->getConnection();
 
         $unserializableDebugInfo = $this
             ->getMockBuilder('\stdClass')

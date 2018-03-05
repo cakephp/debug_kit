@@ -79,7 +79,7 @@ class SqlLogPanel extends DebugPanel
         return [
             'tables' => array_map(function (Table $table) {
                 return $table->getAlias();
-            }, TableRegistry::genericInstances()),
+            }, TableRegistry::getTableLocator()->genericInstances()),
             'loggers' => $this->_loggers,
         ];
     }

@@ -83,7 +83,7 @@ class IncludePanel extends DebugPanel
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach (get_included_files() as $file) {
-            $pluginName = $this->_isPluginFile($file);
+            $pluginName = $this->_getPluginName($file);
 
             if ($pluginName) {
                 $return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, 'plugin', $pluginName);
@@ -92,7 +92,7 @@ class IncludePanel extends DebugPanel
             } elseif ($this->_isCakeFile($file)) {
                 $return['cake'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'cake');
             } else {
-                $vendorName = $this->_isVendorFile($file);
+                $vendorName = $this->_getComposerPackageName($file);
 
                 if ($vendorName) {
                     $return['vendor'][$vendorName][] = $this->_niceFileName($file, 'vendor', $vendorName);
@@ -138,7 +138,7 @@ class IncludePanel extends DebugPanel
      */
     protected function _isCakeFile($file)
     {
-        return strstr($file, CAKE);
+        return strpos($file, CAKE) === 0;
     }
 
     /**
@@ -149,19 +149,19 @@ class IncludePanel extends DebugPanel
      */
     protected function _isAppFile($file)
     {
-        return strstr($file, APP);
+        return strpos($file, APP) === 0;
     }
 
     /**
-     * Check if a path is from a plugin
+     * Detect plugin the file belongs to
      *
      * @param string $file File to check
      * @return string|bool plugin name, or false if not plugin
      */
-    protected function _isPluginFile($file)
+    protected function _getPluginName($file)
     {
         foreach ($this->_pluginPaths as $plugin => $path) {
-            if (strstr($file, $path)) {
+            if (strpos($file, $path) === 0) {
                 return $plugin;
             }
         }
@@ -170,15 +170,15 @@ class IncludePanel extends DebugPanel
     }
 
     /**
-     * Check if a path is from a Composer package
+     * Detect Composer package the file belongs to
      *
      * @param string $file File to check
      * @return string|bool package name, or false if not Composer package
      */
-    protected function _isVendorFile($file)
+    protected function _getComposerPackageName($file)
     {
         foreach ($this->_composerPaths as $package => $path) {
-            if (strstr($file, $path)) {
+            if (strpos($file, $path) === 0) {
                 return $package;
             }
         }

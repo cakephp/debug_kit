@@ -15,6 +15,7 @@ namespace DebugKit\Panel;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
+use Composer\Json\JsonFile;
 use DebugKit\DebugPanel;
 
 /**
@@ -30,6 +31,13 @@ class IncludePanel extends DebugPanel
      * @var <type>
      */
     protected $_pluginPaths = [];
+
+    /**
+     * The list of Composer packages
+     *
+     * @var <type>
+     */
+    protected $_composerPaths = [];
 
     /**
      * File Types
@@ -51,6 +59,18 @@ class IncludePanel extends DebugPanel
         foreach (Plugin::loaded() as $plugin) {
             $this->_pluginPaths[$plugin] = str_replace('/', DIRECTORY_SEPARATOR, Plugin::path($plugin));
         }
+
+        $lockFile = new JsonFile(ROOT . DIRECTORY_SEPARATOR . 'composer.lock');
+        if ($lockFile->exists()) {
+            $lockContent = $lockFile->read();
+
+            $vendorDir = ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR;
+            $packages = array_merge($lockContent['packages'], $lockContent['packages-dev']);
+
+            foreach ($packages as $package) {
+                $this->_composerPaths[$package['name']] = $vendorDir . str_replace('/', DIRECTORY_SEPARATOR, $package['name']) . DIRECTORY_SEPARATOR;
+            }
+        }
     }
 
     /**
@@ -60,27 +80,34 @@ class IncludePanel extends DebugPanel
      */
     protected function _prepare()
     {
-        $return = ['cake' => [], 'app' => [], 'plugins' => []];
+        $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach (get_included_files() as $file) {
             $pluginName = $this->_isPluginFile($file);
 
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, $pluginName);
+                $return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, 'plugin', $pluginName);
             } elseif ($this->_isAppFile($file)) {
                 $return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
             } elseif ($this->_isCakeFile($file)) {
                 $return['cake'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'cake');
             } else {
-                $return['other'][] = $this->_niceFileName($file, 'root');
+                $vendorName = $this->_isVendorFile($file);
+
+                if ($vendorName) {
+                    $return['vendor'][$vendorName][] = $this->_niceFileName($file, 'vendor', $vendorName);
+                } else {
+                    $return['other'][] = $this->_niceFileName($file, 'root');
+                }
             }
         }
 
         $return['paths'] = $this->_includePaths();
 
+        ksort($return['app']);
         ksort($return['cake']);
         ksort($return['plugins']);
-        ksort($return['app']);
+        ksort($return['vendor']);
 
         foreach ($return['plugins'] as &$plugin) {
             ksort($plugin);
@@ -143,16 +170,31 @@ class IncludePanel extends DebugPanel
     }
 
     /**
+     * Check if a path is from a Composer package
+     *
+     * @param string $file File to check
+     * @return bool
+     */
+    protected function _isVendorFile($file)
+    {
+        foreach ($this->_composerPaths as $package => $path) {
+            if (strstr($file, $path)) {
+                return $package;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Replace the path with APP, CAKE, ROOT or the plugin name
      *
      * @param string $file File to check
      * @param string $type The file type
-     *  - app for app files
-     *  - cake for cake files
-     *  - PluginName for the name of a plugin
+     * @param string $name plugin name or composer package
      * @return bool
      */
-    protected function _niceFileName($file, $type)
+    protected function _niceFileName($file, $type, $name = null)
     {
         switch ($type) {
             case 'app':
@@ -164,8 +206,11 @@ class IncludePanel extends DebugPanel
             case 'root':
                 return str_replace(ROOT, 'ROOT', $file);
 
-            default:
-                return str_replace($this->_pluginPaths[$type], $type . DIRECTORY_SEPARATOR, $file);
+            case 'plugin':
+                return str_replace($this->_pluginPaths[$name], $name . DIRECTORY_SEPARATOR, $file);
+
+            case 'vendor':
+                return str_replace($this->_composerPaths[$name], '', $file);
         }
     }
 
@@ -183,7 +228,7 @@ class IncludePanel extends DebugPanel
             }
         }
 
-        return 'Other';
+        return 'other';
     }
 
     /**

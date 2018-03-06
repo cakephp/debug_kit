@@ -18,6 +18,7 @@
  * @var array $app
  * @var array $cake
  * @var array $plugins
+ * @var array $vendor
  * @var array $other
  */
 
@@ -30,4 +31,4 @@ if (!isset($cake) && isset($core)) {
 <?= $this->Toolbar->makeNeatArray($paths) ?>
 
 <h4><?= __d('debug_kit', 'Included Files') ?></h4>
-<?= $this->Toolbar->makeNeatArray(compact('app', 'cake', 'plugins', 'other')) ?>
+<?= $this->Toolbar->makeNeatArray(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>

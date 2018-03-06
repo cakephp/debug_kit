@@ -28,14 +28,14 @@ class IncludePanel extends DebugPanel
     /**
      * The list of plugins within the application
      *
-     * @var <type>
+     * @var string[]
      */
     protected $_pluginPaths = [];
 
     /**
      * The list of Composer packages
      *
-     * @var <type>
+     * @var string[]
      */
     protected $_composerPaths = [];
 
@@ -156,7 +156,7 @@ class IncludePanel extends DebugPanel
      * Check if a path is from a plugin
      *
      * @param string $file File to check
-     * @return bool
+     * @return string|bool plugin name, or false if not plugin
      */
     protected function _isPluginFile($file)
     {
@@ -173,7 +173,7 @@ class IncludePanel extends DebugPanel
      * Check if a path is from a Composer package
      *
      * @param string $file File to check
-     * @return bool
+     * @return string|bool package name, or false if not Composer package
      */
     protected function _isVendorFile($file)
     {
@@ -191,8 +191,8 @@ class IncludePanel extends DebugPanel
      *
      * @param string $file File to check
      * @param string $type The file type
-     * @param string $name plugin name or composer package
-     * @return bool
+     * @param string|null $name plugin name or composer package
+     * @return string Path with replaced prefix
      */
     protected function _niceFileName($file, $type, $name = null)
     {

@@ -82,6 +82,10 @@ class IncludePanel extends DebugPanel
         ksort($return['plugins']);
         ksort($return['app']);
 
+        foreach ($return['plugins'] as &$plugin) {
+            ksort($plugin);
+        }
+
         return $return;
     }
 

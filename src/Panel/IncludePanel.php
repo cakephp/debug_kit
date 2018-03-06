@@ -254,6 +254,8 @@ class IncludePanel extends DebugPanel
             $data = $this->_prepare();
         }
 
+        unset($data['paths']);
+
         return count(Hash::flatten($data));
     }
 }

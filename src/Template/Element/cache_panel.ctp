@@ -23,7 +23,7 @@
     <?php foreach ($metrics as $name => $counters): ?>
     <section class="section-tile">
         <h3><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h3>
-        <button class="btn-primary clear-cache" data-name="<?= h($name) ?>">Clear <?= h($name) ?> cache</button>
+        <button class="btn-primary clear-cache" data-name="<?= h($name) ?>"><?= __d('debug_kit', 'Clear {0} cache', h($name)) ?></button>
         <span class="inline-message"></span>
         <table cellspacing="0" cellpadding="0" class="debug-table">
             <thead>
@@ -69,9 +69,9 @@ $(document).ready(function() {
             type: 'POST'
         });
         xhr.done(function(response) {
-            showMessage(messageEl, name + ' cache cleared.')
+            showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache cleared.') ?>');
         }).error(function(response) {
-            showMessage(messageEl, name + ' cache could not be cleared.');
+            showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache could not be cleared.') ?>');
         });
         e.preventDefault();
     });

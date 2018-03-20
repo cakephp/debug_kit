@@ -1,13 +1,11 @@
 <p class="info">
-    Why not test your emails interactively instead? Go to the
-    <?= $this->Html->link('Email previews page',
-        ['controller' => 'MailPreview', 'action' => 'index'],
-        ['target' => '_blank']);
-    ?>
+    <?= __d('debug_kit',
+            'Why not test your emails interactively instead? Go to the {0}',
+            $this->Html->link(__d('debug_kit', 'Email previews page'), ['controller' => 'MailPreview', 'action' => 'index'], ['target' => '_blank'])) ?>
 </p>
 <?php
     if (empty($emails)) {
-        echo "<p>No emails were sent during this request</p>";
+        echo "<p>" . __d('debug_kit', 'No emails were sent during this request') . "</p>";
         return;
     }
     $url = $this->Url->build(['controller' => 'MailPreview', 'action' => 'sent', 'panel' => $panel->id, 'id' => 0]);
@@ -16,7 +14,7 @@
     <div style="width:300px;">
         <table class="debug-table">
             <tr>
-                <th>Subject</th>
+                <th><?= __d('debug_kit', 'Subject') ?></th>
             </tr>
             <?php foreach ($emails as $k => $email) : ?>
             <tr onclick="loadSentEmail(this, <?= $k ?>)" class="<?= $k == 0 ? 'highlighted' : '' ?>">

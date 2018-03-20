@@ -61,6 +61,17 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
+     * teardown
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        putenv('HTTP_HOST=');
+    }
+
+    /**
      * Test loading panels.
      *
      * @return void
@@ -340,6 +351,44 @@ class ToolbarServiceTest extends TestCase
         Configure::write('debug', false);
         $bar = new ToolbarService($this->events, []);
         $this->assertFalse($bar->isEnabled(), 'debug is off, panel is disabled');
+    }
+
+    /**
+     * Test isEnabled returns false for some suspiciously production environments
+     *
+     * @param string $domain The domain name where the app is hosted
+     * @param bool $isEnabled The expectation for isEnabled()
+     * @dataProvider domainsProvider
+     * @return void
+     */
+    public function testIsEnabledProductionEnv($domain, $isEnabled)
+    {
+        Configure::write('debug', true);
+        putenv("HTTP_HOST=$domain");
+        $bar = new ToolbarService($this->events, []);
+        $this->assertEquals($isEnabled, $bar->isEnabled());
+    }
+
+    public function domainsProvider()
+    {
+        return [
+            ['localhost', true],
+            ['192.168.1.34', true],
+            ['127.0.0.1:8765', true],
+            ['10.14.34.5', true],
+            ['10.14.34.5:80', true],
+            ['myapp.localhost', true],
+            ['myapp.local', true],
+            ['myapp.dev', true],
+            ['myapp', true],
+            ['myapp.invalid', true],
+            ['myapp.test', true],
+            ['myapp.com', false],
+            ['myapp.io', false],
+            ['myapp.net', false],
+            ['172.112.34.2', false],
+            ['6.112.34.2', false],
+        ];
     }
 
     /**

@@ -52,13 +52,13 @@ class SqlLogPanelTest extends TestCase
     {
         parent::setUp();
         $this->panel = new SqlLogPanel();
-        $this->logger = ConnectionManager::get('test')->logger();
+        $this->logger = ConnectionManager::get('test')->getLogger();
     }
 
     public function tearDown()
     {
         parent::tearDown();
-        ConnectionManager::get('test')->logger($this->logger);
+        ConnectionManager::get('test')->setLogger($this->logger);
     }
 
     /**
@@ -70,11 +70,11 @@ class SqlLogPanelTest extends TestCase
     {
         $this->panel->initialize();
         $db = ConnectionManager::get('test');
-        $logger = $db->logger();
+        $logger = $db->getLogger();
         $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
 
         $this->panel->initialize();
-        $second = $db->logger();
+        $second = $db->getLogger();
         $this->assertSame($second, $logger);
     }
 
@@ -88,7 +88,7 @@ class SqlLogPanelTest extends TestCase
         Configure::write('DebugKit.includeSchemaReflection', true);
         $this->panel->initialize();
         $db = ConnectionManager::get('test');
-        $logger = $db->logger();
+        $logger = $db->getLogger();
         $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
         $this->assertAttributeEquals(true, '_includeSchema', $logger);
     }

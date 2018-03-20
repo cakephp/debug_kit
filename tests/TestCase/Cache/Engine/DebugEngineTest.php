@@ -169,7 +169,7 @@ class DebugEngineTest extends TestCase
         ]);
         $engine->init();
 
-        $data = $engine->config();
+        $data = $engine->getConfig();
         $this->assertArrayHasKey('path', $data);
         $this->assertArrayHasKey('isWindows', $data);
         $this->assertArrayHasKey('prefix', $data);

@@ -34,7 +34,7 @@ class RequestTableTest extends TestCase
     {
         parent::setUp();
         $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
     }
 
     /**
@@ -54,7 +54,7 @@ class RequestTableTest extends TestCase
         TableRegistry::get('DebugKit.Requests');
         TableRegistry::get('DebugKit.Panels');
 
-        $schema = $connection->schemaCollection();
+        $schema = $connection->getSchemaCollection();
         $this->assertContains('requests', $schema->listTables());
         $this->assertContains('panels', $schema->listTables());
     }

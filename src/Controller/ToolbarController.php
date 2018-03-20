@@ -16,7 +16,7 @@ use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * Provides utility features need by the toolbar.
@@ -43,7 +43,7 @@ class ToolbarController extends Controller
      *
      * @param \Cake\Event\Event $event The event.
      * @return void
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
@@ -57,15 +57,15 @@ class ToolbarController extends Controller
      * Clear a named cache.
      *
      * @return void
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function clearCache()
     {
         $this->request->allowMethod('post');
-        if (!$this->request->data('name')) {
+        if (!$this->request->getData('name')) {
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
-        $result = Cache::clear(false, $this->request->data('name'));
+        $result = Cache::clear(false, $this->request->getData('name'));
         $this->set([
             '_serialize' => ['success'],
             'success' => $result,

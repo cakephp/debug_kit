@@ -13,8 +13,8 @@ namespace DebugKit\Routing\Filter;
 
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest as Request;
 use Cake\Routing\DispatcherFilter;
 use DebugKit\ToolbarService;
 
@@ -133,9 +133,9 @@ class DebugBarFilter extends DispatcherFilter
     public function afterDispatch(Event $event)
     {
         /* @var Request $request */
-        $request = $event->data['request'];
+        $request = $event->getData('request');
         /* @var Response $response */
-        $response = $event->data['response'];
+        $response = $event->getData('response');
         $row = $this->service->saveData($request, $response);
         if (!$row) {
             return;

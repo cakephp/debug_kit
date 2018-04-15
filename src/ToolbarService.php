@@ -72,7 +72,7 @@ class ToolbarService
      */
     public function __construct(EventManager $events, array $config)
     {
-        $this->config($config);
+        $this->setConfig($config);
         $this->registry = new PanelRegistry($events);
     }
 
@@ -94,15 +94,43 @@ class ToolbarService
     public function isEnabled()
     {
         $enabled = (bool)Configure::read('debug');
-        if ($enabled) {
+
+        if ($enabled && !$this->isSuspiciouslyProduction()) {
             return true;
         }
-        $force = $this->config('forceEnable');
+        $force = $this->getConfig('forceEnable');
         if (is_callable($force)) {
             return $force();
         }
 
         return $force;
+    }
+
+    /**
+     * Returns true if this applications is being executed on a domain with a TLD
+     * that is commonly associated with a production environment.
+     *
+     * @return bool
+     */
+    protected function isSuspiciouslyProduction()
+    {
+        $host = explode('.', parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST));
+        $first = current($host);
+        $isIP = is_numeric(implode('', $host));
+
+        if (count($host) === 1) {
+            return false;
+        }
+
+        if ($isIP && in_array($first, ['192', '10', '127'])) {
+            // Accessing the app by private IP, this is safe
+            return false;
+        }
+
+        $tld = end($host);
+        $safeTLD = ["localhost", "dev", "invalid", "test", "example", "local"];
+
+        return !in_array($tld, $safeTLD);
     }
 
     /**
@@ -133,7 +161,7 @@ class ToolbarService
      */
     public function loadPanels()
     {
-        foreach ($this->config('panels') as $panel => $enabled) {
+        foreach ($this->getConfig('panels') as $panel => $enabled) {
             list($panel, $enabled) = (is_numeric($panel)) ? [$enabled, true] : [$panel, $enabled];
             if ($enabled) {
                 $this->registry->load($panel);
@@ -175,7 +203,7 @@ class ToolbarService
             'content_type' => $response->getHeaderLine('Content-Type'),
             'method' => $request->getMethod(),
             'status_code' => $response->getStatusCode(),
-            'requested_at' => $request->env('REQUEST_TIME'),
+            'requested_at' => $request->getEnv('REQUEST_TIME'),
             'panels' => []
         ];
         /* @var \DebugKit\Model\Table\RequestsTable $requests */

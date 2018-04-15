@@ -17,9 +17,9 @@ use Cake\Core\Plugin;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest as Request;
 use Cake\Log\Log;
-use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
@@ -57,7 +57,18 @@ class ToolbarServiceTest extends TestCase
         $this->events = new EventManager();
 
         $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->driver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+    }
+
+    /**
+     * teardown
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        putenv('HTTP_HOST=');
     }
 
     /**
@@ -105,10 +116,10 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
 
-        $this->assertNull(Log::config('debug_kit_log_panel'));
+        $this->assertNull(Log::getConfig('debug_kit_log_panel'));
         $bar->initializePanels();
 
-        $this->assertNotEmpty(Log::config('debug_kit_log_panel'), 'Panel attached logger.');
+        $this->assertNotEmpty(Log::getConfig('debug_kit_log_panel'), 'Panel attached logger.');
     }
 
     /**
@@ -243,7 +254,7 @@ class ToolbarServiceTest extends TestCase
             '<script id="__debug_kit" data-id="' . $row->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
-        $this->assertTextEquals($expected, $response->body());
+        $this->assertTextEquals($expected, $response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
@@ -268,7 +279,7 @@ class ToolbarServiceTest extends TestCase
         $row = new RequestEntity(['id' => 'abc123']);
 
         $result = $bar->injectScripts($row, $response);
-        $this->assertInstanceOf('Cake\Network\Response', $result);
+        $this->assertInstanceOf('Cake\Http\Response', $result);
         $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
         $this->assertTrue($result->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
@@ -288,19 +299,17 @@ class ToolbarServiceTest extends TestCase
             'statusCode' => 200,
             'type' => 'text/html',
         ]);
-        $response->body(function () {
-            return 'I am a teapot!';
-        });
+        $response = $response->withStringBody('I am a teapot!');
 
         $bar = new ToolbarService($this->events, []);
         $row = new RequestEntity(['id' => 'abc123']);
 
         $result = $bar->injectScripts($row, $response);
-        $this->assertInstanceOf('Cake\Network\Response', $result);
+        $this->assertInstanceOf('Cake\Http\Response', $result);
         if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
-            $this->assertEquals('I am a teapot!', $response->body());
+            $this->assertEquals('I am a teapot!', $response->getBody());
         } else {
-            $this->assertInstanceOf('Closure', $response->body());
+            $this->assertInstanceOf('Closure', $response->getBody());
         }
     }
 
@@ -324,7 +333,7 @@ class ToolbarServiceTest extends TestCase
 
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
-        $this->assertTextEquals('{"some":"json"}', $response->body());
+        $this->assertTextEquals('{"some":"json"}', $response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
@@ -342,6 +351,44 @@ class ToolbarServiceTest extends TestCase
         Configure::write('debug', false);
         $bar = new ToolbarService($this->events, []);
         $this->assertFalse($bar->isEnabled(), 'debug is off, panel is disabled');
+    }
+
+    /**
+     * Test isEnabled returns false for some suspiciously production environments
+     *
+     * @param string $domain The domain name where the app is hosted
+     * @param bool $isEnabled The expectation for isEnabled()
+     * @dataProvider domainsProvider
+     * @return void
+     */
+    public function testIsEnabledProductionEnv($domain, $isEnabled)
+    {
+        Configure::write('debug', true);
+        putenv("HTTP_HOST=$domain");
+        $bar = new ToolbarService($this->events, []);
+        $this->assertEquals($isEnabled, $bar->isEnabled());
+    }
+
+    public function domainsProvider()
+    {
+        return [
+            ['localhost', true],
+            ['192.168.1.34', true],
+            ['127.0.0.1:8765', true],
+            ['10.14.34.5', true],
+            ['10.14.34.5:80', true],
+            ['myapp.localhost', true],
+            ['myapp.local', true],
+            ['myapp.dev', true],
+            ['myapp', true],
+            ['myapp.invalid', true],
+            ['myapp.test', true],
+            ['myapp.com', false],
+            ['myapp.io', false],
+            ['myapp.net', false],
+            ['172.112.34.2', false],
+            ['6.112.34.2', false],
+        ];
     }
 
     /**

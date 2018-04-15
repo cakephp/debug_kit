@@ -36,7 +36,7 @@ class CachePanelTest extends TestCase
     {
         parent::setUp();
         $this->panel = new CachePanel();
-        Cache::config('debug_kit_test', ['className' => 'Null']);
+        Cache::setConfig('debug_kit_test', ['className' => 'Null']);
     }
 
     /**

@@ -40,8 +40,8 @@ trait LazyTableTrait
     public function ensureTables(array $fixtures)
     {
         /* @var Connection $connection */
-        $connection = $this->connection();
-        $schema = $connection->schemaCollection();
+        $connection = $this->getConnection();
+        $schema = $connection->getSchemaCollection();
 
         try {
             $existing = $schema->listTables();

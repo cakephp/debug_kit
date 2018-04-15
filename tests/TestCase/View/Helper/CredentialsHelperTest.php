@@ -13,7 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-use Cake\Network\Request;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DebugKit\View\Helper\CredentialsHelper;
@@ -42,7 +42,7 @@ class CredentialsHelperTest extends TestCase
     {
         parent::setUp();
 
-        $request = new Request();
+        $request = new ServerRequest();
 
         $this->View = new View($request);
         $this->Helper = new CredentialsHelper($this->View);

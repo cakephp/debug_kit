@@ -27,8 +27,8 @@ class TestMailer extends Mailer
      */
     public function test_email()
     {
-        if (!Email::configTransport('default')) {
-            Email::configTransport(['default' => ['className' => 'Debug']]);
+        if (!Email::getConfigTransport('default')) {
+            Email::setConfigTransport(['default' => ['className' => 'Debug']]);
         }
 
         return $this;

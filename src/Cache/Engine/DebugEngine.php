@@ -249,6 +249,7 @@ class DebugEngine extends CacheEngine
      * This method uses func_get_args() as not doing so confuses the
      * proxied class.
      *
+     * @deprecated 3.6.0 use setConfig()/getConfig() instead.
      * @param string $key The key to set/read.
      * @param mixed $value The value to set.
      * @param bool $merge Whether or not configuration should be merged.
@@ -257,6 +258,32 @@ class DebugEngine extends CacheEngine
     public function config($key = null, $value = null, $merge = true)
     {
         return call_user_func_array([$this->_engine, 'config'], func_get_args());
+    }
+
+    /**
+     * Returns the config.
+     *
+     * @param string|null $key The key to get or null for the whole config.
+     * @param mixed $default The return value when the key does not exist.
+     * @return mixed Config value being read.
+     */
+    public function getConfig($key = null, $default = null)
+    {
+        return $this->_engine->getConfig($key, $default);
+    }
+
+    /**
+     * Sets the config.
+     *
+     * @param string|array $key The key to set, or a complete array of configs.
+     * @param mixed|null $value The value to set.
+     * @param bool $merge Whether to recursively merge or overwrite existing config, defaults to true.
+     * @return $this
+     * @throws \Cake\Core\Exception\Exception When trying to set a key that is invalid.
+     */
+    public function setConfig($key, $value = null, $merge = true)
+    {
+        return $this->_engine->setConfig($key, $value, $merge);
     }
 
     /**

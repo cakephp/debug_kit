@@ -13,7 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
@@ -46,7 +46,7 @@ class ToolbarHelperTest extends TestCase
         Router::connect('/:controller/:action');
 
         $request = new Request();
-        $request->addParams(['controller' => 'pages', 'action' => 'display']);
+        $request = $request->withParam('controller', 'pages')->withParam('action', 'display');
 
         $this->View = new View($request);
         $this->Toolbar = new ToolbarHelper($this->View);

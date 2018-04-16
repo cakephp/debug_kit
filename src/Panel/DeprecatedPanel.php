@@ -56,21 +56,21 @@ class DeprecatedPanel extends DebugPanel
      */
     public function __construct()
     {
-      foreach (Plugin::loaded() as $plugin) {
-          $this->_pluginPaths[$plugin] = str_replace('/', DIRECTORY_SEPARATOR, Plugin::path($plugin));
-      }
+        foreach (Plugin::loaded() as $plugin) {
+            $this->_pluginPaths[$plugin] = str_replace('/', DIRECTORY_SEPARATOR, Plugin::path($plugin));
+        }
 
-      $lockFile = new JsonFile(ROOT . DIRECTORY_SEPARATOR . 'composer.lock');
-      if ($lockFile->exists()) {
-          $lockContent = $lockFile->read();
+        $lockFile = new JsonFile(ROOT . DIRECTORY_SEPARATOR . 'composer.lock');
+        if ($lockFile->exists()) {
+            $lockContent = $lockFile->read();
 
-          $vendorDir = ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR;
-          $packages = array_merge($lockContent['packages'], $lockContent['packages-dev']);
+            $vendorDir = ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR;
+            $packages = array_merge($lockContent['packages'], $lockContent['packages-dev']);
 
-          foreach ($packages as $package) {
-              $this->_composerPaths[$package['name']] = $vendorDir . str_replace('/', DIRECTORY_SEPARATOR, $package['name']) . DIRECTORY_SEPARATOR;
-          }
-      }
+            foreach ($packages as $package) {
+                $this->_composerPaths[$package['name']] = $vendorDir . str_replace('/', DIRECTORY_SEPARATOR, $package['name']) . DIRECTORY_SEPARATOR;
+            }
+        }
     }
 
     /**
@@ -79,13 +79,14 @@ class DeprecatedPanel extends DebugPanel
      * @return array
      */
     protected function _prepare()
-    {   $errors = \DebugKit\ToolbarService::getDeprecatedErrors();
+    {
+        $errors = \DebugKit\ToolbarService::getDeprecatedErrors();
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach ($errors as $error) {
             $array = explode(' ', $error['description']);
-            $line = $array[count($array)-1];
-            $file = $array[count($array)-3];
+            $line = $array[count($array) - 1];
+            $file = $array[count($array) - 3];
             $description = 'line: '.$line. ", ";
             $description .= implode(" ", array_splice($array, 0, -3));
             $description = " " . $description;

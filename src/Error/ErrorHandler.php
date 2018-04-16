@@ -46,10 +46,10 @@ class ErrorHandler extends BaseErrorHandler
         if (!$debug) {
             return;
         }
-        if(strtolower($error['error']) !== 'deprecated'){
+        if (strtolower($error['error']) !== 'deprecated') {
             parent::_displayError($error, $debug);
         }
-        if(!Plugin::loaded('DebugKit')){
+        if (!Plugin::loaded('DebugKit')) {
             parent::_displayError($error, $debug);
         }
         ToolbarService::addDeprecatedError($error);

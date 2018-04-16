@@ -17,8 +17,8 @@ configuration data and environment variables hidden. :warning:
 
 The `master` branch has the following requirements:
 
-* CakePHP 3.1.0 or greater.
-* PHP 5.4.16 or greater.
+* CakePHP 3.6.0 or greater.
+* PHP 5.6.0 or greater.
 * SQLite or another database driver that CakePHP can talk to. By default DebugKit will use SQLite, if you
   need to use a different database see the Database Configuration section below.
 

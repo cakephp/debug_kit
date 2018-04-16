@@ -41,6 +41,13 @@ class ToolbarService
     protected $registry;
 
     /**
+     * The panel registry.
+     *
+     * @var \DebugKit\Panel\PanelRegistry
+     */
+    protected static $deprecatedErrors = [];
+
+    /**
      * Default configuration.
      *
      * @var array
@@ -60,6 +67,7 @@ class ToolbarService
             'DebugKit.Routes' => true,
             'DebugKit.Packages' => true,
             'DebugKit.Mail' => true,
+            'DebugKit.Deprecated' => true,
         ],
         'forceEnable' => false,
     ];
@@ -234,6 +242,27 @@ class ToolbarService
         return $requests->save($row);
     }
 
+    /**
+     * Add a error
+     *
+     * @param array $error The deprecated error
+     * @return void
+     */
+    public static function addDeprecatedError($error)
+    {
+        static::$deprecatedErrors[] = $error;
+    }
+
+    /**
+     * Get the list of Errors
+     *
+     * @param array $error The deprecated error
+     * @return void
+     */
+    public static function getDeprecatedErrors()
+    {
+        return static::$deprecatedErrors;
+    }
     /**
      * Reads the modified date of a file in the webroot, and returns the integer
      *

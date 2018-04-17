@@ -152,7 +152,7 @@ class ToolbarService
     }
 
     /**
-     * Get the list of loaded panels
+     * Get the a loaded panel
      *
      * @param string $name The name of the panel you want to get.
      * @return \DebugKit\DebugPanel|null The panel or null.
@@ -256,7 +256,6 @@ class ToolbarService
     /**
      * Get the list of Errors
      *
-     * @param array $error The deprecated error
      * @return array
      */
     public static function getDeprecatedErrors()

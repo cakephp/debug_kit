@@ -13,13 +13,21 @@
  */
 
 App::uses('ConnectionManager', 'Model');
+App::uses('Model', 'Model');
 
 /**
  * Class ToolbarAccess
  *
  * Contains logic for accessing DebugKit specific information.
  */
-class ToolbarAccess extends Object {
+class ToolbarAccess extends Model {
+
+/**
+ * No database table.
+ *
+ * @var mixed
+ */
+	public $useTable = false;
 
 /**
  * Runs an explain on a query if the connection supports EXPLAIN.

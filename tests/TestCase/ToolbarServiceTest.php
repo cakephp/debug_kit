@@ -220,10 +220,10 @@ class ToolbarServiceTest extends TestCase
         $this->assertEquals(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertEquals('SqlLog', $result->panels[10]->panel);
-        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[10]->element);
-        $this->assertSame('0', $result->panels[10]->summary);
-        $this->assertEquals('Sql Log', $result->panels[10]->title);
+        $this->assertEquals('SqlLog', $result->panels[11]->panel);
+        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[11]->element);
+        $this->assertSame('0', $result->panels[11]->summary);
+        $this->assertEquals('Sql Log', $result->panels[11]->title);
     }
 
     /**

@@ -46,7 +46,6 @@ class ErrorHandler extends BaseErrorHandler
             return;
         }
         if (strtolower($error['error']) !== 'deprecated'
-        || !Plugin::loaded('DebugKit')
         || !Configure::read('debug')) {
             parent::_displayError($error, $debug);
         }

@@ -84,27 +84,30 @@ class DeprecatedPanel extends DebugPanel
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach ($errors as $error) {
-            $array = explode(' ', $error['description']);
-            $line = $array[count($array) - 1];
-            $file = $array[count($array) - 3];
-            $description = 'line: '.$line. ", ";
-            $description .= implode(" ", array_splice($array, 0, -3));
-            $description = " " . $description;
-            $pluginName = $this->_getPluginName($file);
+            $description =  $error['description'];
+            $line = $error['context']['frame']['line'];
+            $file = $error['context']['frame']['file'];
 
+            $pluginName = $this->_getPluginName($file);
+            $description = sprintf(
+                "(line: %s) \n  %s",
+                $line,
+                $description
+            );
+            $description = " " . $description;
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, 'plugin', $pluginName) . $description;
+                $return['plugins'][$pluginName][$this->_getFileType($file)][$this->_niceFileName($file, 'plugin', $pluginName)][] = $description;
             } elseif ($this->_isAppFile($file)) {
-                $return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app') . $description;
+                $return['app'][$this->_getFileType($file)][$this->_niceFileName($file, 'app')][] = $description;
             } elseif ($this->_isCakeFile($file)) {
-                $return['cake'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'cake') . $description;
+                $return['cake'][$this->_getFileType($file)][$this->_niceFileName($file, 'cake')][] = $description;
             } else {
                 $vendorName = $this->_getComposerPackageName($file);
 
                 if ($vendorName) {
-                    $return['vendor'][$vendorName][] = $this->_niceFileName($file, 'vendor', $vendorName) . $description;
+                    $return['vendor'][$vendorName][$this->_niceFileName($file, 'vendor', $vendorName)][] = $description;
                 } else {
-                    $return['other'][] = $this->_niceFileName($file, 'root') . $description;
+                    $return['other'][$this->_niceFileName($file, 'root')][] = $description;
                 }
             }
         }

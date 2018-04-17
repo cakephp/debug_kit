@@ -16,10 +16,9 @@
  */
 namespace DebugKit\Error;
 
-use Cake\Core\App;
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Error\ErrorHandler as BaseErrorHandler;
-use Cake\Http\ResponseEmitter;
 use DebugKit\ToolbarService;
 use Exception;
 use Throwable;

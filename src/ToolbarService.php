@@ -41,9 +41,9 @@ class ToolbarService
     protected $registry;
 
     /**
-     * The panel registry.
+     * The list of depreated errors.
      *
-     * @var \DebugKit\Panel\PanelRegistry
+     * @var array
      */
     protected static $deprecatedErrors = [];
 
@@ -257,7 +257,7 @@ class ToolbarService
      * Get the list of Errors
      *
      * @param array $error The deprecated error
-     * @return void
+     * @return array
      */
     public static function getDeprecatedErrors()
     {

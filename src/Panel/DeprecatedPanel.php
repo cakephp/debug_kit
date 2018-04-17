@@ -84,7 +84,7 @@ class DeprecatedPanel extends DebugPanel
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach ($errors as $error) {
-            $description =  $error['description'];
+            $description = $error['description'];
             $line = $error['context']['frame']['line'];
             $file = $error['context']['frame']['file'];
 

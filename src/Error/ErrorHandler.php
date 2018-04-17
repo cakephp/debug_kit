@@ -45,7 +45,7 @@ class ErrorHandler extends BaseErrorHandler
         if (!$debug) {
             return;
         }
-        if (strtolower($error['error']) !== 'deprecated'
+        if (!($error['code'] & E_USER_DEPRECATED)
         || !Configure::read('debug')) {
             parent::_displayError($error, $debug);
         }

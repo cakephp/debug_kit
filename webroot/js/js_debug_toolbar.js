@@ -835,11 +835,9 @@ DEBUGKIT.historyPanel = function () {
 
 	// Private method to handle restoration to current request.
 	var restoreCurrentState = function () {
-		var id, i, panelContent, tag;
-
 		historyLinks.removeClass('loading');
 
-		$.each(toolbar.panels, function (panel, id) {
+		$.each(toolbar.panels, function (i, panel) {
 			if (panel.content === undefined) {
 				return;
 			}

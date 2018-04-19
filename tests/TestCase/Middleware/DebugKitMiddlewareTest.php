@@ -221,7 +221,7 @@ class DebugKitMiddlewareTest extends TestCase
     }
 
     /**
-     * Test that requestAction requests are not tracked or modified.
+     * Test that configuration is correctly passed to the service
      *
      * @return void
      */

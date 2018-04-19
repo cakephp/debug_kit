@@ -39,6 +39,7 @@ class DebugKitMiddlewareTest extends TestCase
         'plugin.debug_kit.requests',
         'plugin.debug_kit.panels'
     ];
+
     /**
      * setup
      *
@@ -50,6 +51,19 @@ class DebugKitMiddlewareTest extends TestCase
 
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->oldConfig = Configure::read('DebugKit');
+    }
+
+    /**
+     * tearDown
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Configure::write('DebugKit', $this->oldConfig);
     }
 
     /**
@@ -204,5 +218,21 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertEquals(0, $total, 'Should not track sub-requests');
         $body = $result->getBody();
         $this->assertNotContains('<script', '' . $body);
+    }
+
+    /**
+     * Test that requestAction requests are not tracked or modified.
+     *
+     * @return void
+     */
+    public function testConfigIsPassed()
+    {
+        $config = ['foo' => 'bar'];
+        Configure::write('DebugKit', $config);
+        $layer = new DebugKitMiddleware();
+        $prop = new \ReflectionProperty(DebugKitMiddleware::class, 'service');
+        $prop->setAccessible(true);
+        $service = $prop->getValue($layer);
+        $this->assertEquals('bar', $service->getConfig('foo'));
     }
 }

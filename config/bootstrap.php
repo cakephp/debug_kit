@@ -29,13 +29,14 @@ if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === '
 }
 
 $previousHandler = set_error_handler(
-    function ($code, $message, $file, $line,$context = null) use (&$previousHandler) {
+    function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
         if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
-            ToolbarService::addDeprecatedError(compact('code', 'message', 'file', 'line','context'));
+            ToolbarService::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
+
             return;
         }
         if ($previousHandler) {
-            return $previousHandler($code, $message, $file, $line,$context);
+            return $previousHandler($code, $message, $file, $line, $context);
         }
     }
 );

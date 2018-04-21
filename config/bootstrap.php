@@ -28,24 +28,27 @@ if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === '
     return;
 }
 
-$previousHandler = set_error_handler(
-    function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
-        if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
-            ToolbarService::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
+if ($service->getConfig('panels')['DebugKit.Deprecated']) {
+    $previousHandler = set_error_handler(
+        function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
+            if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
+                ToolbarService::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
 
-            return;
+                return;
+            }
+            if ($previousHandler) {
+                return $previousHandler($code, $message, $file, $line, $context);
+            }
         }
-        if ($previousHandler) {
-            return $previousHandler($code, $message, $file, $line, $context);
-        }
-    }
-);
+    );
+}
 
 $hasDebugKitConfig = ConnectionManager::getConfig('debug_kit');
 if (!$hasDebugKitConfig && !in_array('sqlite', PDO::getAvailableDrivers())) {
     $msg = 'DebugKit not enabled. You need to either install pdo_sqlite, ' .
         'or define the "debug_kit" connection name.';
     Log::warning($msg);
+
     return;
 }
 

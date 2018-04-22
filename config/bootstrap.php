@@ -19,6 +19,7 @@ use Cake\ORM\Query;
 use Cake\Routing\DispatcherFactory;
 use DebugKit\DebugSql;
 use DebugKit\Middleware\DebugKitMiddleware;
+use DebugKit\Panel\DeprecatedPanel;
 use DebugKit\Routing\Filter\DebugBarFilter;
 use DebugKit\ToolbarService;
 
@@ -32,7 +33,7 @@ if ($service->getConfig('panels')['DebugKit.Deprecated']) {
     $previousHandler = set_error_handler(
         function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
             if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
-                ToolbarService::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
+                DeprecatedPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
 
                 return;
             }

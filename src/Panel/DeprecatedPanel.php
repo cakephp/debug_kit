@@ -27,6 +27,13 @@ class DeprecatedPanel extends DebugPanel
 {
 
     /**
+     * The list of depreated errors.
+     *
+     * @var array
+     */
+    protected static $deprecatedErrors = [];
+
+    /**
      * instance of DebugInclude
      *
      * @var \DebugKit\DebugInclude
@@ -48,7 +55,7 @@ class DeprecatedPanel extends DebugPanel
      */
     protected function _prepare()
     {
-        $errors = \DebugKit\ToolbarService::getDeprecatedErrors();
+        $errors = static::$deprecatedErrors;
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach ($errors as $error) {
@@ -90,6 +97,17 @@ class DeprecatedPanel extends DebugPanel
         }
 
         return $return;
+    }
+
+    /**
+     * Add a error
+     *
+     * @param array $error The deprecated error
+     * @return void
+     */
+    public static function addDeprecatedError($error)
+    {
+        static::$deprecatedErrors[] = $error;
     }
 
     /**

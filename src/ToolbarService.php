@@ -41,13 +41,6 @@ class ToolbarService
     protected $registry;
 
     /**
-     * The list of depreated errors.
-     *
-     * @var array
-     */
-    protected static $deprecatedErrors = [];
-
-    /**
      * Default configuration.
      *
      * @var array
@@ -242,26 +235,6 @@ class ToolbarService
         return $requests->save($row);
     }
 
-    /**
-     * Add a error
-     *
-     * @param array $error The deprecated error
-     * @return void
-     */
-    public static function addDeprecatedError($error)
-    {
-        static::$deprecatedErrors[] = $error;
-    }
-
-    /**
-     * Get the list of Errors
-     *
-     * @return array
-     */
-    public static function getDeprecatedErrors()
-    {
-        return static::$deprecatedErrors;
-    }
     /**
      * Reads the modified date of a file in the webroot, and returns the integer
      *

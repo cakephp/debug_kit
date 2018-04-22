@@ -19,10 +19,10 @@ use Composer\Json\JsonFile;
 use DebugKit\DebugPanel;
 
 /**
- * Provides a list of files for the current request
+ * Contains methods for Providing list of files.
  *
  */
-class IncludePanel extends DebugPanel
+class DebugInclude
 {
 
     /**
@@ -78,7 +78,7 @@ class IncludePanel extends DebugPanel
      *
      * @return array
      */
-    protected function _includePaths()
+    public function includePaths()
     {
         $paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
 
@@ -93,7 +93,7 @@ class IncludePanel extends DebugPanel
      * @param string $file File to check
      * @return bool
      */
-    protected function _isCakeFile($file)
+    public function isCakeFile($file)
     {
         return strpos($file, CAKE) === 0;
     }
@@ -104,7 +104,7 @@ class IncludePanel extends DebugPanel
      * @param string $file File to check
      * @return bool
      */
-    protected function _isAppFile($file)
+    public function isAppFile($file)
     {
         return strpos($file, APP) === 0;
     }
@@ -115,7 +115,7 @@ class IncludePanel extends DebugPanel
      * @param string $file File to check
      * @return string|bool plugin name, or false if not plugin
      */
-    protected function _getPluginName($file)
+    public function getPluginName($file)
     {
         foreach ($this->_pluginPaths as $plugin => $path) {
             if (strpos($file, $path) === 0) {
@@ -132,7 +132,7 @@ class IncludePanel extends DebugPanel
      * @param string $file File to check
      * @return string|bool package name, or false if not Composer package
      */
-    protected function _getComposerPackageName($file)
+    public function getComposerPackageName($file)
     {
         foreach ($this->_composerPaths as $package => $path) {
             if (strpos($file, $path) === 0) {
@@ -151,7 +151,7 @@ class IncludePanel extends DebugPanel
      * @param string|null $name plugin name or composer package
      * @return string Path with replaced prefix
      */
-    protected function _niceFileName($file, $type, $name = null)
+    public function niceFileName($file, $type, $name = null)
     {
         switch ($type) {
             case 'app':
@@ -177,7 +177,7 @@ class IncludePanel extends DebugPanel
      * @param string $file File to check.
      * @return string
      */
-    protected function _getFileType($file)
+    public function getFileType($file)
     {
         foreach ($this->_fileTypes as $type) {
             if (stripos($file, DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR) !== false) {
@@ -186,16 +186,5 @@ class IncludePanel extends DebugPanel
         }
 
         return 'other';
-    }
-
-    /**
-     * Shutdown callback
-     *
-     * @param \Cake\Event\Event $event Event
-     * @return void
-     */
-    public function shutdown(Event $event)
-    {
-        $this->_data = $this->_prepare();
     }
 }

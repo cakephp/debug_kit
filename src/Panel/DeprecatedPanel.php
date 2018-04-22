@@ -16,14 +16,31 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Composer\Json\JsonFile;
-use DebugKit\IncludePanel as basePanel;
+use DebugKit\DebugInclude;
+use DebugKit\DebugPanel;
 
 /**
  * Provides a list of deprecated methods for the current request
  *
  */
-class DeprecatedPanel extends basePanel
+class DeprecatedPanel extends DebugPanel
 {
+
+    /**
+     * instance of DebugInclude
+     *
+     * @var \DebugKit\DebugInclude
+     */
+    protected $_debug;
+
+    /**
+     * construct
+     */
+    public function __construct()
+    {
+        $this->_debug = new DebugInclude();
+    }
+
     /**
      * Get a list of files that were deprecated and split them out into the various parts of the app
      *
@@ -39,7 +56,7 @@ class DeprecatedPanel extends basePanel
             $line = $error['context']['frame']['line'];
             $file = $error['context']['frame']['file'];
 
-            $pluginName = $this->_getPluginName($file);
+            $pluginName = $this->_debug->getPluginName($file);
             $description = sprintf(
                 "(line: %s) \n  %s",
                 $line,
@@ -47,18 +64,18 @@ class DeprecatedPanel extends basePanel
             );
             $description = " " . $description;
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_getFileType($file)][$this->_niceFileName($file, 'plugin', $pluginName)][] = $description;
-            } elseif ($this->_isAppFile($file)) {
-                $return['app'][$this->_getFileType($file)][$this->_niceFileName($file, 'app')][] = $description;
-            } elseif ($this->_isCakeFile($file)) {
-                $return['cake'][$this->_getFileType($file)][$this->_niceFileName($file, 'cake')][] = $description;
+                $return['plugins'][$pluginName][$this->_debug->getFileType($file)][$this->_debug->niceFileName($file, 'plugin', $pluginName)][] = $description;
+            } elseif ($this->_debug->isAppFile($file)) {
+                $return['app'][$this->_debug->getFileType($file)][$this->_debug->niceFileName($file, 'app')][] = $description;
+            } elseif ($this->_debug->isCakeFile($file)) {
+                $return['cake'][$this->_debug->getFileType($file)][$this->_debug->niceFileName($file, 'cake')][] = $description;
             } else {
-                $vendorName = $this->_getComposerPackageName($file);
+                $vendorName = $this->_debug->getComposerPackageName($file);
 
                 if ($vendorName) {
-                    $return['vendor'][$vendorName][$this->_niceFileName($file, 'vendor', $vendorName)][] = $description;
+                    $return['vendor'][$vendorName][$this->_debug->niceFileName($file, 'vendor', $vendorName)][] = $description;
                 } else {
-                    $return['other'][$this->_niceFileName($file, 'root')][] = $description;
+                    $return['other'][$this->_debug->niceFileName($file, 'root')][] = $description;
                 }
             }
         }
@@ -91,5 +108,16 @@ class DeprecatedPanel extends basePanel
         }, ARRAY_FILTER_USE_BOTH);
 
         return count(Hash::flatten($data));
+    }
+
+    /**
+     * Shutdown callback
+     *
+     * @param \Cake\Event\Event $event Event
+     * @return void
+     */
+    public function shutdown(Event $event)
+    {
+        $this->_data = $this->_prepare();
     }
 }

@@ -16,14 +16,31 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Composer\Json\JsonFile;
-use DebugKit\IncludePanel as basePanel;
+use DebugKit\DebugInclude;
+use DebugKit\DebugPanel;
 
 /**
  * Provides a list of included files for the current request
  *
  */
-class IncludePanel extends basePanel
+class IncludePanel extends DebugPanel
 {
+
+    /**
+     * instance of DebugInclude
+     *
+     * @var \DebugKit\DebugInclude
+     */
+    protected $_debug;
+
+    /**
+     * construct
+     */
+    public function __construct()
+    {
+        $this->_debug = new DebugInclude();
+    }
+
     /**
      * Get a list of files that were included and split them out into the various parts of the app
      *
@@ -34,26 +51,26 @@ class IncludePanel extends basePanel
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach (get_included_files() as $file) {
-            $pluginName = $this->_getPluginName($file);
+            $pluginName = $this->_debug->getPluginName($file);
 
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, 'plugin', $pluginName);
-            } elseif ($this->_isAppFile($file)) {
-                $return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
-            } elseif ($this->_isCakeFile($file)) {
-                $return['cake'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'cake');
+                $return['plugins'][$pluginName][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'plugin', $pluginName);
+            } elseif ($this->_debug->isAppFile($file)) {
+                $return['app'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'app');
+            } elseif ($this->_debug->isCakeFile($file)) {
+                $return['cake'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'cake');
             } else {
-                $vendorName = $this->_getComposerPackageName($file);
+                $vendorName = $this->_debug->getComposerPackageName($file);
 
                 if ($vendorName) {
-                    $return['vendor'][$vendorName][] = $this->_niceFileName($file, 'vendor', $vendorName);
+                    $return['vendor'][$vendorName][] = $this->_debug->niceFileName($file, 'vendor', $vendorName);
                 } else {
-                    $return['other'][] = $this->_niceFileName($file, 'root');
+                    $return['other'][] = $this->_debug->niceFileName($file, 'root');
                 }
             }
         }
 
-        $return['paths'] = $this->_includePaths();
+        $return['paths'] = $this->_debug->includePaths();
 
         ksort($return['app']);
         ksort($return['cake']);
@@ -80,7 +97,21 @@ class IncludePanel extends basePanel
         }
 
         unset($data['paths']);
+        $data = array_filter($data, function ($v, $k) {
+            return !empty($v);
+        }, ARRAY_FILTER_USE_BOTH);
 
         return count(Hash::flatten($data));
+    }
+
+    /**
+     * Shutdown callback
+     *
+     * @param \Cake\Event\Event $event Event
+     * @return void
+     */
+    public function shutdown(Event $event)
+    {
+        $this->_data = $this->_prepare();
     }
 }

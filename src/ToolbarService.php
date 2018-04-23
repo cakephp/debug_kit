@@ -18,6 +18,7 @@ use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
@@ -130,7 +131,19 @@ class ToolbarService
         $tld = end($host);
         $safeTLD = ["localhost", "dev", "invalid", "test", "example", "local"];
 
-        return !in_array($tld, $safeTLD);
+        if (!in_array($tld, $safeTLD)) {
+            $host = implode('.', $host);
+            $safeList = implode(',', $safeTLD);
+            Log::warning(
+                "DebugKit is disabling itself as your host `{$host}` " .
+                "is not in the known safe list of top-level-domains ({$safeList}). " .
+                "If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option."
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

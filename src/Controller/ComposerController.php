@@ -35,7 +35,7 @@ class ComposerController extends Controller
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        $this->viewBuilder()->className(JsonView::class);
+        $this->viewBuilder()->setClassName(JsonView::class);
     }
 
     /**

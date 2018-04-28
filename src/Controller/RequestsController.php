@@ -51,8 +51,8 @@ class RequestsController extends Controller
     public function beforeRender(Event $event)
     {
         $this->viewBuilder()
-            ->layout('DebugKit.toolbar')
-            ->className('DebugKit.Ajax');
+            ->setLayout('DebugKit.toolbar')
+            ->setClassName('DebugKit.Ajax');
     }
 
     /**

@@ -60,7 +60,7 @@ class ToolbarService
             'DebugKit.Routes' => true,
             'DebugKit.Packages' => true,
             'DebugKit.Mail' => true,
-            'DebugKit.Deprecated' => true,
+            'DebugKit.Deprecations' => true,
         ],
         'forceEnable' => false,
     ];

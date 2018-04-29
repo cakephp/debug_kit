@@ -11,7 +11,6 @@
  * @since         DebugKit 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-use Cake\Utility\Hash;
 
 /**
  * @var \DebugKit\View\AjaxView $this
@@ -30,14 +29,15 @@ if (!isset($cake) && isset($core)) {
 $printer = function ($section, $data) {
 ?>
     <h3><?= h(ucfirst($section)) ?> </h3>
-    <?php foreach ($data as $group => $groupData): ?>
-        <?php foreach ($groupData as $file => $messages): ?>
-            <h4><?= h($group) ?> : <?= h($file) ?></h4>
-            <ul class="list deprecation-list">
-                <li><?= implode('</li><li>', h($messages)) ?></li>
-            </ul>
-        <?php endforeach; ?>
+    <ul class="list deprecation-list">
+    <?php foreach ($data as $message): ?>
+        <li>
+            <strong><?= h($message['niceFile']) ?>:<?= h($message['line']) ?></strong>
+            <br>
+            <?= h($message['message']) ?>
+        </li>
     <?php endforeach; ?>
+    </ul>
 <?php
 };
 ?>

@@ -59,30 +59,34 @@ class DeprecatedPanel extends DebugPanel
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach ($errors as $error) {
-            $description = $error['message'];
-            $line = $error['context']['frame']['line'];
             $file = $error['context']['frame']['file'];
+            $line = $error['context']['frame']['line'];
+
+            $errorData = [
+                'file' => $file,
+                'line' => $line,
+                'message' => $error['message'],
+            ];
 
             $pluginName = $this->_debug->getPluginName($file);
-            $description = sprintf(
-                "(line: %s) \n  %s",
-                $line,
-                $description
-            );
-            $description = " " . $description;
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_debug->getFileType($file)][$this->_debug->niceFileName($file, 'plugin', $pluginName)][] = $description;
+                $errorData['niceFile'] = $this->_debug->niceFileName($file, 'plugin', $pluginName);
+                $return['plugins'][$pluginName][] = $errorData;
             } elseif ($this->_debug->isAppFile($file)) {
-                $return['app'][$this->_debug->getFileType($file)][$this->_debug->niceFileName($file, 'app')][] = $description;
+                $errorData['niceFile'] = $this->_debug->niceFileName($file, 'app');
+                $return['app'][] = $errorData;
             } elseif ($this->_debug->isCakeFile($file)) {
-                $return['cake'][$this->_debug->getFileType($file)][$this->_debug->niceFileName($file, 'cake')][] = $description;
+                $errorData['niceFile'] = $this->_debug->niceFileName($file, 'cake');
+                $return['cake'][] = $errorData;
             } else {
                 $vendorName = $this->_debug->getComposerPackageName($file);
 
                 if ($vendorName) {
-                    $return['vendor'][$vendorName][$this->_debug->niceFileName($file, 'vendor', $vendorName)][] = $description;
+                    $errorData['niceFile'] = $this->_debug->niceFileName($file, 'vendor', $vendorName);
+                    $return['vendor'][$vendorName][] = $errorData;
                 } else {
-                    $return['other'][$this->_debug->niceFileName($file, 'root')][] = $description;
+                    $errorData['niceFile'] = $this->_debug->niceFileName($file, 'root');
+                    $return['other'][] = $errorData;
                 }
             }
         }
@@ -121,11 +125,23 @@ class DeprecatedPanel extends DebugPanel
         if (empty($data)) {
             $data = $this->_prepare();
         }
-        $data = array_filter($data, function ($v, $k) {
-            return !empty($v);
-        }, ARRAY_FILTER_USE_BOTH);
 
-        return count(Hash::flatten($data));
+        return array_reduce($data, function ($carry, $item) {
+            if (empty($item)) {
+                return $carry;
+            }
+            // app, cake, or other groups
+            if (Hash::dimensions($item) == 2) {
+                return $carry + count($item);
+            }
+
+            // plugin and vendor groups
+            foreach ($item as $group) {
+                $carry += count($group);
+            }
+
+            return $carry;
+        }, 0);
     }
 
     /**

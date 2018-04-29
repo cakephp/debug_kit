@@ -56,7 +56,7 @@ class MailPreviewController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()->layout('DebugKit.mailer');
+        $this->viewBuilder()->setLayout('DebugKit.mailer');
     }
 
     /**
@@ -102,7 +102,7 @@ class MailPreviewController extends Controller
         $this->set('email', $email);
         $this->set('plugin', '');
         $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
-        $this->viewBuilder()->template('email');
+        $this->viewBuilder()->setTemplate('email');
     }
 
     /**
@@ -118,7 +118,7 @@ class MailPreviewController extends Controller
         $email = $this->findPreview($name, $method, $plugin);
         $partType = $this->request->getQuery('part');
 
-        $this->viewBuilder()->layout(false);
+        $this->viewBuilder()->setLayout(false);
 
         if ($partType) {
             return $this->respondWithPart($email, $partType);

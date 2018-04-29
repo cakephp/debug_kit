@@ -20,6 +20,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
@@ -114,6 +115,11 @@ class MailPreviewController extends Controller
      */
     public function email($name, $method)
     {
+        // Clear the plugin attribute from the request instance
+        // Router is holding onto so that we can render mail previews
+        // in a plugin less request context.
+        Router::pushRequest($this->request->withParam('plugin', null));
+
         $plugin = $this->request->getQuery('plugin');
         $email = $this->findPreview($name, $method, $plugin);
         $partType = $this->request->getQuery('part');

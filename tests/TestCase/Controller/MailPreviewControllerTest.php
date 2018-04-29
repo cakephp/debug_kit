@@ -44,6 +44,10 @@ class MailPreviewControllerTest extends IntegrationTestCase
     {
         parent::setUp();
         Plugin::load('DebugkitTestPlugin', ['path' => APP . 'Plugin' . DS . 'DebugkitTestPlugin' . DS]);
+        Router::scope('/', function ($routes) {
+            $routes->connect('/users/:action/*', ['controller' => 'Users']);
+        });
+
         Router::plugin('DebugKit', function (RouteBuilder $routes) {
             $routes->scope(
                 '/mail_preview',
@@ -80,6 +84,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('Testing email action.');
+        $this->assertResponseContains('/users/verify/token', 'Should contain URL from app context');
     }
 
     /**

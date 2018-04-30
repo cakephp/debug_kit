@@ -58,7 +58,9 @@ if (count($cake)):
 endif;
 
 if (count($vendor)):
-    $printer('vendor', $vendor);
+    foreach ($vendors as $vendor => $vendorData):
+        $printer($vendor, $vendorData);
+    endforeach;
 endif;
 
 if (count($other)):

@@ -21,10 +21,6 @@
  * @var array $vendor
  * @var array $other
  */
-// Backwards compat for old DebugKit data.
-if (!isset($cake) && isset($core)) {
-    $cake = $core;
-}
 
 $printer = function ($section, $data) {
 ?>
@@ -58,8 +54,8 @@ if (count($cake)):
 endif;
 
 if (count($vendor)):
-    foreach ($vendors as $vendor => $vendorData):
-        $printer($vendor, $vendorData);
+    foreach ($vendor as $vendorSection => $vendorData):
+        $printer($vendorSection, $vendorData);
     endforeach;
 endif;
 

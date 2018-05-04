@@ -35,7 +35,7 @@ class ComposerController extends Controller
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        $this->viewBuilder()->className(JsonView::class);
+        $this->viewBuilder()->setClassName(JsonView::class);
     }
 
     /**
@@ -60,12 +60,12 @@ class ComposerController extends Controller
      */
     public function checkDependencies()
     {
-        $this->request->allowMethod('post');
+        $this->getRequest()->allowMethod('post');
 
         $input = new ArrayInput([
             'command' => 'outdated',
             '--no-interaction' => true,
-            '--direct' => (bool)$this->request->data('direct'),
+            '--direct' => (bool)$this->getRequest()->data('direct'),
         ]);
 
         $output = $this->executeComposerCommand($input);

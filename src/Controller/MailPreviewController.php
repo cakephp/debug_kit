@@ -56,7 +56,7 @@ class MailPreviewController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()->layout('DebugKit.mailer');
+        $this->viewBuilder()->setLayout('DebugKit.mailer');
     }
 
     /**
@@ -93,7 +93,7 @@ class MailPreviewController extends Controller
         $email = $content['emails'][$number];
         $email = new SentMailResult(array_filter($email['headers']), $email['message']);
 
-        $partType = $this->request->getQuery('part');
+        $partType = $this->getRequest()->getQuery('part');
         if ($partType) {
             return $this->respondWithPart($email, $partType);
         }
@@ -101,7 +101,7 @@ class MailPreviewController extends Controller
         $this->set('noHeader', true);
         $this->set('email', $email);
         $this->set('plugin', '');
-        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->getRequest()->getQuery('part')));
         $this->viewBuilder()->template('email');
     }
 
@@ -114,11 +114,11 @@ class MailPreviewController extends Controller
      */
     public function email($name, $method)
     {
-        $plugin = $this->request->getQuery('plugin');
+        $plugin = $this->getRequest()->getQuery('plugin');
         $email = $this->findPreview($name, $method, $plugin);
-        $partType = $this->request->getQuery('part');
+        $partType = $this->getRequest()->getQuery('part');
 
-        $this->viewBuilder()->layout(false);
+        $this->viewBuilder()->setLayout(false);
 
         if ($partType) {
             return $this->respondWithPart($email, $partType);
@@ -128,7 +128,7 @@ class MailPreviewController extends Controller
         $this->set('title', $humanName);
         $this->set('email', $email);
         $this->set('plugin', $plugin);
-        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->getRequest()->getQuery('part')));
     }
 
     /**

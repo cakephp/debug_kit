@@ -55,10 +55,10 @@ class PanelsController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()->layout('DebugKit.toolbar');
+        $this->viewBuilder()->setLayout('DebugKit.toolbar');
 
-        if (!$this->request->is('json')) {
-            $this->viewBuilder()->className('DebugKit.Ajax');
+        if (!$this->getRequest()->is('json')) {
+            $this->viewBuilder()->setClassName('DebugKit.Ajax');
         }
     }
 

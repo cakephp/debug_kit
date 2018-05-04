@@ -93,7 +93,7 @@ class MailPreviewController extends Controller
         $email = $content['emails'][$number];
         $email = new SentMailResult(array_filter($email['headers']), $email['message']);
 
-        $partType = $this->getRequest()->getQuery('part');
+        $partType = $this->request->getQuery('part');
         if ($partType) {
             return $this->respondWithPart($email, $partType);
         }
@@ -101,7 +101,7 @@ class MailPreviewController extends Controller
         $this->set('noHeader', true);
         $this->set('email', $email);
         $this->set('plugin', '');
-        $this->set('part', $this->findPreferredPart($email, $this->getRequest()->getQuery('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
         $this->viewBuilder()->setTemplate('email');
     }
 
@@ -114,9 +114,9 @@ class MailPreviewController extends Controller
      */
     public function email($name, $method)
     {
-        $plugin = $this->getRequest()->getQuery('plugin');
+        $plugin = $this->request->getQuery('plugin');
         $email = $this->findPreview($name, $method, $plugin);
-        $partType = $this->getRequest()->getQuery('part');
+        $partType = $this->request->getQuery('part');
 
         $this->viewBuilder()->setLayout(false);
 
@@ -128,7 +128,7 @@ class MailPreviewController extends Controller
         $this->set('title', $humanName);
         $this->set('email', $email);
         $this->set('plugin', $plugin);
-        $this->set('part', $this->findPreferredPart($email, $this->getRequest()->getQuery('part')));
+        $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
     }
 
     /**

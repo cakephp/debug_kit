@@ -61,11 +61,11 @@ class ToolbarController extends Controller
      */
     public function clearCache()
     {
-        $this->getRequest()->allowMethod('post');
-        if (!$this->getRequest()->getData('name')) {
+        $this->request->allowMethod('post');
+        if (!$this->request->getData('name')) {
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
-        $result = Cache::clear(false, $this->getRequest()->getData('name'));
+        $result = Cache::clear(false, $this->request->getData('name'));
         $this->set([
             '_serialize' => ['success'],
             'success' => $result,

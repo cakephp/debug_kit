@@ -57,7 +57,7 @@ class PanelsController extends Controller
     {
         $this->viewBuilder()->setLayout('DebugKit.toolbar');
 
-        if (!$this->getRequest()->is('json')) {
+        if (!$this->request->is('json')) {
             $this->viewBuilder()->setClassName('DebugKit.Ajax');
         }
     }

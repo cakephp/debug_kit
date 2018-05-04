@@ -60,12 +60,12 @@ class ComposerController extends Controller
      */
     public function checkDependencies()
     {
-        $this->getRequest()->allowMethod('post');
+        $this->request->allowMethod('post');
 
         $input = new ArrayInput([
             'command' => 'outdated',
             '--no-interaction' => true,
-            '--direct' => (bool)$this->getRequest()->data('direct'),
+            '--direct' => (bool)$this->request->data('direct'),
         ]);
 
         $output = $this->executeComposerCommand($input);

@@ -80,11 +80,16 @@ class DebugInclude
      */
     public function includePaths()
     {
-        $paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
+        $paths = explode(PATH_SEPARATOR, get_include_path());
+        $paths = array_filter($paths, function ($path) {
+            if ($path === '.' || strlen($path) === 0) {
+                return false;
+            }
 
-        unset($paths['.']);
+            return true;
+        });
 
-        return array_flip($paths);
+        return array_values($paths);
     }
 
     /**

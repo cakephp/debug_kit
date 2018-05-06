@@ -24,7 +24,7 @@ define('ROOT', dirname(__DIR__));
 define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
-define('TESTS', ROOT . 'tests');
+define('TESTS', ROOT . DS . 'tests');
 define('APP', ROOT . DS . 'tests' . DS . 'test_app' . DS);
 define('APP_DIR', 'test_app');
 define('WEBROOT_DIR', 'webroot');
@@ -113,4 +113,4 @@ Log::setConfig([
     ]
 ]);
 
-Plugin::load('DebugKit', ['path' => ROOT, 'bootstrap' => true]);
+Plugin::load('DebugKit', ['path' => ROOT . DS, 'bootstrap' => true]);

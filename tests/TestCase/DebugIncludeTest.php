@@ -87,7 +87,7 @@ class DebugIncludeTest extends TestCase
         );
 
         $this->assertSame(
-            'DebugKit//tests/bootstrap.php',
+            'DebugKit/tests/bootstrap.php',
             $include->niceFileName(ROOT . '/tests/bootstrap.php', 'plugin', 'DebugKit')
         );
 

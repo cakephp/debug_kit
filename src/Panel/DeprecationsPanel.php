@@ -59,8 +59,12 @@ class DeprecationsPanel extends DebugPanel
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach ($errors as $error) {
-            $file = $error['context']['frame']['file'];
-            $line = $error['context']['frame']['line'];
+            $file = $error['file'];
+            $line = $error['line'];
+            if (isset($error['context']['frame'])) {
+                $file = $error['context']['frame']['file'];
+                $line = $error['context']['frame']['line'];
+            }
 
             $errorData = [
                 'file' => $file,
@@ -112,6 +116,16 @@ class DeprecationsPanel extends DebugPanel
     public static function addDeprecatedError($error)
     {
         static::$deprecatedErrors[] = $error;
+    }
+
+    /**
+     * Reset the tracked errors.
+     *
+     * @return void
+     */
+    public static function clearDeprecatedErrors()
+    {
+        static::$deprecatedErrors = [];
     }
 
     /**

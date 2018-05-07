@@ -367,6 +367,9 @@ class ToolbarServiceTest extends TestCase
         putenv("HTTP_HOST=$domain");
         $bar = new ToolbarService($this->events, []);
         $this->assertEquals($isEnabled, $bar->isEnabled());
+
+        $bar = new ToolbarService($this->events, ['forceEnable' => true]);
+        $this->assertTrue($bar->isEnabled(), 'When forced should always be on.');
     }
 
     public function domainsProvider()

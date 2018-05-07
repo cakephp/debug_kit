@@ -131,7 +131,7 @@ class ToolbarService
         $tld = end($host);
         $safeTLD = ["localhost", "dev", "invalid", "test", "example", "local"];
 
-        if (!in_array($tld, $safeTLD)) {
+        if (!in_array($tld, $safeTLD) && !$this->getConfig('forceEnable')) {
             $host = implode('.', $host);
             $safeList = implode(',', $safeTLD);
             Log::warning(

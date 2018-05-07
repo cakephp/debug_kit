@@ -20,12 +20,12 @@ use Cake\Routing\DispatcherFactory;
 require_once 'vendor/autoload.php';
 
 // Path constants to a few helpful things.
-define('ROOT', dirname(__DIR__) . DS);
-define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
-define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
+define('ROOT', dirname(__DIR__));
+define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
+define('CORE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
-define('TESTS', ROOT . 'tests');
-define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
+define('TESTS', ROOT . DS . 'tests');
+define('APP', ROOT . DS . 'tests' . DS . 'test_app' . DS);
 define('APP_DIR', 'test_app');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
@@ -113,4 +113,4 @@ Log::setConfig([
     ]
 ]);
 
-Plugin::load('DebugKit', ['path' => ROOT, 'bootstrap' => true]);
+Plugin::load('DebugKit', ['path' => ROOT . DS, 'bootstrap' => true]);

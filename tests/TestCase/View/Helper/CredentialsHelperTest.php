@@ -60,8 +60,6 @@ class CredentialsHelperTest extends TestCase
     }
 
     /**
-     *
-     * @covers CredentialsHelper::filter
      * @dataProvider credentialsProvider
      * @return void
      */

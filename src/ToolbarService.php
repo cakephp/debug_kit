@@ -136,7 +136,7 @@ class ToolbarService
 
         if (!in_array($tld, $safeTopLevelDomains, true) && !$this->getConfig('forceEnable')) {
             $host = implode('.', $host);
-            $safeList = implode(',', $safeTopLevelDomains);
+            $safeList = implode(', ', $safeTopLevelDomains);
             Log::warning(
                 "DebugKit is disabling itself as your host `{$host}` " .
                 "is not in the known safe list of top-level-domains ({$safeList}). " .

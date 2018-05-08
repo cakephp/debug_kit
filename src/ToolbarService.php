@@ -64,6 +64,7 @@ class ToolbarService
             'DebugKit.Deprecations' => true,
         ],
         'forceEnable' => false,
+        'safeTld' => []
     ];
 
     /**
@@ -130,11 +131,11 @@ class ToolbarService
         }
 
         $tld = end($host);
-        $safeTLD = ["localhost", "dev", "invalid", "test", "example", "local"];
+        $safeTopLevelDomains = array_merge(['localhost', 'dev', 'invalid', 'test', 'example', 'local'], (array)$this->getConfig('safeTld'));
 
-        if (!in_array($tld, $safeTLD) && !$this->getConfig('forceEnable')) {
+        if (!in_array($tld, $safeTopLevelDomains, true) && !$this->getConfig('forceEnable')) {
             $host = implode('.', $host);
-            $safeList = implode(',', $safeTLD);
+            $safeList = implode(',', $safeTopLevelDomains);
             Log::warning(
                 "DebugKit is disabling itself as your host `{$host}` " .
                 "is not in the known safe list of top-level-domains ({$safeList}). " .

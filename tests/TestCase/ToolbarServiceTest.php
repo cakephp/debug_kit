@@ -366,7 +366,7 @@ class ToolbarServiceTest extends TestCase
         Configure::write('debug', true);
         putenv("HTTP_HOST=$domain");
         $bar = new ToolbarService($this->events, []);
-        $this->assertEquals($isEnabled, $bar->isEnabled());
+        $this->assertSame($isEnabled, $bar->isEnabled());
 
         $bar = new ToolbarService($this->events, ['forceEnable' => true]);
         $this->assertTrue($bar->isEnabled(), 'When forced should always be on.');
@@ -392,6 +392,24 @@ class ToolbarServiceTest extends TestCase
             ['172.112.34.2', false],
             ['6.112.34.2', false],
         ];
+    }
+
+    /**
+     * Tests isEnabled() with custom safe TLD.
+     *
+     * @return void
+     */
+    public function testIsEnabledProductionEnvCustomTld()
+    {
+        $domain = 'myapp.foobar';
+        Configure::write('debug', true);
+
+        putenv("HTTP_HOST=$domain");
+        $bar = new ToolbarService($this->events, []);
+        $this->assertFalse($bar->isEnabled());
+
+        $bar = new ToolbarService($this->events, ['safeTld' => ['foobar']]);
+        $this->assertTrue($bar->isEnabled(), 'When safe TLD should always be on.');
     }
 
     /**

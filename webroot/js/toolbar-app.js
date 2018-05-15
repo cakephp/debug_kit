@@ -122,6 +122,10 @@ Toolbar.prototype = {
   },
 
   loadPanel: function(id) {
+    if (id === undefined) {
+      return;
+    }
+
     var url = this.baseUrl + 'debug-kit/panels/view/' + id;
     var contentArea = this.content.find('#panel-content');
     var _this = this;

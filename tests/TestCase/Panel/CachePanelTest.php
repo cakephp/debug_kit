@@ -65,6 +65,20 @@ class CachePanelTest extends TestCase
     }
 
     /**
+     * test initialize incomplete data
+     *
+     * @return void
+     */
+    public function testInitializeIncompleteData()
+    {
+        Cache::setConfig('incomplete', ['duration' => '+2 seconds']);
+        $this->panel->initialize();
+
+        $result = $this->panel->data();
+        $this->assertArrayHasKey('incomplete', $result['metrics']);
+    }
+
+    /**
      * Ensure that subrequests don't double proxy the cache engine.
      *
      * @return void

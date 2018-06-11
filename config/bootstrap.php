@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 use Cake\Core\Configure;
+use Cake\Core\Plugin as CorePlugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
@@ -61,6 +62,10 @@ if (!$hasDebugKitConfig) {
         'cacheMetadata' => true,
         'quoteIdentifiers' => false,
     ]);
+}
+
+if (!CorePlugin::getCollection()->get('DebugKit')->isEnabled('routes')) {
+    include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'routes.php';
 }
 
 $appClass = Configure::read('App.namespace') . '\Application';

@@ -12,7 +12,7 @@
  */
 namespace DebugKit;
 
-use Cake\Core\Plugin;
+use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Composer\Json\JsonFile;
@@ -56,8 +56,8 @@ class DebugInclude
      */
     public function __construct()
     {
-        foreach (Plugin::loaded() as $plugin) {
-            $this->_pluginPaths[$plugin] = str_replace('/', DIRECTORY_SEPARATOR, Plugin::path($plugin));
+        foreach (CorePlugin::loaded() as $plugin) {
+            $this->_pluginPaths[$plugin] = str_replace('/', DIRECTORY_SEPARATOR, CorePlugin::path($plugin));
         }
 
         $lockFile = new JsonFile(ROOT . DIRECTORY_SEPARATOR . 'composer.lock');

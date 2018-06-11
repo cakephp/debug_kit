@@ -17,7 +17,7 @@ use Cake\Collection\CollectionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Routing\Router;
@@ -179,7 +179,7 @@ class MailPreviewController extends Controller
      */
     protected function getMailPreviewClasses()
     {
-        $pluginPaths = collection(Plugin::loaded())
+        $pluginPaths = collection(CorePlugin::loaded())
             ->reject(function ($plugin) {
                 return $plugin === 'DebugKit';
             })

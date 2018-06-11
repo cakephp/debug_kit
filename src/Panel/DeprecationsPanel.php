@@ -12,7 +12,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Composer\Json\JsonFile;

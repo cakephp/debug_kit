@@ -13,7 +13,7 @@ namespace DebugKit;
 
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
-use Cake\Core\Plugin;
+use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
@@ -260,7 +260,7 @@ class ToolbarService
         $url = 'js/toolbar.js';
         $filePaths = [
             str_replace('/', DIRECTORY_SEPARATOR, WWW_ROOT . 'debug_kit/' . $url),
-            str_replace('/', DIRECTORY_SEPARATOR, Plugin::path('DebugKit') . 'webroot/' . $url)
+            str_replace('/', DIRECTORY_SEPARATOR, CorePlugin::path('DebugKit') . 'webroot/' . $url)
         ];
         $url = '/debug_kit/' . $url;
         foreach ($filePaths as $filePath) {

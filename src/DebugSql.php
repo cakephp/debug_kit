@@ -14,8 +14,8 @@
 namespace DebugKit;
 
 use Cake\Core\Configure;
+use Cake\Database\Query;
 use Cake\Error\Debugger;
-use Cake\ORM\Query;
 use SqlFormatter;
 
 /**

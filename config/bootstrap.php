@@ -12,10 +12,10 @@
  */
 use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
+use Cake\Database\Query;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
-use Cake\ORM\Query;
 use Cake\Routing\DispatcherFactory;
 use DebugKit\DebugSql;
 use DebugKit\Middleware\DebugKitMiddleware;

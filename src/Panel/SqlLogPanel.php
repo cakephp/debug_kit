@@ -64,7 +64,11 @@ class SqlLogPanel extends DebugPanel
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
             $connection->logQueries(true);
-            $connection->setLogger($logger);
+            if (method_exists($connection, 'setLogger')) {
+                $connection->setLogger($logger);
+            } else {
+                $connection->logger($logger);
+            }
             $this->_loggers[] = $logger;
         }
     }

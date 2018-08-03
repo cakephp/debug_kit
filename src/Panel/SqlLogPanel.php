@@ -66,6 +66,8 @@ class SqlLogPanel extends DebugPanel
             $connection->logQueries(true);
             if (method_exists($connection, 'setLogger')) {
                 $connection->setLogger($logger);
+            } else {
+                $connection->logger($logger);
             }
             $this->_loggers[] = $logger;
         }

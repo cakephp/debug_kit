@@ -23,7 +23,7 @@ use DebugKit\Panel\VariablesPanel;
  */
 class VariablesPanelTest extends TestCase
 {
-    public $fixtures = ['plugin.debug_kit.requests', 'plugin.debug_kit.panels'];
+    public $fixtures = ['plugin.DebugKit.Requests', 'plugin.DebugKit.Panels'];
 
     /**
      * @var VariablesPanel

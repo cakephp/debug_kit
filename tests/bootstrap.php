@@ -113,4 +113,4 @@ Log::setConfig([
     ]
 ]);
 
-Plugin::load('DebugKit', ['path' => ROOT, 'bootstrap' => true]);
+Plugin::getCollection()->add(new \DebugKit\Plugin());

@@ -52,7 +52,7 @@ class SqlLogPanel extends DebugPanel
                 continue;
             }
             $logger = null;
-            if ($connection->logQueries()) {
+            if ($connection->isQueryLoggingEnabled()) {
                 $logger = $connection->getLogger();
             }
 
@@ -63,7 +63,7 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
-            $connection->logQueries(true);
+            $connection->enableQueryLogging(true);
             $connection->setLogger($logger);
             $this->_loggers[] = $logger;
         }

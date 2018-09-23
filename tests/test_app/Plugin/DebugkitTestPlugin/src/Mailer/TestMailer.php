@@ -16,8 +16,8 @@
  */
 namespace DebugkitTestPlugin\Mailer;
 
-use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
 
 class TestMailer extends Mailer
 {
@@ -27,8 +27,8 @@ class TestMailer extends Mailer
      */
     public function test_email()
     {
-        if (!Email::getConfigTransport('default')) {
-            Email::setConfigTransport(['default' => ['className' => 'Debug']]);
+        if (!TransportFactory::getConfig('default')) {
+            TransportFactory::setConfig(['default' => ['className' => 'Debug']]);
         }
 
         return $this;

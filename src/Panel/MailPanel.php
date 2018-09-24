@@ -14,7 +14,7 @@ namespace DebugKit\Panel;
 
 use ArrayObject;
 use Cake\Core\App;
-use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 use DebugKit\DebugPanel;
 use DebugKit\Mailer\Transport\DebugKitTransport;
 use ReflectionClass;
@@ -39,8 +39,8 @@ class MailPanel extends DebugPanel
      */
     public function initialize()
     {
-        $reflection = new ReflectionClass(Email::class);
-        $property = $reflection->getProperty('_transportConfig');
+        $reflection = new ReflectionClass(TransportFactory::class);
+        $property = $reflection->getProperty('_config');
         $property->setAccessible(true);
         $configs = $property->getValue();
 

@@ -47,8 +47,8 @@ class PreviewResult extends AbstractResult
         $prop->setAccessible(true);
         $email = $prop->getValue($mailer);
 
-        if (!$email->getTemplate()) {
-            $email->setTemplate($method);
+        if (!$email->viewBuilder()->getTemplate()) {
+            $email->viewBuilder()->setTemplate($method);
         }
 
         $render = (new ReflectionClass($email))

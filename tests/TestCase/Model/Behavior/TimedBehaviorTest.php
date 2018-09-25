@@ -29,7 +29,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = ['core.articles'];
+    public $fixtures = ['core.Articles'];
 
     /**
      * @var Table

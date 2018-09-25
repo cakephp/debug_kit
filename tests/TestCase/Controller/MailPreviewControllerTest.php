@@ -31,8 +31,8 @@ class MailPreviewControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.debug_kit.requests',
-        'plugin.debug_kit.panels'
+        'plugin.DebugKit.Requests',
+        'plugin.DebugKit.Panels'
     ];
 
     /**
@@ -43,7 +43,8 @@ class MailPreviewControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
-        Plugin::load('DebugkitTestPlugin', ['path' => APP . 'Plugin' . DS . 'DebugkitTestPlugin' . DS]);
+
+        Plugin::getCollection()->add(new \DebugkitTestPlugin\Plugin());
         Router::plugin('DebugKit', function (RouteBuilder $routes) {
             $routes->scope(
                 '/mail_preview',

@@ -29,8 +29,8 @@ class RequestsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.debug_kit.requests',
-        'plugin.debug_kit.panels'
+        'plugin.DebugKit.Requests',
+        'plugin.DebugKit.Panels'
     ];
 
     /**

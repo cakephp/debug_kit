@@ -113,7 +113,7 @@ class DebugPanel implements EventListenerInterface
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.shutdown' => 'shutdown',

@@ -28,7 +28,7 @@ class TimerPanel extends DebugPanel
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         $before = function ($name) {
             return function () use ($name) {

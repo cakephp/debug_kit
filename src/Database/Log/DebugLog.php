@@ -143,7 +143,7 @@ class DebugLog extends QueryLogger
      * @param \Cake\Database\Log\LoggedQuery $query The query being logged.
      * @return void
      */
-    public function log(LoggedQuery $query)
+    public function log(LoggedQuery $query): void
     {
         if ($this->_logger) {
             if ($this->_logger instanceof PsrAbstractLogger) {

@@ -39,7 +39,7 @@ class RequestsTable extends Table
      * @param array $config Config data.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->hasMany('DebugKit.Panels', [
             'sort' => ['Panels.title' => 'ASC'],
@@ -57,7 +57,7 @@ class RequestsTable extends Table
      *
      * @return string
      */
-    public static function defaultConnectionName()
+    public static function defaultConnectionName(): string
     {
         return 'debug_kit';
     }

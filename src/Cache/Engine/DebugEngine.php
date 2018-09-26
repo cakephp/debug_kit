@@ -68,7 +68,7 @@ class DebugEngine extends CacheEngine
      * @param array $config Array of setting for the engine.
      * @return bool True, this engine cannot fail to initialize.
      */
-    public function init(array $config = [])
+    public function init(array $config = []): bool
     {
         if (is_object($this->_config)) {
             $this->_engine = $this->_config;
@@ -116,7 +116,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function write($key, $value)
+    public function write(string $key, $value): bool
     {
         $this->_track('write');
         DebugTimer::start('Cache.write ' . $key);
@@ -129,7 +129,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function writeMany($data)
+    public function writeMany(array $data): array
     {
         $this->_track('write');
         DebugTimer::start('Cache.writeMany');
@@ -142,7 +142,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function read($key)
+    public function read(string $key)
     {
         $this->_track('read');
         DebugTimer::start('Cache.read ' . $key);
@@ -160,7 +160,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function readMany($data)
+    public function readMany(array $data): array
     {
         $this->_track('read');
         DebugTimer::start('Cache.readMany');
@@ -173,7 +173,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function increment($key, $offset = 1)
+    public function increment(string $key, int $offset = 1)
     {
         $this->_track('write');
         DebugTimer::start('Cache.increment ' . $key);
@@ -186,7 +186,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function decrement($key, $offset = 1)
+    public function decrement(string $key, int $offset = 1)
     {
         $this->_track('write');
         DebugTimer::start('Cache.decrement ' . $key);
@@ -199,7 +199,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function delete($key)
+    public function delete(string $key): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.delete ' . $key);
@@ -212,7 +212,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function deleteMany($data)
+    public function deleteMany(array $data): array
     {
         $this->_track('delete');
         DebugTimer::start('Cache.deleteMany');
@@ -225,7 +225,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function clear($check)
+    public function clear(bool $check): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.clear');
@@ -238,7 +238,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function groups()
+    public function groups(): array
     {
         return $this->_engine->groups();
     }
@@ -267,7 +267,7 @@ class DebugEngine extends CacheEngine
      * @param mixed $default The return value when the key does not exist.
      * @return mixed Config value being read.
      */
-    public function getConfig($key = null, $default = null)
+    public function getConfig(?string $key = null, $default = null)
     {
         return $this->_engine->getConfig($key, $default);
     }
@@ -289,7 +289,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function clearGroup($group)
+    public function clearGroup(string $group): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.clearGroup ' . $group);

@@ -18,6 +18,7 @@ use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
@@ -60,8 +61,10 @@ class ToolbarService
             'DebugKit.Routes' => true,
             'DebugKit.Packages' => true,
             'DebugKit.Mail' => true,
+            'DebugKit.Deprecations' => true,
         ],
         'forceEnable' => false,
+        'safeTld' => []
     ];
 
     /**
@@ -128,9 +131,22 @@ class ToolbarService
         }
 
         $tld = end($host);
-        $safeTLD = ["localhost", "dev", "invalid", "test", "example", "local"];
+        $safeTopLevelDomains = ['localhost', 'dev', 'invalid', 'test', 'example', 'local'];
+        $safeTopLevelDomains = array_merge($safeTopLevelDomains, (array)$this->getConfig('safeTld'));
 
-        return !in_array($tld, $safeTLD);
+        if (!in_array($tld, $safeTopLevelDomains, true) && !$this->getConfig('forceEnable')) {
+            $host = implode('.', $host);
+            $safeList = implode(', ', $safeTopLevelDomains);
+            Log::warning(
+                "DebugKit is disabling itself as your host `{$host}` " .
+                "is not in the known safe list of top-level-domains ({$safeList}). " .
+                "If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option."
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -144,7 +160,7 @@ class ToolbarService
     }
 
     /**
-     * Get the list of loaded panels
+     * Get the a loaded panel
      *
      * @param string $name The name of the panel you want to get.
      * @return \DebugKit\DebugPanel|null The panel or null.

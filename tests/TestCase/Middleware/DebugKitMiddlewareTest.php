@@ -39,6 +39,7 @@ class DebugKitMiddlewareTest extends TestCase
         'plugin.DebugKit.Requests',
         'plugin.DebugKit.Panels'
     ];
+
     /**
      * setup
      *
@@ -50,6 +51,19 @@ class DebugKitMiddlewareTest extends TestCase
 
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->oldConfig = Configure::read('DebugKit');
+    }
+
+    /**
+     * tearDown
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Configure::write('DebugKit', $this->oldConfig);
     }
 
     /**
@@ -90,10 +104,10 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertEquals(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertEquals('SqlLog', $result->panels[10]->panel);
-        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[10]->element);
-        $this->assertNotNull($result->panels[10]->summary);
-        $this->assertEquals('Sql Log', $result->panels[10]->title);
+        $this->assertEquals('SqlLog', $result->panels[11]->panel);
+        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[11]->element);
+        $this->assertNotNull($result->panels[11]->summary);
+        $this->assertEquals('Sql Log', $result->panels[11]->title);
 
         $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'toolbar.js');
 
@@ -204,5 +218,21 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertEquals(0, $total, 'Should not track sub-requests');
         $body = $result->getBody();
         $this->assertNotContains('<script', '' . $body);
+    }
+
+    /**
+     * Test that configuration is correctly passed to the service
+     *
+     * @return void
+     */
+    public function testConfigIsPassed()
+    {
+        $config = ['foo' => 'bar'];
+        Configure::write('DebugKit', $config);
+        $layer = new DebugKitMiddleware();
+        $prop = new \ReflectionProperty(DebugKitMiddleware::class, 'service');
+        $prop->setAccessible(true);
+        $service = $prop->getValue($layer);
+        $this->assertEquals('bar', $service->getConfig('foo'));
     }
 }

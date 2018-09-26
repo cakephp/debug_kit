@@ -11,6 +11,7 @@
  */
 namespace DebugKit\Middleware;
 
+use Cake\Core\Configure;
 use Cake\Event\EventManager;
 use DebugKit\ToolbarService;
 
@@ -31,7 +32,7 @@ class DebugKitMiddleware
      */
     public function __construct(ToolbarService $service = null)
     {
-        $service = $service ?: new ToolbarService(EventManager::instance(), []);
+        $service = $service ?: new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
         $this->service = $service;
     }
 

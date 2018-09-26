@@ -12,9 +12,10 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
+use Composer\Json\JsonFile;
+use DebugKit\DebugInclude;
 use DebugKit\DebugPanel;
 
 /**
@@ -25,32 +26,18 @@ class IncludePanel extends DebugPanel
 {
 
     /**
-     * The list of plugins within the application
+     * instance of DebugInclude
      *
-     * @var <type>
+     * @var \DebugKit\DebugInclude
      */
-    protected $_pluginPaths = [];
+    protected $_debug;
 
     /**
-     * File Types
-     *
-     * @var array
-     */
-    protected $_fileTypes = [
-        'Auth', 'Cache', 'Collection', 'Config', 'Configure', 'Console', 'Component', 'Controller',
-        'Behavior', 'Database', 'Datasource', 'Model', 'Template', 'View', 'Utility',
-        'Network', 'Routing', 'I18n', 'Log', 'Error', 'Event', 'Form', 'Filesystem',
-        'ORM', 'Filter', 'Validation'
-    ];
-
-    /**
-     * Get a list of plugins on construct for later use
+     * construct
      */
     public function __construct()
     {
-        foreach (Plugin::loaded() as $plugin) {
-            $this->_pluginPaths[$plugin] = Plugin::path($plugin);
-        }
+        $this->_debug = new DebugInclude();
     }
 
     /**
@@ -60,132 +47,40 @@ class IncludePanel extends DebugPanel
      */
     protected function _prepare()
     {
-        $return = ['cake' => [], 'app' => [], 'plugins' => []];
+        $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach (get_included_files() as $file) {
-            $pluginName = $this->_isPluginFile($file);
+            $pluginName = $this->_debug->getPluginName($file);
 
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_getFileType($file)][] = $this->_niceFileName($file, $pluginName);
-            } elseif ($this->_isAppFile($file)) {
-                $return['app'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'app');
-            } elseif ($this->_isCakeFile($file)) {
-                $return['cake'][$this->_getFileType($file)][] = $this->_niceFileName($file, 'cake');
+                $return['plugins'][$pluginName][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'plugin', $pluginName);
+            } elseif ($this->_debug->isAppFile($file)) {
+                $return['app'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'app');
+            } elseif ($this->_debug->isCakeFile($file)) {
+                $return['cake'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'cake');
+            } else {
+                $vendorName = $this->_debug->getComposerPackageName($file);
+
+                if ($vendorName) {
+                    $return['vendor'][$vendorName][] = $this->_debug->niceFileName($file, 'vendor', $vendorName);
+                } else {
+                    $return['other'][] = $this->_debug->niceFileName($file, 'root');
+                }
             }
         }
 
-        $return['paths'] = $this->_includePaths();
+        $return['paths'] = $this->_debug->includePaths();
 
+        ksort($return['app']);
         ksort($return['cake']);
         ksort($return['plugins']);
-        ksort($return['app']);
+        ksort($return['vendor']);
+
+        foreach ($return['plugins'] as &$plugin) {
+            ksort($plugin);
+        }
 
         return $return;
-    }
-
-    /**
-     * Get the possible include paths
-     *
-     * @return array
-     */
-    protected function _includePaths()
-    {
-        $paths = array_flip(array_filter(explode(PATH_SEPARATOR, get_include_path())));
-
-        unset($paths['.']);
-
-        return array_flip($paths);
-    }
-
-    /**
-     * Check if a path is part of CakePHP
-     *
-     * @param string $file File to check
-     * @return bool
-     */
-    protected function _isCakeFile($file)
-    {
-        return strstr($file, CAKE);
-    }
-
-    /**
-     * Check if a path is from APP but not a plugin
-     *
-     * @param string $file File to check
-     * @return bool
-     */
-    protected function _isAppFile($file)
-    {
-        return strstr($file, APP);
-    }
-
-    /**
-     * Check if a path is from a plugin
-     *
-     * @param string $file File to check
-     * @return bool
-     */
-    protected function _isPluginFile($file)
-    {
-        foreach ($this->_pluginPaths as $plugin => $path) {
-            if (strstr($file, $path)) {
-                return $plugin;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Replace the path with APP, CORE or the plugin name
-     *
-     * @param string $file File to check
-     * @param string $type The file type
-     *  - app for app files
-     *  - cake for cake files
-     *  - PluginName for the name of a plugin
-     * @return bool
-     */
-    protected function _niceFileName($file, $type)
-    {
-        switch ($type) {
-            case 'app':
-                return str_replace(APP, 'APP' . DIRECTORY_SEPARATOR, $file);
-
-            case 'cake':
-                return str_replace(CAKE, 'CAKE' . DIRECTORY_SEPARATOR, $file);
-
-            default:
-                return str_replace($this->_pluginPaths[$type], $type . DIRECTORY_SEPARATOR, $file);
-        }
-    }
-
-    /**
-     * Get the type of file (model, controller etc)
-     *
-     * @param string $file File to check.
-     * @return string
-     */
-    protected function _getFileType($file)
-    {
-        foreach ($this->_fileTypes as $type) {
-            if (stripos($file, DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR) !== false) {
-                return $type;
-            }
-        }
-
-        return 'Other';
-    }
-
-    /**
-     * Shutdown callback
-     *
-     * @param \Cake\Event\Event $event Event
-     * @return void
-     */
-    public function shutdown(Event $event)
-    {
-        $this->_data = $this->_prepare();
     }
 
     /**
@@ -200,6 +95,22 @@ class IncludePanel extends DebugPanel
             $data = $this->_prepare();
         }
 
+        unset($data['paths']);
+        $data = array_filter($data, function ($v, $k) {
+            return !empty($v);
+        }, ARRAY_FILTER_USE_BOTH);
+
         return count(Hash::flatten($data));
+    }
+
+    /**
+     * Shutdown callback
+     *
+     * @param \Cake\Event\Event $event Event
+     * @return void
+     */
+    public function shutdown(Event $event)
+    {
+        $this->_data = $this->_prepare();
     }
 }

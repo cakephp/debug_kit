@@ -61,7 +61,7 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [APP . 'Template' . DS]
+        'templates' => [APP . 'templates' . DS]
     ]
 ]);
 Configure::write('Session', [

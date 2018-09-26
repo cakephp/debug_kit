@@ -18,7 +18,7 @@ use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
@@ -37,11 +37,11 @@ class MailPreviewController extends Controller
     /**
      * Before filter callback.
      *
-     * @param \Cake\Event\Event $event The beforeFilter event.
+     * @param \Cake\Event\EventInterface $event The beforeFilter event.
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         if (!Configure::read('debug')) {
             throw new NotFoundException();
@@ -51,10 +51,10 @@ class MailPreviewController extends Controller
     /**
      * Before render handler.
      *
-     * @param \Cake\Event\Event $event The event.
+     * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         $this->viewBuilder()->setLayout('DebugKit.mailer');
     }

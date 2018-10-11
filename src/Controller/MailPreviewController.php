@@ -150,7 +150,7 @@ class MailPreviewController extends Controller
         $part = $this->findPart($email, $partType);
 
         if ($part === false) {
-            throw new NotFoundException(__d('debug_kit', "Email part '{0}' not found in email", $partType));
+            throw new NotFoundException(__d('debug_kit', "Email part ''{0}'' not found in email", $partType));
         }
 
         $response = $this->response->withType($partType);

@@ -139,7 +139,7 @@ class VariablesPanel extends DebugPanel
             return $item;
         };
         // Copy so viewVars is not mutated.
-        $vars = $controller->viewVars;
+        $vars = $controller->viewBuilder()->getVars();
         array_walk_recursive($vars, $walker);
 
         foreach ($vars as $k => $v) {

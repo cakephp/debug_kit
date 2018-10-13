@@ -20,7 +20,6 @@ use Cake\Routing\DispatcherFactory;
 use DebugKit\DebugSql;
 use DebugKit\Middleware\DebugKitMiddleware;
 use DebugKit\Panel\DeprecationsPanel;
-use DebugKit\Routing\Filter\DebugBarFilter;
 use DebugKit\ToolbarService;
 
 $service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
@@ -69,17 +68,11 @@ if (!CorePlugin::getCollection()->get('DebugKit')->isEnabled('routes')) {
 }
 
 $appClass = Configure::read('App.namespace') . '\Application';
-if (class_exists($appClass)) {
-    EventManager::instance()->on('Server.buildMiddleware', function ($event, $queue) use ($service) {
-        $middleware = new DebugKitMiddleware($service);
-        $queue->insertAt(0, $middleware);
-    });
-} else {
-    // Setup dispatch filter
-    $debugBar = new DebugBarFilter(EventManager::instance(), (array)Configure::read('DebugKit'));
-    $debugBar->setup();
-    DispatcherFactory::add($debugBar);
-}
+EventManager::instance()->on('Server.buildMiddleware', function ($event, $queue) use ($service) {
+    $middleware = new DebugKitMiddleware($service);
+    $queue->insertAt(0, $middleware);
+});
+
 
 if (!function_exists('sql')) {
     /**

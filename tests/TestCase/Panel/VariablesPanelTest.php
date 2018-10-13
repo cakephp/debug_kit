@@ -15,6 +15,7 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\View\ViewVarsTrait;
 use DebugKit\Panel\VariablesPanel;
 
 /**
@@ -80,8 +81,10 @@ class VariablesPanelTest extends TestCase
 
         $resource = fopen('data:text/plain;base64,', 'r');
 
-        $controller = new \stdClass();
-        $controller->viewVars = [
+        $controller = new class {
+            use ViewVarsTrait;
+        };
+        $controller->viewBuilder()->setVars([
             'resource' => $resource,
             'unserializableDebugInfo' => $unserializableDebugInfo,
             'debugInfoException' => $debugInfoException,
@@ -91,7 +94,7 @@ class VariablesPanelTest extends TestCase
             'result set' => $result,
             'string' => 'yes',
             'array' => ['some' => 'key']
-        ];
+        ]);
         $event = new Event('Controller.shutdown', $controller);
         $this->panel->shutdown($event);
         $output = $this->panel->data();
@@ -108,14 +111,14 @@ class VariablesPanelTest extends TestCase
         );
         $this->assertInstanceOf(
             'Cake\ORM\Query',
-            $controller->viewVars['query'],
+            $controller->viewBuilder()->getVar('query'),
             'Original value should not be mutated'
         );
         $this->assertInternalType('array', $output['content']['updateQuery']);
         $this->assertInternalType('array', $output['content']['query']);
         $this->assertInternalType('array', $output['content']['unbufferedQuery']);
         $this->assertInternalType('array', $output['content']['result set']);
-        $this->assertEquals($controller->viewVars['string'], $output['content']['string']);
-        $this->assertEquals($controller->viewVars['array'], $output['content']['array']);
+        $this->assertEquals($controller->viewBuilder()->getVar('string'), $output['content']['string']);
+        $this->assertEquals($controller->viewBuilder()->getVar('array'), $output['content']['array']);
     }
 }

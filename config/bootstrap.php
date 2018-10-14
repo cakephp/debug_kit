@@ -10,38 +10,10 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-use Cake\Core\Configure;
-use Cake\Core\Plugin as CorePlugin;
 use Cake\Database\Query;
 use Cake\Datasource\ConnectionManager;
-use Cake\Event\EventManager;
 use Cake\Log\Log;
-use Cake\Routing\DispatcherFactory;
 use DebugKit\DebugSql;
-use DebugKit\Middleware\DebugKitMiddleware;
-use DebugKit\Panel\DeprecationsPanel;
-use DebugKit\ToolbarService;
-
-$service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
-
-if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
-    return;
-}
-
-if (!empty($service->getConfig('panels')['DebugKit.Deprecations'])) {
-    $previousHandler = set_error_handler(
-        function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
-            if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
-                DeprecationsPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
-
-                return;
-            }
-            if ($previousHandler) {
-                return $previousHandler($code, $message, $file, $line, $context);
-            }
-        }
-    );
-}
 
 $hasDebugKitConfig = ConnectionManager::getConfig('debug_kit');
 if (!$hasDebugKitConfig && !in_array('sqlite', PDO::getAvailableDrivers())) {
@@ -62,17 +34,6 @@ if (!$hasDebugKitConfig) {
         'quoteIdentifiers' => false,
     ]);
 }
-
-if (!CorePlugin::getCollection()->get('DebugKit')->isEnabled('routes')) {
-    include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'routes.php';
-}
-
-$appClass = Configure::read('App.namespace') . '\Application';
-EventManager::instance()->on('Server.buildMiddleware', function ($event, $queue) use ($service) {
-    $middleware = new DebugKitMiddleware($service);
-    $queue->insertAt(0, $middleware);
-});
-
 
 if (!function_exists('sql')) {
     /**

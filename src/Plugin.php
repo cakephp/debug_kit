@@ -14,10 +14,82 @@
 namespace DebugKit;
 
 use Cake\Core\BasePlugin;
+use Cake\Core\Configure;
+use Cake\Core\PluginApplicationInterface;
+use Cake\Event\EventManager;
+use Cake\Http\MiddlewareQueue;
+use DebugKit\Middleware\DebugKitMiddleware;
+use DebugKit\Panel\DeprecationsPanel;
 
 /**
- * Plugin class for CakePHP 3.6.0 plugin collection.
+ * Plugin class for CakePHP plugin collection.
  */
 class Plugin extends BasePlugin
 {
+    /**
+     * @var \DebugKit\ToolbarService
+     */
+    protected $service;
+
+    /**
+     * Load all the application configuration and bootstrap logic.
+     *
+     * @param \Cake\Core\PluginApplicationInterface $app The host application
+     * @return void
+     */
+    public function bootstrap(PluginApplicationInterface $app): void
+    {
+        $service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
+        $this->service = $service;
+
+        if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
+            return;
+        }
+
+        $this->setDeprecationHandler($service);
+
+        if (!$this->isEnabled('routes')) {
+            include $this->getConfigPath() . 'routes.php';
+        }
+
+        // will load `config/bootstrap.php`.
+        parent::bootstrap($app);
+    }
+    /**
+     * Add middleware for the plugin.
+     *
+     * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to update.
+     * @return \Cake\Http\MiddlewareQueue
+     */
+    public function middleware(MiddlewareQueue $middleware): MiddlewareQueue
+    {
+        if ($this->service) {
+            $middleware->add(new DebugKitMiddleware($this->service));
+        }
+
+        return $middleware;
+    }
+    /**
+     * set deprecation handler
+     *
+     * @param \DebugKit\ToolbarService $service The toolbar service instance
+     * @return void
+     */
+    public function setDeprecationHandler($service)
+    {
+        if (!empty($service->getConfig('panels')['DebugKit.Deprecations'])) {
+            $previousHandler = set_error_handler(
+                function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
+                    if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
+                        DeprecationsPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
+
+                        return;
+                    }
+                    if ($previousHandler) {
+                        return $previousHandler($code, $message, $file, $line, $context);
+                    }
+                }
+            );
+        }
+    }
 }

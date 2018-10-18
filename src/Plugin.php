@@ -48,10 +48,6 @@ class Plugin extends BasePlugin
 
         $this->setDeprecationHandler($service);
 
-        if (!$this->isEnabled('routes')) {
-            include $this->getConfigPath() . 'routes.php';
-        }
-
         // will load `config/bootstrap.php`.
         parent::bootstrap($app);
     }

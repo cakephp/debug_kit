@@ -244,23 +244,6 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * Return the proxied configuration data.
-     *
-     * This method uses func_get_args() as not doing so confuses the
-     * proxied class.
-     *
-     * @deprecated 3.6.0 use setConfig()/getConfig() instead.
-     * @param string $key The key to set/read.
-     * @param mixed $value The value to set.
-     * @param bool $merge Whether or not configuration should be merged.
-     * @return mixed
-     */
-    public function config($key = null, $value = null, $merge = true)
-    {
-        return call_user_func_array([$this->_engine, 'config'], func_get_args());
-    }
-
-    /**
      * Returns the config.
      *
      * @param string|null $key The key to get or null for the whole config.

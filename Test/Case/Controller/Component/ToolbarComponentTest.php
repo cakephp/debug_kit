@@ -469,8 +469,8 @@ class ToolbarComponentTestCase extends CakeTestCase {
 
 		$result = $this->Controller->Toolbar->panels['history']->beforeRender($this->Controller);
 		$expected = array(
-			'plugin' => 'debug_kit',
-			'controller' => 'toolbar_access',
+			'plugin' => 'DebugKit',
+			'controller' => 'ToolbarAccess',
 			'action' => 'history_state',
 			0 => 1,
 			'admin' => false,

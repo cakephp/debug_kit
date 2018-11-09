@@ -439,7 +439,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$sql = 'SELECT * FROM tasks';
 		$result = $this->Toolbar->explainLink($sql, 'default');
 		$expected = array(
-			'form' => array('action' => '/debug_kit/toolbar_access/sql_explain', 'method' => 'post',
+			'form' => array('action' => '/DebugKit/ToolbarAccess/sql_explain', 'method' => 'post',
 				'accept-charset' => 'utf-8', 'id'),
 			array('div' => array('style' => 'display:none;')),
 			array('input' => array('type' => 'hidden', 'name' => '_method', 'value' => 'POST')),

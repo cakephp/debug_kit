@@ -215,8 +215,8 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$sql = str_replace(array("\n", "\t"), ' ', $sql);
 		$hash = Security::hash($sql . $connection, 'sha1', true);
 		$url = array(
-			'plugin' => 'debug_kit',
-			'controller' => 'toolbar_access',
+			'plugin' => 'DebugKit',
+			'controller' => 'ToolbarAccess',
 			'action' => 'sql_explain'
 		);
 		foreach (Router::prefixes() as $prefix) {

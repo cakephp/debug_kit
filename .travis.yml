@@ -13,8 +13,6 @@ php:
   - 7.3
 
 env:
-  - CAKE_VERSION=2.8.9 DB=mysql
-  - CAKE_VERSION=2.8.9 DB=pgsql
   - CAKE_VERSION=2.x DB=mysql
   - CAKE_VERSION=2.x DB=pgsql
 

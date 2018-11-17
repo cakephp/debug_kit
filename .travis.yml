@@ -21,8 +21,9 @@ install:
   - cp -R ../debug_kit plugins/DebugKit
   - chmod -R 777 ../cakephp/app/tmp
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]] ; then sh -c "composer global require 'phpunit/phpunit=3.7.38'"; fi
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then sh -c "composer global require 'phpunit/phpunit=5.7.27'"; fi
-  - sh -c "ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ../cakephp/vendors/PHPUnit"
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]] ; then sh -c "ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ../cakephp/vendors/PHPUnit"; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then sh -c "composer require --dev 'phpunit/phpunit=5.7.27'"; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then echo "require_once dirname(APP) . DS . 'vendors' . DS . 'autoload.php';" >> app/Config/bootstrap.php; fi
 
 before_script:
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"

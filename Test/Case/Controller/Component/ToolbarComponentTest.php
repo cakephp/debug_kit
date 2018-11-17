@@ -148,6 +148,7 @@ class ToolbarComponentTestCase extends CakeTestCase {
  * Test exceptions on bad panel names
  *
  * @expectedException PHPUnit_Framework_Error
+ * @expectedExceptionMessage Undefined property: ToolbarComponentTestCase::$Controller
  * @return void
  */
 	public function testLoadPanelsError() {

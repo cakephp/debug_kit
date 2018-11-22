@@ -13,7 +13,6 @@
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Event\Event;
-use Cake\Form\Form;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\VariablesPanel;

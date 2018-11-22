@@ -99,7 +99,7 @@ class VariablesPanelTest extends TestCase
         $this->panel->shutdown($event);
         $output = $this->panel->data();
 
-        array_walk_recursive($output, function($item) {
+        array_walk_recursive($output, function ($item) {
             try {
                 serialize($item);
             } catch (\Exception $e) {

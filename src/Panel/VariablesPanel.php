@@ -166,11 +166,13 @@ class VariablesPanel extends DebugPanel
     {
         try {
             serialize($item);
+
             return $item;
         } catch (\Exception $e) {
             if (is_object($item)) {
                 return __d('debug_kit', 'Unserializable object - {0}. Error: {1} in {2}, line {3}', get_class($item), $e->getMessage(), $e->getFile(), $e->getLine());
             }
+
             return __d('debug_kit', 'Unserializable Error: {1} in {2}, line {3}', $e->getMessage(), $e->getFile(), $e->getLine());
         }
     }

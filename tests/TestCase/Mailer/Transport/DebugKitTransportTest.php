@@ -12,8 +12,8 @@
  */
 namespace DebugKit\Test\TestCase\Mailer\Transport;
 
-use Cake\Mailer\Email;
 use Cake\Mailer\AbstractTransport;
+use Cake\Mailer\Email;
 use Cake\TestSuite\TestCase;
 use DebugKit\Mailer\Transport\DebugKitTransport;
 

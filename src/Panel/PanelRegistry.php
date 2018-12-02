@@ -60,7 +60,7 @@ class PanelRegistry extends ObjectRegistry
      */
     protected function _throwMissingClassError($class, $plugin)
     {
-        throw new \RuntimeException(__d('debug_kit', "Unable to find '{0}' panel.", $class));
+        throw new \RuntimeException(__d('debug_kit', "Unable to find ''{0}'' panel.", $class));
     }
 
     /**

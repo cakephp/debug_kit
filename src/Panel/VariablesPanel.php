@@ -126,17 +126,13 @@ class VariablesPanel extends DebugPanel
                     // Convert objects into using __debugInfo.
                     $item = $this->_walkDebugInfo($walker, $item);
                 } else {
-                    try {
-                        serialize($item);
-                    } catch (\Exception $e) {
-                        $item = __d('debug_kit', 'Unserializable object - {0}. Error: {1} in {2}, line {3}', get_class($item), $e->getMessage(), $e->getFile(), $e->getLine());
-                    }
+                    $item = $this->trySerialize($item);
                 }
             } elseif (is_resource($item)) {
                 $item = sprintf('[%s] %s', get_resource_type($item), $item);
             }
 
-            return $item;
+            return $this->trySerialize($item);
         };
         // Copy so viewVars is not mutated.
         $vars = $controller->viewVars;
@@ -158,6 +154,27 @@ class VariablesPanel extends DebugPanel
             'content' => $vars,
             'errors' => $errors
         ];
+    }
+
+    /**
+     * Try to serialize an item, provide an error message if not possible
+     *
+     * @param mixed $item Item to check
+     * @return mixed The $item if it is serializable, error message if not
+     */
+    protected function trySerialize($item)
+    {
+        try {
+            serialize($item);
+
+            return $item;
+        } catch (\Exception $e) {
+            if (is_object($item)) {
+                return __d('debug_kit', 'Unserializable object - {0}. Error: {1} in {2}, line {3}', get_class($item), $e->getMessage(), $e->getFile(), $e->getLine());
+            }
+
+            return __d('debug_kit', 'Unserializable Error: {1} in {2}, line {3}', $e->getMessage(), $e->getFile(), $e->getLine());
+        }
     }
 
     /**

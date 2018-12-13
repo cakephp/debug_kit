@@ -62,7 +62,7 @@ class PanelsControllerTest extends IntegrationTestCase
             ]
         ]);
 
-        $this->get('/debug_kit/panels/index/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->get('/debug-kit/panels/index/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
         $this->assertResponseOk();
         $this->assertContentType('application/json');
@@ -75,7 +75,7 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->get('/debug_kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->get('/debug-kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request</h2>');
@@ -89,7 +89,7 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public function testViewNotExists()
     {
-        $this->get('/debug_kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
+        $this->get('/debug-kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
         $this->assertResponseError();
         $this->assertResponseContains('Error page');
     }

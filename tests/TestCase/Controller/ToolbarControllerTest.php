@@ -58,7 +58,7 @@ class ToolbarControllerTest extends IntegrationTestCase
      */
     public function testClearCacheNoGet()
     {
-        $this->get('/debug_kit/toolbar/clear_cache?name=testing');
+        $this->get('/debug-kit/toolbar/clear_cache?name=testing');
 
         $this->assertEquals(405, $this->_response->getStatusCode());
     }
@@ -80,7 +80,7 @@ class ToolbarControllerTest extends IntegrationTestCase
         Cache::setConfig('testing', $mock);
 
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->post('/debug_kit/toolbar/clear_cache', ['name' => 'testing']);
+        $this->post('/debug-kit/toolbar/clear-cache', ['name' => 'testing']);
         $this->assertResponseOk();
         $this->assertResponseContains('success');
     }

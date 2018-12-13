@@ -67,7 +67,7 @@ class ToolbarController extends Controller
         if (!$this->request->getData('name')) {
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
-        $result = Cache::clear(false, $this->request->getData('name'));
+        $result = Cache::clear($this->request->getData('name'));
         $this->set([
             '_serialize' => ['success'],
             'success' => $result,

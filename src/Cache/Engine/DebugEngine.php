@@ -45,9 +45,9 @@ class DebugEngine extends CacheEngine
      * @var mixed
      */
     protected $_metrics = [
-        'write' => 0,
+        'set' => 0,
         'delete' => 0,
-        'read' => 0,
+        'get' => 0,
         'hit' => 0,
         'miss' => 0,
     ];
@@ -116,12 +116,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function write(string $key, $value): bool
+    public function set($key, $value, $ttl = null)
     {
-        $this->_track('write');
-        DebugTimer::start('Cache.write ' . $key);
-        $result = $this->_engine->write($key, $value);
-        DebugTimer::stop('Cache.write ' . $key);
+        $this->_track('set');
+        DebugTimer::start('Cache.set ' . $key);
+        $result = $this->_engine->set($key, $value, $ttl);
+        DebugTimer::stop('Cache.set ' . $key);
 
         return $result;
     }
@@ -129,12 +129,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function writeMany(array $data): array
+    public function setMultiple($data, $ttl = null): bool
     {
-        $this->_track('write');
-        DebugTimer::start('Cache.writeMany');
-        $result = $this->_engine->writeMany($data);
-        DebugTimer::stop('Cache.writeMany');
+        $this->_track('set');
+        DebugTimer::start('Cache.setMultiple');
+        $result = $this->_engine->setMultiple($data);
+        DebugTimer::stop('Cache.setMultiple');
 
         return $result;
     }
@@ -142,12 +142,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function read(string $key)
+    public function get($key, $default = null)
     {
-        $this->_track('read');
-        DebugTimer::start('Cache.read ' . $key);
-        $result = $this->_engine->read($key);
-        DebugTimer::stop('Cache.read ' . $key);
+        $this->_track('get');
+        DebugTimer::start('Cache.get ' . $key);
+        $result = $this->_engine->get($key, $default);
+        DebugTimer::stop('Cache.get ' . $key);
         $metric = 'hit';
         if ($result === false) {
             $metric = 'miss';
@@ -160,12 +160,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function readMany(array $data): array
+    public function getMultiple($keys, $default = null): array
     {
-        $this->_track('read');
-        DebugTimer::start('Cache.readMany');
-        $result = $this->_engine->readMany($data);
-        DebugTimer::stop('Cache.readMany');
+        $this->_track('get');
+        DebugTimer::start('Cache.getMultiple');
+        $result = $this->_engine->getMultiple($keys);
+        DebugTimer::stop('Cache.getMultiple');
 
         return $result;
     }
@@ -175,7 +175,7 @@ class DebugEngine extends CacheEngine
      */
     public function increment(string $key, int $offset = 1)
     {
-        $this->_track('write');
+        $this->_track('set');
         DebugTimer::start('Cache.increment ' . $key);
         $result = $this->_engine->increment($key, $offset);
         DebugTimer::stop('Cache.increment ' . $key);
@@ -188,7 +188,7 @@ class DebugEngine extends CacheEngine
      */
     public function decrement(string $key, int $offset = 1)
     {
-        $this->_track('write');
+        $this->_track('set');
         DebugTimer::start('Cache.decrement ' . $key);
         $result = $this->_engine->decrement($key, $offset);
         DebugTimer::stop('Cache.decrement ' . $key);
@@ -199,7 +199,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function delete(string $key): bool
+    public function delete($key)
     {
         $this->_track('delete');
         DebugTimer::start('Cache.delete ' . $key);
@@ -212,12 +212,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function deleteMany(array $data): array
+    public function deleteMultiple($data): bool
     {
         $this->_track('delete');
-        DebugTimer::start('Cache.deleteMany');
-        $result = $this->_engine->deleteMany($data);
-        DebugTimer::stop('Cache.deleteMany');
+        DebugTimer::start('Cache.deleteMultiple');
+        $result = $this->_engine->deleteMultiple($data);
+        DebugTimer::stop('Cache.deleteMultiple');
 
         return $result;
     }
@@ -225,11 +225,11 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function clear(bool $check): bool
+    public function clear()
     {
         $this->_track('delete');
         DebugTimer::start('Cache.clear');
-        $result = $this->_engine->clear($check);
+        $result = $this->_engine->clear();
         DebugTimer::stop('Cache.clear');
 
         return $result;

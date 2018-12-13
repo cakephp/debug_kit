@@ -87,9 +87,9 @@ class DebugEngineTest extends TestCase
     public function testProxyMethodsTracksMetrics()
     {
         $this->mock->expects($this->at(0))
-            ->method('read');
+            ->method('get');
         $this->mock->expects($this->at(1))
-            ->method('write');
+            ->method('set');
         $this->mock->expects($this->at(2))
             ->method('delete');
         $this->mock->expects($this->at(3))
@@ -97,16 +97,16 @@ class DebugEngineTest extends TestCase
         $this->mock->expects($this->at(4))
             ->method('decrement');
 
-        $this->engine->read('key');
-        $this->engine->write('key', 'value');
+        $this->engine->get('key');
+        $this->engine->set('key', 'value');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
 
         $result = $this->engine->metrics();
-        $this->assertEquals(3, $result['write']);
+        $this->assertEquals(3, $result['set']);
         $this->assertEquals(1, $result['delete']);
-        $this->assertEquals(1, $result['read']);
+        $this->assertEquals(1, $result['get']);
     }
 
     /**
@@ -116,26 +116,26 @@ class DebugEngineTest extends TestCase
      */
     public function testProxyMethodsTimers()
     {
-        $this->engine->read('key');
-        $this->engine->write('key', 'value');
+        $this->engine->get('key');
+        $this->engine->set('key', 'value');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
-        $this->engine->writeMany(['key' => 'value']);
-        $this->engine->readMany(['key']);
-        $this->engine->deleteMany(['key']);
+        $this->engine->setMultiple(['key' => 'value']);
+        $this->engine->getMultiple(['key']);
+        $this->engine->deleteMultiple(['key']);
         $this->engine->clearGroup('group');
 
         $result = DebugTimer::getAll();
         $this->assertCount(10, $result);
-        $this->assertArrayHasKey('Cache.read key', $result);
-        $this->assertArrayHasKey('Cache.write key', $result);
+        $this->assertArrayHasKey('Cache.get key', $result);
+        $this->assertArrayHasKey('Cache.set key', $result);
         $this->assertArrayHasKey('Cache.delete key', $result);
         $this->assertArrayHasKey('Cache.increment key', $result);
         $this->assertArrayHasKey('Cache.decrement key', $result);
-        $this->assertArrayHasKey('Cache.readMany', $result);
-        $this->assertArrayHasKey('Cache.writeMany', $result);
-        $this->assertArrayHasKey('Cache.deleteMany', $result);
+        $this->assertArrayHasKey('Cache.getMultiple', $result);
+        $this->assertArrayHasKey('Cache.setMultiple', $result);
+        $this->assertArrayHasKey('Cache.deleteMultiple', $result);
         $this->assertArrayHasKey('Cache.clearGroup group', $result);
     }
 

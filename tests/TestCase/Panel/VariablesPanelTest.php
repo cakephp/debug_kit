@@ -17,6 +17,7 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\View\ViewVarsTrait;
 use DebugKit\Panel\VariablesPanel;
+use DebugKit\TestApp\Form\TestForm;
 
 /**
  * Class VariablesPanelTest
@@ -93,12 +94,20 @@ class VariablesPanelTest extends TestCase
             'unbufferedQuery' => $unbufferedQuery,
             'result set' => $result,
             'string' => 'yes',
-            'array' => ['some' => 'key']
+            'array' => ['some' => 'key'],
+            'notSerializableForm' => new TestForm(),
         ]);
         $event = new Event('Controller.shutdown', $controller);
         $this->panel->shutdown($event);
         $output = $this->panel->data();
 
+        array_walk_recursive($output, function ($item) {
+            try {
+                serialize($item);
+            } catch (\Exception $e) {
+                $this->fail('Panel Output content is not serializable');
+            }
+        });
         $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
         $this->assertInternalType('array', $output['content']['unserializableDebugInfo']);
         $this->assertStringStartsWith(

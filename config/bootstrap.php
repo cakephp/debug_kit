@@ -71,4 +71,4 @@ if (!function_exists('sqld')) {
     {
         DebugSql::sqld($query, $showValues, $showHtml, 2);
     }
-}
+

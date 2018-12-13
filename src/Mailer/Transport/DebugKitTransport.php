@@ -81,4 +81,61 @@ class DebugKitTransport extends AbstractTransport
 
         return $result;
     }
+
+    /**
+     * Proxy unknown methods to the wrapped object
+     *
+     * @param string $method The method to call
+     * @param array $args The args to call $method with.
+     * @return mixed
+     */
+    public function __call($method, array $args)
+    {
+        return call_user_func_array([$this->originalTransport, $method], $args);
+    }
+
+    /**
+     * Proxy property reads to the wrapped object
+     *
+     * @param string $name The property to read.
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this->originalTransport->{$name};
+    }
+
+    /**
+     * Proxy property changes to the wrapped object
+     *
+     * @param string $name The property to read.
+     * @param mixed $value The property value.
+     * @return mixed
+     */
+    public function __set($name, $value)
+    {
+        return $this->originalTransport->{$name} = $value;
+    }
+
+    /**
+     * Proxy property changes to the wrapped object
+     *
+     * @param string $name The property to read.
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset($this->originalTransport->{$name});
+    }
+
+    /**
+     * Proxy property changes to the wrapped object
+     *
+     * @param string $name The property to delete.
+     * @return void
+     */
+    public function __unset($name)
+    {
+        unset($this->originalTransport->{$name});
+    }
 }

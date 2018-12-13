@@ -61,7 +61,7 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      */
     protected function _throwMissingClassError(string $class, ?string $plugin): void
     {
-        throw new \RuntimeException(__d('debug_kit', "Unable to find '{0}' panel.", $class));
+        throw new \RuntimeException(__d('debug_kit', "Unable to find ''{0}'' panel.", $class));
     }
 
     /**

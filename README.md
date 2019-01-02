@@ -17,8 +17,6 @@ configuration data and environment variables hidden. :warning:
 
 The `master` branch has the following requirements:
 
-* CakePHP 3.6.0 or greater.
-* PHP 5.6.0 or greater.
 * SQLite (pdo_sqlite) or another database driver that CakePHP can talk to. By
   default DebugKit will use SQLite, if you need to use a different database see
   the Database Configuration section below.
@@ -31,7 +29,7 @@ If you want DebugKit for your 2.x application, you can use the latest `2.2.y` ta
 
 * Install the plugin with [Composer](https://getcomposer.org/) from your CakePHP Project's ROOT directory (where the **composer.json** file is located)
 ```sh
-php composer.phar require --dev cakephp/debug_kit "~3.0"
+php composer.phar require --dev cakephp/debug_kit:"~3.0"
 ```
 
 * [Load the plugin](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin)

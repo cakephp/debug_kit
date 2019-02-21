@@ -44,7 +44,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Plugin::getCollection()->add(new \DebugkitTestPlugin\Plugin());
+        Plugin::getCollection()->add(new \Debugkit\Plugin());
         Router::scope('/', function ($routes) {
             $routes->connect('/users/:action/*', ['controller' => 'Users']);
         });

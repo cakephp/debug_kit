@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,7 +15,6 @@ namespace DebugKit\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Entity\Panel;
 
 /**
  * The panels table collects the information for each panel on
@@ -30,7 +30,6 @@ use DebugKit\Model\Entity\Panel;
  */
 class PanelsTable extends Table
 {
-
     use LazyTableTrait;
 
     /**

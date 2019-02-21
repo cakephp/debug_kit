@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -30,7 +31,6 @@ use DebugKit\ToolbarService;
  */
 class ToolbarServiceTest extends TestCase
 {
-
     /**
      * Fixtures
      *
@@ -38,7 +38,7 @@ class ToolbarServiceTest extends TestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -96,7 +96,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, ['panels' => [
             'DebugKit.SqlLog' => false,
             'DebugKit.Cache' => true,
-            'DebugKit.Session'
+            'DebugKit.Session',
         ]]);
         $bar->loadPanels();
 
@@ -131,12 +131,12 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'params' => ['plugin' => null, 'requested' => 1]
+            'params' => ['plugin' => null, 'requested' => 1],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new ToolbarService($this->events, []);
@@ -152,12 +152,12 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/debug_kit/panel/abc123',
-            'params' => []
+            'params' => [],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new ToolbarService($this->events, []);
@@ -173,12 +173,12 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/debug-kit/panel/abc123',
-            'params' => []
+            'params' => [],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new ToolbarService($this->events, []);
@@ -194,12 +194,12 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET']
+            'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new ToolbarService($this->events, []);
@@ -235,12 +235,12 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET']
+            'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new ToolbarService($this->events, []);
@@ -254,7 +254,7 @@ class ToolbarServiceTest extends TestCase
             '<script id="__debug_kit" data-id="' . $row->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
-        $this->assertTextEquals($expected, $response->getBody());
+        $this->assertTextEquals($expected, (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
@@ -267,7 +267,7 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'params' => ['plugin' => null]
+            'params' => ['plugin' => null],
         ]);
         $response = new Response([
             'statusCode' => 200,
@@ -293,7 +293,7 @@ class ToolbarServiceTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'params' => ['plugin' => null]
+            'params' => ['plugin' => null],
         ]);
         $response = new Response([
             'statusCode' => 200,
@@ -325,7 +325,7 @@ class ToolbarServiceTest extends TestCase
         $response = new Response([
             'statusCode' => 200,
             'type' => 'application/json',
-            'body' => '{"some":"json"}'
+            'body' => '{"some":"json"}',
         ]);
 
         $bar = new ToolbarService($this->events, []);
@@ -333,7 +333,7 @@ class ToolbarServiceTest extends TestCase
 
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
-        $this->assertTextEquals('{"some":"json"}', $response->getBody());
+        $this->assertTextEquals('{"some":"json"}', (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
@@ -435,7 +435,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, [
             'forceEnable' => function () {
                 return true;
-            }
+            },
         ]);
         $this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
     }

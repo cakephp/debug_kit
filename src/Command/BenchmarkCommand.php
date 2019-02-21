@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -32,7 +33,6 @@ use Cake\Utility\Text;
  */
 class BenchmarkCommand extends Command
 {
-
     /**
      * The console io
      *
@@ -88,20 +88,20 @@ class BenchmarkCommand extends Command
         $this->io->out("");
 
         $this->io->out(Text::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
-                'rps' => round($requests / $duration, 3)
+                'rps' => round($requests / $duration, 3),
         ]));
 
         $this->io->out(Text::insert(__d('debug_kit', 'Average request time: :average-time seconds'), [
-                'average-time' => round($duration / $requests, 3)
+                'average-time' => round($duration / $requests, 3),
         ]));
 
         $this->io->out(Text::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), [
-                'std-dev' => round($this->_deviation($times, true), 3)
+                'std-dev' => round($this->_deviation($times, true), 3),
         ]));
 
         $this->io->out(Text::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), [
                 'longest' => round(max($times), 3),
-                'shortest' => round(min($times), 3)
+                'shortest' => round(min($times), 3),
         ]));
 
         $this->io->out("");
@@ -164,11 +164,11 @@ class BenchmarkCommand extends Command
         ))
         ->addArgument('url', [
             'help' => __d('debug_kit', 'The URL to request.'),
-            'required' => true
+            'required' => true,
         ])
         ->addOption('n', [
             'default' => 10,
-            'help' => __d('debug_kit', 'Number of iterations to perform.')
+            'help' => __d('debug_kit', 'Number of iterations to perform.'),
         ])
         ->addOption('t', [
             'default' => 100,
@@ -176,7 +176,7 @@ class BenchmarkCommand extends Command
                 'debug_kit',
                 'Maximum total time for all iterations, in seconds.' .
                 'If a single iteration takes more than the timeout, only one request will be made'
-            )
+            ),
         ])
         ->setEpilog(__d(
             'debug_kit',

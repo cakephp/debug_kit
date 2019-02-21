@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -26,7 +27,6 @@ use Psr\Log\AbstractLogger as PsrAbstractLogger;
  */
 class DebugLog extends QueryLogger
 {
-
     /**
      * Logs from the current request.
      *
@@ -166,7 +166,7 @@ class DebugLog extends QueryLogger
         $this->_queries[] = [
             'query' => $query->query,
             'took' => $query->took,
-            'rows' => $query->numRows
+            'rows' => $query->numRows,
         ];
     }
 
@@ -180,8 +180,7 @@ class DebugLog extends QueryLogger
     {
         $querystring = $query->query;
 
-        return (
-            // Multiple engines
+        return // Multiple engines
             strpos($querystring, 'FROM information_schema') !== false ||
             // Postgres
             strpos($querystring, 'FROM pg_catalog') !== false ||
@@ -194,7 +193,6 @@ class DebugLog extends QueryLogger
             strpos($querystring, 'PRAGMA') === 0 ||
             // Sqlserver
             strpos($querystring, 'FROM INFORMATION_SCHEMA') !== false ||
-            strpos($querystring, 'FROM sys.') !== false
-        );
+            strpos($querystring, 'FROM sys.') !== false;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Test Panel of test_app
  *
@@ -20,7 +21,6 @@ use DebugKit\Mailer\MailPreview;
 
 class TestMailerPreview extends MailPreview
 {
-
     /**
      * Test email
      */

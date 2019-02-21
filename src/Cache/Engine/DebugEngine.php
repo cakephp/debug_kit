@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +25,6 @@ use DebugKit\DebugTimer;
  */
 class DebugEngine extends CacheEngine
 {
-
     /**
      * Proxied cache engine config.
      *
@@ -75,7 +75,7 @@ class DebugEngine extends CacheEngine
 
             return true;
         }
-        $registry = new CacheRegistry;
+        $registry = new CacheRegistry();
         $this->_engine = $registry->load('spies', $this->_config);
         unset($registry);
 
@@ -290,7 +290,7 @@ class DebugEngine extends CacheEngine
     public function __toString()
     {
         if (!empty($this->_engine)) {
-            list($ns, $class) = namespaceSplit(get_class($this->_engine));
+            [$ns, $class] = namespaceSplit(get_class($this->_engine));
 
             return str_replace('Engine', '', $class);
         }

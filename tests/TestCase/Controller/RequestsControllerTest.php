@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -22,7 +23,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class RequestsControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures.
      *
@@ -30,7 +30,7 @@ class RequestsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**

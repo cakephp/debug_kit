@@ -44,7 +44,7 @@ class RequestsFixture extends TestFixture
         'requested_at' => ['type' => 'datetime', 'null' => false],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
-        ]
+        ],
     ];
 
     /**
@@ -58,8 +58,8 @@ class RequestsFixture extends TestFixture
             'url' => '/tasks/add',
             'content_type' => 'text/html',
             'status_code' => 200,
-            'requested_at' => '2014-08-21 7:41:12'
-        ]
+            'requested_at' => '2014-08-21 7:41:12',
+        ],
     ];
 
     /**

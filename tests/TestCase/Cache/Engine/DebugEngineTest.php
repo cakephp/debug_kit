@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,8 +14,6 @@
  */
 namespace DebugKit\Test\TestCase\Cache\Engine;
 
-use BadMethodCallException;
-use Cake\Cache\CacheEngine;
 use Cake\TestSuite\TestCase;
 use DebugKit\Cache\Engine\DebugEngine;
 use DebugKit\DebugTimer;
@@ -58,7 +57,7 @@ class DebugEngineTest extends TestCase
     {
         $engine = new DebugEngine([
             'className' => 'File',
-            'path' => TMP
+            'path' => TMP,
         ]);
         $this->assertTrue($engine->init());
         $this->assertInstanceOf('Cake\Cache\Engine\FileEngine', $engine->engine());
@@ -74,7 +73,7 @@ class DebugEngineTest extends TestCase
     {
         $engine = new DebugEngine([
             'className' => 'Derpy',
-            'path' => TMP
+            'path' => TMP,
         ]);
         $engine->init();
     }
@@ -149,7 +148,7 @@ class DebugEngineTest extends TestCase
         $engine = new DebugEngine([
             'className' => 'File',
             'path' => TMP,
-            'groups' => ['test', 'test2']
+            'groups' => ['test', 'test2'],
         ]);
         $engine->init();
         $result = $engine->groups();
@@ -165,7 +164,7 @@ class DebugEngineTest extends TestCase
     {
         $engine = new DebugEngine([
             'className' => 'File',
-            'path' => TMP
+            'path' => TMP,
         ]);
         $engine->init();
 
@@ -185,7 +184,7 @@ class DebugEngineTest extends TestCase
         $engine = new DebugEngine([
             'className' => 'File',
             'path' => TMP,
-            'groups' => ['test', 'test2']
+            'groups' => ['test', 'test2'],
         ]);
         $this->assertEquals('File', (string)$engine);
     }

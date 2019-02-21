@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -28,7 +29,6 @@ use Iterator;
  */
 class ToolbarHelper extends Helper
 {
-
     /**
      * helpers property
      *
@@ -47,6 +47,7 @@ class ToolbarHelper extends Helper
      * set sorting of values
      *
      * @param bool $sort Whether or not sort values by key
+     * @return void
      */
     public function setSort($sort)
     {
@@ -64,8 +65,13 @@ class ToolbarHelper extends Helper
      * the path.
      * @return string
      */
-    public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false, \SplObjectStorage $currentAncestors = null)
-    {
+    public function makeNeatArray(
+        $values,
+        $openDepth = 0,
+        $currentDepth = 0,
+        $doubleEncode = false,
+        ?\SplObjectStorage $currentAncestors = null
+    ) {
         if ($currentAncestors === null) {
             $ancestors = new \SplObjectStorage();
         } elseif (is_object($values)) {

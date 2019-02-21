@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -77,7 +78,7 @@ class VariablesPanelTest extends TestCase
             ->setMethods(['__debugInfo'])
             ->getMock();
         $unserializableDebugInfo->expects($this->once())->method('__debugInfo')->willReturn([
-            'unserializable' => $unserializable
+            'unserializable' => $unserializable,
         ]);
 
         $resource = fopen('data:text/plain;base64,', 'r');

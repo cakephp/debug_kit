@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace DebugKit\Mailer\Transport;
 
 use Cake\Core\App;
@@ -14,7 +15,7 @@ class DebugKitTransport extends AbstractTransport
     /**
      * The transport object this class is decorating
      *
-     * @var AbstractTransport
+     * @var \Cake\Mailer\AbstractTransport
      */
     protected $originalTransport;
 
@@ -30,9 +31,9 @@ class DebugKitTransport extends AbstractTransport
      * Constructor
      *
      * @param array $config Configuration options.
-     * @param AbstractTransport|null $originalTransport The transport that is to be decorated
+     * @param \Cake\Mailer\AbstractTransport|null $originalTransport The transport that is to be decorated
      */
-    public function __construct($config = [], AbstractTransport $originalTransport = null)
+    public function __construct($config = [], ?AbstractTransport $originalTransport = null)
     {
         $this->emailLog = $config['debugKitLog'];
 
@@ -68,7 +69,7 @@ class DebugKitTransport extends AbstractTransport
         $headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc']);
         $parts = [
             'text' => $email->message(Email::MESSAGE_TEXT),
-            'html' => $email->message(Email::MESSAGE_HTML)
+            'html' => $email->message(Email::MESSAGE_HTML),
         ];
 
         $headers['Subject'] = $email->getOriginalSubject();

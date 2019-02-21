@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,10 +14,7 @@
 namespace DebugKit;
 
 use Cake\Core\Plugin as CorePlugin;
-use Cake\Event\Event;
-use Cake\Utility\Hash;
 use Composer\Json\JsonFile;
-use DebugKit\DebugPanel;
 
 /**
  * Contains methods for Providing list of files.
@@ -24,7 +22,6 @@ use DebugKit\DebugPanel;
  */
 class DebugInclude
 {
-
     /**
      * The list of plugins within the application
      *
@@ -48,7 +45,7 @@ class DebugInclude
         'Auth', 'Cache', 'Collection', 'Config', 'Configure', 'Console', 'Component', 'Controller',
         'Behavior', 'Database', 'Datasource', 'Model', 'Template', 'View', 'Utility',
         'Network', 'Routing', 'I18n', 'Log', 'Error', 'Event', 'Form', 'Filesystem',
-        'ORM', 'Filter', 'Validation'
+        'ORM', 'Filter', 'Validation',
     ];
 
     /**
@@ -68,7 +65,9 @@ class DebugInclude
             $packages = array_merge($lockContent['packages'], $lockContent['packages-dev']);
 
             foreach ($packages as $package) {
-                $this->_composerPaths[$package['name']] = $vendorDir . str_replace('/', DIRECTORY_SEPARATOR, $package['name']) . DIRECTORY_SEPARATOR;
+                $this->_composerPaths[$package['name']] = $vendorDir
+                    . str_replace('/', DIRECTORY_SEPARATOR, $package['name'])
+                    . DIRECTORY_SEPARATOR;
             }
         }
     }

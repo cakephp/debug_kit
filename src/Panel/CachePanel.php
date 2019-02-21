@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -22,11 +23,10 @@ use DebugKit\DebugPanel;
  */
 class CachePanel extends DebugPanel
 {
-
     /**
      * The cache spy instances used.
      *
-     * @var DebugEngine[]
+     * @var \DebugKit\Cache\Engine\DebugEngine[]
      */
     protected $_instances = [];
 
@@ -63,7 +63,7 @@ class CachePanel extends DebugPanel
         }
 
         return [
-            'metrics' => $metrics
+            'metrics' => $metrics,
         ];
     }
 }

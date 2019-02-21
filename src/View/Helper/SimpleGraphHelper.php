@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +25,6 @@ use Cake\View\Helper;
  */
 class SimpleGraphHelper extends Helper
 {
-
     /**
      * Default settings to be applied to each Simple Graph
      *

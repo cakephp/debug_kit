@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -15,7 +16,6 @@ namespace DebugKit\Model\Table;
 use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Entity\Request;
 
 /**
  * The requests table tracks basic information about each request.
@@ -30,7 +30,6 @@ use DebugKit\Model\Entity\Request;
  */
 class RequestsTable extends Table
 {
-
     use LazyTableTrait;
 
     /**
@@ -46,8 +45,8 @@ class RequestsTable extends Table
         ]);
         $this->addBehavior('Timestamp', [
             'events' => [
-                'Model.beforeSave' => ['requested_at' => 'new']
-            ]
+                'Model.beforeSave' => ['requested_at' => 'new'],
+            ],
         ]);
         $this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
     }
@@ -67,7 +66,7 @@ class RequestsTable extends Table
      *
      * @param \Cake\ORM\Query $query The query
      * @param array $options The options
-     * @return Query The query.
+     * @return \Cake\ORM\Query The query.
      */
     public function findRecent(Query $query, array $options)
     {

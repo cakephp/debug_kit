@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,7 +14,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use DebugKit\DebugPanel;
@@ -23,7 +23,6 @@ use DebugKit\DebugPanel;
  */
 class RoutesPanel extends DebugPanel
 {
-
     /**
      * Get summary data for the routes panel.
      *

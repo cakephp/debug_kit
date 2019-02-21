@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -65,12 +66,12 @@ class DeprecationsPanelTest extends TestCase
         $error = $data['plugins']['DebugKit'][0];
         $this->assertContains('Something going away', $error['message']);
         $this->assertEquals('DebugKit/tests/TestCase/Panel/DeprecationsPanelTest.php', $error['niceFile']);
-        $this->assertEquals(45, $error['line']);
+        $this->assertEquals(46, $error['line']);
 
         $error = $data['plugins']['DebugKit'][2];
         $this->assertContains('Raw error', $error['message']);
         $this->assertEquals('DebugKit/tests/TestCase/Panel/DeprecationsPanelTest.php', $error['niceFile']);
-        $this->assertEquals(47, $error['line']);
+        $this->assertEquals(48, $error['line']);
     }
 
     public function testSummary()

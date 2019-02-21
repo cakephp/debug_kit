@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,7 +15,6 @@ namespace DebugKit\Panel;
 
 use Cake\Event\Event;
 use Cake\Utility\Hash;
-use Composer\Json\JsonFile;
 use DebugKit\DebugInclude;
 use DebugKit\DebugPanel;
 
@@ -24,7 +24,6 @@ use DebugKit\DebugPanel;
  */
 class DeprecationsPanel extends DebugPanel
 {
-
     /**
      * The list of depreated errors.
      *

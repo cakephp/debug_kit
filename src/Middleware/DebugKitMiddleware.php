@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -28,9 +29,9 @@ class DebugKitMiddleware
     /**
      * Constructor
      *
-     * @param DebugKit\ToolbarService $service The configured service, or null.
+     * @param \DebugKit\Middleware\DebugKit\ToolbarService $service The configured service, or null.
      */
-    public function __construct(ToolbarService $service = null)
+    public function __construct(?ToolbarService $service = null)
     {
         $service = $service ?: new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
         $this->service = $service;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,8 +14,6 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Database\Driver\Sqlite;
-use Cake\Datasource\ConnectionManager;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
@@ -24,7 +23,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class PanelsControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures.
      *
@@ -32,7 +30,7 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -59,7 +57,7 @@ class PanelsControllerTest extends IntegrationTestCase
         $this->configRequest([
             'headers' => [
                 'accept' => 'application/json, text/javascript, */*; q=0.01',
-            ]
+            ],
         ]);
 
         $this->get('/debug-kit/panels/index/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');

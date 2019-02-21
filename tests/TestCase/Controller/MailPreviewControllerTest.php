@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +25,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class MailPreviewControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures.
      *
@@ -32,7 +32,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -124,9 +124,9 @@ class MailPreviewControllerTest extends IntegrationTestCase
             'emails' => [
                 [
                     'headers' => ['To' => 'test@example.com'],
-                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi']
-                ]
-            ]
+                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi'],
+                ],
+            ],
         ];
         $panel->content = serialize($data);
         $panels->save($panel);
@@ -150,9 +150,9 @@ class MailPreviewControllerTest extends IntegrationTestCase
             'emails' => [
                 [
                     'headers' => ['To' => 'test@example.com'],
-                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi']
-                ]
-            ]
+                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi'],
+                ],
+            ],
         ];
         $panel->content = serialize($data);
         $panels->save($panel);

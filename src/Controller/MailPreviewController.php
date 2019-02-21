@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,7 +14,6 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Collection\CollectionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
@@ -25,8 +25,6 @@ use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
 use DebugKit\Mailer\SentMailResult;
-use PDOException;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Provides access to the MailPreview classes for visually debugging email sending
@@ -192,7 +190,7 @@ class MailPreviewController extends Controller
         return collection([$appPaths])
             ->append($pluginPaths)
             ->unfold(function ($pairs) {
-                list($paths, $plugin) = $pairs;
+                [$paths, $plugin] = $pairs;
                 foreach ($paths as $path) {
                     yield $plugin => $path;
                 }
@@ -202,7 +200,7 @@ class MailPreviewController extends Controller
                     $base = str_replace(".php", "", basename($file));
                     $class = App::className($plugin . $base, 'Mailer/Preview');
                     if ($class) {
-                        yield ['plugin' => trim($plugin, '.'), 'class' => new $class];
+                        yield ['plugin' => trim($plugin, '.'), 'class' => new $class()];
                     }
                 }
             });
@@ -269,11 +267,16 @@ class MailPreviewController extends Controller
         if (!$realClass) {
             throw new NotFoundException("Mailer preview ${previewName} not found");
         }
-        $mailPreview = new $realClass;
+        $mailPreview = new $realClass();
 
         $email = $mailPreview->find($emailName);
         if (!$email) {
-            throw new NotFoundException(__d('debug_kit', "Mailer preview {0}::{1} not found", $previewName, $emailName));
+            throw new NotFoundException(__d(
+                'debug_kit',
+                "Mailer preview {0}::{1} not found",
+                $previewName,
+                $emailName
+            ));
         }
 
         return new PreviewResult($mailPreview->$email(), $email);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -14,8 +15,6 @@ namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\SqlLogPanel;
@@ -25,7 +24,6 @@ use DebugKit\Panel\SqlLogPanel;
  */
 class SqlLogPanelTest extends TestCase
 {
-
     /**
      * fixtures.
      *

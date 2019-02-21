@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,7 +15,6 @@ namespace DebugKit\Panel;
 
 use Cake\Event\Event;
 use Cake\Utility\Hash;
-use Composer\Json\JsonFile;
 use DebugKit\DebugInclude;
 use DebugKit\DebugPanel;
 
@@ -24,7 +24,6 @@ use DebugKit\DebugPanel;
  */
 class IncludePanel extends DebugPanel
 {
-
     /**
      * instance of DebugInclude
      *
@@ -53,7 +52,11 @@ class IncludePanel extends DebugPanel
             $pluginName = $this->_debug->getPluginName($file);
 
             if ($pluginName) {
-                $return['plugins'][$pluginName][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'plugin', $pluginName);
+                $return['plugins'][$pluginName][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName(
+                    $file,
+                    'plugin',
+                    $pluginName
+                );
             } elseif ($this->_debug->isAppFile($file)) {
                 $return['app'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'app');
             } elseif ($this->_debug->isCakeFile($file)) {

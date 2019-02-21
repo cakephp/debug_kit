@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -22,7 +23,6 @@ use DebugKit\DebugTimer;
  */
 class DebugTimerTest extends TestCase
 {
-
     /**
      * tearDown method
      *
@@ -50,7 +50,7 @@ class DebugTimerTest extends TestCase
         sleep(1);
         $this->assertTrue(DebugTimer::stop('test2'));
         $elapsed = DebugTimer::elapsedTime('test2');
-        $expected = stripos(PHP_OS, 'win') === false ? 0.999: 0.95; // Windows timer's precision is bad
+        $expected = stripos(PHP_OS, 'win') === false ? 0.999 : 0.95; // Windows timer's precision is bad
         $this->assertTrue($elapsed >= $expected);
 
         DebugTimer::start('test3');

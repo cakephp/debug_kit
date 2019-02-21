@@ -9,30 +9,16 @@ declare(strict_types=1);
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         4.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Panel;
+namespace DebugKit\TestApp\Panel;
 
-use Cake\Event\Event;
 use DebugKit\DebugPanel;
 
 /**
- * Provides debug information on the Session contents.
+ * Testing stub.
  */
-class SessionPanel extends DebugPanel
+class SimplePanel extends DebugPanel
 {
-    /**
-     * shutdown callback
-     *
-     * @param \Cake\Event\Event $event The event
-     * @return void
-     */
-    public function shutdown(Event $event)
-    {
-        /* @var Request $request */
-        $request = $event->getSubject()->getRequest();
-        if ($request) {
-            $this->_data = ['content' => $request->getSession()->read()];
-        }
-    }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,7 +13,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Controller\Controller;
 use Cake\Event\Event;
 use DebugKit\DebugPanel;
 
@@ -22,7 +22,6 @@ use DebugKit\DebugPanel;
  */
 class RequestPanel extends DebugPanel
 {
-
     /**
      * Data collection callback.
      *

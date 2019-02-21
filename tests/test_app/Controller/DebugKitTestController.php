@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * DebugKit TestController of test_app
  *
@@ -26,7 +27,6 @@ use Cake\Controller\Controller;
  */
 class DebugKitTestController extends Controller
 {
-
     /**
      * Mame of the Controller
      *

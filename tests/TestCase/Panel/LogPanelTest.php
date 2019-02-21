@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,7 +15,6 @@ namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
-use DebugKit\Log\Engine\DebugKitLog;
 use DebugKit\Panel\LogPanel;
 
 /**

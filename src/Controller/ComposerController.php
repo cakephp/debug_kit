@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -27,7 +28,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class ComposerController extends Controller
 {
-
     /**
      * {@inheritDoc}
      */
@@ -95,8 +95,8 @@ class ComposerController extends Controller
     }
 
     /**
-     * @param ArrayInput $input An array describing the command input
-     * @return BufferedOutput Aa Console command buffered result
+     * @param \Symfony\Component\Console\Input\ArrayInput $input An array describing the command input
+     * @return \Symfony\Component\Console\Output\BufferedOutput Aa Console command buffered result
      */
     private function executeComposerCommand(ArrayInput $input)
     {

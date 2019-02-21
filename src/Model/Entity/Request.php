@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace DebugKit\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -11,5 +12,4 @@ use Cake\ORM\Entity;
  */
 class Request extends Entity
 {
-
 }

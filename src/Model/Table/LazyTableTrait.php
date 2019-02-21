@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -13,8 +14,6 @@
 namespace DebugKit\Model\Table;
 
 use Cake\Core\App;
-use Cake\Database\Connection;
-use Cake\Datasource\FixtureInterface;
 use PDOException;
 
 /**
@@ -27,7 +26,6 @@ use PDOException;
  */
 trait LazyTableTrait
 {
-
     /**
      * Ensures the tables for the given fixtures exist in the schema.
      *

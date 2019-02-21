@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -22,7 +23,6 @@ use DebugKit\DebugTimer;
  */
 class TimerPanel extends DebugPanel
 {
-
     /**
      * Return an array of events to listen to.
      *
@@ -43,7 +43,7 @@ class TimerPanel extends DebugPanel
         $both = function ($name) use ($before, $after) {
             return [
                 ['priority' => 0, 'callable' => $before('Event: ' . $name)],
-                ['priority' => 999, 'callable' => $after('Event: ' . $name)]
+                ['priority' => 999, 'callable' => $after('Event: ' . $name)],
             ];
         };
 
@@ -53,7 +53,7 @@ class TimerPanel extends DebugPanel
                     DebugMemory::record(__d('debug_kit', 'Controller initialization'));
                 }],
                 ['priority' => 0, 'callable' => $before('Event: Controller.initialize')],
-                ['priority' => 999, 'callable' => $after('Event: Controller.initialize')]
+                ['priority' => 999, 'callable' => $after('Event: Controller.initialize')],
             ],
             'Controller.startup' => [
                 ['priority' => 0, 'callable' => $before('Event: Controller.startup')],

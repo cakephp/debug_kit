@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,7 +14,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use DebugKit\DebugPanel;
@@ -24,7 +24,6 @@ use DebugKit\DebugPanel;
  */
 class EnvironmentPanel extends DebugPanel
 {
-
     /**
      * Get necessary data about environment to pass back to controller
      *
@@ -65,7 +64,7 @@ class EnvironmentPanel extends DebugPanel
             'ROOT' => ROOT,
             'TESTS' => TESTS,
             'TMP' => TMP,
-            'WWW_ROOT' => WWW_ROOT
+            'WWW_ROOT' => WWW_ROOT,
         ];
 
         $hiddenCakeConstants = array_fill_keys(

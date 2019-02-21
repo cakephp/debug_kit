@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,11 +25,10 @@ use ReflectionClass;
  */
 class MailPanel extends DebugPanel
 {
-
     /**
      * The list of emails produced during the request
      *
-     * @var ArrayObject
+     * @var \ArrayObject
      */
     protected $emailLog;
 
@@ -44,7 +44,7 @@ class MailPanel extends DebugPanel
         $property->setAccessible(true);
         $configs = $property->getValue();
 
-        $log = $this->emailLog = new ArrayObject;
+        $log = $this->emailLog = new ArrayObject();
 
         foreach ($configs as $name => &$transport) {
             if (is_object($transport)) {
@@ -73,7 +73,7 @@ class MailPanel extends DebugPanel
     public function data()
     {
         return [
-            'emails' => isset($this->emailLog) ? $this->emailLog->getArrayCopy() : []
+            'emails' => isset($this->emailLog) ? $this->emailLog->getArrayCopy() : [],
         ];
     }
 

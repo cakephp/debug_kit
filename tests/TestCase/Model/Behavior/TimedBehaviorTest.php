@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,7 +14,6 @@
  */
 namespace DebugKit\Test\TestCase\Model\Behavior;
 
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugTimer;
@@ -23,7 +23,6 @@ use DebugKit\DebugTimer;
  */
 class TimedBehaviorTest extends TestCase
 {
-
     /**
      * Fixtures
      *

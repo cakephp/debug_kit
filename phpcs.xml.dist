@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="CakePHP Core">
- <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml">
-    <!-- Exclude unwanted sniffs -->
-    <exclude name="Generic.Commenting.Todo.TaskFound"/> <!-- Excluded during 3.next development -->
- </rule>
+<ruleset name="CakePHP DebugKit">
+    <config name="installed_paths" value="../../cakephp/cakephp-codesniffer" />
 
- <!-- Necessary for class aliases used for backwards compat -->
- <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
-  <severity>0</severity>
- </rule>
+    <rule ref="CakePHP" />
 </ruleset>

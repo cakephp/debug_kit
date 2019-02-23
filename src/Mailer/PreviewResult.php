@@ -52,20 +52,7 @@ class PreviewResult extends AbstractResult
         $prop->setAccessible(true);
         $email = $prop->getValue($mailer);
 
-        $reflection = new ReflectionClass($email);
-        $prop = $reflection->getProperty('renderer');
-        $prop->setAccessible(true);
-        $renderer = $prop->getValue($email);
-
-        $reflection = new ReflectionClass($renderer);
-        $prop = $reflection->getProperty('email');
-        $prop->setAccessible(true);
-        $prop->setValue($renderer, $email);
-
-        $method = $reflection->getMethod('renderTemplates');
-        $closure = $method->getClosure($renderer);
-
-        $this->parts = $closure('');
+        $this->parts = $email->getRenderer()->renderTemplates($email, '');
 
         $extra = ['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'];
         $this->headers = array_filter($email->getHeaders($extra));

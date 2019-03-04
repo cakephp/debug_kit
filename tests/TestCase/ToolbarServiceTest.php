@@ -382,7 +382,7 @@ class ToolbarServiceTest extends TestCase
             ['10.14.34.5:80', true],
             ['myapp.localhost', true],
             ['myapp.local', true],
-            ['myapp.dev', true],
+            ['myapp.dev', false],
             ['myapp', true],
             ['myapp.invalid', true],
             ['myapp.test', true],

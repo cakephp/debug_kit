@@ -131,7 +131,7 @@ class ToolbarService
         }
 
         $tld = end($host);
-        $safeTopLevelDomains = ['localhost', 'dev', 'invalid', 'test', 'example', 'local'];
+        $safeTopLevelDomains = ['localhost', 'invalid', 'test', 'example', 'local'];
         $safeTopLevelDomains = array_merge($safeTopLevelDomains, (array)$this->getConfig('safeTld'));
 
         if (!in_array($tld, $safeTopLevelDomains, true) && !$this->getConfig('forceEnable')) {

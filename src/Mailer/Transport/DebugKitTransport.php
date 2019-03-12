@@ -4,7 +4,7 @@ namespace DebugKit\Mailer\Transport;
 
 use Cake\Core\App;
 use Cake\Mailer\AbstractTransport;
-use Cake\Mailer\Email;
+use Cake\Mailer\Message;
 
 /**
  * Debug Transport class, useful for emulating the email sending process and inspecting
@@ -61,23 +61,23 @@ class DebugKitTransport extends AbstractTransport
     /**
      * Send mail
      *
-     * @param \Cake\Mailer\Email $email Cake Email
+     * @param \Cake\Mailer\Message $message Cake Email
      * @return array
      */
-    public function send(Email $email): array
+    public function send(Message $message): array
     {
-        $headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc']);
+        $headers = $message->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc']);
         $parts = [
-            'text' => $email->message(Email::MESSAGE_TEXT),
-            'html' => $email->message(Email::MESSAGE_HTML),
+            'text' => $message->message(Message::MESSAGE_TEXT),
+            'html' => $message->message(Message::MESSAGE_HTML),
         ];
 
-        $headers['Subject'] = $email->getOriginalSubject();
+        $headers['Subject'] = $message->getOriginalSubject();
         $result = ['headers' => $headers, 'message' => $parts];
         $this->emailLog[] = $result;
 
         if ($this->originalTransport !== null) {
-            return $this->originalTransport->send($email);
+            return $this->originalTransport->send($message);
         }
 
         return $result;

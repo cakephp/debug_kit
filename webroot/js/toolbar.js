@@ -94,15 +94,15 @@ if (elem) {
 
   // Bind on ready callback.
   if (doc.addEventListener) {
-    doc.addEventListener('DOMContentLoaded', onReady, false);
-    doc.addEventListener('DOMContentLoaded', proxyAjaxOpen, false);
-    doc.addEventListener('DOMContentLoaded', proxyAjaxSend, false);
+    if (!window.__debugKitListenersApplied) {
+      doc.addEventListener('DOMContentLoaded', onReady, false);
+      doc.addEventListener('DOMContentLoaded', proxyAjaxOpen, false);
+      doc.addEventListener('DOMContentLoaded', proxyAjaxSend, false);
 
-    if (!window.__debugKitTurbolinksListenerApplied) {
       doc.addEventListener('turbolinks:load', onReady, false);
       doc.addEventListener('turbolinks:load', proxyAjaxOpen, false);
       doc.addEventListener('turbolinks:load', proxyAjaxSend, false);
-      window.__debugKitTurbolinksListenerApplied = true;
+      window.__debugKitListenersApplied = true;
     }
   } else {
     throw new Error('Unable to add event listener for DebugKit. Please use a browser' +

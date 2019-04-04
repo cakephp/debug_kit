@@ -92,11 +92,25 @@ if (elem) {
     };
   };
 
-  // Bind on ready callback.
+  // Bind on ready callbacks to DOMContentLoaded (native js) and turbolinks:load
+  // Turbolinks replaces the body and merges the head of an HTML page.
+  // Since the body is already loaded (DOMContentLoaded), the event is not triggered.
   if (doc.addEventListener) {
-    doc.addEventListener('DOMContentLoaded', onReady, false);
-    doc.addEventListener('DOMContentLoaded', proxyAjaxOpen, false);
-    doc.addEventListener('DOMContentLoaded', proxyAjaxSend, false);
+    // This ensures that all event listeners get applied only once.
+    if (!window.__debugKitListenersApplied) {
+      // The DOMContentLoaded is for all pages that do not have Turbolinks
+      doc.addEventListener('DOMContentLoaded', onReady, false);
+      doc.addEventListener('DOMContentLoaded', proxyAjaxOpen, false);
+      doc.addEventListener('DOMContentLoaded', proxyAjaxSend, false);
+
+      // turbolinks:load is the alternative DOMContentLoaded Event of Turbolinks
+      // https://github.com/turbolinks/turbolinks
+      // https://github.com/cakephp/debug_kit/pull/664
+      doc.addEventListener('turbolinks:load', onReady, false);
+      doc.addEventListener('turbolinks:load', proxyAjaxOpen, false);
+      doc.addEventListener('turbolinks:load', proxyAjaxSend, false);
+      window.__debugKitListenersApplied = true;
+    }
   } else {
     throw new Error('Unable to add event listener for DebugKit. Please use a browser' +
       'that supports addEventListener().');

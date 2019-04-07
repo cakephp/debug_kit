@@ -49,7 +49,7 @@ class PreviewResult extends AbstractResult
         $mailer->render();
         $message = $mailer->getMessage();
         $this->parts = [
-            'text' => $message->getBody(Message::MESSAGE_HTML),
+            'html' => $message->getBody(Message::MESSAGE_HTML),
             'text' => $message->getBody(Message::MESSAGE_TEXT),
         ];
 

@@ -14,8 +14,7 @@ declare(strict_types=1);
 namespace DebugKit\Mailer;
 
 use Cake\Mailer\Mailer;
-use Cake\Mailer\Renderer;
-use ReflectionClass;
+use Cake\Mailer\Message;
 
 /**
  * Represents the result of a preview for a given mailer
@@ -47,14 +46,14 @@ class PreviewResult extends AbstractResult
             $mailer->viewBuilder()->setTemplate($method);
         }
 
-        $reflection = new ReflectionClass($mailer);
-        $prop = $reflection->getProperty('_email');
-        $prop->setAccessible(true);
-        $email = $prop->getValue($mailer);
-
-        $this->parts = $email->getRenderer()->renderTemplates($email, '');
+        $mailer->render();
+        $message = $mailer->getMessage();
+        $this->parts = [
+            'html' => $message->getBody(Message::MESSAGE_HTML),
+            'text' => $message->getBody(Message::MESSAGE_TEXT),
+        ];
 
         $extra = ['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'];
-        $this->headers = array_filter($email->getHeaders($extra));
+        $this->headers = array_filter($message->getHeaders($extra));
     }
 }

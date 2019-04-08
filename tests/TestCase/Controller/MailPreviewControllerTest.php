@@ -72,7 +72,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('src="?part=text&plugin=DebugkitTestPlugin');
+        $this->assertResponseContains('src="?part=html&plugin=DebugkitTestPlugin');
     }
 
     /** Test email template content

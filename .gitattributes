@@ -41,3 +41,6 @@ phpunit.xml.dist export-ignore
 /tests/TestCase export-ignore
 /tests/test_app export-ignore
 /tests/bootstrap.php export-ignore
+.jshintrc export-ignore
+.stickler.yml export-ignore
+phpcs.xml.dist export-ignore

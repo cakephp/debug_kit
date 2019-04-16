@@ -1,9 +1,11 @@
 <?php
 use Cake\Routing\RouteBuilder;
+use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\Router;
 
 Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {
     $routes->setExtensions('json');
+    $routes->setRouteClass(DashedRoute::class);
     $routes->connect(
         '/toolbar/clear-cache',
         ['controller' => 'Toolbar', 'action' => 'clearCache']

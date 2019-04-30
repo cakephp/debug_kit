@@ -28,6 +28,7 @@
 *.gif binary
 *.ico binary
 *.mo binary
+*.mp4 binary
 
 # Remove files for archives generated using `git archive`
 appveyor.yml export-ignore
@@ -38,6 +39,7 @@ CONTRIBUTING.md export-ignore
 Makefile export-ignore
 phpunit.xml.dist export-ignore
 .travis.yml export-ignore
+/docs/static export-ignore
 /tests/TestCase export-ignore
 /tests/test_app export-ignore
 /tests/bootstrap.php export-ignore

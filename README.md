@@ -76,4 +76,4 @@ correct branch.
 # Documentation
 
 Documentation for DebugKit can be found in the 
-[CakePHP documentation](https://book.cakephp.org/3.0/en/debug-kit.html).
+[CakePHP documentation](https://book.cakephp.org/debugkit/3.x/en/index.html).

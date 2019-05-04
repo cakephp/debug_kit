@@ -7,7 +7,7 @@ COPY docs /data/docs
 
 RUN cd /data/docs-builder && \
   # In the future repeat website for each version
-  make website LANGS="en fr jp pt" SOURCE=/data/docs DEST=/data/website/3.x
+  make website LANGS="en fr ja pt" SOURCE=/data/docs DEST=/data/website/3.x
 
 # Move media files into the output directory so video elements work.
 RUN mkdir -p /data/website/3.x/html/_static \

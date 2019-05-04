@@ -236,7 +236,7 @@ MailPreview クラスは、 アプリケーションまたはプラグインの 
 他のプラグインのパネル
 ----------------------
 
-パネルはひとつの小さな違いを除き、`plugins <https://book.cakephp.org/3.0/jp/plugins.html>`_ 
+パネルはひとつの小さな違いを除き、`plugins <https://book.cakephp.org/3.0/ja/plugins.html>`_ 
 とほぼ同じ動作を提供します。レンダリング時にパネルのエレメントを配置できるように、 
 ``public $plugin`` にプラグインディレクトリーの名前を必ずセットする必要があります。 ::
 

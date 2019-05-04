@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Cache\Engine;
 
+use BadMethodCallException;
 use Cake\TestSuite\TestCase;
 use DebugKit\Cache\Engine\DebugEngine;
 use DebugKit\DebugTimer;
@@ -38,7 +39,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
@@ -66,11 +67,11 @@ class DebugEngineTest extends TestCase
     /**
      * Test that the normal errors bubble up still.
      *
-     * @expectedException BadMethodCallException
      * @return void
      */
     public function testInitErrorOnInvalidConfig()
     {
+        $this->expectException(BadMethodCallException::class);
         $engine = new DebugEngine([
             'className' => 'Derpy',
             'path' => TMP,

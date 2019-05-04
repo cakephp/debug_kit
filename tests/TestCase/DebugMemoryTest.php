@@ -47,7 +47,7 @@ class DebugMemoryTest extends TestCase
         DebugMemory::record();
         $result = DebugMemory::getAll(true);
         $this->assertCount(1, $result);
-        $this->assertContains('DebugMemoryTest.php line ' . (__LINE__ - 3), array_keys($result)[0]);
+        $this->assertStringContainsString('DebugMemoryTest.php line ' . (__LINE__ - 3), array_keys($result)[0]);
     }
 
     /**

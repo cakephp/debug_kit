@@ -17,6 +17,7 @@ nbproject/*
 .svn
 errors.err
 tags
+/.phpunit.result.cache
 /nbproject/
 /composer.lock
 /vendor

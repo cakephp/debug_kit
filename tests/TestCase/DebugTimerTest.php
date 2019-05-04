@@ -28,7 +28,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         DebugTimer::clear();
     }

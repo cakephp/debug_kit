@@ -38,7 +38,7 @@ class VariablesPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->panel = new VariablesPanel();
@@ -49,7 +49,7 @@ class VariablesPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->panel);
@@ -110,7 +110,7 @@ class VariablesPanelTest extends TestCase
             }
         });
         $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
-        $this->assertInternalType('array', $output['content']['unserializableDebugInfo']);
+        $this->assertIsArray($output['content']['unserializableDebugInfo']);
         $this->assertStringStartsWith(
             'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances',
             $output['content']['unserializableDebugInfo']['unserializable']
@@ -124,10 +124,10 @@ class VariablesPanelTest extends TestCase
             $controller->viewBuilder()->getVar('query'),
             'Original value should not be mutated'
         );
-        $this->assertInternalType('array', $output['content']['updateQuery']);
-        $this->assertInternalType('array', $output['content']['query']);
-        $this->assertInternalType('array', $output['content']['unbufferedQuery']);
-        $this->assertInternalType('array', $output['content']['result set']);
+        $this->assertIsArray($output['content']['updateQuery']);
+        $this->assertIsArray($output['content']['query']);
+        $this->assertIsArray($output['content']['unbufferedQuery']);
+        $this->assertIsArray($output['content']['result set']);
         $this->assertEquals($controller->viewBuilder()->getVar('string'), $output['content']['string']);
         $this->assertEquals($controller->viewBuilder()->getVar('array'), $output['content']['array']);
     }

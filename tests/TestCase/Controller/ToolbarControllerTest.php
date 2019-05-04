@@ -39,7 +39,7 @@ class ToolbarControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Router::plugin('DebugKit', function (RouteBuilder $routes) {

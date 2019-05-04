@@ -11,6 +11,7 @@ declare(strict_types=1);
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -20,6 +21,7 @@ use Cake\Log\Log;
 require_once 'vendor/autoload.php';
 
 // Path constants to a few helpful things.
+define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__));
 define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);

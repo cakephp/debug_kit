@@ -33,7 +33,7 @@ class EnvironmentPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->panel = new EnvironmentPanel();
@@ -44,7 +44,7 @@ class EnvironmentPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->panel);
@@ -63,7 +63,7 @@ class EnvironmentPanelTest extends TestCase
 
         $this->panel->shutdown($event);
         $output = $this->panel->data();
-        $this->assertInternalType('array', $output);
+        $this->assertIsArray($output);
         $this->assertSame(['php', 'ini', 'cake', 'app'], array_keys($output));
         $this->assertEquals('mysql://user:password@localhost/my_db', $output['php']['TEST_URL_1']);
     }

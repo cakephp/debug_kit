@@ -20,7 +20,7 @@ use DebugKit\Mailer\Transport\DebugKitTransport;
 
 class DebugKitTransportTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->log = new \ArrayObject();
         $this->wrapped = $this->getMockBuilder(AbstractTransport::class)

@@ -26,7 +26,7 @@ class DebugIncludeTest extends TestCase
     {
         $include = new DebugInclude();
         $result = $include->includePaths();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertFileExists($result[0]);
     }
 

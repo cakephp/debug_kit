@@ -40,7 +40,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Article = TableRegistry::get('Articles');
@@ -52,7 +52,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->Article);

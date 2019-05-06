@@ -41,7 +41,7 @@ class ToolbarHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Router::connect('/:controller/:action');
@@ -58,7 +58,7 @@ class ToolbarHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->Toolbar);

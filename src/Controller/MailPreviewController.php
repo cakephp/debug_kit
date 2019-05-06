@@ -122,7 +122,7 @@ class MailPreviewController extends Controller
         $email = $this->findPreview($name, $method, $plugin);
         $partType = $this->request->getQuery('part');
 
-        $this->viewBuilder()->setLayout(false);
+        $this->viewBuilder()->disableAutoLayout();
 
         if ($partType) {
             return $this->respondWithPart($email, $partType);

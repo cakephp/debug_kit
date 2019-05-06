@@ -33,7 +33,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->panel = new LogPanel();
@@ -44,7 +44,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         Log::drop('debug_kit_log_panel');
@@ -77,7 +77,7 @@ class LogPanelTest extends TestCase
         $result = $this->panel->data();
 
         $this->assertArrayHasKey('logger', $result);
-        /* @var DebugKitLog $logger */
+        /** @var DebugKitLog $logger */
         $logger = $result['logger'];
 
         $this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $logger);

@@ -44,7 +44,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -58,7 +58,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -150,8 +150,8 @@ class DebugKitMiddlewareTest extends TestCase
 
         $this->assertEquals(1, $total, 'Should track response');
         $body = $result->getBody();
-        $this->assertNotContains('__debug_kit', '' . $body);
-        $this->assertNotContains('<script', '' . $body);
+        $this->assertStringNotContainsString('__debug_kit', '' . $body);
+        $this->assertStringNotContainsString('<script', '' . $body);
     }
 
     /**
@@ -216,7 +216,7 @@ class DebugKitMiddlewareTest extends TestCase
 
         $this->assertEquals(0, $total, 'Should not track sub-requests');
         $body = $result->getBody();
-        $this->assertNotContains('<script', '' . $body);
+        $this->assertStringNotContainsString('<script', '' . $body);
     }
 
     /**

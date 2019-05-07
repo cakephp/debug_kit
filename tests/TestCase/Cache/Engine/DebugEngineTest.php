@@ -44,6 +44,8 @@ class DebugEngineTest extends TestCase
         parent::setUp();
         $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
         $this->mock = $mock;
+        $this->mock->method('getMultiple')->will($this->returnValue([]));
+
         $this->engine = new DebugEngine($mock);
         $this->engine->init();
         DebugTimer::clear();

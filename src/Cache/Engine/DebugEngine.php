@@ -116,7 +116,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
         $this->_track('set');
         DebugTimer::start('Cache.set ' . $key);
@@ -199,7 +199,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.delete ' . $key);
@@ -225,7 +225,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.clear');

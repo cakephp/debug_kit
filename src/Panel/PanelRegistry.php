@@ -43,9 +43,9 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      * Part of the template method for Cake\Utility\ObjectRegistry::load()
      *
      * @param string $class Partial class name to resolve.
-     * @return string|false Either the correct class name or false.
+     * @return string|null Either the correct class name, null if the class is not found.
      */
-    protected function _resolveClassName($class)
+    protected function _resolveClassName(string $class): ?string
     {
         return App::className($class, 'Panel', 'Panel');
     }

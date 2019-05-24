@@ -138,13 +138,12 @@ class DebugLog extends QueryLogger
     }
 
     /**
-     * Log queries
-     *
-     * @param \Cake\Database\Log\LoggedQuery $query The query being logged.
-     * @return void
+     * @inheritDoc
      */
-    public function log(LoggedQuery $query): void
+    public function log($level, $message, array $context = []): void
     {
+        $query = $context['query'];
+
         if ($this->_logger) {
             if ($this->_logger instanceof PsrAbstractLogger) {
                 $this->_logger->log($query, $query->error);

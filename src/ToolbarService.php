@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -226,7 +227,7 @@ class ToolbarService
             'requested_at' => $request->getEnv('REQUEST_TIME'),
             'panels' => [],
         ];
-        /* @var \DebugKit\Model\Table\RequestsTable $requests */
+        /** @var \DebugKit\Model\Table\RequestsTable $requests */
         $requests = TableRegistry::get('DebugKit.Requests');
         $requests->gc();
 

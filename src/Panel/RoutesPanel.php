@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -42,7 +43,7 @@ class RoutesPanel extends DebugPanel
     public function shutdown(Event $event)
     {
         $controller = $event->getSubject();
-        /* @var \Cake\Http\ServerRequest $request */
+        /** @var \Cake\Http\ServerRequest $request */
         $request = $controller ? $controller->getRequest() : null;
         $this->_data = [
             'matchedRoute' => $request ? $request->getParam('_matchedRoute') : null,

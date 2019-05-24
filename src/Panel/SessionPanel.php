@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -29,7 +30,7 @@ class SessionPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        /* @var Request $request */
+        /** @var \DebugKit\Panel\Request $request */
         $request = $event->getSubject()->getRequest();
         if ($request) {
             $this->_data = ['content' => $request->getSession()->read()];

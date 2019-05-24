@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -37,7 +38,7 @@ trait LazyTableTrait
      */
     public function ensureTables(array $fixtures)
     {
-        /* @var Connection $connection */
+        /** @var \DebugKit\Model\Table\Connection $connection */
         $connection = $this->getConnection();
         $schema = $connection->getSchemaCollection();
 
@@ -57,7 +58,7 @@ trait LazyTableTrait
             if ($class === false) {
                 throw new \RuntimeException("Unknown fixture '$name'.");
             }
-            /* @var FixtureInterface $fixture */
+            /** @var \DebugKit\Model\Table\FixtureInterface $fixture */
             $fixture = new $class($connection->configName());
             if (in_array($fixture->table, $existing)) {
                 continue;

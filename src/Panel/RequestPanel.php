@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -30,7 +31,7 @@ class RequestPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        /* @var Controller $controller */
+        /** @var \DebugKit\Panel\Controller $controller */
         $controller = $event->getSubject();
         $request = $controller->getRequest();
         $this->_data = [

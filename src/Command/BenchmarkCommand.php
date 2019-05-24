@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -69,6 +70,8 @@ class BenchmarkCommand extends Command
             $times[] = $stop - $start;
         }
         $this->_results($times);
+
+        return static::CODE_SUCCESS;
     }
 
     /**

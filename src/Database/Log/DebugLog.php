@@ -16,6 +16,7 @@ namespace DebugKit\Database\Log;
 
 use Cake\Database\Log\LoggedQuery;
 use Cake\Log\Engine\BaseLog;
+use Psr\Log\LoggerInterface;
 
 /**
  * DebugKit Query logger.
@@ -36,7 +37,7 @@ class DebugLog extends BaseLog
     /**
      * Decorated logger.
      *
-     * @var \Psr\Log\LoggerInterface
+     * @var \Psr\Log\LoggerInterface|null
      */
     protected $_logger;
 
@@ -72,11 +73,11 @@ class DebugLog extends BaseLog
     /**
      * Constructor
      *
-     * @param \Psr\Log\LoggerInterface $logger The logger to decorate and spy on.
+     * @param \Psr\Log\LoggerInterface|null $logger The logger to decorate and spy on.
      * @param string $name The name of the connection being logged.
      * @param bool $includeSchema Whether or not schema reflection should be included.
      */
-    public function __construct($logger, string $name, bool $includeSchema = false)
+    public function __construct(?LoggerInterface $logger, string $name, bool $includeSchema = false)
     {
         $this->_logger = $logger;
         $this->_connectionName = $name;

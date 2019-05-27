@@ -16,6 +16,8 @@ namespace DebugKit\Test\TestCase\Database\Log;
 use Cake\Database\Log\LoggedQuery;
 use Cake\TestSuite\TestCase;
 use DebugKit\Database\Log\DebugLog;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * DebugLog test case
@@ -52,12 +54,12 @@ class DebugLogTest extends TestCase
 
         $this->assertCount(0, $this->logger->queries());
 
-        $this->logger->log($query);
+        $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(1, $this->logger->queries());
         $this->assertEquals(10, $this->logger->totalTime());
         $this->assertEquals(5, $this->logger->totalRows());
 
-        $this->logger->log($query);
+        $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(2, $this->logger->queries());
         $this->assertEquals(20, $this->logger->totalTime());
         $this->assertEquals(10, $this->logger->totalRows());
@@ -78,7 +80,7 @@ class DebugLogTest extends TestCase
 
         $this->assertCount(0, $this->logger->queries());
 
-        $this->logger->log($query);
+        $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(0, $this->logger->queries());
     }
 
@@ -98,7 +100,7 @@ class DebugLogTest extends TestCase
         $logger = new DebugLog(null, 'test', true);
         $this->assertCount(0, $logger->queries());
 
-        $logger->log($query);
+        $logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(1, $logger->queries());
     }
 
@@ -126,12 +128,12 @@ class DebugLogTest extends TestCase
      */
     public function testLogDecorates()
     {
-        $orig = $this->getMockBuilder('Cake\Database\Log\QueryLogger')->getMock();
+        $orig = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $orig->expects($this->once())
             ->method('log');
 
         $query = new LoggedQuery();
         $logger = new DebugLog($orig, 'test');
-        $logger->log($query);
+        $logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
     }
 }

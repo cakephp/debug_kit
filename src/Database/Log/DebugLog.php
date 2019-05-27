@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace DebugKit\Database\Log;
 
 use Cake\Database\Log\LoggedQuery;
-use Cake\Log\Engine\BaseLog;
+use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -25,7 +25,7 @@ use Psr\Log\LoggerInterface;
  * and stores log messages internally so they can be displayed
  * or stored for future use.
  */
-class DebugLog extends BaseLog
+class DebugLog extends AbstractLogger
 {
     /**
      * Logs from the current request.

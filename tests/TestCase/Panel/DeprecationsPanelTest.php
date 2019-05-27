@@ -67,12 +67,12 @@ class DeprecationsPanelTest extends TestCase
         $error = $data['plugins']['DebugKit'][0];
         $this->assertStringContainsString('Something going away', $error['message']);
         $this->assertEquals('DebugKit/tests/TestCase/Panel/DeprecationsPanelTest.php', $error['niceFile']);
-        $this->assertEquals(46, $error['line']);
+        $this->assertEquals(47, $error['line']);
 
         $error = $data['plugins']['DebugKit'][2];
         $this->assertStringContainsString('Raw error', $error['message']);
         $this->assertEquals('DebugKit/tests/TestCase/Panel/DeprecationsPanelTest.php', $error['niceFile']);
-        $this->assertEquals(48, $error['line']);
+        $this->assertEquals(49, $error['line']);
     }
 
     public function testSummary()

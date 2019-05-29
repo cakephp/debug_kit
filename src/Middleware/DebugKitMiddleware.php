@@ -50,6 +50,10 @@ class DebugKitMiddleware
      */
     public function __invoke($request, $response, $next)
     {
+        if (!$this->service->isEnabled()) {
+            return $next($request, $response);
+        }
+
         $this->service->loadPanels();
         $this->service->initializePanels();
         $response = $next($request, $response);

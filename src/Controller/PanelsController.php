@@ -86,9 +86,9 @@ class PanelsController extends Controller
             throw new NotFoundException();
         }
         $this->set([
-            '_serialize' => ['panels'],
             'panels' => $panels,
         ]);
+        $this->viewBuilder()->setOption('serialize', ['panels']);
     }
 
     /**

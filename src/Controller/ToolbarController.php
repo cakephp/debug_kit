@@ -70,9 +70,7 @@ class ToolbarController extends Controller
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
         $result = Cache::clear($this->request->getData('name'));
-        $this->set([
-            '_serialize' => ['success'],
-            'success' => $result,
-        ]);
+        $this->set('success', $result);
+        $this->viewBuilder()->setOption('serialize', ['success']);
     }
 }

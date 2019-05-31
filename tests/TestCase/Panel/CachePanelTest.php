@@ -48,6 +48,7 @@ class CachePanelTest extends TestCase
     {
         parent::tearDown();
         Cache::drop('debug_kit_test');
+        Cache::drop('incomplete');
     }
 
     /**
@@ -62,6 +63,21 @@ class CachePanelTest extends TestCase
         $result = $this->panel->data();
         $this->assertArrayHasKey('debug_kit_test', $result['metrics']);
         $this->assertArrayHasKey('_cake_model_', $result['metrics']);
+    }
+
+    /**
+     * test initialize incomplete data
+     *
+     * @return void
+     */
+    public function testInitializeNoProxyIncompleteConfig()
+    {
+        $data = ['duration' => '+2 seconds'];
+        Cache::setConfig('incomplete', $data);
+        $this->panel->initialize();
+
+        $config = Cache::getConfig('incomplete');
+        $this->assertSame($data, $config);
     }
 
     /**

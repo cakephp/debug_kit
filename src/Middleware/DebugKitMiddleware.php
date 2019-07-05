@@ -53,14 +53,16 @@ class DebugKitMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        if ($this->service->isEnabled()) {
+            $this->service->loadPanels();
+            $this->service->initializePanels();
+        }
         $response = $handler->handle($request);
 
         if (!$this->service->isEnabled()) {
             return $response;
         }
 
-        $this->service->loadPanels();
-        $this->service->initializePanels();
         $row = $this->service->saveData($request, $response);
         if (!$row) {
             return $response;

@@ -65,7 +65,7 @@ class ComposerController extends Controller
         $input = new ArrayInput([
             'command' => 'outdated',
             '--no-interaction' => true,
-            '--direct' => (bool)$this->request->data('direct'),
+            '--direct' => filter_var($this->request->data('direct'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         $output = $this->executeComposerCommand($input);

@@ -24,6 +24,7 @@ project = 'CakePHP DebugKit'
 # Other versions that display in the version picker menu.
 version_list = [
     {'name': '3.x', 'number': '/debugkit/3.x', 'title': '3.x', 'current': True},
+    {'name': '4.x', 'number': '/debugkit/4.x', 'title': '4.x'},
 ]
 
 # Languages available.

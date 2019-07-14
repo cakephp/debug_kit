@@ -66,7 +66,7 @@ class ComposerController extends Controller
         $input = new ArrayInput([
             'command' => 'outdated',
             '--no-interaction' => true,
-            '--direct' => (bool)$this->request->data('direct'),
+            '--direct' => filter_var($this->request->getData('direct'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         $output = $this->executeComposerCommand($input);
@@ -89,10 +89,8 @@ class ComposerController extends Controller
             $packages['bcBreaks'] = trim(implode("\n", $packages['bcBreaks']));
         }
 
-        $this->set([
-            '_serialize' => ['packages'],
-            'packages' => $packages,
-        ]);
+        $this->viewBuilder()->setOption('serialize', ['packages']);
+        $this->set('packages', $packages);
     }
 
     /**
@@ -119,7 +117,7 @@ class ComposerController extends Controller
 
         // Restore environment
         chdir($dir);
-        set_time_limit($timeLimit);
+        set_time_limit((int)$timeLimit);
         ini_set('memory_limit', $memoryLimit);
 
         return $output;

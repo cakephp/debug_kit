@@ -3,18 +3,23 @@ FROM markstory/cakephp-docs-builder as builder
 
 RUN pip install git+https://github.com/sphinx-contrib/video.git@master
 
-COPY docs /data/docs
+# Copy entire repo in with .git so we can build all versions in one image.
+COPY . /data/src
 
-RUN cd /data/docs-builder && \
-  # Make 3.x docs
-  make website LANGS="en fr ja pt" SOURCE=/data/docs DEST=/data/website/3.x && \
+# Make static directories
+
+# Make 3.x docs
+RUN cd /data/docs-builder \
+  && make website LANGS="en fr ja pt" SOURCE=/data/src/docs DEST=/data/website/3.x \
+  # Move media files into the output directory so video elements work.
+  && mkdir -p /data/website/3.x/html/_static \
+  && cp /data/src/docs/static/* /data/website/3.x/html/_static/ \
   # Make 4.x docs
-  git checkout 4.x && \
-  make website LANGS="en fr ja pt" SOURCE=/data/docs DEST=/data/website/4.x
-
-# Move media files into the output directory so video elements work.
-RUN mkdir -p /data/website/3.x/html/_static \
- && cp /data/docs/static/* /data/website/3.x/html/_static/
+  && cd /data/src && git checkout 4.x \
+  && cd /data/docs-builder \
+  && make website LANGS="en fr ja pt" SOURCE=/data/src/docs DEST=/data/website/4.x \
+  && mkdir -p /data/website/4.x/html/_static \
+  && cp /data/src/docs/static/* /data/website/4.x/html/_static/
 
 # Build a small nginx container with just the static site in it.
 FROM nginx:1.15-alpine

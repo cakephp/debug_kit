@@ -18,7 +18,7 @@ DebugKit は、CakePHP アプリケーション用のデバッグツールバー
 もし削除してしまって再インストールしたい場合は、以下のコマンドをアプリケーションの
 ルートディレクトリー (composer.json ファイルのある場所) で実行してください。 ::
 
-    php composer.phar require --dev cakephp/debug_kit "~3.0"
+    php composer.phar require --dev cakephp/debug_kit "~4.0"
 
 そして以下のコマンドでプラグインを有効化する必要があります。 ::
 

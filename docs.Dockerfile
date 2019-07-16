@@ -20,4 +20,5 @@ COPY --from=builder /data/website /data/website
 COPY --from=builder /data/docs-builder/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Move files into final location
-RUN mv /data/website/html/* /usr/share/nginx/html/
+RUN cp -R /data/website/html/* /usr/share/nginx/html \
+  rm -rf /data/website/

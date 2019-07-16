@@ -10,8 +10,8 @@ COPY . /data/src
 RUN cd /data/docs-builder \
   && make website LANGS="en fr ja pt" SOURCE=/data/src/docs DEST=/data/website/ \
   # Move media files into the output directory so video elements work.
-  && mkdir -p /data/website/3.x/html/_static \
-  && cp /data/src/docs/static/* /data/website/3.x/html/_static/ \
+  && mkdir -p /data/website/html/_static \
+  && cp /data/src/docs/static/* /data/website/html/_static/ \
 
 # Build a small nginx container with just the static site in it.
 FROM nginx:1.15-alpine

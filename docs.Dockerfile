@@ -21,5 +21,3 @@ COPY --from=builder /data/docs-builder/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Move files into final location
 RUN mv /data/website/html/* /usr/share/nginx/html/
-# Backwards compat alias
-RUN ln -s /usr/share/nginx/html /usr/share/nginx/html/3.x

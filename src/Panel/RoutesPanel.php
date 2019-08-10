@@ -36,7 +36,10 @@ class RoutesPanel extends DebugPanel
             return 0;
         }
 
-        return count(Router::routes());
+        $routes = array_filter(Router::routes(), function ($route) {
+            return strpos($route->getName(), 'debugkit.') !== 0;
+        });
+        return count($routes);
     }
 
     /**

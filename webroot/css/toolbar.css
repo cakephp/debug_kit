@@ -501,6 +501,7 @@ pre,
 	color: #fff;
 	border-radius: 4px;
 	box-shadow: 0 2px 0 #2a6496;
+	padding: 4px 10px;
 }
 .btn-primary:active {
 	box-shadow: none;

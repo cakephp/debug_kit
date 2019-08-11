@@ -123,6 +123,7 @@
             showMessage(terminal, buildLoader());
             var direct = $('.direct-dependency')[0].checked;
             var xhr = $.ajax({
+                headers: {'X-CSRF-TOKEN': '<?= $this->request->getParam('_csrfToken') ?>'},
                 url: baseUrl,
                 data: {direct: direct},
                 dataType: 'json',

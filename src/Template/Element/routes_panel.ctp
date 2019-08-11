@@ -21,7 +21,7 @@ $routes = Cake\Routing\Router::routes();
         $class = '';
         if ($matchedRoute === $route->template):
             $class = 'highlighted';
-        elseif (strpos($route->getName(), 'debugkit.') === 0):
+        elseif ($route->defaults['plugin'] === 'DebugKit'):
             $class = 'debugkit-route hidden';
         endif;
         ?>

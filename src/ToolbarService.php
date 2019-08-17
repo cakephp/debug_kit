@@ -232,7 +232,7 @@ class ToolbarService
         $requests->gc();
 
         $row = $requests->newEntity($data);
-        $row->isNew(true);
+        $row->setNew(true);
 
         foreach ($this->registry->loaded() as $name) {
             $panel = $this->registry->{$name};

@@ -50,8 +50,8 @@ class PreviewResult extends AbstractResult
         $mailer->render();
         $message = $mailer->getMessage();
         $this->parts = [
-            'html' => $message->getBody(Message::MESSAGE_HTML),
-            'text' => $message->getBody(Message::MESSAGE_TEXT),
+            'html' => $message->getBodyHtml(),
+            'text' => $message->getBodyText(),
         ];
 
         $extra = ['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'];

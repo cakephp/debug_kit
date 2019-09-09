@@ -153,7 +153,7 @@ class MailPreviewController extends Controller
         }
 
         $response = $this->response->withType($partType);
-        if ($part === 'text') {
+        if ($partType === 'text') {
             $part = '<pre>' . $part . "</pre>";
         }
         $response = $response->withStringBody($part);

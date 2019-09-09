@@ -69,8 +69,8 @@ class DebugKitTransport extends AbstractTransport
     {
         $headers = $message->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc']);
         $parts = [
-            'text' => $message->message(Message::MESSAGE_TEXT),
-            'html' => $message->message(Message::MESSAGE_HTML),
+            'text' => $message->getBodyText(),
+            'html' => $message->getBodyHtml(),
         ];
 
         $headers['Subject'] = $message->getOriginalSubject();

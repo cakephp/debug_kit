@@ -13,6 +13,7 @@
 namespace DebugKit\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Database\Driver\Sqlite;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use DebugKit\Model\Entity\Request;
@@ -108,5 +109,10 @@ class RequestsTable extends Table
 
         $statement = $query->execute();
         $statement->closeCursor();
+
+        $conn = $this->getConnection();
+        if ($conn->getDriver() instanceof Sqlite) {
+            $conn->execute('VACUUM;');
+        }
     }
 }

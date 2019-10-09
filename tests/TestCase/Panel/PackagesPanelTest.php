@@ -49,6 +49,7 @@ class PackagesPanelTest extends TestCase
             'dev requirements' => ['devPackages'],
         ];
     }
+
     /**
      * test data
      *

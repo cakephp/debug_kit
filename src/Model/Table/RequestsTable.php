@@ -79,7 +79,8 @@ class RequestsTable extends Table
     /**
      * Garbage collect old request data.
      *
-     * Delete request data that is older than 2 weeks old.
+     * Delete request data that is older than latest 20 requests.
+     * You can use the `DebugKit.requestCount` config to change this limit.
      * This method will only trigger periodically.
      *
      * @return void

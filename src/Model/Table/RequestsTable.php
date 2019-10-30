@@ -91,11 +91,8 @@ class RequestsTable extends Table
         }
         $noPurge = $this->find()
             ->select(['id'])
-            ->enableHydration(false)
             ->order(['requested_at' => 'desc'])
-            ->limit(Configure::read('DebugKit.requestCount') ?: 20)
-            ->extract('id')
-            ->toArray();
+            ->limit(Configure::read('DebugKit.requestCount') ?: 20);
 
         $query = $this->Panels->query()
             ->delete()

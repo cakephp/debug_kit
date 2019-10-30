@@ -6,6 +6,10 @@ php:
 
 dist: trusty
 
+services:
+  - postgresql
+  - mysql
+
 env:
   matrix:
     - DB=mysql db_dsn='mysql://root@127.0.0.1/cakephp_test'

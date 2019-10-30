@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace DebugKit\Mailer;
 
 use Cake\Mailer\Mailer;
-use Cake\Mailer\Message;
 
 /**
  * Represents the result of a preview for a given mailer

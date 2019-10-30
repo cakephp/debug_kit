@@ -53,6 +53,7 @@ class Plugin extends BasePlugin
         // will load `config/bootstrap.php`.
         parent::bootstrap($app);
     }
+
     /**
      * Add middleware for the plugin.
      *
@@ -67,6 +68,7 @@ class Plugin extends BasePlugin
 
         return $middleware;
     }
+
     /**
      * set deprecation handler
      *

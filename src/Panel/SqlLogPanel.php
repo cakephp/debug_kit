@@ -50,7 +50,8 @@ class SqlLogPanel extends DebugPanel
 
         foreach ($configs as $name) {
             $connection = ConnectionManager::get($name);
-            if ($connection->configName() === 'debug_kit'
+            if (
+                $connection->configName() === 'debug_kit'
                 || !$connection instanceof ConnectionInterface
             ) {
                 continue;

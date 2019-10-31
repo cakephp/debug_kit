@@ -114,10 +114,11 @@ class MailPreviewController extends Controller
      */
     public function email($name, $method)
     {
+        $restore = Router::getRequest();
         // Clear the plugin attribute from the request instance
         // Router is holding onto so that we can render mail previews
         // in a plugin less request context.
-        Router::pushRequest($this->request->withParam('plugin', null));
+        Router::setRequest($this->request->withParam('plugin', null));
 
         $plugin = $this->request->getQuery('plugin');
         $email = $this->findPreview($name, $method, $plugin);
@@ -126,7 +127,10 @@ class MailPreviewController extends Controller
         $this->viewBuilder()->disableAutoLayout();
 
         if ($partType) {
-            return $this->respondWithPart($email, $partType);
+            $result = $this->respondWithPart($email, $partType);
+            Router::setRequest($restore);
+
+            return $result;
         }
 
         $humanName = Inflector::humanize(Inflector::underscore($name) . "_$method");
@@ -134,6 +138,8 @@ class MailPreviewController extends Controller
         $this->set('email', $email);
         $this->set('plugin', $plugin);
         $this->set('part', $this->findPreferredPart($email, $this->request->getQuery('part')));
+
+        Router::setRequest($restore);
     }
 
     /**

@@ -79,7 +79,8 @@ class RequestsTable extends Table
     /**
      * Garbage collect old request data.
      *
-     * Delete request data that is older than 2 weeks old.
+     * Delete request data that is older than latest 20 requests.
+     * You can use the `DebugKit.requestCount` config to change this limit.
      * This method will only trigger periodically.
      *
      * @return void
@@ -91,11 +92,8 @@ class RequestsTable extends Table
         }
         $noPurge = $this->find()
             ->select(['id'])
-            ->enableHydration(false)
             ->order(['requested_at' => 'desc'])
-            ->limit(Configure::read('DebugKit.requestCount') ?: 20)
-            ->extract('id')
-            ->toArray();
+            ->limit(Configure::read('DebugKit.requestCount') ?: 20);
 
         $query = $this->Panels->query()
             ->delete()

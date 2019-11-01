@@ -7,6 +7,9 @@ use Cake\Utility\Hash;
 
 $routes = Cake\Routing\Router::routes();
 ?>
+<button type="button" class="btn-primary" id="toggle-debugkit-routes">
+    <?= __d('debug_kit', 'Toggle debugkit internal routes') ?>
+</button>
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
     <tr>
@@ -33,9 +36,6 @@ $routes = Cake\Routing\Router::routes();
     <?php endforeach; ?>
     </tbody>
 </table>
-<button type="button" class="btn-primary" id="toggle-debugkit-routes">
-    <?= __d('debug_kit', 'Toggle debugkit internal routes') ?>
-</button>
 
 <script>
 $(document).ready(function() {

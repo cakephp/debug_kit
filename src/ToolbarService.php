@@ -21,6 +21,7 @@ use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\Utility\Inflector;
 use DebugKit\Panel\PanelRegistry;
 use Psr\Http\Message\ResponseInterface;
 
@@ -214,6 +215,15 @@ class ToolbarService
         ) {
             return null;
         }
+        // Skip plugins assets
+        if (strpos($path, '.') !== false &&
+            strpos($path, '/.') === false &&
+            strpos($path, '..') === false &&
+            $response->getStatusCode() === 200 &&
+            $this->checkFileExists($path)
+        ) {
+            return null;
+        }
         $data = [
             'url' => $request->getUri()->getPath(),
             'content_type' => $response->getHeaderLine('Content-Type'),
@@ -312,5 +322,38 @@ class ToolbarService
         $body->write($contents);
 
         return $response->withBody($body);
+    }
+
+    /**
+     * Builds asset file path based off url and checks whether a file exists
+     *
+     * @param string $url Asset URL
+     * @return bool true if file exists, false otherwise
+     */
+    protected function checkFileExists($url)
+    {
+        $parts = explode('/', ltrim($url, '/'));
+        $pluginPart = [];
+        for ($i = 0; $i < 2; $i++) {
+            if (!isset($parts[$i])) {
+                break;
+            }
+            $pluginPart[] = Inflector::camelize($parts[$i]);
+            $plugin = implode('/', $pluginPart);
+            if ($plugin && CorePlugin::isLoaded($plugin)) {
+                $parts = array_slice($parts, $i + 1);
+                $fileFragment = implode(DIRECTORY_SEPARATOR, $parts);
+                $pluginWebroot = CorePlugin::path($plugin) . 'webroot' . DIRECTORY_SEPARATOR;
+
+                $file = $pluginWebroot . $fileFragment;
+                if (file_exists($file)) {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        return false;
     }
 }

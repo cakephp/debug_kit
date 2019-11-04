@@ -175,7 +175,7 @@ class DebugBarFilterTest extends TestCase
         $this->assertEquals('/articles', $result->url);
         $this->assertNotEmpty($result->requested_at);
         $this->assertNotEmpty('text/html', $result->content_type);
-        $this->assertEquals(200, $result->status_code);
+        $this->assertSame(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
         $this->assertEquals('SqlLog', $result->panels[11]->panel);

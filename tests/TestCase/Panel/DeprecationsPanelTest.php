@@ -75,6 +75,6 @@ class DeprecationsPanelTest extends TestCase
 
     public function testSummary()
     {
-        $this->assertEquals(3, $this->panel->summary());
+        $this->assertEquals('3', $this->panel->summary());
     }
 }

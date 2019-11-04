@@ -68,7 +68,7 @@ class RequestTableTest extends TestCase
     {
         $table = TableRegistry::get('DebugKit.Requests');
         $query = $table->find('recent');
-        $this->assertEquals(10, $query->clause('limit'));
+        $this->assertSame(10, $query->clause('limit'));
         $this->assertNotEmpty($query->clause('order'));
     }
 }

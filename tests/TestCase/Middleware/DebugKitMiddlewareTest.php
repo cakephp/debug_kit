@@ -101,7 +101,7 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertEquals('/articles', $result->url);
         $this->assertNotEmpty($result->requested_at);
         $this->assertNotEmpty('text/html', $result->content_type);
-        $this->assertEquals(200, $result->status_code);
+        $this->assertSame(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
         $this->assertEquals('SqlLog', $result->panels[11]->panel);
@@ -149,7 +149,7 @@ class DebugKitMiddlewareTest extends TestCase
         $requests = TableRegistry::get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
-        $this->assertEquals(1, $total, 'Should track response');
+        $this->assertSame(1, $total, 'Should track response');
         $body = $result->getBody();
         $this->assertNotContains('__debug_kit', '' . $body);
         $this->assertNotContains('<script', '' . $body);
@@ -182,7 +182,7 @@ class DebugKitMiddlewareTest extends TestCase
         $requests = TableRegistry::get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
-        $this->assertEquals(1, $total, 'Should track response');
+        $this->assertSame(1, $total, 'Should track response');
         $body = $result->getBody();
         $this->assertSame('OK', '' . $body);
     }
@@ -215,7 +215,7 @@ class DebugKitMiddlewareTest extends TestCase
         $requests = TableRegistry::get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
-        $this->assertEquals(0, $total, 'Should not track sub-requests');
+        $this->assertSame(0, $total, 'Should not track sub-requests');
         $body = $result->getBody();
         $this->assertNotContains('<script', '' . $body);
     }

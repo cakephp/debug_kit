@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * Dashboard and common DebugKit backend.
@@ -29,14 +29,16 @@ class DebugKitController extends Controller
      *
      * @param \Cake\Event\Event $event The event.
      * @return void
-     * @throws \Cake\Network\Exception\NotFoundException
+     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
         // TODO add config override.
         if (!Configure::read('debug')) {
-            throw new NotFoundException();
+            throw new NotFoundException('Not available without debug mode on.');
         }
+
+        $this->viewBuilder()->setLayout('dashboard');
     }
 
     /**

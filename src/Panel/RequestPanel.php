@@ -22,7 +22,6 @@ use DebugKit\DebugPanel;
  */
 class RequestPanel extends DebugPanel
 {
-
     /**
      * Data collection callback.
      *
@@ -31,7 +30,7 @@ class RequestPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        /* @var Controller $controller */
+        /* @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
         $request = $controller->request;
         $this->_data = [

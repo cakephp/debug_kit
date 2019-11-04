@@ -53,13 +53,13 @@ class DebugLogTest extends TestCase
 
         $this->logger->log($query);
         $this->assertCount(1, $this->logger->queries());
-        $this->assertEquals(10, $this->logger->totalTime());
-        $this->assertEquals(5, $this->logger->totalRows());
+        $this->assertSame(10, $this->logger->totalTime());
+        $this->assertSame(5, $this->logger->totalRows());
 
         $this->logger->log($query);
         $this->assertCount(2, $this->logger->queries());
-        $this->assertEquals(20, $this->logger->totalTime());
-        $this->assertEquals(10, $this->logger->totalRows());
+        $this->assertSame(20, $this->logger->totalTime());
+        $this->assertSame(10, $this->logger->totalRows());
     }
 
     /**

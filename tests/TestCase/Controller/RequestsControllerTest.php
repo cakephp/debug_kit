@@ -13,9 +13,8 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Request controller test.
@@ -41,9 +40,7 @@ class RequestsControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->connect('/toolbar/:action/*', ['controller' => 'Requests']);
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 
@@ -55,7 +52,7 @@ class RequestsControllerTest extends IntegrationTestCase
     public function testView()
     {
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->get('/debug_kit/toolbar/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->get('/debug-kit/toolbar/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request', 'Has a panel button');
@@ -70,7 +67,7 @@ class RequestsControllerTest extends IntegrationTestCase
     public function testViewNotExists()
     {
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->get('/debug_kit/toolbar/view/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');
+        $this->get('/debug-kit/toolbar/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');
 
         $this->assertResponseError();
     }

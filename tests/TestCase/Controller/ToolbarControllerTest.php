@@ -14,9 +14,8 @@
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Toolbar controller test.
@@ -42,12 +41,7 @@ class ToolbarControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->connect(
-                '/toolbar/clear_cache/*',
-                ['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']
-            );
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 
@@ -58,9 +52,9 @@ class ToolbarControllerTest extends IntegrationTestCase
      */
     public function testClearCacheNoGet()
     {
-        $this->get('/debug_kit/toolbar/clear_cache?name=testing');
+        $this->get('/debug-kit/toolbar/clear_cache?name=testing');
 
-        $this->assertEquals(405, $this->_response->getStatusCode());
+        $this->assertEquals(404, $this->_response->getStatusCode());
     }
 
     /**
@@ -80,7 +74,7 @@ class ToolbarControllerTest extends IntegrationTestCase
         Cache::setConfig('testing', $mock);
 
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->post('/debug_kit/toolbar/clear_cache', ['name' => 'testing']);
+        $this->post('/debug-kit/toolbar/clear-cache', ['name' => 'testing']);
         $this->assertResponseOk();
         $this->assertResponseContains('success');
     }

@@ -13,11 +13,10 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Mail preview controller test
@@ -43,22 +42,10 @@ class MailPreviewControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
-
-        Plugin::getCollection()->add(new \Debugkit\Plugin());
         Router::scope('/', function ($routes) {
             $routes->connect('/users/:action/*', ['controller' => 'Users']);
         });
-
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->scope(
-                '/mail_preview',
-                ['controller' => 'MailPreview'],
-                function ($routes) {
-                    $routes->connect('/sent/*', ['action' => 'sent']);
-                    $routes->connect('/preview/*', ['action' => 'email']);
-                }
-            );
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 
@@ -69,7 +56,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testEmailPluginPassedToView()
     {
-        $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
+        $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
         $this->assertResponseOk();
         $this->assertResponseContains('src="?part=text&plugin=DebugkitTestPlugin');
@@ -81,7 +68,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testEmailPartTextContent()
     {
-        $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?part=text&plugin=DebugkitTestPlugin');
+        $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?part=text&plugin=DebugkitTestPlugin');
 
         $this->assertResponseOk();
         $this->assertResponseContains('Testing email action.');
@@ -95,7 +82,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testOnChangeJsPluginPassedToview()
     {
-        $this->get('/debug_kit/mail_preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
+        $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
         $this->assertResponseContains("iframe.contentWindow.location.replace('?part=' + part_name + '&plugin=DebugkitTestPlugin');");
     }
@@ -107,7 +94,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testSentInvalidData()
     {
-        $this->get('/debug_kit/mail_preview/sent/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/0');
+        $this->get('/debug-kit/mail-preview/sent/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/0');
         $this->assertResponseCode(404);
     }
 
@@ -131,7 +118,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $panel->content = serialize($data);
         $panels->save($panel);
 
-        $this->get("/debug_kit/mail_preview/sent/{$panel->id}/0");
+        $this->get("/debug-kit/mail-preview/sent/{$panel->id}/0");
         $this->assertResponseCode(200);
         $this->assertResponseContains('test@example.com');
         $this->assertResponseContains('<iframe');
@@ -157,7 +144,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $panel->content = serialize($data);
         $panels->save($panel);
 
-        $this->get("/debug_kit/mail_preview/sent/{$panel->id}/0?part=html");
+        $this->get("/debug-kit/mail-preview/sent/{$panel->id}/0?part=html");
         $this->assertResponseCode(200);
         $this->assertResponseContains('<h1>Hi</h1>');
     }

@@ -8,7 +8,7 @@
     "authors": [
         {
             "name": "Mark Story",
-            "homepage": "http://mark-story.com",
+            "homepage": "https://mark-story.com",
             "role": "Author"
         },
         {
@@ -36,8 +36,8 @@
     },
     "autoload": {
         "psr-4": {
-            "DebugKit\\": "src",
-            "DebugKit\\Test\\Fixture\\": "tests\\Fixture"
+            "DebugKit\\": "src/",
+            "DebugKit\\Test\\Fixture\\": "tests/Fixture/"
         }
     },
     "autoload-dev": {

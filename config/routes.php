@@ -40,7 +40,7 @@ Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $rou
         }
     );
 
-    $routes->get('/', ['controller' => 'DebugKit', 'action' => 'index']);
-    $routes->get('/dashboard', ['controller' => 'DebugKit', 'action' => 'index']);
-    $routes->post('/dashboard/reset', ['controller' => 'DebugKit', 'action' => 'reset']);
+    $routes->get('/', ['controller' => 'Dashboard', 'action' => 'index']);
+    $routes->get('/dashboard', ['controller' => 'Dashboard', 'action' => 'index']);
+    $routes->post('/dashboard/reset', ['controller' => 'Dashboard', 'action' => 'reset']);
 });

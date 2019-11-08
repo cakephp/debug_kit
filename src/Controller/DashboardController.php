@@ -14,15 +14,13 @@ namespace DebugKit\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Database\Driver\Sqlite;
-use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
 
 /**
  * Dashboard and common DebugKit backend.
  */
-class DebugKitController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Before filter handler.

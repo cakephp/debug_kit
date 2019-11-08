@@ -124,27 +124,6 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
-     * Test that saveData ignores requestAction
-     *
-     * @return void
-     */
-    public function testSaveDataIgnoreRequestAction()
-    {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null, 'requested' => 1],
-        ]);
-        $response = new Response([
-            'statusCode' => 200,
-            'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>',
-        ]);
-
-        $bar = new ToolbarService($this->events, []);
-        $this->assertNull($bar->saveData($request, $response));
-    }
-
-    /**
      * Test that saveData ignores debugkit paths
      *
      * @return void

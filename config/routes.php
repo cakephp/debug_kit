@@ -7,7 +7,6 @@ Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $rou
     $routes->setExtensions('json');
     $routes->setRouteClass(DashedRoute::class);
 
-
     $routes->connect(
         '/toolbar/clear-cache',
         ['controller' => 'Toolbar', 'action' => 'clearCache']

@@ -7,7 +7,6 @@ Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $rou
     $routes->setExtensions('json');
     $routes->setRouteClass(DashedRoute::class);
 
-    $routes->connect('/', ['controller' => 'DebugKit', 'action' => 'index']);
 
     $routes->connect(
         '/toolbar/clear-cache',
@@ -42,5 +41,7 @@ Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $rou
         }
     );
 
-    $routes->fallbacks();
+    $routes->get('/', ['controller' => 'DebugKit', 'action' => 'index']);
+    $routes->get('/dashboard', ['controller' => 'DebugKit', 'action' => 'index']);
+    $routes->post('/dashboard/reset', ['controller' => 'DebugKit', 'action' => 'reset']);
 });

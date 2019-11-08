@@ -49,32 +49,28 @@ class DebugKitController extends Controller
      */
     public function index()
     {
-        $connection = ConnectionManager::getConfig('debug_kit');
+        $this->loadModel('DebugKit.Requests');
 
-        if ($connection['driver'] === Sqlite::class) {
-            $connection['location'] = str_replace(ROOT . DS, DS, $connection['database']);
-            $connection['size'] = 0;
-            if (file_exists($connection['database'])) {
-                $connection['size'] = filesize($connection['database']);
-            }
-        }
+        $data = [
+            'driver' => get_class($this->Requests->getConnection()->getDriver()),
+            'rows' => $this->Requests->find()->count(),
+        ];
 
-        $this->set(compact('connection'));
+        $this->set('connection', $data);
     }
 
     /**
      * Reset SQLite DB.
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response
      */
     public function reset()
     {
         $this->request->allowMethod('post');
+        $this->loadModel('DebugKit.Requests');
 
-        $connection = ConnectionManager::getConfig('debug_kit');
-        if ($connection['driver'] === Sqlite::class && file_exists($connection['database'])) {
-            unlink($connection['database']);
-        }
+        $this->Requests->Panels->deleteAll('1=1');
+        $this->Requests->deleteAll('1=1');
 
         return $this->redirect(['action' => 'index']);
     }

@@ -3,20 +3,24 @@
  * @var \App\View\AppView $this
  */
 ?>
-<h1>Debug Kit</h1>
+<h1><?= __d('debug_kit', 'Debug Kit Dashboard') ?></h1>
 
-<h2>Database</h2>
+<h2><?= __d('debug_kit', 'Database') ?></h2>
 <ul>
-    <li><?= h($connection['driver']); ?></li>
-    <?php if (isset($connection['size'])): ?>
-    <li>DB Size: <?php echo $this->Number->toReadableSize($connection['size']); ?></li>
+    <li><?= __d('debug_kit', 'Driver') ?>: <?= h($connection['driver']); ?></li>
+    <?php if (isset($connection['rows'])): ?>
+    <li><?= __d('debug_kit', 'Requests') ?>: <?= $this->Number->format($connection['rows']) ?></li>
     <?php endif; ?>
 </ul>
-<?php if (!empty($connection['size'])): ?>
-<?php echo $this->Form->postLink('Reset', ['action' => 'reset'], ['confirm' => 'Sure?']); ?>
+<?php if (!empty($connection['rows'])): ?>
+    <?= $this->Form->postLink(
+        __d('debug_kit', 'Reset database'),
+        ['_method' => 'POST', 'action' => 'reset'],
+        ['confirm' => 'Are you sure?']
+    ); ?>
 <?php endif; ?>
 
 <h3>Actions</h3>
 <ul>
-    <li><?php echo $this->Html->link('Mail Preview', ['controller' => 'MailPreview']); ?></li>
+    <li><?= $this->Html->link(__d('debug_kit', 'Mail Preview'), ['controller' => 'MailPreview']); ?></li>
 </ul>

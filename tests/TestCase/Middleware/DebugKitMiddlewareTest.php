@@ -203,40 +203,6 @@ class DebugKitMiddlewareTest extends TestCase
     }
 
     /**
-     * Test that requestAction requests are not tracked or modified.
-     *
-     * @return void
-     */
-    public function testInvokeNoModifyRequestAction()
-    {
-        $request = new ServerRequest([
-            'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET'],
-            'params' => ['requested' => true],
-        ]);
-        $response = new Response([
-            'statusCode' => 200,
-            'type' => 'text/html',
-            'body' => '<body><p>things</p></body>',
-        ]);
-
-        $handler = $this->handler();
-        $handler->expects($this->once())
-            ->method('handle')
-            ->willReturn($response);
-        $middleware = new DebugKitMiddleware();
-        $result = $middleware->process($request, $handler);
-        $this->assertInstanceOf(Response::class, $result, 'Should return a response');
-
-        $requests = TableRegistry::get('DebugKit.Requests');
-        $total = $requests->find()->where(['url' => '/articles'])->count();
-
-        $this->assertEquals(0, $total, 'Should not track sub-requests');
-        $body = (string)$result->getBody();
-        $this->assertStringNotContainsString('<script', $body);
-    }
-
-    /**
      * Test that configuration is correctly passed to the service
      *
      * @return void

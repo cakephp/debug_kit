@@ -26,7 +26,10 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  */
 class Application extends BaseApplication
 {
-    public function initialize(): void
+    /**
+     * @return void
+     */
+    public function initialize()
     {
         parent::initialize();
         $this->loadPlugin('DebugKit');

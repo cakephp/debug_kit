@@ -17,7 +17,6 @@ namespace DebugKit\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
-use Cake\Filesystem\File;
 use Cake\View\Helper;
 
 /**
@@ -138,25 +137,26 @@ class TidyHelper extends Helper
         if (function_exists('tidy_parse_string')) {
             $tidy = tidy_parse_string($out, [], 'UTF8');
             $tidy->cleanRepair();
+            /** @psalm-suppress UndefinedPropertyFetch */
             $errors = $tidy->errorBuffer . "\n";
 
             return $errors;
         }
 
         // cli
-        $File = new File(rtrim(TMP, DS) . DS . rand() . '.html', true);
-        $File->write($out);
-        $path = $File->pwd();
-        $errors = $path . '.err';
-        $this->_exec("tidy -eq -utf8 -f $errors $path");
-        $File->delete();
+        $filePath = rtrim(TMP, DS) . DS . uniqid() . '.html';
+        file_put_contents($filePath, $out);
+        $errorFilePath = $filePath . '.err';
+        $this->_exec("tidy -eq -utf8 -f $errorFilePath $filePath");
+        unlink($filePath);
 
-        if (!file_exists($errors)) {
+        if (!file_exists($errorFilePath)) {
             return '';
         }
-        $Error = new File($errors);
-        $errors = $Error->read();
-        $Error->delete();
+
+        /** @var string $errors */
+        $errors = file_get_contents($errorFilePath);
+        unlink($errorFilePath);
 
         return $errors;
     }

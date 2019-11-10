@@ -16,7 +16,6 @@ namespace DebugKit\Test\TestCase\Controller;
 use Cake\TestSuite\IntegrationTestCase;
 use DebugKit\TestApp\Application;
 
-
 /**
  * Panel controller test.
  */

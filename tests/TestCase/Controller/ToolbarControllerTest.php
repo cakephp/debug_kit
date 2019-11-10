@@ -52,8 +52,8 @@ class ToolbarControllerTest extends IntegrationTestCase
      */
     public function testClearCacheNoGet()
     {
-        $this->get('/debug-kit/toolbar/clear_cache?name=testing');
-        $this->assertResponseCode(404);
+        $this->get('/debug-kit/toolbar/clear-cache?name=testing');
+        $this->assertResponseCode(405);
     }
 
     /**

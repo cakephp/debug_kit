@@ -107,9 +107,9 @@ class DebugEngineTest extends TestCase
         $this->engine->decrement('key');
 
         $result = $this->engine->metrics();
-        $this->assertEquals(3, $result['set']);
-        $this->assertEquals(1, $result['delete']);
-        $this->assertEquals(1, $result['get']);
+        $this->assertSame(3, $result['set']);
+        $this->assertSame(1, $result['delete']);
+        $this->assertSame(1, $result['get']);
     }
 
     /**

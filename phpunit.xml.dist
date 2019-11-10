@@ -8,8 +8,8 @@
 
 	<!-- Add any additional test suites you want to run here -->
 	<testsuites>
-		<testsuite name="All Tests">
-			<directory>./tests/TestCase</directory>
+		<testsuite name="debug-kit">
+			<directory>tests/TestCase</directory>
 		</testsuite>
 		<!-- Add plugin test suites here. -->
 	</testsuites>
@@ -17,17 +17,15 @@
 	<!-- configure code coverage -->
 	<filter>
 		<whitelist>
-			<directory suffix=".php">./src/</directory>
+			<directory suffix=".php">src/</directory>
 		</whitelist>
 	</filter>
 
 	<!-- Setup a listener for fixtures -->
 	<listeners>
-		<listener
-		class="\Cake\TestSuite\Fixture\FixtureInjector"
-		file="./vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php">
+		<listener class="Cake\TestSuite\Fixture\FixtureInjector">
 			<arguments>
-				<object class="\Cake\TestSuite\Fixture\FixtureManager" />
+				<object class="Cake\TestSuite\Fixture\FixtureManager"/>
 			</arguments>
 		</listener>
 	</listeners>

@@ -15,11 +15,10 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Mail preview controller test
@@ -44,22 +43,10 @@ class MailPreviewControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        Plugin::getCollection()->add(new \Debugkit\Plugin());
         Router::scope('/', function ($routes) {
             $routes->connect('/users/:action/*', ['controller' => 'Users']);
         });
-
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->scope(
-                '/mail-preview',
-                ['controller' => 'MailPreview'],
-                function ($routes) {
-                    $routes->connect('/sent/*', ['action' => 'sent']);
-                    $routes->connect('/preview/*', ['action' => 'email']);
-                }
-            );
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 

@@ -16,9 +16,8 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Toolbar controller test.
@@ -43,12 +42,7 @@ class ToolbarControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->connect(
-                '/toolbar/clear_cache/*',
-                ['plugin' => 'DebugKit', 'controller' => 'Toolbar', 'action' => 'clearCache']
-            );
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 
@@ -59,9 +53,8 @@ class ToolbarControllerTest extends IntegrationTestCase
      */
     public function testClearCacheNoGet()
     {
-        $this->get('/debug-kit/toolbar/clear_cache?name=testing');
-
-        $this->assertEquals(405, $this->_response->getStatusCode());
+        $this->get('/debug-kit/toolbar/clear-cache?name=testing');
+        $this->assertResponseCode(405);
     }
 
     /**

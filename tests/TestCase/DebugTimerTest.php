@@ -100,7 +100,7 @@ class DebugTimerTest extends TestCase
         $this->assertTrue(DebugTimer::stop());
 
         $timers = DebugTimer::getAll();
-        $this->assertEquals(3, count($timers), 'incorrect number of timers %s');
+        $this->assertSame(3, count($timers), 'incorrect number of timers %s');
         $firstTimerLine = __LINE__ - 9;
         $secondTimerLine = __LINE__ - 8;
         $file = Debugger::trimPath(__FILE__);
@@ -130,7 +130,7 @@ class DebugTimerTest extends TestCase
         DebugTimer::stop('my timer');
 
         $timers = DebugTimer::getAll();
-        $this->assertEquals(3, count($timers), 'wrong timer count %s');
+        $this->assertSame(3, count($timers), 'wrong timer count %s');
 
         $this->assertTrue(isset($timers['my timer']));
         $this->assertTrue(isset($timers['my timer #2']));

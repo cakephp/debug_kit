@@ -15,9 +15,8 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Panel controller test.
@@ -42,9 +41,7 @@ class PanelsControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->connect('/panels/:action/*', ['controller' => 'Panels']);
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 
@@ -61,7 +58,7 @@ class PanelsControllerTest extends IntegrationTestCase
             ],
         ]);
 
-        $this->get('/debug-kit/panels/index/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->get('/debug-kit/panels/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
 
         $this->assertResponseOk();
         $this->assertContentType('application/json');

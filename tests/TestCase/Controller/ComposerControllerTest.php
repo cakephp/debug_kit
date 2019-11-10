@@ -15,9 +15,8 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\TestApp\Application;
 
 /**
  * Composer controller test.
@@ -32,9 +31,7 @@ class ComposerControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        Router::plugin('DebugKit', function (RouteBuilder $routes) {
-            $routes->connect('/composer/:action', ['controller' => 'Composer']);
-        });
+        $this->configApplication(Application::class, []);
         $this->useHttpServer(true);
     }
 
@@ -50,8 +47,7 @@ class ComposerControllerTest extends IntegrationTestCase
                 'accept' => 'application/json, text/javascript, */*; q=0.01',
             ],
         ]);
-        $this->disableErrorHandlerMiddleware();
-        $this->post('/debug-kit/composer/checkDependencies');
+        $this->post('/debug-kit/composer/check-dependencies');
         $this->assertResponseOk();
         $this->assertContentType('application/json');
         $data = json_decode((string)$this->_response->getBody(), true);

@@ -30,6 +30,15 @@ use Cake\Routing\Middleware\RoutingMiddleware;
 class Application extends BaseApplication
 {
     /**
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadPlugin('DebugKit');
+    }
+
+    /**
      * Setup the middleware queue your application will use.
      *
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.

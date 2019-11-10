@@ -60,9 +60,9 @@ class RoutesPanelTest extends TestCase
     public function testSummary()
     {
         $this->panel->initialize();
-        $this->assertEquals(4, $this->panel->summary());
+        $this->assertSame('4', $this->panel->summary());
 
         Router::connect('/test', ['controller' => 'Pages', 'action' => 'display', 'home']);
-        $this->assertEquals(5, $this->panel->summary());
+        $this->assertSame('5', $this->panel->summary());
     }
 }

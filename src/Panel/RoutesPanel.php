@@ -27,7 +27,7 @@ class RoutesPanel extends DebugPanel
     /**
      * Get summary data for the routes panel.
      *
-     * @return int
+     * @return string
      */
     public function summary()
     {
@@ -35,7 +35,7 @@ class RoutesPanel extends DebugPanel
             return $route->defaults['plugin'] !== 'DebugKit';
         });
 
-        return count($routes);
+        return (string)count($routes);
     }
 
     /**

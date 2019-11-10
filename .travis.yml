@@ -3,8 +3,9 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4snapshot
 
-dist: trusty
+dist: xenial
 
 services:
   - postgresql
@@ -20,6 +21,9 @@ env:
 
 matrix:
   fast_finish: true
+
+  allow_failures:
+    - php: 7.4snapshot
 
 install:
   - composer install --prefer-dist --no-interaction

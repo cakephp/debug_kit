@@ -16,6 +16,7 @@ namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
+use DebugKit\Log\Engine\DebugKitLog;
 use DebugKit\Panel\LogPanel;
 
 /**
@@ -78,10 +79,10 @@ class LogPanelTest extends TestCase
         $result = $this->panel->data();
 
         $this->assertArrayHasKey('logger', $result);
-        /** @var DebugKitLog $logger */
+        /** @var \DebugKit\Log\Engine\DebugKitLog $logger */
         $logger = $result['logger'];
 
-        $this->assertInstanceOf('DebugKit\Log\Engine\DebugKitLog', $logger);
+        $this->assertInstanceOf(DebugKitLog::class, $logger);
         $this->assertCount(1, $logger->all()['error']);
     }
 
@@ -95,10 +96,10 @@ class LogPanelTest extends TestCase
         $this->panel->initialize();
 
         Log::write('error', 'Test');
-        $this->assertEquals(1, $this->panel->summary());
+        $this->assertSame('1', $this->panel->summary());
 
         Log::write('error', 'Test 2');
         Log::write('notice', 'A thing');
-        $this->assertEquals(3, $this->panel->summary());
+        $this->assertSame('3', $this->panel->summary());
     }
 }

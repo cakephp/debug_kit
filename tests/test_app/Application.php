@@ -14,8 +14,6 @@
  */
 namespace DebugKit\TestApp;
 
-use Cake\Core\Configure;
-use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
@@ -28,6 +26,15 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  */
 class Application extends BaseApplication
 {
+    /**
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadPlugin('DebugKit');
+    }
+
     /**
      * Setup the middleware queue your application will use.
      *

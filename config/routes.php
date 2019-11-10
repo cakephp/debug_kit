@@ -36,7 +36,7 @@ Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $rou
             $routes->connect('/', ['action' => 'index']);
             $routes->connect('/preview', ['action' => 'email']);
             $routes->connect('/preview/*', ['action' => 'email']);
-            $routes->connect('/sent/:panel/:id', ['action' => 'sent'], ['pass' => ['panel', 'id']]);
+            $routes->connect('/sent/{panel}/{id}', ['action' => 'sent'], ['pass' => ['panel', 'id']]);
         }
     );
 

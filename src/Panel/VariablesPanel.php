@@ -16,7 +16,7 @@ namespace DebugKit\Panel;
 
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Form\Form;
 use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
@@ -44,9 +44,9 @@ class VariablesPanel extends DebugPanel
      */
     protected function _getErrors(EntityInterface $entity)
     {
-        $errors = $entity->errors();
+        $errors = $entity->getErrors();
 
-        foreach ($entity->visibleProperties() as $property) {
+        foreach ($entity->getVisible() as $property) {
             $v = $entity[$property];
             if ($v instanceof EntityInterface) {
                 $errors[$property] = $this->_getErrors($v);
@@ -92,10 +92,10 @@ class VariablesPanel extends DebugPanel
     /**
      * Shutdown event
      *
-     * @param \Cake\Event\Event $event The event
+     * @param \Cake\Event\EventInterface $event The event
      * @return void
      */
-    public function shutdown(Event $event)
+    public function shutdown(EventInterface $event)
     {
         $controller = $event->getSubject();
         $errors = [];
@@ -153,7 +153,7 @@ class VariablesPanel extends DebugPanel
             if ($v instanceof EntityInterface) {
                 $errors[$k] = $this->_getErrors($v);
             } elseif ($v instanceof Form) {
-                $formError = $v->errors();
+                $formError = $v->getErrors();
                 if (!empty($formError)) {
                     $errors[$k] = $formError;
                 }

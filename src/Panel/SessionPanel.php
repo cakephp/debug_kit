@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
 
 /**
@@ -25,12 +25,12 @@ class SessionPanel extends DebugPanel
     /**
      * shutdown callback
      *
-     * @param \Cake\Event\Event $event The event
+     * @param \Cake\Event\EventInterface $event The event
      * @return void
      */
-    public function shutdown(Event $event)
+    public function shutdown(EventInterface $event)
     {
-        /** @var \DebugKit\Panel\Request $request */
+        /** @var \Cake\Http\ServerRequest $request */
         $request = $event->getSubject()->getRequest();
         if ($request) {
             $this->_data = ['content' => $request->getSession()->read()];

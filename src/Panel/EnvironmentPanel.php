@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace DebugKit\Panel;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
 
 /**
@@ -87,10 +87,10 @@ class EnvironmentPanel extends DebugPanel
     /**
      * Shutdown callback
      *
-     * @param \Cake\Event\Event $event Event
+     * @param \Cake\Event\EventInterface $event Event
      * @return void
      */
-    public function shutdown(Event $event)
+    public function shutdown(EventInterface $event)
     {
         $this->_data = $this->_prepare();
     }

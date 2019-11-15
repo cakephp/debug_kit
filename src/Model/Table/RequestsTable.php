@@ -22,13 +22,13 @@ use Cake\ORM\Table;
 /**
  * The requests table tracks basic information about each request.
  *
- * @method \DebugKit\Model\Table\Request get($primaryKey, $options = [])
- * @method \DebugKit\Model\Table\Request newEntity($data = null, array $options = [])
- * @method \DebugKit\Model\Table\Request[] newEntities(array $data, array $options = [])
- * @method \DebugKit\Model\Table\Request save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \DebugKit\Model\Table\Request patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \DebugKit\Model\Table\Request[] patchEntities($entities, array $data, array $options = [])
- * @method \DebugKit\Model\Table\Request findOrCreate($search, callable $callback = null)
+ * @method \DebugKit\Model\Entity\Request get($primaryKey, $options = [])
+ * @method \DebugKit\Model\Entity\Request newEntity($data = null, array $options = [])
+ * @method \DebugKit\Model\Entity\Request[] newEntities(array $data, array $options = [])
+ * @method \DebugKit\Model\Entity\Request save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DebugKit\Model\Entity\Request patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \DebugKit\Model\Entity\Request[] patchEntities($entities, array $data, array $options = [])
+ * @method \DebugKit\Model\Entity\Request findOrCreate($search, callable $callback = null, array $options = [])
  */
 class RequestsTable extends Table
 {

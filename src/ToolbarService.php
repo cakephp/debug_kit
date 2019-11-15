@@ -229,7 +229,7 @@ class ToolbarService
             'panels' => [],
         ];
         /** @var \DebugKit\Model\Table\RequestsTable $requests */
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = TableRegistry::getTableLocator()->get('DebugKit.Requests');
         $requests->gc();
 
         $row = $requests->newEntity($data);

@@ -51,6 +51,7 @@ class BenchmarkCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $this->io = $io;
+        /** @var string $url */
         $url = $args->getArgumentAt(0);
         $defaults = ['t' => 100, 'n' => 10];
         $options = array_merge($defaults, $args->getOptions());

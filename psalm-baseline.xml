@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.6.4@3e98c800ec72e06eed7546956823ff395fc30c75">
+<files psalm-version="3.6.5@b1aae0d1a5a11908e0e5f9eb6795ab7bb3f43577">
   <file src="src/Controller/DashboardController.php">
     <InvalidNullableReturnType occurrences="1">
       <code>\Cake\Http\Response</code>
@@ -148,30 +148,8 @@
       <code>$url === false</code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/View/Helper/TidyHelper.php">
-    <InvalidOperand occurrences="1">
-      <code>$line</code>
-    </InvalidOperand>
-    <InvalidReturnStatement occurrences="1">
-      <code>$_out ? $_out : true</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>bool</code>
-    </InvalidReturnType>
-    <PossiblyInvalidOperand occurrences="1">
-      <code>Debugger::trace(['depth' =&gt; 1, 'start' =&gt; 2])</code>
-    </PossiblyInvalidOperand>
-    <PossiblyNullArgument occurrences="2">
-      <code>$out</code>
-      <code>$out</code>
-    </PossiblyNullArgument>
-    <UndefinedClass occurrences="1">
-      <code>$tidy</code>
-    </UndefinedClass>
-  </file>
   <file src="src/View/Helper/ToolbarHelper.php">
-    <InvalidArgument occurrences="2">
-      <code>$currentAncestors</code>
+    <InvalidArgument occurrences="1">
       <code>$value</code>
     </InvalidArgument>
   </file>

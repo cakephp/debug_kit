@@ -34,7 +34,7 @@ define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP);
 
-$loader = new \Cake\Core\ClassLoader;
+$loader = new \Cake\Core\ClassLoader();
 $loader->register();
 
 $loader->addNamespace('TestApp', APP);

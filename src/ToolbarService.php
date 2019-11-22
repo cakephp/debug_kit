@@ -208,8 +208,7 @@ class ToolbarService
     {
         // Skip debugkit requests and requestAction()
         $path = $request->getUri()->getPath();
-        if (
-            strpos($path, 'debug_kit') !== false ||
+        if (strpos($path, 'debug_kit') !== false ||
             strpos($path, 'debug-kit') !== false ||
             $request->is('requested')
         ) {

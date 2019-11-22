@@ -127,8 +127,7 @@ class ToolbarHelper extends Helper
                 $value = ' - recursion';
             }
 
-            if (
-                (
+            if ((
                 $value instanceof ArrayAccess ||
                 $value instanceof Iterator ||
                 is_array($value) ||

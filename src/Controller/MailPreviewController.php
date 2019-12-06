@@ -202,7 +202,7 @@ class MailPreviewController extends Controller
                     $base = str_replace(".php", "", basename($file));
                     $class = App::className($plugin . $base, 'Mailer/Preview');
                     if ($class) {
-                        yield ['plugin' => trim($plugin, '.'), 'class' => new $class];
+                        yield ['plugin' => trim($plugin, '.'), 'class' => new $class()];
                     }
                 }
             });
@@ -269,7 +269,7 @@ class MailPreviewController extends Controller
         if (!$realClass) {
             throw new NotFoundException("Mailer preview ${previewName} not found");
         }
-        $mailPreview = new $realClass;
+        $mailPreview = new $realClass();
 
         $email = $mailPreview->find($emailName);
         if (!$email) {

@@ -30,7 +30,6 @@ use DebugKit\Model\Entity\Panel;
  */
 class PanelsTable extends Table
 {
-
     use LazyTableTrait;
 
     /**

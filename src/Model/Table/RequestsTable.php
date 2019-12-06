@@ -31,7 +31,6 @@ use DebugKit\Model\Entity\Request;
  */
 class RequestsTable extends Table
 {
-
     use LazyTableTrait;
 
     /**

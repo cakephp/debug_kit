@@ -50,5 +50,13 @@
     },
     "suggest": {
         "ext-pdo_sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs --colors -p src/ tests/",
+        "cs-fix": "phpcbf --colors -p src/ tests/"
     }
 }

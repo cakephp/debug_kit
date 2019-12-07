@@ -45,7 +45,7 @@ class LogPanel extends DebugPanel
     public function data()
     {
         return [
-            'logger' => Log::engine('debug_kit_log_panel')
+            'logger' => Log::engine('debug_kit_log_panel'),
         ];
     }
 

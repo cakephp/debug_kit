@@ -68,7 +68,7 @@ class DebugKitTransport extends AbstractTransport
         $headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc']);
         $parts = [
             'text' => $email->message(Email::MESSAGE_TEXT),
-            'html' => $email->message(Email::MESSAGE_HTML)
+            'html' => $email->message(Email::MESSAGE_HTML),
         ];
 
         $headers['Subject'] = $email->getOriginalSubject();

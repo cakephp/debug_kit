@@ -64,7 +64,7 @@ class ToolbarService
             'DebugKit.Deprecations' => true,
         ],
         'forceEnable' => false,
-        'safeTld' => []
+        'safeTld' => [],
     ];
 
     /**
@@ -208,7 +208,8 @@ class ToolbarService
     {
         // Skip debugkit requests and requestAction()
         $path = $request->getUri()->getPath();
-        if (strpos($path, 'debug_kit') !== false ||
+        if (
+            strpos($path, 'debug_kit') !== false ||
             strpos($path, 'debug-kit') !== false ||
             $request->is('requested')
         ) {
@@ -220,7 +221,7 @@ class ToolbarService
             'method' => $request->getMethod(),
             'status_code' => $response->getStatusCode(),
             'requested_at' => $request->getEnv('REQUEST_TIME'),
-            'panels' => []
+            'panels' => [],
         ];
         /* @var \DebugKit\Model\Table\RequestsTable $requests */
         $requests = TableRegistry::get('DebugKit.Requests');
@@ -260,7 +261,7 @@ class ToolbarService
         $url = 'js/toolbar.js';
         $filePaths = [
             str_replace('/', DIRECTORY_SEPARATOR, WWW_ROOT . 'debug_kit/' . $url),
-            str_replace('/', DIRECTORY_SEPARATOR, CorePlugin::path('DebugKit') . 'webroot/' . $url)
+            str_replace('/', DIRECTORY_SEPARATOR, CorePlugin::path('DebugKit') . 'webroot/' . $url),
         ];
         $url = '/debug_kit/' . $url;
         foreach ($filePaths as $filePath) {

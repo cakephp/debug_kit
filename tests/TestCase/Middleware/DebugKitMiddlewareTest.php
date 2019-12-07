@@ -37,7 +37,7 @@ class DebugKitMiddlewareTest extends TestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -75,12 +75,12 @@ class DebugKitMiddlewareTest extends TestCase
     {
         $request = new ServerRequest([
             'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET']
+            'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $layer = new DebugKitMiddleware();
@@ -128,7 +128,7 @@ class DebugKitMiddlewareTest extends TestCase
     {
         $request = new ServerRequest([
             'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET']
+            'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $response = new Response([
             'statusCode' => 200,
@@ -164,12 +164,12 @@ class DebugKitMiddlewareTest extends TestCase
     {
         $request = new ServerRequest([
             'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET']
+            'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/plain',
-            'body' => 'OK'
+            'body' => 'OK',
         ]);
 
         $layer = new DebugKitMiddleware();
@@ -202,7 +202,7 @@ class DebugKitMiddlewareTest extends TestCase
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<body><p>things</p></body>'
+            'body' => '<body><p>things</p></body>',
         ]);
 
         $layer = new DebugKitMiddleware();

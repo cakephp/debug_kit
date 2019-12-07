@@ -65,7 +65,7 @@ class EnvironmentPanel extends DebugPanel
             'ROOT' => ROOT,
             'TESTS' => TESTS,
             'TMP' => TMP,
-            'WWW_ROOT' => WWW_ROOT
+            'WWW_ROOT' => WWW_ROOT,
         ];
 
         $hiddenCakeConstants = array_fill_keys(

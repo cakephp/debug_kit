@@ -65,7 +65,7 @@ class CachePanel extends DebugPanel
         }
 
         return [
-            'metrics' => $metrics
+            'metrics' => $metrics,
         ];
     }
 }

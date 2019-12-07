@@ -166,7 +166,7 @@ class DebugLog extends QueryLogger
         $this->_queries[] = [
             'query' => $query->query,
             'took' => $query->took,
-            'rows' => $query->numRows
+            'rows' => $query->numRows,
         ];
     }
 

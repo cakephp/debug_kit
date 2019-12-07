@@ -78,11 +78,11 @@ class SimpleGraphHelperTest extends TestCase
             ['div' => [
                 'class' => 'graph-bar-value',
                 'style' => 'margin-left: 0px; width: 35px',
-                'title' => 'Starting 0ms into the request, taking 10ms'
+                'title' => 'Starting 0ms into the request, taking 10ms',
             ]],
             ' ',
             '/div',
-            '/div'
+            '/div',
         ];
         $this->assertHtml($expected, $output);
     }
@@ -103,11 +103,11 @@ class SimpleGraphHelperTest extends TestCase
             ['div' => [
                 'class' => 'graph-bar-value',
                 'style' => 'margin-left: 35px; width: 35px',
-                'title' => 'Starting 10ms into the request, taking 10ms'
+                'title' => 'Starting 10ms into the request, taking 10ms',
             ]],
             ' ',
             '/div',
-            '/div'
+            '/div',
         ];
         $this->assertHtml($expected, $output);
     }

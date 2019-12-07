@@ -76,7 +76,7 @@ class VariablesPanelTest extends TestCase
             ->setMethods(['__debugInfo'])
             ->getMock();
         $unserializableDebugInfo->expects($this->once())->method('__debugInfo')->willReturn([
-            'unserializable' => $unserializable
+            'unserializable' => $unserializable,
         ]);
 
         $resource = fopen('data:text/plain;base64,', 'r');

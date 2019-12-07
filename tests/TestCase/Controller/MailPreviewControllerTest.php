@@ -31,7 +31,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -111,9 +111,9 @@ class MailPreviewControllerTest extends IntegrationTestCase
             'emails' => [
                 [
                     'headers' => ['To' => 'test@example.com'],
-                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi']
-                ]
-            ]
+                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi'],
+                ],
+            ],
         ];
         $panel->content = serialize($data);
         $panels->save($panel);
@@ -137,9 +137,9 @@ class MailPreviewControllerTest extends IntegrationTestCase
             'emails' => [
                 [
                     'headers' => ['To' => 'test@example.com'],
-                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi']
-                ]
-            ]
+                    'message' => ['html' => '<h1>Hi</h1>', 'text' => 'Hi'],
+                ],
+            ],
         ];
         $panel->content = serialize($data);
         $panels->save($panel);

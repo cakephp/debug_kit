@@ -93,7 +93,8 @@ class VariablesPanel extends DebugPanel
         $errors = [];
 
         $walker = function (&$item) use (&$walker) {
-            if ($item instanceof Collection ||
+            if (
+                $item instanceof Collection ||
                 $item instanceof Query ||
                 $item instanceof ResultSet
             ) {
@@ -108,7 +109,8 @@ class VariablesPanel extends DebugPanel
                 } catch (InvalidArgumentException $e) {
                     $item = $this->_walkDebugInfo($walker, $item);
                 }
-            } elseif ($item instanceof Closure ||
+            } elseif (
+                $item instanceof Closure ||
                 $item instanceof PDO ||
                 $item instanceof SimpleXMLElement
             ) {
@@ -152,7 +154,7 @@ class VariablesPanel extends DebugPanel
 
         $this->_data = [
             'content' => $vars,
-            'errors' => $errors
+            'errors' => $errors,
         ];
     }
 

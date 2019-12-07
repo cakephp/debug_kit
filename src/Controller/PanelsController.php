@@ -83,7 +83,7 @@ class PanelsController extends Controller
         }
         $this->set([
             '_serialize' => ['panels'],
-            'panels' => $panels
+            'panels' => $panels,
         ]);
     }
 

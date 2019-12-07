@@ -75,7 +75,7 @@ class ToolbarHelperTest extends TestCase
         $expected = [
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', '0', '/strong', ' (false)', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -84,7 +84,7 @@ class ToolbarHelperTest extends TestCase
         $expected = [
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', '0', '/strong', ' (null)', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -93,7 +93,7 @@ class ToolbarHelperTest extends TestCase
         $expected = [
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', '0', '/strong', ' (true)', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -102,7 +102,7 @@ class ToolbarHelperTest extends TestCase
         $expected = [
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', '0', '/strong', ' (empty)', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
     }
@@ -134,7 +134,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
     }
@@ -167,7 +167,7 @@ class ToolbarHelperTest extends TestCase
             '/li',
             '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
     }
@@ -184,7 +184,7 @@ class ToolbarHelperTest extends TestCase
         $expected = [
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', 'key', '/strong', ' value', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -193,7 +193,7 @@ class ToolbarHelperTest extends TestCase
         $expected = [
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', 'key', '/strong', ' (null)', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -203,7 +203,7 @@ class ToolbarHelperTest extends TestCase
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', 'key', '/strong', ' value', '/li',
             '<li', '<strong', 'foo', '/strong', ' bar', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -211,8 +211,8 @@ class ToolbarHelperTest extends TestCase
             'key' => 'value',
             'foo' => [
                 'this' => 'deep',
-                'another' => 'value'
-            ]
+                'another' => 'value',
+            ],
         ];
         $result = $this->Toolbar->makeNeatArray($in);
         $expected = [
@@ -225,7 +225,7 @@ class ToolbarHelperTest extends TestCase
                 '<li', '<strong', 'another', '/strong', ' value', '/li',
                 '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -233,12 +233,12 @@ class ToolbarHelperTest extends TestCase
             'key' => 'value',
             'foo' => [
                 'this' => 'deep',
-                'another' => 'value'
+                'another' => 'value',
             ],
             'lotr' => [
                 'gandalf' => 'wizard',
-                'bilbo' => 'hobbit'
-            ]
+                'bilbo' => 'hobbit',
+            ],
         ];
         $result = $this->Toolbar->makeNeatArray($in, 1);
         $expected = [
@@ -258,7 +258,7 @@ class ToolbarHelperTest extends TestCase
                 '<li', '<strong', 'bilbo', '/strong', ' hobbit', '/li',
                 '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -280,7 +280,7 @@ class ToolbarHelperTest extends TestCase
                 '<li', '<strong', 'bilbo', '/strong', ' hobbit', '/li',
                 '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
 
@@ -290,7 +290,7 @@ class ToolbarHelperTest extends TestCase
             'ul' => ['class' => 'neat-array depth-0'],
             '<li', '<strong', 'key', '/strong', ' value', '/li',
             '<li', '<strong', 'array', '/strong', ' (empty)', '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
     }
@@ -317,7 +317,7 @@ class ToolbarHelperTest extends TestCase
             '<li', '<strong', 'name', '/strong', ' mark', '/li',
             '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
     }
@@ -332,12 +332,12 @@ class ToolbarHelperTest extends TestCase
         $in = [
             'lotr' => [
                 'gandalf' => 'wizard',
-                'bilbo' => 'hobbit'
+                'bilbo' => 'hobbit',
             ],
             'key' => 'value',
             'foo' => [
                 'this' => 'deep',
-                'another' => 'value'
+                'another' => 'value',
             ],
         ];
         $this->Toolbar->setSort(true);
@@ -359,7 +359,7 @@ class ToolbarHelperTest extends TestCase
                 '<li', '<strong', 'bilbo', '/strong', ' hobbit', '/li',
                 '/ul',
             '/li',
-            '/ul'
+            '/ul',
         ];
         $this->assertHtml($expected, $result);
     }

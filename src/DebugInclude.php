@@ -48,7 +48,7 @@ class DebugInclude
         'Auth', 'Cache', 'Collection', 'Config', 'Configure', 'Console', 'Component', 'Controller',
         'Behavior', 'Database', 'Datasource', 'Model', 'Template', 'View', 'Utility',
         'Network', 'Routing', 'I18n', 'Log', 'Error', 'Event', 'Form', 'Filesystem',
-        'ORM', 'Filter', 'Validation'
+        'ORM', 'Filter', 'Validation',
     ];
 
     /**

@@ -38,7 +38,7 @@ class DebugBarFilterTest extends TestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -101,12 +101,12 @@ class DebugBarFilterTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'params' => ['plugin' => null, 'requested' => 1]
+            'params' => ['plugin' => null, 'requested' => 1],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new DebugBarFilter($this->events, []);
@@ -124,7 +124,7 @@ class DebugBarFilterTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'params' => ['plugin' => null]
+            'params' => ['plugin' => null],
         ]);
         $response = new Response([
             'statusCode' => 200,
@@ -151,12 +151,12 @@ class DebugBarFilterTest extends TestCase
     {
         $request = new Request([
             'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET']
+            'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>'
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
         $bar = new DebugBarFilter($this->events, []);
@@ -204,7 +204,7 @@ class DebugBarFilterTest extends TestCase
         $response = new Response([
             'statusCode' => 200,
             'type' => 'application/json',
-            'body' => '{"some":"json"}'
+            'body' => '{"some":"json"}',
         ]);
 
         $bar = new DebugBarFilter($this->events, []);
@@ -254,7 +254,7 @@ class DebugBarFilterTest extends TestCase
         $bar = new DebugBarFilter($this->events, [
             'forceEnable' => function () {
                 return true;
-            }
+            },
         ]);
         $this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
     }

@@ -43,7 +43,7 @@ class ComposerControllerTest extends IntegrationTestCase
         $this->configRequest([
             'headers' => [
                 'accept' => 'application/json, text/javascript, */*; q=0.01',
-            ]
+            ],
         ]);
         $this->post('/debug-kit/composer/check-dependencies');
         $this->assertResponseOk();

@@ -75,20 +75,20 @@ class BenchmarkShell extends Shell
         $this->out("");
 
         $this->out(Text::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
-                'rps' => round($requests / $duration, 3)
+                'rps' => round($requests / $duration, 3),
         ]));
 
         $this->out(Text::insert(__d('debug_kit', 'Average request time: :average-time seconds'), [
-                'average-time' => round($duration / $requests, 3)
+                'average-time' => round($duration / $requests, 3),
         ]));
 
         $this->out(Text::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), [
-                'std-dev' => round($this->_deviation($times, true), 3)
+                'std-dev' => round($this->_deviation($times, true), 3),
         ]));
 
         $this->out(Text::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), [
                 'longest' => round(max($times), 3),
-                'shortest' => round(min($times), 3)
+                'shortest' => round(min($times), 3),
         ]));
 
         $this->out("");
@@ -151,11 +151,11 @@ class BenchmarkShell extends Shell
         ))
         ->addArgument('url', [
             'help' => __d('debug_kit', 'The URL to request.'),
-            'required' => true
+            'required' => true,
         ])
         ->addOption('n', [
             'default' => 10,
-            'help' => __d('debug_kit', 'Number of iterations to perform.')
+            'help' => __d('debug_kit', 'Number of iterations to perform.'),
         ])
         ->addOption('t', [
             'default' => 100,
@@ -163,7 +163,7 @@ class BenchmarkShell extends Shell
                 'debug_kit',
                 'Maximum total time for all iterations, in seconds.' .
                 'If a single iteration takes more than the timeout, only one request will be made'
-            )
+            ),
         ])
         ->epilog(__d(
             'debug_kit',

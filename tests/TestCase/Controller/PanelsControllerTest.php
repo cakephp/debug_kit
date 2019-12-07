@@ -29,7 +29,7 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels'
+        'plugin.DebugKit.Panels',
     ];
 
     /**
@@ -54,7 +54,7 @@ class PanelsControllerTest extends IntegrationTestCase
         $this->configRequest([
             'headers' => [
                 'accept' => 'application/json, text/javascript, */*; q=0.01',
-            ]
+            ],
         ]);
 
         $this->get('/debug-kit/panels/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');

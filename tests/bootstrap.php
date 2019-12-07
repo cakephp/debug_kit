@@ -61,29 +61,29 @@ Configure::write('App', [
     'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [APP . 'Plugin' . DS],
-        'templates' => [APP . 'Template' . DS]
-    ]
+        'templates' => [APP . 'Template' . DS],
+    ],
 ]);
 Configure::write('Session', [
-    'defaults' => 'php'
+    'defaults' => 'php',
 ]);
 
 Cache::setConfig([
     '_cake_core_' => [
         'engine' => 'File',
         'prefix' => 'cake_core_',
-        'serialize' => true
+        'serialize' => true,
     ],
     '_cake_model_' => [
         'engine' => 'File',
         'prefix' => 'cake_model_',
-        'serialize' => true
+        'serialize' => true,
     ],
     'default' => [
         'engine' => 'File',
         'prefix' => 'default_',
-        'serialize' => true
-    ]
+        'serialize' => true,
+    ],
 ]);
 
 // Ensure default test connection is defined
@@ -110,7 +110,7 @@ Log::setConfig([
         'engine' => 'Cake\Log\Engine\FileLog',
         'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
         'file' => 'error',
-    ]
+    ],
 ]);
 
 Plugin::getCollection()->add(new \DebugKit\Plugin());

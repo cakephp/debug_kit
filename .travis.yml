@@ -42,7 +42,7 @@ before_script:
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then [ "$(find . \( -path './vendor' \) -prune -o -type f \( -name '*.ctp' -o -name '*.php' \) -print0 | xargs -0 --no-run-if-empty -L1 -i'{}' php -l '{}' | grep -vc 'No syntax errors')" -eq 0 ]; fi"
-  - sh -c "if [ '$DEFAULT' = '1' ]; then ./vendor/bin/phpunit; fi"
+  - sh -c "if [ '$DEFAULT' = '1' ]; then vendor/bin/phpunit; fi"
 
   - sh -c "if [ '$PHPCS' = '1' ]; then composer cs-check; fi"
 

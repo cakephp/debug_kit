@@ -30,7 +30,7 @@ matrix:
       env: PREFER_LOWEST=1
 
   allow_failures:
-    - php: 7.4snapshot
+    - php: 7.4
 
 install:
   - sh -c "if [ '$PREFER_LOWEST' != '1' ]; then composer install --prefer-dist --no-interaction; fi"

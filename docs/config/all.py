@@ -23,8 +23,8 @@ project = 'CakePHP DebugKit'
 
 # Other versions that display in the version picker menu.
 version_list = [
-    {'name': '3.x', 'number': '/debugkit/3.x', 'title': '3.x', 'current': True},
-    # {'name': '4.x', 'number': '/debugkit/4.x', 'title': '4.x'},
+    {'name': '3.x', 'number': '/debugkit/3', 'title': '3.x', 'current': True},
+    {'name': '4.x', 'number': '/debugkit/4', 'title': '4.x'},
 ]
 
 # Languages available.
@@ -32,7 +32,7 @@ languages = ['en', 'fr', 'ja', 'pt']
 
 # The GitHub branch name for this version of the docs
 # for edit links to point at.
-branch = 'master'
+branch = '3.x'
 
 # Current version being built
 version = '3.x'

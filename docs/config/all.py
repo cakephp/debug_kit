@@ -10,10 +10,10 @@ from cakephpsphinx.config.all import *
 #
 
 # The full version, including alpha/beta/rc tags.
-release = '3.x'
+release = '4.x'
 
 # The search index version.
-search_version = 'debugkit-3'
+search_version = 'debugkit-4'
 
 # The marketing display name for the book.
 version_name = ''
@@ -23,8 +23,8 @@ project = 'CakePHP DebugKit'
 
 # Other versions that display in the version picker menu.
 version_list = [
-    {'name': '3.x', 'number': '/debugkit/3.x', 'title': '3.x', 'current': True},
-    # {'name': '4.x', 'number': '/debugkit/4.x', 'title': '4.x'},
+    {'name': '3.x', 'number': 'debugkit/3.x', 'title': '3.x'},
+    {'name': '4.x', 'number': 'debugkit/4.x', 'title': '4.x', 'current': True},
 ]
 
 # Languages available.
@@ -32,10 +32,10 @@ languages = ['en', 'fr', 'ja', 'pt']
 
 # The GitHub branch name for this version of the docs
 # for edit links to point at.
-branch = 'master'
+branch = '4.x'
 
 # Current version being built
-version = '3.x'
+version = '4.x'
 
 # Language in use for this directory.
 language = 'en'
@@ -50,3 +50,5 @@ hide_page_contents = ('search', '404', 'contents')
 
 # DebugKit docs use mp4 videos to show the UI
 extensions.append('sphinxcontrib.video')
+
+is_prerelease = True

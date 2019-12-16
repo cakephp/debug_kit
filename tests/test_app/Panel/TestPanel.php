@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Test Panel of test_app
  *
@@ -27,7 +29,6 @@ use DebugKit\DebugPanel;
  */
 class TestPanel extends DebugPanel
 {
-
     /**
      * Startup
      *

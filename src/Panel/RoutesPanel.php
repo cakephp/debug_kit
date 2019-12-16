@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,7 +15,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use DebugKit\DebugPanel;
@@ -23,7 +24,6 @@ use DebugKit\DebugPanel;
  */
 class RoutesPanel extends DebugPanel
 {
-
     /**
      * Get summary data for the routes panel.
      *
@@ -31,13 +31,8 @@ class RoutesPanel extends DebugPanel
      */
     public function summary()
     {
-        $appClass = Configure::read('App.namespace') . '\Application';
-        if (class_exists($appClass, false) && !Router::$initialized) {
-            return '0';
-        }
-
         $routes = array_filter(Router::routes(), function ($route) {
-            return (!isset($routes->defaults['plugin'])) || $route->defaults['plugin'] !== 'DebugKit';
+            return $route->defaults['plugin'] !== 'DebugKit';
         });
 
         return (string)count($routes);
@@ -52,8 +47,8 @@ class RoutesPanel extends DebugPanel
     public function shutdown(Event $event)
     {
         $controller = $event->getSubject();
-        /* @var \Cake\Http\ServerRequest $request */
-        $request = $controller ? $controller->request : null;
+        /** @var \Cake\Http\ServerRequest $request */
+        $request = $controller ? $controller->getRequest() : null;
         $this->_data = [
             'matchedRoute' => $request ? $request->getParam('_matchedRoute') : null,
         ];

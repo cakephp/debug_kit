@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -30,7 +32,6 @@ use Cake\View\Helper;
  */
 class TidyHelper extends Helper
 {
-
     /**
      * helpers property
      *
@@ -66,13 +67,14 @@ class TidyHelper extends Helper
         foreach ($errors as $error) {
             preg_match('@line (\d+) column (\d+) - (\w+): (.*)@', $error, $matches);
             if ($matches) {
-                list($original, $line, $column, $type, $message) = $matches;
+                [$original, $line, $column, $type, $message] = $matches;
                 $line = $line - 1;
 
                 $string = '</strong>';
                 if (isset($markup[$line - 1])) {
                     $string .= h($markup[$line - 1]);
                 }
+                // phpcs:ignore
                 $string .= '<strong>' . h(@$markup[$line]) . '</strong>';
                 if (isset($markup[$line + 1])) {
                     $string .= h($markup[$line + 1]);

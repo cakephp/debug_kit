@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -15,7 +17,7 @@ namespace DebugKit\Controller;
 use Cake\Cache\Cache;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -23,14 +25,6 @@ use Cake\Http\Exception\NotFoundException;
  */
 class ToolbarController extends Controller
 {
-
-    /**
-     * components
-     *
-     * @var array
-     */
-    public $components = ['RequestHandler'];
-
     /**
      * View class
      *
@@ -39,13 +33,23 @@ class ToolbarController extends Controller
     public $viewClass = 'Cake\View\JsonView';
 
     /**
+     * Initialize controller
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        $this->loadComponent('RequestHandler');
+    }
+
+    /**
      * Before filter handler.
      *
-     * @param \Cake\Event\Event $event The event.
+     * @param \Cake\Event\EventInterface $event The event.
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         // TODO add config override.
         if (!Configure::read('debug')) {
@@ -65,10 +69,8 @@ class ToolbarController extends Controller
         if (!$this->request->getData('name')) {
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
-        $result = Cache::clear(false, $this->request->getData('name'));
-        $this->set([
-            '_serialize' => ['success'],
-            'success' => $result,
-        ]);
+        $result = Cache::clear($this->request->getData('name'));
+        $this->set('success', $result);
+        $this->viewBuilder()->setOption('serialize', ['success']);
     }
 }

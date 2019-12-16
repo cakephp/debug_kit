@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,6 +15,7 @@
 namespace DebugKit\Panel;
 
 use Cake\Core\Configure;
+use Cake\Datasource\ConnectionInterface;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -25,7 +28,6 @@ use DebugKit\DebugPanel;
  */
 class SqlLogPanel extends DebugPanel
 {
-
     /**
      * Loggers connected
      *
@@ -48,7 +50,10 @@ class SqlLogPanel extends DebugPanel
 
         foreach ($configs as $name) {
             $connection = ConnectionManager::get($name);
-            if ($connection->configName() === 'debug_kit') {
+            if (
+                $connection->configName() === 'debug_kit'
+                || !$connection instanceof ConnectionInterface
+            ) {
                 continue;
             }
             $logger = null;
@@ -64,12 +69,7 @@ class SqlLogPanel extends DebugPanel
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
             $connection->enableQueryLogging(true);
-
-            if (method_exists($connection, 'setLogger')) {
-                $connection->setLogger($logger);
-            } else {
-                $connection->logger($logger);
-            }
+            $connection->setLogger($logger);
 
             $this->_loggers[] = $logger;
         }

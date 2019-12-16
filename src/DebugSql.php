@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -56,12 +58,12 @@ TEXT;
      * This function returns the same variable that was passed.
      * Only runs if debug mode is enabled.
      *
-     * @param Query $query Query to show SQL statements for.
+     * @param \Cake\Database\Query $query Query to show SQL statements for.
      * @param bool $showValues Renders the SQL statement with bound variables.
      * @param bool|null $showHtml If set to true, the method prints the debug
      *    data in a browser-friendly way.
      * @param int $stackDepth Provides a hint as to which file in the call stack to reference.
-     * @return Query
+     * @return \Cake\Database\Query
      */
     public static function sql(Query $query, $showValues = true, $showHtml = null, $stackDepth = 0)
     {
@@ -129,7 +131,7 @@ TEXT;
      * Only runs if debug mode is enabled.
      * It will otherwise just continue code execution and ignore this function.
      *
-     * @param Query $query Query to show SQL statements for.
+     * @param \Cake\Database\Query $query Query to show SQL statements for.
      * @param bool $showValues Renders the SQL statement with bound variables.
      * @param bool|null $showHtml If set to true, the method prints the debug
      *    data in a browser-friendly way.

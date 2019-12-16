@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -21,7 +23,6 @@ use Cake\Error\Debugger;
  */
 class DebugTimer
 {
-
     /**
      * Internal timers array
      *
@@ -193,7 +194,7 @@ class DebugTimer
         $start = self::requestStartTime();
         $now = microtime(true);
 
-        return ($now - $start);
+        return $now - $start;
     }
 
     /**

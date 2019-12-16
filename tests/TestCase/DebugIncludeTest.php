@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -25,7 +27,7 @@ class DebugIncludeTest extends TestCase
     {
         $include = new DebugInclude();
         $result = $include->includePaths();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertFileExists($result[0]);
     }
 

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -23,7 +25,6 @@ use DebugKit\TestApp\Application;
  */
 class MailPreviewControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures.
      *
@@ -39,7 +40,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Router::scope('/', function ($routes) {
@@ -59,7 +60,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
         $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('src="?part=text&plugin=DebugkitTestPlugin');
+        $this->assertResponseContains('src="?part=html&plugin=DebugkitTestPlugin');
     }
 
     /** Test email template content

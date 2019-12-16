@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Test Panel of test_app
  *
@@ -21,7 +23,6 @@ use Cake\Mailer\TransportFactory;
 
 class TestMailer extends Mailer
 {
-
     /**
      * Test email method
      */

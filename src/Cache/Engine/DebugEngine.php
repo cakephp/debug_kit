@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +26,6 @@ use DebugKit\DebugTimer;
  */
 class DebugEngine extends CacheEngine
 {
-
     /**
      * Proxied cache engine config.
      *
@@ -45,9 +46,9 @@ class DebugEngine extends CacheEngine
      * @var mixed
      */
     protected $_metrics = [
-        'write' => 0,
+        'set' => 0,
         'delete' => 0,
-        'read' => 0,
+        'get' => 0,
         'hit' => 0,
         'miss' => 0,
     ];
@@ -68,7 +69,7 @@ class DebugEngine extends CacheEngine
      * @param array $config Array of setting for the engine.
      * @return bool True, this engine cannot fail to initialize.
      */
-    public function init(array $config = [])
+    public function init(array $config = []): bool
     {
         if (is_object($this->_config)) {
             $this->_engine = $this->_config;
@@ -116,12 +117,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function write($key, $value)
+    public function set($key, $value, $ttl = null): bool
     {
-        $this->_track('write');
-        DebugTimer::start('Cache.write ' . $key);
-        $result = $this->_engine->write($key, $value);
-        DebugTimer::stop('Cache.write ' . $key);
+        $this->_track('set');
+        DebugTimer::start('Cache.set ' . $key);
+        $result = $this->_engine->set($key, $value, $ttl);
+        DebugTimer::stop('Cache.set ' . $key);
 
         return $result;
     }
@@ -129,12 +130,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function writeMany($data)
+    public function setMultiple($data, $ttl = null): bool
     {
-        $this->_track('write');
-        DebugTimer::start('Cache.writeMany');
-        $result = $this->_engine->writeMany($data);
-        DebugTimer::stop('Cache.writeMany');
+        $this->_track('set');
+        DebugTimer::start('Cache.setMultiple');
+        $result = $this->_engine->setMultiple($data);
+        DebugTimer::stop('Cache.setMultiple');
 
         return $result;
     }
@@ -142,12 +143,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function read($key)
+    public function get($key, $default = null)
     {
-        $this->_track('read');
-        DebugTimer::start('Cache.read ' . $key);
-        $result = $this->_engine->read($key);
-        DebugTimer::stop('Cache.read ' . $key);
+        $this->_track('get');
+        DebugTimer::start('Cache.get ' . $key);
+        $result = $this->_engine->get($key, $default);
+        DebugTimer::stop('Cache.get ' . $key);
         $metric = 'hit';
         if ($result === false) {
             $metric = 'miss';
@@ -160,12 +161,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function readMany($data)
+    public function getMultiple($keys, $default = null): array
     {
-        $this->_track('read');
-        DebugTimer::start('Cache.readMany');
-        $result = $this->_engine->readMany($data);
-        DebugTimer::stop('Cache.readMany');
+        $this->_track('get');
+        DebugTimer::start('Cache.getMultiple');
+        $result = $this->_engine->getMultiple($keys);
+        DebugTimer::stop('Cache.getMultiple');
 
         return $result;
     }
@@ -173,9 +174,9 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function increment($key, $offset = 1)
+    public function increment(string $key, int $offset = 1)
     {
-        $this->_track('write');
+        $this->_track('set');
         DebugTimer::start('Cache.increment ' . $key);
         $result = $this->_engine->increment($key, $offset);
         DebugTimer::stop('Cache.increment ' . $key);
@@ -186,9 +187,9 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function decrement($key, $offset = 1)
+    public function decrement(string $key, int $offset = 1)
     {
-        $this->_track('write');
+        $this->_track('set');
         DebugTimer::start('Cache.decrement ' . $key);
         $result = $this->_engine->decrement($key, $offset);
         DebugTimer::stop('Cache.decrement ' . $key);
@@ -199,7 +200,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.delete ' . $key);
@@ -212,12 +213,12 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function deleteMany($data)
+    public function deleteMultiple($data): bool
     {
         $this->_track('delete');
-        DebugTimer::start('Cache.deleteMany');
-        $result = $this->_engine->deleteMany($data);
-        DebugTimer::stop('Cache.deleteMany');
+        DebugTimer::start('Cache.deleteMultiple');
+        $result = $this->_engine->deleteMultiple($data);
+        DebugTimer::stop('Cache.deleteMultiple');
 
         return $result;
     }
@@ -225,11 +226,11 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function clear($check)
+    public function clear(): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.clear');
-        $result = $this->_engine->clear($check);
+        $result = $this->_engine->clear();
         DebugTimer::stop('Cache.clear');
 
         return $result;
@@ -238,26 +239,9 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function groups()
+    public function groups(): array
     {
         return $this->_engine->groups();
-    }
-
-    /**
-     * Return the proxied configuration data.
-     *
-     * This method uses func_get_args() as not doing so confuses the
-     * proxied class.
-     *
-     * @deprecated 3.6.0 use setConfig()/getConfig() instead.
-     * @param string $key The key to set/read.
-     * @param mixed $value The value to set.
-     * @param bool $merge Whether or not configuration should be merged.
-     * @return mixed
-     */
-    public function config($key = null, $value = null, $merge = true)
-    {
-        return call_user_func_array([$this->_engine, 'config'], func_get_args());
     }
 
     /**
@@ -267,7 +251,7 @@ class DebugEngine extends CacheEngine
      * @param mixed $default The return value when the key does not exist.
      * @return mixed Config value being read.
      */
-    public function getConfig($key = null, $default = null)
+    public function getConfig(?string $key = null, $default = null)
     {
         return $this->_engine->getConfig($key, $default);
     }
@@ -289,7 +273,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function clearGroup($group)
+    public function clearGroup(string $group): bool
     {
         $this->_track('delete');
         DebugTimer::start('Cache.clearGroup ' . $group);
@@ -307,7 +291,7 @@ class DebugEngine extends CacheEngine
     public function __toString()
     {
         if (!empty($this->_engine)) {
-            list($ns, $class) = namespaceSplit(get_class($this->_engine));
+            [$ns, $class] = namespaceSplit(get_class($this->_engine));
 
             return str_replace('Engine', '', $class);
         }

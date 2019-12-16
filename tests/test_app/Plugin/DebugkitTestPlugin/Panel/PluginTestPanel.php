@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Test Panel of test_app
  *

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -33,7 +35,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->panel = new LogPanel();
@@ -44,7 +46,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         Log::drop('debug_kit_log_panel');
@@ -77,7 +79,7 @@ class LogPanelTest extends TestCase
         $result = $this->panel->data();
 
         $this->assertArrayHasKey('logger', $result);
-        /* @var \DebugKit\Log\Engine\DebugKitLog $logger */
+        /** @var \DebugKit\Log\Engine\DebugKitLog $logger */
         $logger = $result['logger'];
 
         $this->assertInstanceOf(DebugKitLog::class, $logger);

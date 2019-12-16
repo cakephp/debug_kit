@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -15,7 +17,7 @@ namespace DebugKit\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\View\JsonView;
 use Composer\Console\Application;
@@ -27,11 +29,10 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class ComposerController extends Controller
 {
-
     /**
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
@@ -45,7 +46,7 @@ class ComposerController extends Controller
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         if (!Configure::read('debug')) {
             throw new NotFoundException();
@@ -88,15 +89,13 @@ class ComposerController extends Controller
             $packages['bcBreaks'] = trim(implode("\n", $packages['bcBreaks']));
         }
 
-        $this->set([
-            '_serialize' => ['packages'],
-            'packages' => $packages,
-        ]);
+        $this->viewBuilder()->setOption('serialize', ['packages']);
+        $this->set('packages', $packages);
     }
 
     /**
-     * @param ArrayInput $input An array describing the command input
-     * @return BufferedOutput Aa Console command buffered result
+     * @param \Symfony\Component\Console\Input\ArrayInput $input An array describing the command input
+     * @return \Symfony\Component\Console\Output\BufferedOutput Aa Console command buffered result
      */
     private function executeComposerCommand(ArrayInput $input)
     {
@@ -118,7 +117,7 @@ class ComposerController extends Controller
 
         // Restore environment
         chdir($dir);
-        set_time_limit($timeLimit);
+        set_time_limit((int)$timeLimit);
         ini_set('memory_limit', $memoryLimit);
 
         return $output;

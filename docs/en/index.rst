@@ -20,7 +20,7 @@ you've removed it and want to re-install it, you can do so by running the
 following from your application's ROOT directory (where composer.json file is
 located)::
 
-    php composer.phar require --dev cakephp/debug_kit "~3.0"
+    php composer.phar require --dev cakephp/debug_kit "~4.0"
 
 Then, you need to enable the plugin by executing the following line::
 

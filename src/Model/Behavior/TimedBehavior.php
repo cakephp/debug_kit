@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -22,7 +24,6 @@ use DebugKit\DebugTimer;
  */
 class TimedBehavior extends Behavior
 {
-
     /**
      * beforeFind, starts a timer for a find operation.
      *

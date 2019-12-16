@@ -12,7 +12,7 @@ você o removeu e gostaria de reinstalá-lo, você pode executar o seguinte coma
 a partir do diretório raiz da aplicação
 (onde o arquivo composer.json está localizado)::
 
-    php composer.phar require --dev cakephp/debug_kit "~3.0"
+    php composer.phar require --dev cakephp/debug_kit "~4.0"
 
 Então, você precisará habilitar o plugin ao executar o seguinte comando::
 

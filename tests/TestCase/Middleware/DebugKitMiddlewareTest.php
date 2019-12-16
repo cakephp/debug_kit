@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -19,17 +21,16 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Http\CallbackStream;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
-use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Middleware\DebugKitMiddleware;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Test the middleware object
  */
 class DebugKitMiddlewareTest extends TestCase
 {
-
     /**
      * Fixtures
      *
@@ -45,7 +46,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -59,11 +60,20 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
         Configure::write('DebugKit', $this->oldConfig);
+    }
+
+    protected function handler()
+    {
+        $handler = $this->getMockBuilder(RequestHandlerInterface::class)
+            ->setMethods(['handle'])
+            ->getMock();
+
+        return $handler;
     }
 
     /**
@@ -83,12 +93,13 @@ class DebugKitMiddlewareTest extends TestCase
             'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
-        $layer = new DebugKitMiddleware();
-        $next = function ($req, $res) {
-            return $res;
-        };
+        $handler = $this->handler();
+        $handler->expects($this->once())
+            ->method('handle')
+            ->willReturn($response);
 
-        $response = $layer($request, $response, $next);
+        $middleware = new DebugKitMiddleware();
+        $response = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $response, 'Should return the response');
 
         $requests = TableRegistry::get('DebugKit.Requests');
@@ -115,8 +126,8 @@ class DebugKitMiddlewareTest extends TestCase
             '<script id="__debug_kit" data-id="' . $result->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
-        $body = $response->getBody();
-        $this->assertTextEquals($expected, '' . $body);
+        $body = (string)$response->getBody();
+        $this->assertTextEquals($expected, $body);
     }
 
     /**
@@ -135,15 +146,18 @@ class DebugKitMiddlewareTest extends TestCase
             'type' => 'text/html',
         ]);
 
-        $layer = new DebugKitMiddleware();
-        $next = function ($req, $res) {
-            $stream = new CallbackStream(function () {
-                return 'hi!';
-            });
+        $handler = $this->handler();
+        $handler->expects($this->once())
+            ->method('handle')
+            ->will($this->returnCallback(function ($req) use ($response) {
+                $stream = new CallbackStream(function () {
+                    return 'hi!';
+                });
 
-            return $res->withBody($stream);
-        };
-        $result = $layer($request, $response, $next);
+                return $response->withBody($stream);
+            }));
+        $middleware = new DebugKitMiddleware();
+        $result = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $result, 'Should return a response');
 
         $requests = TableRegistry::get('DebugKit.Requests');
@@ -151,8 +165,8 @@ class DebugKitMiddlewareTest extends TestCase
 
         $this->assertSame(1, $total, 'Should track response');
         $body = $result->getBody();
-        $this->assertNotContains('__debug_kit', '' . $body);
-        $this->assertNotContains('<script', '' . $body);
+        $this->assertStringNotContainsString('__debug_kit', '' . $body);
+        $this->assertStringNotContainsString('<script', '' . $body);
     }
 
     /**
@@ -172,52 +186,20 @@ class DebugKitMiddlewareTest extends TestCase
             'body' => 'OK',
         ]);
 
-        $layer = new DebugKitMiddleware();
-        $next = function ($req, $res) {
-            return $res;
-        };
-        $result = $layer($request, $response, $next);
+        $handler = $this->handler();
+        $handler->expects($this->once())
+            ->method('handle')
+            ->willReturn($response);
+        $middleware = new DebugKitMiddleware();
+        $result = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $result, 'Should return a response');
 
         $requests = TableRegistry::get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
-        $this->assertSame(1, $total, 'Should track response');
-        $body = $result->getBody();
-        $this->assertSame('OK', '' . $body);
-    }
-
-    /**
-     * Test that requestAction requests are not tracked or modified.
-     *
-     * @return void
-     */
-    public function testInvokeNoModifyRequestAction()
-    {
-        $request = new ServerRequest([
-            'url' => '/articles',
-            'environment' => ['REQUEST_METHOD' => 'GET'],
-            'params' => ['requested' => true],
-        ]);
-        $response = new Response([
-            'statusCode' => 200,
-            'type' => 'text/html',
-            'body' => '<body><p>things</p></body>',
-        ]);
-
-        $layer = new DebugKitMiddleware();
-        $next = function ($req, $res) {
-            return $res;
-        };
-        $result = $layer($request, $response, $next);
-        $this->assertInstanceOf(Response::class, $result, 'Should return a response');
-
-        $requests = TableRegistry::get('DebugKit.Requests');
-        $total = $requests->find()->where(['url' => '/articles'])->count();
-
-        $this->assertSame(0, $total, 'Should not track sub-requests');
-        $body = $result->getBody();
-        $this->assertNotContains('<script', '' . $body);
+        $this->assertEquals(1, $total, 'Should track response');
+        $body = (string)$result->getBody();
+        $this->assertSame('OK', $body);
     }
 
     /**

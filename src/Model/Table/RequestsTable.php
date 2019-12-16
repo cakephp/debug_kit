@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -16,18 +18,17 @@ use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Entity\Request;
 
 /**
  * The requests table tracks basic information about each request.
  *
- * @method Request get($primaryKey, $options = [])
- * @method Request newEntity($data = null, array $options = [])
- * @method Request[] newEntities(array $data, array $options = [])
- * @method Request save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method Request patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method Request[] patchEntities($entities, array $data, array $options = [])
- * @method Request findOrCreate($search, callable $callback = null)
+ * @method \DebugKit\Model\Table\Request get($primaryKey, $options = [])
+ * @method \DebugKit\Model\Table\Request newEntity($data = null, array $options = [])
+ * @method \DebugKit\Model\Table\Request[] newEntities(array $data, array $options = [])
+ * @method \DebugKit\Model\Table\Request save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DebugKit\Model\Table\Request patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \DebugKit\Model\Table\Request[] patchEntities($entities, array $data, array $options = [])
+ * @method \DebugKit\Model\Table\Request findOrCreate($search, callable $callback = null)
  */
 class RequestsTable extends Table
 {
@@ -39,7 +40,7 @@ class RequestsTable extends Table
      * @param array $config Config data.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->hasMany('DebugKit.Panels', [
             'sort' => ['Panels.title' => 'ASC'],
@@ -57,7 +58,7 @@ class RequestsTable extends Table
      *
      * @return string
      */
-    public static function defaultConnectionName()
+    public static function defaultConnectionName(): string
     {
         return 'debug_kit';
     }
@@ -67,7 +68,7 @@ class RequestsTable extends Table
      *
      * @param \Cake\ORM\Query $query The query
      * @param array $options The options
-     * @return Query The query.
+     * @return \Cake\ORM\Query The query.
      */
     public function findRecent(Query $query, array $options)
     {

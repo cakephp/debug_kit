@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace DebugKit\TestApp\Form;
 
 use Cake\Form\Form;
@@ -17,7 +19,7 @@ class TestForm extends Form
      * @param \Cake\Form\Schema $schema From schema
      * @return \Cake\Form\Schema
      */
-    protected function _buildSchema(Schema $schema)
+    protected function _buildSchema(Schema $schema): Schema
     {
         return $schema->addField('accept', 'boolean');
     }
@@ -45,7 +47,7 @@ class TestForm extends Form
      * @param array $data Form data.
      * @return bool
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): bool
     {
         return true;
     }

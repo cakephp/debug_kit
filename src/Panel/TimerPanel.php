@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -22,13 +24,12 @@ use DebugKit\DebugTimer;
  */
 class TimerPanel extends DebugPanel
 {
-
     /**
      * Return an array of events to listen to.
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         $before = function ($name) {
             return function () use ($name) {

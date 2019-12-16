@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php">
-	<php>
-		<ini name="memory_limit" value="-1"/>
-	</php>
+<phpunit
+	colors="true"
+	processIsolation="false"
+	stopOnFailure="false"
+	bootstrap="./tests/bootstrap.php"
+	>
 
 	<!-- Add any additional test suites you want to run here -->
 	<testsuites>
@@ -29,6 +31,7 @@
 	</listeners>
 
 	<php>
+		<ini name="memory_limit" value="-1"/>
 		<!-- Postgres
 		<env name="db_dsn" value="postgres://root@localhost/cake_test_db"/>
 		-->

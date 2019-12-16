@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -14,9 +16,7 @@ namespace DebugKit;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin as CorePlugin;
-use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
@@ -117,7 +117,12 @@ class ToolbarService
      */
     protected function isSuspiciouslyProduction()
     {
-        $host = explode('.', parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST));
+        $url = parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST);
+        if ($url === false) {
+            return false;
+        }
+
+        $host = explode('.', $url);
         $first = current($host);
         $isIP = is_numeric(implode('', $host));
 
@@ -178,7 +183,7 @@ class ToolbarService
     public function loadPanels()
     {
         foreach ($this->getConfig('panels') as $panel => $enabled) {
-            list($panel, $enabled) = (is_numeric($panel)) ? [$enabled, true] : [$panel, $enabled];
+            [$panel, $enabled] = is_numeric($panel) ? [$enabled, true] : [$panel, $enabled];
             if ($enabled) {
                 $this->registry->load($panel);
             }
@@ -223,12 +228,12 @@ class ToolbarService
             'requested_at' => $request->getEnv('REQUEST_TIME'),
             'panels' => [],
         ];
-        /* @var \DebugKit\Model\Table\RequestsTable $requests */
+        /** @var \DebugKit\Model\Table\RequestsTable $requests */
         $requests = TableRegistry::get('DebugKit.Requests');
         $requests->gc();
 
         $row = $requests->newEntity($data);
-        $row->isNew(true);
+        $row->setNew(true);
 
         foreach ($this->registry->loaded() as $name) {
             $panel = $this->registry->{$name};

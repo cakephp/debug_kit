@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -33,11 +35,10 @@ use SimpleXMLElement;
  */
 class VariablesPanel extends DebugPanel
 {
-
     /**
      * Extracts nested validation errors
      *
-     * @param EntityInterface $entity Entity to extract
+     * @param \Cake\Datasource\EntityInterface $entity Entity to extract
      *
      * @return array
      */
@@ -75,7 +76,14 @@ class VariablesPanel extends DebugPanel
         try {
             $info = $item->__debugInfo();
         } catch (\Exception $exception) {
-            return __d('debug_kit', 'Could not retrieve debug info - {0}. Error: {1} in {2}, line {3}', get_class($item), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+            return __d(
+                'debug_kit',
+                'Could not retrieve debug info - {0}. Error: {1} in {2}, line {3}',
+                get_class($item),
+                $exception->getMessage(),
+                $exception->getFile(),
+                $exception->getLine()
+            );
         }
 
         return array_map($walker, $info);
@@ -137,7 +145,7 @@ class VariablesPanel extends DebugPanel
             return $this->trySerialize($item);
         };
         // Copy so viewVars is not mutated.
-        $vars = $controller->viewVars;
+        $vars = $controller->viewBuilder()->getVars();
         array_walk_recursive($vars, $walker);
 
         foreach ($vars as $k => $v) {
@@ -172,10 +180,23 @@ class VariablesPanel extends DebugPanel
             return $item;
         } catch (\Exception $e) {
             if (is_object($item)) {
-                return __d('debug_kit', 'Unserializable object - {0}. Error: {1} in {2}, line {3}', get_class($item), $e->getMessage(), $e->getFile(), $e->getLine());
+                return __d(
+                    'debug_kit',
+                    'Unserializable object - {0}. Error: {1} in {2}, line {3}',
+                    get_class($item),
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                );
             }
 
-            return __d('debug_kit', 'Unserializable Error: {1} in {2}, line {3}', $e->getMessage(), $e->getFile(), $e->getLine());
+            return __d(
+                'debug_kit',
+                'Unserializable Error: {1} in {2}, line {3}',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            );
         }
     }
 

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -14,18 +16,16 @@ namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Event\Event;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\SqlLogPanel;
+use ReflectionProperty;
 
 /**
  * Class SqlLogPanelTest
  */
 class SqlLogPanelTest extends TestCase
 {
-
     /**
      * fixtures.
      *
@@ -48,14 +48,14 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->panel = new SqlLogPanel();
         $this->logger = ConnectionManager::get('test')->getLogger();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         ConnectionManager::get('test')->setLogger($this->logger);
@@ -90,7 +90,10 @@ class SqlLogPanelTest extends TestCase
         $db = ConnectionManager::get('test');
         $logger = $db->getLogger();
         $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
-        $this->assertAttributeEquals(true, '_includeSchema', $logger);
+
+        $property = new ReflectionProperty($logger, '_includeSchema');
+        $property->setAccessible(true);
+        $this->assertTrue($property->getValue($logger));
     }
 
     /**
@@ -102,7 +105,7 @@ class SqlLogPanelTest extends TestCase
     {
         $this->panel->initialize();
 
-        /* @var Table $articles */
+        /** @var Table $articles */
         $articles = TableRegistry::get('Articles');
         $articles->findById(1)->first();
 
@@ -119,7 +122,7 @@ class SqlLogPanelTest extends TestCase
     {
         $this->panel->initialize();
 
-        /* @var Table $articles */
+        /** @var Table $articles */
         $articles = TableRegistry::get('Articles');
         $articles->findById(1)->first();
 

@@ -37,10 +37,6 @@ php composer.phar require --dev cakephp/debug_kit:"~3.0"
 // src/Application.php
 $this->addPlugin('DebugKit');
 ```
-Prior to 3.6.0
-```php
-Plugin::load('DebugKit', ['bootstrap' => true, 'routes' => true]);
-```
 * Set `'debug' => true,` in `config/app.php`.
 
 ## Reporting Issues

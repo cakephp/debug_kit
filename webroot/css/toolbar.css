@@ -79,6 +79,7 @@ strong {
 	overflow: hidden;
 	white-space: nowrap;
 	display: flex;
+    justify-content: flex-end;
 }
 
 .hidden {

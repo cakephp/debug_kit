@@ -24,7 +24,7 @@ le retirez et voulez le réinstaller, vous pouvez le faire en lançant ce qui
 suit à partir du répertoire ROOT de votre application (où le fichier
 composer.json est localisé)::
 
-    php composer.phar require --dev cakephp/debug_kit "~3.0"
+    php composer.phar require --dev cakephp/debug_kit "~4.0"
 
 Ensuite, vous devez activer le plugin en exécutant la ligne suivante::
 

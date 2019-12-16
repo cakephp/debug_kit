@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -24,7 +26,6 @@ use Cake\Utility\Inflector;
  */
 class DebugPanel implements EventListenerInterface
 {
-
     /**
      * Defines which plugin this panel is from so the element can be located.
      *
@@ -46,7 +47,7 @@ class DebugPanel implements EventListenerInterface
      */
     public function title()
     {
-        list($ns, $name) = namespaceSplit(get_class($this));
+        [$ns, $name] = namespaceSplit(static::class);
         $name = substr($name, 0, strlen('Panel') * -1);
 
         return Inflector::humanize(Inflector::underscore($name));
@@ -59,7 +60,7 @@ class DebugPanel implements EventListenerInterface
      */
     public function elementName()
     {
-        list($ns, $name) = namespaceSplit(get_class($this));
+        [$ns, $name] = namespaceSplit(static::class);
         if ($this->plugin) {
             return $this->plugin . '.' . Inflector::underscore($name);
         }
@@ -113,7 +114,7 @@ class DebugPanel implements EventListenerInterface
      *
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.shutdown' => 'shutdown',

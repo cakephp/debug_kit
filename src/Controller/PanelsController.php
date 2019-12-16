@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,7 +16,7 @@ namespace DebugKit\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -24,22 +26,24 @@ use Cake\Http\Exception\NotFoundException;
  */
 class PanelsController extends Controller
 {
-
     /**
-     * components
+     * Initialize controller
      *
-     * @var array
+     * @return void
      */
-    public $components = ['RequestHandler', 'Cookie'];
+    public function initialize(): void
+    {
+        $this->loadComponent('RequestHandler');
+    }
 
     /**
      * Before filter handler.
      *
-     * @param \Cake\Event\Event $event The event.
+     * @param \Cake\Event\EventInterface $event The event.
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         // TODO add config override.
         if (!Configure::read('debug')) {
@@ -50,10 +54,10 @@ class PanelsController extends Controller
     /**
      * Before render handler.
      *
-     * @param \Cake\Event\Event $event The event.
+     * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         $this->viewBuilder()
             ->setHelpers([
@@ -82,9 +86,9 @@ class PanelsController extends Controller
             throw new NotFoundException();
         }
         $this->set([
-            '_serialize' => ['panels'],
             'panels' => $panels,
         ]);
+        $this->viewBuilder()->setOption('serialize', ['panels']);
     }
 
     /**
@@ -95,8 +99,7 @@ class PanelsController extends Controller
      */
     public function view($id = null)
     {
-        $this->Cookie->configKey('debugKit_sort', 'encryption', false);
-        $this->set('sort', $this->Cookie->read('debugKit_sort'));
+        $this->set('sort', $this->request->getCookie('debugKit_sort'));
         $panel = $this->Panels->get($id);
 
         $this->set('panel', $panel);

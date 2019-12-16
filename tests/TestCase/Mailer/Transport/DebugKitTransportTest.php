@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -13,13 +15,13 @@
 namespace DebugKit\Test\TestCase\Mailer\Transport;
 
 use Cake\Mailer\AbstractTransport;
-use Cake\Mailer\Email;
+use Cake\Mailer\Message;
 use Cake\TestSuite\TestCase;
 use DebugKit\Mailer\Transport\DebugKitTransport;
 
 class DebugKitTransportTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->log = new \ArrayObject();
         $this->wrapped = $this->getMockBuilder(AbstractTransport::class)
@@ -52,11 +54,11 @@ class DebugKitTransportTest extends TestCase
 
     public function testEmailCapture()
     {
-        $email = new Email();
-        $email->setSubject('Testing 123')
+        $message = new Message();
+        $message->setSubject('Testing 123')
             ->setFrom('sender@example.com')
             ->setTo('to@example.com');
-        $this->transport->send($email);
+        $this->transport->send($message);
         $this->assertCount(1, $this->log);
 
         $result = $this->log[0];

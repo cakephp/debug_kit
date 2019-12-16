@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -11,13 +13,16 @@
  * @since         DebugKit 1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Shell;
+namespace DebugKit\Command;
 
-use Cake\Console\Shell;
+use Cake\Console\Arguments;
+use Cake\Console\Command;
+use Cake\Console\ConsoleIo;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Utility\Text;
 
 /**
- * Benchmark Shell Class
+ * Benchmark Command Class
  *
  * Provides basic benchmarking of application requests
  * functionally similar to Apache AB
@@ -27,23 +32,32 @@ use Cake\Utility\Text;
  * @todo Export/graphing of data to .dot format for graphviz visualization
  * @todo Make calculated results round to leading significant digit position of std dev.
  */
-class BenchmarkShell extends Shell
+class BenchmarkCommand extends Command
 {
+    /**
+     * The console io
+     *
+     * @var \Cake\Console\ConsoleIo
+     */
+    protected $io;
 
     /**
-     * Main execution of shell
+     * Execute.
      *
-     * @return void
+     * @param \Cake\Console\Arguments $args The command arguments.
+     * @param \Cake\Console\ConsoleIo $io The console io
+     * @return null|int The exit code or null for success
      */
-    public function main()
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $url = $this->args[0];
+        $this->io = $io;
+        $url = $args->getArgumentAt(0);
         $defaults = ['t' => 100, 'n' => 10];
-        $options = array_merge($defaults, $this->params);
+        $options = array_merge($defaults, $args->getOptions());
         $times = [];
 
-        $this->out(Text::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
-        $this->out("");
+        $io->out(Text::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
+        $io->out("");
         for ($i = 0; $i < $options['n']; $i++) {
             if (floor($options['t'] - array_sum($times)) <= 0 || $options['n'] <= 1) {
                 break;
@@ -56,6 +70,8 @@ class BenchmarkShell extends Shell
             $times[] = $stop - $start;
         }
         $this->_results($times);
+
+        return static::CODE_SUCCESS;
     }
 
     /**
@@ -69,29 +85,29 @@ class BenchmarkShell extends Shell
         $duration = array_sum($times);
         $requests = count($times);
 
-        $this->out(Text::insert(__d('debug_kit', 'Total Requests made: :requests'), compact('requests')));
-        $this->out(Text::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)'), compact('duration')));
+        $this->io->out(Text::insert(__d('debug_kit', 'Total Requests made: :requests'), compact('requests')));
+        $this->io->out(Text::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)'), compact('duration')));
 
-        $this->out("");
+        $this->io->out("");
 
-        $this->out(Text::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
+        $this->io->out(Text::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
                 'rps' => round($requests / $duration, 3),
         ]));
 
-        $this->out(Text::insert(__d('debug_kit', 'Average request time: :average-time seconds'), [
+        $this->io->out(Text::insert(__d('debug_kit', 'Average request time: :average-time seconds'), [
                 'average-time' => round($duration / $requests, 3),
         ]));
 
-        $this->out(Text::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), [
+        $this->io->out(Text::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), [
                 'std-dev' => round($this->_deviation($times, true), 3),
         ]));
 
-        $this->out(Text::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), [
+        $this->io->out(Text::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), [
                 'longest' => round(max($times), 3),
                 'shortest' => round(min($times), 3),
         ]));
 
-        $this->out("");
+        $this->io->out("");
     }
 
     /**
@@ -137,14 +153,14 @@ class BenchmarkShell extends Shell
     }
 
     /**
-     * Get option parser.
+     * Gets the option parser instance and configures it.
      *
+     * @param \Cake\Console\ConsoleOptionParser $parser The parser to build
      * @return \Cake\Console\ConsoleOptionParser
      */
-    public function getOptionParser()
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        $parser = parent::getOptionParser();
-        $parser->description(__d(
+        $parser->setDescription(__d(
             'debug_kit',
             'Allows you to obtain some rough benchmarking statistics' .
             'about a fully qualified URL.'
@@ -165,7 +181,7 @@ class BenchmarkShell extends Shell
                 'If a single iteration takes more than the timeout, only one request will be made'
             ),
         ])
-        ->epilog(__d(
+        ->setEpilog(__d(
             'debug_kit',
             'Example Use: `cake benchmark --n 10 --t 100 http://localhost/testsite`. ' .
             '<info>Note:</info> this benchmark does not include browser render times.'

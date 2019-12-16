@@ -32,7 +32,7 @@ class DashboardControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->configApplication(Application::class, []);

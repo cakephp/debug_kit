@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -30,7 +32,6 @@ use DebugKit\ToolbarService;
  */
 class ToolbarServiceTest extends TestCase
 {
-
     /**
      * Fixtures
      *
@@ -51,7 +52,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->events = new EventManager();
@@ -65,7 +66,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         putenv('HTTP_HOST=');
@@ -120,27 +121,6 @@ class ToolbarServiceTest extends TestCase
         $bar->initializePanels();
 
         $this->assertNotEmpty(Log::getConfig('debug_kit_log_panel'), 'Panel attached logger.');
-    }
-
-    /**
-     * Test that saveData ignores requestAction
-     *
-     * @return void
-     */
-    public function testSaveDataIgnoreRequestAction()
-    {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null, 'requested' => 1],
-        ]);
-        $response = new Response([
-            'statusCode' => 200,
-            'type' => 'text/html',
-            'body' => '<html><title>test</title><body><p>some text</p></body>',
-        ]);
-
-        $bar = new ToolbarService($this->events, []);
-        $this->assertNull($bar->saveData($request, $response));
     }
 
     /**
@@ -254,7 +234,7 @@ class ToolbarServiceTest extends TestCase
             '<script id="__debug_kit" data-id="' . $row->id . '" ' .
             'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
             '</body>';
-        $this->assertTextEquals($expected, $response->getBody());
+        $this->assertTextEquals($expected, (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 
@@ -333,7 +313,7 @@ class ToolbarServiceTest extends TestCase
 
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
-        $this->assertTextEquals('{"some":"json"}', $response->getBody());
+        $this->assertTextEquals('{"some":"json"}', (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
 

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,19 +16,18 @@ namespace DebugKit\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use DebugKit\Model\Entity\Panel;
 
 /**
  * The panels table collects the information for each panel on
  * each request.
  *
- * @method Panel get($primaryKey, $options = [])
- * @method Panel newEntity($data = null, array $options = [])
- * @method Panel[] newEntities(array $data, array $options = [])
- * @method Panel save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method Panel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method Panel[] patchEntities($entities, array $data, array $options = [])
- * @method Panel findOrCreate($search, callable $callback = null)
+ * @method \DebugKit\Model\Table\Panel get($primaryKey, $options = [])
+ * @method \DebugKit\Model\Table\Panel newEntity($data = null, array $options = [])
+ * @method \DebugKit\Model\Table\Panel[] newEntities(array $data, array $options = [])
+ * @method \DebugKit\Model\Table\Panel save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DebugKit\Model\Table\Panel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \DebugKit\Model\Table\Panel[] patchEntities($entities, array $data, array $options = [])
+ * @method \DebugKit\Model\Table\Panel findOrCreate($search, callable $callback = null)
  */
 class PanelsTable extends Table
 {
@@ -38,7 +39,7 @@ class PanelsTable extends Table
      * @param array $config Config data.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->belongsTo('DebugKit.Requests');
         $this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
@@ -67,7 +68,7 @@ class PanelsTable extends Table
      *
      * @return string
      */
-    public static function defaultConnectionName()
+    public static function defaultConnectionName(): string
     {
         return 'debug_kit';
     }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,7 +16,6 @@
 namespace DebugKit\Test\TestCase\Cache\Engine;
 
 use BadMethodCallException;
-use Cake\Cache\CacheEngine;
 use Cake\TestSuite\TestCase;
 use DebugKit\Cache\Engine\DebugEngine;
 use DebugKit\DebugTimer;
@@ -39,11 +40,13 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
         $this->mock = $mock;
+        $this->mock->method('getMultiple')->will($this->returnValue([]));
+
         $this->engine = new DebugEngine($mock);
         $this->engine->init();
         DebugTimer::clear();
@@ -67,11 +70,11 @@ class DebugEngineTest extends TestCase
     /**
      * Test that the normal errors bubble up still.
      *
-     * @expectedException BadMethodCallException
      * @return void
      */
     public function testInitErrorOnInvalidConfig()
     {
+        $this->expectException(BadMethodCallException::class);
         $engine = new DebugEngine([
             'className' => 'Derpy',
             'path' => TMP,
@@ -87,9 +90,9 @@ class DebugEngineTest extends TestCase
     public function testProxyMethodsTracksMetrics()
     {
         $this->mock->expects($this->at(0))
-            ->method('read');
+            ->method('get');
         $this->mock->expects($this->at(1))
-            ->method('write');
+            ->method('set');
         $this->mock->expects($this->at(2))
             ->method('delete');
         $this->mock->expects($this->at(3))
@@ -97,16 +100,16 @@ class DebugEngineTest extends TestCase
         $this->mock->expects($this->at(4))
             ->method('decrement');
 
-        $this->engine->read('key');
-        $this->engine->write('key', 'value');
+        $this->engine->get('key');
+        $this->engine->set('key', 'value');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
 
         $result = $this->engine->metrics();
-        $this->assertSame(3, $result['write']);
+        $this->assertSame(3, $result['set']);
         $this->assertSame(1, $result['delete']);
-        $this->assertSame(1, $result['read']);
+        $this->assertSame(1, $result['get']);
     }
 
     /**
@@ -116,26 +119,26 @@ class DebugEngineTest extends TestCase
      */
     public function testProxyMethodsTimers()
     {
-        $this->engine->read('key');
-        $this->engine->write('key', 'value');
+        $this->engine->get('key');
+        $this->engine->set('key', 'value');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
-        $this->engine->writeMany(['key' => 'value']);
-        $this->engine->readMany(['key']);
-        $this->engine->deleteMany(['key']);
+        $this->engine->setMultiple(['key' => 'value']);
+        $this->engine->getMultiple(['key']);
+        $this->engine->deleteMultiple(['key']);
         $this->engine->clearGroup('group');
 
         $result = DebugTimer::getAll();
         $this->assertCount(10, $result);
-        $this->assertArrayHasKey('Cache.read key', $result);
-        $this->assertArrayHasKey('Cache.write key', $result);
+        $this->assertArrayHasKey('Cache.get key', $result);
+        $this->assertArrayHasKey('Cache.set key', $result);
         $this->assertArrayHasKey('Cache.delete key', $result);
         $this->assertArrayHasKey('Cache.increment key', $result);
         $this->assertArrayHasKey('Cache.decrement key', $result);
-        $this->assertArrayHasKey('Cache.readMany', $result);
-        $this->assertArrayHasKey('Cache.writeMany', $result);
-        $this->assertArrayHasKey('Cache.deleteMany', $result);
+        $this->assertArrayHasKey('Cache.getMultiple', $result);
+        $this->assertArrayHasKey('Cache.setMultiple', $result);
+        $this->assertArrayHasKey('Cache.deleteMultiple', $result);
         $this->assertArrayHasKey('Cache.clearGroup group', $result);
     }
 
@@ -171,7 +174,6 @@ class DebugEngineTest extends TestCase
 
         $data = $engine->getConfig();
         $this->assertArrayHasKey('path', $data);
-        $this->assertArrayHasKey('isWindows', $data);
         $this->assertArrayHasKey('prefix', $data);
     }
 

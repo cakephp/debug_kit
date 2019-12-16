@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -15,6 +17,7 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\View\ViewVarsTrait;
 use DebugKit\Panel\VariablesPanel;
 use DebugKit\TestApp\Form\TestForm;
 
@@ -36,7 +39,7 @@ class VariablesPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->panel = new VariablesPanel();
@@ -47,7 +50,7 @@ class VariablesPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->panel);
@@ -81,8 +84,10 @@ class VariablesPanelTest extends TestCase
 
         $resource = fopen('data:text/plain;base64,', 'r');
 
-        $controller = new \stdClass();
-        $controller->viewVars = [
+        $controller = new class {
+            use ViewVarsTrait;
+        };
+        $controller->viewBuilder()->setVars([
             'resource' => $resource,
             'unserializableDebugInfo' => $unserializableDebugInfo,
             'debugInfoException' => $debugInfoException,
@@ -93,7 +98,7 @@ class VariablesPanelTest extends TestCase
             'string' => 'yes',
             'array' => ['some' => 'key'],
             'notSerializableForm' => new TestForm(),
-        ];
+        ]);
         $event = new Event('Controller.shutdown', $controller);
         $this->panel->shutdown($event);
         $output = $this->panel->data();
@@ -106,7 +111,7 @@ class VariablesPanelTest extends TestCase
             }
         });
         $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
-        $this->assertInternalType('array', $output['content']['unserializableDebugInfo']);
+        $this->assertIsArray($output['content']['unserializableDebugInfo']);
         $this->assertStringStartsWith(
             'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances',
             $output['content']['unserializableDebugInfo']['unserializable']
@@ -117,14 +122,14 @@ class VariablesPanelTest extends TestCase
         );
         $this->assertInstanceOf(
             'Cake\ORM\Query',
-            $controller->viewVars['query'],
+            $controller->viewBuilder()->getVar('query'),
             'Original value should not be mutated'
         );
-        $this->assertInternalType('array', $output['content']['updateQuery']);
-        $this->assertInternalType('array', $output['content']['query']);
-        $this->assertInternalType('array', $output['content']['unbufferedQuery']);
-        $this->assertInternalType('array', $output['content']['result set']);
-        $this->assertEquals($controller->viewVars['string'], $output['content']['string']);
-        $this->assertEquals($controller->viewVars['array'], $output['content']['array']);
+        $this->assertIsArray($output['content']['updateQuery']);
+        $this->assertIsArray($output['content']['query']);
+        $this->assertIsArray($output['content']['unbufferedQuery']);
+        $this->assertIsArray($output['content']['result set']);
+        $this->assertEquals($controller->viewBuilder()->getVar('string'), $output['content']['string']);
+        $this->assertEquals($controller->viewBuilder()->getVar('array'), $output['content']['array']);
     }
 }

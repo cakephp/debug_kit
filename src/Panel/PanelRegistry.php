@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -14,13 +16,14 @@ namespace DebugKit\Panel;
 
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
+use Cake\Event\EventDispatcherInterface;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
 
 /**
  * Registry object for panels.
  */
-class PanelRegistry extends ObjectRegistry
+class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
 {
     use EventDispatcherTrait;
 
@@ -41,9 +44,9 @@ class PanelRegistry extends ObjectRegistry
      * Part of the template method for Cake\Utility\ObjectRegistry::load()
      *
      * @param string $class Partial class name to resolve.
-     * @return string|false Either the correct class name or false.
+     * @return string|null Either the correct class name, null if the class is not found.
      */
-    protected function _resolveClassName($class)
+    protected function _resolveClassName(string $class): ?string
     {
         return App::className($class, 'Panel', 'Panel');
     }
@@ -58,7 +61,7 @@ class PanelRegistry extends ObjectRegistry
      * @return void
      * @throws \RuntimeException
      */
-    protected function _throwMissingClassError($class, $plugin)
+    protected function _throwMissingClassError(string $class, ?string $plugin): void
     {
         throw new \RuntimeException(__d('debug_kit', "Unable to find ''{0}'' panel.", $class));
     }
@@ -73,7 +76,7 @@ class PanelRegistry extends ObjectRegistry
      * @param array $config An array of config to use for the panel.
      * @return \DebugKit\DebugPanel The constructed panel class.
      */
-    protected function _create($class, $alias, $config)
+    protected function _create($class, string $alias, array $config)
     {
         $instance = new $class($this, $config);
         $this->getEventManager()->on($instance);

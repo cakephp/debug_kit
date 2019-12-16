@@ -50,5 +50,3 @@ hide_page_contents = ('search', '404', 'contents')
 
 # DebugKit docs use mp4 videos to show the UI
 extensions.append('sphinxcontrib.video')
-
-is_prerelease = True

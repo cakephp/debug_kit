@@ -22,7 +22,9 @@ use Cake\Log\Log;
 require_once 'vendor/autoload.php';
 
 // Path constants to a few helpful things.
-define('DS', DIRECTORY_SEPARATOR);
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
 define('ROOT', dirname(__DIR__));
 define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);

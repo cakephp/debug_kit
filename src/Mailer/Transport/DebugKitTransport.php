@@ -60,10 +60,7 @@ class DebugKitTransport extends AbstractTransport
     }
 
     /**
-     * Send mail
-     *
-     * @param \Cake\Mailer\Message $message Cake Email
-     * @return array
+     * @inheritDoc
      */
     public function send(Message $message): array
     {

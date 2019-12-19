@@ -15,7 +15,7 @@ declare(strict_types=1);
  */
 namespace DebugKit;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Inflector;
 
@@ -102,10 +102,10 @@ class DebugPanel implements EventListenerInterface
     /**
      * Shutdown callback
      *
-     * @param \Cake\Event\Event $event The event.
+     * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function shutdown(Event $event)
+    public function shutdown(EventInterface $event)
     {
     }
 

@@ -30,7 +30,7 @@ class HistoryPanel extends DebugPanel
      */
     public function data()
     {
-        $table = TableRegistry::get('DebugKit.Requests');
+        $table = TableRegistry::getTableLocator()->get('DebugKit.Requests');
         $recent = $table->find('recent');
 
         return [

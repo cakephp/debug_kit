@@ -34,7 +34,7 @@ class DebugKitMiddleware implements MiddlewareInterface
     /**
      * Constructor
      *
-     * @param \DebugKit\Middleware\DebugKit\ToolbarService $service The configured service, or null.
+     * @param \DebugKit\ToolbarService $service The configured service, or null.
      */
     public function __construct(?ToolbarService $service = null)
     {

@@ -26,7 +26,6 @@ use Cake\View\View;
  *
  * @property \DebugKit\View\Helper\SimpleGraphHelper $SimpleGraph
  * @property \DebugKit\View\Helper\ToolbarHelper $Toolbar
- * @property \DebugKit\View\Helper\TidyHelper $Tidy
  */
 class AjaxView extends View
 {

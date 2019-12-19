@@ -22,6 +22,10 @@ env:
 matrix:
   fast_finish: true
 
+  include:
+    - php: 7.2
+      env: STATIC_ANALYSIS=1 DEFAULT=0
+
   allow_failures:
     - php: 7.4snapshot
 
@@ -31,10 +35,12 @@ install:
 before_script:
   - if [ $DB = 'mysql' ]; then mysql -u root -e 'CREATE DATABASE cakephp_test;'; fi
   - if [ $DB = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
+  - if [[ $STATIC_ANALYSIS == 1 ]]; then composer require --dev psalm/phar:^3.6; fi
 
 script:
   - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
   - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION != 7.1 ]]; then vendor/bin/phpunit; fi
+  - if [[ $STATIC_ANALYSIS == 1 ]]; then vendor/bin/psalm.phar --show-info=false; fi
 
 after_success:
   - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.1 ]]; then bash <(curl -s https://codecov.io/bash); fi

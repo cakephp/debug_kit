@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
 
 /**
@@ -26,10 +26,10 @@ class RequestPanel extends DebugPanel
     /**
      * Data collection callback.
      *
-     * @param \Cake\Event\Event $event The shutdown event.
+     * @param \Cake\Event\EventInterface $event The shutdown event.
      * @return void
      */
-    public function shutdown(Event $event)
+    public function shutdown(EventInterface $event)
     {
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();

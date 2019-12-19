@@ -21,13 +21,13 @@ use Cake\ORM\Table;
  * The panels table collects the information for each panel on
  * each request.
  *
- * @method \DebugKit\Model\Table\Panel get($primaryKey, $options = [])
- * @method \DebugKit\Model\Table\Panel newEntity($data = null, array $options = [])
- * @method \DebugKit\Model\Table\Panel[] newEntities(array $data, array $options = [])
- * @method \DebugKit\Model\Table\Panel save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \DebugKit\Model\Table\Panel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \DebugKit\Model\Table\Panel[] patchEntities($entities, array $data, array $options = [])
- * @method \DebugKit\Model\Table\Panel findOrCreate($search, callable $callback = null)
+ * @method \DebugKit\Model\Entity\Panel get($primaryKey, $options = [])
+ * @method \DebugKit\Model\Entity\Panel newEntity($data = null, array $options = [])
+ * @method \DebugKit\Model\Entity\Panel[] newEntities(array $data, array $options = [])
+ * @method \DebugKit\Model\Entity\Panel|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DebugKit\Model\Entity\Panel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \DebugKit\Model\Entity\Panel[] patchEntities($entities, array $data, array $options = [])
+ * @method \DebugKit\Model\Entity\Panel findOrCreate($search, callable $callback = null, array $options = [])
  */
 class PanelsTable extends Table
 {

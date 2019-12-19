@@ -42,7 +42,7 @@ class ComposerController extends Controller
     /**
      * Before filter handler.
      *
-     * @param \Cake\Event\Event $event The event.
+     * @param \Cake\Event\EventInterface $event The event.
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */

@@ -161,7 +161,7 @@ class DebugEngine extends CacheEngine
     /**
      * {@inheritDoc}
      */
-    public function getMultiple($keys, $default = null): array
+    public function getMultiple($keys, $default = null): iterable
     {
         $this->_track('get');
         DebugTimer::start('Cache.getMultiple');

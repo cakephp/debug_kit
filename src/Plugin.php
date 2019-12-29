@@ -87,6 +87,7 @@ class Plugin extends BasePlugin
                         return;
                     }
                     if ($previousHandler) {
+                        $context['_trace_frame_offset'] = 1;
                         return $previousHandler($code, $message, $file, $line, $context);
                     }
                 }

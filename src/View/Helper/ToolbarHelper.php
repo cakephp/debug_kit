@@ -128,9 +128,7 @@ class ToolbarHelper extends Helper
                 $value = 'function';
             }
 
-            $isObject = is_object($value);
-            if ($isObject && $ancestors->contains($value)) {
-                $isObject = false;
+            if (is_object($value) && $ancestors->contains($value)) {
                 $value = ' - recursion';
             }
 
@@ -139,7 +137,7 @@ class ToolbarHelper extends Helper
                 $value instanceof ArrayAccess ||
                 $value instanceof Iterator ||
                 is_array($value) ||
-                $isObject
+                is_object($value)
                 ) && !empty($value)
             ) {
                 $out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode, $ancestors);

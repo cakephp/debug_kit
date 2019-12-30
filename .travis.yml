@@ -3,7 +3,7 @@ language: php
 php:
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 dist: xenial
 
@@ -23,27 +23,24 @@ matrix:
   fast_finish: true
 
   include:
-    - php: 7.2
-      env: STATIC_ANALYSIS=1 DEFAULT=0
+    - php: 7.3
+      env: CHECKS=1 DEFAULT=0
 
   allow_failures:
-    - php: 7.4snapshot
+    - php: 7.4
 
 install:
   - composer install --prefer-dist --no-interaction
 
 before_script:
-  - if [ $DB = 'mysql' ]; then mysql -u root -e 'CREATE DATABASE cakephp_test;'; fi
-  - if [ $DB = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
-  - if [[ $STATIC_ANALYSIS == 1 ]]; then composer require --dev psalm/phar:^3.6; fi
+  - if [[ $DB == 'mysql' ]]; then mysql -u root -e 'CREATE DATABASE cakephp_test;'; fi
+  - if [[ $DB == 'pgsql' ]]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
+  - if [[ $CHECKS == 1 ]]; then composer require --dev psalm/phar:^3.6; fi
 
 script:
-  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
-  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION != 7.1 ]]; then vendor/bin/phpunit; fi
-  - if [[ $STATIC_ANALYSIS == 1 ]]; then vendor/bin/psalm.phar --show-info=false; fi
-
-after_success:
-  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.1 ]]; then bash <(curl -s https://codecov.io/bash); fi
+  - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
+  - if [[ $CHECKS == 1 ]]; then vendor/bin/psalm.phar --show-info=false; fi
+  - if [[ $CHECKS == 1 ]]; then vendor/bin/phpcs --colors --parallel=16 -p src/ tests/; fi
 
 notifications:
   email: false

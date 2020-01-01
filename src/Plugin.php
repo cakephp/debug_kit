@@ -42,11 +42,12 @@ class Plugin extends BasePlugin
     public function bootstrap(PluginApplicationInterface $app): void
     {
         $service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
-        $this->service = $service;
 
         if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
             return;
         }
+
+        $this->service = $service;
 
         $this->setDeprecationHandler($service);
 

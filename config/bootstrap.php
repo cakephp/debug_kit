@@ -39,6 +39,7 @@ if (!empty($service->getConfig('panels')['DebugKit.Deprecations'])) {
                 return;
             }
             if ($previousHandler) {
+                $context['_trace_frame_offset'] = 1;
                 return $previousHandler($code, $message, $file, $line, $context);
             }
         },

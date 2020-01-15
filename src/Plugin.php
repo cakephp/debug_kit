@@ -15,11 +15,13 @@ declare(strict_types=1);
  */
 namespace DebugKit;
 
+use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Event\EventManager;
 use Cake\Http\MiddlewareQueue;
+use DebugKit\Command\BenchmarkCommand;
 use DebugKit\Middleware\DebugKitMiddleware;
 use DebugKit\Panel\DeprecationsPanel;
 
@@ -68,6 +70,17 @@ class Plugin extends BasePlugin
         }
 
         return $middleware;
+    }
+
+    /**
+     * Add console commands for the plugin.
+     *
+     * @param \Cake\Console\CommandCollection $commands The command collection to update
+     * @return \Cake\Console\CommandCollection
+     */
+    public function console(CommandCollection $commands): CommandCollection
+    {
+        return $commands->add('benchmark', BenchmarkCommand::class);
     }
 
     /**

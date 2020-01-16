@@ -47,21 +47,24 @@ class MailPanel extends DebugPanel
 
         $log = $this->emailLog = new ArrayObject();
 
-        foreach ($configs as $name => &$transport) {
+        foreach ($configs as $name => $transport) {
             if (is_object($transport)) {
-                $configs[$name] = new DebugKitTransport(['debugKitLog' => $log], $transport);
+                if (!$transport instanceof DebugKitTransport) {
+                    $configs[$name] = new DebugKitTransport(['debugKitLog' => $log], $transport);
+                }
                 continue;
             }
 
             $className = App::className($transport['className'], 'Mailer/Transport', 'Transport');
-
-            if (!$className) {
+            if (!$className || $className === DebugKitTransport::class) {
                 continue;
             }
 
             $transport['originalClassName'] = $transport['className'];
             $transport['className'] = 'DebugKit.DebugKit';
             $transport['debugKitLog'] = $log;
+
+            $configs[$name] = $transport;
         }
         $property->setValue($configs);
     }

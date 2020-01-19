@@ -13,6 +13,7 @@
  */
 namespace DebugKit\Test\TestCase\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
@@ -70,5 +71,36 @@ class RequestTableTest extends TestCase
         $query = $table->find('recent');
         $this->assertSame(10, $query->clause('limit'));
         $this->assertNotEmpty($query->clause('order'));
+    }
+
+    /**
+     * Test the garbage collect.
+     *
+     * @return void
+     */
+    public function testGc()
+    {
+        /** @var \PHPUnit\Framework\MockObject\MockObject&\DebugKit\Model\Table\RequestsTable $requestsTableMock */
+        $requestsTableMock = $this->getMockForModel('DebugKit.Requests', ['shouldGc']);
+        $requestsTableMock->method('shouldGc')
+            ->will($this->returnValue(true));
+
+        $data = array_fill(0, 10, [
+            'url' => '/tasks/add',
+            'content_type' => 'text/html',
+            'status_code' => 200,
+            'requested_at' => '2014-08-21 7:41:12',
+        ]);
+        $requests = $requestsTableMock->newEntities($data);
+        $this->assertNotFalse($requestsTableMock->saveMany($requests));
+
+        $count = $requestsTableMock->find()->count();
+        $this->assertGreaterThanOrEqual(10, $count);
+
+        Configure::write('DebugKit.requestCount', 5);
+        $requestsTableMock->gc();
+
+        $count = $requestsTableMock->find()->count();
+        $this->assertSame(5, $count);
     }
 }

@@ -47,6 +47,7 @@ class ToolbarHelper extends Helper
      * set sorting of values
      *
      * @param bool $sort Whether or not sort values by key
+     * @return void
      */
     public function setSort($sort)
     {

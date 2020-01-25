@@ -128,7 +128,7 @@ class DebugBarFilter extends DispatcherFilter
      * Save the toolbar data.
      *
      * @param \Cake\Event\Event $event The afterDispatch event.
-     * @return \Cake\Http\Response|null Modifed response or null
+     * @return \Psr\Http\Message\ResponseInterface|void Modified response or null
      */
     public function afterDispatch(Event $event)
     {

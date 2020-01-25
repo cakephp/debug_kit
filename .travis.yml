@@ -3,8 +3,7 @@ language: php
 php:
   - 5.6
   - 7.0
-  - 7.3
-  - 7.4snapshot
+  - 7.4
 
 services:
   - postgresql
@@ -21,17 +20,14 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 7.1
+    - php: 7.3
       env: PHPCS=1
 
-    - php: 7.1
+    - php: 7.3
       env: CODECOVERAGE=1 DEFAULT=0
 
     - php: 5.6
       env: PREFER_LOWEST=1
-
-  allow_failures:
-    - php: 7.4snapshot
 
 install:
   - sh -c "if [ '$PREFER_LOWEST' != '1' ]; then composer install --prefer-dist --no-interaction; fi"
@@ -43,9 +39,9 @@ before_script:
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then [ "$(find . \( -path './vendor' \) -prune -o -type f \( -name '*.ctp' -o -name '*.php' \) -print0 | xargs -0 --no-run-if-empty -L1 -i'{}' php -l '{}' | grep -vc 'No syntax errors')" -eq 0 ]; fi"
-  - sh -c "if [ '$DEFAULT' = '1' ]; then ./vendor/bin/phpunit; fi"
+  - sh -c "if [ '$DEFAULT' = '1' ]; then vendor/bin/phpunit; fi"
 
-  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs -n -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then composer cs-check; fi"
 
   - sh -c "if [ '$CODECOVERAGE' = '1' ]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=clover.xml || true; fi"
   - sh -c "if [ '$CODECOVERAGE' = '1' ]; then wget -O codecov.sh https://codecov.io/bash; fi"

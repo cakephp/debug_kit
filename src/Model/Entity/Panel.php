@@ -38,6 +38,7 @@ class Panel extends Entity
      * Over certain sizes PDO will return file handles.
      * For backwards compatibility and consistency we smooth over that difference here.
      *
+     * @param mixed $content Content
      * @return string
      */
     protected function _getContent($content)

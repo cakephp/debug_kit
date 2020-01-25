@@ -73,6 +73,7 @@ class TidyHelper extends Helper
                 if (isset($markup[$line - 1])) {
                     $string .= h($markup[$line - 1]);
                 }
+                // phpcs:ignore
                 $string .= '<strong>' . h(@$markup[$line]) . '</strong>';
                 if (isset($markup[$line + 1])) {
                     $string .= h($markup[$line + 1]);

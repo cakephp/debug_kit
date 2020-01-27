@@ -76,6 +76,16 @@ class RequestsTable extends Table
     }
 
     /**
+     * Check if garbage collection should be run
+     *
+     * @return bool
+     */
+    protected function shouldGc()
+    {
+        return time() % 100 === 0;
+    }
+
+    /**
      * Garbage collect old request data.
      *
      * Delete request data that is older than latest 20 requests.
@@ -86,13 +96,16 @@ class RequestsTable extends Table
      */
     public function gc()
     {
-        if (time() % 100 !== 0) {
+        if (!$this->shouldGc()) {
             return;
         }
         $noPurge = $this->find()
             ->select(['id'])
+            ->enableHydration(false)
             ->order(['requested_at' => 'desc'])
-            ->limit(Configure::read('DebugKit.requestCount') ?: 20);
+            ->limit(Configure::read('DebugKit.requestCount') ?: 20)
+            ->extract('id')
+            ->toArray();
 
         $query = $this->Panels->query()
             ->delete()

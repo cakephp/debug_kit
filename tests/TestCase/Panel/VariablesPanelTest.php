@@ -112,8 +112,14 @@ class VariablesPanelTest extends TestCase
         });
         $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
         $this->assertIsArray($output['content']['unserializableDebugInfo']);
+
+        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
+            $expectedErrorMessage = "Unserializable object - stdClass. Error: Serialization of 'PDO' is not allowed";
+        } else {
+            $expectedErrorMessage = 'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances';
+        }
         $this->assertStringStartsWith(
-            'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances',
+            $expectedErrorMessage,
             $output['content']['unserializableDebugInfo']['unserializable']
         );
         $this->assertStringStartsWith(

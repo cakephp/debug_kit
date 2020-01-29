@@ -28,9 +28,6 @@ use Cake\Utility\Text;
  * functionally similar to Apache AB
  *
  * @since         DebugKit 1.0
- * @todo Print/export time detail information
- * @todo Export/graphing of data to .dot format for graphviz visualization
- * @todo Make calculated results round to leading significant digit position of std dev.
  */
 class BenchmarkCommand extends Command
 {

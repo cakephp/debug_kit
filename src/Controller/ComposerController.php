@@ -15,10 +15,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Controller;
 
-use Cake\Controller\Controller;
-use Cake\Core\Configure;
-use Cake\Event\EventInterface;
-use Cake\Http\Exception\NotFoundException;
 use Cake\View\JsonView;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -27,7 +23,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 /**
  * Provides utility features need by the toolbar.
  */
-class ComposerController extends Controller
+class ComposerController extends DebugKitController
 {
     /**
      * {@inheritDoc}
@@ -37,20 +33,6 @@ class ComposerController extends Controller
         parent::initialize();
         $this->loadComponent('RequestHandler');
         $this->viewBuilder()->setClassName(JsonView::class);
-    }
-
-    /**
-     * Before filter handler.
-     *
-     * @param \Cake\Event\EventInterface $event The event.
-     * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
-     */
-    public function beforeFilter(EventInterface $event)
-    {
-        if (!Configure::read('debug')) {
-            throw new NotFoundException();
-        }
     }
 
     /**

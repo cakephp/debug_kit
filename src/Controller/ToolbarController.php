@@ -15,15 +15,12 @@ declare(strict_types=1);
 namespace DebugKit\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Controller\Controller;
-use Cake\Core\Configure;
-use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 
 /**
  * Provides utility features need by the toolbar.
  */
-class ToolbarController extends Controller
+class ToolbarController extends DebugKitController
 {
     /**
      * View class
@@ -40,21 +37,6 @@ class ToolbarController extends Controller
     public function initialize(): void
     {
         $this->loadComponent('RequestHandler');
-    }
-
-    /**
-     * Before filter handler.
-     *
-     * @param \Cake\Event\EventInterface $event The event.
-     * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
-     */
-    public function beforeFilter(EventInterface $event)
-    {
-        // TODO add config override.
-        if (!Configure::read('debug')) {
-            throw new NotFoundException();
-        }
     }
 
     /**

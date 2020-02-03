@@ -13,8 +13,6 @@
 namespace DebugKit\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -22,7 +20,6 @@ use Cake\Http\Exception\NotFoundException;
  */
 class ToolbarController extends DebugKitController
 {
-
     /**
      * components
      *

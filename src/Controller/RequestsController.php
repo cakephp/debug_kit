@@ -12,9 +12,7 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
 
 /**
  * Provides access to panel data.
@@ -23,13 +21,11 @@ use Cake\Http\Exception\NotFoundException;
  */
 class RequestsController extends DebugKitController
 {
-
     /**
      * Before filter handler.
      *
      * @param \Cake\Event\Event $event The event.
      * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {

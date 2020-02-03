@@ -12,7 +12,6 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
 
@@ -23,7 +22,6 @@ use Cake\Http\Exception\NotFoundException;
  */
 class PanelsController extends DebugKitController
 {
-
     /**
      * components
      *

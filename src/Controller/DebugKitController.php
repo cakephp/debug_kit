@@ -22,7 +22,6 @@ use Cake\Http\Exception\NotFoundException;
  */
 class DebugKitController extends Controller
 {
-
     /**
      * Before filter handler.
      *

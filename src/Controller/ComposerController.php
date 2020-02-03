@@ -13,9 +13,6 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
-use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
 use Cake\View\JsonView;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -26,7 +23,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class ComposerController extends DebugKitController
 {
-
     /**
      * {@inheritDoc}
      */

@@ -12,22 +12,18 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
 
 /**
  * Dashboard and common DebugKit backend.
  */
 class DashboardController extends DebugKitController
 {
-
     /**
      * Before filter handler.
      *
      * @param \Cake\Event\Event $event The event.
      * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {

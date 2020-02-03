@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace DebugKit\Controller;
 
 use Cake\Core\App;
-use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
@@ -33,7 +32,6 @@ use DebugKit\Mailer\SentMailResult;
  */
 class MailPreviewController extends DebugKitController
 {
-
     /**
      * Before render handler.
      *

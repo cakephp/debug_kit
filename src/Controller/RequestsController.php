@@ -14,9 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\Http\Exception\NotFoundException;
 
 /**
  * Provides access to panel data.

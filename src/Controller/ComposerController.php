@@ -15,9 +15,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Controller;
 
-use Cake\Core\Configure;
-use Cake\Event\EventInterface;
-use Cake\Http\Exception\NotFoundException;
 use Cake\View\JsonView;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;

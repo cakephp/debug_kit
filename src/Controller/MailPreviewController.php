@@ -14,7 +14,6 @@
 namespace DebugKit\Controller;
 
 use Cake\Collection\CollectionInterface;
-use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
@@ -33,21 +32,8 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @property \DebugKit\Model\Table\PanelsTable $Panels
  */
-class MailPreviewController extends Controller
+class MailPreviewController extends DebugKitController
 {
-    /**
-     * Before filter callback.
-     *
-     * @param \Cake\Event\Event $event The beforeFilter event.
-     * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
-     */
-    public function beforeFilter(Event $event)
-    {
-        if (!Configure::read('debug')) {
-            throw new NotFoundException();
-        }
-    }
 
     /**
      * Before render handler.

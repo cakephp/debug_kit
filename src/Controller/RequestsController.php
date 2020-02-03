@@ -12,7 +12,6 @@
  */
 namespace DebugKit\Controller;
 
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
@@ -22,7 +21,7 @@ use Cake\Http\Exception\NotFoundException;
  *
  * @property \DebugKit\Model\Table\RequestsTable $Requests
  */
-class RequestsController extends Controller
+class RequestsController extends DebugKitController
 {
 
     /**
@@ -34,10 +33,7 @@ class RequestsController extends Controller
      */
     public function beforeFilter(Event $event)
     {
-        // TODO add config override
-        if (!Configure::read('debug')) {
-            throw new NotFoundException();
-        }
+        parent::beforeFilter($event);
 
         $this->response = $this->response->withHeader('Content-Security-Policy', '');
     }

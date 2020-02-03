@@ -35,5 +35,11 @@ class DebugKitController extends Controller
         if (!Configure::read('debug')) {
             throw new NotFoundException('Not available without debug mode on.');
         }
+
+        // Skip authorization for DebuKit requests
+        $authorizationService = $this->getRequest()->getAttribute('authorization');
+        if ($authorizationService instanceof \Authorization\AuthorizationService) {
+            $authorizationService->skipAuthorization();
+        }
     }
 }

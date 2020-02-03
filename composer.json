@@ -31,6 +31,7 @@
         "jdorn/sql-formatter": "^1.2.0"
     },
     "require-dev": {
+        "cakephp/authorization": "^1.3.2",
         "cakephp/cakephp-codesniffer": "^3.0",
         "phpunit/phpunit": "^5.7.14|^6.0"
     },

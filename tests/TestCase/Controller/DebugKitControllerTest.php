@@ -13,6 +13,8 @@
  */
 namespace DebugKit\Test\TestCase\Controller;
 
+use Authorization\AuthorizationService;
+use Authorization\Policy\OrmResolver;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
@@ -50,5 +52,28 @@ class DebugKitControllerTest extends IntegrationTestCase
         } finally {
             Configure::write('debug', $oldStatus);
         }
+    }
+
+    /**
+     * tests authorization is checked to avoid
+     * AuthorizationRequiredException throwned
+     *
+     * @return void
+     */
+    public function testSkipAuthorization()
+    {
+        $request = new ServerRequest(['url' => '/debug-kit/']);
+
+        $resolver = new OrmResolver();
+        $authorization = new AuthorizationService($resolver);
+
+        $request = $request->withAttribute('authorization', $authorization);
+
+        $controller = new DebugKitController($request, new Response());
+        $event = new Event('testing');
+
+        $controller->beforeFilter($event);
+
+        $this->assertTrue($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
     }
 }

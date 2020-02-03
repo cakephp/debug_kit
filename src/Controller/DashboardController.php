@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Controller;
 
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
@@ -24,7 +23,7 @@ use Cake\Http\Exception\NotFoundException;
  *
  * @property \DebugKit\Model\Table\RequestsTable $Requests
  */
-class DashboardController extends Controller
+class DashboardController extends DebugKitController
 {
     /**
      * Before filter handler.
@@ -35,10 +34,7 @@ class DashboardController extends Controller
      */
     public function beforeFilter(EventInterface $event)
     {
-        // TODO add config override.
-        if (!Configure::read('debug')) {
-            throw new NotFoundException('Not available without debug mode on.');
-        }
+        parent::beforeFilter($event);
 
         $this->viewBuilder()->setLayout('dashboard');
     }

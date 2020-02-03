@@ -14,16 +14,15 @@ declare(strict_types=1);
  */
 namespace DebugKit\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 
 /**
- * Provides access to panel data.
- *
- * @property \DebugKit\Model\Table\RequestsTable $Requests
+ * DebugKit Controller.
  */
-class RequestsController extends DebugKitController
+class DebugKitController extends Controller
 {
     /**
      * Before filter handler.
@@ -34,33 +33,9 @@ class RequestsController extends DebugKitController
      */
     public function beforeFilter(EventInterface $event)
     {
-        parent::beforeFilter($event);
-
-        $this->response = $this->response->withHeader('Content-Security-Policy', '');
-    }
-
-    /**
-     * Before render handler.
-     *
-     * @param \Cake\Event\EventInterface $event The event.
-     * @return void
-     */
-    public function beforeRender(EventInterface $event)
-    {
-        $this->viewBuilder()
-            ->setLayout('DebugKit.toolbar')
-            ->setClassName('DebugKit.Ajax');
-    }
-
-    /**
-     * View a request's data.
-     *
-     * @param string $id The id.
-     * @return void
-     */
-    public function view($id = null)
-    {
-        $toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
-        $this->set('toolbar', $toolbar);
+        // TODO add config override.
+        if (!Configure::read('debug')) {
+            throw new NotFoundException('Not available without debug mode on.');
+        }
     }
 }

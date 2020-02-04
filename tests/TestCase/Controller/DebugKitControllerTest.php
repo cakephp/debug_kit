@@ -47,12 +47,12 @@ class DebugKitControllerTest extends IntegrationTestCase
     }
 
     /**
-     * tests authorization is checked to avoid
-     * AuthorizationRequiredException throwned
+     * Build controller with AuthorizationService
+     * in request attribute
      *
-     * @return void
+     * @return DebugKit\Controller\DebugKitController
      */
-    public function testSkipAuthorization()
+    private function _buildController()
     {
         $request = new ServerRequest(['url' => '/debug-kit/']);
 
@@ -61,9 +61,35 @@ class DebugKitControllerTest extends IntegrationTestCase
 
         $request = $request->withAttribute('authorization', $authorization);
 
-        $controller = new DebugKitController($request, new Response());
-        $event = new Event('testing');
+        return new DebugKitController($request, new Response());
+    }
 
+    /**
+     * tests authorization is enabled but not ignored
+     *
+     * @return void
+     */
+    public function testDontIgnoreAuthorization()
+    {
+        $controller = $this->_buildController();
+        $event = new Event('testing');
+        $controller->beforeFilter($event);
+
+        $this->assertFalse($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
+    }
+
+    /**
+     * tests authorization is checked to avoid
+     * AuthorizationRequiredException throwned
+     *
+     * @return void
+     */
+    public function testIgnoreAuthorization()
+    {
+        Configure::write('DebugKit.ignoreAuthorization', true);
+
+        $controller = $this->_buildController();
+        $event = new Event('testing');
         $controller->beforeFilter($event);
 
         $this->assertTrue($controller->getRequest()->getAttribute('authorization')->authorizationChecked());

@@ -15,6 +15,7 @@ namespace DebugKit\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Log\Log;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -31,15 +32,23 @@ class DebugKitController extends Controller
      */
     public function beforeFilter(Event $event)
     {
-        // TODO add config override.
         if (!Configure::read('debug')) {
             throw new NotFoundException('Not available without debug mode on.');
         }
 
-        // Skip authorization for DebuKit requests
+        // If CakePHP Authorization\Authorization plugin is enabled,
+        // ignore it, only if `DebugKit.ignoreAuthorization` is set to true
         $authorizationService = $this->getRequest()->getAttribute('authorization');
         if ($authorizationService instanceof \Authorization\AuthorizationService) {
-            $authorizationService->skipAuthorization();
+            if (Configure::read('DebugKit.ignoreAuthorization')) {
+                $authorizationService->skipAuthorization();
+            } else {
+                Log::info(
+                    "Cake Authorization plugin is enabled. If you would like " .
+                    "to force DebugKit to ignore it, set `DebugKit.ignoreAuthorization` " .
+                    " Configure option to true."
+                );
+            }
         }
     }
 }

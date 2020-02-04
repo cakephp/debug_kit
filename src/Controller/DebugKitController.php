@@ -15,8 +15,8 @@ namespace DebugKit\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Log\Log;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Log\Log;
 
 /**
  * DebugKit Controller.

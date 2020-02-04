@@ -15,13 +15,13 @@ namespace DebugKit\Test\TestCase\Controller;
 
 use Authorization\AuthorizationService;
 use Authorization\Policy\OrmResolver;
-use DebugKit\TestApp\Application;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\TestSuite\IntegrationTestCase;
 use DebugKit\Controller\DebugKitController;
+use DebugKit\TestApp\Application;
 use Exception;
 
 /**

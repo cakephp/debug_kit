@@ -15,6 +15,7 @@ namespace DebugKit\Test\TestCase\Controller;
 
 use Authorization\AuthorizationService;
 use Authorization\Policy\OrmResolver;
+use DebugKit\TestApp\Application;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
@@ -35,23 +36,14 @@ class DebugKitControllerTest extends IntegrationTestCase
      */
     public function testDebugDisabled()
     {
-        $oldStatus = Configure::read('debug');
         Configure::write('debug', false);
 
-        $request = new ServerRequest(['url' => '/debug-kit/']);
-        $controller = new DebugKitController($request, new Response());
-        $event = new Event('testing');
+        $this->configApplication(Application::class, []);
+        $this->useHttpServer(true);
 
-        // try/catch/finally instead of expectExcetion
-        // to restore `debug` configuration
-        try {
-            $controller->beforeFilter($event);
-        } catch (Exception $e) {
-            $this->assertInstanceOf('Cake\Http\Exception\NotFoundException', $e);
-            $this->assertSame('Not available without debug mode on.', $e->getMessage());
-        } finally {
-            Configure::write('debug', $oldStatus);
-        }
+        $this->get('/debug-kit/toolbar/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->assertResponseError();
+        $this->assertResponseContains('Error page');
     }
 
     /**

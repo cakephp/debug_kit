@@ -13,17 +13,13 @@
 namespace DebugKit\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Controller\Controller;
-use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
 
 /**
  * Provides utility features need by the toolbar.
  */
-class ToolbarController extends Controller
+class ToolbarController extends DebugKitController
 {
-
     /**
      * components
      *
@@ -37,21 +33,6 @@ class ToolbarController extends Controller
      * @var string
      */
     public $viewClass = 'Cake\View\JsonView';
-
-    /**
-     * Before filter handler.
-     *
-     * @param \Cake\Event\Event $event The event.
-     * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
-     */
-    public function beforeFilter(Event $event)
-    {
-        // TODO add config override.
-        if (!Configure::read('debug')) {
-            throw new NotFoundException();
-        }
-    }
 
     /**
      * Clear a named cache.

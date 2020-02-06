@@ -30,6 +30,11 @@ Ensuite, vous devez activer le plugin en exécutant la ligne suivante::
 
     bin/cake plugin load DebugKit
 
+Configuration
+=============
+
+* ``DebugKit.ignoreAuthorization`` - Définie à true pour ignorer le plugin Cake Authorization uniquement pour les requêtes DebugKit. Par défaut à false.
+
 Stockage de DebugKit
 ====================
 

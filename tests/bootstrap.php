@@ -108,11 +108,13 @@ ConnectionManager::setConfig('test_debug_kit', $config);
 Log::setConfig([
     'debug' => [
         'engine' => 'Cake\Log\Engine\FileLog',
+        'path' => LOGS,
         'levels' => ['notice', 'info', 'debug'],
         'file' => 'debug',
     ],
     'error' => [
         'engine' => 'Cake\Log\Engine\FileLog',
+        'path' => LOGS,
         'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
         'file' => 'error',
     ],

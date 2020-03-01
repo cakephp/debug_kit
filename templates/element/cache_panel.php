@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($metrics as $name => $values): ?>
+        <?php foreach ($metrics as $name => $values) : ?>
             <tr>
                 <td><?= h($name) ?></td>
                 <td class="right-text">
@@ -58,7 +58,7 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($metrics as $name => $counters): ?>
+        <?php foreach ($metrics as $name => $counters) : ?>
             <tr>
                 <td><?= h($name) ?></td>
                 <td class="right-text"><?= $counters['get hit'] ?></td>
@@ -78,7 +78,7 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($logs as $log): ?>
+        <?php foreach ($logs as $log) : ?>
         <tr>
             <td><?= h($log) ?></td>
         </tr>

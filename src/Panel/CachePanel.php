@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace DebugKit\Panel;
 
 use Cake\Cache\Cache;
+use Cake\Log\Engine\ArrayLog;
 use DebugKit\Cache\Engine\DebugEngine;
 use DebugKit\DebugPanel;
 
@@ -25,11 +26,22 @@ use DebugKit\DebugPanel;
 class CachePanel extends DebugPanel
 {
     /**
-     * The cache spy instances used.
-     *
+     * @var \Cake\Log\Engine\ArrayLog
+     */
+    protected $logger;
+
+    /**
      * @var \DebugKit\Cache\Engine\DebugEngine[]
      */
-    protected $_instances = [];
+    protected $instances = [];
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->logger = new ArrayLog();
+    }
 
     /**
      * Initialize - install cache spies.
@@ -44,11 +56,11 @@ class CachePanel extends DebugPanel
                 $instance = $config['className'];
             } elseif (isset($config['className'])) {
                 Cache::drop($name);
-                $instance = new DebugEngine($config);
+                $instance = new DebugEngine($config, $name, $this->logger);
                 Cache::setConfig($name, $instance);
             }
             if (isset($instance)) {
-                $this->_instances[$name] = $instance;
+                $this->instances[$name] = $instance;
             }
         }
     }
@@ -61,12 +73,15 @@ class CachePanel extends DebugPanel
     public function data()
     {
         $metrics = [];
-        foreach ($this->_instances as $name => $instance) {
+        foreach ($this->instances as $name => $instance) {
             $metrics[$name] = $instance->metrics();
         }
+        $logs = $this->logger->read();
+        $this->logger->clear();
 
         return [
             'metrics' => $metrics,
+            'logs' => $logs,
         ];
     }
 }

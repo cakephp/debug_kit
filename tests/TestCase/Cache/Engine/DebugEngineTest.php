@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Cache\Engine;
 
 use BadMethodCallException;
+use Cake\Cache\Engine\ArrayEngine;
+use Cake\Log\Engine\ArrayLog;
 use Cake\TestSuite\TestCase;
 use DebugKit\Cache\Engine\DebugEngine;
 use DebugKit\DebugTimer;
@@ -31,9 +33,14 @@ class DebugEngineTest extends TestCase
     protected $engine;
 
     /**
-     * @var CacheEngine
+     * @var \Cake\Cache\Engine\ArrayEngine
      */
-    private $mock;
+    private $wrapped;
+
+    /**
+     * @var \Cake\Log\Engine\ArrayLog
+     */
+    private $logger;
 
     /**
      * setup
@@ -43,11 +50,12 @@ class DebugEngineTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
-        $this->mock = $mock;
-        $this->mock->method('getMultiple')->will($this->returnValue([]));
+        $this->wrapped = new ArrayEngine();
+        $this->wrapped->init(['prefix' => '']);
 
-        $this->engine = new DebugEngine($mock);
+        $this->logger = new ArrayLog();
+
+        $this->engine = new DebugEngine($this->wrapped, 'test', $this->logger);
         $this->engine->init();
         DebugTimer::clear();
     }
@@ -62,7 +70,8 @@ class DebugEngineTest extends TestCase
         $engine = new DebugEngine([
             'className' => 'File',
             'path' => TMP,
-        ]);
+            'prefix' => '',
+        ], 'test', $this->logger);
         $this->assertTrue($engine->init());
         $this->assertInstanceOf('Cake\Cache\Engine\FileEngine', $engine->engine());
     }
@@ -78,7 +87,8 @@ class DebugEngineTest extends TestCase
         $engine = new DebugEngine([
             'className' => 'Derpy',
             'path' => TMP,
-        ]);
+            'prefix' => '',
+        ], 'test', $this->logger);
         $engine->init();
     }
 
@@ -89,19 +99,9 @@ class DebugEngineTest extends TestCase
      */
     public function testProxyMethodsTracksMetrics()
     {
-        $this->mock->expects($this->at(0))
-            ->method('get');
-        $this->mock->expects($this->at(1))
-            ->method('set');
-        $this->mock->expects($this->at(2))
-            ->method('delete');
-        $this->mock->expects($this->at(3))
-            ->method('increment');
-        $this->mock->expects($this->at(4))
-            ->method('decrement');
-
         $this->engine->get('key');
         $this->engine->set('key', 'value');
+        $this->engine->get('key');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
@@ -109,7 +109,8 @@ class DebugEngineTest extends TestCase
         $result = $this->engine->metrics();
         $this->assertSame(3, $result['set']);
         $this->assertSame(1, $result['delete']);
-        $this->assertSame(1, $result['get']);
+        $this->assertSame(1, $result['get miss']);
+        $this->assertSame(1, $result['get hit']);
     }
 
     /**
@@ -117,7 +118,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testProxyMethodsTimers()
+    public function testProxyMethodLogs()
     {
         $this->engine->get('key');
         $this->engine->set('key', 'value');
@@ -129,17 +130,10 @@ class DebugEngineTest extends TestCase
         $this->engine->deleteMultiple(['key']);
         $this->engine->clearGroup('group');
 
-        $result = DebugTimer::getAll();
-        $this->assertCount(10, $result);
-        $this->assertArrayHasKey('Cache.get key', $result);
-        $this->assertArrayHasKey('Cache.set key', $result);
-        $this->assertArrayHasKey('Cache.delete key', $result);
-        $this->assertArrayHasKey('Cache.increment key', $result);
-        $this->assertArrayHasKey('Cache.decrement key', $result);
-        $this->assertArrayHasKey('Cache.getMultiple', $result);
-        $this->assertArrayHasKey('Cache.setMultiple', $result);
-        $this->assertArrayHasKey('Cache.deleteMultiple', $result);
-        $this->assertArrayHasKey('Cache.clearGroup group', $result);
+        $logs = $this->logger->read();
+        $this->assertCount(9, $logs);
+        $this->assertStringStartsWith('info :test: get `key`', $logs[0]);
+        $this->assertStringStartsWith('info :test: set `key`', $logs[1]);
     }
 
     /**
@@ -152,8 +146,9 @@ class DebugEngineTest extends TestCase
         $engine = new DebugEngine([
             'className' => 'File',
             'path' => TMP,
+            'prefix' => '',
             'groups' => ['test', 'test2'],
-        ]);
+        ], 'test', $this->logger);
         $engine->init();
         $result = $engine->groups();
         $this->assertEquals(['test', 'test2'], $result);
@@ -169,7 +164,8 @@ class DebugEngineTest extends TestCase
         $engine = new DebugEngine([
             'className' => 'File',
             'path' => TMP,
-        ]);
+            'prefix' => '',
+        ], 'test', $this->logger);
         $engine->init();
 
         $data = $engine->getConfig();
@@ -188,7 +184,7 @@ class DebugEngineTest extends TestCase
             'className' => 'File',
             'path' => TMP,
             'groups' => ['test', 'test2'],
-        ]);
+        ], 'test', $this->logger);
         $this->assertEquals('File', (string)$engine);
     }
 }

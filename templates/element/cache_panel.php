@@ -15,34 +15,76 @@
 /**
  * @var \DebugKit\View\AjaxView $this
  * @var array $metrics
+ * @var array $logs
  */
 ?>
 <?php if (empty($metrics)): ?>
-    <p class="info"><?= __d('debug_kit', 'There were no cache operations this request.') ?></p>
+    <p class="info"><?= __d('debug_kit', 'There were no cache operations in this request.') ?></p>
 <?php else: ?>
-    <?php foreach ($metrics as $name => $counters): ?>
-    <section class="section-tile">
-        <h3><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h3>
-        <button class="btn-primary clear-cache" data-name="<?= h($name) ?>"><?= __d('debug_kit', 'Clear {0} cache', h($name)) ?></button>
-        <span class="inline-message"></span>
-        <table cellspacing="0" cellpadding="0" class="debug-table">
-            <thead>
-                <tr>
-                    <th><?= __d('debug_kit', 'Metric') ?></th>
-                    <th><?= __d('debug_kit', 'Total') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($counters as $key => $val): ?>
-                <tr>
-                    <td><?= h($key) ?></td>
-                    <td class="right-text"><?= $val ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </section>
-    <?php endforeach; ?>
+    <h3><?= __d('debug_kit', 'Cache Utilities') ?></h3>
+    <table cellspacing="0" cellpadding="0" class="debug-table">
+        <thead>
+            <tr>
+                <th><?= __d('debug_kit', 'Engine') ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($metrics as $name => $values) : ?>
+            <tr>
+                <td><?= h($name) ?></td>
+                <td class="right-text">
+                    <button
+                        class="btn-primary clear-cache"
+                        data-name="<?= h($name) ?>"
+                    >
+                        <?= __d('debug_kit', 'Clear All Data') ?>
+                    </button>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <h3><?= __d('debug_kit', 'Cache Usage Overview') ?></h3>
+    <table cellspacing="0" cellpadding="0" class="debug-table">
+        <thead>
+            <tr>
+                <th><?= __d('debug_kit', 'Engine') ?></th>
+                <th><?= __d('debug_kit', 'get hit') ?></th>
+                <th><?= __d('debug_kit', 'get miss') ?></th>
+                <th><?= __d('debug_kit', 'set') ?></th>
+                <th><?= __d('debug_kit', 'delete') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($metrics as $name => $counters) : ?>
+            <tr>
+                <td><?= h($name) ?></td>
+                <td class="right-text"><?= $counters['get hit'] ?></td>
+                <td class="right-text"><?= $counters['get miss'] ?></td>
+                <td class="right-text"><?= $counters['set'] ?></td>
+                <td class="right-text"><?= $counters['delete'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <h3><?= __d('debug_kit', 'Cache Logs') ?></h3>
+    <table cellspacing="0" cellpadding="0" class="debug-table">
+        <thead>
+            <tr>
+                <th><?= __d('debug_kit', 'Log') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($logs as $log) : ?>
+        <tr>
+            <td><?= h($log) ?></td>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 <?php endif; ?>
 
 <script>

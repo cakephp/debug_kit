@@ -17,7 +17,7 @@ namespace DebugKit\Cache\Engine;
 
 use Cake\Cache\CacheEngine;
 use Cake\Cache\CacheRegistry;
-use DebugKit\DebugTimer;
+use Psr\Log\LoggerInterface;
 
 /**
  * A spying proxy for cache engines.
@@ -41,26 +41,39 @@ class DebugEngine extends CacheEngine
     protected $_engine;
 
     /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Hit/miss metrics.
      *
      * @var mixed
      */
-    protected $_metrics = [
+    protected $metrics = [
         'set' => 0,
         'delete' => 0,
-        'get' => 0,
-        'hit' => 0,
-        'miss' => 0,
+        'get hit' => 0,
+        'get miss' => 0,
     ];
 
     /**
      * Constructor
      *
      * @param mixed $config Config data or the proxied adapter.
+     * @param string $name The name of the proxied cache engine.
+     * @param \Psr\Log\LoggerInterface $logger Logger for collecting cache operation logs.
      */
-    public function __construct($config)
+    public function __construct($config, string $name, LoggerInterface $logger)
     {
         $this->_config = $config;
+        $this->logger = $logger;
+        $this->name = $name;
     }
 
     /**
@@ -100,7 +113,7 @@ class DebugEngine extends CacheEngine
      */
     public function metrics()
     {
-        return $this->_metrics;
+        return $this->metrics;
     }
 
     /**
@@ -109,9 +122,24 @@ class DebugEngine extends CacheEngine
      * @param string $metric The metric to increment.
      * @return void
      */
-    protected function _track($metric)
+    protected function track($metric)
     {
-        $this->_metrics[$metric]++;
+        $this->metrics[$metric]++;
+    }
+
+    /**
+     * Log a cache operation
+     *
+     * @param string $operation The operation performed.
+     * @param float $duration The duration of the operation.
+     * @param string|null $key The cache key.
+     * @return void
+     */
+    protected function log(string $operation, float $duration, ?string $key = null): void
+    {
+        $key = $key ? " `{$key}`" : '';
+        $duration = number_format($duration, 5);
+        $this->logger->log('info', ":{$this->name}: {$operation}{$key} - {$duration}ms");
     }
 
     /**
@@ -119,10 +147,12 @@ class DebugEngine extends CacheEngine
      */
     public function set($key, $value, $ttl = null): bool
     {
-        $this->_track('set');
-        DebugTimer::start('Cache.set ' . $key);
+        $start = microtime(true);
         $result = $this->_engine->set($key, $value, $ttl);
-        DebugTimer::stop('Cache.set ' . $key);
+        $duration = microtime(true) - $start;
+
+        $this->track('set');
+        $this->log('set', $duration, $key);
 
         return $result;
     }
@@ -132,10 +162,12 @@ class DebugEngine extends CacheEngine
      */
     public function setMultiple($data, $ttl = null): bool
     {
-        $this->_track('set');
-        DebugTimer::start('Cache.setMultiple');
+        $start = microtime(true);
         $result = $this->_engine->setMultiple($data);
-        DebugTimer::stop('Cache.setMultiple');
+        $duration = microtime(true) - $start;
+
+        $this->track('set');
+        $this->log('setMultiple', $duration);
 
         return $result;
     }
@@ -145,15 +177,16 @@ class DebugEngine extends CacheEngine
      */
     public function get($key, $default = null)
     {
-        $this->_track('get');
-        DebugTimer::start('Cache.get ' . $key);
+        $start = microtime(true);
         $result = $this->_engine->get($key, $default);
-        DebugTimer::stop('Cache.get ' . $key);
+        $duration = microtime(true) - $start;
         $metric = 'hit';
-        if ($result === false) {
+        if ($result === null) {
             $metric = 'miss';
         }
-        $this->_track($metric);
+
+        $this->track("get {$metric}");
+        $this->log('get', $duration, $key);
 
         return $result;
     }
@@ -163,10 +196,12 @@ class DebugEngine extends CacheEngine
      */
     public function getMultiple($keys, $default = null): iterable
     {
-        $this->_track('get');
-        DebugTimer::start('Cache.getMultiple');
+        $start = microtime(true);
         $result = $this->_engine->getMultiple($keys);
-        DebugTimer::stop('Cache.getMultiple');
+        $duration = microtime(true) - $start;
+
+        $this->track('get hit');
+        $this->log('getMultiple', $duration);
 
         return $result;
     }
@@ -176,10 +211,12 @@ class DebugEngine extends CacheEngine
      */
     public function increment(string $key, int $offset = 1)
     {
-        $this->_track('set');
-        DebugTimer::start('Cache.increment ' . $key);
+        $start = microtime(true);
         $result = $this->_engine->increment($key, $offset);
-        DebugTimer::stop('Cache.increment ' . $key);
+        $duration = microtime(true) - $start;
+
+        $this->track('set');
+        $this->log('increment', $duration, $key);
 
         return $result;
     }
@@ -189,10 +226,12 @@ class DebugEngine extends CacheEngine
      */
     public function decrement(string $key, int $offset = 1)
     {
-        $this->_track('set');
-        DebugTimer::start('Cache.decrement ' . $key);
+        $start = microtime(true);
         $result = $this->_engine->decrement($key, $offset);
-        DebugTimer::stop('Cache.decrement ' . $key);
+        $duration = microtime(true) - $start;
+
+        $this->track('set');
+        $this->log('decrement', $duration, $key);
 
         return $result;
     }
@@ -202,10 +241,12 @@ class DebugEngine extends CacheEngine
      */
     public function delete($key): bool
     {
-        $this->_track('delete');
-        DebugTimer::start('Cache.delete ' . $key);
+        $start = microtime(true);
         $result = $this->_engine->delete($key);
-        DebugTimer::stop('Cache.delete ' . $key);
+        $duration = microtime(true) - $start;
+
+        $this->track('delete');
+        $this->log('delete', $duration, $key);
 
         return $result;
     }
@@ -215,10 +256,12 @@ class DebugEngine extends CacheEngine
      */
     public function deleteMultiple($data): bool
     {
-        $this->_track('delete');
-        DebugTimer::start('Cache.deleteMultiple');
+        $start = microtime(true);
         $result = $this->_engine->deleteMultiple($data);
-        DebugTimer::stop('Cache.deleteMultiple');
+        $duration = microtime(true) - $start;
+
+        $this->track('delete');
+        $this->log('deleteMultiple', $duration);
 
         return $result;
     }
@@ -228,10 +271,12 @@ class DebugEngine extends CacheEngine
      */
     public function clear(): bool
     {
-        $this->_track('delete');
-        DebugTimer::start('Cache.clear');
+        $start = microtime(true);
         $result = $this->_engine->clear();
-        DebugTimer::stop('Cache.clear');
+        $duration = microtime(true) - $start;
+
+        $this->track('delete');
+        $this->log('clear', $duration);
 
         return $result;
     }
@@ -275,10 +320,12 @@ class DebugEngine extends CacheEngine
      */
     public function clearGroup(string $group): bool
     {
-        $this->_track('delete');
-        DebugTimer::start('Cache.clearGroup ' . $group);
+        $start = microtime(true);
         $result = $this->_engine->clearGroup($group);
-        DebugTimer::stop('Cache.clearGroup ' . $group);
+        $duration = microtime(true) - $start;
+
+        $this->track('delete');
+        $this->log('clearGroup', $duration, $group);
 
         return $result;
     }

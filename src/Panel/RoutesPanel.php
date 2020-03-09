@@ -51,9 +51,9 @@ class RoutesPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
+        /* @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
-        /* @var \Cake\Http\ServerRequest $request */
-        $request = $controller ? $controller->request : null;
+        $request = $controller ? $controller->getRequest() : null;
         $this->_data = [
             'matchedRoute' => $request ? $request->getParam('_matchedRoute') : null,
         ];

@@ -32,7 +32,7 @@ class RequestPanel extends DebugPanel
     {
         /* @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
-        $request = $controller->request;
+        $request = $controller->getRequest();
         $this->_data = [
             'params' => $request->getAttribute("params"),
             'query' => $request->getQueryParams(),

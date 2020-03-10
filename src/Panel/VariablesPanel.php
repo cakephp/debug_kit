@@ -89,6 +89,7 @@ class VariablesPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
+        /* @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
         $errors = [];
 
@@ -145,7 +146,7 @@ class VariablesPanel extends DebugPanel
             if ($v instanceof EntityInterface) {
                 $errors[$k] = $this->_getErrors($v);
             } elseif ($v instanceof Form) {
-                $formError = $v->errors();
+                $formError = $v->getErrors();
                 if (!empty($formError)) {
                     $errors[$k] = $formError;
                 }

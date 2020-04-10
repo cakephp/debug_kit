@@ -31,7 +31,6 @@ use SimpleXMLElement;
 
 /**
  * Provides debug information on the View variables.
- *
  */
 class VariablesPanel extends DebugPanel
 {
@@ -39,7 +38,6 @@ class VariablesPanel extends DebugPanel
      * Extracts nested validation errors
      *
      * @param \Cake\Datasource\EntityInterface $entity Entity to extract
-     *
      * @return array
      */
     protected function _getErrors(EntityInterface $entity)
@@ -68,7 +66,6 @@ class VariablesPanel extends DebugPanel
      *
      * @param callable $walker The walker to apply on the debug info array.
      * @param object $item The item whose debug info to retrieve.
-     *
      * @return array|string
      */
     protected function _walkDebugInfo(callable $walker, $item)

@@ -20,7 +20,6 @@ use DebugKit\Panel\IncludePanel;
 
 /**
  * Class IncludePanelTest
- *
  */
 class IncludePanelTest extends TestCase
 {

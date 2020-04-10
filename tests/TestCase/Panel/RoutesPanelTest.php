@@ -21,7 +21,6 @@ use DebugKit\Panel\RoutesPanel;
 
 /**
  * Class RoutesPanelTest
- *
  */
 class RoutesPanelTest extends TestCase
 {

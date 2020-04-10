@@ -22,7 +22,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Class PluginTestPanel
- *
  */
 
 class PluginTestPanel extends DebugPanel

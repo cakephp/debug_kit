@@ -26,7 +26,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 class ComposerController extends DebugKitController
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(): void
     {

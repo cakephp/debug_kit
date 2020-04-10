@@ -19,7 +19,6 @@ use DebugKit\DebugInclude;
 
 /**
  * Class DebugInclude test
- *
  */
 class DebugIncludeTest extends TestCase
 {

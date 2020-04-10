@@ -19,7 +19,6 @@ use Cake\Error\Debugger;
 
 /**
  * Contains methods for Profiling and creating timers.
- *
  */
 class DebugTimer
 {

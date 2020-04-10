@@ -21,7 +21,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Provides a list of deprecated methods for the current request
- *
  */
 class DeprecationsPanel extends DebugPanel
 {

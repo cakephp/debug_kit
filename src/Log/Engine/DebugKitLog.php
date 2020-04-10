@@ -18,7 +18,6 @@ use Cake\Log\Engine\BaseLog;
 
 /**
  * A CakeLog listener which saves having to munge files or other configured loggers.
- *
  */
 class DebugKitLog extends BaseLog
 {

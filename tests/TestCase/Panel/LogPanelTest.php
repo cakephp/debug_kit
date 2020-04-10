@@ -21,7 +21,6 @@ use DebugKit\Panel\LogPanel;
 
 /**
  * Class LogPanelTest
- *
  */
 class LogPanelTest extends TestCase
 {

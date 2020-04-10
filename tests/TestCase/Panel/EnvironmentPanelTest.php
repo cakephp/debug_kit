@@ -20,7 +20,6 @@ use DebugKit\Panel\EnvironmentPanel;
 
 /**
  * Class EnvironmentPanelTest
- *
  */
 class EnvironmentPanelTest extends TestCase
 {

@@ -11,7 +11,6 @@ declare(strict_types=1);
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- *
  */
 namespace DebugKit\Cache\Engine;
 
@@ -143,7 +142,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function set($key, $value, $ttl = null): bool
     {
@@ -158,7 +157,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function setMultiple($data, $ttl = null): bool
     {
@@ -173,7 +172,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function get($key, $default = null)
     {
@@ -192,7 +191,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getMultiple($keys, $default = null): iterable
     {
@@ -207,7 +206,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function increment(string $key, int $offset = 1)
     {
@@ -222,7 +221,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function decrement(string $key, int $offset = 1)
     {
@@ -237,7 +236,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function delete($key): bool
     {
@@ -252,7 +251,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function deleteMultiple($data): bool
     {
@@ -267,7 +266,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function clear(): bool
     {
@@ -282,7 +281,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function groups(): array
     {
@@ -316,7 +315,7 @@ class DebugEngine extends CacheEngine
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function clearGroup(string $group): bool
     {

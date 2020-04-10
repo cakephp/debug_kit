@@ -20,7 +20,6 @@ use DebugKit\Panel\PackagesPanel;
 
 /**
  * Class PackagesPanelTest
- *
  */
 class PackagesPanelTest extends TestCase
 {
@@ -42,6 +41,7 @@ class PackagesPanelTest extends TestCase
 
     /**
      * Packages view variables provider
+     *
      * @return array
      */
     public function packagesProvider()

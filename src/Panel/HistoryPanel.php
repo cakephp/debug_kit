@@ -19,7 +19,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on previous requests.
- *
  */
 class HistoryPanel extends DebugPanel
 {

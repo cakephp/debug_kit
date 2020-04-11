@@ -20,7 +20,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Packages Panel - Reads all installed packages in the project.
- *
  */
 class PackagesPanel extends DebugPanel
 {

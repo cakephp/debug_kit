@@ -24,7 +24,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on the SQL logs and provides links to an ajax explain interface.
- *
  */
 class SqlLogPanel extends DebugPanel
 {

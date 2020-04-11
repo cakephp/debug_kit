@@ -19,7 +19,6 @@ use DebugKit\DebugMemory;
 
 /**
  * Class DebugMemoryTest
- *
  */
 class DebugMemoryTest extends TestCase
 {

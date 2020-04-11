@@ -19,7 +19,6 @@ use Composer\Json\JsonFile;
 
 /**
  * Contains methods for Providing list of files.
- *
  */
 class DebugInclude
 {

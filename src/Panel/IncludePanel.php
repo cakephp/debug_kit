@@ -21,7 +21,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Provides a list of included files for the current request
- *
  */
 class IncludePanel extends DebugPanel
 {

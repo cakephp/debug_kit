@@ -16,7 +16,6 @@ namespace DebugKit\Mailer;
 
 /**
  * Represents the result of an already sent email
- *
  */
 class SentMailResult extends AbstractResult
 {

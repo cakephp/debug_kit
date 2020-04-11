@@ -19,7 +19,6 @@ use DebugKit\DebugPanel;
 
 /**
  * Provides debug information on the Current request params.
- *
  */
 class RequestPanel extends DebugPanel
 {

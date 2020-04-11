@@ -23,7 +23,6 @@ use DebugKit\TestApp\Form\TestForm;
 
 /**
  * Class VariablesPanelTest
- *
  */
 class VariablesPanelTest extends TestCase
 {

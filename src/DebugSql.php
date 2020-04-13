@@ -76,6 +76,7 @@ TEXT;
             $sql = static::interpolate($sql, $query->getValueBinder()->bindings());
         }
 
+        /** @var array $trace */
         $trace = Debugger::trace(['start' => 1, 'depth' => $stackDepth + 2, 'format' => 'array']);
         $file = isset($trace[$stackDepth]) ? $trace[$stackDepth]['file'] : 'n/a';
         $line = isset($trace[$stackDepth]) ? $trace[$stackDepth]['line'] : 0;

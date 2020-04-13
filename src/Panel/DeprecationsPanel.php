@@ -138,7 +138,7 @@ class DeprecationsPanel extends DebugPanel
             $data = $this->_prepare();
         }
 
-        return array_reduce($data, function ($carry, $item) {
+        return (string)array_reduce($data, function ($carry, $item) {
             if (empty($item)) {
                 return $carry;
             }

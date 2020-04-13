@@ -211,6 +211,6 @@ class DebugTimer
             $startTime = env('REQUEST_TIME');
         }
 
-        return $startTime;
+        return (float)$startTime;
     }
 }

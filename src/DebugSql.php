@@ -77,7 +77,9 @@ TEXT;
         }
 
         $trace = Debugger::trace(['start' => 1, 'depth' => $stackDepth + 2, 'format' => 'array']);
+        /** @psalm-suppress PossiblyInvalidArrayOffset */
         $file = isset($trace[$stackDepth]) ? $trace[$stackDepth]['file'] : 'n/a';
+        /** @psalm-suppress PossiblyInvalidArrayOffset */
         $line = isset($trace[$stackDepth]) ? $trace[$stackDepth]['line'] : 0;
         $lineInfo = '';
         if ($file) {

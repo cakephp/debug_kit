@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -42,11 +44,11 @@ if (!function_exists('sql')) {
      * This function returns the same variable that was passed.
      * Only runs if debug mode is enabled.
      *
-     * @param Query $query Query to show SQL statements for.
+     * @param \Cake\Database\Query $query Query to show SQL statements for.
      * @param bool $showValues Renders the SQL statement with bound variables.
      * @param bool|null $showHtml If set to true, the method prints the debug
      *    data in a browser-friendly way.
-     * @return Query
+     * @return \Cake\Database\Query
      */
     function sql(Query $query, $showValues = true, $showHtml = null)
     {
@@ -61,7 +63,7 @@ if (!function_exists('sqld')) {
      * Only runs if debug mode is enabled.
      * It will otherwise just continue code execution and ignore this function.
      *
-     * @param Query $query Query to show SQL statements for.
+     * @param \Cake\Database\Query $query Query to show SQL statements for.
      * @param bool $showValues Renders the SQL statement with bound variables.
      * @param bool|null $showHtml If set to true, the method prints the debug
      *    data in a browser-friendly way.

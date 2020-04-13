@@ -33,7 +33,7 @@ class TimerPanel extends DebugPanel
     {
         $before = function ($name) {
             return function () use ($name) {
-                DebugTimer::start($name, $name);
+                DebugTimer::start($name);
             };
         };
         $after = function ($name) {
@@ -72,7 +72,7 @@ class TimerPanel extends DebugPanel
                 ['priority' => 999, 'callable' => $after('Event: Controller.beforeRender')],
                 ['priority' => 999, 'callable' => function () {
                     DebugMemory::record('View Render start');
-                    DebugTimer::start('debug_kit', 'View: Render');
+                    DebugTimer::start('View: Render');
                 }],
             ],
             'View.beforeRender' => $both('View.beforeRender'),

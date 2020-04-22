@@ -82,7 +82,7 @@ class RequestsTable extends Table
      */
     protected function shouldGc()
     {
-        return time() % 100 === 0;
+        return rand(1, 100) === 100;
     }
 
     /**

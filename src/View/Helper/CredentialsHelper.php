@@ -58,7 +58,7 @@ class CredentialsHelper extends Helper
         $link = $this->Html->tag('a', '******', [
             'class' => 'filtered-credentials',
             'title' => h($credentials),
-            'onclick' => "this.innerHTML = this.title",
+            'onclick' => 'this.innerHTML = this.title',
         ]);
 
         return h($protocol) . $link . '@' . h($tail);

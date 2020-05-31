@@ -145,7 +145,7 @@ class ToolbarService
             Log::warning(
                 "DebugKit is disabling itself as your host `{$host}` " .
                 "is not in the known safe list of top-level-domains ({$safeList}). " .
-                "If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option."
+                'If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option.'
             );
 
             return true;

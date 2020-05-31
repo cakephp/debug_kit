@@ -22,6 +22,7 @@ use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
+use PDOException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -207,7 +208,7 @@ class ToolbarService
      *
      * @param \Cake\Http\ServerRequest $request The request
      * @param \Psr\Http\Message\ResponseInterface $response The response
-     * @return null|\DebugKit\Model\Entity\Request Saved request data.
+     * @return false|\DebugKit\Model\Entity\Request Saved request data.
      */
     public function saveData(ServerRequest $request, ResponseInterface $response)
     {
@@ -218,7 +219,7 @@ class ToolbarService
             strpos($path, 'debug-kit') !== false ||
             $request->is('requested')
         ) {
-            return null;
+            return false;
         }
         $data = [
             'url' => $request->getUri()->getPath(),
@@ -253,7 +254,14 @@ class ToolbarService
             ]);
         }
 
-        return $requests->save($row);
+        try {
+            return $requests->save($row);
+        } catch (PDOException $e) {
+            Log::warning('Unable to save request. This is probably due to concurrent requests.');
+            Log::warning((string)$e);
+        }
+
+        return false;
     }
 
     /**

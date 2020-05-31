@@ -141,7 +141,7 @@ class ToolbarServiceTest extends TestCase
         ]);
 
         $bar = new ToolbarService($this->events, []);
-        $this->assertNull($bar->saveData($request, $response));
+        $this->assertFalse($bar->saveData($request, $response));
     }
 
     /**
@@ -162,7 +162,7 @@ class ToolbarServiceTest extends TestCase
         ]);
 
         $bar = new ToolbarService($this->events, []);
-        $this->assertNull($bar->saveData($request, $response));
+        $this->assertFalse($bar->saveData($request, $response));
     }
 
     /**

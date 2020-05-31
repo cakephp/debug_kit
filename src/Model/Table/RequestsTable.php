@@ -16,8 +16,10 @@ namespace DebugKit\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
+use Cake\Log\Log;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use PDOException;
 
 /**
  * The requests table tracks basic information about each request.
@@ -100,30 +102,36 @@ class RequestsTable extends Table
         if (!$this->shouldGc()) {
             return;
         }
-        $noPurge = $this->find()
-            ->select(['id'])
-            ->enableHydration(false)
-            ->order(['requested_at' => 'desc'])
-            ->limit(Configure::read('DebugKit.requestCount') ?: 20)
-            ->extract('id')
-            ->toArray();
 
-        $query = $this->Panels->query()
-            ->delete()
-            ->where(['request_id NOT IN' => $noPurge]);
-        $statement = $query->execute();
-        $statement->closeCursor();
+        try {
+            $noPurge = $this->find()
+                ->select(['id'])
+                ->enableHydration(false)
+                ->order(['requested_at' => 'desc'])
+                ->limit(Configure::read('DebugKit.requestCount') ?: 20)
+                ->extract('id')
+                ->toArray();
 
-        $query = $this->query()
-            ->delete()
-            ->where(['id NOT IN' => $noPurge]);
+            $query = $this->Panels->query()
+                ->delete()
+                ->where(['request_id NOT IN' => $noPurge]);
+            $statement = $query->execute();
+            $statement->closeCursor();
 
-        $statement = $query->execute();
-        $statement->closeCursor();
+            $query = $this->query()
+                ->delete()
+                ->where(['id NOT IN' => $noPurge]);
 
-        $conn = $this->getConnection();
-        if ($conn->getDriver() instanceof Sqlite) {
-            $conn->execute('VACUUM;');
+            $statement = $query->execute();
+            $statement->closeCursor();
+
+            $conn = $this->getConnection();
+            if ($conn->getDriver() instanceof Sqlite) {
+                $conn->execute('VACUUM;');
+            }
+        } catch (PDOException $e) {
+            Log::warning('Unable to garbage collect requests table. This is probably due to concurrent requests.');
+            Log::warning((string)$e);
         }
     }
 }

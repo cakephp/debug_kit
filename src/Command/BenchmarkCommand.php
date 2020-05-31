@@ -55,7 +55,7 @@ class BenchmarkCommand extends Command
         $times = [];
 
         $io->out(Text::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
-        $io->out("");
+        $io->out('');
         for ($i = 0; $i < $options['n']; $i++) {
             if (floor($options['t'] - array_sum($times)) <= 0 || $options['n'] <= 1) {
                 break;
@@ -86,7 +86,7 @@ class BenchmarkCommand extends Command
         $this->io->out(Text::insert(__d('debug_kit', 'Total Requests made: :requests'), compact('requests')));
         $this->io->out(Text::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)'), compact('duration')));
 
-        $this->io->out("");
+        $this->io->out('');
 
         $this->io->out(Text::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
                 'rps' => round($requests / $duration, 3),
@@ -105,7 +105,7 @@ class BenchmarkCommand extends Command
                 'shortest' => round(min($times), 3),
         ]));
 
-        $this->io->out("");
+        $this->io->out('');
     }
 
     /**

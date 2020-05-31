@@ -73,7 +73,7 @@ class SimpleGraphHelper extends Helper
             '<div class="graph-bar" style="%s"><div class="graph-bar-value" style="%s" title="%s"> </div></div>',
             "width: {$width}px",
             "margin-left: {$graphOffset}px; width: {$graphValue}px",
-            __d('debug_kit', "Starting {0}ms into the request, taking {1}ms", $offset, $value)
+            __d('debug_kit', 'Starting {0}ms into the request, taking {1}ms', $offset, $value)
         );
     }
 }

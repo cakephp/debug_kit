@@ -46,9 +46,9 @@ class DebugKitController extends Controller
                 $authorizationService->skipAuthorization();
             } else {
                 Log::info(
-                    "Cake Authorization plugin is enabled. If you would like " .
-                    "to force DebugKit to ignore it, set `DebugKit.ignoreAuthorization` " .
-                    " Configure option to true."
+                    'Cake Authorization plugin is enabled. If you would like ' .
+                    'to force DebugKit to ignore it, set `DebugKit.ignoreAuthorization` ' .
+                    ' Configure option to true.'
                 );
             }
         }

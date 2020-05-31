@@ -52,15 +52,11 @@
         "ext-pdo_sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
     },
     "scripts": {
-        "cs-check": [
-          "phpcs --colors --parallel=16 -p src/ tests/"
-        ],
-        "cs-fix": [
-          "phpcbf --colors --parallel=16 -p src/ tests/"
-        ],
-        "test": [
-          "phpunit"
-        ]
+        "cs-check": "phpcs --colors --parallel=16 -p src/ tests/",
+        "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
+        "test": "phpunit",
+        "psalm": "psalm.phar --show-info=false",
+        "psalm-setup": "cp composer.json composer.backup && composer require --dev psalm/phar:^3.11 && mv composer.backup composer.json"
     },
     "prefer-stable": true
 }

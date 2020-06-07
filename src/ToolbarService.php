@@ -19,7 +19,7 @@ use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
 use PDOException;
@@ -34,6 +34,7 @@ use Psr\Http\Message\ResponseInterface;
 class ToolbarService
 {
     use InstanceConfigTrait;
+    use LocatorAwareTrait;
 
     /**
      * The panel registry.
@@ -230,7 +231,7 @@ class ToolbarService
             'panels' => [],
         ];
         /** @var \DebugKit\Model\Table\RequestsTable $requests */
-        $requests = TableRegistry::getTableLocator()->get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $requests->gc();
 
         $row = $requests->newEntity($data);

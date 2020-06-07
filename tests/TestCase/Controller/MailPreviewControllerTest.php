@@ -15,7 +15,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 use DebugKit\TestApp\Application;
@@ -106,7 +105,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testSentValidData()
     {
-        $panels = TableRegistry::get('Panels');
+        $panels = $this->getTableLocator()->get('Panels');
         $panel = $panels->newEntity(['request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']);
         $data = [
             'emails' => [
@@ -132,7 +131,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testSentValidDataRenderPart()
     {
-        $panels = TableRegistry::get('Panels');
+        $panels = $this->getTableLocator()->get('Panels');
         $panel = $panels->newEntity(['request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']);
         $data = [
             'emails' => [

@@ -18,7 +18,6 @@ namespace DebugKit\Test\TestCase\Model\Table;
 use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
 use Cake\Datasource\ConnectionManager;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -54,8 +53,8 @@ class RequestTableTest extends TestCase
         $stmt = $connection->execute('DROP TABLE IF EXISTS requests');
         $stmt->closeCursor();
 
-        TableRegistry::get('DebugKit.Requests');
-        TableRegistry::get('DebugKit.Panels');
+        $this->getTableLocator()->get('DebugKit.Requests');
+        $this->getTableLocator()->get('DebugKit.Panels');
 
         $schema = $connection->getSchemaCollection();
         $this->assertContains('requests', $schema->listTables());
@@ -69,7 +68,7 @@ class RequestTableTest extends TestCase
      */
     public function testFindRecent()
     {
-        $table = TableRegistry::get('DebugKit.Requests');
+        $table = $this->getTableLocator()->get('DebugKit.Requests');
         $query = $table->find('recent');
         $this->assertSame(10, $query->clause('limit'));
         $this->assertNotEmpty($query->clause('order'));

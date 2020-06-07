@@ -22,7 +22,6 @@ use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest as Request;
 use Cake\Log\Log;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
 use DebugKit\ToolbarService;
@@ -187,7 +186,7 @@ class ToolbarServiceTest extends TestCase
         $row = $bar->saveData($request, $response);
         $this->assertNotEmpty($row);
 
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $result = $requests->find()
             ->order(['Requests.requested_at' => 'DESC'])
             ->contain('Panels')

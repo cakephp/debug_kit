@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\View\ViewVarsTrait;
 use DebugKit\Panel\VariablesPanel;
@@ -62,7 +61,7 @@ class VariablesPanelTest extends TestCase
      */
     public function testShutdown()
     {
-        $requests = TableRegistry::get('Requests');
+        $requests = $this->getTableLocator()->get('Requests');
         $query = $requests->find('all');
         $result = $requests->find()->all();
         $unbufferedQuery = $requests->find('all')->enableBufferedResults(false);

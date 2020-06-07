@@ -21,7 +21,6 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Http\CallbackStream;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Middleware\DebugKitMiddleware;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -102,7 +101,7 @@ class DebugKitMiddlewareTest extends TestCase
         $response = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $response, 'Should return the response');
 
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $result = $requests->find()
             ->order(['Requests.requested_at' => 'DESC'])
             ->contain('Panels')
@@ -160,7 +159,7 @@ class DebugKitMiddlewareTest extends TestCase
         $result = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $result, 'Should return a response');
 
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
         $this->assertSame(1, $total, 'Should track response');
@@ -194,7 +193,7 @@ class DebugKitMiddlewareTest extends TestCase
         $result = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $result, 'Should return a response');
 
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
         $this->assertEquals(1, $total, 'Should track response');

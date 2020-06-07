@@ -16,7 +16,6 @@ namespace DebugKit\Test\TestCase;
 
 use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugSql;
 
@@ -98,6 +97,6 @@ EXPECTED;
      */
     private function newQuery()
     {
-        return TableRegistry::get('panels')->query();
+        return $this->getTableLocator()->get('panels')->query();
     }
 }

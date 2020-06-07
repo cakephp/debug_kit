@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use DebugKit\DebugPanel;
 
 /**
@@ -22,6 +22,8 @@ use DebugKit\DebugPanel;
  */
 class HistoryPanel extends DebugPanel
 {
+    use LocatorAwareTrait;
+
     /**
      * Get the data for the panel.
      *
@@ -29,7 +31,7 @@ class HistoryPanel extends DebugPanel
      */
     public function data()
     {
-        $table = TableRegistry::getTableLocator()->get('DebugKit.Requests');
+        $table = $this->getTableLocator()->get('DebugKit.Requests');
         $recent = $table->find('recent');
 
         return [

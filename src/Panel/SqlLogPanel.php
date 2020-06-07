@@ -17,8 +17,8 @@ namespace DebugKit\Panel;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionInterface;
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use DebugKit\Database\Log\DebugLog;
 use DebugKit\DebugPanel;
 
@@ -27,6 +27,8 @@ use DebugKit\DebugPanel;
  */
 class SqlLogPanel extends DebugPanel
 {
+    use LocatorAwareTrait;
+
     /**
      * Loggers connected
      *
@@ -84,7 +86,7 @@ class SqlLogPanel extends DebugPanel
         return [
             'tables' => array_map(function (Table $table) {
                 return $table->getAlias();
-            }, TableRegistry::getTableLocator()->genericInstances()),
+            }, $this->getTableLocator()->genericInstances()),
             'loggers' => $this->_loggers,
         ];
     }

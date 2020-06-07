@@ -16,7 +16,6 @@ namespace DebugKit\Test\TestCase\Panel;
 
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\SqlLogPanel;
 use ReflectionProperty;
@@ -106,7 +105,7 @@ class SqlLogPanelTest extends TestCase
         $this->panel->initialize();
 
         /** @var Table $articles */
-        $articles = TableRegistry::get('Articles');
+        $articles = $this->getTableLocator()->get('Articles');
         $articles->findById(1)->first();
 
         $result = $this->panel->data();
@@ -123,7 +122,7 @@ class SqlLogPanelTest extends TestCase
         $this->panel->initialize();
 
         /** @var Table $articles */
-        $articles = TableRegistry::get('Articles');
+        $articles = $this->getTableLocator()->get('Articles');
         $articles->findById(1)->first();
 
         $result = $this->panel->summary();

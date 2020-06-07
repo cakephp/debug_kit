@@ -15,7 +15,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Model\Behavior;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugTimer;
 
@@ -44,7 +43,7 @@ class TimedBehaviorTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Article = TableRegistry::get('Articles');
+        $this->Article = $this->getTableLocator()->get('Articles');
         $this->Article->addBehavior('DebugKit.Timed');
     }
 

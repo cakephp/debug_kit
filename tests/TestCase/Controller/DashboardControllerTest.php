@@ -15,7 +15,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 use DebugKit\TestApp\Application;
 
@@ -43,7 +42,7 @@ class DashboardControllerTest extends IntegrationTestCase
 
     public function testIndexNoRequests()
     {
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $requests->Panels->deleteAll('1=1');
         $requests->deleteAll('1=1');
 
@@ -56,7 +55,7 @@ class DashboardControllerTest extends IntegrationTestCase
 
     public function testIndexWithRequests()
     {
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $request = $requests->newEntity(['url' => '/example']);
         $requests->save($request);
 
@@ -69,7 +68,7 @@ class DashboardControllerTest extends IntegrationTestCase
 
     public function testReset()
     {
-        $requests = TableRegistry::get('DebugKit.Requests');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $this->assertGreaterThan(0, $requests->find()->count(), 'precondition failed');
 
         $this->post('/debug-kit/dashboard/reset');

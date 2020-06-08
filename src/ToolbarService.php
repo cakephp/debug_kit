@@ -67,6 +67,7 @@ class ToolbarService
         ],
         'forceEnable' => false,
         'safeTld' => [],
+        'ignorePaths' => null,
     ];
 
     /**
@@ -213,15 +214,23 @@ class ToolbarService
      */
     public function saveData(ServerRequest $request, ResponseInterface $response)
     {
-        // Skip debugkit requests and requestAction()
+        $ignorePaths = $this->getConfig('ignorePaths');
         $path = $request->getUri()->getPath();
+        $statusCode = $response->getStatusCode();
+
         if (
             strpos($path, 'debug_kit') !== false ||
             strpos($path, 'debug-kit') !== false ||
-            $request->is('requested')
+            (
+                $ignorePaths &&
+                $statusCode >= 200 &&
+                $statusCode <= 299 &&
+                preg_match($ignorePaths, $path)
+            )
         ) {
             return false;
         }
+
         $data = [
             'url' => $request->getUri()->getPath(),
             'content_type' => $response->getHeaderLine('Content-Type'),

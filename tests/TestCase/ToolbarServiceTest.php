@@ -165,7 +165,7 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
-     * Test that saveData ignores path which match "ignorePaths" regex.
+     * Test that saveData ignores path that matches "ignorePaths" regex.
      *
      * @return void
      */

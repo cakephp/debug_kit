@@ -50,11 +50,11 @@ Configuration
     // Before loading DebugKit
     Configure::write('DebugKit.forceEnable', true);
 
-* ``DebugKit.ignorePaths`` - Regex pattern (including delimiter) to ignore paths.
+* ``DebugKit.ignorePathsPattern`` - Regex pattern (including delimiter) to ignore paths.
    DebugKit won't save data for request URLs that match this regex. Defaults to ``null``::
 
     // Ignore image paths
-    Configure::write('DebugKit.ignorePaths', '/\.(jpg|png|gif)$/');
+    Configure::write('DebugKit.ignorePathsPattern', '/\.(jpg|png|gif)$/');
 
 * ``DebugKit.ignoreAuthorization`` - Set to true to ignore Cake Authorization plugin for DebugKit requests. Disabled by default.
 

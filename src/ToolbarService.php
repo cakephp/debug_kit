@@ -67,7 +67,7 @@ class ToolbarService
         ],
         'forceEnable' => false,
         'safeTld' => [],
-        'ignorePaths' => null,
+        'ignorePathsPattern' => null,
     ];
 
     /**
@@ -214,7 +214,7 @@ class ToolbarService
      */
     public function saveData(ServerRequest $request, ResponseInterface $response)
     {
-        $ignorePaths = $this->getConfig('ignorePaths');
+        $ignorePathsPattern = $this->getConfig('ignorePathsPattern');
         $path = $request->getUri()->getPath();
         $statusCode = $response->getStatusCode();
 
@@ -222,10 +222,10 @@ class ToolbarService
             strpos($path, 'debug_kit') !== false ||
             strpos($path, 'debug-kit') !== false ||
             (
-                $ignorePaths &&
+                $ignorePathsPattern &&
                 $statusCode >= 200 &&
                 $statusCode <= 299 &&
-                preg_match($ignorePaths, $path)
+                preg_match($ignorePathsPattern, $path)
             )
         ) {
             return false;

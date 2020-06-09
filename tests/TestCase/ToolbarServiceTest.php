@@ -181,7 +181,7 @@ class ToolbarServiceTest extends TestCase
             'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
-        $bar = new ToolbarService($this->events, ['ignorePaths' => '/\.(jpg|png|gif)$/']);
+        $bar = new ToolbarService($this->events, ['ignorePathsPattern' => '/\.(jpg|png|gif)$/']);
         $this->assertFalse($bar->saveData($request, $response));
 
         $request = new Request([
@@ -194,7 +194,7 @@ class ToolbarServiceTest extends TestCase
             'body' => '<html><title>test</title><body><p>some text</p></body>',
         ]);
 
-        $bar = new ToolbarService($this->events, ['ignorePaths' => '/\.(jpg|png|gif)$/']);
+        $bar = new ToolbarService($this->events, ['ignorePathsPattern' => '/\.(jpg|png|gif)$/']);
         $this->assertNotEmpty($bar->saveData($request, $response));
     }
 

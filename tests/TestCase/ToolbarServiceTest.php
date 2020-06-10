@@ -165,6 +165,40 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
+     * Test that saveData ignores path that matches "ignorePaths" regex.
+     *
+     * @return void
+     */
+    public function testSaveDataIgnorePaths()
+    {
+        $request = new Request([
+            'url' => '/foo.jpg',
+            'params' => [],
+        ]);
+        $response = new Response([
+            'status' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $bar = new ToolbarService($this->events, ['ignorePathsPattern' => '/\.(jpg|png|gif)$/']);
+        $this->assertFalse($bar->saveData($request, $response));
+
+        $request = new Request([
+            'url' => '/foo.jpg',
+            'params' => [],
+        ]);
+        $response = new Response([
+            'status' => 404,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $bar = new ToolbarService($this->events, ['ignorePathsPattern' => '/\.(jpg|png|gif)$/']);
+        $this->assertNotEmpty($bar->saveData($request, $response));
+    }
+
+    /**
      * Test that saveData works
      *
      * @return void

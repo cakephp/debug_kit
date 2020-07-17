@@ -121,7 +121,7 @@ class VariablesPanelTest extends TestCase
             $output['content']['unserializableDebugInfo']['unserializable']
         );
         $this->assertStringStartsWith(
-            'Could not retrieve debug info - Cake\ORM\Query. Error: The NonExistentAssociation association is not defined on Requests',
+            'Could not retrieve debug info - Cake\ORM\Query. Error: The `NonExistentAssociation` association is not defined on `Requests`',
             $output['content']['debugInfoException']
         );
         $this->assertInstanceOf(

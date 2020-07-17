@@ -38,5 +38,9 @@ script:
   - if [[ $CHECKS == 1 ]]; then vendor/bin/psalm.phar --show-info=false; fi
   - if [[ $CHECKS == 1 ]]; then vendor/bin/phpcs --colors --parallel=16 -p src/ tests/; fi
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 notifications:
   email: false

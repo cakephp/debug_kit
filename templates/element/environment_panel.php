@@ -39,7 +39,7 @@ use Cake\Error\Debugger;
         <?php foreach ($app as $key => $val): ?>
         <tr>
             <td><?= h($key) ?></td>
-            <td><?= h(Debugger::exportVar($val)) ?></td>
+            <td><?= Debugger::exportVar($val) ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
@@ -64,7 +64,7 @@ use Cake\Error\Debugger;
         <?php foreach ($cake as $key => $val): ?>
         <tr>
             <td><?= h($key) ?></td>
-            <td><?= h(Debugger::exportVar($val)) ?></td>
+            <td><?= Debugger::exportVar($val) ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
@@ -140,7 +140,7 @@ use Cake\Error\Debugger;
             <?php foreach ($hidef as $key => $val): ?>
             <tr>
                 <td><?= h($key) ?></td>
-                <td><?= h(Debugger::exportVar($val)) ?></td>
+                <td><?= Debugger::exportVar($val) ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>

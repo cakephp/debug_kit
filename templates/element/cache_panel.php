@@ -105,7 +105,7 @@ $(document).ready(function() {
         var messageEl = el.parent().find('.inline-message');
 
         var xhr = $.ajax({
-            headers: {'X-CSRF-TOKEN': '<?= $this->request->getParam('_csrfToken') ?>'},
+            headers: {'X-CSRF-TOKEN': '<?= $this->request->getAttribute('csrfToken') ?>'},
             url: baseUrl,
             data: {name: name},
             dataType: 'json',

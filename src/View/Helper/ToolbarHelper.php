@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace DebugKit\View\Helper;
 
 use ArrayAccess;
-use Cake\Error\Debugger;
 use Cake\Error\Debug\HtmlFormatter;
+use Cake\Error\Debugger;
 use Cake\View\Helper;
 use Closure;
 use Iterator;
@@ -76,6 +76,7 @@ class ToolbarHelper extends Helper
         if ($restore) {
             $debugger->setConfig('exportFormatter', $exportFormatter);
         }
+
         return implode([
             '<div class="cake-debug-output cake-debug" style="direction:ltr">',
             $contents,

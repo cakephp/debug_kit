@@ -32,14 +32,14 @@
 <?php endif; ?>
 
 <h4><?= __d('debug_kit', 'Routing Params') ?></h4>
-<?= $this->Toolbar->makeNeatArray($params) ?>
+<?= $this->Toolbar->dump($params) ?>
 
 <h4><?= __d('debug_kit', 'Post data') ?></h4>
 <?php
 if (empty($data)):
     echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
 else:
-    echo $this->Toolbar->makeNeatArray($data);
+    echo $this->Toolbar->dump($data);
 endif;
 ?>
 
@@ -48,18 +48,18 @@ endif;
 if (empty($query)):
     echo '<p class="info">' . __d('debug_kit', 'No querystring data.') . '</p>';
 else:
-    echo $this->Toolbar->makeNeatArray($query);
+    echo $this->Toolbar->dump($query);
 endif;
 ?>
 
 <h4>Cookie</h4>
 <?php if (isset($cookie)): ?>
-    <?= $this->Toolbar->makeNeatArray($cookie) ?>
+    <?= $this->Toolbar->dump($cookie) ?>
 <?php else: ?>
     <p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
 <?php endif; ?>
 
 <?php if (!empty($matchedRoute)): ?>
 <h4><?= __d('debug_kit', 'Matched Route') ?></h4>
-    <p><?= $this->Toolbar->makeNeatArray(['template' => $matchedRoute]) ?></p>
+    <p><?= $this->Toolbar->dump(['template' => $matchedRoute]) ?></p>
 <?php endif; ?>

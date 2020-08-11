@@ -17,4 +17,4 @@
  * @var array $content
  */
 ?>
-<?= $this->Toolbar->makeNeatArray($content);
+<?= $this->Toolbar->dump($content);

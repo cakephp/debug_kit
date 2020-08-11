@@ -28,7 +28,7 @@ if (!isset($cake) && isset($core)) {
 }
 ?>
 <h4><?= __d('debug_kit', 'Include Paths') ?></h4>
-<?= $this->Toolbar->makeNeatArray($paths) ?>
+<?= $this->Toolbar->dump($paths) ?>
 
 <h4><?= __d('debug_kit', 'Included Files') ?></h4>
-<?= $this->Toolbar->makeNeatArray(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>
+<?= $this->Toolbar->dump(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>

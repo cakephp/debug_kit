@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace DebugKit\View\Helper;
 
 use ArrayAccess;
+use Cake\Error\Debug\HtmlFormatter;
+use Cake\Error\Debugger;
 use Cake\View\Helper;
 use Closure;
 use Iterator;
@@ -56,6 +58,33 @@ class ToolbarHelper extends Helper
     }
 
     /**
+     * Dump the value in $value into an interactive HTML output.
+     *
+     * @param mixed $value The value to output.
+     * @return string Formatted HTML
+     */
+    public function dump($value)
+    {
+        $debugger = Debugger::getInstance();
+        $exportFormatter = $debugger->getConfig('exportFormatter');
+        $restore = false;
+        if ($exportFormatter !== HtmlFormatter::class) {
+            $restore = true;
+            $debugger->setConfig('exportFormatter', HtmlFormatter::class);
+        }
+        $contents = Debugger::exportVar($value, 25);
+        if ($restore) {
+            $debugger->setConfig('exportFormatter', $exportFormatter);
+        }
+
+        return implode([
+            '<div class="cake-debug-output cake-debug" style="direction:ltr">',
+            $contents,
+            '</div>',
+        ]);
+    }
+
+    /**
      * Recursively goes through an array and makes neat HTML out of it.
      *
      * @param mixed $values Array to make pretty.
@@ -65,6 +94,7 @@ class ToolbarHelper extends Helper
      * @param \SplObjectStorage $currentAncestors Object references found down
      * the path.
      * @return string
+     * @deprecated 4.4.0 Use ToolbarHelper::dump() instead.
      */
     public function makeNeatArray(
         $values,

@@ -149,6 +149,9 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/View/Helper/ToolbarHelper.php">
+    <DeprecatedMethod occurrences="1">
+      <code>makeNeatArray</code>
+    </DeprecatedMethod>
     <InvalidArgument occurrences="1">
       <code>$value</code>
     </InvalidArgument>

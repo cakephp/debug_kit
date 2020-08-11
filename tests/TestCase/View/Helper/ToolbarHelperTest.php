@@ -15,6 +15,8 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
+use Cake\Error\Debugger;
+use Cake\Error\Debug\TextFormatter;
 use Cake\Http\ServerRequest as Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
@@ -63,6 +65,21 @@ class ToolbarHelperTest extends TestCase
     {
         parent::tearDown();
         unset($this->Toolbar);
+    }
+
+    public function testDumpCoerceHtml()
+    {
+        $restore = Debugger::configInstance('exportFormatter');
+        Debugger::configInstance('exportFormatter', TextFormatter::class);
+        $result = $this->Toolbar->dump(false);
+        $this->assertRegExp('/<\w/', $result, 'Contains HTML tags.');
+        $this->assertSame(
+            TextFormatter::class, 
+            Debugger::configInstance('exportFormatter'),
+            'Should restore setting'
+        );
+        // Restore back to original value.
+        Debugger::configInstance('exportFormatter', $restore);
     }
 
     /**

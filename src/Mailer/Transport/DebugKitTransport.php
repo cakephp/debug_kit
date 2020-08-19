@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DebugKit\Mailer\Transport;
 
+use ArrayObject;
 use Cake\Core\App;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Message;
@@ -36,7 +37,7 @@ class DebugKitTransport extends AbstractTransport
      */
     public function __construct($config = [], ?AbstractTransport $originalTransport = null)
     {
-        $this->emailLog = $config['debugKitLog'];
+        $this->emailLog = $config['debugKitLog'] ?? new ArrayObject();
 
         if ($originalTransport !== null) {
             $this->originalTransport = $originalTransport;

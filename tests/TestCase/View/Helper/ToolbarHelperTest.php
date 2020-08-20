@@ -22,8 +22,8 @@ use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DebugKit\View\Helper\ToolbarHelper;
-use stdClass;
 use SimpleXmlElement;
+use stdClass;
 
 /**
  * Class ToolbarHelperTestCase

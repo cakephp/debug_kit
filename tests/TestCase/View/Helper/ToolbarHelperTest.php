@@ -23,6 +23,7 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DebugKit\View\Helper\ToolbarHelper;
 use stdClass;
+use SimpleXmlElement;
 
 /**
  * Class ToolbarHelperTestCase
@@ -78,8 +79,28 @@ class ToolbarHelperTest extends TestCase
             Debugger::configInstance('exportFormatter'),
             'Should restore setting'
         );
+
         // Restore back to original value.
         Debugger::configInstance('exportFormatter', $restore);
+    }
+
+    public function testDumpSorted()
+    {
+        $getValues = function ($el) {
+            return (string)$el;
+        };
+        $path = '//*[@class="cake-dbg-array-item"]/*[@class="cake-dbg-string"]';
+        $data = ['z' => 1, 'a' => 99, 'm' => 123];
+        $result = $this->Toolbar->dump($data);
+        $xml = new SimpleXmlElement($result);
+        $elements = $xml->xpath($path);
+        $this->assertSame(["'z'", "'a'", "'m'"], array_map($getValues, $elements));
+
+        $this->Toolbar->setSort(true);
+        $result = $this->Toolbar->dump($data);
+        $xml = new SimpleXmlElement($result);
+        $elements = $xml->xpath($path);
+        $this->assertSame(["'a'", "'m'", "'z'"], array_map($getValues, $elements));
     }
 
     /**

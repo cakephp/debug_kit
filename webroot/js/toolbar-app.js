@@ -150,11 +150,14 @@ Toolbar.prototype = {
       // Slide panel into place - css transitions.
       _this.content.addClass('enabled');
       contentArea.html(response);
+      _this.bindVariableSort();
+      _this.bindDebugBlock();
+
       _this.bindNeatArray();
     });
   },
 
-  bindNeatArray: function() {
+  bindVariableSort: function() {
     var sortButton = this.content.find('.neat-array-sort');
     var _this = this;
     sortButton.click(function() {
@@ -165,7 +168,16 @@ Toolbar.prototype = {
       }
       _this.loadPanel(_this.currentPanel());
     });
+  },
 
+  bindDebugBlock: function () {
+    if (window.__cakeDebugBlockInit) {
+        window.__cakeDebugBlockInit();
+    }
+  },
+
+  bindNeatArray: function() {
+    var _this = this;
     var lists = this.content.find('.depth-0');
     lists.find('ul').hide()
       .parent().addClass('expandable collapsed');

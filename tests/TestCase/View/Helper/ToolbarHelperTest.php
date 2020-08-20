@@ -87,7 +87,7 @@ class ToolbarHelperTest extends TestCase
     public function testDumpSorted()
     {
         $getValues = function ($el) {
-            return (string)$el;
+            return strval($el);
         };
         $path = '//*[@class="cake-dbg-array-item"]/*[@class="cake-dbg-string"]';
         $data = ['z' => 1, 'a' => 99, 'm' => 123];

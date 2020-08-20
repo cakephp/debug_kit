@@ -31,7 +31,7 @@ class DebugKitLog extends BaseLog
     /**
      * Captures log messages in memory
      *
-     * @param string $level The type of message being logged.
+     * @param mixed $level The type of message being logged.
      * @param string $message The message being logged.
      * @param array $context Additional context data
      * @return void

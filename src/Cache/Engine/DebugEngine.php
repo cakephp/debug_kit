@@ -159,10 +159,10 @@ class DebugEngine extends CacheEngine
     /**
      * @inheritDoc
      */
-    public function setMultiple($data, $ttl = null): bool
+    public function setMultiple($values, $ttl = null): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->setMultiple($data);
+        $result = $this->_engine->setMultiple($values);
         $duration = microtime(true) - $start;
 
         $this->track('set');

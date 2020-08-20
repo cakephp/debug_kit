@@ -86,21 +86,18 @@ class ToolbarHelperTest extends TestCase
 
     public function testDumpSorted()
     {
-        $getValues = function ($el) {
-            return strval($el);
-        };
         $path = '//*[@class="cake-dbg-array-item"]/*[@class="cake-dbg-string"]';
         $data = ['z' => 1, 'a' => 99, 'm' => 123];
         $result = $this->Toolbar->dump($data);
         $xml = new SimpleXmlElement($result);
         $elements = $xml->xpath($path);
-        $this->assertSame(["'z'", "'a'", "'m'"], array_map($getValues, $elements));
+        $this->assertSame(["'z'", "'a'", "'m'"], array_map('strval', $elements));
 
         $this->Toolbar->setSort(true);
         $result = $this->Toolbar->dump($data);
         $xml = new SimpleXmlElement($result);
         $elements = $xml->xpath($path);
-        $this->assertSame(["'a'", "'m'", "'z'"], array_map($getValues, $elements));
+        $this->assertSame(["'a'", "'m'", "'z'"], array_map('strval', $elements));
     }
 
     /**

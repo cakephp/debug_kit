@@ -72,6 +72,11 @@ class ToolbarHelper extends Helper
             $restore = true;
             $debugger->setConfig('exportFormatter', HtmlFormatter::class);
         }
+
+        if ($this->sort && is_array($value)) {
+            ksort($value);
+        }
+
         $contents = Debugger::exportVar($value, 25);
         if ($restore) {
             $debugger->setConfig('exportFormatter', $exportFormatter);

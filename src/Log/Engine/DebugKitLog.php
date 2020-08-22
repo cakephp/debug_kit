@@ -31,17 +31,17 @@ class DebugKitLog extends BaseLog
     /**
      * Captures log messages in memory
      *
-     * @param string $type The type of message being logged.
+     * @param mixed $level The type of message being logged.
      * @param string $message The message being logged.
      * @param array $context Additional context data
      * @return void
      */
-    public function log($type, $message, array $context = [])
+    public function log($level, $message, array $context = [])
     {
-        if (!isset($this->_logs[$type])) {
-            $this->_logs[$type] = [];
+        if (!isset($this->_logs[$level])) {
+            $this->_logs[$level] = [];
         }
-        $this->_logs[$type][] = [date('Y-m-d H:i:s'), $this->_format($message)];
+        $this->_logs[$level][] = [date('Y-m-d H:i:s'), $this->_format($message)];
     }
 
     /**

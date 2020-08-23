@@ -78,11 +78,11 @@ class DebugTimerTest extends TestCase
 
         $file = Debugger::trimPath(__FILE__);
         $expected = $file . ' line ' . $lineNo;
-        $this->assertEquals($expected, $key);
+        $this->assertSame($expected, $key);
 
         $timer = $timers[$expected];
         $this->assertTrue($timer['time'] > 0.0020);
-        $this->assertEquals($expected, $timers[$expected]['message']);
+        $this->assertSame($expected, $timers[$expected]['message']);
     }
 
     /**
@@ -100,7 +100,7 @@ class DebugTimerTest extends TestCase
         $this->assertTrue(DebugTimer::stop());
 
         $timers = DebugTimer::getAll();
-        $this->assertSame(3, count($timers), 'incorrect number of timers %s');
+        $this->assertCount(3, $timers, 'incorrect number of timers %s');
         $firstTimerLine = __LINE__ - 9;
         $secondTimerLine = __LINE__ - 8;
         $file = Debugger::trimPath(__FILE__);
@@ -130,14 +130,14 @@ class DebugTimerTest extends TestCase
         DebugTimer::stop('my timer');
 
         $timers = DebugTimer::getAll();
-        $this->assertSame(3, count($timers), 'wrong timer count %s');
+        $this->assertCount(3, $timers, 'wrong timer count %s');
 
         $this->assertTrue(isset($timers['my timer']));
         $this->assertTrue(isset($timers['my timer #2']));
 
         $this->assertTrue($timers['my timer']['time'] > $timers['my timer #2']['time'], 'timer 2 is longer? %s');
-        $this->assertEquals('This is the first call', $timers['my timer']['message']);
-        $this->assertEquals('This is the second call #2', $timers['my timer #2']['message']);
+        $this->assertSame('This is the first call', $timers['my timer']['message']);
+        $this->assertSame('This is the second call #2', $timers['my timer #2']['message']);
     }
 
     /**
@@ -183,7 +183,7 @@ class DebugTimerTest extends TestCase
         $timers = DebugTimer::getAll();
 
         $this->assertCount(3, $timers);
-        $this->assertTrue(is_float($timers['test1']['time']));
+        $this->assertIsFloat($timers['test1']['time']);
         $this->assertTrue(isset($timers['test1']['message']));
         $this->assertTrue(isset($timers['test2']['message']));
     }

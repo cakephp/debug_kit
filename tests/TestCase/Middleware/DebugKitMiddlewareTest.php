@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace DebugKit\Test\Middleware;
+namespace DebugKit\Test\TestCase\Middleware;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -107,17 +107,17 @@ class DebugKitMiddlewareTest extends TestCase
             ->contain('Panels')
             ->first();
 
-        $this->assertEquals('GET', $result->method);
-        $this->assertEquals('/articles', $result->url);
+        $this->assertSame('GET', $result->method);
+        $this->assertSame('/articles', $result->url);
         $this->assertNotEmpty($result->requested_at);
         $this->assertNotEmpty('text/html', $result->content_type);
         $this->assertSame(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertEquals('SqlLog', $result->panels[11]->panel);
-        $this->assertEquals('DebugKit.sql_log_panel', $result->panels[11]->element);
+        $this->assertSame('SqlLog', $result->panels[11]->panel);
+        $this->assertSame('DebugKit.sql_log_panel', $result->panels[11]->element);
         $this->assertNotNull($result->panels[11]->summary);
-        $this->assertEquals('Sql Log', $result->panels[11]->title);
+        $this->assertSame('Sql Log', $result->panels[11]->title);
 
         $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'toolbar.js');
 
@@ -196,7 +196,7 @@ class DebugKitMiddlewareTest extends TestCase
         $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $total = $requests->find()->where(['url' => '/articles'])->count();
 
-        $this->assertEquals(1, $total, 'Should track response');
+        $this->assertSame(1, $total, 'Should track response');
         $body = (string)$result->getBody();
         $this->assertSame('OK', $body);
     }
@@ -214,6 +214,6 @@ class DebugKitMiddlewareTest extends TestCase
         $prop = new \ReflectionProperty(DebugKitMiddleware::class, 'service');
         $prop->setAccessible(true);
         $service = $prop->getValue($layer);
-        $this->assertEquals('bar', $service->getConfig('foo'));
+        $this->assertSame('bar', $service->getConfig('foo'));
     }
 }

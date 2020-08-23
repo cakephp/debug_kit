@@ -36,17 +36,17 @@ class DebugPanelTest extends TestCase
 
     public function testTitle()
     {
-        $this->assertEquals('Simple', $this->panel->title());
+        $this->assertSame('Simple', $this->panel->title());
     }
 
     public function testElementName()
     {
-        $this->assertEquals('DebugKit.simple_panel', $this->panel->elementName());
+        $this->assertSame('DebugKit.simple_panel', $this->panel->elementName());
 
         $this->panel->plugin = 'Derpy';
-        $this->assertEquals('Derpy.simple_panel', $this->panel->elementName());
+        $this->assertSame('Derpy.simple_panel', $this->panel->elementName());
 
         $this->panel->plugin = false;
-        $this->assertEquals('simple_panel', $this->panel->elementName());
+        $this->assertSame('simple_panel', $this->panel->elementName());
     }
 }

@@ -74,6 +74,6 @@ class DashboardControllerTest extends IntegrationTestCase
         $this->post('/debug-kit/dashboard/reset');
 
         $this->assertRedirect('/debug-kit');
-        $this->assertEquals(0, $requests->find()->count());
+        $this->assertSame(0, $requests->find()->count());
     }
 }

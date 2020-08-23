@@ -56,7 +56,7 @@ class DebugIncludeTest extends TestCase
     {
         $include = new DebugInclude();
 
-        $this->assertEquals('DebugKit', $include->getPluginName(__FILE__));
+        $this->assertSame('DebugKit', $include->getPluginName(__FILE__));
         $this->assertFalse($include->getPluginName(TMP));
     }
 
@@ -65,7 +65,7 @@ class DebugIncludeTest extends TestCase
         $include = new DebugInclude();
 
         $path = CAKE . 'Controller/Controller.php';
-        $this->assertEquals('cakephp/cakephp', $include->getComposerPackageName($path));
+        $this->assertSame('cakephp/cakephp', $include->getComposerPackageName($path));
     }
 
     public function testNiceFileName()
@@ -102,8 +102,8 @@ class DebugIncludeTest extends TestCase
     {
         $include = new DebugInclude();
 
-        $this->assertEquals('Controller', $include->getFileType(CAKE . 'Controller/Controller.php'));
-        $this->assertEquals('Component', $include->getFileType(CAKE . 'Controller/Component/FlashComponent.php'));
-        $this->assertEquals('Console', $include->getFileType(CAKE . 'Console/Shell.php'));
+        $this->assertSame('Controller', $include->getFileType(CAKE . 'Controller/Controller.php'));
+        $this->assertSame('Component', $include->getFileType(CAKE . 'Controller/Component/FlashComponent.php'));
+        $this->assertSame('Console', $include->getFileType(CAKE . 'Console/Shell.php'));
     }
 }

@@ -65,6 +65,6 @@ class EnvironmentPanelTest extends TestCase
         $output = $this->panel->data();
         $this->assertIsArray($output);
         $this->assertSame(['php', 'ini', 'cake', 'app'], array_keys($output));
-        $this->assertEquals('mysql://user:password@localhost/my_db', $output['php']['TEST_URL_1']);
+        $this->assertSame('mysql://user:password@localhost/my_db', $output['php']['TEST_URL_1']);
     }
 }

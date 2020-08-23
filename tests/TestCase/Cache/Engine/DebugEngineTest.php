@@ -185,6 +185,6 @@ class DebugEngineTest extends TestCase
             'path' => TMP,
             'groups' => ['test', 'test2'],
         ], 'test', $this->logger);
-        $this->assertEquals('File', (string)$engine);
+        $this->assertSame('File', (string)$engine);
     }
 }

@@ -30,10 +30,10 @@ class DebugMemoryTest extends TestCase
     public function testMemoryUsage()
     {
         $result = DebugMemory::getCurrent();
-        $this->assertTrue(is_int($result));
+        $this->assertIsInt($result);
 
         $result = DebugMemory::getPeak();
-        $this->assertTrue(is_int($result));
+        $this->assertIsInt($result);
     }
 
     /**
@@ -64,7 +64,7 @@ class DebugMemoryTest extends TestCase
         $result = DebugMemory::getAll(true);
         $this->assertCount(1, $result);
         $this->assertTrue(isset($result['test marker']));
-        $this->assertTrue(is_numeric($result['test marker']));
+        $this->assertIsNumeric($result['test marker']);
 
         $result = DebugMemory::getAll();
         $this->assertEmpty($result);

@@ -16,8 +16,7 @@ configuration data and environment variables hidden. :warning:
 ## Requirements
 
 * SQLite (pdo_sqlite) or another database driver that CakePHP can talk to. By
-  default DebugKit will use SQLite, if you need to use a different database see
-  the Database Configuration section below.
+  default DebugKit will use SQLite, if you need to use a different database see the Database Configuration section in the documentation linked below.
 
 For details and older versions see [version map](https://github.com/cakephp/debug_kit/wiki#version-map).
 

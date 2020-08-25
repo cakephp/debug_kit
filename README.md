@@ -50,4 +50,4 @@ requests](https://help.github.com/articles/using-pull-requests) or open
 ## Documentation
 
 Documentation for DebugKit can be found in the 
-[CakePHP documentation](https://book.cakephp.org/debugkit/3.x/en/index.html).
+[CakePHP documentation](https://book.cakephp.org/debugkit/4/en/index.html).

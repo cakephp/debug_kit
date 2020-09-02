@@ -398,8 +398,12 @@ class ToolbarServiceTest extends TestCase
             ['myapp.com', false],
             ['myapp.io', false],
             ['myapp.net', false],
+            ['172.18.0.10', true],
             ['172.112.34.2', false],
             ['6.112.34.2', false],
+            ['[abcd::]', false], // public
+            ['[fc00::]', true],  // private
+            ['[::1]', true],     // localhost
         ];
     }
 

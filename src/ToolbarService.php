@@ -113,48 +113,60 @@ class ToolbarService
     }
 
     /**
-     * Returns true if this applications is being executed on a domain with a TLD
-     * that is commonly associated with a production environment.
+     * Returns true if this application is being executed on a domain with a TLD
+     * that is commonly associated with a production environment, or if the IP
+     * address is not in a private or reserved range.
+     *
+     * Private  IPv4 = 10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16
+     * Reserved IPv4 = 0.0.0.0/8, 169.254.0.0/16, 127.0.0.0/8 and 240.0.0.0/4
+     *
+     * Private  IPv6 = fc00::/7
+     * Reserved IPv6 = ::1/128, ::/128, ::ffff:0:0/96 and fe80::/10
      *
      * @return bool
      */
     protected function isSuspiciouslyProduction()
     {
-        $url = parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST);
-        if ($url === false) {
+        $host = parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST);
+        if ($host === false) {
             return false;
         }
 
-        $host = explode('.', $url);
-        $first = current($host);
-        $isIP = is_numeric(implode('', $host));
+        // IPv6 addresses in URLs are enclosed in brackets. Remove them.
+        $host = trim($host, '[]');
 
-        if (count($host) === 1) {
+        // Check if the host is a private or reserved IPv4/6 address.
+        $isIp = filter_var($host, FILTER_VALIDATE_IP) !== false;
+        if ($isIp) {
+            $isPublicIp = filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
+            return $isPublicIp;
+        }
+
+        // So it's not an IP address. It must be a domain name.
+        $parts = explode('.', $host);
+        if (count($parts) == 1) {
             return false;
         }
 
-        if ($isIP && in_array($first, ['192', '10', '127'])) {
-            // Accessing the app by private IP, this is safe
+        // Check if the TLD is in the list of safe TLDs.
+        $tld = end($parts);
+        $safeTlds = ['localhost', 'invalid', 'test', 'example', 'local'];
+        $safeTlds = array_merge($safeTlds, (array)$this->getConfig('safeTld'));
+
+        if (in_array($tld, $safeTlds, true)) {
             return false;
         }
 
-        $tld = end($host);
-        $safeTopLevelDomains = ['localhost', 'invalid', 'test', 'example', 'local'];
-        $safeTopLevelDomains = array_merge($safeTopLevelDomains, (array)$this->getConfig('safeTld'));
-
-        if (!in_array($tld, $safeTopLevelDomains, true) && !$this->getConfig('forceEnable')) {
-            $host = implode('.', $host);
-            $safeList = implode(', ', $safeTopLevelDomains);
+        // Don't log a warning if forceEnable is set.
+        if (!$this->getConfig('forceEnable')) {
+            $safeList = implode(', ', $safeTlds);
             Log::warning(
                 "DebugKit is disabling itself as your host `{$host}` " .
                 "is not in the known safe list of top-level-domains ({$safeList}). " .
                 'If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option.'
             );
-
-            return true;
         }
-
-        return false;
+        return true;
     }
 
     /**

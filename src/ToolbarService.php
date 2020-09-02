@@ -138,7 +138,9 @@ class ToolbarService
         // Check if the host is a private or reserved IPv4/6 address.
         $isIp = filter_var($host, FILTER_VALIDATE_IP) !== false;
         if ($isIp) {
-            $isPublicIp = filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
+            $flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+            $isPublicIp = filter_var($host, FILTER_VALIDATE_IP, $flags) !== false;
+
             return $isPublicIp;
         }
 
@@ -166,6 +168,7 @@ class ToolbarService
                 'If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option.'
             );
         }
+
         return true;
     }
 

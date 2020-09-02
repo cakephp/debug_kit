@@ -402,8 +402,8 @@ class ToolbarServiceTest extends TestCase
             ['172.112.34.2', false],
             ['6.112.34.2', false],
             ['[abcd::]', false], // public
-            ['[fc00::]', true],  // private
-            ['[::1]', true],     // localhost
+            ['[fc00::]', true], // private
+            ['[::1]', true], // localhost
         ];
     }
 

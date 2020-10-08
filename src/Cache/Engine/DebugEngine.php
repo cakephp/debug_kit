@@ -196,7 +196,7 @@ class DebugEngine extends CacheEngine
     public function getMultiple($keys, $default = null): iterable
     {
         $start = microtime(true);
-        $result = $this->_engine->getMultiple($keys);
+        $result = $this->_engine->getMultiple($keys, $default);
         $duration = microtime(true) - $start;
 
         $this->track('get hit');

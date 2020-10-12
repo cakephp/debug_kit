@@ -105,7 +105,7 @@ class VariablesPanelTest extends TestCase
             try {
                 serialize($item);
             } catch (\Exception $e) {
-                $this->fail('Panel Output content is not serializable');
+                $this->fail('Panel Output content is not serializable. Error was: ' . $e->getMessage());
             }
         });
         $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);

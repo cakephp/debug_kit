@@ -24,6 +24,7 @@ matrix:
   include:
     - php: 7.3
       env: CHECKS=1 DEFAULT=0
+    - php: nightly
 
 install:
   - composer install --prefer-dist --no-interaction

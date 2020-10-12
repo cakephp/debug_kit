@@ -98,7 +98,7 @@ class VariablesPanel extends DebugPanel
         $controller = $event->getSubject();
         $errors = [];
 
-        $walker = function ($item) use (&$walker) {
+        $walker = function (&$item) use (&$walker) {
             if (
                 $item instanceof Collection ||
                 $item instanceof Query ||

@@ -58,5 +58,6 @@
         "psalm": "psalm.phar --show-info=false",
         "psalm-setup": "cp composer.json composer.backup && composer require --dev psalm/phar:^3.11 && mv composer.backup composer.json"
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "minimum-stability": "rc"
 }

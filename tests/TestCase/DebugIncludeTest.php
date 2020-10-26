@@ -27,7 +27,7 @@ class DebugIncludeTest extends TestCase
         $include = new DebugInclude();
         $result = $include->includePaths();
         $this->assertIsArray($result);
-        $this->assertFileExists($result[0]);
+        $this->assertStringContainsString($result[0], get_include_path());
     }
 
     public function testIsCakeFile()

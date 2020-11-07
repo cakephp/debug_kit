@@ -33,10 +33,10 @@
 	<php>
 		<ini name="memory_limit" value="-1"/>
 		<!-- Postgres
-		<env name="db_dsn" value="postgres://root@localhost/cake_test_db"/>
+		<env name="DB_URL" value="postgres://root@localhost/cake_test_db"/>
 		-->
 		<!-- Mysql
-		<env name="db_dsn" value="mysql://root@localhost/cake_test_db"/>
+		<env name="DB_URL" value="mysql://root@localhost/cake_test_db"/>
 		-->
 	</php>
 </phpunit>

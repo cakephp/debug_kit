@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
@@ -23,6 +24,8 @@ use DebugKit\TestApp\Application;
  */
 class PanelsControllerTest extends IntegrationTestCase
 {
+    use FixtureFactoryTrait;
+
     /**
      * Fixtures.
      *
@@ -42,7 +45,6 @@ class PanelsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
     }
 
     /**
@@ -57,8 +59,9 @@ class PanelsControllerTest extends IntegrationTestCase
                 'accept' => 'application/json, text/javascript, */*; q=0.01',
             ],
         ]);
-
-        $this->get('/debug-kit/panels/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $request = $this->makeRequest();
+        $this->makePanel($request);
+        $this->get("/debug-kit/panels/{$request->id}");
 
         $this->assertResponseOk();
         $this->assertContentType('application/json');
@@ -71,7 +74,10 @@ class PanelsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->get('/debug-kit/panels/view/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $request = $this->makeRequest();
+        $panel = $this->makePanel($request);
+
+        $this->get("/debug-kit/panels/view/{$panel->id}");
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request</h2>');

@@ -52,15 +52,7 @@ class RequestsFixture extends TestFixture
      *
      * @var array
      */
-    public $records = [
-        [
-            'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-            'url' => '/tasks/add',
-            'content_type' => 'text/html',
-            'status_code' => 200,
-            'requested_at' => '2014-08-21 7:41:12',
-        ],
-    ];
+    public $records = [];
 
     /**
      * Constructor

@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
@@ -23,6 +24,8 @@ use DebugKit\TestApp\Application;
  */
 class RequestsControllerTest extends IntegrationTestCase
 {
+    use FixtureFactoryTrait;
+
     /**
      * Fixtures.
      *
@@ -42,7 +45,6 @@ class RequestsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
     }
 
     /**
@@ -52,8 +54,11 @@ class RequestsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
+        $request = $this->makeRequest();
+        $panel = $this->makePanel($request);
+
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->get('/debug-kit/toolbar/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
+        $this->get("/debug-kit/toolbar/{$request->id}");
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request', 'Has a panel button');

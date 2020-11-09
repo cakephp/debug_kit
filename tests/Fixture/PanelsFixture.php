@@ -60,16 +60,7 @@ class PanelsFixture extends TestFixture
      *
      * @var array
      */
-    public $records = [
-        [
-            'id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-            'request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-            'panel' => 'DebugKit.Request',
-            'title' => 'Request',
-            'element' => 'DebugKit.request_panel',
-            'content' => 'a:5:{s:6:"params";a:5:{s:6:"plugin";N;s:10:"controller";s:5:"Tasks";s:6:"action";s:3:"add";s:4:"_ext";N;s:4:"pass";a:0:{}}s:5:"query";a:0:{}s:4:"data";a:0:{}s:6:"cookie";a:2:{s:14:"toolbarDisplay";s:4:"show";s:7:"CAKEPHP";s:26:"9pk8sa2ot6pclki9f4iakio560";}s:3:"get";a:0:{}}',
-        ],
-    ];
+    public $records = [];
 
     /**
      * Constructor

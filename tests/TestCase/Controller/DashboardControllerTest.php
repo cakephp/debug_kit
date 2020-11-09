@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
@@ -23,6 +24,8 @@ use DebugKit\TestApp\Application;
  */
 class DashboardControllerTest extends IntegrationTestCase
 {
+    use FixtureFactoryTrait;
+
     public $fixtures = [
         'plugin.DebugKit.Requests',
         'plugin.DebugKit.Panels',
@@ -37,7 +40,6 @@ class DashboardControllerTest extends IntegrationTestCase
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
     }
 
     public function testIndexNoRequests()
@@ -55,9 +57,8 @@ class DashboardControllerTest extends IntegrationTestCase
 
     public function testIndexWithRequests()
     {
-        $requests = $this->getTableLocator()->get('DebugKit.Requests');
-        $request = $requests->newEntity(['url' => '/example']);
-        $requests->save($request);
+        $request = $this->makeRequest();
+        $this->makePanel($request);
 
         $this->get('/debug-kit/dashboard');
 
@@ -68,12 +69,13 @@ class DashboardControllerTest extends IntegrationTestCase
 
     public function testReset()
     {
-        $requests = $this->getTableLocator()->get('DebugKit.Requests');
-        $this->assertGreaterThan(0, $requests->find()->count(), 'precondition failed');
+        $request = $this->makeRequest();
+        $this->makePanel($request);
 
         $this->post('/debug-kit/dashboard/reset');
 
         $this->assertRedirect('/debug-kit');
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $this->assertSame(0, $requests->find()->count());
     }
 }

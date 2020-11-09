@@ -92,12 +92,12 @@ Cache::setConfig([
 ]);
 
 // Ensure default test connection is defined
-if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite://127.0.0.1/' . TMP . 'debug_kit_test.sqlite');
+if (!getenv('DB_URL')) {
+    putenv('DB_URL=sqlite://127.0.0.1/' . TMP . 'debug_kit_test.sqlite');
 }
 
 $config = [
-    'url' => getenv('db_dsn'),
+    'url' => getenv('DB_URL'),
     'timezone' => 'UTC',
 ];
 

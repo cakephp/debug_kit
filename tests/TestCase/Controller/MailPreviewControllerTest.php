@@ -17,6 +17,7 @@ namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
+use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
@@ -24,6 +25,8 @@ use DebugKit\TestApp\Application;
  */
 class MailPreviewControllerTest extends IntegrationTestCase
 {
+    use FixtureFactoryTrait;
+
     /**
      * Fixtures.
      *
@@ -46,7 +49,6 @@ class MailPreviewControllerTest extends IntegrationTestCase
             $routes->connect('/users/:action/*', ['controller' => 'Users']);
         });
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
     }
 
     /**
@@ -105,8 +107,9 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testSentValidData()
     {
-        $panels = $this->getTableLocator()->get('Panels');
-        $panel = $panels->newEntity(['request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']);
+        $panels = $this->getTableLocator()->get('DebugKit.Panels');
+        $request = $this->makeRequest();
+        $panel = $panels->newEntity(['request_id' => $request->id]);
         $data = [
             'emails' => [
                 [
@@ -131,8 +134,9 @@ class MailPreviewControllerTest extends IntegrationTestCase
      */
     public function testSentValidDataRenderPart()
     {
-        $panels = $this->getTableLocator()->get('Panels');
-        $panel = $panels->newEntity(['request_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']);
+        $panels = $this->getTableLocator()->get('DebugKit.Panels');
+        $request = $this->makeRequest();
+        $panel = $panels->newEntity(['request_id' => $request->id]);
         $data = [
             'emails' => [
                 [

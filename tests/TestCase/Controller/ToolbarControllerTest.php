@@ -43,7 +43,6 @@ class ToolbarControllerTest extends IntegrationTestCase
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
     }
 
     /**

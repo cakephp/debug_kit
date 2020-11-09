@@ -49,7 +49,6 @@ class MailPreviewControllerTest extends IntegrationTestCase
             $routes->connect('/users/:action/*', ['controller' => 'Users']);
         });
         $this->configApplication(Application::class, []);
-        $this->getTableLocator()->clear();
     }
 
     /**

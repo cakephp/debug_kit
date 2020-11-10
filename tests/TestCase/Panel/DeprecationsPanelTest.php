@@ -64,6 +64,7 @@ class DeprecationsPanelTest extends TestCase
         $this->assertCount(3, $data['plugins']['DebugKit']);
 
         $error = $data['plugins']['DebugKit'][0];
+        debug($error);
         $this->assertStringContainsString('Something going away', $error['message']);
         $this->assertSame('DebugKit/tests/TestCase/Panel/DeprecationsPanelTest.php', $error['niceFile']);
         $this->assertSame(46, $error['line']);

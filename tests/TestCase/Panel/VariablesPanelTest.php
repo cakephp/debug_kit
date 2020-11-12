@@ -108,7 +108,7 @@ class VariablesPanelTest extends TestCase
                 $this->fail('Panel Output content is not serializable');
             }
         });
-        $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
+        $this->assertMatchesRegularExpression('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
         $this->assertIsArray($output['content']['unserializableDebugInfo']);
 
         if (version_compare(PHP_VERSION, '7.4.0', '>=')) {

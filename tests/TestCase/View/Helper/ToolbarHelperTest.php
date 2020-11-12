@@ -73,7 +73,7 @@ class ToolbarHelperTest extends TestCase
         $restore = Debugger::configInstance('exportFormatter');
         Debugger::configInstance('exportFormatter', TextFormatter::class);
         $result = $this->Toolbar->dump(false);
-        $this->assertMatchesRegularExpression('/<\w/', $result, 'Contains HTML tags.');
+        $this->assertRegExp('/<\w/', $result, 'Contains HTML tags.');
         $this->assertSame(
             TextFormatter::class,
             Debugger::configInstance('exportFormatter'),

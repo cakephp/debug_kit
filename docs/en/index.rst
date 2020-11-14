@@ -51,7 +51,7 @@ Configuration
     Configure::write('DebugKit.forceEnable', true);
 
 * ``DebugKit.ignorePathsPattern`` - Regex pattern (including delimiter) to ignore paths.
-   DebugKit won't save data for request URLs that match this regex. Defaults to ``null``::
+  DebugKit won't save data for request URLs that match this regex. Defaults to ``null``::
 
     // Ignore image paths
     Configure::write('DebugKit.ignorePathsPattern', '/\.(jpg|png|gif)$/');

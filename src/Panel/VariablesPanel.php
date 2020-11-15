@@ -83,7 +83,9 @@ class VariablesPanel extends DebugPanel
             );
         }
 
-        return array_map($walker, $info);
+        array_walk($info, $walker);
+
+        return $walker;
     }
 
     /**

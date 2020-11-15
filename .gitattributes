@@ -40,4 +40,6 @@ phpcs.xml export-ignore
 phpunit.xml.dist export-ignore
 /.github export-ignore
 /docs/static export-ignore
-/tests export-ignore
+/tests/TestCase export-ignore
+/tests/test_app export-ignore
+/tests/bootstrap.php export-ignore

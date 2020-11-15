@@ -85,7 +85,7 @@ class VariablesPanel extends DebugPanel
 
         array_walk($info, $walker);
 
-        return $walker;
+        return $info;
     }
 
     /**

@@ -10,7 +10,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Debugkit\Test\Fixture;
+namespace DebugKit\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
 

@@ -37,7 +37,7 @@ class CachePanelTest extends TestCase
     {
         parent::setUp();
         $this->panel = new CachePanel();
-        Cache::setConfig('debug_kit_test', ['className' => 'Null']);
+        Cache::setConfig('debug_kit_test', ['className' => 'Null', 'path' => TMP]);
     }
 
     /**
@@ -109,5 +109,12 @@ class CachePanelTest extends TestCase
         $this->panel->initialize();
         $result2 = Cache::engine('debug_kit_test');
         $this->assertSame($result2, $result);
+    }
+
+    public function testInitializePreserveGlobalConfig()
+    {
+        $this->panel->initialize();
+        $result = Cache::getConfig('debug_kit_test');
+        $this->assertEquals($result['path'], TMP);
     }
 }

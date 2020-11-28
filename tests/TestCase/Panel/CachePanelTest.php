@@ -103,11 +103,11 @@ class CachePanelTest extends TestCase
     public function testInitializeTwiceNoDoubleProxy()
     {
         $this->panel->initialize();
-        $result = Cache::engine('debug_kit_test');
+        $result = Cache::pool('debug_kit_test');
         $this->assertInstanceOf('DebugKit\Cache\Engine\DebugEngine', $result);
 
         $this->panel->initialize();
-        $result2 = Cache::engine('debug_kit_test');
+        $result2 = Cache::pool('debug_kit_test');
         $this->assertSame($result2, $result);
     }
 

@@ -112,6 +112,10 @@ class RequestsTable extends Table
                 ->extract('id')
                 ->toArray();
 
+            if (empty($noPurge)) {
+                return;
+            }
+
             $query = $this->Panels->query()
                 ->delete()
                 ->where(['request_id NOT IN' => $noPurge]);

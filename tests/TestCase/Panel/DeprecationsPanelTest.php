@@ -40,14 +40,16 @@ class DeprecationsPanelTest extends TestCase
 
         $this->panel = new DeprecationsPanel();
 
-        $previousHandler = set_error_handler(function ($code, $message, $file, $line, $context = null) {
+        set_error_handler(function ($code, $message, $file, $line, $context = null) {
             DeprecationsPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
         });
-        deprecationWarning('Something going away', 0);
-        deprecationWarning('Something else going away', 0);
-        trigger_error('Raw error', E_USER_DEPRECATED);
-
-        set_error_handler($previousHandler);
+        try {
+            deprecationWarning('Something going away', 0);
+            deprecationWarning('Something else going away', 0);
+            trigger_error('Raw error', E_USER_DEPRECATED);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testShutdown()

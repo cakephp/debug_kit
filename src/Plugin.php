@@ -104,6 +104,8 @@ class Plugin extends BasePlugin
 
                         return $previousHandler($code, $message, $file, $line, $context);
                     }
+
+                    return false;
                 }
             );
         }

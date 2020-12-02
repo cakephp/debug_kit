@@ -14,21 +14,12 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
-use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
 use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use Cake\Form\Form;
-use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
-use Closure;
 use DebugKit\DebugPanel;
-use Exception;
-use InvalidArgumentException;
-use PDO;
-use RuntimeException;
-use SimpleXMLElement;
 
 /**
  * Provides debug information on the View variables.

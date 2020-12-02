@@ -16,7 +16,10 @@ declare(strict_types=1);
 namespace DebugKit\View\Helper;
 
 use ArrayAccess;
+use Cake\Error\Debug\ArrayItemNode;
+use Cake\Error\Debug\ArrayNode;
 use Cake\Error\Debug\HtmlFormatter;
+use Cake\Error\Debug\ScalarNode;
 use Cake\Error\Debugger;
 use Cake\View\Helper;
 use Closure;
@@ -58,10 +61,37 @@ class ToolbarHelper extends Helper
     }
 
     /**
+     * Dump an array of nodes
+     *
+     * @param \Cake\Error\Debug\NodeInterface[] $nodes An array of dumped variables.
+     *   Variables should be keyed by the name they had in the view.
+     * @return string Formatted HTML
+     */
+    public function dumpNodes(array $nodes): string
+    {
+        $formatter = new HtmlFormatter();
+        if ($this->sort) {
+            ksort($nodes);
+        }
+        $items = [];
+        foreach ($nodes as $key => $value) {
+            $items[] = new ArrayItemNode(new ScalarNode('string', $key), $value);
+        }
+        $root = new ArrayNode($items);
+
+        return implode([
+            '<div class="cake-debug-output cake-debug" style="direction:ltr">',
+            $formatter->dump($root),
+            '</div>',
+        ]);
+    }
+
+    /**
      * Dump the value in $value into an interactive HTML output.
      *
      * @param mixed $value The value to output.
      * @return string Formatted HTML
+     * @deprecated 4.4.0
      */
     public function dump($value)
     {

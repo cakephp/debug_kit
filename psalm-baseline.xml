@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.6.5@b1aae0d1a5a11908e0e5f9eb6795ab7bb3f43577">
+<files psalm-version="3.18.2@19aa905f7c3c7350569999a93c40ae91ae4e1626">
   <file src="src/Controller/DashboardController.php">
     <InvalidNullableReturnType occurrences="1">
       <code>\Cake\Http\Response</code>
@@ -23,12 +23,9 @@
       <code>string</code>
     </InvalidNullableReturnType>
     <PossiblyNullArrayOffset occurrences="2">
-      <code>$this-&gt;_pluginPaths</code>
       <code>$this-&gt;_composerPaths</code>
+      <code>$this-&gt;_pluginPaths</code>
     </PossiblyNullArrayOffset>
-    <PossiblyNullOperand occurrences="1">
-      <code>$name</code>
-    </PossiblyNullOperand>
   </file>
   <file src="src/DebugSql.php">
     <InternalMethod occurrences="1">
@@ -39,11 +36,6 @@
     <PossiblyNullArrayOffset occurrences="1">
       <code>self::$_timers</code>
     </PossiblyNullArrayOffset>
-  </file>
-  <file src="src/Log/Engine/DebugKitLog.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$type</code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Mailer/MailPreview.php">
     <PossiblyFalseOperand occurrences="1">
@@ -66,17 +58,12 @@
       <code>$request</code>
     </ArgumentTypeCoercion>
   </file>
-  <file src="src/Model/Table/LazyTableTrait.php">
-    <UndefinedClass occurrences="1">
-      <code>new $class($connection-&gt;configName())</code>
-    </UndefinedClass>
-  </file>
   <file src="src/Panel/DeprecationsPanel.php">
     <InvalidScalarArgument occurrences="4">
       <code>$pluginName</code>
-      <code>$vendorName</code>
       <code>$return['plugins']</code>
       <code>$return['vendor']</code>
+      <code>$vendorName</code>
     </InvalidScalarArgument>
   </file>
   <file src="src/Panel/EnvironmentPanel.php">
@@ -87,9 +74,9 @@
   <file src="src/Panel/IncludePanel.php">
     <InvalidScalarArgument occurrences="4">
       <code>$pluginName</code>
-      <code>$vendorName</code>
       <code>$return['plugins']</code>
       <code>$return['vendor']</code>
+      <code>$vendorName</code>
     </InvalidScalarArgument>
   </file>
   <file src="src/Panel/LogPanel.php">
@@ -127,16 +114,6 @@
       <code>!$connection instanceof ConnectionInterface</code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/Panel/VariablesPanel.php">
-    <InvalidArgument occurrences="1">
-      <code>$item</code>
-    </InvalidArgument>
-    <PossiblyInvalidArgument occurrences="3">
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
-    </PossiblyInvalidArgument>
-  </file>
   <file src="src/Plugin.php">
     <InvalidArgument occurrences="1"/>
   </file>
@@ -144,12 +121,6 @@
     <InvalidScalarArgument occurrences="1">
       <code>$row-&gt;id</code>
     </InvalidScalarArgument>
-    <PossiblyNullOperand occurrences="1">
-      <code>env('HTTP_HOST')</code>
-    </PossiblyNullOperand>
-    <TypeDoesNotContainType occurrences="1">
-      <code>$url === false</code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/View/Helper/ToolbarHelper.php">
     <DeprecatedMethod occurrences="1">
@@ -159,5 +130,11 @@
       <code>$value</code>
       <code>$values</code>
     </InvalidArgument>
+    <InternalClass occurrences="1">
+      <code>new HtmlFormatter()</code>
+    </InternalClass>
+    <InternalMethod occurrences="1">
+      <code>dump</code>
+    </InternalMethod>
   </file>
 </files>

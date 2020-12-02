@@ -11,26 +11,34 @@
  * @since         DebugKit 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 /**
  * @var \DebugKit\View\AjaxView $this
  * @var string $error
  * @var bool $sort
+ * @var array $variables
  * @var array $content
  * @var array $errors
  */
 
-if (isset($error)):
+if (isset($error)) :
     printf('<p class="warning">%s</p>', $error);
 endif;
 
-if (!empty($content)):
+// Backwards compatibility for old debug kit data.
+if (!empty($content)) :
     printf('<label class="toggle-checkbox"><input type="checkbox" class="neat-array-sort"%s>%s</label>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
     $this->Toolbar->setSort($sort);
     echo $this->Toolbar->dump($content);
 endif;
 
-if (!empty($errors)):
+// New node based data.
+if (!empty($variables)) :
+    printf('<label class="toggle-checkbox"><input type="checkbox" class="neat-array-sort"%s>%s</label>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
+    $this->Toolbar->setSort($sort);
+    echo $this->Toolbar->dumpNodes($variables);
+endif;
+
+if (!empty($errors)) :
     echo '<h4>' . __d('debug_kit', 'Validation errors') . '</h4>';
     echo $this->Toolbar->dump($errors);
 endif;

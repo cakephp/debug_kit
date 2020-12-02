@@ -67,7 +67,7 @@ class ToolbarHelper extends Helper
      *   Variables should be keyed by the name they had in the view.
      * @return string Formatted HTML
      */
-    public function dumpNodes($nodes)
+    public function dumpNodes(array $nodes): string
     {
         $formatter = new HtmlFormatter();
         if ($this->sort && is_array($nodes)) {

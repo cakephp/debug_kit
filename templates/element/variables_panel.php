@@ -20,25 +20,25 @@
  * @var array $errors
  */
 
-if (isset($error)):
+if (isset($error)) :
     printf('<p class="warning">%s</p>', $error);
 endif;
 
 // Backwards compatibility for old debug kit data.
-if (!empty($content)):
+if (!empty($content)) :
     printf('<label class="toggle-checkbox"><input type="checkbox" class="neat-array-sort"%s>%s</label>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
     $this->Toolbar->setSort($sort);
     echo $this->Toolbar->dump($content);
 endif;
 
 // New node based data.
-if (!empty($variables)):
+if (!empty($variables)) :
     printf('<label class="toggle-checkbox"><input type="checkbox" class="neat-array-sort"%s>%s</label>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
     $this->Toolbar->setSort($sort);
     echo $this->Toolbar->dumpNodes($variables);
 endif;
 
-if (!empty($errors)):
+if (!empty($errors)) :
     echo '<h4>' . __d('debug_kit', 'Validation errors') . '</h4>';
     echo $this->Toolbar->dump($errors);
 endif;

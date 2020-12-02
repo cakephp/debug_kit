@@ -1,5 +1,6 @@
 name: CI
 
+
 on:
   push:
     branches:
@@ -14,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.2', '7.4']
+        php-version: ['7.2', '7.4', '8.0']
         db-type: [mysql, pgsql, sqlite]
         prefer-lowest: ['']
         include:

@@ -16,6 +16,7 @@ namespace DebugKit\Panel;
 
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
+use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use Cake\Form\Form;
 use Cake\ORM\Query;
@@ -97,54 +98,8 @@ class VariablesPanel extends DebugPanel
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
         $errors = [];
-
-        $walker = function (&$item) use (&$walker) {
-            if (
-                $item instanceof Collection ||
-                $item instanceof Query ||
-                $item instanceof ResultSet
-            ) {
-                try {
-                    $item = $item->toArray();
-                } catch (\Cake\Database\Exception $e) {
-                    //Likely issue is unbuffered query; fall back to __debugInfo
-                    $item = $this->_walkDebugInfo($walker, $item);
-                } catch (RuntimeException $e) {
-                    // Likely a non-select query.
-                    $item = $this->_walkDebugInfo($walker, $item);
-                } catch (InvalidArgumentException $e) {
-                    $item = $this->_walkDebugInfo($walker, $item);
-                }
-            } elseif (
-                $item instanceof Closure ||
-                $item instanceof PDO ||
-                $item instanceof SimpleXMLElement
-            ) {
-                $item = 'Unserializable object - ' . get_class($item);
-            } elseif ($item instanceof Exception) {
-                $item = sprintf(
-                    'Unserializable object - %s. Error: %s in %s, line %s',
-                    get_class($item),
-                    $item->getMessage(),
-                    $item->getFile(),
-                    $item->getLine()
-                );
-            } elseif (is_object($item)) {
-                if (method_exists($item, '__debugInfo')) {
-                    // Convert objects into using __debugInfo.
-                    $item = $this->_walkDebugInfo($walker, $item);
-                } else {
-                    $item = $this->trySerialize($item);
-                }
-            } elseif (is_resource($item)) {
-                $item = sprintf('[%s] %s', get_resource_type($item), $item);
-            }
-
-            return $this->trySerialize($item);
-        };
-        // Copy so viewVars is not mutated.
+        $content = [];
         $vars = $controller->viewBuilder()->getVars();
-        array_walk_recursive($vars, $walker);
 
         foreach ($vars as $k => $v) {
             // Get the validation errors for Entity
@@ -156,46 +111,13 @@ class VariablesPanel extends DebugPanel
                     $errors[$k] = $formErrors;
                 }
             }
+            $content[$k] = Debugger::exportVarAsNodes($v, 15);
         }
 
         $this->_data = [
-            'content' => $vars,
+            'variables' => $content,
             'errors' => $errors,
         ];
-    }
-
-    /**
-     * Try to serialize an item, provide an error message if not possible
-     *
-     * @param mixed $item Item to check
-     * @return mixed The $item if it is serializable, error message if not
-     */
-    protected function trySerialize($item)
-    {
-        try {
-            serialize($item);
-
-            return $item;
-        } catch (\Exception $e) {
-            if (is_object($item)) {
-                return __d(
-                    'debug_kit',
-                    'Unserializable object - {0}. Error: {1} in {2}, line {3}',
-                    get_class($item),
-                    $e->getMessage(),
-                    $e->getFile(),
-                    $e->getLine()
-                );
-            }
-
-            return __d(
-                'debug_kit',
-                'Unserializable Error: {1} in {2}, line {3}',
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine()
-            );
-        }
     }
 
     /**
@@ -205,10 +127,10 @@ class VariablesPanel extends DebugPanel
      */
     public function summary()
     {
-        if (!isset($this->_data['content'])) {
+        if (!isset($this->_data['variables'])) {
             return '0';
         }
 
-        return (string)count($this->_data['content']);
+        return (string)count($this->_data['variables']);
     }
 }

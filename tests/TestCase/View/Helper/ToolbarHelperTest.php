@@ -68,6 +68,25 @@ class ToolbarHelperTest extends TestCase
         unset($this->Toolbar);
     }
 
+    public function testDumpNodesSorted()
+    {
+        $path = '//*[@class="cake-dbg-array-item"]/*[@class="cake-dbg-string"]';
+        $data = ['z' => 1, 'a' => 99, 'm' => 123];
+        $nodes = array_map(function ($v) {
+            return Debugger::exportVarAsNodes($v);
+        }, $data);
+        $result = $this->Toolbar->dumpNodes($nodes);
+        $xml = new SimpleXmlElement($result);
+        $elements = $xml->xpath($path);
+        $this->assertSame(["'z'", "'a'", "'m'"], array_map('strval', $elements));
+
+        $this->Toolbar->setSort(true);
+        $result = $this->Toolbar->dumpNodes($nodes);
+        $xml = new SimpleXmlElement($result);
+        $elements = $xml->xpath($path);
+        $this->assertSame(["'a'", "'m'", "'z'"], array_map('strval', $elements));
+    }
+
     public function testDumpCoerceHtml()
     {
         $restore = Debugger::configInstance('exportFormatter');

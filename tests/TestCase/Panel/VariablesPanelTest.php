@@ -85,7 +85,7 @@ class VariablesPanelTest extends TestCase
         $controller = new class {
             use ViewVarsTrait;
         };
-        $controller->viewBuilder()->setVars([
+        $vars = [
             'resource' => $resource,
             'unserializableDebugInfo' => $unserializableDebugInfo,
             'debugInfoException' => $debugInfoException,
@@ -96,44 +96,13 @@ class VariablesPanelTest extends TestCase
             'string' => 'yes',
             'array' => ['some' => 'key'],
             'notSerializableForm' => new TestForm(),
-        ]);
+        ];
+        $controller->viewBuilder()->setVars($vars);
         $event = new Event('Controller.shutdown', $controller);
         $this->panel->shutdown($event);
         $output = $this->panel->data();
 
-        array_walk_recursive($output, function ($item) {
-            try {
-                serialize($item);
-            } catch (\Exception $e) {
-                $this->fail('Panel Output content is not serializable');
-            }
-        });
-        $this->assertRegExp('/^\[stream\] Resource id #\d+$/', $output['content']['resource']);
-        $this->assertIsArray($output['content']['unserializableDebugInfo']);
-
-        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
-            $expectedErrorMessage = "Unserializable object - stdClass. Error: Serialization of 'PDO' is not allowed";
-        } else {
-            $expectedErrorMessage = 'Unserializable object - stdClass. Error: You cannot serialize or unserialize PDO instances';
-        }
-        $this->assertStringStartsWith(
-            $expectedErrorMessage,
-            $output['content']['unserializableDebugInfo']['unserializable']
-        );
-        $this->assertStringStartsWith(
-            'Could not retrieve debug info - Cake\ORM\Query. Error: The `NonExistentAssociation` association is not defined on `Requests`',
-            $output['content']['debugInfoException']
-        );
-        $this->assertInstanceOf(
-            'Cake\ORM\Query',
-            $controller->viewBuilder()->getVar('query'),
-            'Original value should not be mutated'
-        );
-        $this->assertIsArray($output['content']['updateQuery']);
-        $this->assertIsArray($output['content']['query']);
-        $this->assertIsArray($output['content']['unbufferedQuery']);
-        $this->assertIsArray($output['content']['result set']);
-        $this->assertEquals($controller->viewBuilder()->getVar('string'), $output['content']['string']);
-        $this->assertEquals($controller->viewBuilder()->getVar('array'), $output['content']['array']);
+        $this->assertIsArray($output);
+        $this->assertEquals(array_keys($vars), array_keys($output['variables']));
     }
 }

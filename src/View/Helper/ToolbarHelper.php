@@ -70,7 +70,7 @@ class ToolbarHelper extends Helper
     public function dumpNodes(array $nodes): string
     {
         $formatter = new HtmlFormatter();
-        if ($this->sort && is_array($nodes)) {
+        if ($this->sort) {
             ksort($nodes);
         }
         $items = [];

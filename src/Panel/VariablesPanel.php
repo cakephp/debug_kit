@@ -102,7 +102,7 @@ class VariablesPanel extends DebugPanel
                     $errors[$k] = $formErrors;
                 }
             }
-            $content[$k] = Debugger::exportVarAsNodes($v, 15);
+            $content[$k] = Debugger::exportVarAsNodes($v, 5);
         }
 
         $this->_data = [

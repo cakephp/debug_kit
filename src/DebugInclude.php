@@ -16,6 +16,7 @@ namespace DebugKit;
 
 use Cake\Core\Plugin as CorePlugin;
 use Composer\Json\JsonFile;
+use InvalidArgumentException;
 
 /**
  * Contains methods for Providing list of files.
@@ -173,6 +174,8 @@ class DebugInclude
             case 'vendor':
                 return str_replace($this->_composerPaths[$name], '', $file);
         }
+
+        throw new InvalidArgumentException("Type `{$type}` is not supported.");
     }
 
     /**

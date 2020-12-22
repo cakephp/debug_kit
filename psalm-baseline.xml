@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="3.18.2@19aa905f7c3c7350569999a93c40ae91ae4e1626">
   <file src="src/Controller/DashboardController.php">
-    <InvalidNullableReturnType occurrences="1">
-      <code>\Cake\Http\Response</code>
-    </InvalidNullableReturnType>
     <NullableReturnStatement occurrences="1">
       <code>$this-&gt;redirect(['action' =&gt; 'index'])</code>
     </NullableReturnStatement>
@@ -19,9 +16,6 @@
     </InternalProperty>
   </file>
   <file src="src/DebugInclude.php">
-    <InvalidNullableReturnType occurrences="1">
-      <code>string</code>
-    </InvalidNullableReturnType>
     <PossiblyNullArrayOffset occurrences="2">
       <code>$this-&gt;_composerPaths</code>
       <code>$this-&gt;_pluginPaths</code>

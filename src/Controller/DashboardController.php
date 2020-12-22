@@ -57,7 +57,7 @@ class DashboardController extends DebugKitController
     /**
      * Reset SQLite DB.
      *
-     * @return \Cake\Http\Response
+     * @return \Cake\Http\Response|null
      */
     public function reset()
     {

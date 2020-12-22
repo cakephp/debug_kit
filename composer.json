@@ -56,7 +56,7 @@
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
         "test": "phpunit",
         "psalm": "psalm.phar --show-info=false",
-        "psalm-setup": "cp composer.json composer.backup && composer require --dev psalm/phar:^3.11 && mv composer.backup composer.json"
+        "psalm-setup": "cp composer.json composer.backup && composer require --dev psalm/phar:^4.3 && mv composer.backup composer.json"
     },
     "prefer-stable": true
 }

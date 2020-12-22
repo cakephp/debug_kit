@@ -29,7 +29,7 @@ class MailPanel extends DebugPanel
     /**
      * The list of emails produced during the request
      *
-     * @var \ArrayObject
+     * @var \ArrayObject|null
      */
     protected $emailLog;
 

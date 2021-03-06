@@ -253,7 +253,7 @@ table th {
 
 pre,
 .debug-table td {
-	font-family: Monaco, Consolas, mono-space;
+	font-family: Monaco, Consolas, monospace;
 }
 
 /* X column tables have the 2nd+ cell right aligned */
@@ -282,7 +282,7 @@ pre,
 	margin: 10px 0;
 }
 .deprecation-list li {
-	font-family: Monaco, Consolas, mono-space;
+	font-family: Monaco, Consolas, monospace;
 }
 
 /**
@@ -427,7 +427,7 @@ pre,
 }
 .history-url {
 	font-size: 14px;
-	font-family: Monaco, Consolas, mono-space;
+	font-family: Monaco, Consolas, monospace;
 }
 
 /**

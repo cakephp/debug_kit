@@ -111,7 +111,7 @@ jobs:
       run: composer install
 
     - name: Run phpcs
-      run: vendor/bin/phpcs --report=checkstyle -p src/ tests/ | cs2pr
+      run: vendor/bin/phpcs --report=checkstyle src/ tests/ | cs2pr
 
     - name: Run psalm
       run: psalm --output-format=github

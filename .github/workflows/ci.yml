@@ -32,9 +32,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
 
     steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v2
 
     - name: Setup Service
       if: matrix.db-type == 'mysql'
@@ -99,9 +97,7 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
+    - uses: actions/checkout@v2
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -109,13 +105,13 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl
         coverage: none
-        tools: psalm:~4.1.0
+        tools: psalm:~4.1.0, cs2pr
 
     - name: Composer Install
       run: composer install
 
     - name: Run phpcs
-      run: vendor/bin/phpcs -p src/ tests/
+      run: vendor/bin/phpcs -p src/ tests/ | cs2pr
 
     - name: Run psalm
       run: psalm --output-format=github

@@ -260,7 +260,10 @@ class ToolbarService
             $requests = $this->getTableLocator()->get('DebugKit.Requests');
             $requests->gc();
         } catch (MissingDatasourceConfigException $e) {
-            Log::warning('Unable to save request. Check your custom debut_kit datasource connection or check that SQLite extension is enabled..');
+            Log::warning(
+                'Unable to save request. Check your debug_kit datasource connection ' .
+                'or ensure that PDO SQLite extension is enabled.'
+            );
             Log::warning($e->getMessage());
 
             return false;

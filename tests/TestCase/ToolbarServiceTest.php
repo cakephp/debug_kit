@@ -240,6 +240,34 @@ class ToolbarServiceTest extends TestCase
     }
 
     /**
+     * Test that saveData gracefully handles missing connections
+     *
+     * @return void
+     */
+    public function testSaveDataMissingConnection()
+    {
+        $restore = ConnectionManager::getConfig('test_debug_kit');
+        ConnectionManager::drop('test_debug_kit');
+
+        $request = new Request([
+            'url' => '/articles',
+            'environment' => ['REQUEST_METHOD' => 'GET'],
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
+        $row = $bar->saveData($request, $response);
+        $this->assertEmpty($row);
+
+        ConnectionManager::setConfig('test_debug_kit', $restore);
+    }
+
+    /**
      * Test injectScripts()
      *
      * @return void

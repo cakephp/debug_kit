@@ -126,6 +126,6 @@ class SqlLogPanelTest extends TestCase
         $articles->findById(1)->first();
 
         $result = $this->panel->summary();
-        $this->assertRegExp('/\d+ \\/ \d+ ms/', $result);
+        $this->assertMatchesRegularExpression('/\d+ \\/ \d+ ms/', $result);
     }
 }

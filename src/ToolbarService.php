@@ -16,6 +16,7 @@ namespace DebugKit;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin as CorePlugin;
+use Cake\Datasource\Exception\MissingDatasourceConfigException;
 use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
@@ -254,9 +255,19 @@ class ToolbarService
             'requested_at' => $request->getEnv('REQUEST_TIME'),
             'panels' => [],
         ];
-        /** @var \DebugKit\Model\Table\RequestsTable $requests */
-        $requests = $this->getTableLocator()->get('DebugKit.Requests');
-        $requests->gc();
+        try {
+            /** @var \DebugKit\Model\Table\RequestsTable $requests */
+            $requests = $this->getTableLocator()->get('DebugKit.Requests');
+            $requests->gc();
+        } catch (MissingDatasourceConfigException $e) {
+            Log::warning(
+                'Unable to save request. Check your debug_kit datasource connection ' .
+                'or ensure that PDO SQLite extension is enabled.'
+            );
+            Log::warning($e->getMessage());
+
+            return false;
+        }
 
         $row = $requests->newEntity($data);
         $row->setNew(true);
@@ -283,7 +294,7 @@ class ToolbarService
             return $requests->save($row);
         } catch (PDOException $e) {
             Log::warning('Unable to save request. This is probably due to concurrent requests.');
-            Log::warning((string)$e);
+            Log::warning($e->getMessage());
         }
 
         return false;

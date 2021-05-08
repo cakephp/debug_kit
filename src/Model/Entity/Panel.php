@@ -29,7 +29,7 @@ class Panel extends Entity
     /**
      * Some fields should not be in JSON/array exports.
      *
-     * @var array
+     * @var string[]
      */
     protected $_hidden = ['content'];
 

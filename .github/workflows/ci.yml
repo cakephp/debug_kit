@@ -15,11 +15,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['5.6', '7.2']
+        php-version: ['5.6', '7.4']
         db-type: [mysql, pgsql, sqlite]
         prefer-lowest: ['']
         include:
-          - php-version: '7.2'
+          - php-version: '5.6'
             db-type: 'sqlite'
             prefer-lowest: 'prefer-lowest'
 
@@ -66,7 +66,7 @@ jobs:
         if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
           composer update --prefer-lowest --prefer-stable
         else
-          composer install
+          composer update
         fi
 
     - name: Run PHPUnit
@@ -87,5 +87,5 @@ jobs:
         fi
 
     - name: Code Coverage Report
-      if: success() && matrix.php-version == '7.4' && matrix.db-type == 'mysql'
+      if: matrix.php-version == '7.4' && matrix.db-type == 'mysql'
       uses: codecov/codecov-action@v1

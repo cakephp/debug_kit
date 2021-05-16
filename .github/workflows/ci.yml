@@ -72,7 +72,7 @@ jobs:
     - name: Run PHPUnit
       run: |
         if [[ ${{ matrix.db-type }} == 'sqlite' ]]; then
-          export DB_URL='sqlite:///:memory:'
+          export DB_URL='sqlite://./tests.sqlite'
         fi
         if [[ ${{ matrix.db-type }} == 'mysql' ]]; then
           export DB_URL='mysql://root:root@127.0.0.1/cakephp'

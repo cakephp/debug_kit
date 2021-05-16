@@ -1,0 +1,91 @@
+name: CI
+
+
+on:
+  push:
+    branches:
+      - 3.x
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  testsuite-linux:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['5.6', '7.4']
+        db-type: [mysql, pgsql, sqlite]
+        prefer-lowest: ['']
+        include:
+          - php-version: '5.6'
+            db-type: 'sqlite'
+            prefer-lowest: 'prefer-lowest'
+
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: postgres
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Service
+      if: matrix.db-type == 'mysql'
+      run: |
+        sudo service mysql start
+        mysql -h 127.0.0.1 -u root -proot -e 'CREATE DATABASE cakephp;'
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl, pdo_${{ matrix.db-type }}
+        coverage: pcov
+
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Get date part for cache key
+      id: key-date
+      run: echo "::set-output name=date::$(date +'%Y-%m')"
+
+    - name: Cache composer dependencies
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}-${{ matrix.prefer-lowest }}
+
+    - name: Composer install
+      run: |
+        if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
+          composer update --prefer-lowest --prefer-stable
+        else
+          composer update
+        fi
+
+    - name: Run PHPUnit
+      run: |
+        if [[ ${{ matrix.db-type }} == 'sqlite' ]]; then
+          export DB_URL='sqlite://./tests.sqlite'
+        fi
+        if [[ ${{ matrix.db-type }} == 'mysql' ]]; then
+          export DB_URL='mysql://root:root@127.0.0.1/cakephp'
+        fi
+        if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then
+          export DB_URL='postgres://postgres:postgres@127.0.0.1/postgres'
+        fi
+        if [[ ${{ matrix.php-version }} == '7.4' && ${{ matrix.db-type }} == 'mysql' ]]; then
+          vendor/bin/phpunit --coverage-clover=coverage.xml
+        else
+          vendor/bin/phpunit
+        fi
+
+    - name: Code Coverage Report
+      if: matrix.php-version == '7.4' && matrix.db-type == 'mysql'
+      uses: codecov/codecov-action@v1

@@ -15,7 +15,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
-use Cake\Routing\DispatcherFactory;
+use Cake\Utility\Security;
 
 require_once 'vendor/autoload.php';
 
@@ -112,5 +112,7 @@ Log::setConfig([
         'file' => 'error',
     ],
 ]);
+
+Security::setSalt('a long random string that no one will ever guess');
 
 Plugin::getCollection()->add(new \DebugKit\Plugin());

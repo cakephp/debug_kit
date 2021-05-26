@@ -253,10 +253,10 @@ class DebugEngine extends CacheEngine
     /**
      * @inheritDoc
      */
-    public function deleteMultiple($data): bool
+    public function deleteMultiple($keys): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->deleteMultiple($data);
+        $result = $this->_engine->deleteMultiple($keys);
         $duration = microtime(true) - $start;
 
         $this->track('delete');

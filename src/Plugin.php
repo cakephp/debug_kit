@@ -60,16 +60,16 @@ class Plugin extends BasePlugin
     /**
      * Add middleware for the plugin.
      *
-     * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to update.
+     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to update.
      * @return \Cake\Http\MiddlewareQueue
      */
-    public function middleware(MiddlewareQueue $middleware): MiddlewareQueue
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         if ($this->service) {
-            $middleware->insertAt(0, new DebugKitMiddleware($this->service));
+            $middlewareQueue->insertAt(0, new DebugKitMiddleware($this->service));
         }
 
-        return $middleware;
+        return $middlewareQueue;
     }
 
     /**

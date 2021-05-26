@@ -165,7 +165,7 @@ In order to preview emails before sending them, you need to create a preview
 class that defines the receipient and required template variables for your
 mailer methods::
 
-    // in src/Mailer/MailPreview/WelcomePreview.php
+    // in src/Mailer/Preview/WelcomePreview.php
     namespace App\Mailer\Preview;
 
     use DebugKit\Mailer\MailPreview;

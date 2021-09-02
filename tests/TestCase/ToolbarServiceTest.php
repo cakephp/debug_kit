@@ -162,6 +162,19 @@ class ToolbarServiceTest extends TestCase
 
         $bar = new ToolbarService($this->events, []);
         $this->assertFalse($bar->saveData($request, $response));
+
+        $request = new Request([
+            'url' => '/debug-kit',
+            'params' => [],
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $bar = new ToolbarService($this->events, []);
+        $this->assertNotEmpty($bar->saveData($request, $response));
     }
 
     /**

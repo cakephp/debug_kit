@@ -16,6 +16,10 @@ Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $rou
         ['controller' => 'Requests', 'action' => 'view']
     );
     $routes->connect(
+        '/panels/view/latest-history',
+        ['controller' => 'Panels', 'action' => 'latestHistory']
+    );
+    $routes->connect(
         '/panels/view/*',
         ['controller' => 'Panels', 'action' => 'view']
     );

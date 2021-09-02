@@ -90,4 +90,33 @@ class PanelsController extends DebugKitController
         $this->set(@unserialize($panel->content));
         // @codingStandardsIgnoreEnd
     }
+
+    /**
+     * Get Latest request history panel
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function latestHistory()
+    {
+        /** @var array{id:string}|null $request */
+        $request = $this->Panels->Requests->find('recent')
+            ->select(['id'])
+            ->disableHydration()
+            ->first();
+        if (!$request) {
+            throw new NotFoundException();
+        }
+        /** @var array{id:string}|null $historyPanel */
+        $historyPanel = $this->Panels->find('byRequest', ['requestId' => $request['id']])
+            ->where(['Panel' => 'History'])
+            ->select(['id'])
+            ->first();
+        if (!$historyPanel) {
+            throw new NotFoundException();
+        }
+
+        return $this->redirect([
+            'action' => 'view', $historyPanel['id'],
+        ]);
+    }
 }

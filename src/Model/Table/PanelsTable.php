@@ -21,6 +21,7 @@ use Cake\ORM\Table;
  * The panels table collects the information for each panel on
  * each request.
  *
+ * @property \DebugKit\Model\Table\RequestsTable&\Cake\ORM\Association\BelongsTo $Requests
  * @method \DebugKit\Model\Entity\Panel get($primaryKey, $options = [])
  * @method \DebugKit\Model\Entity\Panel newEntity($data = null, array $options = [])
  * @method \DebugKit\Model\Entity\Panel[] newEntities(array $data, array $options = [])

@@ -231,7 +231,7 @@ class ToolbarService
     public function saveData(ServerRequest $request, ResponseInterface $response)
     {
         $path = $request->getUri()->getPath();
-        $dashboardUrl = '/debug-kit/dashboard';
+        $dashboardUrl = '/debug-kit';
         if (strpos($path, 'debug_kit') !== false || strpos($path, 'debug-kit') !== false) {
             if (!($path === $dashboardUrl || $path === $dashboardUrl . '/')) {
                 // internal debug-kit request

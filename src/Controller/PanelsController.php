@@ -104,7 +104,7 @@ class PanelsController extends DebugKitController
             ->disableHydration()
             ->first();
         if (!$request) {
-            throw new NotFoundException();
+            throw new NotFoundException('No requests found');
         }
         /** @var array{id:string}|null $historyPanel */
         $historyPanel = $this->Panels->find('byRequest', ['requestId' => $request['id']])
@@ -112,7 +112,7 @@ class PanelsController extends DebugKitController
             ->select(['id'])
             ->first();
         if (!$historyPanel) {
-            throw new NotFoundException();
+            throw new NotFoundException('History Panel from latest request not found');
         }
 
         return $this->redirect([

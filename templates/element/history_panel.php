@@ -14,7 +14,6 @@
 /**
  * @var \DebugKit\View\AjaxView $this
  * @var \DebugKit\Model\Entity\Panel $panel
- * @var \DebugKit\Model\Entity\Request $currentRequest
  * @var array $requests
  */
 ?>
@@ -31,13 +30,13 @@
     </p>
     <ul class="history-list">
         <li>
-            <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $currentRequest->id] ?>
-            <a class="history-link" data-request="<?= $currentRequest->id ?>" href="<?= $this->Url->build($url) ?>">
-                <span class="history-time"><?= h($currentRequest->requested_at) ?></span>
-                <span class="history-bubble"><?= h($currentRequest->method) ?></span>
-                <span class="history-bubble"><?= h($currentRequest->status_code) ?></span>
-                <span class="history-bubble"><?= h($currentRequest->content_type) ?></span>
-                <span class="history-url"><?= h($currentRequest->url) ?></span>
+            <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id] ?>
+            <a class="history-link" data-request="<?= $panel->request_id ?>" href="<?= $this->Url->build($url) ?>">
+                <span class="history-time"><?= h($panel->request->requested_at) ?></span>
+                <span class="history-bubble"><?= h($panel->request->method) ?></span>
+                <span class="history-bubble"><?= h($panel->request->status_code) ?></span>
+                <span class="history-bubble"><?= h($panel->request->content_type) ?></span>
+                <span class="history-url"><?= h($panel->request->url) ?></span>
             </a>
         </li>
         <?php foreach ($requests as $request): ?>
@@ -61,13 +60,13 @@
     </p>
     <ul class="history-list">
         <li>
-            <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $currentRequest->id] ?>
-            <a class="history-link" data-request="<?= $currentRequest->id ?>" href="<?= $this->Url->build($url) ?>">
-                <span class="history-time"><?= h($currentRequest->requested_at) ?></span>
-                <span class="history-bubble"><?= h($currentRequest->method) ?></span>
-                <span class="history-bubble"><?= h($currentRequest->status_code) ?></span>
-                <span class="history-bubble"><?= h($currentRequest->content_type) ?></span>
-                <span class="history-url"><?= h($currentRequest->url) ?></span>
+            <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id] ?>
+            <a class="history-link" data-request="<?= $panel->request_id ?>" href="<?= $this->Url->build($url) ?>">
+                <span class="history-time"><?= h($panel->request->requested_at) ?></span>
+                <span class="history-bubble"><?= h($panel->request->method) ?></span>
+                <span class="history-bubble"><?= h($panel->request->status_code) ?></span>
+                <span class="history-bubble"><?= h($panel->request->content_type) ?></span>
+                <span class="history-url"><?= h($panel->request->url) ?></span>
             </a>
         </li>
     </ul>

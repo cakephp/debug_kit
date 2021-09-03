@@ -107,9 +107,6 @@ class PanelsControllerTest extends IntegrationTestCase
         $this->get('/debug-kit/panels/view/latest-history');
         $this->assertRedirect([
             'action' => 'view', $panel->id,
-            '?' => [
-                'include-request' => 1,
-            ],
         ]);
     }
 }

@@ -83,11 +83,7 @@ class PanelsController extends DebugKitController
     public function view($id = null)
     {
         $this->set('sort', $this->request->getCookie('debugKit_sort'));
-        $panel = $this->Panels->get($id);
-        if ($panel->title === 'History') {
-            $request = $this->Panels->Requests->get($panel->request_id);
-            $this->set('currentRequest', $request);
-        }
+        $panel = $this->Panels->get($id, ['contain' => ['Requests']]);
 
         $this->set('panel', $panel);
         // @codingStandardsIgnoreStart
@@ -121,9 +117,6 @@ class PanelsController extends DebugKitController
 
         return $this->redirect([
             'action' => 'view', $historyPanel['id'],
-            '?' => [
-                'include-request' => 1,
-            ],
         ]);
     }
 }

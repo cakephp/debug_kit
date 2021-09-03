@@ -23,6 +23,8 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property string $element
  * @property string $content
+ *
+ * @property \DebugKit\Model\Entity\Request $request
  */
 class Panel extends Entity
 {

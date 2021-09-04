@@ -102,7 +102,7 @@ class PanelsControllerTest extends IntegrationTestCase
     public function testLatestHistory()
     {
         $request = $this->makeRequest();
-        $panel = $this->makePanel($request, 'History');
+        $panel = $this->makePanel($request, 'DebugKit.History', 'History');
 
         $this->get('/debug-kit/panels/view/latest-history');
         $this->assertRedirect([

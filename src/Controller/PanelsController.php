@@ -108,7 +108,7 @@ class PanelsController extends DebugKitController
         }
         /** @var array{id:string}|null $historyPanel */
         $historyPanel = $this->Panels->find('byRequest', ['requestId' => $request['id']])
-            ->where(['Panel' => 'History'])
+            ->where(['title' => 'History'])
             ->select(['id'])
             ->first();
         if (!$historyPanel) {

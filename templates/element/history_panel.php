@@ -20,12 +20,12 @@
 <div id="request-history">
 <?php if (empty($requests)): ?>
     <p class="warning">
-        <?= __d('debug_kit', 'No previous requests logged.') ?>
+        <?= __d('debug_kit', 'No requests logged.') ?>
         <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
     </p>
 <?php else: ?>
     <p>
-        <?= count($requests) ?> <?= __d('debug_kit', 'previous requests available') ?>
+        <?= count($requests) ?> <?= __d('debug_kit', 'requests available') ?>
         <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
     </p>
     <ul class="history-list">

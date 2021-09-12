@@ -95,4 +95,21 @@ class PanelsControllerTest extends IntegrationTestCase
         $this->assertResponseError();
         $this->assertResponseContains('Error page');
     }
+
+    /**
+     * @return void
+     */
+    public function testLatestHistory()
+    {
+        $request = $this->getTableLocator()->get('DebugKit.Requests')->find('recent')->first();
+        if (!$request) {
+            $request = $this->makeRequest();
+        }
+        $panel = $this->makePanel($request, 'DebugKit.History', 'History');
+
+        $this->get('/debug-kit/panels/view/latest-history');
+        $this->assertRedirect([
+            'action' => 'view', $panel->id,
+        ]);
+    }
 }

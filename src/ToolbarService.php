@@ -230,19 +230,23 @@ class ToolbarService
      */
     public function saveData(ServerRequest $request, ResponseInterface $response)
     {
-        $ignorePathsPattern = $this->getConfig('ignorePathsPattern');
         $path = $request->getUri()->getPath();
-        $statusCode = $response->getStatusCode();
+        $dashboardUrl = '/debug-kit';
+        if (strpos($path, 'debug_kit') !== false || strpos($path, 'debug-kit') !== false) {
+            if (!($path === $dashboardUrl || $path === $dashboardUrl . '/')) {
+                // internal debug-kit request
+                return false;
+            }
+            // debug-kit dashboard, save request and show toolbar
+        }
 
+        $ignorePathsPattern = $this->getConfig('ignorePathsPattern');
+        $statusCode = $response->getStatusCode();
         if (
-            strpos($path, 'debug_kit') !== false ||
-            strpos($path, 'debug-kit') !== false ||
-            (
-                $ignorePathsPattern &&
-                $statusCode >= 200 &&
-                $statusCode <= 299 &&
-                preg_match($ignorePathsPattern, $path)
-            )
+            $ignorePathsPattern &&
+            $statusCode >= 200 &&
+            $statusCode <= 299 &&
+            preg_match($ignorePathsPattern, $path)
         ) {
             return false;
         }

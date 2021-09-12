@@ -83,11 +83,40 @@ class PanelsController extends DebugKitController
     public function view($id = null)
     {
         $this->set('sort', $this->request->getCookie('debugKit_sort'));
-        $panel = $this->Panels->get($id);
+        $panel = $this->Panels->get($id, ['contain' => ['Requests']]);
 
         $this->set('panel', $panel);
         // @codingStandardsIgnoreStart
         $this->set(@unserialize($panel->content));
         // @codingStandardsIgnoreEnd
+    }
+
+    /**
+     * Get Latest request history panel
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function latestHistory()
+    {
+        /** @var array{id:string}|null $request */
+        $request = $this->Panels->Requests->find('recent')
+            ->select(['id'])
+            ->disableHydration()
+            ->first();
+        if (!$request) {
+            throw new NotFoundException('No requests found');
+        }
+        /** @var array{id:string}|null $historyPanel */
+        $historyPanel = $this->Panels->find('byRequest', ['requestId' => $request['id']])
+            ->where(['title' => 'History'])
+            ->select(['id'])
+            ->first();
+        if (!$historyPanel) {
+            throw new NotFoundException('History Panel from latest request not found');
+        }
+
+        return $this->redirect([
+            'action' => 'view', $historyPanel['id'],
+        ]);
     }
 }

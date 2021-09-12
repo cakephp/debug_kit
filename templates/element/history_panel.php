@@ -11,7 +11,6 @@
  * @since         DebugKit 1.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 /**
  * @var \DebugKit\View\AjaxView $this
  * @var \DebugKit\Model\Entity\Panel $panel
@@ -20,16 +19,25 @@
 ?>
 <div id="request-history">
 <?php if (empty($requests)): ?>
-    <p class="warning"><?= __d('debug_kit', 'No previous requests logged.') ?></p>
+    <p class="warning">
+        <?= __d('debug_kit', 'No requests logged.') ?>
+        <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
+    </p>
 <?php else: ?>
-    <p><?= count($requests) ?> <?= __d('debug_kit', 'previous requests available') ?></p>
+    <p>
+        <?= count($requests) ?> <?= __d('debug_kit', 'requests available') ?>
+        <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
+    </p>
     <ul class="history-list">
         <li>
-            <?= $this->Html->link(
-                __d('debug_kit', 'Back to current request'),
-                ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id],
-                ['class' => 'history-link', 'data-request' => $panel->request_id]
-            ) ?>
+            <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id] ?>
+            <a class="history-link" data-request="<?= $panel->request_id ?>" href="<?= $this->Url->build($url) ?>">
+                <span class="history-time"><?= h($panel->request->requested_at) ?></span>
+                <span class="history-bubble"><?= h($panel->request->method) ?></span>
+                <span class="history-bubble"><?= h($panel->request->status_code) ?></span>
+                <span class="history-bubble"><?= h($panel->request->content_type) ?></span>
+                <span class="history-url"><?= h($panel->request->url) ?></span>
+            </a>
         </li>
         <?php foreach ($requests as $request): ?>
             <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>
@@ -47,13 +55,19 @@
 <?php endif; ?>
 </div>
 <script type="text/html" id="list-template">
+    <p>
+        <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
+    </p>
     <ul class="history-list">
         <li>
-            <?= $this->Html->link(
-                __d('debug_kit', 'Back to current request'),
-                ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id],
-                ['class' => 'history-link', 'data-request' => $panel->request_id]
-            ) ?>
+            <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id] ?>
+            <a class="history-link" data-request="<?= $panel->request_id ?>" href="<?= $this->Url->build($url) ?>">
+                <span class="history-time"><?= h($panel->request->requested_at) ?></span>
+                <span class="history-bubble"><?= h($panel->request->method) ?></span>
+                <span class="history-bubble"><?= h($panel->request->status_code) ?></span>
+                <span class="history-bubble"><?= h($panel->request->content_type) ?></span>
+                <span class="history-url"><?= h($panel->request->url) ?></span>
+            </a>
         </li>
     </ul>
 </script>

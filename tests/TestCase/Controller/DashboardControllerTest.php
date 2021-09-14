@@ -15,21 +15,18 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
  * Dashboard controller test.
  */
-class DashboardControllerTest extends IntegrationTestCase
+class DashboardControllerTest extends TestCase
 {
     use FixtureFactoryTrait;
-
-    public $fixtures = [
-        'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels',
-    ];
+    use IntegrationTestTrait;
 
     /**
      * Setup method.

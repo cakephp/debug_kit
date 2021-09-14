@@ -78,6 +78,6 @@ class DeprecationsPanelTest extends TestCase
 
     public function testSummary()
     {
-        $this->assertSame('3', $this->panel->summary());
+        $this->assertSame('1', $this->panel->summary());
     }
 }

@@ -32,16 +32,6 @@ use DebugKit\ToolbarService;
 class ToolbarServiceTest extends TestCase
 {
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels',
-    ];
-
-    /**
      * @var EventManager
      */
     protected $events;

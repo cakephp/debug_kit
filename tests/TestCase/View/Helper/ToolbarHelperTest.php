@@ -48,7 +48,7 @@ class ToolbarHelperTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Router::connect('/:controller/:action');
+        Router::createRouteBuilder('/')->connect('/{controller}/{action}');
 
         $request = new Request();
         $request = $request->withParam('controller', 'pages')->withParam('action', 'display');

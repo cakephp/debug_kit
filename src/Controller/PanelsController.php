@@ -43,7 +43,7 @@ class PanelsController extends DebugKitController
     public function beforeRender(EventInterface $event)
     {
         $this->viewBuilder()
-            ->setHelpers([
+            ->addHelpers([
                 'Form', 'Html', 'Number', 'Url', 'DebugKit.Toolbar',
                 'DebugKit.Credentials', 'DebugKit.SimpleGraph',
             ])

@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
+use Cake\TestSuite\Fixture\SchemaLoader;
 
 require_once 'vendor/autoload.php';
 
@@ -121,3 +122,9 @@ Log::setConfig([
 ]);
 
 Plugin::getCollection()->add(new \DebugKit\Plugin());
+
+// Create test database schema
+if (env('FIXTURE_SCHEMA_METADATA')) {
+    $loader = new SchemaLoader();
+    $loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'), 'test');
+}

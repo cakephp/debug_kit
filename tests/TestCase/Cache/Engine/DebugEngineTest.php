@@ -132,8 +132,8 @@ class DebugEngineTest extends TestCase
 
         $logs = $this->logger->read();
         $this->assertCount(9, $logs);
-        $this->assertStringStartsWith('info :test: get `key`', $logs[0]);
-        $this->assertStringStartsWith('info :test: set `key`', $logs[1]);
+        $this->assertStringStartsWith('info: :test: get `key`', $logs[0]);
+        $this->assertStringStartsWith('info: :test: set `key`', $logs[1]);
     }
 
     /**

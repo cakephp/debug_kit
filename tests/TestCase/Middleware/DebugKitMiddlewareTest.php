@@ -31,16 +31,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 class DebugKitMiddlewareTest extends TestCase
 {
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels',
-    ];
-
-    /**
      * setup
      *
      * @return void
@@ -69,7 +59,7 @@ class DebugKitMiddlewareTest extends TestCase
     protected function handler()
     {
         $handler = $this->getMockBuilder(RequestHandlerInterface::class)
-            ->setMethods(['handle'])
+            ->onlyMethods(['handle'])
             ->getMock();
 
         return $handler;

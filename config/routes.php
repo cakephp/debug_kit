@@ -3,8 +3,8 @@
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
-return static function (RouteBuilder $outer_routes) {
-    $outer_routes->plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {
+return static function (RouteBuilder $outerRoutes) {
+    $outerRoutes->plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {
         $routes->setExtensions('json');
         $routes->setRouteClass(DashedRoute::class);
 

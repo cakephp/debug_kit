@@ -1,6 +1,7 @@
 <?php
-use Cake\Routing\RouteBuilder;
+
 use Cake\Routing\Route\DashedRoute;
+use Cake\Routing\RouteBuilder;
 
 return static function (RouteBuilder $outer_routes) {
     $outer_routes->plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {

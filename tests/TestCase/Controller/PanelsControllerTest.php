@@ -29,6 +29,16 @@ class PanelsControllerTest extends TestCase
     use IntegrationTestTrait;
 
     /**
+     * Tables to reset each test.
+     *
+     * @var array<string>
+     */
+    public $fixtures = [
+        'plugin.DebugKit.Requests',
+        'plugin.DebugKit.Panels',
+    ];
+
+    /**
      * Setup method.
      *
      * @return void

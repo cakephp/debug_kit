@@ -31,6 +31,16 @@ use Psr\Http\Server\RequestHandlerInterface;
 class DebugKitMiddlewareTest extends TestCase
 {
     /**
+     * Tables to reset each test.
+     *
+     * @var array<string>
+     */
+    public $fixtures = [
+        'plugin.DebugKit.Requests',
+        'plugin.DebugKit.Panels',
+    ];
+
+    /**
      * setup
      *
      * @return void

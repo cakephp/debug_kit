@@ -29,7 +29,6 @@ class MailPreviewControllerTest extends TestCase
     use FixtureFactoryTrait;
     use IntegrationTestTrait;
 
-
     /**
      * Setup method.
      *

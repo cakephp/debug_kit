@@ -8,6 +8,20 @@ use Cake\Database\Schema\TableSchema;
  */
 return [
     [
+        'table' => 'requests',
+        'columns' => [
+            'id' => ['type' => 'uuid', 'null' => false],
+            'url' => ['type' => 'text', 'null' => false],
+            'content_type' => ['type' => 'string'],
+            'status_code' => ['type' => 'integer'],
+            'method' => ['type' => 'string'],
+            'requested_at' => ['type' => 'datetime', 'null' => false],
+        ],
+        'constraints' => [
+            'primary' => ['type' => 'primary', 'columns' => ['id']],
+        ],
+    ],
+    [
         'table' => 'panels',
         'columns' => [
             'id' => ['type' => 'uuid'],
@@ -26,20 +40,6 @@ return [
                 'columns' => ['request_id'],
                 'references' => ['requests', 'id'],
             ],
-        ],
-    ],
-    [
-        'table' => 'requests',
-        'columns' => [
-            'id' => ['type' => 'uuid', 'null' => false],
-            'url' => ['type' => 'text', 'null' => false],
-            'content_type' => ['type' => 'string'],
-            'status_code' => ['type' => 'integer'],
-            'method' => ['type' => 'string'],
-            'requested_at' => ['type' => 'datetime', 'null' => false],
-        ],
-        'constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id']],
         ],
     ],
     [

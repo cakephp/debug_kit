@@ -112,7 +112,7 @@ class DebugPanel implements EventListenerInterface
     /**
      * Get the events this panels supports.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function implementedEvents(): array
     {

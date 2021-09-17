@@ -33,7 +33,7 @@ class RequestsControllerTest extends TestCase
      *
      * @var array<string>
      */
-    public $fixtures = [
+    protected $fixtures = [
         'plugin.DebugKit.Requests',
         'plugin.DebugKit.Panels',
     ];

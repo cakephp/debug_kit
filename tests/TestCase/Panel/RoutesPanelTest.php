@@ -14,7 +14,6 @@ declare(strict_types=1);
  **/
 namespace DebugKit\Test\TestCase\Panel;
 
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\RoutesPanel;
@@ -39,11 +38,10 @@ class RoutesPanelTest extends TestCase
         parent::setUp();
 
         Router::defaultRouteClass('DashedRoute');
-        Router::scope('/', function (RouteBuilder $routes) {
-            $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-            $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-            $routes->fallbacks('DashedRoute');
-        });
+        $routes = Router::createRouteBuilder('/');
+        $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+        $routes->fallbacks('DashedRoute');
 
         // Force Router::$initialized to be true.
         Router::url(['controller' => 'Pages', 'action' => 'display', 'contact']);
@@ -61,7 +59,8 @@ class RoutesPanelTest extends TestCase
         $this->panel->initialize();
         $this->assertSame('4', $this->panel->summary());
 
-        Router::connect('/test', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        Router::createRouteBuilder('/')
+            ->connect('/test', ['controller' => 'Pages', 'action' => 'display', 'home']);
         $this->assertSame('5', $this->panel->summary());
     }
 }

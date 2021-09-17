@@ -16,23 +16,16 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Cache\Cache;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use DebugKit\TestApp\Application;
 
 /**
  * Toolbar controller test.
  */
-class ToolbarControllerTest extends IntegrationTestCase
+class ToolbarControllerTest extends TestCase
 {
-    /**
-     * Fixtures.
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels',
-    ];
+    use IntegrationTestTrait;
 
     /**
      * Setup method.

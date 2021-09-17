@@ -32,11 +32,11 @@ use DebugKit\ToolbarService;
 class ToolbarServiceTest extends TestCase
 {
     /**
-     * Fixtures
+     * Tables to reset each test.
      *
-     * @var array
+     * @var array<string>
      */
-    public $fixtures = [
+    protected $fixtures = [
         'plugin.DebugKit.Requests',
         'plugin.DebugKit.Panels',
     ];

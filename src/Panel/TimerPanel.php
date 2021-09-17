@@ -27,7 +27,7 @@ class TimerPanel extends DebugPanel
     /**
      * Return an array of events to listen to.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function implementedEvents(): array
     {

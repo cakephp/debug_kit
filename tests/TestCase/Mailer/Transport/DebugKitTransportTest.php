@@ -25,7 +25,8 @@ class DebugKitTransportTest extends TestCase
     {
         $this->log = new \ArrayObject();
         $this->wrapped = $this->getMockBuilder(AbstractTransport::class)
-            ->setMethods(['send', 'customMethod'])
+            ->onlyMethods(['send'])
+            ->addMethods(['customMethod'])
             ->getMock();
         $this->transport = new DebugKitTransport(
             ['debugKitLog' => $this->log],

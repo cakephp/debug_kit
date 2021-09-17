@@ -69,6 +69,7 @@ class ToolbarHelper extends Helper
      */
     public function dumpNodes(array $nodes): string
     {
+        /** @psalm-suppress InternalMethod */
         $formatter = new HtmlFormatter();
         if ($this->sort) {
             ksort($nodes);

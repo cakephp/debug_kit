@@ -24,13 +24,6 @@ use DebugKit\DebugTimer;
 class TimedBehaviorTest extends TestCase
 {
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = ['core.Articles'];
-
-    /**
      * @var Table
      */
     protected $Article;

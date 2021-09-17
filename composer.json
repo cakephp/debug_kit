@@ -24,7 +24,7 @@
     },
     "require": {
         "php": ">=7.2",
-        "cakephp/cakephp": "^4.2.0",
+        "cakephp/cakephp": "dev-4.next as 4.3",
         "cakephp/chronos": "^2.0",
         "composer/composer": "^1.3 | ^2.0",
         "jdorn/sql-formatter": "^1.2"

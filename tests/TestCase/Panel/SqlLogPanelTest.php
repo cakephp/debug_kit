@@ -26,13 +26,6 @@ use ReflectionProperty;
 class SqlLogPanelTest extends TestCase
 {
     /**
-     * fixtures.
-     *
-     * @var array
-     */
-    public $fixtures = ['core.Articles'];
-
-    /**
      * @var SqlLogPanel
      */
     protected $panel;

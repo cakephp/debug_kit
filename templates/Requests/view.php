@@ -28,12 +28,12 @@ use Cake\Core\Configure;
     </li>
     <li class="toolbar-inner">
         <ul class="toolbar-inner">
-        <?php foreach ($toolbar->panels as $panel): ?>
+        <?php foreach ($toolbar->panels as $panel) : ?>
         <li class="panel hidden" data-id="<?= $panel->id ?>">
             <span class="panel-button">
                 <?= h($panel->title) ?>
             </span>
-            <?php if (strlen($panel->summary)): ?>
+            <?php if (!empty($panel->summary)) : ?>
             <span class="panel-summary">
                 <?= h($panel->summary) ?>
             </span>

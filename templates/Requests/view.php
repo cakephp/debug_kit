@@ -33,7 +33,7 @@ use Cake\Core\Configure;
             <span class="panel-button">
                 <?= h($panel->title) ?>
             </span>
-            <?php if (strlen($panel->summary)): ?>
+            <?php if (!empty($panel->summary)): ?>
             <span class="panel-summary">
                 <?= h($panel->summary) ?>
             </span>

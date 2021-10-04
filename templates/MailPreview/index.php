@@ -35,7 +35,7 @@
     <h4><?= __d('debug_kit', 'Example') ?></h4>
     <p><?= __d('debug_kit', "{0} integrates with CakePHP’s {1} class. Here's an example of such a mailer:", 'MailPreview', 'Mailer') ?></p>
 
-    <pre style="background-color:#f8f8f8;font-familiy:Monaco,sans-serif;overflow:scroll;margin:10px 0;line-height:25px;">
+    <pre style="background-color:#f8f8f8;font-family:Monaco,monospace;overflow:scroll;margin:10px 0;line-height:25px;">
     <?php
         $code = '
     <?php

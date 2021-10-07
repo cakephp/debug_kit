@@ -63,8 +63,8 @@ class MailPreviewController extends DebugKitController
      */
     public function sent($panelId, $number)
     {
-        $this->loadModel('DebugKit.Panels');
-        $panel = $this->Panels->get($panelId);
+        /** @var \DebugKit\Model\Entity\Panel $panel */
+        $panel = $this->fetchTable('DebugKit.Panels')->get($panelId);
 
         // @codingStandardsIgnoreStart
         $content = @unserialize($panel->content);

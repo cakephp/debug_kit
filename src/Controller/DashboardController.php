@@ -44,11 +44,11 @@ class DashboardController extends DebugKitController
      */
     public function index()
     {
-        $this->loadModel('DebugKit.Requests');
+        $requestsModel = $this->fetchTable('DebugKit.Requests');
 
         $data = [
-            'driver' => get_class($this->Requests->getConnection()->getDriver()),
-            'rows' => $this->Requests->find()->count(),
+            'driver' => get_class($requestsModel->getConnection()->getDriver()),
+            'rows' => $requestsModel->find()->count(),
         ];
 
         $this->set('connection', $data);
@@ -62,10 +62,10 @@ class DashboardController extends DebugKitController
     public function reset()
     {
         $this->request->allowMethod('post');
-        $this->loadModel('DebugKit.Requests');
+        $requestsModel = $this->fetchTable('DebugKit.Requests');
 
-        $this->Requests->Panels->deleteAll('1=1');
-        $this->Requests->deleteAll('1=1');
+        $requestsModel->Panels->deleteAll('1=1');
+        $requestsModel->deleteAll('1=1');
 
         return $this->redirect(['action' => 'index']);
     }

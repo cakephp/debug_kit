@@ -27,6 +27,9 @@
     </PossiblyNullArrayOffset>
   </file>
   <file src="src/Mailer/MailPreview.php">
+    <DeprecatedTrait occurrences="1">
+      <code>ModelAwareTrait</code>
+    </DeprecatedTrait>
     <PossiblyFalseOperand occurrences="1">
       <code>$pos</code>
     </PossiblyFalseOperand>
@@ -55,11 +58,6 @@
       <code>$vendorName</code>
     </InvalidScalarArgument>
   </file>
-  <file src="src/Panel/EnvironmentPanel.php">
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$var['user']</code>
-    </PossiblyInvalidArgument>
-  </file>
   <file src="src/Panel/IncludePanel.php">
     <InvalidScalarArgument occurrences="4">
       <code>$pluginName</code>
@@ -73,27 +71,16 @@
       <code>count</code>
     </UndefinedInterfaceMethod>
   </file>
-  <file src="src/Panel/MailPanel.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$transport</code>
-    </ArgumentTypeCoercion>
-  </file>
   <file src="src/Panel/PanelRegistry.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$instance</code>
-    </ArgumentTypeCoercion>
     <LessSpecificImplementedReturnType occurrences="1">
       <code>string|null</code>
     </LessSpecificImplementedReturnType>
-    <LessSpecificReturnStatement occurrences="1">
-      <code>$instance</code>
-    </LessSpecificReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$class</code>
     </MoreSpecificImplementedParamType>
-    <MoreSpecificReturnType occurrences="1">
-      <code>\DebugKit\DebugPanel</code>
-    </MoreSpecificReturnType>
+    <UnsafeInstantiation occurrences="1">
+      <code>new $class($this, $config)</code>
+    </UnsafeInstantiation>
   </file>
   <file src="src/Panel/SqlLogPanel.php">
     <TypeDoesNotContainType occurrences="1">
@@ -105,11 +92,6 @@
   </file>
   <file src="src/Plugin.php">
     <InvalidArgument occurrences="1"/>
-  </file>
-  <file src="src/ToolbarService.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$row-&gt;id</code>
-    </InvalidScalarArgument>
   </file>
   <file src="src/View/Helper/ToolbarHelper.php">
     <DeprecatedMethod occurrences="1">

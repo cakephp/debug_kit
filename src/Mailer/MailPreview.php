@@ -16,6 +16,7 @@ namespace DebugKit\Mailer;
 
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -25,6 +26,7 @@ use ReflectionMethod;
  */
 class MailPreview
 {
+    use LocatorAwareTrait;
     use MailerAwareTrait;
     use ModelAwareTrait;
 

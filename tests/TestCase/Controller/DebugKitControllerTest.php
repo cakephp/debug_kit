@@ -21,15 +21,18 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use DebugKit\Controller\DebugKitController;
 use DebugKit\TestApp\Application;
 
 /**
  * Composer controller test.
  */
-class DebugKitControllerTest extends IntegrationTestCase
+class DebugKitControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * tests `debug` is disabled
      *
@@ -40,7 +43,6 @@ class DebugKitControllerTest extends IntegrationTestCase
         Configure::write('debug', false);
 
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
 
         $this->get('/debug-kit/toolbar/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
         $this->assertResponseError();

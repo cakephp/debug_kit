@@ -25,8 +25,6 @@ use DebugKit\TestApp\Form\TestForm;
  */
 class VariablesPanelTest extends TestCase
 {
-    public $fixtures = ['plugin.DebugKit.Requests', 'plugin.DebugKit.Panels'];
-
     /**
      * @var VariablesPanel
      */
@@ -74,9 +72,9 @@ class VariablesPanelTest extends TestCase
 
         $unserializableDebugInfo = $this
             ->getMockBuilder('\stdClass')
-            ->setMethods(['__debugInfo'])
+            ->addMethods(['__debugInfo'])
             ->getMock();
-        $unserializableDebugInfo->expects($this->once())->method('__debugInfo')->willReturn([
+        $unserializableDebugInfo->expects($this->any())->method('__debugInfo')->willReturn([
             'unserializable' => $unserializable,
         ]);
 

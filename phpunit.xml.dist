@@ -21,17 +21,13 @@
 		</whitelist>
 	</filter>
 
-	<!-- Setup a listener for fixtures -->
-	<listeners>
-		<listener class="Cake\TestSuite\Fixture\FixtureInjector">
-			<arguments>
-				<object class="Cake\TestSuite\Fixture\FixtureManager"/>
-			</arguments>
-		</listener>
-	</listeners>
+    <extensions>
+        <extension class="Cake\TestSuite\Fixture\PHPUnitExtension"/>
+    </extensions>
 
 	<php>
 		<ini name="memory_limit" value="-1"/>
+        <env name="FIXTURE_SCHEMA_METADATA" value="./tests/schema.php"/>
 		<!-- Postgres
 		<env name="DB_URL" value="postgres://root@localhost/cake_test_db"/>
 		-->

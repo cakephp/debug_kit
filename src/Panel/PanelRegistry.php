@@ -75,7 +75,7 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      * @param string $alias The alias of the panel.
      * @param array $config An array of config to use for the panel.
      * @return \DebugKit\DebugPanel The constructed panel class.
-     * @psalm-param class-string $class
+     * @psalm-param class-string<\DebugKit\DebugPanel> $class
      */
     protected function _create($class, string $alias, array $config)
     {

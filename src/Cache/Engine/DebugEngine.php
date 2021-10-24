@@ -28,7 +28,7 @@ class DebugEngine extends CacheEngine
     /**
      * Proxied cache engine config.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $_config;
 

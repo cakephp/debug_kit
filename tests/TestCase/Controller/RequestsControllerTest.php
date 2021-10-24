@@ -15,23 +15,25 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
  * Request controller test.
  */
-class RequestsControllerTest extends IntegrationTestCase
+class RequestsControllerTest extends TestCase
 {
     use FixtureFactoryTrait;
+    use IntegrationTestTrait;
 
     /**
-     * Fixtures.
+     * Tables to reset each test.
      *
-     * @var array
+     * @var array<string>
      */
-    public $fixtures = [
+    protected $fixtures = [
         'plugin.DebugKit.Requests',
         'plugin.DebugKit.Panels',
     ];

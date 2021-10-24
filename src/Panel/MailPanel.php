@@ -43,6 +43,7 @@ class MailPanel extends DebugPanel
         $reflection = new ReflectionClass(TransportFactory::class);
         $property = $reflection->getProperty('_config');
         $property->setAccessible(true);
+        /** @var array<\Cake\Mailer\AbstractTransport|array> $configs */
         $configs = $property->getValue();
 
         $log = $this->emailLog = new ArrayObject();

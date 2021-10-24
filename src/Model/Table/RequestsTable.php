@@ -109,6 +109,7 @@ class RequestsTable extends Table
                 ->enableHydration(false)
                 ->order(['requested_at' => 'desc'])
                 ->limit(Configure::read('DebugKit.requestCount') ?: 20)
+                ->all()
                 ->extract('id')
                 ->toArray();
 

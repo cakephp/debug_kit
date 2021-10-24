@@ -16,26 +16,18 @@ declare(strict_types=1);
 namespace DebugKit\Test\TestCase\Controller;
 
 use Cake\Routing\Router;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use DebugKit\Test\TestCase\FixtureFactoryTrait;
 use DebugKit\TestApp\Application;
 
 /**
  * Mail preview controller test
  */
-class MailPreviewControllerTest extends IntegrationTestCase
+class MailPreviewControllerTest extends TestCase
 {
     use FixtureFactoryTrait;
-
-    /**
-     * Fixtures.
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.DebugKit.Requests',
-        'plugin.DebugKit.Panels',
-    ];
+    use IntegrationTestTrait;
 
     /**
      * Setup method.
@@ -45,9 +37,7 @@ class MailPreviewControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        Router::scope('/', function ($routes) {
-            $routes->connect('/users/:action/*', ['controller' => 'Users']);
-        });
+        Router::createRouteBuilder('/')->connect('/users/{action}/*', ['controller' => 'Users']);
         $this->configApplication(Application::class, []);
     }
 

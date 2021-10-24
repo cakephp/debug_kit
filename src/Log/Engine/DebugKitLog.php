@@ -41,7 +41,7 @@ class DebugKitLog extends BaseLog
         if (!isset($this->_logs[$level])) {
             $this->_logs[$level] = [];
         }
-        $this->_logs[$level][] = [date('Y-m-d H:i:s'), $this->_format($message)];
+        $this->_logs[$level][] = [date('Y-m-d H:i:s'), $this->interpolate($message)];
     }
 
     /**

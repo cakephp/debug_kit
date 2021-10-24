@@ -15,14 +15,17 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use DebugKit\TestApp\Application;
 
 /**
  * Composer controller test.
  */
-class ComposerControllerTest extends IntegrationTestCase
+class ComposerControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Setup method.
      *
@@ -32,7 +35,6 @@ class ComposerControllerTest extends IntegrationTestCase
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
-        $this->useHttpServer(true);
     }
 
     /**

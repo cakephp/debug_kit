@@ -12,7 +12,7 @@ RUN cd /data/docs-builder \
   && make website LANGS="$LANGS" SOURCE=/data/docs DEST=/data/website \
   # Move media files into the output directory so video elements work.
   && mkdir -p /data/website/html/_static \
-  && cp /data/src/static/* /data/website/html/_static/
+  && cp /data/docs/static/* /data/website/html/_static/
 
 # Build a small nginx container with just the static site in it.
 FROM markstory/cakephp-docs-builder:runtime as runtime

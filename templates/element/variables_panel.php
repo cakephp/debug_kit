@@ -24,6 +24,10 @@ if (isset($error)) :
     printf('<p class="warning">%s</p>', $error);
 endif;
 
+if(isset($varsMaxDepth)){
+    printf('<p class="info">%s</p>', sprintf(__d('debug_kit', 'This view does not show very deep associations! Currently %s levels are being shown. You can overwrite this via the config key %s'), $varsMaxDepth, '<strong>DebugKit.variablesPanelMaxDepth</strong>'));
+}
+
 // Backwards compatibility for old debug kit data.
 if (!empty($content)) :
     printf('<label class="toggle-checkbox"><input type="checkbox" class="neat-array-sort"%s>%s</label>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));

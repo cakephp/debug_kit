@@ -24,7 +24,7 @@ if (isset($error)) :
     printf('<p class="warning">%s</p>', $error);
 endif;
 
-if(isset($varsMaxDepth)){
+if (isset($varsMaxDepth)) {
     printf('<p class="info">%s</p>', sprintf(__d('debug_kit', 'This view does not show very deep associations! Currently %s levels are being shown. You can overwrite this via the config key %s'), $varsMaxDepth, '<strong>DebugKit.variablesPanelMaxDepth</strong>'));
 }
 

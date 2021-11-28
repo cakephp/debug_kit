@@ -25,7 +25,7 @@ if (isset($error)) :
 endif;
 
 if (isset($varsMaxDepth)) {
-    $msg = sprintf(__d('debug_kit', '%s levels of nested arrays shown.'), $varsMaxDepth);
+    $msg = sprintf(__d('debug_kit', '%s levels of nested data shown.'), $varsMaxDepth);
     $msg .= __d('debug_kit', 'You can overwrite this via the config key');
     $msg .= ' <strong>DebugKit.variablesPanelMaxDepth</strong>';
     $msg .= __d('debug_kit', ' | Be aware that increasing the level depth can lead to an out of memory error.');

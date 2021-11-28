@@ -92,7 +92,7 @@ class VariablesPanel extends DebugPanel
         $errors = [];
         $content = [];
         $vars = $controller->viewBuilder()->getVars();
-        $varsMaxDepth = (int)Configure::read('DebugKit.variablesPanelMaxDepth') ?: 5;
+        $varsMaxDepth = (int)Configure::read('DebugKit.variablesPanelMaxDepth', 5);
 
         foreach ($vars as $k => $v) {
             // Get the validation errors for Entity

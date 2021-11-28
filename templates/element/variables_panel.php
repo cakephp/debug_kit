@@ -25,7 +25,9 @@ if (isset($error)) :
 endif;
 
 if (isset($varsMaxDepth)) {
-    printf('<p class="info">%s</p>', sprintf(__d('debug_kit', 'This view does not show very deep associations! Currently %s levels are being shown. You can overwrite this via the config key %s'), $varsMaxDepth, '<strong>DebugKit.variablesPanelMaxDepth</strong>'));
+    $msg = sprintf(__d('debug_kit', 'Currently %s levels are being shown. You can overwrite this via the config key %s'), $varsMaxDepth, '<strong>DebugKit.variablesPanelMaxDepth</strong>');
+    $msg .= ' | Be aware that increasing the level depth can lead to an out of memory error.';
+    printf('<p class="info">%s</p>', $msg);
 }
 
 // Backwards compatibility for old debug kit data.

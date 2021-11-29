@@ -451,7 +451,8 @@ pre,
  */
 .warning,
 .info {
-	padding: 10px 10px 10px 20px;
+    position: relative;
+	padding: 10px 10px 10px 50px;
 	font-size: 14px;
 }
 
@@ -477,8 +478,10 @@ pre,
 	text-align: center;
 	vertical-align: middle;
 	display: inline-block;
-	position: relative;
-	left: -11px;
+	position: absolute;
+	left: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
 
 	background-color: #fff;
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
@@ -91,6 +92,7 @@ class VariablesPanel extends DebugPanel
         $errors = [];
         $content = [];
         $vars = $controller->viewBuilder()->getVars();
+        $varsMaxDepth = (int)Configure::read('DebugKit.variablesPanelMaxDepth', 5);
 
         foreach ($vars as $k => $v) {
             // Get the validation errors for Entity
@@ -102,12 +104,13 @@ class VariablesPanel extends DebugPanel
                     $errors[$k] = $formErrors;
                 }
             }
-            $content[$k] = Debugger::exportVarAsNodes($v, 5);
+            $content[$k] = Debugger::exportVarAsNodes($v, $varsMaxDepth);
         }
 
         $this->_data = [
             'variables' => $content,
             'errors' => $errors,
+            'varsMaxDepth' => $varsMaxDepth,
         ];
     }
 

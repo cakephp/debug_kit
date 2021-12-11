@@ -24,11 +24,11 @@ foreach ($routes as $route) {
     }
 }
 
-$plugin_names = [];
-foreach (CorePlugin::loaded() as $plugin_name) {
-    if (!empty($amountOfRoutesPerGroup[$plugin_name])) {
-        $name = sprintf('%s (%s)', $plugin_name, $amountOfRoutesPerGroup[$plugin_name]);
-        $plugin_names[$name] = preg_replace('/\W+/', '', strtolower($plugin_name));
+$pluginNames = [];
+foreach (CorePlugin::loaded() as $pluginName) {
+    if (!empty( $amountOfRoutesPerGroup[$pluginName])) {
+        $name = sprintf('%s (%s)', $pluginName, $amountOfRoutesPerGroup[$pluginName]);
+        $pluginNames[$name] = preg_replace('/\W+/', '', strtolower($pluginName));
     }
 }
 
@@ -38,11 +38,11 @@ foreach (CorePlugin::loaded() as $plugin_name) {
         <?= __d('debug_kit', 'App') ?>
         <?= !empty($amountOfRoutesPerGroup['app']) ? ' (' . $amountOfRoutesPerGroup['app'] . ')' : '' ?>
     </button>
-    <?php foreach ($plugin_names as $plugin_name => $parsed_name) : ?>
+    <?php foreach ($pluginNames as $pluginName => $parsedName) : ?>
         <button type="button" class="btn-primary js-debugkit-toggle-plugin-route
-            <?= strpos($plugin_name, 'DebugKit') === 0 ? ' is-active' : '' ?>"
-            data-plugin=".route-entry--plugin-<?= $parsed_name ?>">
-            <?= $plugin_name ?>
+            <?= strpos($pluginName, 'DebugKit') === 0 ? ' is-active' : '' ?>"
+                data-plugin=".route-entry--plugin-<?= $parsedName ?>">
+            <?= $pluginName ?>
         </button>
     <?php endforeach; ?>
 </div>

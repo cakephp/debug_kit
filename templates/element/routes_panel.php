@@ -26,7 +26,7 @@ foreach ($routes as $route) {
 
 $plugin_names = [];
 foreach (CorePlugin::loaded() as $plugin_name) {
-    if (!empty( $amountOfRoutesPerGroup[$plugin_name])) {
+    if (!empty($amountOfRoutesPerGroup[$plugin_name])) {
         $name = sprintf('%s (%s)', $plugin_name, $amountOfRoutesPerGroup[$plugin_name]);
         $plugin_names[$name] = preg_replace('/\W+/', '', strtolower($plugin_name));
     }
@@ -36,11 +36,11 @@ foreach (CorePlugin::loaded() as $plugin_name) {
 <div class="debugkit-plugin-routes-button-wrapper">
     <button type="button" class="btn-primary js-debugkit-toggle-plugin-route" data-plugin=".route-entry--app">
         <?= __d('debug_kit', 'App') ?>
-        <?= (!empty( $amountOfRoutesPerGroup['app'])) ? ' (' . $amountOfRoutesPerGroup['app'] . ')' : '' ?>
+        <?= !empty($amountOfRoutesPerGroup['app']) ? ' (' . $amountOfRoutesPerGroup['app'] . ')' : '' ?>
     </button>
     <?php foreach ($plugin_names as $plugin_name => $parsed_name) : ?>
         <button type="button" class="btn-primary js-debugkit-toggle-plugin-route
-            <?= (strpos($plugin_name, 'DebugKit') === 0) ? ' is-active' : '' ?>"
+            <?= strpos($plugin_name, 'DebugKit') === 0 ? ' is-active' : '' ?>"
             data-plugin=".route-entry--plugin-<?= $parsed_name ?>">
             <?= $plugin_name ?>
         </button>
@@ -62,7 +62,7 @@ foreach (CorePlugin::loaded() as $plugin_name) {
             $class = 'route-entry route-entry--app';
         else :
             $class = 'route-entry route-entry--plugin route-entry--plugin-' .
-                preg_replace('/\W+/','',strtolower($route->defaults['plugin']));
+                preg_replace('/\W+/', '', strtolower($route->defaults['plugin']));
 
             // Hide DebugKit internal routes by default
             if ($route->defaults['plugin'] === 'DebugKit') {

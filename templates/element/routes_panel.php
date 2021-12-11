@@ -33,7 +33,7 @@ foreach (CorePlugin::loaded() as $plugin_name) {
 ?>
 <div class="debugkit-plugin-routes-button-wrapper">
     <button type="button" class="btn-primary js-debugkit-toggle-plugin-route" data-plugin=".route-entry--app">
-        <?= __d('debug_kit', 'App') ?><?= (!empty($amount_of_routes_per_group['app'])) ? '(' . $amount_of_routes_per_group['app'] . ')' : '' ?>
+        <?= __d('debug_kit', 'App') ?><?= (!empty($amount_of_routes_per_group['app'])) ? ' (' . $amount_of_routes_per_group['app'] . ')' : '' ?>
     </button>
     <?php foreach($plugin_names as $plugin_name => $parsed_name): ?>
         <button type="button" class="btn-primary js-debugkit-toggle-plugin-route<?= (strpos($plugin_name, 'DebugKit') === 0) ? ' is-active' : '' ?>" data-plugin=".route-entry--plugin-<?= $parsed_name ?>">

@@ -11,17 +11,11 @@ $routes = Cake\Routing\Router::routes();
 
 $amountOfRoutesPerGroup = [];
 foreach ($routes as $route) {
-    if (empty($route->defaults['plugin'])) {
-        if (!array_key_exists('app', $amountOfRoutesPerGroup)) {
-            $amountOfRoutesPerGroup['app'] = 0;
-        }
-        $amountOfRoutesPerGroup['app']++;
-    } else {
-        if (!array_key_exists($route->defaults['plugin'], $amountOfRoutesPerGroup)) {
-            $amountOfRoutesPerGroup[$route->defaults['plugin']] = 0;
-        }
-        $amountOfRoutesPerGroup[$route->defaults['plugin']]++;
+    $group = $route->defaults['plugin'] ?? 'app';
+    if (!array_key_exists($group, $amountOfRoutesPerGroup)) {
+        $amountOfRoutesPerGroup[$group] = 0;
     }
+    $amountOfRoutesPerGroup[$group]++;
 }
 
 $pluginNames = [];

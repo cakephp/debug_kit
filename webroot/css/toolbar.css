@@ -512,9 +512,12 @@ pre,
   position: relative;
   top: 2px;
 }
-
 .btn-primary:hover {
   cursor:pointer;
+}
+.btn-primary.is-active {
+    background-color: #fff;
+    color: #2a6496;
 }
 
 #loader {
@@ -612,4 +615,15 @@ pre,
 
 .terminal .success-message {
   color: #42bd41;
+}
+
+.debugkit-plugin-routes-button-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 -5px;
+}
+
+.debugkit-plugin-routes-button-wrapper button {
+    margin: 5px;
 }

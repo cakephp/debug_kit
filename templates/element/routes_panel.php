@@ -26,7 +26,7 @@ foreach ($routes as $route) {
 
 $pluginNames = [];
 foreach (CorePlugin::loaded() as $pluginName) {
-    if (!empty( $amountOfRoutesPerGroup[$pluginName])) {
+    if (!empty($amountOfRoutesPerGroup[$pluginName])) {
         $name = sprintf('%s (%s)', $pluginName, $amountOfRoutesPerGroup[$pluginName]);
         $pluginNames[$name] = preg_replace('/\W+/', '', strtolower($pluginName));
     }

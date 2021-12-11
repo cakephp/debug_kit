@@ -34,7 +34,7 @@ foreach (CorePlugin::loaded() as $pluginName) {
     </button>
     <?php foreach ($pluginNames as $pluginName => $parsedName) : ?>
         <button type="button" class="btn-primary js-debugkit-toggle-plugin-route
-            <?= strpos($pluginName, 'DebugKit') === 0 ? ' is-active' : '' ?>"
+            <?= strpos($pluginName, 'DebugKit') === 0 ? ' toggle-plugin-route-active' : '' ?>"
                 data-plugin=".route-entry--plugin-<?= $parsedName ?>">
             <?= $pluginName ?>
         </button>
@@ -91,11 +91,11 @@ foreach (CorePlugin::loaded() as $pluginName) {
             var $this = $(this);
             var plugin = $this.attr('data-plugin');
 
-            if($this.hasClass('is-active')) {
-                $this.removeClass('is-active');
+            if($this.hasClass('toggle-plugin-route-active')) {
+                $this.removeClass('toggle-plugin-route-active');
                 $('.route-entry' + plugin).removeClass('hidden');
             } else {
-                $this.addClass('is-active');
+                $this.addClass('toggle-plugin-route-active');
                 $('.route-entry' + plugin).addClass('hidden');
             }
 

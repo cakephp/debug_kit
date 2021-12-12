@@ -6,6 +6,7 @@
 
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 
 $routes = Cake\Routing\Router::routes();
 
@@ -22,7 +23,7 @@ $pluginNames = [];
 foreach (CorePlugin::loaded() as $pluginName) {
     if (!empty($amountOfRoutesPerGroup[$pluginName])) {
         $name = sprintf('%s (%s)', $pluginName, $amountOfRoutesPerGroup[$pluginName]);
-        $pluginNames[$name] = preg_replace('/\W+/', '', strtolower($pluginName));
+        $pluginNames[$name] = Text::slug($pluginName);
     }
 }
 
@@ -56,7 +57,7 @@ foreach (CorePlugin::loaded() as $pluginName) {
             $class = 'route-entry route-entry--app';
         else :
             $class = 'route-entry route-entry--plugin route-entry--plugin-' .
-                preg_replace('/\W+/', '', strtolower($route->defaults['plugin']));
+                Text::slug($route->defaults['plugin']);
 
             // Hide DebugKit internal routes by default
             if ($route->defaults['plugin'] === 'DebugKit') {

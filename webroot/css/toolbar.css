@@ -513,11 +513,13 @@ pre,
   top: 2px;
 }
 .btn-primary:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
 .toggle-plugin-route-active {
-  background-color: #fff;
-  color: #2a6496;
+  background-color: #fff !important;
+  color: #555;
+  border-color: #6f6f6f;
+  box-shadow: 0 2px 0 #6f6f6f;
 }
 
 #loader {
@@ -619,11 +621,7 @@ pre,
 
 .debugkit-plugin-routes-button-wrapper {
   display: flex;
+  gap: 5px;
   flex-wrap: wrap;
-  justify-content: center;
   margin: 0 -5px;
-}
-
-.debugkit-plugin-routes-button-wrapper button {
-  margin: 5px;
 }

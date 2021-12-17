@@ -630,16 +630,16 @@ pre,
 }
 
 .color-info-type {
-    display: flex;
     align-items: center;
+    display: flex;
 }
 
 .color-info-type:before {
     content: '';
     display: inline-block;
-    width: 20px;
     height: 20px;
     margin-right: 10px;
+    width: 20px;
 }
 
 .color-info-type--current-route:before {

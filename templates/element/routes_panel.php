@@ -10,13 +10,19 @@ use Cake\Utility\Text;
 
 $routes = Cake\Routing\Router::routes();
 
-$amountOfRoutesPerGroup = [];
+$amountOfRoutesPerGroup = $duplicateRoutes = [];
 foreach ($routes as $route) {
+    // Count the amount
     $group = $route->defaults['plugin'] ?? 'app';
     if (!array_key_exists($group, $amountOfRoutesPerGroup)) {
         $amountOfRoutesPerGroup[$group] = 0;
     }
     $amountOfRoutesPerGroup[$group]++;
+
+    if (!array_key_exists($route->template, $duplicateRoutes)) {
+        $duplicateRoutes[$route->template] = 0;
+    }
+    $duplicateRoutes[$route->template]++;
 }
 
 $pluginNames = [];
@@ -68,6 +74,11 @@ foreach (CorePlugin::loaded() as $pluginName) {
         // Highlight current route
         if ($matchedRoute === $route->template) {
             $class .= ' highlighted';
+        }
+
+        // Mark duplicate routes
+        if ($duplicateRoutes[$route->template] > 1) {
+            $class .= ' duplicate-route';
         }
 
         ?>

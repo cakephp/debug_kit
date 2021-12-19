@@ -104,8 +104,8 @@ class Plugin extends BasePlugin
                                 if($traceEntry['function'] !== 'trigger_error') {
                                     continue;
                                 }
-                                $file = $trace[$idx + 1]['file'];
-                                $line = $trace[$idx + 1]['line'];
+                                $file = $trace[$idx + 2]['file'];
+                                $line = $trace[$idx + 2]['line'];
                                 break;
                             }
                         }

@@ -97,7 +97,7 @@ class Plugin extends BasePlugin
                     if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
                         // In PHP 8.0+ the $context variable has been removed from the set_error_handler callback
                         // Therefore we need to fetch the correct file and line string ourselves
-                        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+                        if (PHP_VERSION_ID >= 80000) {
                             $trace = debug_backtrace();
                             foreach ($trace as $idx => $traceEntry) {
                                 if ($traceEntry['function'] !== 'trigger_error') {

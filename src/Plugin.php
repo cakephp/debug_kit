@@ -104,6 +104,7 @@ class Plugin extends BasePlugin
                                     continue;
                                 }
                                 $offset = 1;
+                                // ['args'][1] refers to index of $stackFrame argument in deprecationWarning()
                                 if (isset($traceEntry['args'][1])) {
                                     $offset = $traceEntry['args'][1];
                                 }

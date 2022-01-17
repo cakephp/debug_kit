@@ -34,6 +34,9 @@
 <h4><?= __d('debug_kit', 'Routing Params') ?></h4>
 <?= $this->Toolbar->dump($params) ?>
 
+<h4><?= __d('debug_kit', 'Attributes') ?></h4>
+<?= $this->Toolbar->dump($attributes); ?>
+
 <h4><?= __d('debug_kit', 'Post data') ?></h4>
 <?php
 if (empty($data)):

@@ -100,11 +100,16 @@ class Plugin extends BasePlugin
                         if (PHP_VERSION_ID >= 80000) {
                             $trace = debug_backtrace();
                             foreach ($trace as $idx => $traceEntry) {
-                                if ($traceEntry['function'] !== 'trigger_error') {
+                                if ($traceEntry['function'] !== 'deprecationWarning') {
                                     continue;
                                 }
-                                $file = $trace[$idx + 2]['file'];
-                                $line = $trace[$idx + 2]['line'];
+                                $offset = 1;
+                                // ['args'][1] refers to index of $stackFrame argument in deprecationWarning()
+                                if (isset($traceEntry['args'][1])) {
+                                    $offset = $traceEntry['args'][1];
+                                }
+                                $file = $trace[$idx + $offset]['file'];
+                                $line = $trace[$idx + $offset]['line'];
                                 break;
                             }
                         }

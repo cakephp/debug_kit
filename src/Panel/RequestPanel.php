@@ -34,7 +34,6 @@ class RequestPanel extends DebugPanel
         $controller = $event->getSubject();
         $request = $controller->getRequest();
         $this->_data = [
-            'params' => $request->getAttribute('params'),
             'attributes' => $request->getAttributes(),
             'query' => $request->getQueryParams(),
             'data' => $request->getData(),

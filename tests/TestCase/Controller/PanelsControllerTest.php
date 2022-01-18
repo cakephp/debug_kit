@@ -83,7 +83,7 @@ class PanelsControllerTest extends TestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request</h2>');
-        $this->assertResponseContains('Routing Params</h4>');
+        $this->assertResponseContains('Attributes</h4>');
     }
 
     /**

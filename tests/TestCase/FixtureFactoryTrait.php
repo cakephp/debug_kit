@@ -32,12 +32,14 @@ trait FixtureFactoryTrait
     {
         if ($content === null) {
             $content = [
-                'params' => [
-                    'plugin' => null,
-                    'controller' => 'Tasks',
-                    'action' => 'add',
-                    '_ext' => null,
-                    'pass' => [],
+                'attributes' => [
+                    'params' => [
+                        'plugin' => null,
+                        'controller' => 'Tasks',
+                        'action' => 'add',
+                        '_ext' => null,
+                        'pass' => [],
+                    ],
                 ],
                 'query' => [],
                 'data' => [],

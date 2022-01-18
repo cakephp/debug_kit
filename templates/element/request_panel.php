@@ -19,7 +19,7 @@
 /**
  * @var \DebugKit\View\AjaxView $this
  * @var array $headers
- * @var array $params
+ * @var array $attributes
  * @var array $data
  * @var array $query
  * @var array $cookie
@@ -30,9 +30,6 @@
 <h4><?= __d('debug_kit', 'Warning') ?></h4>
     <?= '<p class="warning">' . __d('debug_kit', 'Headers already sent at file {0} and line {1}.', [$headers['file'], $headers['line']]) . '</p>' ?>
 <?php endif; ?>
-
-<h4><?= __d('debug_kit', 'Routing Params') ?></h4>
-<?= $this->Toolbar->dump($params) ?>
 
 <h4><?= __d('debug_kit', 'Attributes') ?></h4>
 <?= $this->Toolbar->dump($attributes); ?>

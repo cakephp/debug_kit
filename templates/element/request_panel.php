@@ -32,7 +32,13 @@
 <?php endif; ?>
 
 <h4><?= __d('debug_kit', 'Attributes') ?></h4>
-<?= $this->Toolbar->dump($attributes); ?>
+<?php
+if (empty($attributes)):
+    echo '<p class="info">' . __d('debug_kit', 'No attributes data.') . '</p>';
+else:
+    echo $this->Toolbar->dump($attributes);
+endif;
+?>
 
 <h4><?= __d('debug_kit', 'Post data') ?></h4>
 <?php

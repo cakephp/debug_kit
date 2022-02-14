@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase;
 
+use Cake\Error\PhpError;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\TestSuite\TestCase;
@@ -37,28 +38,44 @@ class PluginTest extends TestCase
         $service = new ToolbarService(new EventManager(), []);
         $plugin = new Plugin();
         $plugin->setDeprecationHandler($service);
-        $event = new Event('');
         $panel = new DeprecationsPanel();
 
-        //Without setting the $stackFrame
-        deprecationWarning('setDeprecationHandler');
-        //Setting the $stackFrame
-        deprecationWarning('setDeprecationHandler_2', 2);
-        //Raw error
-        $line = __LINE__ + 1;
-        trigger_error('raw_error', E_USER_DEPRECATED);
+        $error = new PhpError(E_USER_WARNING, 'ignored', __FILE__, __LINE__, []);
+        $event = new Event('Error.handled', null, ['error' => $error]);
+        EventManager::instance()->dispatch($event);
+
+        // No file/line in message.
+        $error = new PhpError(E_USER_DEPRECATED, 'going away', __FILE__, __LINE__, []);
+        $event = new Event('Error.handled', null, ['error' => $error]);
+        EventManager::instance()->dispatch($event);
+
+        // Formatted like deprecationWarning()
+        $message = <<<TEXT
+Something deprecated happened.
+Don't use that thing.
+src/Plugin.php, line: 51
+You can disable all deprecation warnings by setting `Error.errorLevel` to `E_ALL & ~E_USER_DEPRECATED`.
+TEXT;
+        $error = new PhpError(E_USER_DEPRECATED, $message, __FILE__, __LINE__, []);
+        $event = new Event('Error.handled', null, ['error' => $error]);
+        EventManager::instance()->dispatch($event);
 
         $panel->shutdown($event);
-        $data = $panel->data()['plugins']['DebugKit'];
+        $data = $panel->data();
 
-        $this->assertCount(3, $data);
+        $this->assertArrayHasKey('plugins', $data);
+        $this->assertArrayHasKey('DebugKit', $data['plugins']);
+        $this->assertCount(1, $data['plugins']['DebugKit']);
 
-        //test first two deprecationWarning()
-        foreach ([$data[0], $data[1]] as $value) {
-            $this->assertStringContainsString($value['file'], $value['message']);
-            $this->assertStringContainsString("line: {$value['line']}", $value['message']);
-        }
-        //test raw error
-        $this->assertSame($line, $data[2]['line']);
+        $first = $data['plugins']['DebugKit'][0];
+        $this->assertEquals($first['message'], 'going away');
+        $this->assertEquals($first['file'], __FILE__);
+        $this->assertEquals($first['line'], 48);
+
+        $this->assertArrayHasKey('other', $data);
+        $parsed = $data['other'][0];
+        $this->assertEquals($parsed['message'], $message);
+        $this->assertEquals($parsed['file'], 'src/Plugin.php');
+        $this->assertEquals($parsed['line'], 51);
     }
 }

@@ -59,10 +59,6 @@ class DeprecationsPanel extends DebugPanel
         foreach ($errors as $error) {
             $file = $error['file'];
             $line = $error['line'];
-            if (isset($error['context']['frame'])) {
-                $file = $error['context']['frame']['file'];
-                $line = $error['context']['frame']['line'];
-            }
 
             $errorData = [
                 'file' => $file,

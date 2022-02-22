@@ -19,6 +19,8 @@ use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
+use Cake\Error\PhpError;
+use Cake\Event\EventInterface;
 use Cake\Event\EventManager;
 use Cake\Http\MiddlewareQueue;
 use DebugKit\Command\BenchmarkCommand;
@@ -50,7 +52,6 @@ class Plugin extends BasePlugin
         }
 
         $this->service = $service;
-
         $this->setDeprecationHandler($service);
 
         // will load `config/bootstrap.php`.
@@ -92,40 +93,30 @@ class Plugin extends BasePlugin
     public function setDeprecationHandler($service)
     {
         if (!empty($service->getConfig('panels')['DebugKit.Deprecations'])) {
-            $previousHandler = set_error_handler(
-                function ($code, $message, $file, $line, $context = null) use (&$previousHandler) {
-                    if ($code == E_USER_DEPRECATED || $code == E_DEPRECATED) {
-                        // In PHP 8.0+ the $context variable has been removed from the set_error_handler callback
-                        // Therefore we need to fetch the correct file and line string ourselves
-                        if (PHP_VERSION_ID >= 80000) {
-                            $trace = debug_backtrace();
-                            foreach ($trace as $idx => $traceEntry) {
-                                if ($traceEntry['function'] !== 'deprecationWarning') {
-                                    continue;
-                                }
-                                $offset = 1;
-                                // ['args'][1] refers to index of $stackFrame argument in deprecationWarning()
-                                if (isset($traceEntry['args'][1])) {
-                                    $offset = $traceEntry['args'][1];
-                                }
-                                $file = $trace[$idx + $offset]['file'];
-                                $line = $trace[$idx + $offset]['line'];
-                                break;
-                            }
-                        }
-                        DeprecationsPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
-
-                        return;
-                    }
-                    if ($previousHandler) {
-                        $context['_trace_frame_offset'] = 1;
-
-                        return $previousHandler($code, $message, $file, $line, $context);
-                    }
-
-                    return false;
+            EventManager::instance()->on('Error.beforeRender', function (EventInterface $event, PhpError $error) {
+                $code = $error->getCode();
+                if ($code !== E_USER_DEPRECATED && $code !== E_DEPRECATED) {
+                    return;
                 }
-            );
+                $file = $error->getFile();
+                $line = $error->getLine();
+
+                // Extract the line/file from the message as deprecationWarning
+                // will calculate the application frame when generating the message.
+                preg_match('/\\n([^\n,]+?), line: (\d+)\\n/', $error->getMessage(), $matches);
+                if ($matches) {
+                    $file = $matches[1];
+                    $line = $matches[2];
+                }
+
+                DeprecationsPanel::addDeprecatedError([
+                    'code' => $code,
+                    'message' => $error->getMessage(),
+                    'file' => $file,
+                    'line' => $line,
+                ]);
+                $event->stopPropagation();
+            });
         }
     }
 }

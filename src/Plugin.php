@@ -93,7 +93,7 @@ class Plugin extends BasePlugin
     public function setDeprecationHandler($service)
     {
         if (!empty($service->getConfig('panels')['DebugKit.Deprecations'])) {
-            EventManager::instance()->on('Error.handled', function (EventInterface $event, PhpError $error) {
+            EventManager::instance()->on('Error.beforeRender', function (EventInterface $event, PhpError $error) {
                 $code = $error->getCode();
                 if ($code !== E_USER_DEPRECATED && $code !== E_DEPRECATED) {
                     return;
@@ -115,6 +115,7 @@ class Plugin extends BasePlugin
                     'file' => $file,
                     'line' => $line,
                 ]);
+                $event->stopPropagation();
             });
         }
     }

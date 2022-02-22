@@ -41,12 +41,12 @@ class PluginTest extends TestCase
         $panel = new DeprecationsPanel();
 
         $error = new PhpError(E_USER_WARNING, 'ignored', __FILE__, __LINE__, []);
-        $event = new Event('Error.handled', null, ['error' => $error]);
+        $event = new Event('Error.beforeRender', null, ['error' => $error]);
         EventManager::instance()->dispatch($event);
 
         // No file/line in message.
         $error = new PhpError(E_USER_DEPRECATED, 'going away', __FILE__, __LINE__, []);
-        $event = new Event('Error.handled', null, ['error' => $error]);
+        $event = new Event('Error.beforeRender', null, ['error' => $error]);
         EventManager::instance()->dispatch($event);
 
         // Formatted like deprecationWarning()
@@ -57,7 +57,7 @@ src/Plugin.php, line: 51
 You can disable all deprecation warnings by setting `Error.errorLevel` to `E_ALL & ~E_USER_DEPRECATED`.
 TEXT;
         $error = new PhpError(E_USER_DEPRECATED, $message, __FILE__, __LINE__, []);
-        $event = new Event('Error.handled', null, ['error' => $error]);
+        $event = new Event('Error.beforeRender', null, ['error' => $error]);
         EventManager::instance()->dispatch($event);
 
         $panel->shutdown($event);

@@ -176,7 +176,7 @@ class ToolbarHelper extends Helper
             if (is_array($value) && count($value) > 0) {
                 $out .= '(array)';
             } elseif (is_object($value)) {
-                $out .= '(' . (get_class($value) ?: 'object') . ')';
+                $out .= '(' . get_class($value) . ')';
             }
             if ($value === null) {
                 $value = '(null)';

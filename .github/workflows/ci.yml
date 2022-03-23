@@ -1,6 +1,5 @@
 name: CI
 
-
 on:
   push:
     branches:
@@ -107,13 +106,14 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl
         coverage: none
-        tools: psalm:~4.10.0, cs2pr
+        tools: cs2pr
 
     - name: Composer Install
-      run: composer install
+      run: composer psalm-setup
 
     - name: Run phpcs
       run: vendor/bin/phpcs --report=checkstyle src/ tests/ | cs2pr
 
     - name: Run psalm
-      run: psalm --output-format=github
+      if: success() || failure()
+      run: vendor/bin/psalm.phar --output-format=github

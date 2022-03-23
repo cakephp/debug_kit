@@ -56,7 +56,12 @@
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
         "test": "phpunit",
         "psalm": "psalm.phar --show-info=false",
-        "psalm-setup": "cp composer.json composer.backup && composer require --dev psalm/phar:^4.10 && mv composer.backup composer.json"
+        "psalm-setup": "cp composer.json composer.backup && composer require --dev psalm/phar:^4.22 && mv composer.backup composer.json"
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }

@@ -150,13 +150,13 @@ class MailPreviewController extends DebugKitController
     {
         $part = $this->findPart($email, $partType);
 
-        if ($part === false) {
+        if ($part === null) {
             throw new NotFoundException(__d('debug_kit', "Email part ''{0}'' not found in email", $partType));
         }
 
         $response = $this->response->withType($partType);
         if ($partType === 'text') {
-            $part = '<pre>' . (string)$part . '</pre>';
+            $part = '<pre>' . $part . '</pre>';
         }
         $response = $response->withStringBody($part);
 

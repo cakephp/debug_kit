@@ -50,6 +50,7 @@ class CachePanel extends DebugPanel
     public function initialize()
     {
         foreach (Cache::configured() as $name) {
+            /** @var array $config */
             $config = Cache::getConfig($name);
             if (isset($config['className']) && $config['className'] instanceof DebugEngine) {
                 $instance = $config['className'];

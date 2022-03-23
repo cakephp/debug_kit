@@ -65,9 +65,7 @@ class Plugin extends BasePlugin
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        if ($this->service) {
-            $middlewareQueue->insertAt(0, new DebugKitMiddleware($this->service));
-        }
+        $middlewareQueue->insertAt(0, new DebugKitMiddleware($this->service));
 
         return $middlewareQueue;
     }

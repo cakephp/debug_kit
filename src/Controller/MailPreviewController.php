@@ -99,7 +99,7 @@ class MailPreviewController extends DebugKitController
      *
      * @param string $name The Mailer name
      * @param string $method The mailer preview method
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|void
      */
     public function email($name, $method)
     {
@@ -158,9 +158,8 @@ class MailPreviewController extends DebugKitController
         if ($partType === 'text') {
             $part = '<pre>' . $part . '</pre>';
         }
-        $response = $response->withStringBody($part);
 
-        return $response;
+        return $response->withStringBody($part);
     }
 
     /**

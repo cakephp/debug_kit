@@ -24,6 +24,7 @@ use PDOException;
 /**
  * The requests table tracks basic information about each request.
  *
+ * @property \DebugKit\Model\Table\PanelsTable $Panels
  * @method \DebugKit\Model\Entity\Request get($primaryKey, $options = [])
  * @method \DebugKit\Model\Entity\Request newEntity($data = null, array $options = [])
  * @method \DebugKit\Model\Entity\Request[] newEntities(array $data, array $options = [])

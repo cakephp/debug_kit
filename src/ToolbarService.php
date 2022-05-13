@@ -18,13 +18,13 @@ use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
 use Cake\Event\EventManager;
-use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
 use PDOException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Used to create the panels and inject a toolbar into
@@ -224,11 +224,11 @@ class ToolbarService
     /**
      * Save the toolbar state.
      *
-     * @param \Cake\Http\ServerRequest $request The request
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request
      * @param \Psr\Http\Message\ResponseInterface $response The response
      * @return false|\DebugKit\Model\Entity\Request Saved request data.
      */
-    public function saveData(ServerRequest $request, ResponseInterface $response)
+    public function saveData(ServerRequestInterface $request, ResponseInterface $response)
     {
         $path = $request->getUri()->getPath();
         $dashboardUrl = '/debug-kit';

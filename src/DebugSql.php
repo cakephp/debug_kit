@@ -73,7 +73,7 @@ TEXT;
 
         $sql = (string)$query;
         if ($showValues) {
-            $sql = static::interpolate($sql, $query->getValueBinder()->bindings());
+            $sql = self::interpolate($sql, $query->getValueBinder()->bindings());
         }
 
         /** @var array $trace */
@@ -92,16 +92,16 @@ TEXT;
             $file = str_replace($search, '', $file);
         }
 
-        $template = static::$templateHtml;
+        $template = self::$templateHtml;
         $sqlHighlight = true;
         if ((PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') || $showHtml === false) {
-            $template = static::$templateText;
+            $template = self::$templateText;
             $sqlHighlight = false;
             if ($file && $line) {
                 $lineInfo = sprintf('%s (line %s)', $file, $line);
             }
         }
-        if ($showHtml === null && $template !== static::$templateText) {
+        if ($showHtml === null && $template !== self::$templateText) {
             $showHtml = true;
         }
 
@@ -113,7 +113,7 @@ TEXT;
         );
 
         if ($showHtml) {
-            $template = static::$templateHtml;
+            $template = self::$templateHtml;
             if ($file && $line) {
                 $lineInfo = sprintf('<span><strong>%s</strong> (line <strong>%s</strong>)</span>', $file, $line);
             }

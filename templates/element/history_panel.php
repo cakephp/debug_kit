@@ -138,7 +138,7 @@
                 for (var i = 0, len = response.panels.length; i < len; i++) {
                     let panel = response.panels[i];
                     // Offset by two for scroll buttons
-                    var button = panelButtons.eq(i + 2);
+                    let button = panelButtons.eq(i + 2);
                     var summary = button.find('.panel-summary');
 
                     // Don't overwrite the history panel.

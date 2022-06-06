@@ -24,6 +24,21 @@ export class Toolbar {
         ];
     }
 
+    initialize() {
+        this.windowOrigin();
+        this.mouseListener();
+        this.keyboardListener();
+        this.loadState();
+        this.cacheClearListener();
+
+        let self = this;
+        window.addEventListener( 'message', function( event ) {
+            self.onMessage( event );
+        }, false );
+    }
+
+    // ========== STATE ==========
+
     toggle() {
         let state = this.nextState();
         this.updateButtons( state );
@@ -121,6 +136,8 @@ export class Toolbar {
         }, 250 );
     }
 
+    // ========== PANEL  ==========
+
     loadPanel( id ) {
         if( id === undefined ) {
             return;
@@ -152,10 +169,19 @@ export class Toolbar {
             contentArea.html( response );
             _this.bindVariableSort();
             _this.bindDebugBlock();
-
             _this.bindNeatArray();
         } );
     }
+
+    currentPanel() {
+        return this._currentPanel;
+    }
+
+    currentPanelButton() {
+        return this.toolbar.find( '[data-id="' + this.currentPanel() + '"]' );
+    }
+
+    // ========== PANEL LISTENERS ==========
 
     bindVariableSort() {
         let sortButton = this.content.find( '.neat-array-sort' );
@@ -190,13 +216,44 @@ export class Toolbar {
         } );
     }
 
-    currentPanel() {
-        return this._currentPanel;
+    // ========== REQUESTS PANEL ==========
+
+    onMessage( event ) {
+        if( typeof ( event.data ) === 'string' && event.data.indexOf( 'ajax-completed$$' ) === 0 ) {
+            this.onRequest( JSON.parse( event.data.split( '$$' )[1] ) );
+        }
     }
 
-    currentPanelButton() {
-        return this.toolbar.find( '[data-id="' + this.currentPanel() + '"]' );
+    onRequest( request ) {
+        this.ajaxRequests.push( request );
+        $('.panel-summary:contains(xhr)').text(this.ajaxRequests.length + ' xhr');
     }
+
+    // ========== TOOLBAR SCROLL ==========
+
+    scroll( direction ) {
+        let scrollValue = 300;
+        let operator = direction === 'left' ? '-=' : '+=';
+        let buttons = this.toolbar.find( '.toolbar-inner li' );
+        let cakeButton = this.toolbar.find( '#panel-button' );
+        let firstButton = buttons.first();
+        let lastButton = buttons.last();
+
+        // If the toolbar is scrolled to the left, don't go farther.
+        if( direction === 'right' && firstButton.position().left === 0 ) {
+            return;
+        }
+
+        let buttonWidth = lastButton.width();
+        // If the last button's right side is left of the cake button, don't scroll further.
+        if( direction === 'left' && lastButton.offset().left + buttonWidth < cakeButton.offset().left ) {
+            return;
+        }
+        let css = { left: operator + scrollValue };
+        $( '.toolbar-inner li', this.button ).animate( css );
+    }
+
+    // ========== GENERAL LISTENERS ==========
 
     keyboardListener() {
         let _this = this;
@@ -272,6 +329,41 @@ export class Toolbar {
         } );
     }
 
+    cacheClearListener() {
+        $(document).on('click', '.js-debugkit-clear-cache', function(e) {
+            e.preventDefault();
+            let el = $(this);
+            let baseUrl = el.attr('data-url');
+            let csrfToken = el.attr('data-csrf-token');
+            let name = el.data('name');
+            let messageEl = el.parents('table').siblings('.inline-message');
+
+            function showMessage(elem, text) {
+                elem.show().html( text );
+                setTimeout(function(){
+                    elem.fadeOut();
+                }, 2000);
+            }
+
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': csrfToken},
+                url: baseUrl,
+                data: {name: name},
+                dataType: 'json',
+                type: 'POST',
+                success: function(data) {
+                    showMessage( messageEl, name + ' ' + data.data.message );
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    showMessage( messageEl, 'There was an error clearing ' + name +
+                        '<br>' + errorThrown );
+                }
+            });
+        });
+    }
+
+    // ========== MISC ==========
+
     windowOrigin() {
         // IE does not have access to window.location.origin
         if( !window.location.origin ) {
@@ -279,51 +371,6 @@ export class Toolbar {
                 window.location.hostname +
                 ( window.location.port ? ':' + window.location.port : '' );
         }
-    }
-
-    onMessage( event ) {
-        if( typeof ( event.data ) === 'string' && event.data.indexOf( 'ajax-completed$$' ) === 0 ) {
-            this.onRequest( JSON.parse( event.data.split( '$$' )[1] ) );
-        }
-    }
-
-    onRequest( request ) {
-        this.ajaxRequests.push( request );
-        $('.panel-summary:contains(xhr)').text(this.ajaxRequests.length + ' xhr');
-    }
-
-    scroll( direction ) {
-        let scrollValue = 300;
-        let operator = direction === 'left' ? '-=' : '+=';
-        let buttons = this.toolbar.find( '.toolbar-inner li' );
-        let cakeButton = this.toolbar.find( '#panel-button' );
-        let firstButton = buttons.first();
-        let lastButton = buttons.last();
-
-        // If the toolbar is scrolled to the left, don't go farther.
-        if( direction === 'right' && firstButton.position().left === 0 ) {
-            return;
-        }
-
-        let buttonWidth = lastButton.width();
-        // If the last button's right side is left of the cake button, don't scroll further.
-        if( direction === 'left' && lastButton.offset().left + buttonWidth < cakeButton.offset().left ) {
-            return;
-        }
-        let css = { left: operator + scrollValue };
-        $( '.toolbar-inner li', this.button ).animate( css );
-    }
-
-    initialize() {
-        this.windowOrigin();
-        this.mouseListener();
-        this.keyboardListener();
-        this.loadState();
-
-        let self = this;
-        window.addEventListener( 'message', function( event ) {
-            self.onMessage( event );
-        }, false );
     }
 
 }

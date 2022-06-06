@@ -35,7 +35,13 @@
                 <td><?= h($name) ?></td>
                 <td class="right-text">
                     <button
-                        class="btn-primary clear-cache"
+                        class="btn-primary js-debugkit-clear-cache"
+                        data-url="<?= $this->Url->build([
+                            'plugin' => 'DebugKit',
+                            'controller' => 'Toolbar',
+                            'action' => 'clearCache'
+                        ]) ?>"
+                        data-csrf-token="<?= $this->getRequest()->getAttribute('csrfToken') ?>"
                         data-name="<?= h($name) ?>"
                     >
                         <?= __d('debug_kit', 'Clear All Data') ?>
@@ -45,6 +51,7 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+    <div class="inline-message"></div>
 
     <h3><?= __d('debug_kit', 'Cache Usage Overview') ?></h3>
     <table cellspacing="0" cellpadding="0" class="debug-table">
@@ -86,37 +93,3 @@
         </tbody>
     </table>
 <?php endif; ?>
-
-<script>
-$(document).ready(function() {
-    var baseUrl = '<?= $this->Url->build([
-        'plugin' => 'DebugKit',
-        'controller' => 'Toolbar',
-        'action' => 'clearCache'
-    ]); ?>';
-
-    function showMessage(el, text) {
-        el.show().text(text).fadeOut(2000);
-    }
-
-    $('.clear-cache').on('click', function(e) {
-        var el = $(this);
-        var name = el.data('name');
-        var messageEl = el.parent().find('.inline-message');
-
-        var xhr = $.ajax({
-            headers: {'X-CSRF-TOKEN': '<?= $this->request->getAttribute('csrfToken') ?>'},
-            url: baseUrl,
-            data: {name: name},
-            dataType: 'json',
-            type: 'POST'
-        });
-        xhr.done(function(response) {
-            showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache cleared.') ?>');
-        }).error(function(response) {
-            showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache could not be cleared.') ?>');
-        });
-        e.preventDefault();
-    });
-});
-</script>

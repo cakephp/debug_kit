@@ -52,7 +52,13 @@ class ToolbarController extends DebugKitController
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
         $result = Cache::clear($this->request->getData('name'));
-        $this->set('success', $result);
-        $this->viewBuilder()->setOption('serialize', ['success']);
+        $data = [
+            'success' => $result
+        ];
+        $data['message'] = ($result) ?
+            __d('debug_kit', 'cache cleared.') :
+            __d('debug_kit', 'cache could not be cleared.');
+        $this->set('data', $data);
+        $this->viewBuilder()->setOption('serialize', ['data']);
     }
 }

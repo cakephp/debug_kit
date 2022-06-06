@@ -16,7 +16,5 @@
         <?= $this->Html->image('DebugKit./img/cake.icon.png', ['class' => 'indicator'])?>
     </div>
     </body>
-    <?= $this->Html->script('DebugKit./js/jquery') ?>
-    <?= $this->Html->script('DebugKit./js/toolbar-app') ?>
     <?= $this->fetch('script') ?>
 </html>

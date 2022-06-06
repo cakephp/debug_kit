@@ -49,6 +49,7 @@ use Cake\Core\Configure;
     </li>
 </ul>
 <?php $this->Html->script('DebugKit./js/debug_kit', [
+    'type' => 'module',
     'block' => true,
     'id' => '__debug_kit_app',
     'data-id' => $toolbar->id,

@@ -139,7 +139,7 @@
                     let panel = response.panels[i];
                     // Offset by two for scroll buttons
                     let button = panelButtons.eq(i + 2);
-                    var summary = button.find('.panel-summary');
+                    let summary = button.find('.panel-summary');
 
                     // Don't overwrite the history panel.
                     if (button.data('id') === thisPanel) {

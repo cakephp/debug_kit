@@ -39,7 +39,7 @@
                         data-url="<?= $this->Url->build([
                             'plugin' => 'DebugKit',
                             'controller' => 'Toolbar',
-                            'action' => 'clearCache'
+                            'action' => 'clearCache',
                         ]) ?>"
                         data-csrf-token="<?= $this->getRequest()->getAttribute('csrfToken') ?>"
                         data-name="<?= h($name) ?>"

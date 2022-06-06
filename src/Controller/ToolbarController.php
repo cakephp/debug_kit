@@ -53,9 +53,9 @@ class ToolbarController extends DebugKitController
         }
         $result = Cache::clear($this->request->getData('name'));
         $data = [
-            'success' => $result
+            'success' => $result,
         ];
-        $data['message'] = ($result) ?
+        $data['message'] = $result ?
             __d('debug_kit', 'cache cleared.') :
             __d('debug_kit', 'cache could not be cleared.');
         $this->set('data', $data);

@@ -33,7 +33,7 @@ use DebugKit\Panel\DeprecationsPanel;
 class Plugin extends BasePlugin
 {
     /**
-     * @var \DebugKit\ToolbarService
+     * @var \DebugKit\ToolbarService|null
      */
     protected $service;
 

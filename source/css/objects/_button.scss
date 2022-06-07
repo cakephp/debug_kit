@@ -1,0 +1,19 @@
+.o-button {
+    font-size: 14px;
+    border: 1px solid #2a6496;
+    background-color: #428bca;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 #2a6496;
+    padding: 4px 10px;
+}
+
+.o-button:active {
+    box-shadow: none;
+    position: relative;
+    top: 2px;
+}
+
+.o-button:hover {
+    cursor: pointer;
+}

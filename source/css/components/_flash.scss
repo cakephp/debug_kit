@@ -1,0 +1,44 @@
+.c-flash {
+    position: relative;
+    padding: 10px 10px 10px 50px;
+    font-size: 14px;
+}
+
+.c-flash:before {
+    padding: 8px;
+    line-height: 12px;
+    font-size: 20px;
+    font-family: "CakeFont";
+    font-weight: bold;
+    height: 12px;
+    width: 12px;
+    border-radius: 15px;
+    background-color: #fff;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.c-flash--warning {
+    background: #f2dede;
+}
+
+.c-flash--warning:before {
+    color: #f2dede;
+    content: '!';
+}
+
+.c-flash--info {
+    background: #d9edf7;
+}
+
+.c-flash--info:before {
+    color: #d9edf7;
+    content: 'i';
+}

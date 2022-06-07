@@ -1,0 +1,54 @@
+.c-panel {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-left: 1px solid rgba(0, 0, 0, 0.075);
+    padding: 0 9px;
+}
+
+.c-panel.is-active {
+    background: #fff;
+    color: #D33C44;
+    transition: background-color 300ms linear;
+}
+
+.c-panel__button {
+    color: #fff;
+    font-family: CakeFont, Helvetica, Arial, sans-serif;
+    line-height: 20px;
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.c-panel.is-active .c-panel__button {
+    color: #D33C44;
+}
+
+.c-panel__summary {
+    background: rgba(60, 60, 60, 0.3);
+    color: #fff;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+.c-panel__title {
+    color: #fff;
+    font-family: CakeFont, sans-serif;
+    font-weight: normal;
+    background: #D33C44;
+    padding: 10px;
+    margin: 0;
+    transition: background-color 300ms linear;
+}
+
+.c-panel__content {
+    padding: 10px;
+}

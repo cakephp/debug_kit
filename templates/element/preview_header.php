@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \DebugKit\Mailer\AbstractResult $email
+ */
+?>
     <header>
         <table>
             <tr>

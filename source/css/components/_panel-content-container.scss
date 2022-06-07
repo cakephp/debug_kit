@@ -1,0 +1,38 @@
+.c-panel-content-container {
+    background: #fff;
+    position: absolute;
+    top: 100%;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    transition: top 0.25s ease-out;
+}
+
+.c-panel-content-container.is-active {
+    top: 0;
+    transition: top 0.25s ease-in-out;
+}
+
+.c-panel-content-container__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    display: inline-block;
+    padding: 8px;
+    line-height: 12px;
+    font-size: 20px;
+    height: 12px;
+    width: 12px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "name": "debug_kit",
+    "version": "1.0.0",
+    "description": "CakePHP Debug Kit",
+    "author": "Kevin Pfeifer",
+    "license": "MIT",
+    "homepage": "https://github.com/cakephp/debug_kit#readme",
+    "bugs": {
+        "url": "https://github.com/cakephp/debug_kit/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cakephp/debug_kit.git"
+    },
+    "keywords": [
+        "cakephp",
+        "debug",
+        "kit"
+    ],
+    "devDependencies": {
+        "laravel-mix": "^6.0.48",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.52.2",
+        "sass-loader": "^12.6.0"
+    },
+    "scripts": {
+        "start": "npx mix"
+    }
+}

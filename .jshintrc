@@ -80,5 +80,6 @@
     "white"         : true,     // true: Check against strict whitespace and indentation rules
 
     // Custom Globals
-    "predef"        : [ ]       // additional predefined global variables
+    "predef"        : [ ],      // additional predefined global variables
+    "esversion"     : 6
 }

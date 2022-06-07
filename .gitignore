@@ -17,6 +17,8 @@ nbproject/*
 .svn
 errors.err
 tags
+node_modules
+package-lock.json
 /.phpunit.result.cache
 /nbproject/
 /composer.lock

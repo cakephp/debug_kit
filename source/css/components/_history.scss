@@ -1,0 +1,58 @@
+.c-history-panel__list li {
+    padding-left: 10px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+
+.c-history-panel__list .is-active:before {
+    content: "\2022";
+    font-size: 40px;
+    color: #42bd41;
+    line-height: 12px;
+    position: absolute;
+    top: 38%;
+    left: 0;
+    vertical-align: middle;
+}
+
+.c-history-panel__list li:last-child {
+    border-bottom: 0;
+}
+
+.c-history-panel__list li:hover {
+    background-color: #e7e9fd;
+}
+
+.c-history-panel__link {
+    color: #222;
+    display: block;
+    text-decoration: none;
+    padding: 6px;
+}
+
+.c-history-panel__bubble {
+    font-size: 12px;
+    line-height: 14px;
+    display: inline-block;
+    background: #eee;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.c-history-panel__xhr {
+    background:#7CFF46
+}
+
+.c-history-panel__time {
+    font-size: 12px;
+    display: block;
+}
+
+.c-history-panel__url {
+    font-size: 14px;
+    font-family: Monaco, Consolas, monospace;
+}
+
+//.history-mode .panel-title {
+//    background: #ab47bc;
+//}

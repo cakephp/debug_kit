@@ -1,0 +1,12 @@
+.o-list {
+    list-style: disc;
+    margin: 10px 0 10px 20px;
+}
+
+.o-list li {
+    margin: 10px 0;
+}
+
+.o-list--is-deprecation li {
+    font-family: Monaco, Consolas, monospace;
+}

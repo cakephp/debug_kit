@@ -10,10 +10,10 @@ if (elem) {
 
 $(document).ready(function() {
   toolbar = new Toolbar({
-    toolbar: $('#toolbar'),
-    content: $('#panel-content-container'),
+    toolbar: $('.js-toolbar'),
+    container: $('.js-panel-content-container'),
     panelButtons: $('.panel'),
-    panelClose: $('#panel-close'),
+    closeBtn: $('.js-debugkit-panel-close'),
     keyboardScope : $(document),
     currentRequest: __debugKitId,
     originalRequest: __debugKitId,

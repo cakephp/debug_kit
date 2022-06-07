@@ -1,0 +1,16 @@
+.c-graph-bar,
+.c-graph-bar__value {
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    height: 14px;
+}
+
+.c-graph-bar {
+    background: #ddd;
+}
+
+.c-graph-bar__value {
+    background: #428bca;
+}

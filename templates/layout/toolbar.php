@@ -12,11 +12,9 @@
     </head>
     <body>
     <?= $this->fetch('content') ?>
-    <div id="loader">
-        <?= $this->Html->image('DebugKit./img/cake.icon.png', ['class' => 'indicator'])?>
+    <div id="o-loader">
+        <?= $this->Html->image('DebugKit./img/cake.icon.png', ['class' => 'o-loader__indicator'])?>
     </div>
     </body>
-    <?= $this->Html->script('DebugKit./js/jquery') ?>
-    <?= $this->Html->script('DebugKit./js/toolbar-app') ?>
     <?= $this->fetch('script') ?>
 </html>

@@ -66,7 +66,10 @@ class Plugin extends BasePlugin
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        $middlewareQueue->insertAt(0, new DebugKitMiddleware($this->service));
+        // Only insert middleware if Toolbar Service is available (not in phpunit run)
+        if ($this->service) {
+            $middlewareQueue->insertAt(0, new DebugKitMiddleware($this->service));
+        }
 
         return $middlewareQueue;
     }

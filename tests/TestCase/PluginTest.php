@@ -86,7 +86,7 @@ TEXT;
      *
      * @return void
      */
-    public function test_middleware_not_loaded_in_tests()
+    public function testMiddlewareNotLoadedInTests()
     {
         $baseApp = new Application(dirname(__DIR__) . '/config');
         $baseApp->pluginBootstrap();

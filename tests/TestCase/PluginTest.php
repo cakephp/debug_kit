@@ -17,9 +17,11 @@ namespace DebugKit\Test\TestCase;
 use Cake\Error\PhpError;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\Http\MiddlewareQueue;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\DeprecationsPanel;
 use DebugKit\Plugin;
+use DebugKit\TestApp\Application;
 use DebugKit\ToolbarService;
 
 /**
@@ -70,12 +72,28 @@ TEXT;
         $first = $data['plugins']['DebugKit'][0];
         $this->assertEquals($first['message'], 'going away');
         $this->assertEquals($first['file'], __FILE__);
-        $this->assertEquals($first['line'], 48);
+        $this->assertEquals($first['line'], 50);
 
         $this->assertArrayHasKey('other', $data);
         $parsed = $data['other'][0];
         $this->assertEquals($parsed['message'], $message);
         $this->assertEquals($parsed['file'], 'src/Plugin.php');
         $this->assertEquals($parsed['line'], 51);
+    }
+
+    /**
+     * Make sure the DebugkitMiddleware is not loaded while running PHPUnit
+     *
+     * @return void
+     */
+    public function test_middleware_not_loaded_in_tests()
+    {
+        $baseApp = new Application(dirname(__DIR__) . '/config');
+        $baseApp->pluginBootstrap();
+        $middlewareQueue = $baseApp->middleware(new MiddlewareQueue());
+        $beforeCount = $middlewareQueue->count();
+        $middlewareQueue = $baseApp->pluginMiddleware($middlewareQueue);
+        $afterCount = $middlewareQueue->count();
+        $this->assertSame($beforeCount, $afterCount);
     }
 }

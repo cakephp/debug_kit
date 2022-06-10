@@ -94,7 +94,7 @@ jobs:
 
     - name: Code Coverage Report
       if: success() && matrix.php-version == '7.4' && matrix.db-type == 'mysql'
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
 
   cs-stan:
     name: Coding Standard & Static Analysis

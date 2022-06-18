@@ -28,7 +28,7 @@ use Cake\Error\Debugger;
 <div class="c-environment-panel">
     <h2><?= __d('debug_kit', 'Application Constants') ?></h2>
 
-    <?php if (!empty($app)): ?>
+    <?php if (!empty($app)) : ?>
         <table class="c-debug-table">
             <thead>
             <tr>
@@ -37,7 +37,7 @@ use Cake\Error\Debugger;
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($app as $key => $val): ?>
+            <?php foreach ($app as $key => $val) : ?>
                 <tr>
                     <td><?= h($key) ?></td>
                     <td><?= Debugger::exportVar($val) ?></td>
@@ -45,7 +45,7 @@ use Cake\Error\Debugger;
             <?php endforeach; ?>
             </tbody>
         </table>
-    <?php else: ?>
+    <?php else : ?>
         <div class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'No application environment available.'); ?>
         </div>
@@ -53,7 +53,7 @@ use Cake\Error\Debugger;
 
     <h2><?= __d('debug_kit', 'CakePHP Constants') ?></h2>
 
-    <?php if (!empty($cake)): ?>
+    <?php if (!empty($cake)) : ?>
         <table class="c-debug-table">
             <thead>
             <tr>
@@ -62,7 +62,7 @@ use Cake\Error\Debugger;
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($cake as $key => $val): ?>
+            <?php foreach ($cake as $key => $val) : ?>
                 <tr>
                     <td><?= h($key) ?></td>
                     <td><?= Debugger::exportVar($val) ?></td>
@@ -70,7 +70,7 @@ use Cake\Error\Debugger;
             <?php endforeach; ?>
             </tbody>
         </table>
-    <?php else: ?>
+    <?php else : ?>
         <div class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'CakePHP environment unavailable.'); ?>
         </div>
@@ -78,7 +78,7 @@ use Cake\Error\Debugger;
 
     <h2><?= __d('debug_kit', 'INI Environment') ?></h2>
 
-    <?php if (!empty($ini)): ?>
+    <?php if (!empty($ini)) : ?>
         <table class="c-debug-table">
             <thead>
             <tr>
@@ -87,7 +87,7 @@ use Cake\Error\Debugger;
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($ini as $key => $val): ?>
+            <?php foreach ($ini as $key => $val) : ?>
                 <tr>
                     <td><?= h($key) ?></td>
                     <td><?= $this->Credentials->filter($val) ?></td>
@@ -95,7 +95,7 @@ use Cake\Error\Debugger;
             <?php endforeach; ?>
             </tbody>
         </table>
-    <?php else: ?>
+    <?php else : ?>
         <div class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'ini environment unavailable.'); ?>
         </div>
@@ -103,7 +103,7 @@ use Cake\Error\Debugger;
 
     <h2><?= __d('debug_kit', 'PHP Environment') ?></h2>
 
-    <?php if (!empty($php)): ?>
+    <?php if (!empty($php)) : ?>
         <table class="c-debug-table">
             <thead>
             <tr>
@@ -112,7 +112,7 @@ use Cake\Error\Debugger;
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($php as $key => $val): ?>
+            <?php foreach ($php as $key => $val) : ?>
                 <tr>
                     <td><?= h($key) ?></td>
                     <td><?= $this->Credentials->filter($val) ?></td>
@@ -120,16 +120,16 @@ use Cake\Error\Debugger;
             <?php endforeach; ?>
             </tbody>
         </table>
-    <?php else: ?>
+    <?php else : ?>
         <div class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'PHP environment unavailable.'); ?>
         </div>
     <?php endif; ?>
 
-    <?php if (isset($hidef)): ?>
+    <?php if (isset($hidef)) : ?>
         <h2><?= __d('debug_kit', 'Hidef Environment') ?></h2>
 
-        <?php if (!empty($hidef)): ?>
+        <?php if (!empty($hidef)) : ?>
             <table class="c-debug-table">
                 <thead>
                 <tr>
@@ -138,7 +138,7 @@ use Cake\Error\Debugger;
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($hidef as $key => $val): ?>
+                <?php foreach ($hidef as $key => $val) : ?>
                     <tr>
                         <td><?= h($key) ?></td>
                         <td><?= Debugger::exportVar($val) ?></td>
@@ -146,7 +146,7 @@ use Cake\Error\Debugger;
                 <?php endforeach; ?>
                 </tbody>
             </table>
-        <?php else: ?>
+        <?php else : ?>
             <div class="c-flash c-flash--warning">
                 <?= __d('debug_kit', 'No Hidef environment available.'); ?>
             </div>

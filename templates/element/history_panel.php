@@ -18,12 +18,12 @@
  */
 ?>
 <div id="request-history" class="c-history-panel" data-panel-id="<?= $panel->id ?>">
-    <?php if (empty($requests)): ?>
+    <?php if (empty($requests)) : ?>
         <p class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'No requests logged.') ?>
             <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
         </p>
-    <?php else: ?>
+    <?php else : ?>
         <p>
             <?= count($requests) ?> <?= __d('debug_kit', 'requests available') ?>
             <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
@@ -39,7 +39,7 @@
                     <span class="c-history-panel__url"><?= h($panel->request->url) ?></span>
                 </a>
             </li>
-            <?php foreach ($requests as $request): ?>
+            <?php foreach ($requests as $request) : ?>
                 <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>
                 <li>
                     <a class="c-history-panel__link" data-request="<?= $request->id ?>" href="<?= $this->Url->build($url) ?>">

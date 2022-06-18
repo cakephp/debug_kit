@@ -18,10 +18,10 @@
  */
 ?>
 <div class="c-log-panel">
-    <?php if ($logger->noLogs()): ?>
+    <?php if ($logger->noLogs()) : ?>
         <p class="c-flash c-flash--info"><?= __d('debug_kit', 'There were no log entries made this request') ?></p>
-    <?php else: ?>
-        <?php foreach ($logger->all() as $logName => $logs): ?>
+    <?php else : ?>
+        <?php foreach ($logger->all() as $logName => $logs) : ?>
             <h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
             <table class="c-debug-table">
                 <thead>
@@ -31,7 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($logs as $log): ?>
+                <?php foreach ($logs as $log) : ?>
                     <tr>
                         <td><?= $log[0] ?></td>
                         <td><?= h($log[1]) ?></td>

@@ -35,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($memory as $key => $value): ?>
+            <?php foreach ($memory as $key => $value) : ?>
                 <tr>
                     <td><?= h($key) ?></td>
                     <td class="u-text-right"><?= $this->Number->toReadableSize($value) ?></td>
@@ -69,15 +69,15 @@
             $i = 0;
             $values = array_values($timers);
 
-            foreach ($timers as $timerName => $timeInfo):
+            foreach ($timers as $timerName => $timeInfo) :
                 $indent = 0;
-                for ($j = 0; $j < $i; $j++):
-                    if (($values[$j]['end'] > $timeInfo['start']) && ($values[$j]['end']) > ($timeInfo['end'])):
+                for ($j = 0; $j < $i; $j++) :
+                    if (($values[$j]['end'] > $timeInfo['start']) && ($values[$j]['end']) > $timeInfo['end']) :
                         $indent++;
                     endif;
                 endfor;
                 $indent = str_repeat("\xC2\xA0\xC2\xA0", $indent);
-            ?>
+                ?>
             <tr>
                 <td>
                     <?= h($indent . $timeInfo['message']) ?>

@@ -32,22 +32,21 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
 ?>
 
 <div class="c-sql-log-panel">
-    <?php if (!empty($tables)): ?>
+    <?php if (!empty($tables)) : ?>
         <h4><?= __d('debug_kit', 'Generated Models') ?></h4>
         <p class="c-flash c-flash--warning"><?= __d('debug_kit', 'The following Table objects used {0} instead of a concrete class:', '<code>Cake\ORM\Table</code>') ?></p>
         <ul class="o-list">
-            <?php foreach ($tables as $table): ?>
+            <?php foreach ($tables as $table) : ?>
                 <li><?= h($table) ?></li>
             <?php endforeach ?>
         </ul>
         <hr />
     <?php endif; ?>
 
-    <?php if (!empty($loggers)): ?>
-        <?php foreach ($loggers as $logger):
-
+    <?php if (!empty($loggers)) : ?>
+        <?php foreach ($loggers as $logger) :
             $queries = $logger->queries();
-            if (empty($queries)):
+            if (empty($queries)) :
                 continue;
             endif;
 
@@ -62,7 +61,7 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
                     $logger->totalTime(),
                     count($queries),
                     $logger->totalRows()
-                    );
+                );
                 ?>
                 </h5>
 
@@ -75,7 +74,7 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($queries as $query): ?>
+                        <?php foreach ($queries as $query) : ?>
                         <tr>
                             <td><?= SqlFormatter::format($query['query']) ?></td>
                             <td><?= h($query['rows']) ?></td>
@@ -88,7 +87,7 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if ($noOutput): ?>
+    <?php if ($noOutput) : ?>
     <div class="c-flash c-flash--warning"><?= __d('debug_kit', 'No active database connections') ?></div>
     <?php endif ?>
 </div>

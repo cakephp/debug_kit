@@ -158,6 +158,7 @@ class MailPreviewController extends DebugKitController
         if ($partType === 'text') {
             $part = '<pre>' . (string)$part . '</pre>';
         }
+
         return $response->withStringBody($part);
     }
 

@@ -33,32 +33,32 @@ $printer = function ($section, $data) {
         </li>
     <?php endforeach; ?>
     </ul>
-<?php
+    <?php
 }
 ?>
 <div class="c-deprecations-panel">
     <?php
-    if (count($app)):
+    if (count($app)) :
         $printer('app', $app);
     endif;
 
-    if (count($plugins)):
-        foreach ($plugins as $plugin => $pluginData):
+    if (count($plugins)) :
+        foreach ($plugins as $plugin => $pluginData) :
             $printer($plugin, $pluginData);
         endforeach;
     endif;
 
-    if (count($cake)):
+    if (count($cake)) :
         $printer('cake', $cake);
     endif;
 
-    if (count($vendor)):
-        foreach ($vendor as $vendorSection => $vendorData):
+    if (count($vendor)) :
+        foreach ($vendor as $vendorSection => $vendorData) :
             $printer($vendorSection, $vendorData);
         endforeach;
     endif;
 
-    if (count($other)):
+    if (count($other)) :
         $printer('other', $other);
     endif;?>
 </div>

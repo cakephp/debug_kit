@@ -5,15 +5,18 @@
 ?>
 <div class="c-mail-panel">
     <p class="c-flash c-flash--info">
-        <?= __d('debug_kit',
-                'Why not test your emails interactively instead? Go to the {0}',
-                $this->Html->link(__d('debug_kit', 'Email previews page'), ['controller' => 'MailPreview', 'action' => 'index'], ['target' => '_blank'])) ?>
+        <?= __d(
+            'debug_kit',
+            'Why not test your emails interactively instead? Go to the {0}',
+            $this->Html->link(__d('debug_kit', 'Email previews page'), ['controller' => 'MailPreview', 'action' => 'index'], ['target' => '_blank'])
+        ) ?>
     </p>
     <?php
-        if (empty($emails)) {
-            echo "<p>" . __d('debug_kit', 'No emails were sent during this request') . "</p>";
-            return;
-        }
+    if (empty($emails)) {
+        echo '<p>' . __d('debug_kit', 'No emails were sent during this request') . '</p>';
+
+        return;
+    }
         $url = $this->Url->build(['controller' => 'MailPreview', 'action' => 'sent', 'panel' => $panel->id, 'id' => 0]);
     ?>
     <div class="c-mail-panel__wrapper">

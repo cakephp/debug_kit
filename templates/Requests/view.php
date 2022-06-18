@@ -59,6 +59,6 @@ use Cake\Utility\Inflector;
         'id' => '__debug_kit_app',
         'data-id' => $toolbar->id,
         'data-url' => Router::url('/', true),
-        'data-webroot' => $this->getRequest()->getAttribute("webroot"),
+        'data-webroot' => $this->getRequest()->getAttribute('webroot'),
     ]);
-?>
+    ?>

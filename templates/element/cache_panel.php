@@ -19,9 +19,9 @@
  */
 ?>
 <div class="c-cache-panel">
-    <?php if (empty($metrics)): ?>
+    <?php if (empty($metrics)) : ?>
         <p class="c-flash c-flash--info"><?= __d('debug_kit', 'There were no cache operations in this request.') ?></p>
-    <?php else: ?>
+    <?php else : ?>
         <h3><?= __d('debug_kit', 'Cache Utilities') ?></h3>
         <table class="c-debug-table">
             <thead>
@@ -41,7 +41,7 @@
                             data-url="<?= $this->Url->build([
                                 'plugin' => 'DebugKit',
                                 'controller' => 'Toolbar',
-                                'action' => 'clearCache'
+                                'action' => 'clearCache',
                             ]) ?>"
                             data-csrf="<?= $this->getRequest()
                                 ->getAttribute('csrfToken') ?>"

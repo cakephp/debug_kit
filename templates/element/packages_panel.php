@@ -21,15 +21,15 @@
      data-base-url="<?= $this->Url->build([
          'plugin' => 'DebugKit',
          'controller' => 'Composer',
-         'action' => 'checkDependencies'
+         'action' => 'checkDependencies',
      ]) ?>"
      data-csrf-token="<?= $this->getRequest()->getAttribute('csrfToken') ?>"
     >
-    <?php if (empty($packages) && empty($devPackages)): ?>
+    <?php if (empty($packages) && empty($devPackages)) : ?>
         <div class="c-flash c-flash--warning">
             <?= __d('debug_kit', '{0} not found', "'composer.lock'"); ?>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <div class="c-packages-panel__check-update">
             <button class="o-button"><?= __d('debug_kit', 'Check for Updates') ?></button>
             <label><input type="checkbox"><?= __d('debug_kit', 'Direct dependencies only') ?></label>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="c-packages-panel__section-wrapper">
-            <?php if (!empty($packages)): ?>
+            <?php if (!empty($packages)) : ?>
                 <section>
                     <h3><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h3>
                     <table class="c-debug-table">
@@ -52,7 +52,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($packages as $package): ?>
+                        <?php foreach ($packages as $package) : ?>
                             <?php extract($package); ?>
                             <tr>
                                 <td title="<?= h($description) ?>">
@@ -67,7 +67,7 @@
                     </table>
                 </section>
             <?php endif; ?>
-            <?php if (!empty($devPackages)): ?>
+            <?php if (!empty($devPackages)) : ?>
                 <section>
                     <h3><?= __d('debug_kit', 'Dev Requirements ({0})', count($devPackages)) ?> </h3>
                     <table class="c-debug-table">
@@ -78,7 +78,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($devPackages as $package): ?>
+                        <?php foreach ($devPackages as $package) : ?>
                             <?php extract($package); ?>
                             <tr>
                                 <td title="<?= h($description) ?>">

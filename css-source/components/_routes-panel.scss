@@ -1,0 +1,13 @@
+.c-routes-panel__button-wrapper {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin: 0 -5px;
+}
+
+.c-routes-panel__button-wrapper .is-active {
+    background-color: #fff;
+    color: #555;
+    border-color: #6f6f6f;
+    box-shadow: 0 2px 0 #6f6f6f;
+}

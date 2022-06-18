@@ -17,16 +17,16 @@
  * @var array $requests
  */
 ?>
-<div id="request-history" class="c-history-panel">
+<div id="request-history" class="c-history-panel" data-panel-id="<?= $panel->id ?>">
     <?php if (empty($requests)): ?>
         <p class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'No requests logged.') ?>
-            <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
+            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
         </p>
     <?php else: ?>
         <p>
             <?= count($requests) ?> <?= __d('debug_kit', 'requests available') ?>
-            <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
+            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
         </p>
         <ul class="c-history-panel__list">
             <li>
@@ -55,7 +55,7 @@
     <?php endif; ?>
     <script type="text/html" id="list-template">
         <p>
-            <button type="button" onclick="toolbar.loadPanel('latest-history')"><?= __d('debug_kit', 'Reload') ?></button>
+            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
         </p>
         <ul class="c-history-panel__list">
             <li>
@@ -83,72 +83,5 @@
             <span class="c-history-panel__url">{url}</span>
         </a>
     </li>
-    </script>
-
-    <script>
-    $(document).ready(function() {
-        var panelButtons = $('.panel');
-        var thisPanel = '<?= h($panel->id) ?>';
-        var toolbar = window.toolbar;
-
-        if (!$('#request-history > ul').length) {
-            $('#request-history').html($('#list-template').html());
-        }
-
-        var listItem = $('#list-item-template').html();
-
-        for (var i = 0; i < toolbar.ajaxRequests.length; i++) {
-            var params = {
-                id: toolbar.ajaxRequests[i].requestId,
-                time: (new Date(toolbar.ajaxRequests[i].date)).toLocaleString(),
-                method: toolbar.ajaxRequests[i].method,
-                status: toolbar.ajaxRequests[i].status,
-                url: toolbar.ajaxRequests[i].url,
-                type: toolbar.ajaxRequests[i].type
-            };
-            var content = listItem.replace(/{([^{}]*)}/g, function(a, b) {
-                var r = params[b];
-                return typeof r === 'string' || typeof r === 'number' ? r : a;
-            });
-            $('.c-history-panel__list li:first').after(content);
-        }
-
-        var buttons = $('.c-history-panel__link');
-        // Highlight the active request.
-        buttons.filter('[data-request=' + window.toolbar.currentRequest + ']').addClass('active');
-
-        buttons.on('click', function(e) {
-            var el = $(this);
-            e.preventDefault();
-            buttons.removeClass('active');
-            el.addClass('active');
-
-            window.toolbar.currentRequest = el.data('request');
-
-            $.getJSON(el.attr('href'), function(response) {
-                if (response.panels[0].request_id == window.toolbar.originalRequest) {
-                    $('#panel-content-container').removeClass('history-mode');
-                    $('#toolbar').removeClass('history-mode');
-                } else {
-                    $('#panel-content-container').addClass('history-mode');
-                    $('#toolbar').addClass('history-mode');
-                }
-
-                for (var i = 0, len = response.panels.length; i < len; i++) {
-                    var panel = response.panels[i];
-                    // Offset by two for scroll buttons
-                    var button = panelButtons.eq(i + 2);
-                    var summary = button.find('.panel-summary');
-
-                    // Don't overwrite the history panel.
-                    if (button.data('id') == thisPanel) {
-                        continue;
-                    }
-                    button.attr('data-id', panel.id);
-                    summary.text(panel.summary);
-                }
-            });
-        });
-    });
     </script>
 </div>

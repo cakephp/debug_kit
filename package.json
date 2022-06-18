@@ -18,12 +18,18 @@
         "kit"
     ],
     "devDependencies": {
+        "eslint": "^8.17.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.26.0",
         "laravel-mix": "^6.0.48",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.52.2",
         "sass-loader": "^12.6.0"
     },
     "scripts": {
-        "start": "npx mix"
+        "start": "npx mix watch",
+        "build": "npx mix --production",
+        "cs-check": "npx eslint webroot/js/main.js webroot/js/inject-iframe.js webroot/js/modules/*.js",
+        "cs-fix": "npx eslint webroot/js/main.js webroot/js/inject-iframe.js webroot/js/modules/*.js --fix"
     }
 }

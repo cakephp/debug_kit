@@ -1,0 +1,15 @@
+.c-mail-panel__wrapper {
+    display: flex;
+}
+
+.c-mail-panel__table-wrapper {
+    width: 300px;
+}
+
+.c-mail-panel__iframe {
+    height: calc(100vh - 128px);
+    flex: 1;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+}

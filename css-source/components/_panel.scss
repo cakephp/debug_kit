@@ -17,12 +17,6 @@
 .c-panel__button {
     color: #fff;
     font-family: CakeFont, Helvetica, Arial, sans-serif;
-    line-height: 20px;
-    height: 40px;
-    width: 40px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
 }
 
 .c-panel.is-active .c-panel__button {
@@ -47,6 +41,10 @@
     padding: 10px;
     margin: 0;
     transition: background-color 300ms linear;
+}
+
+.is-history-mode .c-panel__title {
+    background: #ab47bc;
 }
 
 .c-panel__content {

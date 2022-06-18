@@ -36,14 +36,14 @@ foreach (CorePlugin::loaded() as $pluginName) {
 ?>
 <div class="c-routes-panel">
     <div class="c-routes-panel__button-wrapper">
-        <button type="button" class="o-button js-toggle-plugin-route" data-plugin=".route-entry--app">
+        <button type="button" class="o-button js-toggle-plugin-route" data-plugin=".c-routes-panel__route-entry--app">
             <?= __d('debug_kit', 'App') ?>
             <?= !empty($amountOfRoutesPerGroup['app']) ? ' (' . $amountOfRoutesPerGroup['app'] . ')' : '' ?>
         </button>
         <?php foreach ($pluginNames as $pluginName => $parsedName) : ?>
-            <button type="button" class="o-button js-toggle-plugin-route
-                <?= strpos($pluginName, 'DebugKit') === 0 ? ' toggle-plugin-route-active' : '' ?>"
-                    data-plugin=".route-entry--plugin-<?= $parsedName ?>">
+            <button type="button" class="o-button js-toggle-plugin-route <?=
+                    strpos($pluginName, 'DebugKit') === 0 ? ' is-active' : '' ?>"
+                    data-plugin=".c-routes-panel__route-entry--plugin-<?= $parsedName ?>">
                 <?= $pluginName ?>
             </button>
         <?php endforeach; ?>
@@ -61,14 +61,14 @@ foreach (CorePlugin::loaded() as $pluginName) {
             <?php
             $class = '';
             if (empty($route->defaults['plugin'])) :
-                $class = 'route-entry route-entry--app';
+                $class = 'c-routes-panel__route-entry c-routes-panel__route-entry--app';
             else :
-                $class = 'route-entry route-entry--plugin route-entry--plugin-' .
+                $class = 'c-routes-panel__route-entry c-routes-panel__route-entry--plugin c-routes-panel__route-entry--plugin-' .
                     Text::slug($route->defaults['plugin']);
 
                 // Hide DebugKit internal routes by default
                 if ($route->defaults['plugin'] === 'DebugKit') {
-                    $class .= ' hidden';
+                    $class .= ' is-hidden';
                 }
             endif;
 
@@ -91,28 +91,4 @@ foreach (CorePlugin::loaded() as $pluginName) {
         <?php endforeach; ?>
         </tbody>
     </table>
-
-    <script>
-        $(document).ready(function() {
-            $('#toggle-debugkit-routes').on('click', function (event) {
-                event.preventDefault();
-                var routes = $('.debugkit-route');
-                routes.toggleClass('hidden');
-            });
-
-            $('.js-toggle-plugin-route').on('click', function (event) {
-                var $this = $(this);
-                var plugin = $this.attr('data-plugin');
-
-                if($this.hasClass('toggle-plugin-route-active')) {
-                    $this.removeClass('toggle-plugin-route-active');
-                    $('.route-entry' + plugin).removeClass('hidden');
-                } else {
-                    $this.addClass('toggle-plugin-route-active');
-                    $('.route-entry' + plugin).addClass('hidden');
-                }
-
-            });
-        });
-    </script>
 </div>

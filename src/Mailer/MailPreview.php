@@ -14,8 +14,8 @@ declare(strict_types=1);
  */
 namespace DebugKit\Mailer;
 
-use Cake\Datasource\ModelAwareTrait;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -26,7 +26,7 @@ use ReflectionMethod;
 class MailPreview
 {
     use MailerAwareTrait;
-    use ModelAwareTrait;
+    use LocatorAwareTrait;
 
     /**
      * Returns the name of an email if it is valid

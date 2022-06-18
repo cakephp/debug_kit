@@ -1,0 +1,39 @@
+/**
+ * CakePHP Debug Kit SCSS
+ */
+
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+@import 'css-source/reset';
+@import "css-source/base/elements";
+
+@import "css-source/typography/fonts";
+@import "css-source/typography/headings";
+
+@import "css-source/objects/button";
+@import "css-source/objects/checkbox";
+@import "css-source/objects/lists";
+@import "css-source/objects/loader";
+
+@import "css-source/components/cache-panel";
+@import "css-source/components/debug-table";
+@import "css-source/components/flash";
+@import "css-source/components/graph-bar";
+@import "css-source/components/history";
+@import "css-source/components/packages";
+@import "css-source/components/panel";
+@import "css-source/components/panel-content-container";
+@import "css-source/components/routes-panel";
+@import "css-source/components/toolbar";
+@import "css-source/components/mail-panel";
+
+@import "css-source/utilities";
+
+.is-hidden {
+    display: none;
+}

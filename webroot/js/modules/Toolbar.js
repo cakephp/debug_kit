@@ -1,239 +1,257 @@
-export class Toolbar {
+export default class Toolbar {
+  constructor(options) {
+    this.$body = options.body;
+    this.$container = options.container;
+    this.$toggleBtn = options.toggleBtn;
+    this.$panelButtons = options.panelButtons;
+    this.currentRequest = options.currentRequest;
+    this.originalRequest = options.originalRequest;
+    this.baseUrl = options.baseUrl;
+    this.isLocalStorageAvailable = options.isLocalStorageAvailable;
 
-    constructor(options) {
-        this.$toolbar = options.toolbar;
-        this.$container = options.container;
-        this.$panelButtons = options.panelButtons;
-        this.$closeBtn = options.closeBtn;
-        this.keyboardScope = options.keyboardScope;
-        this.currentRequest = options.currentRequest;
-        this.originalRequest = options.originalRequest;
-        this.baseUrl = options.baseUrl;
-        this.webroot = options.webroot;
+    this.currentPanelId = 0;
+    this.currentState = 0;
+    this.states = [
+      'collapse',
+      'toolbar',
+    ];
 
-        this.isLocalStorageAvailable = options.isLocalStorageAvailable;
+    this.ajaxRequests = [];
+  }
 
-        this.currentState = 0;
-        this.states = [
-            'collapse',
-            'toolbar'
-        ];
+  initialize() {
+    this.mouseListeners();
+    this.loadState();
+
+    const self = this;
+    window.addEventListener('message', (event) => {
+      self.onMessage(event);
+    }, false);
+  }
+
+  toggle() {
+    const state = this.nextState();
+    this.updateButtons(state);
+    this.updateToolbarState(state);
+    window.parent.postMessage(state, window.location.origin);
+  }
+
+  hide() {
+    this.$container.removeClass('is-active');
+    this.currentPanelButton().removeClass('is-active');
+    const that = this;
+
+    // Shrink the iframe back to 40px height
+    setTimeout(() => {
+      window.parent.postMessage(that.state(), window.location.origin);
+    }, 250);
+  }
+
+  isExpanded() {
+    return this.$container.hasClass('is-active');
+  }
+
+  // ========== STATES ==========
+
+  state() {
+    return this.states[this.currentState];
+  }
+
+  nextState() {
+    this.currentState++;
+    if (this.currentState === this.states.length) {
+      this.currentState = 0;
+    }
+    this.saveState();
+    return this.state();
+  }
+
+  saveState() {
+    if (!this.isLocalStorageAvailable) {
+      return;
+    }
+    window.localStorage.setItem('toolbar_state', this.currentState);
+  }
+
+  loadState() {
+    if (this.isLocalStorageAvailable) {
+      let old = window.localStorage.getItem('toolbar_state');
+      if (!old) {
+        old = '0';
+      }
+      if (old === '0') {
+        this.hide();
+      }
+      if (old === '1') {
+        this.toggle();
+      }
+    }
+  }
+
+  // ========== UPDATE ELEMENTES DEPENDING ON STATE ==========
+
+  updateToolbarState(state) {
+    if (state === 'toolbar') {
+      this.$body.addClass('is-active');
+    }
+    if (state === 'collapse') {
+      this.$body.removeClass('is-active');
+    }
+  }
+
+  updateButtons(state) {
+    if (state === 'toolbar') {
+      this.$panelButtons.show();
+    }
+    if (state === 'collapse') {
+      this.$panelButtons.hide();
+    }
+  }
+
+  // ========== PANELS ==========
+
+  currentPanelButton() {
+    return this.$body.find(`[data-id="${this.currentPanel()}"]`);
+  }
+
+  currentPanel() {
+    return this.currentPanelId;
+  }
+
+  /**
+     * Responsible for loading a specific panel
+     *
+     * @param id The panel id
+     * @param panelType The panel type used for global custom events
+     */
+  loadPanel(id, panelType) {
+    if (id === undefined) {
+      return;
     }
 
-    toggle() {
-        let state = this.nextState();
-        this.updateButtons(state);
-        this.updateToolbarState(state);
-        window.parent.postMessage(state, window.location.origin);
+    const url = `${this.baseUrl}debug-kit/panels/view/${id}`;
+    const contentArea = this.$container.find('.c-panel-content-container__content');
+    const that = this;
+    const loader = $('.o-loader');
+
+    const timer = setTimeout(() => {
+      loader.addClass('is-loading');
+    }, 500);
+
+    this.currentPanelId = id;
+    window.parent.postMessage('expand', window.location.origin);
+
+    $.get(url, (response) => {
+      clearTimeout(timer);
+      loader.removeClass('is-loading');
+
+      // Slide panel into place
+      that.$container.addClass('is-active');
+      contentArea.html(response);
+
+      // This initializes the panel specific JS logic (if there is any)
+      document.dispatchEvent(new CustomEvent('initPanel', { detail: `panel${panelType}` }));
+      that.bindNeatArray();
+      that.bindDebugBlock();
+    });
+  }
+
+  // ???????
+  bindNeatArray() {
+    const lists = this.$container.find('.depth-0');
+    lists.find('ul').hide()
+      .parent().addClass('expandable collapsed');
+
+    lists.on('click', 'li', (event) => {
+      event.stopPropagation();
+      const el = $(this);
+      el.children('ul').toggle();
+      el.toggleClass('expanded')
+        .toggleClass('collapsed');
+    });
+  }
+
+  // This re-inits the collapsible Debugger::exportVar() content of the Variables tab
+  bindDebugBlock() {
+    if (window.__cakeDebugBlockInit) {
+      window.__cakeDebugBlockInit();
+    }
+  }
+
+  // ========== LISTENERS ==========
+
+  mouseListeners() {
+    const that = this;
+
+    $(document).on('click', '.js-toolbar-scroll-left', () => {
+      that.scroll('left');
+    });
+    $(document).on('click', '.js-toolbar-scroll-right', () => {
+      that.scroll('right');
+    });
+    $(document).on('click', '.js-toolbar-load-panel', () => {
+      const panelId = $(this).attr('data-panel-id');
+      that.loadPanel(panelId, 'panelhistory');
+    });
+    $(document).on('click', '.js-panel-close', () => {
+      that.hide();
+    });
+
+    this.$panelButtons.on('click', function onClick(e) {
+      that.$panelButtons.removeClass('is-active');
+      e.preventDefault();
+      e.stopPropagation();
+      const id = $(this).attr('data-id');
+      const samePanel = that.currentPanel() === id;
+
+      // If the current panel is open and its tab has been clicked => close it
+      if (that.isExpanded() && samePanel) {
+        that.hide();
+        return false;
+      }
+
+      $(this).addClass('is-active');
+      const panelType = $(this).attr('data-panel-type');
+      that.loadPanel(id, panelType);
+      return true;
+    });
+
+    this.$toggleBtn.on('click', () => {
+      that.toggle();
+    });
+  }
+
+  scroll(direction) {
+    const scrollValue = 300;
+    const operator = direction === 'left' ? '-=' : '+=';
+    const buttons = this.$panelButtons;
+    const firstButton = buttons.first();
+    const lastButton = buttons.last();
+
+    // If the toolbar is scrolled to the left, don't go farther.
+    if (direction === 'right' && firstButton.position().left === 0) {
+      return;
     }
 
-    hide() {
-        this.$container.classList.remove('is-active');
-        this.currentPanelButton().classList.remove('is-active');
-        let _this = this;
-
-        // Hardcode timer as one does.
-        setTimeout(function() {
-            _this._currentPanel = null;
-            window.parent.postMessage(_this.state(), window.location.origin);
-        }, 250);
+    const buttonWidth = lastButton.width();
+    // If the last button's right side is left of the cake button, don't scroll further.
+    if (direction === 'left' && lastButton.offset().left + buttonWidth < this.$toggleBtn.offset().left) {
+      return;
     }
+    const css = { left: operator + scrollValue };
+    $(this.$panelButtons).animate(css);
+  }
 
-    isExpanded() {
-        return this.$container.classList.contains('is-active');
+  // ========== AJAX related functionality ==========
+
+  onMessage(event) {
+    if (typeof (event.data) === 'string' && event.data.indexOf('ajax-completed$$') === 0) {
+      this.onRequest(JSON.parse(event.data.split('$$')[1]));
     }
+  }
 
-    // ========== STATES ==========
-
-    state() {
-        return this.states[this.currentState];
-    }
-
-    nextState() {
-        this.currentState++;
-        if (this.currentState === this.states.length) {
-            this.currentState = 0;
-        }
-        this.saveState();
-        return this.state();
-    }
-
-    saveState() {
-        if (!this.isLocalStorageAvailable) {
-            return;
-        }
-        window.localStorage.setItem('toolbar_state', this.currentState);
-    }
-
-    loadState() {
-        if (!this.isLocalStorageAvailable) {
-            return;
-        }
-        let old = window.localStorage.getItem('toolbar_state');
-        if (!old) {
-            old = '0';
-        }
-        if (old === '0') {
-            return this.hide();
-        }
-        if (old === '1') {
-            return this.toggle();
-        }
-    }
-
-    // ========== UPDATE ELEMENTES DEPENDING ON STATE ==========
-
-    updateToolbarState(state) {
-        if (state === 'toolbar') {
-            this.$toolbar.classList.add('open');
-        }
-        if (state === 'collapse') {
-            this.$toolbar.classList.remove('open');
-        }
-    }
-
-    updateButtons(state) {
-        if (state === 'toolbar') {
-            this.$panelButtons.show();
-        }
-        if (state === 'collapse') {
-            this.$panelButtons.hide();
-        }
-    }
-
-    // ========== PANELS ==========
-
-    currentPanelButton() {
-        return this.$toolbar.find('[data-id="' + this.currentPanel() + '"]');
-    }
-
-    currentPanel() {
-        return this._currentPanel;
-    }
-
-    loadPanel(id) {
-        if (id === undefined) {
-            return;
-        }
-
-        let url = this.baseUrl + 'debug-kit/panels/view/' + id;
-        let contentArea = this.container.find('#panel-content');
-        let _this = this;
-        let timer;
-        let loader = $('#loader');
-
-        if (this._lastPanel !== id) {
-            timer = setTimeout(function() {
-                loader.addClass('loading');
-            }, 500);
-        }
-
-        this._currentPanel = id;
-        this._lastPanel = id;
-
-        window.parent.postMessage('expand', window.location.origin);
-
-        $.get(url, function(response) {
-            clearTimeout(timer);
-            loader.removeClass('loading');
-
-            // Slide panel into place - css transitions.
-            _this.container.addClass('enabled');
-            contentArea.html(response);
-            _this.bindVariableSort();
-
-            _this.bindNeatArray();
-        });
-    }
-
-    bindVariableSort() {
-        let sortButton = this.container.find('.neat-array-sort');
-        let _this = this;
-        sortButton.click(function() {
-            if (!$(this).prop('checked')) {
-                document.cookie = 'debugKit_sort=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=' + _this.webroot;
-            } else {
-                document.cookie = 'debugKit_sort=1; path=' + _this.webroot;
-            }
-            _this.loadPanel(_this.currentPanel());
-        });
-    }
-
-    bindNeatArray() {
-        var lists = this.container.find('.depth-0');
-        lists.find('ul').hide()
-            .parent().addClass('expandable collapsed');
-
-        lists.on('click', 'li', function(event) {
-            event.stopPropagation();
-            var el = $(this);
-            el.children('ul').toggle();
-            el.toggleClass('expanded')
-                .toggleClass('collapsed');
-        });
-    }
-
-    // ========== LISTENERS ==========
-
-    mouseListeners() {
-        let _this = this;
-        this.$toolbar.find('.panel-button-left').on('click', function(e) {
-            _this.scroll('left');
-            return false;
-        });
-        this.$toolbar.find('.panel-button-right').on('click', function(e) {
-            _this.scroll('right');
-            return false;
-        });
-
-        this.$panelButtons.on('click', function(e) {
-            _this.$panelButtons.classList.remove('is-active');
-            e.preventDefault();
-            e.stopPropagation();
-            let id = this.getAttribute('data-id');
-            let samePanel = _this.currentPanel() === id;
-
-            if (_this.isExpanded() && samePanel) {
-                _this.hide();
-            }
-            if (samePanel) {
-                return false;
-            }
-            this.classList.add('is-active');
-            _this.loadPanel(id);
-        });
-
-        this.$toolbar.on('click', function() {
-            _this.toggle();
-            return false;
-        });
-
-        this.$closeBtn.on('click', function() {
-            _this.hide();
-            return false;
-        });
-    }
-
-    scroll(direction) {
-        let scrollValue = 300;
-        let operator = direction === 'left' ? '-=' : '+=';
-        let buttons = this.toolbar.find('.toolbar-inner li');
-        let cakeButton = this.toolbar.find('#panel-button');
-        let firstButton = buttons.first();
-        let lastButton = buttons.last();
-
-        // If the toolbar is scrolled to the left, don't go farther.
-        if (direction === 'right' && firstButton.position().left == 0) {
-            return;
-        }
-
-        var buttonWidth = lastButton.width();
-        // If the last button's right side is left of the cake button, don't scroll further.
-        if (direction === 'left' && lastButton.offset().left + buttonWidth < cakeButton.offset().left) {
-            return;
-        }
-        var css = {left: operator + scrollValue};
-        $('.toolbar-inner li', this.button).animate(css);
-    },
-
+  onRequest(request) {
+    this.ajaxRequests.push(request);
+    $('.c-panel__summary:contains(xhr)').text(`${this.ajaxRequests.length} xhr`);
+  }
 }

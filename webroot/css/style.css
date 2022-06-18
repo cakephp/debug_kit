@@ -1,7 +1,15 @@
 @charset "UTF-8";
 /**
- *
+ * CakePHP Debug Kit SCSS
  */
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -183,38 +191,35 @@ strong {
   margin: 10px 0;
 }
 
-.o-list--is-deprecation li {
+.o-list--deprecation-list li {
   font-family: Monaco, Consolas, monospace;
 }
 
 .o-loader {
-  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #D33C44;
   position: absolute;
   top: 0;
-  bottom: 40px;
   left: 0;
-  right: 0;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   z-index: 100;
-  display: none;
   opacity: 0;
-  transition: opacity 0.5s ease-in;
+  visibility: hidden;
+  transition: all 0.3s;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.o-loader.is-active {
-  display: block;
+.o-loader.is-loading {
   opacity: 1;
+  visibility: visible;
 }
 
 .o-loader__indicator {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -15px 0 0 -15px;
   -webkit-animation: spin 4s linear infinite;
-  animation: spin 4s linear infinite;
+          animation: spin 4s linear infinite;
 }
 
 @-webkit-keyframes spin {
@@ -228,6 +233,11 @@ strong {
     transform: rotate(360deg);
   }
 }
+.c-cache-panel__messages p {
+  padding: 5px;
+  background: lightgreen;
+}
+
 .c-debug-table td {
   font-family: Monaco, Consolas, monospace;
 }
@@ -374,6 +384,16 @@ strong {
   font-family: Monaco, Consolas, monospace;
 }
 
+.c-packages-panel__section-wrapper {
+  display: flex;
+}
+
+.c-packages-panel__section-wrapper > section {
+  width: 50%;
+  max-width: 50%;
+  min-width: 50%;
+}
+
 .c-packages-panel__version {
   background: #D33C44;
   border-radius: 4px;
@@ -396,7 +416,7 @@ strong {
   display: none;
 }
 
-.c-packages-panel__section-header {
+.c-packages-panel__terminal .c-packages-panel__section-header {
   color: #428bca;
 }
 
@@ -406,10 +426,6 @@ strong {
 
 .c-packages-panel__terminal highlight {
   color: #D33C44;
-}
-
-.c-packages-panel__terminal .loading {
-  margin: 0;
 }
 
 .c-packages-panel__terminal .indicator {
@@ -447,12 +463,6 @@ strong {
 .c-panel__button {
   color: #fff;
   font-family: CakeFont, Helvetica, Arial, sans-serif;
-  line-height: 20px;
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
 
 .c-panel.is-active .c-panel__button {
@@ -479,6 +489,10 @@ strong {
   transition: background-color 300ms linear;
 }
 
+.is-history-mode .c-panel__title {
+  background: #ab47bc;
+}
+
 .c-panel__content {
   padding: 10px;
 }
@@ -496,29 +510,49 @@ strong {
 
 .c-panel-content-container.is-active {
   top: 0;
-  transition: top 0.25s ease-in-out;
 }
 
 .c-panel-content-container__close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 15px;
   right: 15px;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
-  display: inline-block;
-  padding: 8px;
-  line-height: 12px;
-  font-size: 20px;
-  height: 12px;
-  width: 12px;
-  border-radius: 15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  vertical-align: middle;
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 50%;
   cursor: pointer;
 }
 .c-panel-content-container__close:hover {
   background: rgba(0, 0, 0, 0.5);
+}
+.c-panel-content-container__close:before, .c-panel-content-container__close:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: 50%;
+  height: 2px;
+  background: #fff;
+  transform-origin: 50% 50%;
+}
+.c-panel-content-container__close:before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.c-panel-content-container__close:after {
+  transform: translate(-50%, -50%) rotate(315deg);
+}
+
+.is-active .o-loader.is-active {
+  display: block;
+}
+
+.c-panel-content-container__content .o-loader {
+  display: none;
 }
 
 .c-routes-panel__button-wrapper {
@@ -528,27 +562,87 @@ strong {
   margin: 0 -5px;
 }
 
+.c-routes-panel__button-wrapper .is-active {
+  background-color: #fff;
+  color: #555;
+  border-color: #6f6f6f;
+  box-shadow: 0 2px 0 #6f6f6f;
+}
+
 .c-toolbar {
+  display: flex;
   background: #D33C44;
   height: 40px;
+  width: 40px;
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
 }
 
-.c-toolbar.is-open {
+.is-active .c-toolbar {
+  width: 100%;
   border-radius: 0;
   overflow: auto;
   padding-right: 40px;
 }
 
-.c-toolbar__inner {
+.c-toolbar__inner-wrapper {
+  display: none;
+  flex: 1;
+}
+
+.is-active .c-toolbar__inner-wrapper {
+  display: block;
+}
+
+.c-toolbar__inner-ul {
+  display: flex;
+  justify-content: flex-end;
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.c-toolbar__button {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: #D33C44;
+}
+
+.c-toolbar__scroll-button {
+  display: none;
+  font-size: 1.25em;
+  cursor: pointer;
+}
+
+.is-active .c-toolbar__scroll-button {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-toolbar__scroll-button--right {
+  margin-left: 20px;
+}
+
+.c-mail-panel__wrapper {
+  display: flex;
+}
+
+.c-mail-panel__table-wrapper {
+  width: 300px;
+}
+
+.c-mail-panel__iframe {
+  height: calc(100vh - 128px);
+  flex: 1;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 1px solid #ccc;
 }
 
 .u-text-center {

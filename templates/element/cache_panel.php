@@ -38,6 +38,13 @@
                         <button
                             class="o-button js-clear-cache"
                             data-name="<?= h($name) ?>"
+                            data-url="<?= $this->Url->build([
+                                'plugin' => 'DebugKit',
+                                'controller' => 'Toolbar',
+                                'action' => 'clearCache'
+                            ]) ?>"
+                            data-csrf="<?= $this->getRequest()
+                                ->getAttribute('csrfToken') ?>"
                         >
                             <?= __d('debug_kit', 'Clear All Data') ?>
                         </button>
@@ -46,6 +53,7 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+        <div class="c-cache-panel__messages"></div>
 
         <h3><?= __d('debug_kit', 'Cache Usage Overview') ?></h3>
         <table class="c-debug-table">
@@ -87,38 +95,4 @@
             </tbody>
         </table>
     <?php endif; ?>
-
-    <script>
-    $(document).ready(function() {
-        var baseUrl = '<?= $this->Url->build([
-            'plugin' => 'DebugKit',
-            'controller' => 'Toolbar',
-            'action' => 'clearCache'
-        ]); ?>';
-
-        function showMessage(el, text) {
-            el.show().text(text).fadeOut(2000);
-        }
-
-        $('.js-clear-cache').on('click', function(e) {
-            var el = $(this);
-            var name = el.data('name');
-            var messageEl = el.parent().find('.inline-message');
-
-            var xhr = $.ajax({
-                headers: {'X-CSRF-TOKEN': '<?= $this->request->getAttribute('csrfToken') ?>'},
-                url: baseUrl,
-                data: {name: name},
-                dataType: 'json',
-                type: 'POST'
-            });
-            xhr.done(function(response) {
-                showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache cleared.') ?>');
-            }).error(function(response) {
-                showMessage(messageEl, name + ' ' + '<?= __d('debug_kit', 'cache could not be cleared.') ?>');
-            });
-            e.preventDefault();
-        });
-    });
-    </script>
 </div>

@@ -1,35 +1,28 @@
-import {Toolbar} from './Toolbar';
-import Helper from "./Helper";
+import Toolbar from './Toolbar.js';
+import Helper from './Helper.js';
 
-export default ( function() {
-    'use strict';
+export default (($) => {
+  const init = () => {
+    const elem = document.getElementById('__debug_kit_app');
+    if (elem) {
+      window.debugKitId = elem.getAttribute('data-id');
+      window.debugKitBaseUrl = elem.getAttribute('data-url');
+      window.debugKitWebroot = elem.getAttribute('data-webroot');
+    }
 
-    let init = function() {
-        let elem = document.getElementById('__debug_kit_app');
-        let __debugKitId, __debugKitBaseUrl, __debugKitWebroot;
-        if (elem) {
-            __debugKitId = elem.getAttribute('data-id');
-            __debugKitBaseUrl = elem.getAttribute('data-url');
-            __debugKitWebroot = elem.getAttribute('data-webroot');
-        }
+    return new Toolbar({
+      body: $('body'),
+      container: $('.js-panel-content-container'),
+      toggleBtn: $('.js-toolbar-toggle'),
+      panelButtons: $('.js-panel-button'),
+      currentRequest: window.debugKitId,
+      originalRequest: window.debugKitId,
+      baseUrl: window.debugKitBaseUrl,
+      isLocalStorageAvailable: Helper.isLocalStorageAvailable(),
+    });
+  };
 
-        return new Toolbar({
-            toolbar: document.getElementsByClassName('.js-toolbar')[0],
-            container: document.getElementsByClassName('.js-panel-content-container')[0],
-            panelButtons: document.getElementsByClassName('.js-panel-button'),
-            closeBtn: document.getElementsByClassName('.js-panel-close')[0],
-            keyboardScope : document,
-            currentRequest: __debugKitId,
-            originalRequest: __debugKitId,
-            baseUrl: __debugKitBaseUrl,
-            webroot: __debugKitWebroot,
-            isLocalStorageAvailable: Helper.isLocalStorageAvailable()
-        });
-
-    };
-
-    return {
-        init: init
-    };
-
-}() );
+  return {
+    init,
+  };
+})(jQuery);

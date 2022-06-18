@@ -1,0 +1,33 @@
+.o-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #D33C44;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+
+    background: rgba(0,0,0,.3);
+}
+
+.o-loader.is-loading {
+    opacity: 1;
+    visibility: visible;
+}
+
+.o-loader__indicator {
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

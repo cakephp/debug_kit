@@ -48,11 +48,15 @@ class ToolbarController extends DebugKitController
     public function clearCache()
     {
         $this->request->allowMethod('post');
-        if (!$this->request->getData('name')) {
+        $name = $this->request->getData('name');
+        if (!$name) {
             throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
         }
-        $result = Cache::clear($this->request->getData('name'));
-        $this->set('success', $result);
-        $this->viewBuilder()->setOption('serialize', ['success']);
+        $success = Cache::clear($name);
+        $message = $success ?
+            __d('debug_kit', '{0} cache cleared.', [$name]) :
+            __d('debug_kit', '{0} cache could not be cleared.', [$name]);
+        $this->set(compact('success', 'message'));
+        $this->viewBuilder()->setOption('serialize', ['success', 'message']);
     }
 }

@@ -1,3 +1,13 @@
+.c-packages-panel__section-wrapper {
+    display: flex;
+}
+
+.c-packages-panel__section-wrapper > section  {
+    width: 50%;
+    max-width: 50%;
+    min-width: 50%;
+}
+
 .c-packages-panel__version {
     background: #D33C44;
     border-radius: 4px;
@@ -20,6 +30,8 @@
     display: none;
 }
 
+.c-packages-panel__terminal
+
 .c-packages-panel__section-header {
     color: #428bca;
 }
@@ -30,10 +42,6 @@
 
 .c-packages-panel__terminal highlight {
     color: #D33C44;
-}
-
-.c-packages-panel__terminal .loading {
-    margin: 0;
 }
 
 .c-packages-panel__terminal .indicator {

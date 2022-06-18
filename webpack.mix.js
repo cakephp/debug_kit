@@ -13,5 +13,5 @@ mix
     .options( {
         processCssUrls: false
     } )
-    .sass('source/css/style.scss', 'css')
+    .sass('css-source/style.scss', 'css')
     .setPublicPath('webroot');

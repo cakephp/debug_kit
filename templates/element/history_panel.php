@@ -38,7 +38,7 @@
                     'plugin' => 'DebugKit',
                     'controller' => 'Panels',
                     'action' => 'index',
-                    $panel->request_id
+                    $panel->request_id,
                 ] ?>
                 <a class="c-history-panel__link" data-request="<?= $panel->request_id ?>"
                    href="<?= $this->Url->build($url) ?>">
@@ -77,7 +77,7 @@
                     'plugin' => 'DebugKit',
                     'controller' => 'Panels',
                     'action' => 'index',
-                    $panel->request_id
+                    $panel->request_id,
                 ] ?>
                 <a class="c-history-panel__link"
                    data-request="<?= $panel->request_id ?>"

@@ -35,8 +35,11 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
     <?php if (!empty($tables)) : ?>
         <h4><?= __d('debug_kit', 'Generated Models') ?></h4>
         <p class="c-flash c-flash--warning"><?=
-            __d('debug_kit', 'The following Table objects used {0} instead of a concrete class:',
-                '<code>Cake\ORM\Table</code>') ?></p>
+            __d(
+                'debug_kit',
+                'The following Table objects used {0} instead of a concrete class:',
+                '<code>Cake\ORM\Table</code>'
+                                            ) ?></p>
         <ul class="o-list">
             <?php foreach ($tables as $table) : ?>
                 <li><?= h($table) ?></li>

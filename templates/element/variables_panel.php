@@ -45,7 +45,7 @@
                     <?= __d('debug_kit', 'Sort variables by name') ?>
             </label>
         </div>
-    <?php
+        <?php
         $this->Toolbar->setSort($sort);
         echo $this->Toolbar->dump($content);
     endif;
@@ -61,7 +61,7 @@
                 <?= __d('debug_kit', 'Sort variables by name') ?>
             </label>
         </div>
-    <?php
+        <?php
         $this->Toolbar->setSort($sort);
         echo $this->Toolbar->dumpNodes($variables);
     endif;

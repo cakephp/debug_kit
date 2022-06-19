@@ -8,9 +8,11 @@
         <?= __d(
             'debug_kit',
             'Why not test your emails interactively instead? Go to the {0}',
-            $this->Html->link(__d('debug_kit', 'Email previews page'),
+            $this->Html->link(
+                __d('debug_kit', 'Email previews page'),
                 ['controller' => 'MailPreview', 'action' => 'index'],
-                ['target' => '_blank'])
+                ['target' => '_blank']
+            )
         ) ?>
     </p>
     <?php
@@ -23,9 +25,9 @@
             'controller' => 'MailPreview',
             'action' => 'sent',
             'panel' => $panel->id,
-            'id' => 0
+            'id' => 0,
         ]);
-    ?>
+        ?>
     <div class="c-mail-panel__wrapper">
         <div class="c-mail-panel__table-wrapper">
             <table class="c-debug-table">

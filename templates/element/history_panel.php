@@ -21,17 +21,27 @@
     <?php if (empty($requests)) : ?>
         <p class="c-flash c-flash--warning">
             <?= __d('debug_kit', 'No requests logged.') ?>
-            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
+            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history">
+                <?= __d('debug_kit', 'Reload') ?>
+            </button>
         </p>
     <?php else : ?>
         <p>
             <?= count($requests) ?> <?= __d('debug_kit', 'requests available') ?>
-            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
+            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history">
+                <?= __d('debug_kit', 'Reload') ?>
+            </button>
         </p>
         <ul class="c-history-panel__list">
             <li>
-                <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id] ?>
-                <a class="c-history-panel__link" data-request="<?= $panel->request_id ?>" href="<?= $this->Url->build($url) ?>">
+                <?php $url = [
+                    'plugin' => 'DebugKit',
+                    'controller' => 'Panels',
+                    'action' => 'index',
+                    $panel->request_id
+                ] ?>
+                <a class="c-history-panel__link" data-request="<?= $panel->request_id ?>"
+                   href="<?= $this->Url->build($url) ?>">
                     <span class="c-history-panel__time"><?= h($panel->request->requested_at) ?></span>
                     <span class="c-history-panel__bubble"><?= h($panel->request->method) ?></span>
                     <span class="c-history-panel__bubble"><?= h($panel->request->status_code) ?></span>
@@ -42,7 +52,9 @@
             <?php foreach ($requests as $request) : ?>
                 <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $request->id] ?>
                 <li>
-                    <a class="c-history-panel__link" data-request="<?= $request->id ?>" href="<?= $this->Url->build($url) ?>">
+                    <a class="c-history-panel__link"
+                       data-request="<?= $request->id ?>"
+                       href="<?= $this->Url->build($url) ?>">
                         <span class="c-history-panel__time"><?= h($request->requested_at) ?></span>
                         <span class="c-history-panel__bubble"><?= h($request->method) ?></span>
                         <span class="c-history-panel__bubble"><?= h($request->status_code) ?></span>
@@ -55,12 +67,21 @@
     <?php endif; ?>
     <script type="text/html" id="list-template">
         <p>
-            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history"><?= __d('debug_kit', 'Reload') ?></button>
+            <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history">
+                <?= __d('debug_kit', 'Reload') ?>
+            </button>
         </p>
         <ul class="c-history-panel__list">
             <li>
-                <?php $url = ['plugin' => 'DebugKit', 'controller' => 'Panels', 'action' => 'index', $panel->request_id] ?>
-                <a class="c-history-panel__link" data-request="<?= $panel->request_id ?>" href="<?= $this->Url->build($url) ?>">
+                <?php $url = [
+                    'plugin' => 'DebugKit',
+                    'controller' => 'Panels',
+                    'action' => 'index',
+                    $panel->request_id
+                ] ?>
+                <a class="c-history-panel__link"
+                   data-request="<?= $panel->request_id ?>"
+                   href="<?= $this->Url->build($url) ?>">
                     <span class="c-history-panel__time"><?= h($panel->request->requested_at) ?></span>
                     <span class="c-history-panel__bubble"><?= h($panel->request->method) ?></span>
                     <span class="c-history-panel__bubble"><?= h($panel->request->status_code) ?></span>

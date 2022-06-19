@@ -35,15 +35,33 @@
     }
 
     // Backwards compatibility for old debug kit data.
-    if (!empty($content)) :
-        printf('<div class="o-checkbox"><label><input type="checkbox" class="js-debugkit-sort-variables"%s>%s</label></div>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
+    if (!empty($content)) :?>
+        <div class="o-checkbox">
+            <label>
+                <input
+                    type="checkbox"
+                    class="js-debugkit-sort-variables"
+                    <?= $sort ? ' checked="checked"' : '' ?>>
+                    <?= __d('debug_kit', 'Sort variables by name') ?>
+            </label>
+        </div>
+    <?php
         $this->Toolbar->setSort($sort);
         echo $this->Toolbar->dump($content);
     endif;
 
     // New node based data.
-    if (!empty($variables)) :
-        printf('<div class="o-checkbox"><label><input type="checkbox" class="js-debugkit-sort-variables"%s>%s</label></div>', $sort ? ' checked="checked"' : '', __d('debug_kit', 'Sort variables by name'));
+    if (!empty($variables)) :?>
+        <div class="o-checkbox">
+            <label>
+                <input
+                    type="checkbox"
+                    class="js-debugkit-sort-variables"
+                    <?= $sort ? ' checked="checked"' : '' ?>>
+                <?= __d('debug_kit', 'Sort variables by name') ?>
+            </label>
+        </div>
+    <?php
         $this->Toolbar->setSort($sort);
         echo $this->Toolbar->dumpNodes($variables);
     endif;

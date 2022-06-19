@@ -29,7 +29,10 @@
 <div class="c-request-panel">
     <?php if (!empty($headers) && $headers['response']) : ?>
     <h4><?= __d('debug_kit', 'Warning') ?></h4>
-        <?= '<p class="c-flash c-flash--warning">' . __d('debug_kit', 'Headers already sent at file {0} and line {1}.', [$headers['file'], $headers['line']]) . '</p>' ?>
+        <?= '<p class="c-flash c-flash--warning">' .
+        __d('debug_kit', 'Headers already sent at file {0} and line {1}.',
+            [$headers['file'], $headers['line']]
+        ) . '</p>' ?>
     <?php endif; ?>
 
     <h4><?= __d('debug_kit', 'Attributes') ?></h4>

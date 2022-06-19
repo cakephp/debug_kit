@@ -30,7 +30,9 @@ use Cake\Utility\Inflector;
     <li class="c-toolbar__inner-wrapper">
         <ul class="c-toolbar__inner-ul">
         <?php foreach ($toolbar->panels as $panel) : ?>
-            <li class="c-panel js-panel-button is-hidden" data-id="<?= $panel->id ?>" data-panel-type="<?= Inflector::variable($panel->title) ?>">
+            <li class="c-panel js-panel-button is-hidden"
+                data-id="<?= $panel->id ?>"
+                data-panel-type="<?= Inflector::variable($panel->title) ?>">
                 <span class="c-panel__button">
                     <?= h($panel->title) ?>
                 </span>

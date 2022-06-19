@@ -56,7 +56,12 @@
                             <?php extract($package); ?>
                             <tr>
                                 <td title="<?= h($description) ?>">
-                                    <a href="https://packagist.org/packages/<?= h($name) ?>" title="<?= h($description) ?>" target="_blank" class="c-packages-panel__link"><?= h($name) ?></a>
+                                    <a href="https://packagist.org/packages/<?= h($name) ?>"
+                                       title="<?= h($description) ?>"
+                                       target="_blank"
+                                       class="c-packages-panel__link">
+                                        <?= h($name) ?>
+                                    </a>
                                 </td>
                                 <td>
                                     <span class="c-packages-panel__version"><?= h($version) ?></span>
@@ -82,7 +87,12 @@
                             <?php extract($package); ?>
                             <tr>
                                 <td title="<?= h($description) ?>">
-                                    <a href="https://packagist.org/packages/<?= h($name) ?>" title="<?= h($description) ?>" target="_blank" class="c-packages-panel__link"><?= h($name) ?></a>
+                                    <a href="https://packagist.org/packages/<?= h($name) ?>"
+                                       title="<?= h($description) ?>"
+                                       target="_blank"
+                                       class="c-packages-panel__link">
+                                        <?= h($name) ?>
+                                    </a>
                                 </td>
                                 <td>
                                     <span class="c-packages-panel__version"><?= h($version) ?></span>

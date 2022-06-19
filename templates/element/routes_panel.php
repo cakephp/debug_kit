@@ -63,7 +63,8 @@ foreach (CorePlugin::loaded() as $pluginName) {
             if (empty($route->defaults['plugin'])) :
                 $class = 'c-routes-panel__route-entry c-routes-panel__route-entry--app';
             else :
-                $class = 'c-routes-panel__route-entry c-routes-panel__route-entry--plugin c-routes-panel__route-entry--plugin-' .
+                $class = 'c-routes-panel__route-entry ' .
+                    'c-routes-panel__route-entry--plugin c-routes-panel__route-entry--plugin-' .
                     Text::slug($route->defaults['plugin']);
 
                 // Hide DebugKit internal routes by default

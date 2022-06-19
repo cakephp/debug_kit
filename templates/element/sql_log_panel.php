@@ -39,7 +39,7 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
                 'debug_kit',
                 'The following Table objects used {0} instead of a concrete class:',
                 '<code>Cake\ORM\Table</code>'
-            ) ?></p>
+                                            ) ?></p>
         <ul class="o-list">
             <?php foreach ($tables as $table) : ?>
                 <li><?= h($table) ?></li>

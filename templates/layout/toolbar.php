@@ -7,6 +7,7 @@
 <html>
     <head>
         <title><?= isset($title) ? h($title) : "Debug Kit Toolbar" ?></title>
+        <?= $this->Html->css('DebugKit./css/reset') ?>
         <?= $this->Html->css('DebugKit./css/style') ?>
     </head>
     <body>

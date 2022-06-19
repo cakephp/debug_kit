@@ -1,6 +1,6 @@
 export default (($) => {
   const init = () => {
-    $(document).on('click', '.js-toggle-plugin-route', function togglePluginRoute() {
+    $('.js-toggle-plugin-route').on('click', function togglePluginRoute() {
       const $this = $(this);
       const plugin = $this.attr('data-plugin');
 
@@ -14,7 +14,15 @@ export default (($) => {
     });
   };
 
+  const onEvent = () => {
+    document.addEventListener('initPanel', (e) => {
+      if (e.detail === 'panelroutes') {
+        init();
+      }
+    });
+  };
+
   return {
-    init,
+    onEvent,
   };
 })(jQuery);

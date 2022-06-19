@@ -13,10 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
   Keyboard.init(toolbar);
 
   // Init Panels
-  CachePanel.init();
-  RoutesPanel.init();
-  HistoryPanel.onEvent(toolbar);
-  VariablesPanel.onEvent(toolbar);
+  CachePanel.onEvent();
+  RoutesPanel.onEvent();
   PackagesPanel.onEvent();
   MailPanel.onEvent();
+
+  // Init Panels with a reference to the toolbar
+  HistoryPanel.onEvent(toolbar);
+  VariablesPanel.onEvent(toolbar);
 });

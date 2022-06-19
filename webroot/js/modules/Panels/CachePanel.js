@@ -1,12 +1,12 @@
 export default (($) => {
   const addMessage = (text) => {
-    $('<p>' + text +'</p>')
+    $(`<p>${text}</p>`)
       .appendTo('.c-cache-panel__messages')
       .fadeOut(2000);
   };
 
   const init = () => {
-    $(document).on('click', '.js-clear-cache', function triggerCacheClear(e) {
+    $('.js-clear-cache').on('click', function triggerCacheClear(e) {
       const el = $(this);
       const name = el.attr('data-name');
       const baseUrl = el.attr('data-url');
@@ -29,7 +29,15 @@ export default (($) => {
     });
   };
 
+  const onEvent = () => {
+    document.addEventListener('initPanel', (e) => {
+      if (e.detail === 'panelcache') {
+        init();
+      }
+    });
+  };
+
   return {
-    init,
+    onEvent,
   };
 })(jQuery);

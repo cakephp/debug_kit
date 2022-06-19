@@ -1,6 +1,6 @@
 export default (($) => {
   function init() {
-    $(document).on('click', '.js-debugkit-load-sent-email', function loadSentEmail() {
+    $('.js-debugkit-load-sent-email').on('click', function loadSentEmail() {
       const $elem = $(this);
       const idx = $elem.attr('data-mail-idx');
       const iframe = $('.c-mail-panel__iframe');

@@ -15,15 +15,12 @@ declare(strict_types=1);
  */
 namespace DebugKit\View\Helper;
 
-use ArrayAccess;
 use Cake\Error\Debug\ArrayItemNode;
 use Cake\Error\Debug\ArrayNode;
 use Cake\Error\Debug\HtmlFormatter;
 use Cake\Error\Debug\ScalarNode;
 use Cake\Error\Debugger;
 use Cake\View\Helper;
-use Closure;
-use Iterator;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.

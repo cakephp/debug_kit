@@ -23,7 +23,6 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DebugKit\View\Helper\ToolbarHelper;
 use SimpleXmlElement;
-use stdClass;
 
 /**
  * Class ToolbarHelperTestCase

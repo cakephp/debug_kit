@@ -634,6 +634,10 @@ strong {
     background: var(--toolbar-bg);
 }
 
+.c-toolbar__button img {
+    display: block;
+}
+
 .c-toolbar__scroll-button {
     display: none;
     font-size: 1.25em;

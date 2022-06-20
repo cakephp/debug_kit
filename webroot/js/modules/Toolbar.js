@@ -151,23 +151,7 @@ export default class Toolbar {
 
       // This initializes the panel specific JS logic (if there is any)
       document.dispatchEvent(new CustomEvent('initPanel', { detail: `panel${panelType}` }));
-      that.bindNeatArray();
       that.bindDebugBlock();
-    });
-  }
-
-  // ???????
-  bindNeatArray() {
-    const lists = this.$container.find('.depth-0');
-    lists.find('ul').hide()
-      .parent().addClass('expandable collapsed');
-
-    lists.on('click', 'li', (event) => {
-      event.stopPropagation();
-      const el = $(this);
-      el.children('ul').toggle();
-      el.toggleClass('expanded')
-        .toggleClass('collapsed');
     });
   }
 

@@ -77,14 +77,6 @@
       <code>genericInstances</code>
     </UndefinedInterfaceMethod>
   </file>
-  <file src="src/Plugin.php">
-    <InvalidArgument occurrences="1"/>
-  </file>
-  <file src="src/ToolbarService.php">
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>getEnv</code>
-    </UndefinedInterfaceMethod>
-  </file>
   <file src="src/View/Helper/ToolbarHelper.php">
     <DeprecatedMethod occurrences="1">
       <code>makeNeatArray</code>

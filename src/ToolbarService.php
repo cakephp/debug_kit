@@ -18,6 +18,7 @@ use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
 use Cake\Event\EventManager;
+use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Routing\Router;
@@ -140,9 +141,8 @@ class ToolbarService
         $isIp = filter_var($host, FILTER_VALIDATE_IP) !== false;
         if ($isIp) {
             $flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
-            $isPublicIp = filter_var($host, FILTER_VALIDATE_IP, $flags) !== false;
 
-            return $isPublicIp;
+            return filter_var($host, FILTER_VALIDATE_IP, $flags) !== false;
         }
 
         // So it's not an IP address. It must be a domain name.
@@ -224,11 +224,11 @@ class ToolbarService
     /**
      * Save the toolbar state.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request
+     * @param \Cake\Http\ServerRequest $request The request
      * @param \Psr\Http\Message\ResponseInterface $response The response
      * @return false|\DebugKit\Model\Entity\Request Saved request data.
      */
-    public function saveData(ServerRequestInterface $request, ResponseInterface $response)
+    public function saveData(ServerRequest $request, ResponseInterface $response)
     {
         $path = $request->getUri()->getPath();
         $dashboardUrl = '/debug-kit';

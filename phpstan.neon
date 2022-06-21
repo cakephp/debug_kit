@@ -1,6 +1,5 @@
 includes:
-    - phpstan-baseline.neon
-    - vendor/cakedc/cakephp-phpstan/extension.neon
+	- phpstan-baseline.neon
 
 parameters:
 	level: 6
@@ -9,5 +8,6 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- tests/bootstrap.php
+		- vendor/cakephp/cakephp/src/Core/Exception/CakeException.php
 	paths:
 		- src/

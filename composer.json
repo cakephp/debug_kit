@@ -32,8 +32,7 @@
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
         "cakephp/authorization": "^2.0",
-        "phpunit/phpunit": "~8.5.0 | ^9.3",
-        "cakedc/cakephp-phpstan": "^2.0"
+        "phpunit/phpunit": "~8.5.0 | ^9.3"
     },
     "autoload": {
         "psr-4": {
@@ -63,7 +62,7 @@
         ],
         "stan-baseline": "phpstan.phar --generate-baseline",
         "psalm-baseline": "psalm.phar --set-baseline=psalm-baseline.xml",
-        "stan-setup": "cp composer.json composer.backup && composer require --dev symfony/polyfill-php81 phpstan/phpstan:~1.6.0 psalm/phar:~4.22.0 && mv composer.backup composer.json",
+        "stan-setup": "cp composer.json composer.backup && composer require --dev symfony/polyfill-php81 phpstan/phpstan:~1.7.0 psalm/phar:~4.23.0 && mv composer.backup composer.json",
         "test": "phpunit"
     },
     "prefer-stable": true,

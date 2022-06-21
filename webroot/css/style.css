@@ -283,6 +283,10 @@ strong {
 .c-debug-table .highlighted td {
     background: var(--highlighted);
 }
+.c-debug-table th.c-left-align,
+.c-debug-table td.c-left-align {
+  text-align: left;
+}
 
 .c-flash {
     position: relative;

@@ -25,7 +25,6 @@ use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
 use PDOException;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Used to create the panels and inject a toolbar into

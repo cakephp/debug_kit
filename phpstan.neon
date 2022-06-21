@@ -8,6 +8,5 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- tests/bootstrap.php
-		- vendor/cakephp/cakephp/src/Core/Exception/CakeException.php
 	paths:
 		- src/

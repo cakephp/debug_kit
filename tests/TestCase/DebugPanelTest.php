@@ -46,7 +46,7 @@ class DebugPanelTest extends TestCase
         $this->panel->plugin = 'Derpy';
         $this->assertSame('Derpy.simple_panel', $this->panel->elementName());
 
-        $this->panel->plugin = false;
+        $this->panel->plugin = '';
         $this->assertSame('simple_panel', $this->panel->elementName());
     }
 }

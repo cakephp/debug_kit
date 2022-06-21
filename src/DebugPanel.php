@@ -31,21 +31,21 @@ class DebugPanel implements EventListenerInterface
      *
      * @var string
      */
-    public $plugin = 'DebugKit';
+    public string $plugin = 'DebugKit';
 
     /**
      * The data collected about a given request.
      *
      * @var array
      */
-    protected $_data = [];
+    protected array $_data = [];
 
     /**
      * Get the title for the panel.
      *
      * @return string
      */
-    public function title()
+    public function title(): string
     {
         [$ns, $name] = namespaceSplit(static::class);
         $name = substr($name, 0, strlen('Panel') * -1);
@@ -58,7 +58,7 @@ class DebugPanel implements EventListenerInterface
      *
      * @return string
      */
-    public function elementName()
+    public function elementName(): string
     {
         [$ns, $name] = namespaceSplit(static::class);
         if ($this->plugin) {
@@ -73,7 +73,7 @@ class DebugPanel implements EventListenerInterface
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         return $this->_data;
     }
@@ -85,7 +85,7 @@ class DebugPanel implements EventListenerInterface
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         return '';
     }
@@ -95,7 +95,7 @@ class DebugPanel implements EventListenerInterface
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
@@ -105,7 +105,7 @@ class DebugPanel implements EventListenerInterface
      * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
     }
 

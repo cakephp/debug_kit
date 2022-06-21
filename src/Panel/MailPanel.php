@@ -31,14 +31,14 @@ class MailPanel extends DebugPanel
      *
      * @var \ArrayObject|null
      */
-    protected $emailLog;
+    protected ?ArrayObject $emailLog = null;
 
     /**
      * Initialize hook - configures the email transport.
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $reflection = new ReflectionClass(TransportFactory::class);
         $property = $reflection->getProperty('_config');
@@ -75,7 +75,7 @@ class MailPanel extends DebugPanel
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         return [
             'emails' => isset($this->emailLog) ? $this->emailLog->getArrayCopy() : [],
@@ -87,7 +87,7 @@ class MailPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         if (empty($this->emailLog)) {
             return '';

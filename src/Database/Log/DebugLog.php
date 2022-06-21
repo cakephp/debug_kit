@@ -18,6 +18,7 @@ namespace DebugKit\Database\Log;
 use Cake\Database\Log\LoggedQuery;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
+use Stringable;
 
 /**
  * DebugKit Query logger.
@@ -33,35 +34,35 @@ class DebugLog extends AbstractLogger
      *
      * @var array
      */
-    protected $_queries = [];
+    protected array $_queries = [];
 
     /**
      * Decorated logger.
      *
      * @var \Psr\Log\LoggerInterface|null
      */
-    protected $_logger;
+    protected ?LoggerInterface $_logger = null;
 
     /**
      * Name of the connection being logged.
      *
      * @var string
      */
-    protected $_connectionName;
+    protected string $_connectionName;
 
     /**
      * Total time (ms) of all queries
      *
-     * @var int
+     * @var float
      */
-    protected $_totalTime = 0;
+    protected float $_totalTime = 0;
 
     /**
      * Total rows of all queries
      *
      * @var int
      */
-    protected $_totalRows = 0;
+    protected int $_totalRows = 0;
 
     /**
      * Set to true to capture schema reflection queries
@@ -69,7 +70,7 @@ class DebugLog extends AbstractLogger
      *
      * @var bool
      */
-    protected $_includeSchema = false;
+    protected bool $_includeSchema = false;
 
     /**
      * Constructor
@@ -121,9 +122,9 @@ class DebugLog extends AbstractLogger
     /**
      * Get the total time
      *
-     * @return int
+     * @return float
      */
-    public function totalTime(): int
+    public function totalTime(): float
     {
         return $this->_totalTime;
     }
@@ -141,7 +142,7 @@ class DebugLog extends AbstractLogger
     /**
      * @inheritDoc
      */
-    public function log($level, $message, array $context = []): void
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         $query = $context['query'];
 
@@ -153,13 +154,15 @@ class DebugLog extends AbstractLogger
             return;
         }
 
-        $this->_totalTime += $query->took;
-        $this->_totalRows += $query->numRows;
+        $data = $query->jsonSerialize();
+
+        $this->_totalTime += $data['took'];
+        $this->_totalRows += $data['numRows'];
 
         $this->_queries[] = [
             'query' => (string)$query,
-            'took' => $query->took,
-            'rows' => $query->numRows,
+            'took' => $data['took'],
+            'rows' => $data['numRows'],
         ];
     }
 
@@ -171,7 +174,8 @@ class DebugLog extends AbstractLogger
      */
     protected function isSchemaQuery(LoggedQuery $query): bool
     {
-        $querystring = $query->query;
+        /** @psalm-suppress InternalMethod */
+        $querystring = $query->jsonSerialize()['query'];
 
         return // Multiple engines
             strpos($querystring, 'FROM information_schema') !== false ||

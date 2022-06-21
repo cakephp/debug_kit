@@ -28,7 +28,7 @@ class PackagesPanel extends DebugPanel
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         $packages = $devPackages = [];
 

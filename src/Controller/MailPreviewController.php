@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Controller;
 
+use Cake\Collection\CollectionInterface;
 use Cake\Core\App;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\EventInterface;
@@ -24,6 +25,7 @@ use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
 use DebugKit\Mailer\SentMailResult;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Provides access to the MailPreview classes for visually debugging email sending
@@ -38,7 +40,7 @@ class MailPreviewController extends DebugKitController
      * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeRender(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
         $this->viewBuilder()->setLayout('DebugKit.mailer');
     }
@@ -48,7 +50,7 @@ class MailPreviewController extends DebugKitController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->set('mailPreviews', $this->getMailPreviews()->toArray());
     }
@@ -61,7 +63,7 @@ class MailPreviewController extends DebugKitController
      * @param string $number The email number as stored in the logs.
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function sent($panelId, $number)
+    public function sent(string $panelId, string $number): ?ResponseInterface
     {
         /** @var \DebugKit\Model\Entity\Panel $panel */
         $panel = $this->fetchTable('DebugKit.Panels')->get($panelId);
@@ -99,9 +101,9 @@ class MailPreviewController extends DebugKitController
      *
      * @param string $name The Mailer name
      * @param string $method The mailer preview method
-     * @return \Psr\Http\Message\ResponseInterface|void
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function email($name, $method)
+    public function email(string $name, string $method): ResponseInterface|null
     {
         $restore = Router::getRequest();
         // Clear the plugin attribute from the request instance
@@ -136,6 +138,8 @@ class MailPreviewController extends DebugKitController
         if ($restore) {
             Router::setRequest($restore);
         }
+
+        return null;
     }
 
     /**
@@ -146,7 +150,7 @@ class MailPreviewController extends DebugKitController
      * @param string $partType The email part to retrieve
      * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function respondWithPart($email, $partType)
+    protected function respondWithPart(AbstractResult $email, string $partType): ResponseInterface
     {
         $part = $this->findPart($email, $partType);
 
@@ -167,7 +171,7 @@ class MailPreviewController extends DebugKitController
      *
      * @return \Cake\Collection\CollectionInterface
      */
-    protected function getMailPreviews()
+    protected function getMailPreviews(): CollectionInterface
     {
         return $this->getMailPreviewClasses()->groupBy('plugin');
     }
@@ -177,7 +181,7 @@ class MailPreviewController extends DebugKitController
      *
      * @return \Cake\Collection\CollectionInterface
      */
-    protected function getMailPreviewClasses()
+    protected function getMailPreviewClasses(): CollectionInterface
     {
         $pluginPaths = collection(CorePlugin::loaded())
             ->reject(function ($plugin) {
@@ -213,9 +217,9 @@ class MailPreviewController extends DebugKitController
      *
      * @param \DebugKit\Mailer\AbstractResult $email The result of the email preview
      * @param string $partType The name of a part
-     * @return null|string
+     * @return string|null
      */
-    protected function findPart(AbstractResult $email, $partType)
+    protected function findPart(AbstractResult $email, string $partType): ?string
     {
         foreach ($email->getParts() as $part => $content) {
             if ($part === $partType) {
@@ -230,23 +234,24 @@ class MailPreviewController extends DebugKitController
      * Finds a specified email part or the first part available
      *
      * @param \DebugKit\Mailer\AbstractResult $email The result of the email preview
-     * @param string $partType The name of a part
-     * @return null|string
+     * @param string|null $partType The name of a part
+     * @return string|null
      */
-    protected function findPreferredPart(AbstractResult $email, $partType)
+    protected function findPreferredPart(AbstractResult $email, ?string $partType): ?string
     {
         $parts = $email->getParts();
 
-        if (empty($partType) && !empty($parts['html'])) {
+        if ($partType === null && !empty($parts['html'])) {
             return 'html';
         }
 
-        if (empty($partType)) {
+        if ($partType === null) {
             foreach ($email->getParts() as $part => $content) {
                 return $part;
             }
         }
 
+        /** @psalm-suppress PossiblyNullArgument */
         return $this->findPart($email, $partType) ?: null;
     }
 
@@ -259,7 +264,7 @@ class MailPreviewController extends DebugKitController
      * @return \DebugKit\Mailer\PreviewResult The result of the email preview
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    protected function findPreview($previewName, $emailName, $plugin = '')
+    protected function findPreview(string $previewName, string $emailName, string $plugin = ''): PreviewResult
     {
         if ($plugin) {
             $plugin = "$plugin.";
@@ -267,7 +272,7 @@ class MailPreviewController extends DebugKitController
 
         $realClass = App::className($plugin . $previewName, 'Mailer/Preview');
         if (!$realClass) {
-            throw new NotFoundException("Mailer preview ${previewName} not found");
+            throw new NotFoundException("Mailer preview $previewName not found");
         }
         $mailPreview = new $realClass();
 

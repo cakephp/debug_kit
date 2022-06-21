@@ -26,36 +26,28 @@ use Psr\Log\LoggerInterface;
 class DebugEngine extends CacheEngine
 {
     /**
-     * Proxied cache engine config.
-     *
-     * @var array<string, mixed>|\Cake\Cache\CacheEngine
-     * @psalm-suppress NonInvariantDocblockPropertyType
-     */
-    protected $_config;
-
-    /**
      * Proxied engine
      *
      * @var \Cake\Cache\CacheEngine
      */
-    protected $_engine;
+    protected CacheEngine $_engine;
 
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Hit/miss metrics.
      *
-     * @var mixed
+     * @var array<string, int>
      */
-    protected $metrics = [
+    protected array $metrics = [
         'set' => 0,
         'delete' => 0,
         'get hit' => 0,
@@ -65,13 +57,18 @@ class DebugEngine extends CacheEngine
     /**
      * Constructor
      *
-     * @param array<string, mixed>|\Cake\Cache\CacheEngine $config Config data or the proxied adapter.
+     * @param \Cake\Cache\CacheEngine|array<string, mixed> $config Config data or the proxied adapter.
      * @param string $name The name of the proxied cache engine.
      * @param \Psr\Log\LoggerInterface $logger Logger for collecting cache operation logs.
      */
-    public function __construct($config, string $name, LoggerInterface $logger)
+    public function __construct(CacheEngine|array $config, string $name, LoggerInterface $logger)
     {
-        $this->_config = $config;
+        if ($config instanceof CacheEngine) {
+            $this->_engine = $config;
+        } else {
+            $this->_config = $config;
+        }
+
         $this->logger = $logger;
         $this->name = $name;
     }
@@ -84,14 +81,12 @@ class DebugEngine extends CacheEngine
      */
     public function init(array $config = []): bool
     {
-        if (!is_array($this->_config)) {
-            $this->_engine = $this->_config;
-
-            return true;
+        /** @psalm-suppress RedundantPropertyInitializationCheck */
+        if (!isset($this->_engine)) {
+            $registry = new CacheRegistry();
+            $this->_engine = $registry->load('spies', $this->_config);
+            unset($registry);
         }
-        $registry = new CacheRegistry();
-        $this->_engine = $registry->load('spies', $this->_config);
-        unset($registry);
 
         return true;
     }
@@ -101,7 +96,7 @@ class DebugEngine extends CacheEngine
      *
      * @return \Cake\Cache\CacheEngine
      */
-    public function engine()
+    public function engine(): CacheEngine
     {
         return $this->_engine;
     }
@@ -111,7 +106,7 @@ class DebugEngine extends CacheEngine
      *
      * @return array
      */
-    public function metrics()
+    public function metrics(): array
     {
         return $this->metrics;
     }
@@ -122,7 +117,7 @@ class DebugEngine extends CacheEngine
      * @param string $metric The metric to increment.
      * @return void
      */
-    protected function track($metric)
+    protected function track(string $metric): void
     {
         $this->metrics[$metric]++;
     }
@@ -175,7 +170,7 @@ class DebugEngine extends CacheEngine
     /**
      * @inheritDoc
      */
-    public function get($key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         $start = microtime(true);
         $result = $this->_engine->get($key, $default);
@@ -209,7 +204,7 @@ class DebugEngine extends CacheEngine
     /**
      * @inheritDoc
      */
-    public function increment(string $key, int $offset = 1)
+    public function increment(string $key, int $offset = 1): int|false
     {
         $start = microtime(true);
         $result = $this->_engine->increment($key, $offset);
@@ -224,7 +219,7 @@ class DebugEngine extends CacheEngine
     /**
      * @inheritDoc
      */
-    public function decrement(string $key, int $offset = 1)
+    public function decrement(string $key, int $offset = 1): int|false
     {
         $start = microtime(true);
         $result = $this->_engine->decrement($key, $offset);
@@ -296,7 +291,7 @@ class DebugEngine extends CacheEngine
      * @param mixed $default The return value when the key does not exist.
      * @return mixed Config value being read.
      */
-    public function getConfig(?string $key = null, $default = null)
+    public function getConfig(?string $key = null, mixed $default = null): mixed
     {
         return $this->_engine->getConfig($key, $default);
     }
@@ -304,13 +299,13 @@ class DebugEngine extends CacheEngine
     /**
      * Sets the config.
      *
-     * @param string|array $key The key to set, or a complete array of configs.
+     * @param array|string $key The key to set, or a complete array of configs.
      * @param mixed|null $value The value to set.
      * @param bool $merge Whether to recursively merge or overwrite existing config, defaults to true.
      * @return $this
-     * @throws \Cake\Core\Exception\Exception When trying to set a key that is invalid.
+     * @throws \Cake\Core\Exception\CakeException When trying to set a key that is invalid.
      */
-    public function setConfig($key, $value = null, $merge = true)
+    public function setConfig(array|string $key, mixed $value = null, bool $merge = true)
     {
         $this->_engine->setConfig($key, $value, $merge);
 
@@ -337,7 +332,7 @@ class DebugEngine extends CacheEngine
      *
      * @return string Returns the CacheEngine's name
      */
-    public function __toString()
+    public function __toString(): string
     {
         /** @psalm-suppress RedundantPropertyInitializationCheck */
         if (isset($this->_engine)) {

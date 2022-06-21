@@ -55,7 +55,7 @@ class DebugTimerTest extends TestCase
         $this->assertTrue($elapsed >= $expected);
 
         DebugTimer::start('test3');
-        $this->assertSame(DebugTimer::elapsedTime('test3'), 0);
+        $this->assertSame(DebugTimer::elapsedTime('test3'), 0.0);
         $this->assertFalse(DebugTimer::stop('wrong'));
     }
 

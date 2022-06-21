@@ -29,49 +29,12 @@ class PanelsFixture extends TestFixture
      *
      * @var string
      */
-    public $table = 'panels';
-
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
-        'id' => ['type' => 'uuid'],
-        'request_id' => ['type' => 'uuid', 'null' => false],
-        'panel' => ['type' => 'string'],
-        'title' => ['type' => 'string'],
-        'element' => ['type' => 'string'],
-        'summary' => ['type' => 'string'],
-        'content' => ['type' => 'binary', 'length' => TableSchema::LENGTH_LONG],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id']],
-            'unique_panel' => ['type' => 'unique', 'columns' => ['request_id', 'panel']],
-            'request_id_fk' => [
-                'type' => 'foreign',
-                'columns' => ['request_id'],
-                'references' => ['requests', 'id'],
-            ],
-        ],
-    ];
+    public string $table = 'panels';
 
     /**
      * Records
      *
      * @var array
      */
-    public $records = [];
-
-    /**
-     * Constructor
-     *
-     * @param string $connection The connection name to use.
-     */
-    public function __construct($connection = null)
-    {
-        if ($connection) {
-            $this->connection = $connection;
-        }
-        $this->init();
-    }
+    public array $records = [];
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Mailer\Transport;
 
+use ArrayObject;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Message;
 use Cake\TestSuite\TestCase;
@@ -21,9 +22,15 @@ use DebugKit\Mailer\Transport\DebugKitTransport;
 
 class DebugKitTransportTest extends TestCase
 {
+    protected ArrayObject $log;
+
+    protected DebugKitTransport $transport;
+
+    protected $wrapped;
+
     public function setUp(): void
     {
-        $this->log = new \ArrayObject();
+        $this->log = new ArrayObject();
         $this->wrapped = $this->getMockBuilder(AbstractTransport::class)
             ->onlyMethods(['send'])
             ->addMethods(['customMethod'])

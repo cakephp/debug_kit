@@ -30,7 +30,7 @@ class DebugSql
      *
      * @var string
      */
-    private static $templateHtml = <<<HTML
+    private static string $templateHtml = <<<HTML
 <div class="cake-debug-output">
 %s
 <pre class="cake-debug">
@@ -44,7 +44,7 @@ HTML;
      *
      * @var string
      */
-    private static $templateText = <<<TEXT
+    private static string $templateText = <<<TEXT
 %s
 ########## DEBUG ##########
 %s
@@ -65,8 +65,12 @@ TEXT;
      * @param int $stackDepth Provides a hint as to which file in the call stack to reference.
      * @return \Cake\Database\Query
      */
-    public static function sql(Query $query, $showValues = true, $showHtml = null, $stackDepth = 0)
-    {
+    public static function sql(
+        Query $query,
+        bool $showValues = true,
+        ?bool $showHtml = null,
+        int $stackDepth = 0
+    ): Query {
         if (!Configure::read('debug')) {
             return $query;
         }
@@ -137,8 +141,12 @@ TEXT;
      * @param int $stackDepth Provides a hint as to which file in the call stack to reference.
      * @return void
      */
-    public static function sqld(Query $query, $showValues = true, $showHtml = null, $stackDepth = 1)
-    {
+    public static function sqld(
+        Query $query,
+        bool $showValues = true,
+        ?bool $showHtml = null,
+        int $stackDepth = 1
+    ): void {
         static::sql($query, $showValues, $showHtml, $stackDepth);
         die(1);
     }
@@ -151,7 +159,7 @@ TEXT;
      * @param array $bindings The Query bindings
      * @return string
      */
-    private static function interpolate($sql, array $bindings)
+    private static function interpolate(string $sql, array $bindings): string
     {
         $params = array_map(function ($binding) {
             $p = $binding['value'];

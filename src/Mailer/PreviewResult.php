@@ -27,7 +27,7 @@ class PreviewResult extends AbstractResult
      * @param \Cake\Mailer\Mailer $mailer The mailer instance to execute and extract the email data from
      * @param string $method The method to execute in the mailer
      */
-    public function __construct(Mailer $mailer, $method)
+    public function __construct(Mailer $mailer, string $method)
     {
         $this->processMailer(clone $mailer, $method);
         $mailer->reset();
@@ -40,7 +40,7 @@ class PreviewResult extends AbstractResult
      * @param string $method The method to execute in the mailer
      * @return void
      */
-    protected function processMailer(Mailer $mailer, $method)
+    protected function processMailer(Mailer $mailer, string $method): void
     {
         if (!$mailer->viewBuilder()->getTemplate()) {
             $mailer->viewBuilder()->setTemplate($method);

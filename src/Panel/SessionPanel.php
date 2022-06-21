@@ -28,7 +28,7 @@ class SessionPanel extends DebugPanel
      * @param \Cake\Event\EventInterface $event The event
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
         /** @var \Cake\Http\ServerRequest|null $request */
         $request = $event->getSubject()->getRequest();

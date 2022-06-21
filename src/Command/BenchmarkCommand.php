@@ -36,14 +36,14 @@ class BenchmarkCommand extends Command
      *
      * @var \Cake\Console\ConsoleIo
      */
-    protected $io;
+    protected ConsoleIo $io;
 
     /**
      * Execute.
      *
      * @param \Cake\Console\Arguments $args The command arguments.
      * @param \Cake\Console\ConsoleIo $io The console io
-     * @return null|int The exit code or null for success
+     * @return int|null The exit code or null for success
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
@@ -76,10 +76,10 @@ class BenchmarkCommand extends Command
     /**
      * Prints calculated results
      *
-     * @param float[] $times Array of time values
+     * @param array<float> $times Array of time values
      * @return void
      */
-    protected function _results($times)
+    protected function _results(array $times): void
     {
         $duration = array_sum($times);
         $requests = count($times);
@@ -123,7 +123,7 @@ class BenchmarkCommand extends Command
      *                           variance from a finite sample.
      * @return float Variance
      */
-    protected function _variance($times, $sample = true)
+    protected function _variance(array $times, bool $sample = true): float
     {
         $n = $mean = $M2 = 0;
 
@@ -148,7 +148,7 @@ class BenchmarkCommand extends Command
      * @param bool $sample ''
      * @return float Standard deviation
      */
-    protected function _deviation($times, $sample = true)
+    protected function _deviation(array $times, bool $sample = true): float
     {
         return sqrt($this->_variance($times, $sample));
     }

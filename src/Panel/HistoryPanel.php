@@ -29,7 +29,7 @@ class HistoryPanel extends DebugPanel
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         $table = $this->getTableLocator()->get('DebugKit.Requests');
         $recent = $table->find('recent');
@@ -44,7 +44,7 @@ class HistoryPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         return '0 xhr';
     }

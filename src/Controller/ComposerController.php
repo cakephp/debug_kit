@@ -17,6 +17,7 @@ namespace DebugKit\Controller;
 
 use Cake\View\JsonView;
 use Composer\Console\Application;
+use RuntimeException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -31,7 +32,6 @@ class ComposerController extends DebugKitController
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('RequestHandler');
         $this->viewBuilder()->setClassName(JsonView::class);
     }
 
@@ -41,7 +41,7 @@ class ComposerController extends DebugKitController
      * @return void
      * @throws \RuntimeException
      */
-    public function checkDependencies()
+    public function checkDependencies(): void
     {
         $this->request->allowMethod('post');
 
@@ -56,7 +56,7 @@ class ComposerController extends DebugKitController
         $packages = [];
         foreach ($dependencies as $dependency) {
             if (strpos($dependency, 'php_network_getaddresses') !== false) {
-                throw new \RuntimeException(__d('debug_kit', 'You have to be connected to the internet'));
+                throw new RuntimeException(__d('debug_kit', 'You have to be connected to the internet'));
             }
             if (strpos($dependency, '<highlight>') !== false) {
                 $packages['semverCompatible'][] = $dependency;
@@ -79,7 +79,7 @@ class ComposerController extends DebugKitController
      * @param \Symfony\Component\Console\Input\ArrayInput $input An array describing the command input
      * @return \Symfony\Component\Console\Output\BufferedOutput Aa Console command buffered result
      */
-    private function executeComposerCommand(ArrayInput $input)
+    private function executeComposerCommand(ArrayInput $input): BufferedOutput
     {
         $bin = implode(DIRECTORY_SEPARATOR, [ROOT, 'vendor', 'bin', 'composer']);
         putenv('COMPOSER_HOME=' . $bin);

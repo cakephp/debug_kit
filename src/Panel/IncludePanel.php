@@ -29,7 +29,7 @@ class IncludePanel extends DebugPanel
      *
      * @var \DebugKit\DebugInclude
      */
-    protected $_debug;
+    protected DebugInclude $_debug;
 
     /**
      * construct
@@ -44,11 +44,12 @@ class IncludePanel extends DebugPanel
      *
      * @return array
      */
-    protected function _prepare()
+    protected function _prepare(): array
     {
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
 
         foreach (get_included_files() as $file) {
+            /** @var string|false $pluginName */
             $pluginName = $this->_debug->getPluginName($file);
 
             if ($pluginName) {
@@ -62,6 +63,7 @@ class IncludePanel extends DebugPanel
             } elseif ($this->_debug->isCakeFile($file)) {
                 $return['cake'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'cake');
             } else {
+                /** @var string|false $vendorName */
                 $vendorName = $this->_debug->getComposerPackageName($file);
 
                 if ($vendorName) {
@@ -91,7 +93,7 @@ class IncludePanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         $data = $this->_data;
         if (empty($data)) {
@@ -112,7 +114,7 @@ class IncludePanel extends DebugPanel
      * @param \Cake\Event\EventInterface $event Event
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
         $this->_data = $this->_prepare();
     }

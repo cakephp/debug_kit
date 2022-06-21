@@ -29,7 +29,7 @@ class RequestsController extends DebugKitController
      * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 
@@ -42,7 +42,7 @@ class RequestsController extends DebugKitController
      * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeRender(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
         $this->viewBuilder()
             ->setLayout('DebugKit.toolbar')
@@ -55,7 +55,7 @@ class RequestsController extends DebugKitController
      * @param string $id The id.
      * @return void
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
         $this->set('toolbar', $toolbar);

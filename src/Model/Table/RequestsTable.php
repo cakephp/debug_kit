@@ -73,7 +73,7 @@ class RequestsTable extends Table
      * @param array $options The options
      * @return \Cake\ORM\Query The query.
      */
-    public function findRecent(Query $query, array $options)
+    public function findRecent(Query $query, array $options): Query
     {
         return $query->order(['Requests.requested_at' => 'DESC'])
             ->limit(10);
@@ -84,7 +84,7 @@ class RequestsTable extends Table
      *
      * @return bool
      */
-    protected function shouldGc()
+    protected function shouldGc(): bool
     {
         return rand(1, 100) === 100;
     }
@@ -98,7 +98,7 @@ class RequestsTable extends Table
      *
      * @return void
      */
-    public function gc()
+    public function gc(): void
     {
         if (!$this->shouldGc()) {
             return;

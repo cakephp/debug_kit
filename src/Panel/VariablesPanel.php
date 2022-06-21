@@ -21,6 +21,7 @@ use Cake\Event\EventInterface;
 use Cake\Form\Form;
 use Cake\Utility\Hash;
 use DebugKit\DebugPanel;
+use Exception;
 
 /**
  * Provides debug information on the View variables.
@@ -33,7 +34,7 @@ class VariablesPanel extends DebugPanel
      * @param \Cake\Datasource\EntityInterface $entity Entity to extract
      * @return array
      */
-    protected function _getErrors(EntityInterface $entity)
+    protected function _getErrors(EntityInterface $entity): array
     {
         $errors = $entity->getErrors();
 
@@ -61,11 +62,11 @@ class VariablesPanel extends DebugPanel
      * @param object $item The item whose debug info to retrieve.
      * @return array|string
      */
-    protected function _walkDebugInfo(callable $walker, $item)
+    protected function _walkDebugInfo(callable $walker, object $item): array|string
     {
         try {
             $info = $item->__debugInfo();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return __d(
                 'debug_kit',
                 'Could not retrieve debug info - {0}. Error: {1} in {2}, line {3}',
@@ -85,7 +86,7 @@ class VariablesPanel extends DebugPanel
      * @param \Cake\Event\EventInterface $event The event
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
@@ -119,7 +120,7 @@ class VariablesPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         if (!isset($this->_data['variables'])) {
             return '0';

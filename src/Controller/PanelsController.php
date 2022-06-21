@@ -16,6 +16,8 @@ namespace DebugKit\Controller;
 
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Response;
+use Cake\View\JsonView;
 
 /**
  * Provides access to panel data.
@@ -25,13 +27,11 @@ use Cake\Http\Exception\NotFoundException;
 class PanelsController extends DebugKitController
 {
     /**
-     * Initialize controller
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function initialize(): void
+    public function viewClasses(): array
     {
-        $this->loadComponent('RequestHandler');
+        return ['json' => JsonView::class];
     }
 
     /**
@@ -40,7 +40,7 @@ class PanelsController extends DebugKitController
      * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeRender(EventInterface $event)
+    public function beforeRender(EventInterface $event): void
     {
         $this->viewBuilder()
             ->addHelpers([
@@ -61,7 +61,7 @@ class PanelsController extends DebugKitController
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function index($requestId = null)
+    public function index(?string $requestId = null): void
     {
         $query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
         $panels = $query->toArray();
@@ -80,7 +80,7 @@ class PanelsController extends DebugKitController
      * @param string $id The id.
      * @return void
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $this->set('sort', $this->request->getCookie('debugKit_sort'));
         $panel = $this->Panels->get($id, ['contain' => ['Requests']]);
@@ -96,7 +96,7 @@ class PanelsController extends DebugKitController
      *
      * @return \Cake\Http\Response|null
      */
-    public function latestHistory()
+    public function latestHistory(): ?Response
     {
         /** @var array{id:string}|null $request */
         $request = $this->Panels->Requests->find('recent')

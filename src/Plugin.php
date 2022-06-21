@@ -35,7 +35,7 @@ class Plugin extends BasePlugin
     /**
      * @var \DebugKit\ToolbarService|null
      */
-    protected $service;
+    protected ?ToolbarService $service = null;
 
     /**
      * Load all the application configuration and bootstrap logic.
@@ -91,10 +91,10 @@ class Plugin extends BasePlugin
      * @param \DebugKit\ToolbarService $service The toolbar service instance
      * @return void
      */
-    public function setDeprecationHandler($service)
+    public function setDeprecationHandler(ToolbarService $service): void
     {
         if (!empty($service->getConfig('panels')['DebugKit.Deprecations'])) {
-            EventManager::instance()->on('Error.beforeRender', function (EventInterface $event, PhpError $error) {
+            EventManager::instance()->on('Error.beforeRender', function (EventInterface $event, PhpError $error): void {
                 $code = $error->getCode();
                 if ($code !== E_USER_DEPRECATED && $code !== E_DEPRECATED) {
                     return;

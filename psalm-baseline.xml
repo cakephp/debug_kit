@@ -45,11 +45,6 @@
       <code>new $className($config)</code>
     </PropertyTypeCoercion>
   </file>
-  <file src="src/Middleware/DebugKitMiddleware.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$request</code>
-    </ArgumentTypeCoercion>
-  </file>
   <file src="src/Panel/DeprecationsPanel.php">
     <InvalidScalarArgument occurrences="4">
       <code>$pluginName</code>
@@ -66,11 +61,6 @@
       <code>$vendorName</code>
     </InvalidScalarArgument>
   </file>
-  <file src="src/Panel/LogPanel.php">
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>count</code>
-    </UndefinedInterfaceMethod>
-  </file>
   <file src="src/Panel/PanelRegistry.php">
     <LessSpecificImplementedReturnType occurrences="1">
       <code>string|null</code>
@@ -83,15 +73,9 @@
     </UnsafeInstantiation>
   </file>
   <file src="src/Panel/SqlLogPanel.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>!$connection instanceof ConnectionInterface</code>
-    </TypeDoesNotContainType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>genericInstances</code>
     </UndefinedInterfaceMethod>
-  </file>
-  <file src="src/Plugin.php">
-    <InvalidArgument occurrences="1"/>
   </file>
   <file src="src/View/Helper/ToolbarHelper.php">
     <DeprecatedMethod occurrences="1">

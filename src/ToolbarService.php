@@ -140,9 +140,8 @@ class ToolbarService
         $isIp = filter_var($host, FILTER_VALIDATE_IP) !== false;
         if ($isIp) {
             $flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
-            $isPublicIp = filter_var($host, FILTER_VALIDATE_IP, $flags) !== false;
 
-            return $isPublicIp;
+            return filter_var($host, FILTER_VALIDATE_IP, $flags) !== false;
         }
 
         // So it's not an IP address. It must be a domain name.

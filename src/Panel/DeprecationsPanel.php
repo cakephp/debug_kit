@@ -89,19 +89,8 @@ class DeprecationsPanel extends DebugPanel
             }
         }
 
-        /** @psalm-suppress RedundantFunctionCall */
-        ksort($return['app']);
-        /** @psalm-suppress RedundantFunctionCall */
-        ksort($return['cake']);
-        /** @psalm-suppress RedundantFunctionCall */
         ksort($return['plugins']);
-        /** @psalm-suppress RedundantFunctionCall */
         ksort($return['vendor']);
-
-        foreach ($return['plugins'] as &$plugin) {
-            /** @psalm-suppress RedundantFunctionCall */
-            ksort($plugin);
-        }
 
         return $return;
     }

@@ -112,11 +112,14 @@ jobs:
         tools: cs2pr
 
     - name: Composer Install
-      run: composer psalm-setup
+      run: composer stan-setup
 
     - name: Run phpcs
       run: vendor/bin/phpcs --report=checkstyle src/ tests/ | cs2pr
 
     - name: Run psalm
-      if: always()
       run: vendor/bin/psalm.phar --output-format=github
+
+    - name: Run phpstan
+      if: always()
+      run: vendor/bin/phpstan.phar analyse --error-format=github

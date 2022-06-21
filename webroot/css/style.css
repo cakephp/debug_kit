@@ -5,6 +5,7 @@
     --cake-gray: #404041;
     --cake-blue: #428BCA;
     --cake-dark-blue: #2A6496;
+    --cake-light-gray: #ECECE9;
 
     --btn-text: #fff;
     --btn-bg: var(--cake-blue);
@@ -51,7 +52,7 @@
 
     --highlighted: #e7e9fd;
 
-    --packages-version: var(--cake-red);
+    --packages-version: var(--cake-light-gray);
     --packages-terminal: #1a1a1a;
     --packages-section-header: var(--cake-blue);
     --packages-highlight: var(--cake-red);
@@ -421,6 +422,7 @@ strong {
     line-height: 20px;
     display: inline-block;
     white-space: nowrap;
+    padding: 2px 1px;
 }
 
 .c-packages-panel__link {

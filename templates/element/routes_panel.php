@@ -52,8 +52,8 @@ foreach (CorePlugin::loaded() as $pluginName) {
         <thead>
         <tr>
             <th><?= __d('debug_kit', 'Route name') ?></th>
-            <th class="c-debug_table u-text-left"><?= __d('debug_kit', 'URI template') ?></th>
-            <th class="c-debug-table u-text-left"><?= __d('debug_kit', 'Defaults') ?></th>
+            <th class="u-text-left"><?= __d('debug_kit', 'URI template') ?></th>
+            <th class="u-text-left"><?= __d('debug_kit', 'Defaults') ?></th>
         </tr>
         </thead>
         <tbody>
@@ -86,8 +86,8 @@ foreach (CorePlugin::loaded() as $pluginName) {
             ?>
             <tr class="<?= $class ?>">
                 <td><?= h(Hash::get($route->options, '_name', $route->getName())) ?></td>
-                <td class="c-debug-table u-text-left"><?= h($route->template) ?></td>
-                <td class="c-debug-table u-text-left"><pre><?= json_encode($route->defaults, JSON_PRETTY_PRINT) ?></pre></td>
+                <td class="u-text-left"><?= h($route->template) ?></td>
+                <td class="u-text-left"><pre><?= json_encode($route->defaults, JSON_PRETTY_PRINT) ?></pre></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -272,8 +272,8 @@ strong {
     word-break: break-word; /* Not standard for webkit */
 }
 
-.c-debug-table th.left,
-.c-debug-table td.left {
+.c-debug-table th.u-text-left,
+.c-debug-table td.u-text-left {
     text-align: left;
 }
 

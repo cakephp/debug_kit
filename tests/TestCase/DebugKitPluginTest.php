@@ -19,8 +19,8 @@ use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Http\MiddlewareQueue;
 use Cake\TestSuite\TestCase;
+use DebugKit\DebugKitPlugin;
 use DebugKit\Panel\DeprecationsPanel;
-use DebugKit\Plugin;
 use DebugKit\TestApp\Application;
 use DebugKit\ToolbarService;
 
@@ -38,7 +38,7 @@ class PluginTest extends TestCase
     {
         DeprecationsPanel::clearDeprecatedErrors();
         $service = new ToolbarService(new EventManager(), []);
-        $plugin = new Plugin();
+        $plugin = new DebugKitPlugin();
         $plugin->setDeprecationHandler($service);
         $panel = new DeprecationsPanel();
 

@@ -32,10 +32,11 @@ class Application extends BaseApplication
     /**
      * @return void
      */
-    public function initialize()
+    public function bootstrap(): void
     {
-        parent::initialize();
-        $this->loadPlugin('DebugKit');
+        parent::bootstrap();
+
+        $this->addPlugin('DebugKit');
     }
 
     /**

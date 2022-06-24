@@ -30,7 +30,7 @@ use DebugKit\Panel\DeprecationsPanel;
 /**
  * Plugin class for CakePHP plugin collection.
  */
-class Plugin extends BasePlugin
+class DebugKitPlugin extends BasePlugin
 {
     /**
      * @var \DebugKit\ToolbarService|null

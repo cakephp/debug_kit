@@ -31,9 +31,9 @@ class Panel extends Entity
     /**
      * Some fields should not be in JSON/array exports.
      *
-     * @var string[]
+     * @var array<string>
      */
-    protected $_hidden = ['content'];
+    protected array $_hidden = ['content'];
 
     /**
      * Read the stream contents.
@@ -44,7 +44,7 @@ class Panel extends Entity
      * @param mixed $content Content
      * @return string
      */
-    protected function _getContent($content)
+    protected function _getContent(mixed $content): string
     {
         if (is_resource($content)) {
             return stream_get_contents($content);

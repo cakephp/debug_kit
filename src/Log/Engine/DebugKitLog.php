@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace DebugKit\Log\Engine;
 
 use Cake\Log\Engine\BaseLog;
+use Stringable;
 
 /**
  * A CakeLog listener which saves having to munge files or other configured loggers.
@@ -26,17 +27,17 @@ class DebugKitLog extends BaseLog
      *
      * @var array
      */
-    protected $_logs = [];
+    protected array $_logs = [];
 
     /**
      * Captures log messages in memory
      *
      * @param mixed $level The type of message being logged.
-     * @param string $message The message being logged.
+     * @param \Stringable|string $message The message being logged.
      * @param array $context Additional context data
      * @return void
      */
-    public function log($level, $message, array $context = [])
+    public function log(mixed $level, Stringable|string $message, array $context = []): void
     {
         if (!isset($this->_logs[$level])) {
             $this->_logs[$level] = [];
@@ -49,7 +50,7 @@ class DebugKitLog extends BaseLog
      *
      * @return array
      */
-    public function all()
+    public function all(): array
     {
         return $this->_logs;
     }
@@ -59,7 +60,7 @@ class DebugKitLog extends BaseLog
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return array_reduce($this->_logs, function ($sum, $v) {
             return $sum + count($v);
@@ -71,7 +72,7 @@ class DebugKitLog extends BaseLog
      *
      * @return bool
      */
-    public function noLogs()
+    public function noLogs(): bool
     {
         return empty($this->_logs);
     }

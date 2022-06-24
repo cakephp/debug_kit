@@ -49,20 +49,22 @@ class DebugLogTest extends TestCase
     public function testLog()
     {
         $query = new LoggedQuery();
-        $query->query = 'SELECT * FROM posts';
-        $query->took = 10;
-        $query->numRows = 5;
+        $query->setContext([
+            'query' => 'SELECT * FROM posts',
+            'took' => 10,
+            'numRows' => 5,
+        ]);
 
         $this->assertCount(0, $this->logger->queries());
 
         $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(1, $this->logger->queries());
-        $this->assertSame(10, $this->logger->totalTime());
+        $this->assertSame(10.0, $this->logger->totalTime());
         $this->assertSame(5, $this->logger->totalRows());
 
         $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(2, $this->logger->queries());
-        $this->assertSame(20, $this->logger->totalTime());
+        $this->assertSame(20.0, $this->logger->totalTime());
         $this->assertSame(10, $this->logger->totalRows());
     }
 
@@ -75,9 +77,11 @@ class DebugLogTest extends TestCase
     public function testLogIgnoreReflection($sql)
     {
         $query = new LoggedQuery();
-        $query->query = $sql;
-        $query->took = 10;
-        $query->numRows = 5;
+        $query->setContext([
+            'query' => $sql,
+            'took' => 10,
+            'numRows' => 5,
+        ]);
 
         $this->assertCount(0, $this->logger->queries());
 
@@ -94,9 +98,11 @@ class DebugLogTest extends TestCase
     public function testLogIgnoreReflectionDisabled($sql)
     {
         $query = new LoggedQuery();
-        $query->query = $sql;
-        $query->took = 10;
-        $query->numRows = 5;
+        $query->setContext([
+            'query' => $sql,
+            'took' => 10,
+            'numRows' => 5,
+        ]);
 
         $logger = new DebugLog(null, 'test', true);
         $this->assertCount(0, $logger->queries());

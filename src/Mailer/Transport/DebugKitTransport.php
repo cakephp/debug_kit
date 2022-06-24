@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DebugKit\Mailer\Transport;
 
+use ArrayObject;
 use Cake\Core\App;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Message;
@@ -18,7 +19,7 @@ class DebugKitTransport extends AbstractTransport
      *
      * @var \Cake\Mailer\AbstractTransport|null
      */
-    protected $originalTransport;
+    protected ?AbstractTransport $originalTransport = null;
 
     /**
      * A reference to the object were emails will be pushed to
@@ -26,7 +27,7 @@ class DebugKitTransport extends AbstractTransport
      *
      * @var \ArrayObject
      */
-    protected $emailLog;
+    protected ArrayObject $emailLog;
 
     /**
      * Constructor
@@ -34,7 +35,7 @@ class DebugKitTransport extends AbstractTransport
      * @param array $config Configuration options.
      * @param \Cake\Mailer\AbstractTransport|null $originalTransport The transport that is to be decorated
      */
-    public function __construct($config = [], ?AbstractTransport $originalTransport = null)
+    public function __construct(array $config = [], ?AbstractTransport $originalTransport = null)
     {
         $this->emailLog = $config['debugKitLog'];
 
@@ -88,7 +89,7 @@ class DebugKitTransport extends AbstractTransport
      * @param array $args The args to call $method with.
      * @return mixed
      */
-    public function __call($method, array $args)
+    public function __call(string $method, array $args): mixed
     {
         return call_user_func_array([$this->originalTransport, $method], $args);
     }
@@ -99,7 +100,7 @@ class DebugKitTransport extends AbstractTransport
      * @param string $name The property to read.
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         return $this->originalTransport->{$name};
     }
@@ -109,11 +110,11 @@ class DebugKitTransport extends AbstractTransport
      *
      * @param string $name The property to read.
      * @param mixed $value The property value.
-     * @return mixed
+     * @return void
      */
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
-        return $this->originalTransport->{$name} = $value;
+        $this->originalTransport->{$name} = $value;
     }
 
     /**
@@ -122,7 +123,7 @@ class DebugKitTransport extends AbstractTransport
      * @param string $name The property to read.
      * @return bool
      */
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
         return isset($this->originalTransport->{$name});
     }
@@ -133,7 +134,7 @@ class DebugKitTransport extends AbstractTransport
      * @param string $name The property to delete.
      * @return void
      */
-    public function __unset($name)
+    public function __unset(string $name): void
     {
         unset($this->originalTransport->{$name});
     }

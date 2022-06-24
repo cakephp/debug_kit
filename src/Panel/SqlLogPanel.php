@@ -34,7 +34,7 @@ class SqlLogPanel extends DebugPanel
      *
      * @var array
      */
-    protected $_loggers = [];
+    protected array $_loggers = [];
 
     /**
      * Initialize hook - configures logger.
@@ -44,7 +44,7 @@ class SqlLogPanel extends DebugPanel
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $configs = ConnectionManager::configured();
         $includeSchemaReflection = (bool)Configure::read('DebugKit.includeSchemaReflection');
@@ -57,10 +57,7 @@ class SqlLogPanel extends DebugPanel
             ) {
                 continue;
             }
-            $logger = null;
-            if ($connection->isQueryLoggingEnabled()) {
-                $logger = $connection->getLogger();
-            }
+            $logger = $connection->getDriver()->getLogger();
 
             if ($logger instanceof DebugLog) {
                 $logger->setIncludeSchema($includeSchemaReflection);
@@ -69,8 +66,7 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
-            $connection->enableQueryLogging(true);
-            $connection->setLogger($logger);
+            $connection->getDriver()->setLogger($logger);
 
             $this->_loggers[] = $logger;
         }
@@ -81,7 +77,7 @@ class SqlLogPanel extends DebugPanel
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         return [
             'tables' => array_map(function (Table $table) {
@@ -96,7 +92,7 @@ class SqlLogPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         $count = $time = 0;
         foreach ($this->_loggers as $logger) {

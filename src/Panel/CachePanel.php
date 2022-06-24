@@ -27,12 +27,12 @@ class CachePanel extends DebugPanel
     /**
      * @var \Cake\Log\Engine\ArrayLog
      */
-    protected $logger;
+    protected ArrayLog $logger;
 
     /**
-     * @var \DebugKit\Cache\Engine\DebugEngine[]
+     * @var array<\DebugKit\Cache\Engine\DebugEngine>
      */
-    protected $instances = [];
+    protected array $instances = [];
 
     /**
      * Constructor
@@ -47,7 +47,7 @@ class CachePanel extends DebugPanel
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         foreach (Cache::configured() as $name) {
             /** @var array $config */
@@ -71,7 +71,7 @@ class CachePanel extends DebugPanel
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         $metrics = [];
         foreach ($this->instances as $name => $instance) {

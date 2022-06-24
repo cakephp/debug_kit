@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace DebugKit\Controller;
 
 use Cake\Event\EventInterface;
+use Cake\Http\Response;
 
 /**
  * Dashboard and common DebugKit backend.
@@ -29,7 +30,7 @@ class DashboardController extends DebugKitController
      * @param \Cake\Event\EventInterface $event The event.
      * @return void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 
@@ -42,7 +43,7 @@ class DashboardController extends DebugKitController
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function index()
+    public function index(): void
     {
         $requestsModel = $this->fetchTable('DebugKit.Requests');
 
@@ -59,7 +60,7 @@ class DashboardController extends DebugKitController
      *
      * @return \Cake\Http\Response|null
      */
-    public function reset()
+    public function reset(): ?Response
     {
         $this->request->allowMethod('post');
         /** @var \DebugKit\Model\Table\RequestsTable $requestsModel */

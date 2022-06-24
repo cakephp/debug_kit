@@ -37,7 +37,7 @@ trait LazyTableTrait
      * @return void
      * @throws \RuntimeException When fixtures are missing/unknown/fail.
      */
-    public function ensureTables(array $fixtures)
+    public function ensureTables(array $fixtures): void
     {
         /** @var \Cake\Database\Connection $connection */
         $connection = $this->getConnection();
@@ -58,7 +58,7 @@ trait LazyTableTrait
             foreach ($fixtures as $name) {
                 $class = App::className($name, 'Test/Fixture', 'Fixture');
                 if ($class === null) {
-                    throw new \RuntimeException("Unknown fixture '$name'.");
+                    throw new RuntimeException("Unknown fixture '$name'.");
                 }
 
                 /** @var \Cake\TestSuite\Fixture\TestFixture $fixture */

@@ -28,7 +28,7 @@ class RoutesPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         $routes = array_filter(Router::routes(), function ($route) {
             return !isset($route->defaults['plugin']) || $route->defaults['plugin'] !== 'DebugKit';
@@ -43,7 +43,7 @@ class RoutesPanel extends DebugPanel
      * @param \Cake\Event\EventInterface $event The shutdown event.
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
         /** @var \Cake\Controller\Controller|null $controller */
         $controller = $event->getSubject();

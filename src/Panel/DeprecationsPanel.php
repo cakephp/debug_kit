@@ -29,14 +29,14 @@ class DeprecationsPanel extends DebugPanel
      *
      * @var array
      */
-    protected static $deprecatedErrors = [];
+    protected static array $deprecatedErrors = [];
 
     /**
      * instance of DebugInclude
      *
      * @var \DebugKit\DebugInclude
      */
-    protected $_debug;
+    protected DebugInclude $_debug;
 
     /**
      * construct
@@ -51,7 +51,7 @@ class DeprecationsPanel extends DebugPanel
      *
      * @return array
      */
-    protected function _prepare()
+    protected function _prepare(): array
     {
         $errors = static::$deprecatedErrors;
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
@@ -67,6 +67,7 @@ class DeprecationsPanel extends DebugPanel
             ];
 
             $pluginName = $this->_debug->getPluginName($file);
+            /** @var string|false $pluginName */
             if ($pluginName) {
                 $errorData['niceFile'] = $this->_debug->niceFileName($file, 'plugin', $pluginName);
                 $return['plugins'][$pluginName][] = $errorData;
@@ -77,6 +78,7 @@ class DeprecationsPanel extends DebugPanel
                 $errorData['niceFile'] = $this->_debug->niceFileName($file, 'cake');
                 $return['cake'][] = $errorData;
             } else {
+                /** @var string|false $vendorName */
                 $vendorName = $this->_debug->getComposerPackageName($file);
 
                 if ($vendorName) {
@@ -101,7 +103,7 @@ class DeprecationsPanel extends DebugPanel
      * @param array $error The deprecated error
      * @return void
      */
-    public static function addDeprecatedError($error)
+    public static function addDeprecatedError(array $error): void
     {
         static::$deprecatedErrors[] = $error;
     }
@@ -111,7 +113,7 @@ class DeprecationsPanel extends DebugPanel
      *
      * @return void
      */
-    public static function clearDeprecatedErrors()
+    public static function clearDeprecatedErrors(): void
     {
         static::$deprecatedErrors = [];
     }
@@ -121,7 +123,7 @@ class DeprecationsPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         $data = $this->_data;
         if (empty($data)) {
@@ -152,7 +154,7 @@ class DeprecationsPanel extends DebugPanel
      * @param \Cake\Event\EventInterface $event Event
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
         $this->_data = $this->_prepare();
     }

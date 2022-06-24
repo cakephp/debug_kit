@@ -28,42 +28,12 @@ class RequestsFixture extends TestFixture
      *
      * @var string
      */
-    public $table = 'requests';
-
-    /**
-     * fields property
-     *
-     * @var array
-     */
-    public $fields = [
-        'id' => ['type' => 'uuid', 'null' => false],
-        'url' => ['type' => 'text', 'null' => false],
-        'content_type' => ['type' => 'string'],
-        'status_code' => ['type' => 'integer'],
-        'method' => ['type' => 'string'],
-        'requested_at' => ['type' => 'datetime', 'null' => false],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id']],
-        ],
-    ];
+    public string $table = 'requests';
 
     /**
      * Records
      *
      * @var array
      */
-    public $records = [];
-
-    /**
-     * Constructor
-     *
-     * @param string $connection The connection name to use.
-     */
-    public function __construct($connection = null)
-    {
-        if ($connection) {
-            $this->connection = $connection;
-        }
-        $this->init();
-    }
+    public array $records = [];
 }

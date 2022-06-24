@@ -24,6 +24,7 @@ use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use DebugKit\Middleware\DebugKitMiddleware;
 use Psr\Http\Server\RequestHandlerInterface;
+use ReflectionProperty;
 
 /**
  * Test the middleware object
@@ -35,10 +36,12 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @var array<string>
      */
-    protected $fixtures = [
+    protected array $fixtures = [
         'plugin.DebugKit.Requests',
         'plugin.DebugKit.Panels',
     ];
+
+    protected $oldConfig;
 
     /**
      * setup
@@ -211,7 +214,7 @@ class DebugKitMiddlewareTest extends TestCase
         $config = ['foo' => 'bar'];
         Configure::write('DebugKit', $config);
         $layer = new DebugKitMiddleware();
-        $prop = new \ReflectionProperty(DebugKitMiddleware::class, 'service');
+        $prop = new ReflectionProperty(DebugKitMiddleware::class, 'service');
         $prop->setAccessible(true);
         $service = $prop->getValue($layer);
         $this->assertSame('bar', $service->getConfig('foo'));

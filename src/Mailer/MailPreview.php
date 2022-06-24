@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Mailer;
 
-use Cake\Datasource\ModelAwareTrait;
 use Cake\Mailer\MailerAwareTrait;
 use ReflectionClass;
 use ReflectionException;
@@ -26,15 +25,14 @@ use ReflectionMethod;
 class MailPreview
 {
     use MailerAwareTrait;
-    use ModelAwareTrait;
 
     /**
      * Returns the name of an email if it is valid
      *
      * @param string $email Email name
-     * @return null|string
+     * @return string|null
      */
-    public function find($email)
+    public function find(string $email): ?string
     {
         if ($this->validEmail($email)) {
             return $email;
@@ -48,7 +46,7 @@ class MailPreview
      *
      * @return array
      */
-    public function getEmails()
+    public function getEmails(): array
     {
         $emails = [];
         foreach (get_class_methods($this) as $methodName) {
@@ -67,7 +65,7 @@ class MailPreview
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         $classname = static::class;
         $pos = strrpos($classname, '\\');
@@ -82,7 +80,7 @@ class MailPreview
      * @param string $email Name of email
      * @return bool
      */
-    protected function validEmail($email)
+    protected function validEmail(string $email): bool
     {
         if (empty($email)) {
             return false;

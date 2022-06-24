@@ -29,7 +29,7 @@ class DebugKitMiddleware implements MiddlewareInterface
     /**
      * @var \DebugKit\ToolbarService
      */
-    protected $service;
+    protected ToolbarService $service;
 
     /**
      * Constructor

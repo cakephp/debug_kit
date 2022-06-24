@@ -17,6 +17,7 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\EnvironmentPanel;
+use stdClass;
 
 /**
  * Class EnvironmentPanelTest
@@ -57,7 +58,7 @@ class EnvironmentPanelTest extends TestCase
      */
     public function testShutdown()
     {
-        $controller = new \stdClass();
+        $controller = new stdClass();
         $event = new Event('Controller.shutdown', $controller);
         $_SERVER['TEST_URL_1'] = 'mysql://user:password@localhost/my_db';
 

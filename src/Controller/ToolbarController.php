@@ -16,6 +16,7 @@ namespace DebugKit\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Http\Exception\NotFoundException;
+use Cake\View\JsonView;
 
 /**
  * Provides utility features need by the toolbar.
@@ -23,20 +24,13 @@ use Cake\Http\Exception\NotFoundException;
 class ToolbarController extends DebugKitController
 {
     /**
-     * View class
-     *
-     * @var string
-     */
-    public $viewClass = 'Cake\View\JsonView';
-
-    /**
-     * Initialize controller
-     *
-     * @return void
+     * @inheritDoc
      */
     public function initialize(): void
     {
-        $this->loadComponent('RequestHandler');
+        parent::initialize();
+
+        $this->viewBuilder()->setClassName(JsonView::class);
     }
 
     /**
@@ -45,7 +39,7 @@ class ToolbarController extends DebugKitController
      * @return void
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->request->allowMethod('post');
         if (!$this->request->getData('name')) {

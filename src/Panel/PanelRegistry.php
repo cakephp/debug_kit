@@ -19,6 +19,8 @@ use Cake\Core\ObjectRegistry;
 use Cake\Event\EventDispatcherInterface;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
+use DebugKit\DebugPanel;
+use RuntimeException;
 
 /**
  * Registry object for panels.
@@ -63,7 +65,7 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      */
     protected function _throwMissingClassError(string $class, ?string $plugin): void
     {
-        throw new \RuntimeException(__d('debug_kit', "Unable to find ''{0}'' panel.", $class));
+        throw new RuntimeException(__d('debug_kit', "Unable to find ''{0}'' panel.", $class));
     }
 
     /**
@@ -77,9 +79,14 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      * @return \DebugKit\DebugPanel The constructed panel class.
      * @psalm-param class-string<\DebugKit\DebugPanel> $class
      */
-    protected function _create($class, string $alias, array $config)
+    protected function _create(object|string $class, string $alias, array $config): DebugPanel
     {
-        $instance = new $class($this, $config);
+        if (is_string($class)) {
+            $instance = new $class($this, $config);
+        } else {
+            $instance = $class;
+        }
+
         $this->getEventManager()->on($instance);
 
         return $instance;

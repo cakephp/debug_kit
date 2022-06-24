@@ -27,7 +27,7 @@ class LogPanel extends DebugPanel
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         if (Log::getConfig('debug_kit_log_panel')) {
             return;
@@ -42,7 +42,7 @@ class LogPanel extends DebugPanel
      *
      * @return array
      */
-    public function data()
+    public function data(): array
     {
         return [
             'logger' => Log::engine('debug_kit_log_panel'),
@@ -54,7 +54,7 @@ class LogPanel extends DebugPanel
      *
      * @return string
      */
-    public function summary()
+    public function summary(): string
     {
         /** @var \DebugKit\Log\Engine\DebugKitLog|null $logger */
         $logger = Log::engine('debug_kit_log_panel');

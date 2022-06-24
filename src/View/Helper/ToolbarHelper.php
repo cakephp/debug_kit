@@ -24,6 +24,7 @@ use Cake\Error\Debugger;
 use Cake\View\Helper;
 use Closure;
 use Iterator;
+use SplObjectStorage;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.
@@ -40,14 +41,14 @@ class ToolbarHelper extends Helper
      *
      * @var array
      */
-    public $helpers = ['Html', 'Form', 'Url'];
+    public array $helpers = ['Html', 'Form', 'Url'];
 
     /**
      * Whether or not the top level keys should be sorted.
      *
      * @var bool
      */
-    protected $sort = false;
+    protected bool $sort = false;
 
     /**
      * set sorting of values
@@ -55,7 +56,7 @@ class ToolbarHelper extends Helper
      * @param bool $sort Whether or not sort values by key
      * @return void
      */
-    public function setSort($sort)
+    public function setSort(bool $sort): void
     {
         $this->sort = $sort;
     }
@@ -63,7 +64,7 @@ class ToolbarHelper extends Helper
     /**
      * Dump an array of nodes
      *
-     * @param \Cake\Error\Debug\NodeInterface[] $nodes An array of dumped variables.
+     * @param array<\Cake\Error\Debug\NodeInterface> $nodes An array of dumped variables.
      *   Variables should be keyed by the name they had in the view.
      * @return string Formatted HTML
      */
@@ -94,7 +95,7 @@ class ToolbarHelper extends Helper
      * @return string Formatted HTML
      * @deprecated 4.4.0
      */
-    public function dump($value)
+    public function dump(mixed $value): string
     {
         $debugger = Debugger::getInstance();
         $exportFormatter = $debugger->getConfig('exportFormatter');
@@ -133,16 +134,16 @@ class ToolbarHelper extends Helper
      * @deprecated 4.4.0 Use ToolbarHelper::dump() instead.
      */
     public function makeNeatArray(
-        $values,
-        $openDepth = 0,
-        $currentDepth = 0,
-        $doubleEncode = false,
-        ?\SplObjectStorage $currentAncestors = null
-    ) {
+        mixed $values,
+        int $openDepth = 0,
+        int $currentDepth = 0,
+        bool $doubleEncode = false,
+        ?SplObjectStorage $currentAncestors = null
+    ): string {
         if ($currentAncestors === null) {
-            $ancestors = new \SplObjectStorage();
+            $ancestors = new SplObjectStorage();
         } elseif (is_object($values)) {
-            $ancestors = new \SplObjectStorage();
+            $ancestors = new SplObjectStorage();
             $ancestors->addAll($currentAncestors);
             $ancestors->attach($values);
         } else {

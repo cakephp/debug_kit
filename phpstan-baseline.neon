@@ -1,21 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^PHPDoc type array\\<string, mixed\\>\\|Cake\\\\Cache\\\\CacheEngine of property DebugKit\\\\Cache\\\\Engine\\\\DebugEngine\\:\\:\\$_config is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Cake\\\\Cache\\\\CacheEngine\\:\\:\\$_config\\.$#"
-			count: 1
-			path: src/Cache/Engine/DebugEngine.php
-
-		-
-			message: "#^Property DebugKit\\\\Cache\\\\Engine\\\\DebugEngine\\:\\:\\$_engine \\(Cake\\\\Cache\\\\CacheEngine\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: src/Cache/Engine/DebugEngine.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: src/Cache/Engine/DebugEngine.php
-
-		-
 			message: "#^Call to function file_get_contents\\(\\) on a separate line has no effect\\.$#"
 			count: 1
 			path: src/Command/BenchmarkCommand.php

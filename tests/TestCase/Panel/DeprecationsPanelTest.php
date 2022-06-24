@@ -44,8 +44,8 @@ class DeprecationsPanelTest extends TestCase
             DeprecationsPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
         });
         try {
-            deprecationWarning('Something going away', 0);
-            deprecationWarning('Something else going away', 0);
+            deprecationWarning('x.x', 'Something going away', 0);
+            deprecationWarning('x.x', 'Something else going away', 0);
             trigger_error('Raw error', E_USER_DEPRECATED);
         } finally {
             restore_error_handler();

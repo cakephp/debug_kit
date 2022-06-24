@@ -28,7 +28,7 @@ class RequestPanel extends DebugPanel
      * @param \Cake\Event\EventInterface $event The shutdown event.
      * @return void
      */
-    public function shutdown(EventInterface $event)
+    public function shutdown(EventInterface $event): void
     {
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();

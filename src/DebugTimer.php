@@ -27,7 +27,7 @@ class DebugTimer
      *
      * @var array
      */
-    protected static $_timers = [];
+    protected static array $_timers = [];
 
     /**
      * Start an benchmarking timer.
@@ -36,7 +36,7 @@ class DebugTimer
      * @param string $message A message for your timer
      * @return bool Always true
      */
-    public static function start($name = null, $message = null)
+    public static function start(?string $name = null, ?string $message = null): bool
     {
         $start = microtime(true);
 
@@ -80,7 +80,7 @@ class DebugTimer
      * @param string $name The name of the timer to end.
      * @return bool true if timer was ended, false if timer was not started.
      */
-    public static function stop($name = null)
+    public static function stop(?string $name = null): bool
     {
         $end = microtime(true);
         if (!$name) {
@@ -119,7 +119,7 @@ class DebugTimer
      * @param bool $clear false
      * @return array
      */
-    public static function getAll($clear = false)
+    public static function getAll(bool $clear = false): array
     {
         $start = self::requestStartTime();
         $now = microtime(true);
@@ -160,7 +160,7 @@ class DebugTimer
      *
      * @return bool true
      */
-    public static function clear()
+    public static function clear(): bool
     {
         self::$_timers = [];
 
@@ -174,7 +174,7 @@ class DebugTimer
      * @param int $precision the number of decimal places to return, defaults to 5.
      * @return float number of seconds elapsed for timer name, 0 on missing key
      */
-    public static function elapsedTime($name = 'default', $precision = 5)
+    public static function elapsedTime(string $name = 'default', int $precision = 5): float
     {
         if (!isset(self::$_timers[$name]['start']) || !isset(self::$_timers[$name]['end'])) {
             return 0;
@@ -188,7 +188,7 @@ class DebugTimer
      *
      * @return float elapsed time in seconds since script start.
      */
-    public static function requestTime()
+    public static function requestTime(): float
     {
         $start = self::requestStartTime();
         $now = microtime(true);
@@ -201,7 +201,7 @@ class DebugTimer
      *
      * @return float time of request start
      */
-    public static function requestStartTime()
+    public static function requestStartTime(): float
     {
         if (defined('TIME_START')) {
             $startTime = TIME_START;

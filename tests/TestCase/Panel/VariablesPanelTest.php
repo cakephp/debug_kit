@@ -19,6 +19,8 @@ use Cake\TestSuite\TestCase;
 use Cake\View\ViewVarsTrait;
 use DebugKit\Panel\VariablesPanel;
 use DebugKit\TestApp\Form\TestForm;
+use PDO;
+use stdClass;
 
 /**
  * Class VariablesPanelTest
@@ -62,13 +64,13 @@ class VariablesPanelTest extends TestCase
         $requests = $this->getTableLocator()->get('Requests');
         $query = $requests->find('all');
         $result = $requests->find()->all();
-        $unbufferedQuery = $requests->find('all')->enableBufferedResults(false);
+        $unbufferedQuery = $requests->find('all');
         $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
         $update = $requests->query()->update();
         $debugInfoException = $requests->query()->contain('NonExistentAssociation');
 
-        $unserializable = new \stdClass();
-        $unserializable->pdo = $requests->getConnection()->getDriver()->getConnection();
+        $unserializable = new stdClass();
+        $unserializable->pdo = new PDO('sqlite::memory:');
 
         $unserializableDebugInfo = $this
             ->getMockBuilder('\stdClass')
@@ -85,7 +87,7 @@ class VariablesPanelTest extends TestCase
         };
         $vars = [
             'resource' => $resource,
-            'unserializableDebugInfo' => $unserializableDebugInfo,
+            // 'unserializableDebugInfo' => $unserializableDebugInfo,
             'debugInfoException' => $debugInfoException,
             'updateQuery' => $update,
             'query' => $query,

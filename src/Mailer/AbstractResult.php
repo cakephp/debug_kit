@@ -24,21 +24,21 @@ abstract class AbstractResult
      *
      * @var array
      */
-    protected $headers = [];
+    protected array $headers = [];
 
     /**
      * The rendered parts of the email (for example text and html)
      *
      * @var array
      */
-    protected $parts = [];
+    protected array $parts = [];
 
     /**
      * Returns the list of headers included in th email
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -48,7 +48,7 @@ abstract class AbstractResult
      *
      * @return array
      */
-    public function getParts()
+    public function getParts(): array
     {
         return $this->parts;
     }

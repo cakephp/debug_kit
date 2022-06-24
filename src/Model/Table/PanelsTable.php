@@ -16,6 +16,7 @@ namespace DebugKit\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use RuntimeException;
 
 /**
  * The panels table collects the information for each panel on
@@ -54,10 +55,10 @@ class PanelsTable extends Table
      * @return \Cake\ORM\Query The query.
      * @throws \RuntimeException
      */
-    public function findByRequest(Query $query, array $options)
+    public function findByRequest(Query $query, array $options): Query
     {
         if (empty($options['requestId'])) {
-            throw new \RuntimeException(__d('debug_kit', 'Missing request id in {0}.', 'findByRequest()'));
+            throw new RuntimeException(__d('debug_kit', 'Missing request id in {0}.', 'findByRequest()'));
         }
 
         return $query->where(['Panels.request_id' => $options['requestId']])

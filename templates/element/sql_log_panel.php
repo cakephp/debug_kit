@@ -31,62 +31,68 @@ SqlFormatter::$word_attributes = 'style="color: #9c27b0;"';
 SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transparent;"';
 ?>
 
-<?php if (!empty($tables)): ?>
-<h4><?= __d('debug_kit', 'Generated Models') ?></h4>
-<p class="warning"><?= __d('debug_kit', 'The following Table objects used {0} instead of a concrete class:', '<code>Cake\ORM\Table</code>') ?></p>
-<ul class="list">
-<?php foreach ($tables as $table): ?>
-    <li><?= h($table) ?></li>
-<?php endforeach ?>
-</ul>
-<hr />
-<?php endif; ?>
+<div class="c-sql-log-panel">
+    <?php if (!empty($tables)) : ?>
+        <h4><?= __d('debug_kit', 'Generated Models') ?></h4>
+        <p class="c-flash c-flash--warning"><?=
+            __d(
+                'debug_kit',
+                'The following Table objects used {0} instead of a concrete class:',
+                '<code>Cake\ORM\Table</code>'
+            ) ?></p>
+        <ul class="o-list">
+            <?php foreach ($tables as $table) : ?>
+                <li><?= h($table) ?></li>
+            <?php endforeach ?>
+        </ul>
+        <hr />
+    <?php endif; ?>
 
-<?php if (!empty($loggers)): ?>
-    <?php foreach ($loggers as $logger): ?>
-    <?php
-    $queries = $logger->queries();
-    if (empty($queries)):
-        continue;
-    endif;
+    <?php if (!empty($loggers)) : ?>
+        <?php foreach ($loggers as $logger) :
+            $queries = $logger->queries();
+            if (empty($queries)) :
+                continue;
+            endif;
 
-    $noOutput = false;
-    ?>
-    <div class="sql-log-panel-query-log">
-        <h4><?= h($logger->name()) ?></h4>
-        <h5>
-        <?= __d(
-            'debug_kit',
-            'Total Time: {0} ms &mdash; Total Queries: {1} &mdash; Total Rows: {2}',
-            $logger->totalTime(),
-            count($queries),
-            $logger->totalRows()
-            );
-        ?>
-        </h5>
+            $noOutput = false;
+            ?>
+            <div class="c-sql-log-panel__entry">
+                <h4><?= h($logger->name()) ?></h4>
+                <h5>
+                <?= __d(
+                    'debug_kit',
+                    'Total Time: {0} ms &mdash; Total Queries: {1} &mdash; Total Rows: {2}',
+                    $logger->totalTime(),
+                    count($queries),
+                    $logger->totalRows()
+                );
+                ?>
+                </h5>
 
-        <table cellspacing="0" cellpadding="0">
-            <thead>
-                <tr>
-                    <th><?= __d('debug_kit', 'Query') ?></th>
-                    <th><?= __d('debug_kit', 'Rows') ?></th>
-                    <th><?= __d('debug_kit', 'Took (ms)') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($queries as $query): ?>
-                <tr>
-                    <td><?= SqlFormatter::format($query['query']) ?></td>
-                    <td><?= h($query['rows']) ?></td>
-                    <td><?= h($query['took']) ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php endforeach; ?>
-<?php endif; ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><?= __d('debug_kit', 'Query') ?></th>
+                            <th><?= __d('debug_kit', 'Rows') ?></th>
+                            <th><?= __d('debug_kit', 'Took (ms)') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($queries as $query) : ?>
+                        <tr>
+                            <td><?= SqlFormatter::format($query['query']) ?></td>
+                            <td><?= h($query['rows']) ?></td>
+                            <td><?= h($query['took']) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
-<?php if ($noOutput): ?>
-<div class="warning"><?= __d('debug_kit', 'No active database connections') ?></div>
-<?php endif ?>
+    <?php if ($noOutput) : ?>
+    <div class="c-flash c-flash--warning"><?= __d('debug_kit', 'No active database connections') ?></div>
+    <?php endif ?>
+</div>

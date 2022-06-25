@@ -70,7 +70,7 @@ class SimpleGraphHelper extends Helper
         }
 
         return sprintf(
-            '<div class="graph-bar" style="%s"><div class="graph-bar-value" style="%s" title="%s"> </div></div>',
+            '<div class="c-graph-bar" style="%s"><div class="c-graph-bar__value" style="%s" title="%s"> </div></div>',
             "width: {$width}px",
             "margin-left: {$graphOffset}px; width: {$graphValue}px",
             __d('debug_kit', 'Starting {0}ms into the request, taking {1}ms', $offset, $value)

@@ -17,26 +17,28 @@
  * @var \DebugKit\Log\Engine\DebugKitLog $logger
  */
 ?>
-<?php if ($logger->noLogs()): ?>
-    <p class="info"><?= __d('debug_kit', 'There were no log entries made this request') ?></p>
-<?php else: ?>
-    <?php foreach ($logger->all() as $logName => $logs): ?>
-        <h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
-        <table cellspacing="0" cellpadding="0" class="debug-table">
-            <thead>
+<div class="c-log-panel">
+    <?php if ($logger->noLogs()) : ?>
+        <p class="c-flash c-flash--info"><?= __d('debug_kit', 'There were no log entries made this request') ?></p>
+    <?php else : ?>
+        <?php foreach ($logger->all() as $logName => $logs) : ?>
+            <h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
+            <table class="c-debug-table">
+                <thead>
                 <tr>
                     <th><?= __d('debug_kit', 'Time') ?></th>
                     <th><?= __d('debug_kit', 'Message') ?></th>
                 </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($logs as $log): ?>
-                <tr>
-                    <td width="200" class="code"><?= $log[0] ?></td>
-                    <td><?= h($log[1]) ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php endforeach; ?>
-<?php endif; ?>
+                </thead>
+                <tbody>
+                <?php foreach ($logs as $log) : ?>
+                    <tr>
+                        <td><?= $log[0] ?></td>
+                        <td><?= h($log[1]) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>

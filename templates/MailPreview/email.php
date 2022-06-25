@@ -1,4 +1,4 @@
-<style type="text/css">
+<style>
     html, body {
         height: 100%;
     }
@@ -26,8 +26,8 @@
 
 <script>
     function formatChanged(form) {
-        var part_name = form.options[form.selectedIndex].value
-        var iframe = document.getElementsByName('messageBody')[0];
+        let part_name = form.options[form.selectedIndex].value
+        let iframe = document.getElementsByName('messageBody')[0];
         iframe.contentWindow.location.replace('?part=' + part_name + '&plugin=<?= h($plugin); ?>');
     }
 </script>

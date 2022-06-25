@@ -74,11 +74,11 @@ class SimpleGraphHelperTest extends TestCase
         $output = $this->Graph->bar(10, 0);
         $expected = [
             ['div' => [
-                'class' => 'graph-bar',
+                'class' => 'c-graph-bar',
                 'style' => 'width: 350px',
             ]],
             ['div' => [
-                'class' => 'graph-bar-value',
+                'class' => 'c-graph-bar__value',
                 'style' => 'margin-left: 0px; width: 35px',
                 'title' => 'Starting 0ms into the request, taking 10ms',
             ]],
@@ -99,11 +99,11 @@ class SimpleGraphHelperTest extends TestCase
         $output = $this->Graph->bar(10, 10);
         $expected = [
             ['div' => [
-                'class' => 'graph-bar',
+                'class' => 'c-graph-bar',
                 'style' => 'width: 350px',
             ]],
             ['div' => [
-                'class' => 'graph-bar-value',
+                'class' => 'c-graph-bar__value',
                 'style' => 'margin-left: 35px; width: 35px',
                 'title' => 'Starting 10ms into the request, taking 10ms',
             ]],

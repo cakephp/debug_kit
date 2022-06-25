@@ -119,11 +119,11 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertNotNull($result->panels[11]->summary);
         $this->assertSame('Sql Log', $result->panels[11]->title);
 
-        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'toolbar.js');
+        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
-            '<script id="__debug_kit" data-id="' . $result->id . '" ' .
-            'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
+            '<script id="__debug_kit_script" data-id="' . $result->id . '" ' .
+            'data-url="http://localhost/" type="module" src="/debug_kit/js/inject-iframe.js?' . $timeStamp . '"></script>' .
             '</body>';
         $body = (string)$response->getBody();
         $this->assertTextEquals($expected, $body);

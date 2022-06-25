@@ -15,15 +15,12 @@ declare(strict_types=1);
  */
 namespace DebugKit\View\Helper;
 
-use ArrayAccess;
 use Cake\Error\Debug\ArrayItemNode;
 use Cake\Error\Debug\ArrayNode;
 use Cake\Error\Debug\HtmlFormatter;
 use Cake\Error\Debug\ScalarNode;
 use Cake\Error\Debugger;
 use Cake\View\Helper;
-use Closure;
-use Iterator;
 
 /**
  * Provides Base methods for content specific debug toolbar helpers.
@@ -118,102 +115,5 @@ class ToolbarHelper extends Helper
             $contents,
             '</div>',
         ]);
-    }
-
-    /**
-     * Recursively goes through an array and makes neat HTML out of it.
-     *
-     * @param mixed $values Array to make pretty.
-     * @param int $openDepth Depth to add open class
-     * @param int $currentDepth current depth.
-     * @param bool $doubleEncode Whether or not to double encode.
-     * @param \SplObjectStorage $currentAncestors Object references found down
-     * the path.
-     * @return string
-     * @deprecated 4.4.0 Use ToolbarHelper::dump() instead.
-     */
-    public function makeNeatArray(
-        $values,
-        $openDepth = 0,
-        $currentDepth = 0,
-        $doubleEncode = false,
-        ?\SplObjectStorage $currentAncestors = null
-    ) {
-        if ($currentAncestors === null) {
-            $ancestors = new \SplObjectStorage();
-        } elseif (is_object($values)) {
-            $ancestors = new \SplObjectStorage();
-            $ancestors->addAll($currentAncestors);
-            $ancestors->attach($values);
-        } else {
-            $ancestors = $currentAncestors;
-        }
-        $className = "neat-array depth-$currentDepth";
-        if ($openDepth > $currentDepth) {
-            $className .= ' expanded';
-        }
-        $nextDepth = $currentDepth + 1;
-        $out = "<ul class=\"$className\">";
-        if (!is_array($values)) {
-            if (is_bool($values)) {
-                $values = [$values];
-            }
-            if ($values === null) {
-                $values = [null];
-            }
-            if (is_object($values) && method_exists($values, 'toArray')) {
-                $values = $values->toArray();
-            }
-        }
-        if (empty($values)) {
-            $values[] = '(empty)';
-        }
-        if ($this->sort && is_array($values) && $currentDepth === 0) {
-            ksort($values);
-        }
-        foreach ($values as $key => $value) {
-            $out .= '<li><strong>' . h($key, $doubleEncode) . '</strong> ';
-            if (is_array($value) && count($value) > 0) {
-                $out .= '(array)';
-            } elseif (is_object($value)) {
-                $out .= '(' . (get_class($value) ?: 'object') . ')';
-            }
-            if ($value === null) {
-                $value = '(null)';
-            }
-            if ($value === false) {
-                $value = '(false)';
-            }
-            if ($value === true) {
-                $value = '(true)';
-            }
-            if (empty($value) && $value != 0) {
-                $value = '(empty)';
-            }
-            if ($value instanceof Closure) {
-                $value = 'function';
-            }
-
-            if (is_object($value) && $ancestors->contains($value)) {
-                $value = ' - recursion';
-            }
-
-            if (
-                (
-                $value instanceof ArrayAccess ||
-                $value instanceof Iterator ||
-                is_array($value) ||
-                is_object($value)
-                ) && !empty($value)
-            ) {
-                $out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode, $ancestors);
-            } else {
-                $out .= h($value, $doubleEncode);
-            }
-            $out .= '</li>';
-        }
-        $out .= '</ul>';
-
-        return $out;
     }
 }

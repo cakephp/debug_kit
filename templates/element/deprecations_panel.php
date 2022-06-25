@@ -24,7 +24,7 @@
 $printer = function ($section, $data) {
 ?>
     <h3><?= h(ucfirst($section)) ?> </h3>
-    <ul class="list deprecation-list">
+    <ul class="o-list o-list--deprecation-list">
     <?php foreach ($data as $message): ?>
         <li>
             <strong><?= h($message['niceFile']) ?>:<?= h($message['line']) ?></strong>
@@ -33,31 +33,32 @@ $printer = function ($section, $data) {
         </li>
     <?php endforeach; ?>
     </ul>
-<?php
-};
+    <?php
+}
 ?>
+<div class="c-deprecations-panel">
+    <?php
+    if (count($app)) :
+        $printer('app', $app);
+    endif;
 
-<?php
-if (count($app)):
-    $printer('app', $app);
-endif;
+    if (count($plugins)) :
+        foreach ($plugins as $plugin => $pluginData) :
+            $printer($plugin, $pluginData);
+        endforeach;
+    endif;
 
-if (count($plugins)):
-    foreach ($plugins as $plugin => $pluginData):
-        $printer($plugin, $pluginData);
-    endforeach;
-endif;
+    if (count($cake)) :
+        $printer('cake', $cake);
+    endif;
 
-if (count($cake)):
-    $printer('cake', $cake);
-endif;
+    if (count($vendor)) :
+        foreach ($vendor as $vendorSection => $vendorData) :
+            $printer($vendorSection, $vendorData);
+        endforeach;
+    endif;
 
-if (count($vendor)):
-    foreach ($vendor as $vendorSection => $vendorData):
-        $printer($vendorSection, $vendorData);
-    endforeach;
-endif;
-
-if (count($other)):
-    $printer('other', $other);
-endif;
+    if (count($other)) :
+        $printer('other', $other);
+    endif;?>
+</div>

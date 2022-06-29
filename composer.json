@@ -34,8 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DebugKit\\": "src/",
-            "DebugKit\\Test\\Fixture\\": "tests/Fixture/"
+            "DebugKit\\": "src/"
         }
     },
     "autoload-dev": {

@@ -67,8 +67,8 @@ trait LazyTableTrait
 
                 // Use Database/Schema primitives to generate dialect specific
                 // CREATE TABLE statements and run them.
-                $schema = new TableSchema($name, $config['columns']);
-                foreach ($config['constraints'] as $name => $itemConfig) {
+                $schema = new TableSchema($table['table'], $table['columns']);
+                foreach ($table['constraints'] as $name => $itemConfig) {
                     $schema->addConstraint($name, $itemConfig);
                 }
                 foreach ($schema->createSql($connection) as $sql) {

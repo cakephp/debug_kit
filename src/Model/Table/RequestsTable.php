@@ -53,7 +53,7 @@ class RequestsTable extends Table
                 'Model.beforeSave' => ['requested_at' => 'new'],
             ],
         ]);
-        $this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
+        $this->ensureTables(['requests', 'panels']);
     }
 
     /**

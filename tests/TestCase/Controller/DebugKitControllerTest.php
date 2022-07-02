@@ -19,7 +19,6 @@ use Authorization\AuthorizationService;
 use Authorization\Policy\OrmResolver;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;

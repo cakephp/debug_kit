@@ -57,8 +57,6 @@ class DebugKitControllerTest extends TestCase
      */
     private function _buildController()
     {
-        $this->markTestSkipped('Waiting for Authorization plugin to be updated for 5.x');
-
         $request = new ServerRequest(['url' => '/debug-kit/']);
 
         $resolver = new OrmResolver();
@@ -66,7 +64,7 @@ class DebugKitControllerTest extends TestCase
 
         $request = $request->withAttribute('authorization', $authorization);
 
-        return new DebugKitController($request, new Response());
+        return new DebugKitController($request);
     }
 
     /**

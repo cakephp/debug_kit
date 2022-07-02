@@ -22,7 +22,7 @@ $testTables = [
                 'columns' => ['id'],
             ],
         ],
-    ]
+    ],
 ];
 
 return array_merge($tables, $testTables);

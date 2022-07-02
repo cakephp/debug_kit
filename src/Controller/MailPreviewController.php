@@ -103,7 +103,7 @@ class MailPreviewController extends DebugKitController
      * @param string $method The mailer preview method
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function email(string $name, string $method): ResponseInterface|null
+    public function email(string $name, string $method): ?ResponseInterface
     {
         $restore = Router::getRequest();
         // Clear the plugin attribute from the request instance

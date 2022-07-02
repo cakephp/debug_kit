@@ -25,8 +25,8 @@ return [
         'constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
         ],
-    ],
-    [
+     ],
+     [
         'table' => 'panels',
         'columns' => [
             'id' => ['type' => 'uuid'],
@@ -46,5 +46,5 @@ return [
                 'references' => ['requests', 'id'],
             ],
         ],
-    ]
+     ],
 ];

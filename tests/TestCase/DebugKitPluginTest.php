@@ -27,7 +27,7 @@ use DebugKit\ToolbarService;
 /**
  * Test the Plugin
  */
-class PluginTest extends TestCase
+class DebugKitPluginTest extends TestCase
 {
     /**
      * Test setDeprecationHandler.

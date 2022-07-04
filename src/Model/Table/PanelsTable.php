@@ -44,7 +44,7 @@ class PanelsTable extends Table
     public function initialize(array $config): void
     {
         $this->belongsTo('DebugKit.Requests');
-        $this->ensureTables(['DebugKit.Requests', 'DebugKit.Panels']);
+        $this->ensureTables(['requests', 'panels']);
     }
 
     /**

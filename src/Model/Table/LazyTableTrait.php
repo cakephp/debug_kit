@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Model\Table;
 
-use Cake\Core\App;
+use Cake\Database\Schema\TableSchema;
 use PDOException;
 use RuntimeException;
 
@@ -55,18 +55,25 @@ trait LazyTableTrait
         }
 
         try {
-            foreach ($fixtures as $name) {
-                $class = App::className($name, 'Test/Fixture', 'Fixture');
-                if ($class === null) {
-                    throw new RuntimeException("Unknown fixture '$name'.");
-                }
-
-                /** @var \Cake\TestSuite\Fixture\TestFixture $fixture */
-                $fixture = new $class($connection->configName());
-                if (in_array($fixture->table, $existing)) {
+            $config = require dirname(dirname(__DIR__)) . '/schema.php';
+            $driver = $connection->getDriver();
+            foreach ($config as $table) {
+                if (in_array($table['table'], $existing, true)) {
                     continue;
                 }
-                $fixture->create($connection);
+                if (!in_array($table['table'], $fixtures, true)) {
+                    continue;
+                }
+
+                // Use Database/Schema primitives to generate dialect specific
+                // CREATE TABLE statements and run them.
+                $schema = new TableSchema($table['table'], $table['columns']);
+                foreach ($table['constraints'] as $name => $itemConfig) {
+                    $schema->addConstraint($name, $itemConfig);
+                }
+                foreach ($schema->createSql($connection) as $sql) {
+                    $driver->execute($sql);
+                }
             }
         } catch (PDOException $e) {
             if (strpos($e->getMessage(), 'unable to open')) {

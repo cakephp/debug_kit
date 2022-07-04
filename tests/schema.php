@@ -1,47 +1,12 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Database\Schema\TableSchema;
+$tables = require dirname(__DIR__) . '/src/schema.php';
 
 /**
- * Abstract schema for Debugkit tests.
+ * Additional tables used for tests.
  */
-return [
-    [
-        'table' => 'requests',
-        'columns' => [
-            'id' => ['type' => 'uuid', 'null' => false],
-            'url' => ['type' => 'text', 'null' => false],
-            'content_type' => ['type' => 'string'],
-            'status_code' => ['type' => 'integer'],
-            'method' => ['type' => 'string'],
-            'requested_at' => ['type' => 'datetime', 'null' => false],
-        ],
-        'constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id']],
-        ],
-    ],
-    [
-        'table' => 'panels',
-        'columns' => [
-            'id' => ['type' => 'uuid'],
-            'request_id' => ['type' => 'uuid', 'null' => false],
-            'panel' => ['type' => 'string'],
-            'title' => ['type' => 'string'],
-            'element' => ['type' => 'string'],
-            'summary' => ['type' => 'string'],
-            'content' => ['type' => 'binary', 'length' => TableSchema::LENGTH_LONG],
-        ],
-        'constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id']],
-            'unique_panel' => ['type' => 'unique', 'columns' => ['request_id', 'panel']],
-            'request_id_fk' => [
-                'type' => 'foreign',
-                'columns' => ['request_id'],
-                'references' => ['requests', 'id'],
-            ],
-        ],
-    ],
+$testTables = [
     [
         'table' => 'articles',
         'columns' => [
@@ -59,3 +24,5 @@ return [
         ],
     ],
 ];
+
+return array_merge($tables, $testTables);

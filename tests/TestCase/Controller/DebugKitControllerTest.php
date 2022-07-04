@@ -19,7 +19,6 @@ use Authorization\AuthorizationService;
 use Authorization\Policy\OrmResolver;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -57,8 +56,6 @@ class DebugKitControllerTest extends TestCase
      */
     private function _buildController()
     {
-        $this->markTestSkipped('Waiting for Authorization plugin to be updated for 5.x');
-
         $request = new ServerRequest(['url' => '/debug-kit/']);
 
         $resolver = new OrmResolver();
@@ -66,7 +63,7 @@ class DebugKitControllerTest extends TestCase
 
         $request = $request->withAttribute('authorization', $authorization);
 
-        return new DebugKitController($request, new Response());
+        return new DebugKitController($request);
     }
 
     /**

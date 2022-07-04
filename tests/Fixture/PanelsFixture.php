@@ -12,7 +12,6 @@
  */
 namespace DebugKit\Test\Fixture;
 
-use Cake\Database\Schema\TableSchema;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**

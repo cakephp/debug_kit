@@ -63,6 +63,7 @@ class DebugKitMiddleware implements MiddlewareInterface
             return $response;
         }
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         $row = $this->service->saveData($request, $response);
         if (!$row) {
             return $response;

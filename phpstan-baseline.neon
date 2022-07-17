@@ -1,0 +1,36 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^PHPDoc type array\\<string, mixed\\>\\|Cake\\\\Cache\\\\CacheEngine of property DebugKit\\\\Cache\\\\Engine\\\\DebugEngine\\:\\:\\$_config is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Cake\\\\Cache\\\\CacheEngine\\:\\:\\$_config\\.$#"
+			count: 1
+			path: src/Cache/Engine/DebugEngine.php
+
+		-
+			message: "#^Property DebugKit\\\\Cache\\\\Engine\\\\DebugEngine\\:\\:\\$_engine \\(Cake\\\\Cache\\\\CacheEngine\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: src/Cache/Engine/DebugEngine.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Cache/Engine/DebugEngine.php
+
+		-
+			message: "#^Call to function file_get_contents\\(\\) on a separate line has no effect\\.$#"
+			count: 1
+			path: src/Command/BenchmarkCommand.php
+
+		-
+			message: "#^Method DebugKit\\\\Mailer\\\\Transport\\\\DebugKitTransport\\:\\:send\\(\\) should return array\\{headers\\: string, message\\: string\\} but returns array\\{headers\\: non\\-empty\\-array\\<string\\>, message\\: array\\{text\\: string, html\\: string\\}\\}\\.$#"
+			count: 1
+			path: src/Mailer/Transport/DebugKitTransport.php
+
+		-
+			message: "#^Parameter \\#1 \\$request of method DebugKit\\\\ToolbarService\\:\\:saveData\\(\\) expects Cake\\\\Http\\\\ServerRequest, Psr\\\\Http\\\\Message\\\\ServerRequestInterface given\\.$#"
+			count: 1
+			path: src/Middleware/DebugKitMiddleware.php
+
+		-
+			message: "#^Call to an undefined method Cake\\\\ORM\\\\Locator\\\\LocatorInterface\\:\\:genericInstances\\(\\)\\.$#"
+			count: 1
+			path: src/Panel/SqlLogPanel.php

@@ -62,6 +62,7 @@ class DashboardController extends DebugKitController
     public function reset()
     {
         $this->request->allowMethod('post');
+        /** @var \DebugKit\Model\Table\RequestsTable $requestsModel */
         $requestsModel = $this->fetchTable('DebugKit.Requests');
 
         $requestsModel->Panels->deleteAll('1=1');

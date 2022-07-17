@@ -16,7 +16,7 @@ class DebugKitTransport extends AbstractTransport
     /**
      * The transport object this class is decorating
      *
-     * @var \Cake\Mailer\AbstractTransport
+     * @var \Cake\Mailer\AbstractTransport|null
      */
     protected $originalTransport;
 

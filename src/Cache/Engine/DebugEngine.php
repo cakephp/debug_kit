@@ -28,14 +28,15 @@ class DebugEngine extends CacheEngine
     /**
      * Proxied cache engine config.
      *
-     * @var array<string, mixed>
+     * @var array<string, mixed>|\Cake\Cache\CacheEngine
+     * @psalm-suppress NonInvariantDocblockPropertyType
      */
     protected $_config;
 
     /**
      * Proxied engine
      *
-     * @var mixed
+     * @var \Cake\Cache\CacheEngine
      */
     protected $_engine;
 
@@ -64,7 +65,7 @@ class DebugEngine extends CacheEngine
     /**
      * Constructor
      *
-     * @param mixed $config Config data or the proxied adapter.
+     * @param array<string, mixed>|\Cake\Cache\CacheEngine $config Config data or the proxied adapter.
      * @param string $name The name of the proxied cache engine.
      * @param \Psr\Log\LoggerInterface $logger Logger for collecting cache operation logs.
      */
@@ -83,7 +84,7 @@ class DebugEngine extends CacheEngine
      */
     public function init(array $config = []): bool
     {
-        if (is_object($this->_config)) {
+        if (!is_array($this->_config)) {
             $this->_engine = $this->_config;
 
             return true;
@@ -311,7 +312,9 @@ class DebugEngine extends CacheEngine
      */
     public function setConfig($key, $value = null, $merge = true)
     {
-        return $this->_engine->setConfig($key, $value, $merge);
+        $this->_engine->setConfig($key, $value, $merge);
+
+        return $this;
     }
 
     /**
@@ -336,12 +339,14 @@ class DebugEngine extends CacheEngine
      */
     public function __toString()
     {
-        if (!empty($this->_engine)) {
+        /** @psalm-suppress RedundantPropertyInitializationCheck */
+        if (isset($this->_engine)) {
             [$ns, $class] = namespaceSplit(get_class($this->_engine));
 
             return str_replace('Engine', '', $class);
         }
 
+        /** @psalm-suppress UndefinedMethod */
         return $this->_config['className'];
     }
 }

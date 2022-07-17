@@ -56,6 +56,7 @@ class LogPanel extends DebugPanel
      */
     public function summary()
     {
+        /** @var \DebugKit\Log\Engine\DebugKitLog|null $logger */
         $logger = Log::engine('debug_kit_log_panel');
         if (!$logger) {
             return '0';

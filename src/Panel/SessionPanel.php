@@ -30,7 +30,7 @@ class SessionPanel extends DebugPanel
      */
     public function shutdown(EventInterface $event)
     {
-        /** @var \Cake\Http\ServerRequest $request */
+        /** @var \Cake\Http\ServerRequest|null $request */
         $request = $event->getSubject()->getRequest();
         if ($request) {
             $this->_data = ['content' => $request->getSession()->read()];

@@ -99,7 +99,7 @@ class MailPreviewController extends DebugKitController
      *
      * @param string $name The Mailer name
      * @param string $method The mailer preview method
-     * @return \Psr\Http\Message\ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|void
      */
     public function email($name, $method)
     {
@@ -150,13 +150,13 @@ class MailPreviewController extends DebugKitController
     {
         $part = $this->findPart($email, $partType);
 
-        if ($part === false) {
+        if ($part === null) {
             throw new NotFoundException(__d('debug_kit', "Email part ''{0}'' not found in email", $partType));
         }
 
         $response = $this->response->withType($partType);
         if ($partType === 'text') {
-            $part = '<pre>' . (string)$part . '</pre>';
+            $part = '<pre>' . $part . '</pre>';
         }
 
         return $response->withStringBody($part);

@@ -39,7 +39,7 @@ class CredentialsHelper extends Helper
      * Replace credentials in url's by *****
      * Example mysql://username:password@localhost/my_db -> mysql://******@localhost/my_db
      *
-     * @param string $in variable to filter
+     * @param mixed $in variable to filter
      * @return string
      */
     public function filter($in)

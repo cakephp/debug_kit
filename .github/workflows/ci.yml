@@ -1,6 +1,5 @@
 name: CI
 
-
 on:
   push:
     branches:
@@ -9,9 +8,12 @@ on:
     branches:
       - '*'
 
+permissions:
+  contents: read
+
 jobs:
   testsuite-linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -34,7 +36,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup Service
       if: matrix.db-type == 'mysql'
@@ -58,7 +60,7 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m')"
 
     - name: Cache composer dependencies
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}-${{ matrix.prefer-lowest }}
@@ -92,14 +94,14 @@ jobs:
 
     - name: Code Coverage Report
       if: success() && matrix.php-version == '7.4' && matrix.db-type == 'mysql'
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
 
   cs-stan:
     name: Coding Standard & Static Analysis
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -107,13 +109,17 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl
         coverage: none
-        tools: psalm:~4.10.0, cs2pr
+        tools: cs2pr
 
     - name: Composer Install
-      run: composer install
+      run: composer stan-setup
 
     - name: Run phpcs
       run: vendor/bin/phpcs --report=checkstyle src/ tests/ | cs2pr
 
     - name: Run psalm
-      run: psalm --output-format=github
+      run: vendor/bin/psalm.phar --output-format=github
+
+    - name: Run phpstan
+      if: always()
+      run: vendor/bin/phpstan.phar analyse --error-format=github

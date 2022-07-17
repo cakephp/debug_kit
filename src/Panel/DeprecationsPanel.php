@@ -89,14 +89,8 @@ class DeprecationsPanel extends DebugPanel
             }
         }
 
-        ksort($return['app']);
-        ksort($return['cake']);
         ksort($return['plugins']);
         ksort($return['vendor']);
-
-        foreach ($return['plugins'] as &$plugin) {
-            ksort($plugin);
-        }
 
         return $return;
     }

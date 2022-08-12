@@ -291,6 +291,20 @@ to include the panel::
 The above would load all the default panels as well as the ``AppPanel``, and
 ``MyCustomPanel`` panel from ``MyPlugin``.
 
+Accessing Toolbar without a frontend
+====================================
+
+If you have an application which only provides an API (and therefore no frontend)
+the usual way of accessing the toolbar can't be used.
+
+Instead you have to call http://localhost/debug-kit/toolbar/``<debugkit-id>``
+
+The ``<debugkit-id>`` can be found inside the HTTP headers of your API response. It should look something like that::
+
+    X-DEBUGKIT-ID: 5ef39604-ad5d-4ca4-85d8-8595e52373bb
+
+So you would have to call http://localhost/debug-kit/toolbar/5ef39604-ad5d-4ca4-85d8-8595e52373bb
+
 Helper Functions
 ================
 

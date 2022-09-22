@@ -66,7 +66,7 @@ class VariablesPanelTest extends TestCase
         $result = $requests->find()->all();
         $unbufferedQuery = $requests->find('all');
         $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
-        $update = $requests->query()->update();
+        $update = $requests->updateQuery();
         $debugInfoException = $requests->query()->contain('NonExistentAssociation');
 
         $unserializable = new stdClass();

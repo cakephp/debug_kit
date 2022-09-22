@@ -64,7 +64,7 @@ class RequestsControllerTest extends TestCase
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request', 'Has a panel button');
-        $this->assertResponseContains('/css/toolbar.css', 'Has a CSS file');
+        $this->assertResponseContains('/css/style.css', 'Has a CSS file');
     }
 
     /**

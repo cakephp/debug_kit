@@ -14,10 +14,10 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase;
 
-use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugSql;
+use DebugKit\TestApp\Stub\DebugSqlStub;
 
 /**
  * Test the debugging SQL
@@ -41,9 +41,10 @@ class DebugSqlTest extends TestCase
     }
 
     /**
-     * Tests that a SQL string is outputted as text on the CLI.
+     * Tests that a SQL string is outputted in a formatted and
+     * highlighted fashion in a CLI environment.
      */
-    public function testSqlText()
+    public function testSqlCli()
     {
         $query = $this->newQuery()->select(['panels.id']);
 
@@ -51,22 +52,20 @@ class DebugSqlTest extends TestCase
         $this->assertSame($query, DebugSql::sql($query));
         $result = ob_get_clean();
 
-        $expectedText = <<<EXPECTED
+        $expected = <<<EXPECTED
 %s (line %d)
 ########## DEBUG ##########
-SELECT panels.id AS %s FROM panels panels
-###########################
-
+[37mSELECT[0m
 EXPECTED;
-        $fieldName = $this->connection->getDriver() instanceof Postgres ? '"panels__id"' : 'panels__id';
-        $expected = sprintf($expectedText, str_replace(ROOT, '', __FILE__), __LINE__ - 11, $fieldName);
-        $this->assertSame($expected, $result);
+        $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 8);
+        $this->assertTextContains($expected, $result);
     }
 
     /**
-     * Tests that a SQL string is outputted as HTML.
+     * Tests that a SQL string is outputted as HTML in a CLI
+     * environment.
      */
-    public function testSqlHtml()
+    public function testSqlHtmlOnCli()
     {
         $query = $this->newQuery()->select(['panels.id']);
 
@@ -74,26 +73,68 @@ EXPECTED;
         $this->assertSame($query, DebugSql::sql($query, true, true));
         $result = ob_get_clean();
 
-        $expectedHtml = <<<EXPECTED
+        $expected = <<<EXPECTED
 <div class="cake-debug-output">
 <span><strong>%s</strong> (line <strong>%d</strong>)</span>
 <pre class="cake-debug">
-SELECT 
-  panels.id AS %s 
-FROM 
-  panels panels
-</pre>
-</div>
+<span style="font-weight:bold;">SELECT</span>
 EXPECTED;
-        $fieldName = $this->connection->getDriver() instanceof Postgres ? '"panels__id"' : 'panels__id';
-        $expected = sprintf($expectedHtml, str_replace(ROOT, '', __FILE__), __LINE__ - 15, $fieldName);
-        $this->assertSame(str_replace("\r", '', $expected), str_replace("\r", '', $result));
+        $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 9);
+        $this->assertTextContains(str_replace("\r", '', $expected), str_replace("\r", '', $result));
+    }
+
+    /**
+     * Tests that a SQL string is outputted as HTML in a non-CLI
+     * environment.
+     */
+    public function testSqlHtml()
+    {
+        $query = $this->newQuery()->select(['panels.id']);
+
+        ob_start();
+        DebugSqlStub::$isCli = false;
+        $this->assertSame($query, DebugSqlStub::sql($query, true, true));
+        DebugSqlStub::$isCli = true;
+        $result = ob_get_clean();
+
+        $expected = <<<EXPECTED
+<div class="cake-debug-output">
+<span><strong>%s</strong> (line <strong>%d</strong>)</span>
+<pre class="cake-debug">
+<span style="font-weight:bold;">SELECT</span>
+EXPECTED;
+        $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 10);
+        $this->assertTextContains(str_replace("\r", '', $expected), str_replace("\r", '', $result));
+    }
+
+    /**
+     * Tests that a SQL string is outputted as plain text in a non-CLI
+     * environment.
+     */
+    public function testSqlPlain()
+    {
+        $query = $this->newQuery()->select(['panels.id']);
+
+        ob_start();
+        DebugSqlStub::$isCli = false;
+        $this->assertSame($query, DebugSqlStub::sql($query, true, false));
+        DebugSqlStub::$isCli = true;
+        $result = ob_get_clean();
+
+        $expectedHtml = <<<EXPECTED
+%s (line %s)
+########## DEBUG ##########
+SELECT
+EXPECTED;
+
+        $expected = sprintf($expectedHtml, str_replace(ROOT, '', __FILE__), __LINE__ - 10);
+        $this->assertTextContains(str_replace("\r", '', $expected), str_replace("\r", '', $result));
     }
 
     /**
      * Creates a Query object for testing.
      *
-     * @return Query
+     * @return \Cake\ORM\Query
      */
     private function newQuery()
     {

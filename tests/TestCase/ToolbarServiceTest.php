@@ -58,6 +58,8 @@ class ToolbarServiceTest extends TestCase
 
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
+        unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
     }
 
     /**
@@ -69,6 +71,7 @@ class ToolbarServiceTest extends TestCase
     {
         parent::tearDown();
         putenv('HTTP_HOST=');
+        $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $this->restore;
     }
 
     /**
@@ -302,11 +305,11 @@ class ToolbarServiceTest extends TestCase
         $row = $bar->saveData($request, $response);
         $response = $bar->injectScripts($row, $response);
 
-        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'toolbar.js');
+        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
-            '<script id="__debug_kit" data-id="' . $row->id . '" ' .
-            'data-url="http://localhost/" src="/debug_kit/js/toolbar.js?' . $timeStamp . '"></script>' .
+            '<script id="__debug_kit_script" data-id="' . $row->id . '" ' .
+            'data-url="http://localhost/" type="module" src="/debug_kit/js/inject-iframe.js?' . $timeStamp . '"></script>' .
             '</body>';
         $this->assertTextEquals($expected, (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');

@@ -191,7 +191,7 @@ class MailPreviewController extends DebugKitController
                 return [[CorePlugin::classPath($plugin) . 'Mailer/Preview/'], "$plugin."];
             });
 
-        $appPaths = [App::path('Mailer/Preview'), ''];
+        $appPaths = [App::classPath('Mailer/Preview'), ''];
 
         return collection([$appPaths])
             ->append($pluginPaths)

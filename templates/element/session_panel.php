@@ -17,4 +17,6 @@
  * @var array $content
  */
 ?>
-<?= $this->Toolbar->dump($content);
+<div class="c-session-panel">
+    <?= $this->Toolbar->dump($content) ?>
+</div>

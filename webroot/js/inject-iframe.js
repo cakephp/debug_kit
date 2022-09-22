@@ -1,17 +1,15 @@
-var __debugKitId,
-  __debugKitBaseUrl;
-var elem = document.getElementById('__debug_kit');
+let elem = document.getElementById('__debug_kit_script');
 if (elem) {
-  __debugKitId = elem.getAttribute('data-id');
-  __debugKitBaseUrl = elem.getAttribute('data-url');
+  window.debugKitId = elem.getAttribute('data-id');
+  window.debugKitBaseUrl = elem.getAttribute('data-url');
   elem = null;
 }
 
-(function(win, doc) {
-  var iframe;
-  var bodyOverflow;
+((win, doc) => {
+  let iframe;
+  let bodyOverflow;
 
-  var onMessage = function(event) {
+  const onMessage = (event) => {
     if (event.data === 'collapse') {
       iframe.height = 40;
       iframe.width = 40;
@@ -28,15 +26,14 @@ if (elem) {
       iframe.width = '100%';
       iframe.height = '100%';
       doc.body.style.overflow = 'hidden';
-      return;
     }
   };
 
-  var onReady = function() {
-    if (!win.__debugKitId) {
+  const onReady = () => {
+    if (!win.debugKitId) {
       return;
     }
-    var body = doc.body;
+    const { body } = doc;
 
     // Cannot use css text, because of CSP compatibility.
     iframe = doc.createElement('iframe');
@@ -49,7 +46,7 @@ if (elem) {
     iframe.style.zIndex = 99999;
     iframe.height = 40;
     iframe.width = 40;
-    iframe.src = __debugKitBaseUrl + 'debug-kit/toolbar/' + __debugKitId;
+    iframe.src = `${window.debugKitBaseUrl}debug-kit/toolbar/${window.debugKitId}`;
 
     body.appendChild(iframe);
     bodyOverflow = body.style.overflow;
@@ -57,38 +54,37 @@ if (elem) {
     window.addEventListener('message', onMessage, false);
   };
 
-  var logAjaxRequest = function(original) {
-    return function() {
-      if (this.readyState === 4 && this.getResponseHeader('X-DEBUGKIT-ID')) {
-        var params = {
-          requestId: this.getResponseHeader('X-DEBUGKIT-ID'),
-          status: this.status,
-          date: new Date,
-          method: this._arguments && this._arguments[0],
-          url: this._arguments && this._arguments[1],
-          type: this.getResponseHeader('Content-Type')
-        };
-        iframe.contentWindow.postMessage('ajax-completed$$' + JSON.stringify(params), window.location.origin);
-      }
-      if (original) {
-        return original.apply(this, [].slice.call(arguments));
-      }
+  const logAjaxRequest = (original) => function ajaxRequest() {
+    if (this.readyState === 4 && this.getResponseHeader('X-DEBUGKIT-ID')) {
+      const params = {
+        requestId: this.getResponseHeader('X-DEBUGKIT-ID'),
+        status: this.status,
+        date: new Date(),
+        method: this._arguments && this._arguments[0],
+        url: this._arguments && this._arguments[1],
+        type: this.getResponseHeader('Content-Type'),
+      };
+      iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+    }
+    if (original) {
+      return original.apply(this, [].slice.call(arguments));
+    }
+    return false;
+  };
+
+  const proxyAjaxOpen = () => {
+    const proxied = window.XMLHttpRequest.prototype.open;
+    window.XMLHttpRequest.prototype.open = function ajaxCall(...args) {
+      this._arguments = args;
+      return proxied.apply(this, [].slice.call(args));
     };
   };
 
-  var proxyAjaxOpen = function() {
-    var proxied = window.XMLHttpRequest.prototype.open;
-    window.XMLHttpRequest.prototype.open = function() {
-      this._arguments = arguments;
-      return proxied.apply(this, [].slice.call(arguments));
-    };
-  };
-
-  var proxyAjaxSend = function() {
-    var proxied = window.XMLHttpRequest.prototype.send;
-    window.XMLHttpRequest.prototype.send = function() {
+  const proxyAjaxSend = () => {
+    const proxied = window.XMLHttpRequest.prototype.send;
+    window.XMLHttpRequest.prototype.send = function ajaxCall(...args) {
       this.onreadystatechange = logAjaxRequest(this.onreadystatechange);
-      return proxied.apply(this, [].slice.call(arguments));
+      return proxied.apply(this, [].slice.call(args));
     };
   };
 
@@ -97,7 +93,7 @@ if (elem) {
   // Since the body is already loaded (DOMContentLoaded), the event is not triggered.
   if (doc.addEventListener) {
     // This ensures that all event listeners get applied only once.
-    if (!window.__debugKitListenersApplied) {
+    if (!win.debugKitListenersApplied) {
       // The DOMContentLoaded is for all pages that do not have Turbolinks
       doc.addEventListener('DOMContentLoaded', onReady, false);
       doc.addEventListener('DOMContentLoaded', proxyAjaxOpen, false);
@@ -109,10 +105,10 @@ if (elem) {
       doc.addEventListener('turbolinks:load', onReady, false);
       doc.addEventListener('turbolinks:load', proxyAjaxOpen, false);
       doc.addEventListener('turbolinks:load', proxyAjaxSend, false);
-      window.__debugKitListenersApplied = true;
+      win.debugKitListenersApplied = true;
     }
   } else {
-    throw new Error('Unable to add event listener for DebugKit. Please use a browser' +
-      'that supports addEventListener().');
+    throw new Error('Unable to add event listener for DebugKit. Please use a browser'
+            + ' that supports addEventListener().');
   }
-}(window, document));
+})(window, document);

@@ -26,46 +26,53 @@
  * @var string $matchedRoute
  */
 ?>
-<?php if (!empty($headers) && $headers['response']) : ?>
-<h4><?= __d('debug_kit', 'Warning') ?></h4>
-    <?= '<p class="warning">' . __d('debug_kit', 'Headers already sent at file {0} and line {1}.', [$headers['file'], $headers['line']]) . '</p>' ?>
-<?php endif; ?>
+<div class="c-request-panel">
+    <?php if (!empty($headers) && $headers['response']) : ?>
+    <h4><?= __d('debug_kit', 'Warning') ?></h4>
+        <?= '<p class="c-flash c-flash--warning">' .
+        __d(
+            'debug_kit',
+            'Headers already sent at file {0} and line {1}.',
+            [$headers['file'], $headers['line']]
+        ) . '</p>' ?>
+    <?php endif; ?>
 
-<h4><?= __d('debug_kit', 'Attributes') ?></h4>
-<?php
-if (empty($attributes)) :
-    echo '<p class="info">' . __d('debug_kit', 'No attributes data.') . '</p>';
-else :
-    echo $this->Toolbar->dump($attributes);
-endif;
-?>
+    <h4><?= __d('debug_kit', 'Attributes') ?></h4>
+    <?php
+    if (empty($attributes)) :
+        echo '<p class="c-flash c-flash--info">' . __d('debug_kit', 'No attributes data.') . '</p>';
+    else :
+        echo $this->Toolbar->dump($attributes);
+    endif;
+    ?>
 
-<h4><?= __d('debug_kit', 'Post data') ?></h4>
-<?php
-if (empty($data)) :
-    echo '<p class="info">' . __d('debug_kit', 'No post data.') . '</p>';
-else :
-    echo $this->Toolbar->dump($data);
-endif;
-?>
+    <h4><?= __d('debug_kit', 'Post data') ?></h4>
+    <?php
+    if (empty($data)) :
+        echo '<p class="c-flash c-flash--info">' . __d('debug_kit', 'No post data.') . '</p>';
+    else :
+        echo $this->Toolbar->dump($data);
+    endif;
+    ?>
 
-<h4>Query string</h4>
-<?php
-if (empty($query)) :
-    echo '<p class="info">' . __d('debug_kit', 'No querystring data.') . '</p>';
-else :
-    echo $this->Toolbar->dump($query);
-endif;
-?>
+    <h4>Query string</h4>
+    <?php
+    if (empty($query)) :
+        echo '<p class="c-flash c-flash--info">' . __d('debug_kit', 'No querystring data.') . '</p>';
+    else :
+        echo $this->Toolbar->dump($query);
+    endif;
+    ?>
 
-<h4>Cookie</h4>
-<?php if (isset($cookie)) : ?>
-    <?= $this->Toolbar->dump($cookie) ?>
-<?php else : ?>
-    <p class="info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
-<?php endif; ?>
+    <h4>Cookie</h4>
+    <?php if (isset($cookie)) : ?>
+        <?= $this->Toolbar->dump($cookie) ?>
+    <?php else : ?>
+        <p class="c-flash c-flash--info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
+    <?php endif; ?>
 
-<?php if (!empty($matchedRoute)) : ?>
-<h4><?= __d('debug_kit', 'Matched Route') ?></h4>
-    <p><?= $this->Toolbar->dump(['template' => $matchedRoute]) ?></p>
-<?php endif; ?>
+    <?php if (!empty($matchedRoute)) : ?>
+    <h4><?= __d('debug_kit', 'Matched Route') ?></h4>
+        <p><?= $this->Toolbar->dump(['template' => $matchedRoute]) ?></p>
+    <?php endif; ?>
+</div>

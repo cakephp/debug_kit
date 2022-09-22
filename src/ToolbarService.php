@@ -102,9 +102,14 @@ class ToolbarService
      */
     public function isEnabled(): bool
     {
-        $enabled = (bool)Configure::read('debug');
+        if (isset($GLOBALS['__PHPUNIT_BOOTSTRAP'])) {
+            return false;
+        }
+        $enabled = (bool)Configure::read('debug')
+                && !$this->isSuspiciouslyProduction()
+                && php_sapi_name() !== 'phpdbg';
 
-        if ($enabled && !$this->isSuspiciouslyProduction()) {
+        if ($enabled) {
             return true;
         }
         $force = $this->getConfig('forceEnable');
@@ -312,7 +317,7 @@ class ToolbarService
      */
     public function getToolbarUrl(): string
     {
-        $url = 'js/toolbar.js';
+        $url = 'js/inject-iframe.js';
         $filePaths = [
             str_replace('/', DIRECTORY_SEPARATOR, WWW_ROOT . 'debug_kit/' . $url),
             str_replace('/', DIRECTORY_SEPARATOR, CorePlugin::path('DebugKit') . 'webroot/' . $url),
@@ -357,7 +362,7 @@ class ToolbarService
 
         $url = Router::url('/', true);
         $script = sprintf(
-            '<script id="__debug_kit" data-id="%s" data-url="%s" src="%s"></script>',
+            '<script id="__debug_kit_script" data-id="%s" data-url="%s" type="module" src="%s"></script>',
             $row->id,
             $url,
             Router::url($this->getToolbarUrl())

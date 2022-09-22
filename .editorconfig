@@ -13,3 +13,6 @@ trim_trailing_whitespace = true
 
 [*.neon]
 indent_style = tab
+
+[*.js]
+indent_size = 2

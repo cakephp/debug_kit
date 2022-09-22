@@ -17,7 +17,7 @@ namespace DebugKit\Model\Table;
 use Cake\Core\Configure;
 use Cake\Database\Driver\Sqlite;
 use Cake\Log\Log;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
 use PDOException;
 
@@ -69,11 +69,11 @@ class RequestsTable extends Table
     /**
      * Finder method to get recent requests as a simple array
      *
-     * @param \Cake\ORM\Query $query The query
+     * @param \Cake\ORM\Query\SelectQuery $query The query
      * @param array $options The options
-     * @return \Cake\ORM\Query The query.
+     * @return \Cake\ORM\Query\SelectQuery The query.
      */
-    public function findRecent(Query $query, array $options): Query
+    public function findRecent(SelectQuery $query, array $options): SelectQuery
     {
         return $query->order(['Requests.requested_at' => 'DESC'])
             ->limit(10);
@@ -118,14 +118,12 @@ class RequestsTable extends Table
                 return;
             }
 
-            $query = $this->Panels->query()
-                ->delete()
+            $query = $this->Panels->deleteQuery()
                 ->where(['request_id NOT IN' => $noPurge]);
             $statement = $query->execute();
             $statement->closeCursor();
 
-            $query = $this->query()
-                ->delete()
+            $query = $this->deleteQuery()
                 ->where(['id NOT IN' => $noPurge]);
 
             $statement = $query->execute();

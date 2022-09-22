@@ -15,9 +15,9 @@ declare(strict_types=1);
  */
 namespace DebugKit\Model\Behavior;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use DebugKit\DebugTimer;
 
 /**
@@ -28,11 +28,11 @@ class TimedBehavior extends Behavior
     /**
      * beforeFind, starts a timer for a find operation.
      *
-     * @param \Cake\Event\Event $event The beforeFind event
-     * @param \Cake\ORM\Query $query Query
-     * @return \Cake\ORM\Query
+     * @param \Cake\Event\EventInterface $event The beforeFind event
+     * @param \Cake\ORM\Query\SelectQuery $query SelectQuery
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function beforeFind(Event $event, Query $query): Query
+    public function beforeFind(EventInterface $event, SelectQuery $query): SelectQuery
     {
         $alias = $event->getSubject()->getAlias();
         DebugTimer::start($alias . '_find', $alias . '->find()');
@@ -47,10 +47,10 @@ class TimedBehavior extends Behavior
     /**
      * beforeSave, starts a time before a save is initiated.
      *
-     * @param \Cake\Event\Event $event The beforeSave event
+     * @param \Cake\Event\EventInterface $event The beforeSave event
      * @return void
      */
-    public function beforeSave(Event $event): void
+    public function beforeSave(EventInterface $event): void
     {
         $alias = $event->getSubject()->getAlias();
         DebugTimer::start($alias . '_save', $alias . '->save()');
@@ -59,10 +59,10 @@ class TimedBehavior extends Behavior
     /**
      * afterSave, stop the timer started from a save.
      *
-     * @param \Cake\Event\Event $event The afterSave event
+     * @param \Cake\Event\EventInterface $event The afterSave event
      * @return void
      */
-    public function afterSave(Event $event): void
+    public function afterSave(EventInterface $event): void
     {
         $alias = $event->getSubject()->getAlias();
         DebugTimer::stop($alias . '_save');

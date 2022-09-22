@@ -24,6 +24,8 @@ use RuntimeException;
 
 /**
  * Registry object for panels.
+ *
+ * @extends \Cake\Core\ObjectRegistry<\DebugKit\DebugPanel>
  */
 class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
 {
@@ -73,11 +75,10 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      *
      * Part of the template method for Cake\Utility\ObjectRegistry::load()
      *
-     * @param string $class The classname to create.
+     * @param \DebugKit\DebugPanel|class-string<\DebugKit\DebugPanel> $class The classname to create.
      * @param string $alias The alias of the panel.
      * @param array $config An array of config to use for the panel.
      * @return \DebugKit\DebugPanel The constructed panel class.
-     * @psalm-param class-string<\DebugKit\DebugPanel> $class
      */
     protected function _create(object|string $class, string $alias, array $config): DebugPanel
     {

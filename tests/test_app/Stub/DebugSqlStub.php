@@ -9,7 +9,7 @@ class DebugSqlStub extends DebugSql
 {
     public static $isCli = true;
 
-    protected static function isCli()
+    protected static function isCli(): bool
     {
         return static::$isCli;
     }

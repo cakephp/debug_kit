@@ -100,9 +100,14 @@ class ToolbarService
      */
     public function isEnabled()
     {
-        $enabled = (bool)Configure::read('debug');
+        if (isset($GLOBALS['__PHPUNIT_BOOTSTRAP'])) {
+            return false;
+        }
+        $enabled = (bool)Configure::read('debug')
+                && !$this->isSuspiciouslyProduction()
+                && php_sapi_name() !== 'phpdbg';
 
-        if ($enabled && !$this->isSuspiciouslyProduction()) {
+        if ($enabled) {
             return true;
         }
         $force = $this->getConfig('forceEnable');

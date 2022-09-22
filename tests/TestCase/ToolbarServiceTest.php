@@ -58,6 +58,8 @@ class ToolbarServiceTest extends TestCase
 
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
+        unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
     }
 
     /**
@@ -69,6 +71,7 @@ class ToolbarServiceTest extends TestCase
     {
         parent::tearDown();
         putenv('HTTP_HOST=');
+        $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $this->restore;
     }
 
     /**

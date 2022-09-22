@@ -52,6 +52,8 @@ class DebugKitMiddlewareTest extends TestCase
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
         $this->oldConfig = Configure::read('DebugKit');
+        $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
+        unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
     }
 
     /**
@@ -64,6 +66,7 @@ class DebugKitMiddlewareTest extends TestCase
         parent::tearDown();
 
         Configure::write('DebugKit', $this->oldConfig);
+        $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $this->restore;
     }
 
     protected function handler()

@@ -47,7 +47,7 @@ class Plugin extends BasePlugin
     {
         $service = new ToolbarService(EventManager::instance(), (array)Configure::read('DebugKit'));
 
-        if (!$service->isEnabled() || php_sapi_name() === 'cli' || php_sapi_name() === 'phpdbg') {
+        if (!$service->isEnabled()) {
             return;
         }
 

@@ -174,7 +174,7 @@ TEXT;
      *
      * @return bool
      */
-    protected static function isCli()
+    protected static function isCli(): bool
     {
         return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
     }

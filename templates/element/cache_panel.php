@@ -20,13 +20,13 @@
 ?>
 <div class="c-cache-panel">
     <?php if (empty($metrics)) : ?>
-        <p class="c-flash c-flash--info"><?= __d('debug_kit', 'There were no cache operations in this request.') ?></p>
+        <p class="c-flash c-flash--info">There were no cache operations in this request.</p>
     <?php else : ?>
-        <h3><?= __d('debug_kit', 'Cache Utilities') ?></h3>
+        <h3>Cache Utilities</h3>
         <table class="c-debug-table">
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Engine') ?></th>
+                    <th>Engine</th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,7 +46,7 @@
                             data-csrf="<?= $this->getRequest()
                                 ->getAttribute('csrfToken') ?>"
                         >
-                            <?= __d('debug_kit', 'Clear All Data') ?>
+                            Clear All Data
                         </button>
                     </td>
                 </tr>
@@ -55,15 +55,15 @@
         </table>
         <div class="c-cache-panel__messages"></div>
 
-        <h3><?= __d('debug_kit', 'Cache Usage Overview') ?></h3>
+        <h3>Cache Usage Overview</h3>
         <table class="c-debug-table">
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Engine') ?></th>
-                    <th><?= __d('debug_kit', 'get hit') ?></th>
-                    <th><?= __d('debug_kit', 'get miss') ?></th>
-                    <th><?= __d('debug_kit', 'set') ?></th>
-                    <th><?= __d('debug_kit', 'delete') ?></th>
+                    <th>Engine</th>
+                    <th>get hit</th>
+                    <th>get miss</th>
+                    <th>set</th>
+                    <th>delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,11 +79,11 @@
             </tbody>
         </table>
 
-        <h3><?= __d('debug_kit', 'Cache Logs') ?></h3>
+        <h3>Cache Logs</h3>
         <table class="c-debug-table">
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Log') ?></th>
+                    <th>Log</th>
                 </tr>
             </thead>
             <tbody>

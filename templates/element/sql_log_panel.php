@@ -33,13 +33,10 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
 
 <div class="c-sql-log-panel">
     <?php if (!empty($tables)) : ?>
-        <h4><?= __d('debug_kit', 'Generated Models') ?></h4>
-        <p class="c-flash c-flash--warning"><?=
-            __d(
-                'debug_kit',
-                'The following Table objects used {0} instead of a concrete class:',
-                '<code>Cake\ORM\Table</code>'
-            ) ?></p>
+        <h4>Generated Models</h4>
+        <p class="c-flash c-flash--warning">
+            The following Table objects used <code>Cake\ORM\Table</code> instead of a concrete class:
+        </p>
         <ul class="o-list">
             <?php foreach ($tables as $table) : ?>
                 <li><?= h($table) ?></li>
@@ -60,9 +57,8 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
             <div class="c-sql-log-panel__entry">
                 <h4><?= h($logger->name()) ?></h4>
                 <h5>
-                <?= __d(
-                    'debug_kit',
-                    'Total Time: {0} ms &mdash; Total Queries: {1} &mdash; Total Rows: {2}',
+                <?= sprintf(
+                    'Total Time: %d ms &mdash; Total Queries: %d &mdash; Total Rows: %d',
                     $logger->totalTime(),
                     count($queries),
                     $logger->totalRows()
@@ -73,9 +69,9 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
                 <table>
                     <thead>
                         <tr>
-                            <th><?= __d('debug_kit', 'Query') ?></th>
-                            <th><?= __d('debug_kit', 'Rows') ?></th>
-                            <th><?= __d('debug_kit', 'Took (ms)') ?></th>
+                            <th>Query</th>
+                            <th>Rows</th>
+                            <th>Took (ms)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +89,6 @@ SqlFormatter::$pre_attributes = 'style="color: #222; background-color: transpare
     <?php endif; ?>
 
     <?php if ($noOutput) : ?>
-    <div class="c-flash c-flash--warning"><?= __d('debug_kit', 'No active database connections') ?></div>
+    <div class="c-flash c-flash--warning">No active database connections</div>
     <?php endif ?>
 </div>

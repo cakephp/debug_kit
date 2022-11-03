@@ -71,7 +71,7 @@ class MailPreviewController extends DebugKitController
         // @codingStandardsIgnoreEnd
 
         if (empty($content['emails'][$number])) {
-            throw new NotFoundException(__d('debug_kit', 'No emails found in this request'));
+            throw new NotFoundException('No emails found in this request');
         }
 
         $email = $content['emails'][$number];
@@ -151,7 +151,7 @@ class MailPreviewController extends DebugKitController
         $part = $this->findPart($email, $partType);
 
         if ($part === null) {
-            throw new NotFoundException(__d('debug_kit', "Email part ''{0}'' not found in email", $partType));
+            throw new NotFoundException(sprintf("Email part '%s' not found in email", $partType));
         }
 
         $response = $this->response->withType($partType);
@@ -273,9 +273,8 @@ class MailPreviewController extends DebugKitController
 
         $email = $mailPreview->find($emailName);
         if (!$email) {
-            throw new NotFoundException(__d(
-                'debug_kit',
-                'Mailer preview {0}::{1} not found',
+            throw new NotFoundException(sprintf(
+                'Mailer preview %s::%s not found',
                 $previewName,
                 $emailName
             ));

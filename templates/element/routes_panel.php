@@ -37,7 +37,7 @@ foreach (CorePlugin::loaded() as $pluginName) {
 <div class="c-routes-panel">
     <div class="c-routes-panel__button-wrapper">
         <button type="button" class="o-button js-toggle-plugin-route" data-plugin=".c-routes-panel__route-entry--app">
-            <?= __d('debug_kit', 'App') ?>
+            App
             <?= !empty($amountOfRoutesPerGroup['app']) ? ' (' . $amountOfRoutesPerGroup['app'] . ')' : '' ?>
         </button>
         <?php foreach ($pluginNames as $pluginName => $parsedName) : ?>
@@ -51,9 +51,9 @@ foreach (CorePlugin::loaded() as $pluginName) {
     <table class="c-debug-table">
         <thead>
         <tr>
-            <th><?= __d('debug_kit', 'Route name') ?></th>
-            <th class="u-text-left"><?= __d('debug_kit', 'URI template') ?></th>
-            <th class="u-text-left"><?= __d('debug_kit', 'Defaults') ?></th>
+            <th>Route name</th>
+            <th class="u-text-left">URI template</th>
+            <th class="u-text-left">Defaults</th>
         </tr>
         </thead>
         <tbody>

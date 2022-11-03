@@ -5,11 +5,10 @@
 ?>
 <div class="c-mail-panel">
     <p class="c-flash c-flash--info">
-        <?= __d(
-            'debug_kit',
-            'Why not test your emails interactively instead? Go to the {0}',
+        <?= sprintf(
+            'Why not test your emails interactively instead? Go to the %s',
             $this->Html->link(
-                __d('debug_kit', 'Email previews page'),
+                'Email previews page',
                 ['controller' => 'MailPreview', 'action' => 'index'],
                 ['target' => '_blank']
             )
@@ -17,7 +16,7 @@
     </p>
     <?php
     if (empty($emails)) {
-        echo '<p>' . __d('debug_kit', 'No emails were sent during this request') . '</p>';
+        echo '<p>No emails were sent during this request</p>';
 
         return;
     }
@@ -32,7 +31,7 @@
         <div class="c-mail-panel__table-wrapper">
             <table class="c-debug-table">
                 <tr>
-                    <th><?= __d('debug_kit', 'Subject') ?></th>
+                    <th>Subject</th>
                 </tr>
                 <?php foreach ($emails as $index => $email) : ?>
                 <tr class="js-debugkit-load-sent-email<?= $index == 0 ? ' highlighted' : '' ?>"

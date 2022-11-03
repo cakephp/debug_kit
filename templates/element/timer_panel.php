@@ -21,17 +21,17 @@
 ?>
 <div class="c-timer-panel">
     <section>
-        <h3><?= __d('debug_kit', 'Memory') ?></h3>
+        <h3>Memory</h3>
         <div class="c-timer-panel__peak-mem-use">
-            <strong><?= __d('debug_kit', 'Peak Memory Use:') ?></strong>
+            <strong>Peak Memory Use:</strong>
             <?= $this->Number->toReadableSize($peakMemory) ?>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Message') ?></th>
-                    <th><?= __d('debug_kit', 'Memory Use') ?></th>
+                    <th>Message</th>
+                    <th>Memory Use</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,18 +46,18 @@
     </section>
 
     <section>
-        <h3><?= __d('debug_kit', 'Timers') ?></h3>
+        <h3>Timers</h3>
         <div class="c-timer-panel__request-time">
-            <strong><?= __d('debug_kit', 'Total Request Time:') ?></strong>
+            <strong>Total Request Time:</strong>
             <?= $this->Number->precision($requestTime * 1000, 0) ?> ms
         </div>
 
         <table>
             <thead>
             <tr>
-                <th><?= __d('debug_kit', 'Event') ?></th>
-                <th><?= __d('debug_kit', 'Time in ms') ?></th>
-                <th><?= __d('debug_kit', 'Timeline') ?></th>
+                <th>Event</th>
+                <th>Time in ms</th>
+                <th>Timeline</th>
             </tr>
             </thead>
             <tbody>

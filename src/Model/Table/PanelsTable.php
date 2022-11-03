@@ -57,7 +57,7 @@ class PanelsTable extends Table
     public function findByRequest(Query $query, array $options)
     {
         if (empty($options['requestId'])) {
-            throw new \RuntimeException(__d('debug_kit', 'Missing request id in {0}.', 'findByRequest()'));
+            throw new \RuntimeException('Missing request id in findByRequest().');
         }
 
         return $query->where(['Panels.request_id' => $options['requestId']])

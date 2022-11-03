@@ -132,7 +132,7 @@ class DebugTimer
             $_end = $now;
         }
         $times['Core Processing (Derived from $_SERVER["REQUEST_TIME"])'] = [
-            'message' => __d('debug_kit', 'Core Processing (Derived from $_SERVER["REQUEST_TIME"])'),
+            'message' => 'Core Processing (Derived from $_SERVER["REQUEST_TIME"])',
             'start' => 0,
             'end' => $_end - $start,
             'time' => round($_end - $start, 6),

@@ -27,10 +27,10 @@
     endif;
 
     if (isset($varsMaxDepth)) {
-        $msg = sprintf(__d('debug_kit', '%s levels of nested data shown.'), $varsMaxDepth);
-        $msg .= ' ' . __d('debug_kit', 'You can overwrite this via the config key');
+        $msg = sprintf('%s levels of nested data shown.', $varsMaxDepth);
+        $msg .= ' You can overwrite this via the config key';
         $msg .= ' <strong>DebugKit.variablesPanelMaxDepth</strong><br>';
-        $msg .= __d('debug_kit', 'Increasing the depth value can lead to an out of memory error.');
+        $msg .= 'Increasing the depth value can lead to an out of memory error.';
         printf('<p class="c-flash c-flash--info">%s</p>', $msg);
     }
 
@@ -42,7 +42,7 @@
                     type="checkbox"
                     class="js-debugkit-sort-variables"
                     <?= $sort ? ' checked="checked"' : '' ?>>
-                    <?= __d('debug_kit', 'Sort variables by name') ?>
+                    Sort variables by name
             </label>
         </div>
         <?php
@@ -58,7 +58,7 @@
                     type="checkbox"
                     class="js-debugkit-sort-variables"
                     <?= $sort ? ' checked="checked"' : '' ?>>
-                <?= __d('debug_kit', 'Sort variables by name') ?>
+                Sort variables by name
             </label>
         </div>
         <?php
@@ -67,7 +67,7 @@
     endif;
 
     if (!empty($errors)) :
-        echo '<h4>' . __d('debug_kit', 'Validation errors') . '</h4>';
+        echo '<h4>Validation errors</h4>';
         echo $this->Toolbar->dump($errors);
     endif;
     ?>

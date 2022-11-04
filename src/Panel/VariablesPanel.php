@@ -66,9 +66,8 @@ class VariablesPanel extends DebugPanel
         try {
             $info = $item->__debugInfo();
         } catch (\Exception $exception) {
-            return __d(
-                'debug_kit',
-                'Could not retrieve debug info - {0}. Error: {1} in {2}, line {3}',
+            return sprintf(
+                'Could not retrieve debug info - %s. Error: %s in %s, line %d',
                 get_class($item),
                 $exception->getMessage(),
                 $exception->getFile(),

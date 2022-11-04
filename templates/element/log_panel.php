@@ -19,15 +19,15 @@
 ?>
 <div class="c-log-panel">
     <?php if ($logger->noLogs()) : ?>
-        <p class="c-flash c-flash--info"><?= __d('debug_kit', 'There were no log entries made this request') ?></p>
+        <p class="c-flash c-flash--info">There were no log entries made this request</p>
     <?php else : ?>
         <?php foreach ($logger->all() as $logName => $logs) : ?>
-            <h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
+            <h3><?= sprintf('%s Messages', h(ucfirst($logName))) ?> </h3>
             <table class="c-debug-table">
                 <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Time') ?></th>
-                    <th><?= __d('debug_kit', 'Message') ?></th>
+                    <th>Time</th>
+                    <th>Message</th>
                 </tr>
                 </thead>
                 <tbody>

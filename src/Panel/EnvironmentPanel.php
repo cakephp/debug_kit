@@ -75,10 +75,6 @@ class EnvironmentPanel extends DebugPanel
         $var = get_defined_constants(true);
         $return['app'] = array_diff_key($var['user'], $return['cake'], $hiddenCakeConstants);
 
-        if (isset($var['hidef'])) {
-            $return['hidef'] = $var['hidef'];
-        }
-
         return $return;
     }
 

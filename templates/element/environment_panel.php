@@ -21,7 +21,6 @@ use Cake\Error\Debugger;
  * @var array $app
  * @var array $cake
  * @var array $php
- * @var array $hidef
  */
 ?>
 
@@ -124,32 +123,5 @@ use Cake\Error\Debugger;
         <div class="c-flash c-flash--warning">
             PHP environment unavailable.
         </div>
-    <?php endif; ?>
-
-    <?php if (isset($hidef)) : ?>
-        <h2>Hidef Environment</h2>
-
-        <?php if (!empty($hidef)) : ?>
-            <table class="c-debug-table">
-                <thead>
-                <tr>
-                    <th>Constant</th>
-                    <th>Value</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($hidef as $key => $val) : ?>
-                    <tr>
-                        <td><?= h($key) ?></td>
-                        <td><?= Debugger::exportVar($val) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else : ?>
-            <div class="c-flash c-flash--warning">
-                No Hidef environment available.
-            </div>
-        <?php endif; ?>
     <?php endif; ?>
 </div>

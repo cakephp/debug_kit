@@ -173,7 +173,7 @@ export default class Toolbar {
     $(document).on('click', '.js-toolbar-scroll-right', () => {
       that.scroll('right');
     });
-    $(document).on('click', '.js-toolbar-load-panel', () => {
+    $(document).on('click', '.js-toolbar-load-panel', function () {
       const panelId = $(this).attr('data-panel-id');
       that.loadPanel(panelId, 'panelhistory');
     });

@@ -152,7 +152,14 @@ export default class Toolbar {
       // This initializes the panel specific JS logic (if there is any)
       document.dispatchEvent(new CustomEvent('initPanel', { detail: `panel${panelType}` }));
       that.bindDebugBlock();
-    });
+    })
+      .fail((response) => {
+        clearTimeout(timer);
+        contentArea.html(response.responseText);
+        $('.o-loader').removeClass('is-loading');
+        $('.c-panel-content-container').addClass('is-active');
+        window.parent.postMessage('error', window.location.origin);
+      });
   }
 
   // This re-inits the collapsible Debugger::exportVar() content of the Variables tab

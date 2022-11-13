@@ -27,6 +27,11 @@ if (elem) {
       iframe.height = '100%';
       doc.body.style.overflow = 'hidden';
     }
+    if (event.data === 'error') {
+      iframe.width = '40%';
+      iframe.height = '40%';
+      doc.body.style.overflow = bodyOverflow;
+    }
   };
 
   const onReady = () => {

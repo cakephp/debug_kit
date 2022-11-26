@@ -16,6 +16,7 @@ namespace DebugKit\Panel;
 
 use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
+use Exception;
 
 /**
  * Provides debug information on the Current request params.
@@ -33,8 +34,19 @@ class RequestPanel extends DebugPanel
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
         $request = $controller->getRequest();
+
+        $attributes = [];
+        foreach ($request->getAttributes() as $attr => $value) {
+            try {
+                serialize($value);
+            } catch (Exception $e) {
+                $value = "Could not serialize `{$attr}`. It failed with {$e->getMessage()}";
+            }
+            $attributes[$attr] = $value;
+        }
+
         $this->_data = [
-            'attributes' => $request->getAttributes(),
+            'attributes' => $attributes,
             'query' => $request->getQueryParams(),
             'data' => $request->getData(),
             'cookie' => $request->getCookieParams(),

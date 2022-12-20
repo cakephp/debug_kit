@@ -109,7 +109,7 @@ class DebugKitMiddlewareTest extends TestCase
 
         $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $result = $requests->find()
-            ->order(['Requests.requested_at' => 'DESC'])
+            ->orderBy(['Requests.requested_at' => 'DESC'])
             ->contain('Panels')
             ->first();
 

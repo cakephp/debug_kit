@@ -26,7 +26,6 @@ use Cake\Routing\Router;
 use DebugKit\Model\Entity\Request;
 use DebugKit\Panel\PanelRegistry;
 use Exception;
-use PDOException;
 use Psr\Http\Message\ResponseInterface;
 
 /**

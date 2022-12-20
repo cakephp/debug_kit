@@ -62,7 +62,7 @@
             </label>
         </div>
         <?php
-        $this->Toolbar->setSort($sort);
+        $this->Toolbar->setSort($sort ?? false);
         echo $this->Toolbar->dumpNodes($variables);
     endif;
 

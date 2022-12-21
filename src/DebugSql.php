@@ -84,7 +84,7 @@ TEXT;
         }
 
         /** @var array $trace */
-        $trace = Debugger::trace(['start' => 1, 'depth' => $stackDepth + 2, 'format' => 'array']);
+        $trace = Debugger::trace(['start' => 0, 'depth' => $stackDepth + 1, 'format' => 'array']);
         $file = isset($trace[$stackDepth]) ? $trace[$stackDepth]['file'] : 'n/a';
         $line = isset($trace[$stackDepth]) ? $trace[$stackDepth]['line'] : 0;
         $lineInfo = '';

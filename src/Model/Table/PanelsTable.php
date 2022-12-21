@@ -62,7 +62,7 @@ class PanelsTable extends Table
         }
 
         return $query->where(['Panels.request_id' => $options['requestId']])
-            ->order(['Panels.title' => 'ASC']);
+            ->orderBy(['Panels.title' => 'ASC']);
     }
 
     /**

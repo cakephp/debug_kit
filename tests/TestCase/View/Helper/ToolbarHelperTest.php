@@ -69,7 +69,7 @@ class ToolbarHelperTest extends TestCase
 
     public function testDumpNodesSorted()
     {
-        $path = '//*[@class="cake-dbg-array-item"]/*[@class="cake-dbg-string"]';
+        $path = '//*[@class="cake-debug-array-item"]/*[@class="cake-debug-string"]';
         $data = ['z' => 1, 'a' => 99, 'm' => 123];
         $nodes = array_map(function ($v) {
             return Debugger::exportVarAsNodes($v);
@@ -104,7 +104,7 @@ class ToolbarHelperTest extends TestCase
 
     public function testDumpSorted()
     {
-        $path = '//*[@class="cake-dbg-array-item"]/*[@class="cake-dbg-string"]';
+        $path = '//*[@class="cake-debug-array-item"]/*[@class="cake-debug-string"]';
         $data = ['z' => 1, 'a' => 99, 'm' => 123];
         $result = $this->Toolbar->dump($data);
         $xml = new SimpleXmlElement($result);

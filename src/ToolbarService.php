@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace DebugKit;
 
 use Cake\Core\Configure;
+use Cake\Core\Exception\CakeException;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Datasource\Exception\MissingDatasourceConfigException;
@@ -25,7 +26,6 @@ use Cake\Routing\Router;
 use DebugKit\Model\Entity\Request;
 use DebugKit\Panel\PanelRegistry;
 use Exception;
-use PDOException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -302,7 +302,7 @@ class ToolbarService
 
         try {
             return $requests->save($row);
-        } catch (PDOException $e) {
+        } catch (CakeException $e) {
             Log::warning('Unable to save request. This is probably due to concurrent requests.');
             Log::warning($e->getMessage());
         }

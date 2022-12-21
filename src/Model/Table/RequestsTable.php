@@ -75,7 +75,7 @@ class RequestsTable extends Table
      */
     public function findRecent(SelectQuery $query, array $options): SelectQuery
     {
-        return $query->order(['Requests.requested_at' => 'DESC'])
+        return $query->orderBy(['Requests.requested_at' => 'DESC'])
             ->limit(10);
     }
 
@@ -108,7 +108,7 @@ class RequestsTable extends Table
             $noPurge = $this->find()
                 ->select(['id'])
                 ->enableHydration(false)
-                ->order(['requested_at' => 'desc'])
+                ->orderBy(['requested_at' => 'desc'])
                 ->limit(Configure::read('DebugKit.requestCount') ?: 20)
                 ->all()
                 ->extract('id')

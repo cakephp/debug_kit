@@ -19,3 +19,13 @@ parameters:
 			message: "#^Call to an undefined method Cake\\\\ORM\\\\Locator\\\\LocatorInterface\\:\\:genericInstances\\(\\)\\.$#"
 			count: 1
 			path: src/Panel/SqlLogPanel.php
+
+		-
+			message: "#^Dead catch \\- Cake\\\\Core\\\\Exception\\\\CakeException is never thrown in the try block\\.$#"
+			count: 1
+			path: src/ToolbarService.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/ToolbarService.php

@@ -34,7 +34,7 @@ export default (($) => {
           return toolbar.loadPanel(id, panelType);
         }
       }
-      return false;
+      return;
     });
   };
 

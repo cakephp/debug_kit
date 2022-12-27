@@ -138,6 +138,6 @@ EXPECTED;
      */
     private function newQuery()
     {
-        return $this->getTableLocator()->get('panels')->query();
+        return $this->fetchTable('panels')->query();
     }
 }

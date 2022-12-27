@@ -53,8 +53,8 @@ class RequestTableTest extends TestCase
         $stmt = $connection->execute('DROP TABLE IF EXISTS requests');
         $stmt->closeCursor();
 
-        $this->getTableLocator()->get('DebugKit.Requests');
-        $this->getTableLocator()->get('DebugKit.Panels');
+        $this->fetchTable('DebugKit.Requests');
+        $this->fetchTable('DebugKit.Panels');
 
         $schema = $connection->getSchemaCollection();
         $this->assertContains('requests', $schema->listTables());
@@ -68,7 +68,7 @@ class RequestTableTest extends TestCase
      */
     public function testFindRecent()
     {
-        $table = $this->getTableLocator()->get('DebugKit.Requests');
+        $table = $this->fetchTable('DebugKit.Requests');
         $query = $table->find('recent');
         $this->assertSame(10, $query->clause('limit'));
         $this->assertNotEmpty($query->clause('order'));

@@ -267,7 +267,7 @@ class ToolbarService
         ];
         try {
             /** @var \DebugKit\Model\Table\RequestsTable $requests */
-            $requests = $this->getTableLocator()->get('DebugKit.Requests');
+            $requests = $this->fetchTable('DebugKit.Requests');
             $requests->gc();
         } catch (MissingDatasourceConfigException $e) {
             Log::warning(

@@ -36,7 +36,7 @@ class TimedBehaviorTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Article = $this->getTableLocator()->get('Articles');
+        $this->Article = $this->fetchTable('Articles');
         $this->Article->addBehavior('DebugKit.Timed');
     }
 

@@ -103,7 +103,7 @@ class PanelsControllerTest extends TestCase
      */
     public function testLatestHistory()
     {
-        $request = $this->getTableLocator()->get('DebugKit.Requests')->find('recent')->first();
+        $request = $this->fetchTable('DebugKit.Requests')->find('recent')->first();
         if (!$request) {
             $request = $this->makeRequest();
         }

@@ -51,7 +51,7 @@ class DashboardControllerTest extends TestCase
 
     public function testIndexNoRequests()
     {
-        $requests = $this->getTableLocator()->get('DebugKit.Requests');
+        $requests = $this->fetchTable('DebugKit.Requests');
         $requests->Panels->deleteAll('1=1');
         $requests->deleteAll('1=1');
 
@@ -82,7 +82,7 @@ class DashboardControllerTest extends TestCase
         $this->post('/debug-kit/dashboard/reset');
 
         $this->assertRedirect('/debug-kit');
-        $requests = $this->getTableLocator()->get('DebugKit.Requests');
+        $requests = $this->fetchTable('DebugKit.Requests');
         $this->assertSame(0, $requests->find()->count());
     }
 }

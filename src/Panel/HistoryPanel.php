@@ -31,7 +31,7 @@ class HistoryPanel extends DebugPanel
      */
     public function data(): array
     {
-        $table = $this->getTableLocator()->get('DebugKit.Requests');
+        $table = $this->fetchTable('DebugKit.Requests');
         $recent = $table->find('recent');
 
         return [

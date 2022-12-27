@@ -97,7 +97,7 @@ class MailPreviewControllerTest extends TestCase
      */
     public function testSentValidData()
     {
-        $panels = $this->getTableLocator()->get('DebugKit.Panels');
+        $panels = $this->fetchTable('DebugKit.Panels');
         $request = $this->makeRequest();
         $panel = $panels->newEntity(['request_id' => $request->id]);
         $data = [
@@ -124,7 +124,7 @@ class MailPreviewControllerTest extends TestCase
      */
     public function testSentValidDataRenderPart()
     {
-        $panels = $this->getTableLocator()->get('DebugKit.Panels');
+        $panels = $this->fetchTable('DebugKit.Panels');
         $request = $this->makeRequest();
         $panel = $panels->newEntity(['request_id' => $request->id]);
         $data = [

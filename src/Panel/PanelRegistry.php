@@ -26,20 +26,24 @@ use RuntimeException;
  * Registry object for panels.
  *
  * @extends \Cake\Core\ObjectRegistry<\DebugKit\DebugPanel>
+ * @implements \Cake\Event\EventDispatcherInterface<object>
  */
 class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
 {
+    /**
+     * @use \Cake\Event\EventDispatcherTrait<object>
+     */
     use EventDispatcherTrait;
 
     /**
      * Constructor
      *
-     * @param \Cake\Event\EventManager $events Event Manager that panels should bind to.
+     * @param \Cake\Event\EventManager $eventManager Event Manager that panels should bind to.
      *   Typically this is the global manager.
      */
-    public function __construct(EventManager $events)
+    public function __construct(EventManager $eventManager)
     {
-        $this->setEventManager($events);
+        $this->setEventManager($eventManager);
     }
 
     /**

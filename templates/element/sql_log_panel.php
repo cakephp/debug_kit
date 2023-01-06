@@ -59,10 +59,9 @@ $noOutput = true;
                 <h5>
                 <?= __d(
                     'debug_kit',
-                    'Total Time: {0} ms &mdash; Total Queries: {1} &mdash; Total Rows: {2}',
+                    'Total Time: {0} ms &mdash; Total Queries: {1}',
                     $logger->totalTime(),
-                    count($queries),
-                    $logger->totalRows()
+                    count($queries)
                 );
                 ?>
                 </h5>

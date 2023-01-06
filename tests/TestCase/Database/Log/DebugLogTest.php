@@ -60,12 +60,10 @@ class DebugLogTest extends TestCase
         $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(1, $this->logger->queries());
         $this->assertSame(10.0, $this->logger->totalTime());
-        $this->assertSame(5, $this->logger->totalRows());
 
         $this->logger->log(LogLevel::DEBUG, (string)$query, ['query' => $query]);
         $this->assertCount(2, $this->logger->queries());
         $this->assertSame(20.0, $this->logger->totalTime());
-        $this->assertSame(10, $this->logger->totalRows());
     }
 
     /**

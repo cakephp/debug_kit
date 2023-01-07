@@ -58,13 +58,6 @@ class DebugLog extends AbstractLogger
     protected float $_totalTime = 0;
 
     /**
-     * Total rows of all queries
-     *
-     * @var int
-     */
-    protected int $_totalRows = 0;
-
-    /**
      * Set to true to capture schema reflection queries
      * in the SQL log panel.
      *
@@ -130,16 +123,6 @@ class DebugLog extends AbstractLogger
     }
 
     /**
-     * Get the total rows
-     *
-     * @return int
-     */
-    public function totalRows(): int
-    {
-        return $this->_totalRows;
-    }
-
-    /**
      * @inheritDoc
      */
     public function log($level, string|Stringable $message, array $context = []): void
@@ -157,7 +140,6 @@ class DebugLog extends AbstractLogger
         $data = $query->jsonSerialize();
 
         $this->_totalTime += $data['took'];
-        $this->_totalRows += $data['numRows'];
 
         $this->_queries[] = [
             'query' => (string)$query,

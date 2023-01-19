@@ -22,6 +22,7 @@ package-lock.json
 /.phpunit.result.cache
 /nbproject/
 /composer.lock
+/tools
 /vendor
 /phpunit.xml
 /webroot/css/style.css.map

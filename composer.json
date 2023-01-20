@@ -51,15 +51,15 @@
     "scripts": {
         "cs-check": "phpcs --colors --parallel=16 -p src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
-        "phpstan": "phpstan.phar analyse",
-        "psalm": "psalm.phar --show-info=false",
+        "phpstan": "tools/phpstan analyse",
+        "psalm": "tools/psalm --show-info=false",
         "stan": [
             "@phpstan",
             "@psalm"
         ],
-        "stan-baseline": "phpstan.phar --generate-baseline",
-        "psalm-baseline": "psalm.phar --set-baseline=psalm-baseline.xml",
-        "stan-setup": "cp composer.json composer.backup && composer require --dev symfony/polyfill-php81 phpstan/phpstan:~1.9.0 psalm/phar:~5.1.0 && mv composer.backup composer.json",
+        "stan-baseline": "tools/phpstan --generate-baseline",
+        "psalm-baseline": "tools/psalm  --set-baseline=psalm-baseline.xml",
+        "stan-setup": "phive install",
         "test": "phpunit"
     },
     "minimum-stability": "dev",

@@ -90,6 +90,6 @@ trait SqlTraceTrait
             }
         }
 
-        return $query->modifier(sprintf('/* %s (line %s) */', $file, $line));
+        return $query->comment(sprintf('%s (line %s)', $file, $line));
     }
 }

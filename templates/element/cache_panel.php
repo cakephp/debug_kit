@@ -1,15 +1,15 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -20,13 +20,13 @@
 ?>
 <div class="c-cache-panel">
     <?php if (empty($metrics)) : ?>
-        <p class="c-flash c-flash--info"><?= __d('debug_kit', 'There were no cache operations in this request.') ?></p>
+        <p class="c-flash c-flash--info">There were no cache operations in this request.</p>
     <?php else : ?>
-        <h3><?= __d('debug_kit', 'Cache Utilities') ?></h3>
+        <h3>Cache Utilities</h3>
         <table class="c-debug-table">
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Engine') ?></th>
+                    <th>Engine</th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,7 +46,7 @@
                             data-csrf="<?= $this->getRequest()
                                 ->getAttribute('csrfToken') ?>"
                         >
-                            <?= __d('debug_kit', 'Clear All Data') ?>
+                            Clear All Data
                         </button>
                     </td>
                 </tr>
@@ -55,15 +55,15 @@
         </table>
         <div class="c-cache-panel__messages"></div>
 
-        <h3><?= __d('debug_kit', 'Cache Usage Overview') ?></h3>
+        <h3>Cache Usage Overview</h3>
         <table class="c-debug-table">
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Engine') ?></th>
-                    <th><?= __d('debug_kit', 'get hit') ?></th>
-                    <th><?= __d('debug_kit', 'get miss') ?></th>
-                    <th><?= __d('debug_kit', 'set') ?></th>
-                    <th><?= __d('debug_kit', 'delete') ?></th>
+                    <th>Engine</th>
+                    <th>get hit</th>
+                    <th>get miss</th>
+                    <th>set</th>
+                    <th>delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,11 +79,11 @@
             </tbody>
         </table>
 
-        <h3><?= __d('debug_kit', 'Cache Logs') ?></h3>
+        <h3>Cache Logs</h3>
         <table class="c-debug-table">
             <thead>
                 <tr>
-                    <th><?= __d('debug_kit', 'Log') ?></th>
+                    <th>Log</th>
                 </tr>
             </thead>
             <tbody>

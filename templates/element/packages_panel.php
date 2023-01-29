@@ -1,15 +1,15 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 3.5.2
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -27,28 +27,28 @@
     >
     <?php if (empty($packages) && empty($devPackages)) : ?>
         <div class="c-flash c-flash--warning">
-            <?= __d('debug_kit', '{0} not found', "'composer.lock'"); ?>
+            'composer.lock' not found
         </div>
     <?php else : ?>
         <div class="c-packages-panel__check-update">
-            <button class="o-button"><?= __d('debug_kit', 'Check for Updates') ?></button>
-            <label><input type="checkbox"><?= __d('debug_kit', 'Direct dependencies only') ?></label>
+            <button class="o-button">Check for Updates</button>
+            <label><input type="checkbox">Direct dependencies only</label>
         </div>
         <div class="c-packages-panel__terminal">
             <div class="c-packages-panel__terminal-loader">
-                <?= __d('debug_kit', 'Loading') .
+                <?= 'Loading' .
                     $this->Html->image('DebugKit./img/cake.icon.png', ['class' => 'indicator']) ?>
             </div>
         </div>
         <div class="c-packages-panel__section-wrapper">
             <?php if (!empty($packages)) : ?>
                 <section>
-                    <h3><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h3>
+                    <h3><?= sprintf('Requirements (%d)', count($packages)) ?> </h3>
                     <table class="c-debug-table">
                         <thead>
                         <tr>
-                            <th><?= __d('debug_kit', 'Name') ?></th>
-                            <th><?= __d('debug_kit', 'Version') ?></th>
+                            <th>Name</th>
+                            <th>Version</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,12 +74,12 @@
             <?php endif; ?>
             <?php if (!empty($devPackages)) : ?>
                 <section>
-                    <h3><?= __d('debug_kit', 'Dev Requirements ({0})', count($devPackages)) ?> </h3>
+                    <h3><?= sprintf('Dev Requirements (%d)', count($devPackages)) ?></h3>
                     <table class="c-debug-table">
                         <thead>
                         <tr>
-                            <th><?= __d('debug_kit', 'Name') ?></th>
-                            <th><?= __d('debug_kit', 'Version') ?></th>
+                            <th>Name</th>
+                            <th>Version</th>
                         </tr>
                         </thead>
                         <tbody>

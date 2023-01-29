@@ -3,7 +3,7 @@
 <div style="height:calc(100vh);overflow-y:scroll">
     <?php if (empty($noHeader)) : ?>
         <h2 class="panel-title">
-            <?= isset($title) ? h($title) : __d('debug_kit', 'DebugKit Dashboard') ?>
+            <?= isset($title) ? h($title) : 'DebugKit Dashboard' ?>
         </h2>
     <?php endif ?>
 

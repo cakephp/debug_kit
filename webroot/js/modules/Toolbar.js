@@ -152,7 +152,14 @@ export default class Toolbar {
       // This initializes the panel specific JS logic (if there is any)
       document.dispatchEvent(new CustomEvent('initPanel', { detail: `panel${panelType}` }));
       that.bindDebugBlock();
-    });
+    })
+      .fail((response) => {
+        clearTimeout(timer);
+        contentArea.html(response.responseText);
+        $('.o-loader').removeClass('is-loading');
+        $('.c-panel-content-container').addClass('is-active');
+        window.parent.postMessage('error', window.location.origin);
+      });
   }
 
   // This re-inits the collapsible Debugger::exportVar() content of the Variables tab
@@ -173,7 +180,7 @@ export default class Toolbar {
     $(document).on('click', '.js-toolbar-scroll-right', () => {
       that.scroll('right');
     });
-    $(document).on('click', '.js-toolbar-load-panel', () => {
+    $(document).on('click', '.js-toolbar-load-panel', function () {
       const panelId = $(this).attr('data-panel-id');
       that.loadPanel(panelId, 'panelhistory');
     });

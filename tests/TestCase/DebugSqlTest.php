@@ -77,16 +77,12 @@ EXPECTED;
 <div class="cake-debug-output">
 <span><strong>%s</strong> (line <strong>%d</strong>)</span>
 <pre class="cake-debug">
-<<<<<<< HEAD
-<span style="font-weight:bold;">SELECT</span>
-=======
 SELECT
   panels.id AS %s
 FROM
   panels panels
 </pre>
 </div>
->>>>>>> 4.x
 EXPECTED;
         $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 9);
         $this->assertTextContains(str_replace("\r", '', $expected), str_replace("\r", '', $result));

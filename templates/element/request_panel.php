@@ -4,16 +4,16 @@
  *
  * PHP 5
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -28,28 +28,29 @@
 ?>
 <div class="c-request-panel">
     <?php if (!empty($headers) && $headers['response']) : ?>
-    <h4><?= __d('debug_kit', 'Warning') ?></h4>
-        <?= '<p class="c-flash c-flash--warning">' .
-        __d(
-            'debug_kit',
-            'Headers already sent at file {0} and line {1}.',
-            [$headers['file'], $headers['line']]
-        ) . '</p>' ?>
+        <h4>Warning</h4>
+        <p class="c-flash c-flash--warning">
+            <?= sprintf(
+                'Headers already sent at file %s and line %d.',
+                $headers['file'],
+                $headers['line']
+            ) ?>
+        </p>
     <?php endif; ?>
 
-    <h4><?= __d('debug_kit', 'Attributes') ?></h4>
+    <h4>Attributes</h4>
     <?php
     if (empty($attributes)) :
-        echo '<p class="c-flash c-flash--info">' . __d('debug_kit', 'No attributes data.') . '</p>';
+        echo '<p class="c-flash c-flash--info">No attributes data.</p>';
     else :
         echo $this->Toolbar->dump($attributes);
     endif;
     ?>
 
-    <h4><?= __d('debug_kit', 'Post data') ?></h4>
+    <h4>Post data</h4>
     <?php
     if (empty($data)) :
-        echo '<p class="c-flash c-flash--info">' . __d('debug_kit', 'No post data.') . '</p>';
+        echo '<p class="c-flash c-flash--info">No post data.</p>';
     else :
         echo $this->Toolbar->dump($data);
     endif;
@@ -58,7 +59,7 @@
     <h4>Query string</h4>
     <?php
     if (empty($query)) :
-        echo '<p class="c-flash c-flash--info">' . __d('debug_kit', 'No querystring data.') . '</p>';
+        echo '<p class="c-flash c-flash--info">No querystring data.</p>';
     else :
         echo $this->Toolbar->dump($query);
     endif;
@@ -68,11 +69,11 @@
     <?php if (isset($cookie)) : ?>
         <?= $this->Toolbar->dump($cookie) ?>
     <?php else : ?>
-        <p class="c-flash c-flash--info"><?= __d('debug_kit', 'No Cookie data.') ?></p>
+        <p class="c-flash c-flash--info">No Cookie data.</p>
     <?php endif; ?>
 
     <?php if (!empty($matchedRoute)) : ?>
-    <h4><?= __d('debug_kit', 'Matched Route') ?></h4>
+    <h4>Matched Route</h4>
         <p><?= $this->Toolbar->dump(['template' => $matchedRoute]) ?></p>
     <?php endif; ?>
 </div>

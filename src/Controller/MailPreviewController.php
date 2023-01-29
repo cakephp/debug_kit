@@ -2,16 +2,16 @@
 declare(strict_types=1);
 
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         3.3
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\Controller;
 
@@ -71,7 +71,7 @@ class MailPreviewController extends DebugKitController
         // @codingStandardsIgnoreEnd
 
         if (empty($content['emails'][$number])) {
-            throw new NotFoundException(__d('debug_kit', 'No emails found in this request'));
+            throw new NotFoundException('No emails found in this request');
         }
 
         $email = $content['emails'][$number];
@@ -151,7 +151,7 @@ class MailPreviewController extends DebugKitController
         $part = $this->findPart($email, $partType);
 
         if ($part === null) {
-            throw new NotFoundException(__d('debug_kit', "Email part ''{0}'' not found in email", $partType));
+            throw new NotFoundException(sprintf("Email part '%s' not found in email", $partType));
         }
 
         $response = $this->response->withType($partType);
@@ -273,9 +273,8 @@ class MailPreviewController extends DebugKitController
 
         $email = $mailPreview->find($emailName);
         if (!$email) {
-            throw new NotFoundException(__d(
-                'debug_kit',
-                'Mailer preview {0}::{1} not found',
+            throw new NotFoundException(sprintf(
+                'Mailer preview %s::%s not found',
                 $previewName,
                 $emailName
             ));

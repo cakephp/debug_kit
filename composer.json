@@ -18,7 +18,7 @@
     ],
     "support": {
         "issues": "https://github.com/cakephp/debug_kit/issues",
-        "forum": "http://stackoverflow.com/tags/cakephp",
+        "forum": "https://stackoverflow.com/tags/cakephp",
         "irc": "irc://irc.freenode.org/cakephp",
         "source": "https://github.com/cakephp/debug_kit"
     },

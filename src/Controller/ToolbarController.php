@@ -2,15 +2,15 @@
 declare(strict_types=1);
 
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\Controller;
 
@@ -50,12 +50,12 @@ class ToolbarController extends DebugKitController
         $this->request->allowMethod('post');
         $name = $this->request->getData('name');
         if (!$name) {
-            throw new NotFoundException(__d('debug_kit', 'Invalid cache engine name.'));
+            throw new NotFoundException('Invalid cache engine name.');
         }
         $success = Cache::clear($name);
         $message = $success ?
-            __d('debug_kit', '{0} cache cleared.', [$name]) :
-            __d('debug_kit', '{0} cache could not be cleared.', [$name]);
+            sprintf('%s cache cleared.', $name) :
+            sprintf('%s cache could not be cleared.', $name);
         $this->set(compact('success', 'message'));
         $this->viewBuilder()->setOption('serialize', ['success', 'message']);
     }

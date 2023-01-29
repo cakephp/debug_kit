@@ -14,17 +14,19 @@ declare(strict_types=1);
  **/
 namespace DebugKit\Test\TestCase\Panel;
 
+use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
-use DebugKit\Panel\EnvironmentPanel;
+use DebugKit\Panel\RequestPanel;
 
 /**
- * Class EnvironmentPanelTest
+ * Class RequestPanelTest
  */
-class EnvironmentPanelTest extends TestCase
+class RequestPanelTest extends TestCase
 {
     /**
-     * @var EnvironmentPanel
+     * @var RequestPanel
      */
     protected $panel;
 
@@ -36,35 +38,33 @@ class EnvironmentPanelTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->panel = new EnvironmentPanel();
+        $this->panel = new RequestPanel();
     }
 
     /**
-     * Teardown method.
+     * Test that shutdown will skip unserializable attributes.
      *
      * @return void
      */
-    public function tearDown(): void
+    public function testShutdownSkipAttributes()
     {
-        parent::tearDown();
-        unset($this->panel);
-    }
+        $request = new ServerRequest([
+            'url' => '/',
+            'post' => ['name' => 'bob'],
+            'query' => ['page' => 1],
+        ]);
+        $request = $request
+            ->withAttribute('ok', 'string')
+            ->withAttribute('closure', function () {
+            });
 
-    /**
-     * test shutdown
-     *
-     * @return void
-     */
-    public function testShutdown()
-    {
-        $controller = new \stdClass();
+        $controller = new Controller($request);
         $event = new Event('Controller.shutdown', $controller);
-        $_SERVER['TEST_URL_1'] = 'mysql://user:password@localhost/my_db';
-
         $this->panel->shutdown($event);
-        $output = $this->panel->data();
-        $this->assertIsArray($output);
-        $this->assertSame(['php', 'ini', 'cake', 'app'], array_keys($output));
-        $this->assertSame('mysql://user:password@localhost/my_db', $output['php']['TEST_URL_1']);
+
+        $data = $this->panel->data();
+        $this->assertArrayHasKey('attributes', $data);
+        $this->assertEquals('string', $data['attributes']['ok']);
+        $this->assertStringContainsString('Could not serialize `closure`', $data['attributes']['closure']);
     }
 }

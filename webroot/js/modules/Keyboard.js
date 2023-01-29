@@ -1,8 +1,7 @@
 export default (($) => {
   const init = (toolbar) => {
     $(document).on('keydown', (event) => {
-      // Esc key
-      if (event.keyCode === 27) {
+      if (event.key === 'Escape') {
         // Close active panel
         if (toolbar.isExpanded()) {
           return toolbar.hide();
@@ -12,8 +11,7 @@ export default (($) => {
           return toolbar.toggle();
         }
       }
-      // Check for left arrow
-      if (event.keyCode === 37 && toolbar.isExpanded()) {
+      if (event.key === 'ArrowLeft' && toolbar.isExpanded()) {
         toolbar.$panelButtons.removeClass('is-active');
         const prevPanel = toolbar.currentPanelButton().prev();
         if (prevPanel.hasClass('c-panel')) {
@@ -23,8 +21,7 @@ export default (($) => {
           return toolbar.loadPanel(id, panelType);
         }
       }
-      // Check for right arrow
-      if (event.keyCode === 39 && toolbar.isExpanded()) {
+      if (event.key === 'ArrowRight' && toolbar.isExpanded()) {
         toolbar.$panelButtons.removeClass('is-active');
         const nextPanel = toolbar.currentPanelButton().next();
         if (nextPanel.hasClass('c-panel')) {
@@ -34,7 +31,7 @@ export default (($) => {
           return toolbar.loadPanel(id, panelType);
         }
       }
-      return false;
+      return;
     });
   };
 

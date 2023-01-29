@@ -574,6 +574,10 @@ strong {
     display: block;
 }
 
+.c-panel-content-container__content {
+    height: 100%;
+}
+
 .c-panel-content-container__content .o-loader {
     display: none;
 }

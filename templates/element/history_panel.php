@@ -1,15 +1,15 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 1.1
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 /**
  * @var \DebugKit\View\AjaxView $this
@@ -20,16 +20,16 @@
 <div id="request-history" class="c-history-panel" data-panel-id="<?= $panel->id ?>">
     <?php if (empty($requests)) : ?>
         <p class="c-flash c-flash--warning">
-            <?= __d('debug_kit', 'No requests logged.') ?>
+            No requests logged.
             <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history">
-                <?= __d('debug_kit', 'Reload') ?>
+                Reload
             </button>
         </p>
     <?php else : ?>
         <p>
-            <?= count($requests) ?> <?= __d('debug_kit', 'requests available') ?>
+            <?= count($requests) ?> requests available
             <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history">
-                <?= __d('debug_kit', 'Reload') ?>
+                Reload
             </button>
         </p>
         <ul class="c-history-panel__list">
@@ -68,7 +68,7 @@
     <script type="text/html" id="list-template">
         <p>
             <button type="button" class="js-toolbar-load-panel" data-panel-id="latest-history">
-                <?= __d('debug_kit', 'Reload') ?>
+                Reload
             </button>
         </p>
         <ul class="c-history-panel__list">

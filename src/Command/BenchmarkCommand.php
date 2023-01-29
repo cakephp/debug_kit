@@ -2,16 +2,16 @@
 declare(strict_types=1);
 
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 1.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace DebugKit\Command;
 
@@ -54,7 +54,7 @@ class BenchmarkCommand extends Command
         $options = array_merge($defaults, $args->getOptions());
         $times = [];
 
-        $io->out(Text::insert(__d('debug_kit', '-> Testing :url'), compact('url')));
+        $io->out(Text::insert('-> Testing :url', compact('url')));
         $io->out('');
         for ($i = 0; $i < $options['n']; $i++) {
             /** @psalm-suppress PossiblyInvalidOperand */
@@ -84,25 +84,25 @@ class BenchmarkCommand extends Command
         $duration = array_sum($times);
         $requests = count($times);
 
-        $this->io->out(Text::insert(__d('debug_kit', 'Total Requests made: :requests'), compact('requests')));
-        $this->io->out(Text::insert(__d('debug_kit', 'Total Time elapsed: :duration (seconds)'), compact('duration')));
+        $this->io->out(Text::insert('Total Requests made: :requests', compact('requests')));
+        $this->io->out(Text::insert('Total Time elapsed: :duration (seconds)', compact('duration')));
 
         $this->io->out('');
 
-        $this->io->out(Text::insert(__d('debug_kit', 'Requests/Second: :rps req/sec'), [
+        $this->io->out(Text::insert('Requests/Second: :rps req/sec', [
             'rps' => round($requests / $duration, 3),
         ]));
 
-        $this->io->out(Text::insert(__d('debug_kit', 'Average request time: :average-time seconds'), [
+        $this->io->out(Text::insert('Average request time: :average-time seconds', [
             'average-time' => round($duration / $requests, 3),
         ]));
 
-        $this->io->out(Text::insert(__d('debug_kit', 'Standard deviation of average request time: :std-dev'), [
+        $this->io->out(Text::insert('Standard deviation of average request time: :std-dev', [
             'std-dev' => round($this->_deviation($times, true), 3),
         ]));
 
         if (!empty($times)) {
-            $this->io->out(Text::insert(__d('debug_kit', 'Longest/shortest request: :longest sec/:shortest sec'), [
+            $this->io->out(Text::insert('Longest/shortest request: :longest sec/:shortest sec', [
                 'longest' => round(max($times), 3),
                 'shortest' => round(min($times), 3),
             ]));
@@ -161,32 +161,28 @@ class BenchmarkCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        $parser->setDescription(__d(
-            'debug_kit',
+        $parser->setDescription(
             'Allows you to obtain some rough benchmarking statistics' .
             'about a fully qualified URL.'
-        ))
+        )
         ->addArgument('url', [
-            'help' => __d('debug_kit', 'The URL to request.'),
+            'help' => 'The URL to request.',
             'required' => true,
         ])
         ->addOption('n', [
             'default' => 10,
-            'help' => __d('debug_kit', 'Number of iterations to perform.'),
+            'help' => 'Number of iterations to perform.',
         ])
         ->addOption('t', [
             'default' => 100,
-            'help' => __d(
-                'debug_kit',
-                'Maximum total time for all iterations, in seconds.' .
-                'If a single iteration takes more than the timeout, only one request will be made'
-            ),
+            'help' =>
+                'Maximum total time for all iterations, in seconds. ' .
+                'If a single iteration takes more than the timeout, only one request will be made',
         ])
-        ->setEpilog(__d(
-            'debug_kit',
+        ->setEpilog(
             'Example Use: `cake benchmark --n 10 --t 100 http://localhost/testsite`. ' .
             '<info>Note:</info> this benchmark does not include browser render times.'
-        ));
+        );
 
         return $parser;
     }

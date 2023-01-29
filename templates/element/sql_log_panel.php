@@ -4,16 +4,16 @@
  *
  * PHP 5
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -30,13 +30,10 @@ $noOutput = true;
 
 <div class="c-sql-log-panel">
     <?php if (!empty($tables)) : ?>
-        <h4><?= __d('debug_kit', 'Generated Models') ?></h4>
-        <p class="c-flash c-flash--warning"><?=
-            __d(
-                'debug_kit',
-                'The following Table objects used {0} instead of a concrete class:',
-                '<code>Cake\ORM\Table</code>'
-            ) ?></p>
+        <h4>Generated Models</h4>
+        <p class="c-flash c-flash--warning">
+            The following Table objects used <code>Cake\ORM\Table</code> instead of a concrete class:
+        </p>
         <ul class="o-list">
             <?php foreach ($tables as $table) : ?>
                 <li><?= h($table) ?></li>
@@ -57,9 +54,8 @@ $noOutput = true;
             <div class="c-sql-log-panel__entry">
                 <h4><?= h($logger->name()) ?></h4>
                 <h5>
-                <?= __d(
-                    'debug_kit',
-                    'Total Time: {0} ms &mdash; Total Queries: {1} &mdash; Total Rows: {2}',
+                <?= sprintf(
+                    'Total Time: %d ms &mdash; Total Queries: %d &mdash; Total Rows: %d',
                     $logger->totalTime(),
                     count($queries),
                     $logger->totalRows()
@@ -70,9 +66,9 @@ $noOutput = true;
                 <table>
                     <thead>
                         <tr>
-                            <th><?= __d('debug_kit', 'Query') ?></th>
-                            <th><?= __d('debug_kit', 'Rows') ?></th>
-                            <th><?= __d('debug_kit', 'Took (ms)') ?></th>
+                            <th>Query</th>
+                            <th>Rows</th>
+                            <th>Took (ms)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,6 +99,6 @@ $noOutput = true;
     <?php endif; ?>
 
     <?php if ($noOutput) : ?>
-    <div class="c-flash c-flash--warning"><?= __d('debug_kit', 'No active database connections') ?></div>
+    <div class="c-flash c-flash--warning">No active database connections</div>
     <?php endif ?>
 </div>

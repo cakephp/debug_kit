@@ -1,5 +1,5 @@
 # CakePHP DebugKit
-[![Build Status](https://secure.travis-ci.org/cakephp/debug_kit.png?branch=master)](http://travis-ci.org/cakephp/debug_kit)
+[![Build Status](https://secure.travis-ci.org/cakephp/debug_kit.png?branch=master)](https://travis-ci.org/cakephp/debug_kit)
 [![Coverage Status](https://img.shields.io/codecov/c/github/cakephp/debug_kit.svg?style=flat-square)](https://codecov.io/github/cakephp/debug_kit)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Total Downloads](https://img.shields.io/packagist/dt/cakephp/cakephp.svg?style=flat-square)](https://packagist.org/packages/cakephp/debug_kit)
@@ -32,7 +32,7 @@ If you want DebugKit for your 2.x application, you can use the latest `2.2.y` ta
 php composer.phar require --dev cakephp/debug_kit:"~3.0"
 ```
 
-* [Load the plugin](http://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin)
+* [Load the plugin](https://book.cakephp.org/3.0/en/plugins.html#loading-a-plugin)
 ```php
 // src/Application.php
 $this->addPlugin('DebugKit');
@@ -75,5 +75,5 @@ correct branch.
 
 # Documentation
 
-Documentation for DebugKit can be found in the 
+Documentation for DebugKit can be found in the
 [CakePHP documentation](https://book.cakephp.org/debugkit/3.x/en/index.html).

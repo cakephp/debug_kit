@@ -78,9 +78,9 @@ EXPECTED;
 <div class="cake-debug-output">
 <span><strong>%s</strong> (line <strong>%d</strong>)</span>
 <pre class="cake-debug">
-SELECT
-  panels.id AS %s
-FROM
+SELECT 
+  panels.id AS %s 
+FROM 
   panels panels
 </pre>
 </div>

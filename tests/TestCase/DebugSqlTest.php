@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase;
 
+use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugSql;
@@ -77,15 +78,11 @@ EXPECTED;
 <div class="cake-debug-output">
 <span><strong>%s</strong> (line <strong>%d</strong>)</span>
 <pre class="cake-debug">
-SELECT
-  panels.id AS %s
-FROM
-  panels panels
-</pre>
-</div>
+<span style="font-weight:bold;">SELECT</span>
 EXPECTED;
-        $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 9);
-        $this->assertTextContains(str_replace("\r", '', $expected), str_replace("\r", '', $result));
+        $fieldName = $this->connection->getDriver() instanceof Postgres ? '"panels__id"' : 'panels__id';
+        $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 10, $fieldName);
+        $this->assertTextContains(str_replace(["\n", "\r"], '', $expected), str_replace(["\n", "\r"], '', $result));
     }
 
     /**

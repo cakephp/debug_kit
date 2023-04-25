@@ -336,6 +336,7 @@ class DebugEngine extends CacheEngine
     {
         /** @psalm-suppress RedundantPropertyInitializationCheck */
         if (isset($this->_engine)) {
+            // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
             [$ns, $class] = namespaceSplit(get_class($this->_engine));
 
             return str_replace('Engine', '', $class);

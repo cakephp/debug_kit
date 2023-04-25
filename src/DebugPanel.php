@@ -47,6 +47,7 @@ class DebugPanel implements EventListenerInterface
      */
     public function title(): string
     {
+        // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
         [$ns, $name] = namespaceSplit(static::class);
         $name = substr($name, 0, strlen('Panel') * -1);
 
@@ -60,6 +61,7 @@ class DebugPanel implements EventListenerInterface
      */
     public function elementName(): string
     {
+        // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
         [$ns, $name] = namespaceSplit(static::class);
         if ($this->plugin) {
             return $this->plugin . '.' . Inflector::underscore($name);

@@ -57,7 +57,7 @@ class RequestsControllerTest extends TestCase
     public function testView()
     {
         $request = $this->makeRequest();
-        $panel = $this->makePanel($request);
+        $this->makePanel($request);
 
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
         $this->get("/debug-kit/toolbar/{$request->id}");

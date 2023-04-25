@@ -322,10 +322,6 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInjectScriptsFileBodies()
     {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null],
-        ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
@@ -348,10 +344,6 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInjectScriptsStreamBodies()
     {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null],
-        ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',

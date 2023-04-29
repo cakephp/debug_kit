@@ -16,6 +16,7 @@ namespace DebugKit\Panel;
 
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetDecorator;
 use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use Cake\Form\Form;
@@ -102,6 +103,8 @@ class VariablesPanel extends DebugPanel
                 if ($formErrors) {
                     $errors[$k] = $formErrors;
                 }
+            } elseif ($v instanceof ResultSetDecorator) {
+                $v = $v->toArray();
             }
             $content[$k] = Debugger::exportVarAsNodes($v, $varsMaxDepth);
         }

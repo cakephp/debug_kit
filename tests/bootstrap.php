@@ -42,6 +42,8 @@ define('CACHE', TMP);
 define('LOGS', TMP);
 
 require_once CORE_PATH . 'config/bootstrap.php';
+require_once CAKE . 'Core/functions_global.php';
+require_once CAKE . 'Collection/functions_global.php';
 
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');

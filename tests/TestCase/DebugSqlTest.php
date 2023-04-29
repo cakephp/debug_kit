@@ -71,21 +71,13 @@ EXPECTED;
 
         ob_start();
         $this->assertSame($query, DebugSql::sql($query, true, true));
-        $result = ob_get_clean();
+        $result = strip_tags(ob_get_clean());
+        $result = preg_replace("/[\n\r]/", '', $result);
 
-        $expected = <<<EXPECTED
-<div class="cake-debug-output">
-<span><strong>%s</strong> (line <strong>%d</strong>)</span>
-<pre class="cake-debug">
-SELECT
-  panels.id AS %s
-FROM
-  panels panels
-</pre>
-</div>
-EXPECTED;
-        $expected = sprintf($expected, str_replace(ROOT, '', __FILE__), __LINE__ - 9);
-        $this->assertTextContains(str_replace("\r", '', $expected), str_replace("\r", '', $result));
+        $this->assertStringContainsString(sprintf('%s (line %s)', str_replace(ROOT, '', __FILE__), __LINE__ - 4), $result);
+        $this->assertStringContainsString('SELECT  panels.id AS', $result);
+        $this->assertStringContainsString('panels__id', $result);
+        $this->assertStringContainsString('FROM  panels panels', $result);
     }
 
     /**

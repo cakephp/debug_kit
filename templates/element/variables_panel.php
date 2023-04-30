@@ -16,7 +16,6 @@
  * @var string $error
  * @var bool|null $sort
  * @var array $variables
- * @var array $content
  * @var array $errors
  */
 ?>
@@ -33,22 +32,6 @@
         $msg .= 'Increasing the depth value can lead to an out of memory error.';
         printf('<p class="c-flash c-flash--info">%s</p>', $msg);
     }
-
-    // Backwards compatibility for old debug kit data.
-    if (!empty($content)) :?>
-        <div class="o-checkbox">
-            <label>
-                <input
-                    type="checkbox"
-                    class="js-debugkit-sort-variables"
-                    <?= $sort ? ' checked="checked"' : '' ?>>
-                    Sort variables by name
-            </label>
-        </div>
-        <?php
-        $this->Toolbar->setSort($sort);
-        echo $this->Toolbar->dump($content);
-    endif;
 
     // New node based data.
     if (!empty($variables)) :?>
@@ -68,7 +51,7 @@
 
     if (!empty($errors)) :
         echo '<h4>Validation errors</h4>';
-        echo $this->Toolbar->dump($errors);
+        echo $this->Toolbar->dumpNodes($errors);
     endif;
     ?>
 </div>

@@ -15,14 +15,14 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
-use Cake\Error\Debug\TextFormatter;
 use Cake\Error\Debugger;
 use Cake\Http\ServerRequest as Request;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DebugKit\View\Helper\ToolbarHelper;
-use SimpleXmlElement;
+use DOMDocument;
+use DOMXPath;
 
 /**
  * Class ToolbarHelperTestCase
@@ -75,46 +75,28 @@ class ToolbarHelperTest extends TestCase
             return Debugger::exportVarAsNodes($v);
         }, $data);
         $result = $this->Toolbar->dumpNodes($nodes);
-        $xml = new SimpleXmlElement($result);
-        $elements = $xml->xpath($path);
-        $this->assertSame(["'z'", "'a'", "'m'"], array_map('strval', $elements));
+        $doc = new DOMDocument();
+        $doc->loadHTML($result);
+        $elements = new DOMXPath($doc);
+
+        $result = [];
+        foreach ($elements->query($path) as $elem) {
+            $result[] = $elem->nodeValue;
+        }
+        $expected = ["'z'", "'a'", "'m'"];
+        $this->assertSame($expected, $result);
 
         $this->Toolbar->setSort(true);
         $result = $this->Toolbar->dumpNodes($nodes);
-        $xml = new SimpleXmlElement($result);
-        $elements = $xml->xpath($path);
-        $this->assertSame(["'a'", "'m'", "'z'"], array_map('strval', $elements));
-    }
+        $doc = new DOMDocument();
+        $doc->loadHTML($result);
+        $elements = new DOMXPath($doc);
 
-    public function testDumpCoerceHtml()
-    {
-        $restore = Debugger::configInstance('exportFormatter');
-        Debugger::configInstance('exportFormatter', TextFormatter::class);
-        $result = $this->Toolbar->dump(false);
-        $this->assertMatchesRegularExpression('/<\w/', $result, 'Contains HTML tags.');
-        $this->assertSame(
-            TextFormatter::class,
-            Debugger::configInstance('exportFormatter'),
-            'Should restore setting'
-        );
-
-        // Restore back to original value.
-        Debugger::configInstance('exportFormatter', $restore);
-    }
-
-    public function testDumpSorted()
-    {
-        $path = '//*[@class="cake-debug-array-item"]/*[@class="cake-debug-string"]';
-        $data = ['z' => 1, 'a' => 99, 'm' => 123];
-        $result = $this->Toolbar->dump($data);
-        $xml = new SimpleXmlElement($result);
-        $elements = $xml->xpath($path);
-        $this->assertSame(["'z'", "'a'", "'m'"], array_map('strval', $elements));
-
-        $this->Toolbar->setSort(true);
-        $result = $this->Toolbar->dump($data);
-        $xml = new SimpleXmlElement($result);
-        $elements = $xml->xpath($path);
-        $this->assertSame(["'a'", "'m'", "'z'"], array_map('strval', $elements));
+        $result = [];
+        foreach ($elements->query($path) as $elem) {
+            $result[] = $elem->nodeValue;
+        }
+        $expected = ["'a'", "'m'", "'z'"];
+        $this->assertSame($expected, $result);
     }
 }

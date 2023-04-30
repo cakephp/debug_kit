@@ -64,7 +64,7 @@ class RequestPanelTest extends TestCase
 
         $data = $this->panel->data();
         $this->assertArrayHasKey('attributes', $data);
-        $this->assertEquals('string', $data['attributes']['ok']);
-        $this->assertStringContainsString('Could not serialize `closure`', $data['attributes']['closure']);
+        $this->assertEquals('string', $data['attributes']['ok']->getType());
+        $this->assertStringContainsString('Could not serialize `closure`', $data['attributes']['closure']->getValue());
     }
 }

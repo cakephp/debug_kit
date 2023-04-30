@@ -19,7 +19,6 @@ use Cake\Error\Debug\ArrayItemNode;
 use Cake\Error\Debug\ArrayNode;
 use Cake\Error\Debug\HtmlFormatter;
 use Cake\Error\Debug\ScalarNode;
-use Cake\Error\Debugger;
 use Cake\View\Helper;
 
 /**
@@ -80,39 +79,6 @@ class ToolbarHelper extends Helper
         return implode([
             '<div class="cake-debug-output cake-debug" style="direction:ltr">',
             $formatter->dump($root),
-            '</div>',
-        ]);
-    }
-
-    /**
-     * Dump the value in $value into an interactive HTML output.
-     *
-     * @param mixed $value The value to output.
-     * @return string Formatted HTML
-     * @deprecated 4.4.0
-     */
-    public function dump(mixed $value): string
-    {
-        $debugger = Debugger::getInstance();
-        $exportFormatter = $debugger->getConfig('exportFormatter');
-        $restore = false;
-        if ($exportFormatter !== HtmlFormatter::class) {
-            $restore = true;
-            $debugger->setConfig('exportFormatter', HtmlFormatter::class);
-        }
-
-        if ($this->sort && is_array($value)) {
-            ksort($value);
-        }
-
-        $contents = Debugger::exportVar($value, 25);
-        if ($restore) {
-            $debugger->setConfig('exportFormatter', $exportFormatter);
-        }
-
-        return implode([
-            '<div class="cake-debug-output cake-debug" style="direction:ltr">',
-            $contents,
             '</div>',
         ]);
     }

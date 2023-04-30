@@ -15,6 +15,8 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase;
 
+use Cake\Error\Debugger;
+
 trait FixtureFactoryTrait
 {
     protected function makeRequest()
@@ -33,19 +35,23 @@ trait FixtureFactoryTrait
         if ($content === null) {
             $content = [
                 'attributes' => [
-                    'params' => [
-                        'plugin' => null,
-                        'controller' => 'Tasks',
-                        'action' => 'add',
-                        '_ext' => null,
-                        'pass' => [],
-                    ],
+                    Debugger::exportVarAsNodes([
+                        'params' => [
+                            'plugin' => null,
+                            'controller' => 'Tasks',
+                            'action' => 'add',
+                            '_ext' => null,
+                            'pass' => [],
+                        ],
+                    ]),
                 ],
                 'query' => [],
                 'data' => [],
                 'get' => [],
                 'cookie' => [
-                    'toolbarDisplay' => 'show',
+                    Debugger::exportVarAsNodes([
+                        'toolbarDisplay' => 'show',
+                    ]),
                 ],
             ];
         }

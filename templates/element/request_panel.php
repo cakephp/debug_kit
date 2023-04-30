@@ -43,7 +43,7 @@
     if (empty($attributes)) :
         echo '<p class="c-flash c-flash--info">No attributes data.</p>';
     else :
-        echo $this->Toolbar->dump($attributes);
+        echo $this->Toolbar->dumpNodes($attributes);
     endif;
     ?>
 
@@ -52,7 +52,7 @@
     if (empty($data)) :
         echo '<p class="c-flash c-flash--info">No post data.</p>';
     else :
-        echo $this->Toolbar->dump($data);
+        echo $this->Toolbar->dumpNodes($data);
     endif;
     ?>
 
@@ -61,19 +61,19 @@
     if (empty($query)) :
         echo '<p class="c-flash c-flash--info">No querystring data.</p>';
     else :
-        echo $this->Toolbar->dump($query);
+        echo $this->Toolbar->dumpNodes($query);
     endif;
     ?>
 
     <h4>Cookie</h4>
     <?php if (isset($cookie)) : ?>
-        <?= $this->Toolbar->dump($cookie) ?>
+        <?= $this->Toolbar->dumpNodes($cookie) ?>
     <?php else : ?>
         <p class="c-flash c-flash--info">No Cookie data.</p>
     <?php endif; ?>
 
     <?php if (!empty($matchedRoute)) : ?>
     <h4>Matched Route</h4>
-        <p><?= $this->Toolbar->dump(['template' => $matchedRoute]) ?></p>
+        <p><?= $this->Toolbar->dumpNodes(['template' => $matchedRoute]) ?></p>
     <?php endif; ?>
 </div>

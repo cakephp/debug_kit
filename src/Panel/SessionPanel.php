@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
+use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
 
@@ -33,7 +34,8 @@ class SessionPanel extends DebugPanel
         /** @var \Cake\Http\ServerRequest|null $request */
         $request = $event->getSubject()->getRequest();
         if ($request) {
-            $this->_data = ['content' => $request->getSession()->read()];
+            $content = Debugger::exportVarAsNodes($request->getSession()->read());
+            $this->_data = compact('content');
         }
     }
 }

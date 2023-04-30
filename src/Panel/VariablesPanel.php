@@ -97,11 +97,11 @@ class VariablesPanel extends DebugPanel
         foreach ($vars as $k => $v) {
             // Get the validation errors for Entity
             if ($v instanceof EntityInterface) {
-                $errors[$k] = $this->_getErrors($v);
+                $errors[$k] = Debugger::exportVarAsNodes($this->_getErrors($v), $varsMaxDepth);
             } elseif ($v instanceof Form) {
                 $formErrors = $v->getErrors();
                 if ($formErrors) {
-                    $errors[$k] = $formErrors;
+                    $errors[$k] = Debugger::exportVarAsNodes($formErrors, $varsMaxDepth);
                 }
             }
             $content[$k] = Debugger::exportVarAsNodes($v, $varsMaxDepth);

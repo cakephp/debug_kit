@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
+use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 use DebugKit\DebugInclude;
@@ -83,6 +84,10 @@ class IncludePanel extends DebugPanel
 
         foreach ($return['plugins'] as &$plugin) {
             ksort($plugin);
+        }
+
+        foreach ($return as $k => $v) {
+            $return[$k] = Debugger::exportVarAsNodes($v);
         }
 
         return $return;

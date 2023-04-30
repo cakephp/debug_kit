@@ -63,7 +63,7 @@ class PanelsController extends DebugKitController
      */
     public function index(?string $requestId = null): void
     {
-        $query = $this->Panels->find('byRequest', ['requestId' => $requestId]);
+        $query = $this->Panels->find('byRequest', requestId: $requestId);
         $panels = $query->toArray();
         if (empty($panels)) {
             throw new NotFoundException();
@@ -107,7 +107,7 @@ class PanelsController extends DebugKitController
             throw new NotFoundException('No requests found');
         }
         /** @var array{id:string}|null $historyPanel */
-        $historyPanel = $this->Panels->find('byRequest', ['requestId' => $request['id']])
+        $historyPanel = $this->Panels->find('byRequest', requestId: $request['id'])
             ->where(['title' => 'History'])
             ->select(['id'])
             ->first();

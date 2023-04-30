@@ -71,10 +71,9 @@ class RequestsTable extends Table
      * Finder method to get recent requests as a simple array
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query
-     * @param array $options The options
      * @return \Cake\ORM\Query\SelectQuery The query.
      */
-    public function findRecent(SelectQuery $query, array $options): SelectQuery
+    public function findRecent(SelectQuery $query): SelectQuery
     {
         return $query->orderBy(['Requests.requested_at' => 'DESC'])
             ->limit(10);

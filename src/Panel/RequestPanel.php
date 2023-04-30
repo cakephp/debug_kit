@@ -48,16 +48,16 @@ class RequestPanel extends DebugPanel
 
         $this->_data = [
             'attributes' => $attributes,
-            'query' => Debugger::exportVarAsNodes($request->getQueryParams()),
-            'data' => Debugger::exportVarAsNodes($request->getData()),
-            'cookie' => Debugger::exportVarAsNodes($request->getCookieParams()),
-            'get' => Debugger::exportVarAsNodes($_GET),
+            'query' => [Debugger::exportVarAsNodes($request->getQueryParams())],
+            'data' => [Debugger::exportVarAsNodes($request->getData())],
+            'cookie' => [Debugger::exportVarAsNodes($request->getCookieParams())],
+            'get' => [Debugger::exportVarAsNodes($_GET)],
             'matchedRoute' => $request->getParam('_matchedRoute'),
-            'headers' => Debugger::exportVarAsNodes([
+            'headers' => [
                 'response' => headers_sent($file, $line),
                 'file' => $file,
                 'line' => $line,
-            ]),
+            ],
         ];
     }
 }

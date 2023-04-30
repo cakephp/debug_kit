@@ -29,7 +29,7 @@ if (!isset($cake) && isset($core)) {
 ?>
 <div class="c-include-panel">
     <h4>Include Paths</h4>
-    <?= $this->Toolbar->dumpNodes($paths) ?>
+    <?= $this->Toolbar->dumpNodes(compact('paths')) ?>
 
     <h4>Included Files</h4>
     <?= $this->Toolbar->dumpNodes(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>

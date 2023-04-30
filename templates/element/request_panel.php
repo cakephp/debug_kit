@@ -25,6 +25,9 @@
  * @var array $cookie
  * @var string $matchedRoute
  */
+
+use Cake\Error\Debugger;
+
 ?>
 <div class="c-request-panel">
     <?php if (!empty($headers) && $headers['response']) : ?>
@@ -74,6 +77,6 @@
 
     <?php if (!empty($matchedRoute)) : ?>
     <h4>Matched Route</h4>
-        <p><?= $this->Toolbar->dumpNodes(['template' => $matchedRoute]) ?></p>
+        <p><?= $this->Toolbar->dumpNodes([Debugger::exportVarAsNodes(['template' => $matchedRoute])]) ?></p>
     <?php endif; ?>
 </div>

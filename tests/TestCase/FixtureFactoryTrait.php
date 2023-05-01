@@ -45,14 +45,12 @@ trait FixtureFactoryTrait
                         ],
                     ]),
                 ],
-                'query' => [],
-                'data' => [],
-                'get' => [],
-                'cookie' => [
-                    Debugger::exportVarAsNodes([
-                        'toolbarDisplay' => 'show',
-                    ]),
-                ],
+                'query' => Debugger::exportVarAsNodes([]),
+                'data' => Debugger::exportVarAsNodes([]),
+                'get' => Debugger::exportVarAsNodes([]),
+                'cookie' => Debugger::exportVarAsNodes([
+                    'toolbarDisplay' => 'show',
+                ]),
             ];
         }
         $panels = $this->getTableLocator()->get('DebugKit.Panels');

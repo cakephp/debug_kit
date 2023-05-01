@@ -34,7 +34,7 @@ class SessionPanel extends DebugPanel
         /** @var \Cake\Http\ServerRequest|null $request */
         $request = $event->getSubject()->getRequest();
         if ($request) {
-            $content = [Debugger::exportVarAsNodes($request->getSession()->read())];
+            $content = Debugger::exportVarAsNodes($request->getSession()->read());
             $this->_data = compact('content');
         }
     }

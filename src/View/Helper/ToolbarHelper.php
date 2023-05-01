@@ -18,6 +18,7 @@ namespace DebugKit\View\Helper;
 use Cake\Error\Debug\ArrayItemNode;
 use Cake\Error\Debug\ArrayNode;
 use Cake\Error\Debug\HtmlFormatter;
+use Cake\Error\Debug\NodeInterface;
 use Cake\Error\Debug\ScalarNode;
 use Cake\View\Helper;
 
@@ -79,6 +80,24 @@ class ToolbarHelper extends Helper
         return implode([
             '<div class="cake-debug-output cake-debug" style="direction:ltr">',
             $formatter->dump($root),
+            '</div>',
+        ]);
+    }
+
+    /**
+     * Dump an error node
+     *
+     * @param \Cake\Error\Debug\NodeInterface $node A error node containing dumped variables.
+     * @return string Formatted HTML
+     */
+    public function dumpNode(NodeInterface $node): string
+    {
+        /** @psalm-suppress InternalMethod */
+        $formatter = new HtmlFormatter();
+
+        return implode([
+            '<div class="cake-debug-output cake-debug" style="direction:ltr">',
+            $formatter->dump($node),
             '</div>',
         ]);
     }

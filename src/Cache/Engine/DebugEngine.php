@@ -342,7 +342,6 @@ class DebugEngine extends CacheEngine
             return str_replace('Engine', '', $class);
         }
 
-        /** @psalm-suppress UndefinedMethod */
         return $this->_config['className'];
     }
 }

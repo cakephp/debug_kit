@@ -7,6 +7,9 @@
     autoloader="tests/bootstrap.php"
     usePhpDocMethodsWithoutMagicCall="true"
     errorBaseline="psalm-baseline.xml"
+    findUnusedPsalmSuppress="true"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src" />

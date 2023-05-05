@@ -77,7 +77,7 @@ class ToolbarHelper extends Helper
         $root = new ArrayNode($items);
 
         return implode([
-            '<div class="cake-debug-output cake-debug" style="direction:ltr">',
+            '<div class="cake-debug-output" style="direction:ltr">',
             $formatter->dump($root),
             '</div>',
         ]);
@@ -94,7 +94,7 @@ class ToolbarHelper extends Helper
         $formatter = new HtmlFormatter();
 
         return implode([
-            '<div class="cake-debug-output cake-debug" style="direction:ltr">',
+            '<div class="cake-debug-output" style="direction:ltr">',
             $formatter->dump($node),
             '</div>',
         ]);

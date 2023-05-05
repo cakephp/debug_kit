@@ -14,9 +14,9 @@
 
 /**
  * @var \DebugKit\View\AjaxView $this
- * @var array $content
+ * @var \Cake\Error\Debug\NodeInterface $content
  */
 ?>
 <div class="c-session-panel">
-    <?= $this->Toolbar->dump($content) ?>
+    <?= $this->Toolbar->dumpNode($content) ?>
 </div>

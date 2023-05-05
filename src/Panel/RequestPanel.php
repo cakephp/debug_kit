@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
+use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
 use Exception;
@@ -42,17 +43,21 @@ class RequestPanel extends DebugPanel
             } catch (Exception $e) {
                 $value = "Could not serialize `{$attr}`. It failed with {$e->getMessage()}";
             }
-            $attributes[$attr] = $value;
+            $attributes[$attr] = Debugger::exportVarAsNodes($value);
         }
 
         $this->_data = [
             'attributes' => $attributes,
-            'query' => $request->getQueryParams(),
-            'data' => $request->getData(),
-            'cookie' => $request->getCookieParams(),
-            'get' => $_GET,
+            'query' => Debugger::exportVarAsNodes($request->getQueryParams()),
+            'data' => Debugger::exportVarAsNodes($request->getData()),
+            'cookie' => Debugger::exportVarAsNodes($request->getCookieParams()),
+            'get' => Debugger::exportVarAsNodes($_GET),
             'matchedRoute' => $request->getParam('_matchedRoute'),
-            'headers' => ['response' => headers_sent($file, $line), 'file' => $file, 'line' => $line],
+            'headers' => [
+                'response' => headers_sent($file, $line),
+                'file' => $file,
+                'line' => $line,
+            ],
         ];
     }
 }

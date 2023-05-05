@@ -17,16 +17,17 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Http\ServerRequest;
+use Cake\Http\Session;
 use Cake\TestSuite\TestCase;
-use DebugKit\Panel\RequestPanel;
+use DebugKit\Panel\SessionPanel;
 
 /**
  * Class RequestPanelTest
  */
-class RequestPanelTest extends TestCase
+class SessionPanelTest extends TestCase
 {
     /**
-     * @var RequestPanel
+     * @var SessionPanel
      */
     protected $panel;
 
@@ -38,7 +39,7 @@ class RequestPanelTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->panel = new RequestPanel();
+        $this->panel = new SessionPanel();
     }
 
     /**
@@ -48,23 +49,21 @@ class RequestPanelTest extends TestCase
      */
     public function testShutdownSkipAttributes()
     {
+        $session = new Session();
+        $session->write('test', 123);
         $request = new ServerRequest([
-            'url' => '/',
-            'post' => ['name' => 'bob'],
-            'query' => ['page' => 1],
+            'session' => $session,
         ]);
-        $request = $request
-            ->withAttribute('ok', 'string')
-            ->withAttribute('closure', function () {
-            });
 
         $controller = new Controller($request);
         $event = new Event('Controller.shutdown', $controller);
         $this->panel->shutdown($event);
 
         $data = $this->panel->data();
-        $this->assertArrayHasKey('attributes', $data);
-        $this->assertEquals('string', $data['attributes']['ok']->getType());
-        $this->assertStringContainsString('Could not serialize `closure`', $data['attributes']['closure']->getValue());
+        $this->assertArrayHasKey('content', $data);
+        /** @var \Cake\Error\Debug\ArrayItemNode $content */
+        $content = $data['content']->getChildren()[0];
+        $this->assertEquals('test', $content->getKey()->getValue());
+        $this->assertEquals('123', $content->getValue()->getValue());
     }
 }

@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.x-dev@">
+<files psalm-version="5.10.0@a5effd2d2dddd1a7ea7a0f6a051ce63ff979e356">
   <file src="src/DebugInclude.php">
-    <PossiblyNullArrayOffset occurrences="2">
-      <code>$this-&gt;_composerPaths</code>
-      <code>$this-&gt;_pluginPaths</code>
+    <PossiblyNullArrayOffset>
+      <code><![CDATA[$this->_composerPaths]]></code>
+      <code><![CDATA[$this->_pluginPaths]]></code>
     </PossiblyNullArrayOffset>
   </file>
   <file src="src/DebugSql.php">
-    <InternalMethod occurrences="1">
+    <InternalMethod>
       <code>bindings</code>
     </InternalMethod>
   </file>
   <file src="src/DebugTimer.php">
-    <PossiblyNullArrayOffset occurrences="1">
+    <PossiblyNullArrayOffset>
       <code>self::$_timers</code>
     </PossiblyNullArrayOffset>
   </file>
   <file src="src/Mailer/MailPreview.php">
-    <PossiblyFalseOperand occurrences="1">
+    <PossiblyFalseOperand>
       <code>$pos</code>
     </PossiblyFalseOperand>
   </file>
   <file src="src/Mailer/Transport/DebugKitTransport.php">
-    <InvalidReturnStatement occurrences="1">
+    <InvalidReturnStatement>
       <code>$result</code>
     </InvalidReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
+    <MoreSpecificReturnType>
       <code>array</code>
     </MoreSpecificReturnType>
-    <PropertyTypeCoercion occurrences="1">
+    <PropertyTypeCoercion>
       <code>new $className($config)</code>
     </PropertyTypeCoercion>
   </file>
   <file src="src/Panel/PanelRegistry.php">
-    <LessSpecificImplementedReturnType occurrences="1">
+    <LessSpecificImplementedReturnType>
       <code>string|null</code>
     </LessSpecificImplementedReturnType>
-    <UnsafeInstantiation occurrences="1">
+    <UnsafeInstantiation>
       <code>new $class($this, $config)</code>
     </UnsafeInstantiation>
   </file>
   <file src="src/Panel/SqlLogPanel.php">
-    <UndefinedInterfaceMethod occurrences="1">
+    <UndefinedInterfaceMethod>
       <code>genericInstances</code>
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/View/Helper/ToolbarHelper.php">
-    <InternalClass occurrences="1">
+    <InternalClass>
+      <code>new HtmlFormatter()</code>
       <code>new HtmlFormatter()</code>
     </InternalClass>
-    <InternalMethod occurrences="1">
+    <InternalMethod>
       <code>dump</code>
+      <code>dump</code>
+      <code>new HtmlFormatter()</code>
+      <code>new HtmlFormatter()</code>
     </InternalMethod>
   </file>
 </files>

@@ -14,12 +14,12 @@
 
 /**
  * @var \DebugKit\View\AjaxView $this
- * @var array $paths
- * @var array $app
- * @var array $cake
- * @var array $plugins
- * @var array $vendor
- * @var array $other
+ * @var array<\Cake\Error\Debug\NodeInterface> $paths
+ * @var array<\Cake\Error\Debug\NodeInterface> $app
+ * @var array<\Cake\Error\Debug\NodeInterface> $cake
+ * @var array<\Cake\Error\Debug\NodeInterface> $plugins
+ * @var array<\Cake\Error\Debug\NodeInterface> $vendor
+ * @var array<\Cake\Error\Debug\NodeInterface> $other
  */
 
 // Backwards compat for old DebugKit data.
@@ -29,8 +29,8 @@ if (!isset($cake) && isset($core)) {
 ?>
 <div class="c-include-panel">
     <h4>Include Paths</h4>
-    <?= $this->Toolbar->dump($paths) ?>
+    <?= $this->Toolbar->dumpNodes(compact('paths')) ?>
 
     <h4>Included Files</h4>
-    <?= $this->Toolbar->dump(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>
+    <?= $this->Toolbar->dumpNodes(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>
 </div>

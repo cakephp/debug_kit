@@ -22,7 +22,7 @@ use Cake\ORM\Table;
  * each request.
  *
  * @property \DebugKit\Model\Table\RequestsTable&\Cake\ORM\Association\BelongsTo $Requests
- * @method \DebugKit\Model\Entity\Panel get($primaryKey, $options = [])
+ * @method \DebugKit\Model\Entity\Panel get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, ...$args)
  * @method \DebugKit\Model\Entity\Panel newEntity($data = null, array $options = [])
  * @method \DebugKit\Model\Entity\Panel[] newEntities(array $data, array $options = [])
  * @method \DebugKit\Model\Entity\Panel|false save(\Cake\Datasource\EntityInterface $entity, $options = [])

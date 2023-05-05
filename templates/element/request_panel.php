@@ -20,11 +20,14 @@
  * @var \DebugKit\View\AjaxView $this
  * @var array $headers
  * @var array $attributes
- * @var array $data
- * @var array $query
- * @var array $cookie
+ * @var \Cake\Error\Debug\NodeInterface $data
+ * @var \Cake\Error\Debug\NodeInterface $query
+ * @var \Cake\Error\Debug\NodeInterface $cookie
  * @var string $matchedRoute
  */
+
+use Cake\Error\Debugger;
+
 ?>
 <div class="c-request-panel">
     <?php if (!empty($headers) && $headers['response']) : ?>
@@ -43,7 +46,7 @@
     if (empty($attributes)) :
         echo '<p class="c-flash c-flash--info">No attributes data.</p>';
     else :
-        echo $this->Toolbar->dump($attributes);
+        echo $this->Toolbar->dumpNodes($attributes);
     endif;
     ?>
 
@@ -52,7 +55,7 @@
     if (empty($data)) :
         echo '<p class="c-flash c-flash--info">No post data.</p>';
     else :
-        echo $this->Toolbar->dump($data);
+        echo $this->Toolbar->dumpNode($data);
     endif;
     ?>
 
@@ -61,19 +64,19 @@
     if (empty($query)) :
         echo '<p class="c-flash c-flash--info">No querystring data.</p>';
     else :
-        echo $this->Toolbar->dump($query);
+        echo $this->Toolbar->dumpNode($query);
     endif;
     ?>
 
     <h4>Cookie</h4>
     <?php if (isset($cookie)) : ?>
-        <?= $this->Toolbar->dump($cookie) ?>
+        <?= $this->Toolbar->dumpNode($cookie) ?>
     <?php else : ?>
         <p class="c-flash c-flash--info">No Cookie data.</p>
     <?php endif; ?>
 
     <?php if (!empty($matchedRoute)) : ?>
     <h4>Matched Route</h4>
-        <p><?= $this->Toolbar->dump(['template' => $matchedRoute]) ?></p>
+        <p><?= $this->Toolbar->dumpNode(Debugger::exportVarAsNodes(['template' => $matchedRoute])) ?></p>
     <?php endif; ?>
 </div>

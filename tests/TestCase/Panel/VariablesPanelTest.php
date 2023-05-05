@@ -96,6 +96,7 @@ class VariablesPanelTest extends TestCase
             'string' => 'yes',
             'array' => ['some' => 'key'],
             'notSerializableForm' => new TestForm(),
+            'emptyEntity' => $requests->newEmptyEntity(),
         ];
         $controller->viewBuilder()->setVars($vars);
         $event = new Event('Controller.shutdown', $controller);

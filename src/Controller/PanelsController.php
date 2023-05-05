@@ -83,7 +83,7 @@ class PanelsController extends DebugKitController
     public function view(?string $id = null): void
     {
         $this->set('sort', $this->request->getCookie('debugKit_sort'));
-        $panel = $this->Panels->get($id, ['contain' => ['Requests']]);
+        $panel = $this->Panels->get($id, ...['contain' => ['Requests']]);
 
         $this->set('panel', $panel);
         // @codingStandardsIgnoreStart

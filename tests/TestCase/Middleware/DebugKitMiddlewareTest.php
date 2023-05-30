@@ -55,8 +55,8 @@ class DebugKitMiddlewareTest extends TestCase
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
         $this->oldConfig = Configure::read('DebugKit');
-        $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
-        unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
+        $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'];
+        $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = true;
     }
 
     /**
@@ -69,7 +69,7 @@ class DebugKitMiddlewareTest extends TestCase
         parent::tearDown();
 
         Configure::write('DebugKit', $this->oldConfig);
-        $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $this->restore;
+        $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = $this->restore;
     }
 
     protected function handler()
@@ -125,7 +125,7 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertNotNull($result->panels[11]->summary);
         $this->assertSame('Sql Log', $result->panels[11]->title);
 
-        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
+        $timeStamp = filectime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit_script" data-id="' . $result->id . '" ' .

@@ -12,6 +12,7 @@ nbproject/*
 .vscode
 .DS_Store
 .cache
+.phpunit.cache
 .project
 .settings
 .svn

@@ -58,8 +58,8 @@ class ToolbarServiceTest extends TestCase
 
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
-        $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
-        unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
+        $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'];
+        $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = true;
     }
 
     /**
@@ -71,7 +71,7 @@ class ToolbarServiceTest extends TestCase
     {
         parent::tearDown();
         putenv('HTTP_HOST=');
-        $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $this->restore;
+        $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = $this->restore;
     }
 
     /**
@@ -417,7 +417,7 @@ class ToolbarServiceTest extends TestCase
         $this->assertTrue($bar->isEnabled(), 'When forced should always be on.');
     }
 
-    public function domainsProvider()
+    public static function domainsProvider()
     {
         return [
             ['localhost', true],

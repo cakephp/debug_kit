@@ -44,7 +44,7 @@ class PackagesPanelTest extends TestCase
      *
      * @return array
      */
-    public function packagesProvider()
+    public static function packagesProvider()
     {
         return [
             'requirements' => ['packages'],

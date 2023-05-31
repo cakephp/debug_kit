@@ -75,7 +75,7 @@ class CredentialsHelperTest extends TestCase
      *
      * @return array input, expected output
      */
-    public function credentialsProvider()
+    public static function credentialsProvider()
     {
         return [
             [null, null],

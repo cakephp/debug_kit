@@ -102,7 +102,13 @@ class ToolbarService
      */
     public function isEnabled(): bool
     {
-        if (defined('PHPUNIT_COMPOSER_INSTALL') && !$GLOBALS['FORCE_DEBUGKIT_TOOLBAR']) {
+        if (!isset($GLOBALS['FORCE_DEBUGKIT_TOOLBAR'])) {
+            $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = false;
+        }
+        if (
+            defined('PHPUNIT_COMPOSER_INSTALL') &&
+            !$GLOBALS['FORCE_DEBUGKIT_TOOLBAR']
+        ) {
             return false;
         }
         $enabled = (bool)Configure::read('debug')

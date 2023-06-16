@@ -55,7 +55,7 @@ $noOutput = true;
                 <h4><?= h($logger->name()) ?></h4>
                 <h5>
                 <?= sprintf(
-                    'Total Time: %d ms &mdash; Total Queries: %d &mdash; Total Rows: %d',
+                    'Total Time: %d ms &mdash; Total Queries: %d',
                     $logger->totalTime(),
                     count($queries)
                 );

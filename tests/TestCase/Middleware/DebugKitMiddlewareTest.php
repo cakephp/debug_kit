@@ -50,7 +50,6 @@ class DebugKitMiddlewareTest extends TestCase
         parent::setUp();
 
         $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
         $this->oldConfig = Configure::read('DebugKit');
         $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
         unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
@@ -130,6 +129,38 @@ class DebugKitMiddlewareTest extends TestCase
             '</body>';
         $body = (string)$response->getBody();
         $this->assertTextEquals($expected, $body);
+    }
+
+    /**
+     * Ensure data is saved for HTML requests
+     *
+     * @return void
+     */
+    public function testInvokeInjectCspNonce()
+    {
+        $request = new ServerRequest([
+            'url' => '/articles',
+            'environment' => ['REQUEST_METHOD' => 'GET'],
+        ]);
+        $request = $request->withAttribute('cspScriptNonce', 'csp-nonce');
+
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $handler = $this->handler();
+        $handler->expects($this->once())
+            ->method('handle')
+            ->willReturn($response);
+
+        $middleware = new DebugKitMiddleware();
+        $response = $middleware->process($request, $handler);
+        $this->assertInstanceOf(Response::class, $response, 'Should return the response');
+
+        $body = (string)$response->getBody();
+        $this->assertStringContainsString('nonce="csp-nonce"', $body);
     }
 
     /**

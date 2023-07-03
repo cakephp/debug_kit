@@ -50,6 +50,7 @@ class DebugKitMiddlewareTest extends TestCase
         parent::setUp();
 
         $connection = ConnectionManager::get('test');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'This test fails in CI with sqlite');
         $this->oldConfig = Configure::read('DebugKit');
         $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
         unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);

@@ -62,7 +62,9 @@ class DebugMemory
         $memoryUse = self::getCurrent();
         if (!$message) {
             $trace = debug_backtrace();
-            $message = Debugger::trimPath($trace[0]['file']) . ' line ' . $trace[0]['line'];
+            $file = $trace[0]['file'] ?? 'unknown file';
+            $line = $trace[0]['line'] ?? 'n/a';
+            $message = Debugger::trimPath($file) . ' line ' . $line;
         }
         if (isset(self::$_points[$message])) {
             $originalMessage = $message;

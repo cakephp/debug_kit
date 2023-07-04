@@ -39,7 +39,6 @@ class RequestTableTest extends TestCase
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
     }
 
-
     /**
      * test that schema is created on-demand.
      *

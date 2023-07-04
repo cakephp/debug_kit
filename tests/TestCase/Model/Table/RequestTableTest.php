@@ -26,6 +26,21 @@ use Cake\TestSuite\TestCase;
 class RequestTableTest extends TestCase
 {
     /**
+     * Setup
+     *
+     * Skip tests on SQLite as SQLite complains when tables are changed while a connection is open.
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $connection = ConnectionManager::get('test');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+    }
+
+
+    /**
      * test that schema is created on-demand.
      *
      * @return void

@@ -57,6 +57,7 @@ class ToolbarServiceTest extends TestCase
         $this->events = new EventManager();
 
         $connection = ConnectionManager::get('test');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
         $this->restore = $GLOBALS['__PHPUNIT_BOOTSTRAP'];
         unset($GLOBALS['__PHPUNIT_BOOTSTRAP']);
     }

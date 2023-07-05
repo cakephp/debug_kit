@@ -303,7 +303,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
         $row = $bar->saveData($request, $response);
-        $response = $bar->injectScripts($row, $response);
+        $response = $bar->injectScripts($row, $request, $response);
 
         $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
 
@@ -335,7 +335,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $row = new RequestEntity(['id' => 'abc123']);
 
-        $result = $bar->injectScripts($row, $response);
+        $result = $bar->injectScripts($row, $request, $response);
         $this->assertInstanceOf('Cake\Http\Response', $result);
         $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
         $this->assertTrue($result->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
@@ -361,7 +361,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $row = new RequestEntity(['id' => 'abc123']);
 
-        $result = $bar->injectScripts($row, $response);
+        $result = $bar->injectScripts($row, $request, $response);
         $this->assertInstanceOf('Cake\Http\Response', $result);
         $this->assertSame('I am a teapot!', (string)$response->getBody());
     }
@@ -385,7 +385,7 @@ class ToolbarServiceTest extends TestCase
         $bar->loadPanels();
 
         $row = $bar->saveData($request, $response);
-        $response = $bar->injectScripts($row, $response);
+        $response = $bar->injectScripts($row, $request, $response);
         $this->assertTextEquals('{"some":"json"}', (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }

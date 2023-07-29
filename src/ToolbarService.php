@@ -360,11 +360,9 @@ class ToolbarService
         // Use Router to get the request so that we can see the
         // state after other middleware have been applied.
         $request = Router::getRequest();
-        if ($request) {
-            $nonce = $request->getAttribute('cspScriptNonce');
-            if ($nonce) {
-                $nonce = sprintf(' nonce="%s"', $nonce);
-            }
+        $nonce = '';
+        if ($request && $request->getAttribute('cspScriptNonce')) {
+            $nonce = sprintf(' nonce="%s"', $request->getAttribute('cspScriptNonce'));
         }
 
         $url = Router::url('/', true);

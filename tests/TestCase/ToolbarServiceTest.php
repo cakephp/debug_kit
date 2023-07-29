@@ -305,9 +305,9 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
         $row = $bar->saveData($request, $response);
-        $response = $bar->injectScripts($row, response);
+        $response = $bar->injectScripts($row, $response);
 
-        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
+        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'inject-iframe.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit_script" data-id="' . $row->id . '" ' .
@@ -367,6 +367,10 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInjectScriptsNoModifyResponse()
     {
+        $request = new Request([
+            'url' => '/articles/view/123',
+            'params' => [],
+        ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'application/json',

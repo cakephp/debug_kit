@@ -21,6 +21,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Http\CallbackStream;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
+use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Middleware\DebugKitMiddleware;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -53,7 +54,7 @@ class DebugKitMiddlewareTest extends TestCase
         parent::setUp();
 
         $connection = ConnectionManager::get('test');
-        $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
+        $this->skipIf($connection->getDriver() instanceof Sqlite, 'This test fails in CI with sqlite');
         $this->oldConfig = Configure::read('DebugKit');
         $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'];
         $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = true;
@@ -133,6 +134,39 @@ class DebugKitMiddlewareTest extends TestCase
             '</body>';
         $body = (string)$response->getBody();
         $this->assertTextEquals($expected, $body);
+    }
+
+    /**
+     * Ensure data is saved for HTML requests
+     *
+     * @return void
+     */
+    public function testInvokeInjectCspNonce()
+    {
+        $request = new ServerRequest([
+            'url' => '/articles',
+            'environment' => ['REQUEST_METHOD' => 'GET'],
+        ]);
+        $request = $request->withAttribute('cspScriptNonce', 'csp-nonce');
+        Router::setRequest($request);
+
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $handler = $this->handler();
+        $handler->expects($this->once())
+            ->method('handle')
+            ->willReturn($response);
+
+        $middleware = new DebugKitMiddleware();
+        $response = $middleware->process($request, $handler);
+        $this->assertInstanceOf(Response::class, $response, 'Should return the response');
+
+        $body = (string)$response->getBody();
+        $this->assertStringContainsString('nonce="csp-nonce"', $body);
     }
 
     /**

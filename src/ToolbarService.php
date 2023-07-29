@@ -25,7 +25,6 @@ use Cake\Routing\Router;
 use DebugKit\Panel\PanelRegistry;
 use PDOException;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Used to create the panels and inject a toolbar into
@@ -338,11 +337,10 @@ class ToolbarService
      * contains HTML and there is a </body> tag.
      *
      * @param \DebugKit\Model\Entity\Request $row The request data to inject.
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request to augment.
      * @param \Psr\Http\Message\ResponseInterface $response The response to augment.
      * @return \Psr\Http\Message\ResponseInterface The modified response
      */
-    public function injectScripts($row, ServerRequestInterface $request, ResponseInterface $response)
+    public function injectScripts($row, ResponseInterface $response)
     {
         $response = $response->withHeader('X-DEBUGKIT-ID', (string)$row->id);
         if (strpos($response->getHeaderLine('Content-Type'), 'html') === false) {
@@ -359,9 +357,12 @@ class ToolbarService
         if ($pos === false) {
             return $response;
         }
-        $nonce = $request->getAttribute('cspScriptNonce');
-        if ($nonce) {
-            $nonce = sprintf(' nonce="%s"', $nonce);
+        // Use Router to get the request so that we can see the
+        // state after other middleware have been applied.
+        $request = Router::getRequest();
+        $nonce = '';
+        if ($request && $request->getAttribute('cspScriptNonce')) {
+            $nonce = sprintf(' nonce="%s"', $request->getAttribute('cspScriptNonce'));
         }
 
         $url = Router::url('/', true);

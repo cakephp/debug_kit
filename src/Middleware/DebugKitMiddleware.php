@@ -69,6 +69,6 @@ class DebugKitMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        return $this->service->injectScripts($row, $request, $response);
+        return $this->service->injectScripts($row, $response);
     }
 }

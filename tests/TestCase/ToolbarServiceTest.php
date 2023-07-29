@@ -22,6 +22,7 @@ use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest as Request;
 use Cake\Log\Log;
+use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
 use DebugKit\ToolbarService;
@@ -294,6 +295,7 @@ class ToolbarServiceTest extends TestCase
             'url' => '/articles',
             'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
+        Router::setRequest($request);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
@@ -303,9 +305,9 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
         $row = $bar->saveData($request, $response);
-        $response = $bar->injectScripts($row, $request, $response);
+        $response = $bar->injectScripts($row, $response);
 
-        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
+        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'inject-iframe.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit_script" data-id="' . $row->id . '" ' .
@@ -322,10 +324,6 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInjectScriptsFileBodies()
     {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null],
-        ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
@@ -335,7 +333,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $row = new RequestEntity(['id' => 'abc123']);
 
-        $result = $bar->injectScripts($row, $request, $response);
+        $result = $bar->injectScripts($row, $response);
         $this->assertInstanceOf('Cake\Http\Response', $result);
         $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
         $this->assertTrue($result->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
@@ -348,10 +346,6 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInjectScriptsStreamBodies()
     {
-        $request = new Request([
-            'url' => '/articles',
-            'params' => ['plugin' => null],
-        ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'text/html',
@@ -361,7 +355,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $row = new RequestEntity(['id' => 'abc123']);
 
-        $result = $bar->injectScripts($row, $request, $response);
+        $result = $bar->injectScripts($row, $response);
         $this->assertInstanceOf('Cake\Http\Response', $result);
         $this->assertSame('I am a teapot!', (string)$response->getBody());
     }
@@ -373,8 +367,10 @@ class ToolbarServiceTest extends TestCase
      */
     public function testInjectScriptsNoModifyResponse()
     {
-        $request = new Request(['url' => '/articles']);
-
+        $request = new Request([
+            'url' => '/articles/view/123',
+            'params' => [],
+        ]);
         $response = new Response([
             'statusCode' => 200,
             'type' => 'application/json',
@@ -385,7 +381,7 @@ class ToolbarServiceTest extends TestCase
         $bar->loadPanels();
 
         $row = $bar->saveData($request, $response);
-        $response = $bar->injectScripts($row, $request, $response);
+        $response = $bar->injectScripts($row, $response);
         $this->assertTextEquals('{"some":"json"}', (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }

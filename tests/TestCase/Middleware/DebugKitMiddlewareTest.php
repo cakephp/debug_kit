@@ -21,6 +21,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Http\CallbackStream;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
+use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Middleware\DebugKitMiddleware;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -122,7 +123,7 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertNotNull($result->panels[11]->summary);
         $this->assertSame('Sql Log', $result->panels[11]->title);
 
-        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
+        $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'inject-iframe.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit_script" data-id="' . $result->id . '" ' .
@@ -144,6 +145,7 @@ class DebugKitMiddlewareTest extends TestCase
             'environment' => ['REQUEST_METHOD' => 'GET'],
         ]);
         $request = $request->withAttribute('cspScriptNonce', 'csp-nonce');
+        Router::setRequest($request);
 
         $response = new Response([
             'statusCode' => 200,

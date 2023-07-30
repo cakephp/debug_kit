@@ -365,13 +365,21 @@ class ToolbarService
         if ($pos === false) {
             return $response;
         }
+        // Use Router to get the request so that we can see the
+        // state after other middleware have been applied.
+        $request = Router::getRequest();
+        $nonce = '';
+        if ($request && $request->getAttribute('cspScriptNonce')) {
+            $nonce = sprintf(' nonce="%s"', $request->getAttribute('cspScriptNonce'));
+        }
 
         $url = Router::url('/', true);
         $script = sprintf(
-            '<script id="__debug_kit_script" data-id="%s" data-url="%s" type="module" src="%s"></script>',
+            '<script id="__debug_kit_script" data-id="%s" data-url="%s" type="module" src="%s"%s></script>',
             $row->id,
             $url,
-            Router::url($this->getToolbarUrl())
+            Router::url($this->getToolbarUrl()),
+            $nonce
         );
         $contents = substr($contents, 0, $pos) . $script . substr($contents, $pos);
         $body->rewind();

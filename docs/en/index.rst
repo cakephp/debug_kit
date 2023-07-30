@@ -50,6 +50,12 @@ Configuration
     // Before loading DebugKit
     Configure::write('DebugKit.forceEnable', true);
 
+  You can also provide a callable::
+
+    Configure::write('DebugKit.forceEnable', function() {
+        return $_SERVER['REMOTE_ADDR'] === '192.168.2.182';
+    });
+
 * ``DebugKit.ignorePathsPattern`` - Regex pattern (including delimiter) to ignore paths.
   DebugKit won't save data for request URLs that match this regex. Defaults to ``null``::
 

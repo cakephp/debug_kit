@@ -57,7 +57,7 @@ class RequestsController extends DebugKitController
      */
     public function view(?string $id = null): void
     {
-        $toolbar = $this->Requests->get($id, ['contain' => 'Panels']);
+        $toolbar = $this->Requests->get($id, contain: 'Panels');
         $this->set('toolbar', $toolbar);
     }
 }

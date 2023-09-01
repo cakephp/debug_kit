@@ -2,7 +2,7 @@
     "name": "cakephp/debug_kit",
     "description": "CakePHP Debug Kit",
     "type": "cakephp-plugin",
-    "keywords": ["cakephp", "debug", "kit"],
+    "keywords": ["cakephp", "debug", "kit", "dev"],
     "homepage": "https://github.com/cakephp/debug_kit",
     "license": "MIT",
     "authors": [

@@ -14,7 +14,6 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase;
 
-use Cake\Database\Driver\Postgres;
 use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\TestCase;
 use DebugKit\DebugSql;

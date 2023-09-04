@@ -47,12 +47,13 @@
         {
             public function welcome($user)
             {
-                return $this // Returning the chain is a good idea :)
-                    ->to($user->email)
-                    ->subject(sprintf("Welcome %s", $user->name))
-                    ->template("welcome_mail") // By default template with same name as method name is used.
-                    ->layout("custom")
-                    ->set(["user" => $user]);
+                $mailer = $this->setTo($user->email)
+                    ->setSubject(sprintf("Welcome %s", $user->name))
+                    ->setViewVars(["user" => $user]);
+                $mailer->viewBuilder()
+                    ->setTemplate("welcome_mail") // By default template with same name as method name is used.
+                    ->setLayout("custom");
+                return $mailer;
             }
         }';
         highlight_string($code);
@@ -75,9 +76,10 @@
             {
                 $this->loadModel("Users");
                 $user = $this->Users->find()->first();
+
                 return $this->getMailer("User")
                     ->welcome($user)
-                    ->set(["activationToken" => "dummy-token"]);
+                    ->setViewVars(["activationToken" => "dummy-token"]);
             }
         }';
         highlight_string($code);

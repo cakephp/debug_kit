@@ -23,13 +23,13 @@
         "source": "https://github.com/cakephp/debug_kit"
     },
     "require": {
-        "cakephp/cakephp": "5.x-dev",
+        "cakephp/cakephp": "^5.0.0",
         "composer/composer": "^2.0",
         "doctrine/sql-formatter": "^1.1.3"
     },
     "require-dev": {
-        "cakephp/authorization": "3.x-dev",
-        "cakephp/cakephp-codesniffer": "5.x-dev",
+        "cakephp/authorization": "^3.0.0",
+        "cakephp/cakephp-codesniffer": "^5.0.0",
         "phpunit/phpunit": "^10.1.0"
     },
     "autoload": {
@@ -62,8 +62,6 @@
         "stan-setup": "phive install",
         "test": "phpunit"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true

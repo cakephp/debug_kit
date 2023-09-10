@@ -62,7 +62,6 @@
         "stan-setup": "phive install",
         "test": "phpunit"
     },
-    "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true

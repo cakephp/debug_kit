@@ -38,7 +38,7 @@ $this->addPlugin('DebugKit');
 
 If you don't see a CakePHP icon on the bottom right of your page DebugKit is not be
 working correctly. Some common problems are:
- 
+
 1. Your PHP environment doesn't have SQLite installed. Check your application
    logs to confirm if this happening. You can either configure DebugKit to use
    a different database, or install the PDO SQLite 3 extension.
@@ -61,5 +61,5 @@ requests](https://help.github.com/articles/using-pull-requests) or open
 
 ## Documentation
 
-Documentation for DebugKit can be found in the 
-[CakePHP documentation](https://book.cakephp.org/debugkit/4/en/index.html).
+Documentation for DebugKit can be found in the
+[CakePHP documentation](https://book.cakephp.org/debugkit/5/en/index.html).

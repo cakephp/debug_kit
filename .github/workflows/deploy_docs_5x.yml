@@ -1,0 +1,24 @@
+---
+name: 'deploy_docs_5x'
+
+on:
+  push:
+    branches:
+      - 5.x
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to dokku
+        uses: dokku/github-action@master
+        with:
+          git_remote_url: 'ssh://dokku@apps.cakephp.org:22/debugkit-docs-5'
+          git_push_flags: '-f'
+          ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}

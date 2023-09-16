@@ -1,7 +1,7 @@
 # Basic docker based environment
 # Necessary to trick dokku into building the documentation
 # using dockerfile instead of herokuish
-FROM ubuntu:17.04
+FROM ubuntu:22.04
 
 # Add basic tools
 RUN apt-get update && \
@@ -13,9 +13,11 @@ RUN apt-get update && \
     libffi-dev \
     libssl-dev
 
+# Prevent interactive timezone input
+ENV DEBIAN_FRONTEND=noninteractive
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php && \
   apt-get update && \
-  apt-get install -y php7.2-cli php7.2-mbstring php7.2-xml php7.2-zip php7.2-intl php7.2-opcache php7.2-sqlite
+  apt-get install -y php8.1-cli php8.1-mbstring php8.1-xml php8.1-zip php8.1-intl php8.1-opcache php8.1-sqlite
 
 WORKDIR /code
 

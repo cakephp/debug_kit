@@ -10,10 +10,10 @@ from cakephpsphinx.config.all import *
 #
 
 # The full version, including alpha/beta/rc tags.
-release = '4.x'
+release = '5.x'
 
 # The search index version.
-search_version = 'debugkit-4'
+search_version = 'debugkit-5'
 
 # The marketing display name for the book.
 version_name = ''
@@ -24,7 +24,8 @@ project = 'CakePHP DebugKit'
 # Other versions that display in the version picker menu.
 version_list = [
     {'name': '3.x', 'number': 'debugkit/3.x', 'title': '3.x'},
-    {'name': '4.x', 'number': 'debugkit/4.x', 'title': '4.x', 'current': True},
+    {'name': '4.x', 'number': 'debugkit/4.x', 'title': '4.x'},
+    {'name': '5.x', 'number': 'debugkit/5.x', 'title': '5.x', 'current': True},
 ]
 
 # Languages available.
@@ -32,10 +33,10 @@ languages = ['en', 'fr', 'ja', 'pt']
 
 # The GitHub branch name for this version of the docs
 # for edit links to point at.
-branch = '4.x'
+branch = '5.x'
 
 # Current version being built
-version = '4.x'
+version = '5.x'
 
 # Language in use for this directory.
 language = 'en'

@@ -20,7 +20,7 @@ you've removed it and want to re-install it, you can do so by running the
 following from your application's ROOT directory (where composer.json file is
 located)::
 
-    php composer.phar require --dev cakephp/debug_kit "~4.0"
+    php composer.phar require --dev cakephp/debug_kit "~5.0"
 
 Then, you need to enable the plugin by executing the following line::
 
@@ -316,3 +316,20 @@ Helper Functions
 
 * ``sql()`` Dumps out the SQL from an ORM query.
 * ``sqld()`` Dumps out the SQL from an ORM query, and exits.
+
+Tracing query execution
+=======================
+
+Sometimes you need to know where specific queries are being executed in your app.
+To get this kind of information you can add the ``SqlTraceTrait`` to your Table class like so::
+
+    use DebugKit\Model\Table\SqlTraceTrait;
+
+    class CategoriesTable extends Table
+    {
+        use SqlTraceTrait;
+    }
+
+This will add the following information to the SQL log::
+
+    /* APP/Controller/CategoriesController.php (line 20) *)

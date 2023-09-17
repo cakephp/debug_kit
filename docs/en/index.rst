@@ -332,4 +332,4 @@ To get this kind of information you can add the ``SqlTraceTrait`` to your Table 
 
 This will add the following information to the SQL log::
 
-    /* APP/Controller/CategoriesController.php (line 20) *)
+    /* APP/Controller/CategoriesController.php (line 20) */

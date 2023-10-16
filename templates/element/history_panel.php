@@ -16,6 +16,8 @@
  * @var \DebugKit\Model\Entity\Panel $panel
  * @var array $requests
  */
+
+use function Cake\Core\h;
 ?>
 <div id="request-history" class="c-history-panel" data-panel-id="<?= $panel->id ?>">
     <?php if (empty($requests)) : ?>

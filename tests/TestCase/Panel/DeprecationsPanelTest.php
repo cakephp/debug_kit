@@ -17,6 +17,7 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\DeprecationsPanel;
+use function Cake\Core\deprecationWarning;
 
 /**
  * Class DeprecationsPanelTest

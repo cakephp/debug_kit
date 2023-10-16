@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  */
+
+use function Cake\Core\h;
 ?>
 <h1>Debug Kit Dashboard</h1>
 

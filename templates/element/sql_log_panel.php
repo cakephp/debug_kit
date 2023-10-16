@@ -24,6 +24,7 @@
 
 use Doctrine\SqlFormatter\HtmlHighlighter;
 use Doctrine\SqlFormatter\SqlFormatter;
+use function Cake\Core\h;
 
 $noOutput = true;
 ?>

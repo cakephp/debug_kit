@@ -21,6 +21,8 @@
  * @var array $other
  */
 
+use function Cake\Core\h;
+
 $printer = function ($section, $data) {
 ?>
     <h3><?= h(ucfirst($section)) ?> </h3>

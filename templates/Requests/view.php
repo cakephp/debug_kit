@@ -7,6 +7,7 @@
 use Cake\Routing\Router;
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
+use function Cake\Core\h;
 
 ?>
 <div class="c-panel-content-container js-panel-content-container">

@@ -1,3 +1,6 @@
+<?php
+use function Cake\Core\h;
+?>
 <?php foreach ($mailPreviews as $plugin => $previews) : ?>
 <h3><?= $plugin ?></h3>
     <?php foreach ($previews as $preview) : ?>

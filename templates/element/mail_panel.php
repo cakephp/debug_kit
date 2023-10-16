@@ -2,6 +2,8 @@
 /**
  * @var $panel \DebugKit\Model\Entity\Panel
  */
+
+use function Cake\Core\h;
 ?>
 <div class="c-mail-panel">
     <p class="c-flash c-flash--info">

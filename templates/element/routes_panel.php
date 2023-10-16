@@ -7,6 +7,7 @@
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
+use function Cake\Core\h;
 
 $routes = Cake\Routing\Router::routes();
 

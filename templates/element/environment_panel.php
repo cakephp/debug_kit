@@ -22,6 +22,8 @@ use Cake\Error\Debugger;
  * @var array $cake
  * @var array $php
  */
+
+use function Cake\Core\h;
 ?>
 
 <div class="c-environment-panel">

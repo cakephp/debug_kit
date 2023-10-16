@@ -1,3 +1,6 @@
+<?php
+use function Cake\Core\h;
+?>
 <style>
     html, body {
         height: 100%;

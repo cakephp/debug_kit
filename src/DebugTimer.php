@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace DebugKit;
 
 use Cake\Error\Debugger;
+use function Cake\Core\env;
 
 /**
  * Contains methods for Profiling and creating timers.

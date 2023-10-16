@@ -18,6 +18,7 @@
  * @var int $peakMemory
  * @var array $memory
  */
+use function Cake\Core\h;
 ?>
 <div class="c-timer-panel">
     <section>

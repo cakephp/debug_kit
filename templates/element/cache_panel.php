@@ -17,6 +17,7 @@
  * @var array $metrics
  * @var array $logs
  */
+use function Cake\Core\h;
 ?>
 <div class="c-cache-panel">
     <?php if (empty($metrics)) : ?>

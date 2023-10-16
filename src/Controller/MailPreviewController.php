@@ -26,6 +26,7 @@ use DebugKit\Mailer\AbstractResult;
 use DebugKit\Mailer\PreviewResult;
 use DebugKit\Mailer\SentMailResult;
 use Psr\Http\Message\ResponseInterface;
+use function Cake\Collection\collection;
 
 /**
  * Provides access to the MailPreview classes for visually debugging email sending

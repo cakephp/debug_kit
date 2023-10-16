@@ -17,6 +17,7 @@ namespace DebugKit\View\Helper;
 
 use Cake\Utility\Hash;
 use Cake\View\Helper;
+use function Cake\Core\h;
 
 /**
  * CredentialsHelper

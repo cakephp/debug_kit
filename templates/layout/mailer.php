@@ -1,4 +1,7 @@
-<?php $this->extend('toolbar') ?>
+<?php
+use function Cake\Core\h;
+$this->extend('toolbar');
+?>
 
 <div style="height:calc(100vh);overflow-y:scroll">
     <?php if (empty($noHeader)) : ?>

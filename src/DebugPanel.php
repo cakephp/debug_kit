@@ -18,6 +18,7 @@ namespace DebugKit;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Inflector;
+use function Cake\Core\namespaceSplit;
 
 /**
  * Base class for debug panels.

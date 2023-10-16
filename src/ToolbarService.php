@@ -27,6 +27,7 @@ use DebugKit\Model\Entity\Request;
 use DebugKit\Panel\PanelRegistry;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
+use function Cake\Core\env;
 
 /**
  * Used to create the panels and inject a toolbar into

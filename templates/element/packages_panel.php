@@ -16,6 +16,7 @@
  * @var \DebugKit\View\AjaxView $this
  * @var array $packages
  */
+use function Cake\Core\h;
 ?>
 <div class="c-packages-panel"
      data-base-url="<?= $this->Url->build([

@@ -16,6 +16,8 @@
  * @var \DebugKit\View\AjaxView $this
  * @var \DebugKit\Log\Engine\DebugKitLog $logger
  */
+
+use function Cake\Core\h;
 ?>
 <div class="c-log-panel">
     <?php if ($logger->noLogs()) : ?>

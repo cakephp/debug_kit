@@ -2,6 +2,7 @@
 /**
  * @var \DebugKit\View\AjaxView $this
  */
+use function Cake\Core\h;
 ?>
 <!DOCTYPE html>
 <html>

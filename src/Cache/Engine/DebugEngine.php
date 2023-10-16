@@ -17,6 +17,7 @@ namespace DebugKit\Cache\Engine;
 use Cake\Cache\CacheEngine;
 use Cake\Cache\CacheRegistry;
 use Psr\Log\LoggerInterface;
+use function Cake\Core\namespaceSplit;
 
 /**
  * A spying proxy for cache engines.

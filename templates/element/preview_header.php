@@ -2,6 +2,7 @@
 /**
  * @var \DebugKit\Mailer\AbstractResult $email
  */
+use function Cake\Core\h;
 ?>
     <header>
         <table>

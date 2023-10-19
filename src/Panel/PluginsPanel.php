@@ -53,6 +53,10 @@ class PluginsPanel extends DebugPanel
      */
     public function summary(): string
     {
+        if (!isset($this->_data['plugins'])) {
+            return '0';
+        }
+
         return (string)count($this->_data['plugins']);
     }
 }

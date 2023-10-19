@@ -121,10 +121,10 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertSame(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertSame('SqlLog', $result->panels[11]->panel);
-        $this->assertSame('DebugKit.sql_log_panel', $result->panels[11]->element);
-        $this->assertNotNull($result->panels[11]->summary);
-        $this->assertSame('Sql Log', $result->panels[11]->title);
+        $this->assertSame('SqlLog', $result->panels[12]->panel);
+        $this->assertSame('DebugKit.sql_log_panel', $result->panels[12]->element);
+        $this->assertNotNull($result->panels[12]->summary);
+        $this->assertSame('Sql Log', $result->panels[12]->title);
 
         $timeStamp = filectime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
 

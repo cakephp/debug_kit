@@ -68,6 +68,7 @@ class ToolbarService
             'DebugKit.Packages' => true,
             'DebugKit.Mail' => true,
             'DebugKit.Deprecations' => true,
+            'DebugKit.Plugins' => true,
         ],
         'forceEnable' => false,
         'safeTld' => [],

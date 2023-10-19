@@ -23,7 +23,7 @@
         "source": "https://github.com/cakephp/debug_kit"
     },
     "require": {
-        "cakephp/cakephp": "^5.0",
+        "cakephp/cakephp": "dev-5.next as 5.1.0",
         "composer/composer": "^2.0",
         "doctrine/sql-formatter": "^1.1.3"
     },
@@ -66,5 +66,7 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

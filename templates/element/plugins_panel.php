@@ -27,11 +27,11 @@
         <table class="c-debug-table">
             <thead>
             <tr>
-                <th><?= __d('debug_kit', 'Plugin') ?></th>
-                <th><?= __d('debug_kit', 'Is Loaded') ?></th>
-                <th><?= __d('debug_kit', 'Only Debug') ?></th>
-                <th><?= __d('debug_kit', 'Only CLI') ?></th>
-                <th><?= __d('debug_kit', 'Optional') ?></th>
+                <th>Plugin</th>
+                <th>Is Loaded</th>
+                <th>Only Debug</th>
+                <th>Only CLI</th>
+                <th>Optional</th>
             </tr>
             </thead>
             <tbody>

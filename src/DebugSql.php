@@ -18,7 +18,10 @@ namespace DebugKit;
 use Cake\Core\Configure;
 use Cake\Database\Query;
 use Cake\Error\Debugger;
-use SqlFormatter;
+use Doctrine\SqlFormatter\CliHighlighter;
+use Doctrine\SqlFormatter\HtmlHighlighter;
+use Doctrine\SqlFormatter\NullHighlighter;
+use Doctrine\SqlFormatter\SqlFormatter;
 
 /**
  * Contains methods for dumping well formatted SQL queries.
@@ -77,7 +80,7 @@ TEXT;
         }
 
         /** @var array $trace */
-        $trace = Debugger::trace(['start' => 1, 'depth' => $stackDepth + 2, 'format' => 'array']);
+        $trace = Debugger::trace(['start' => 0, 'depth' => $stackDepth + 2, 'format' => 'array']);
         $file = isset($trace[$stackDepth]) ? $trace[$stackDepth]['file'] : 'n/a';
         $line = isset($trace[$stackDepth]) ? $trace[$stackDepth]['line'] : 0;
         $lineInfo = '';
@@ -93,10 +96,8 @@ TEXT;
         }
 
         $template = self::$templateHtml;
-        $sqlHighlight = true;
-        if ((PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') || $showHtml === false) {
+        if (static::isCli() || $showHtml === false) {
             $template = self::$templateText;
-            $sqlHighlight = false;
             if ($file && $line) {
                 $lineInfo = sprintf('%s (line %s)', $file, $line);
             }
@@ -105,12 +106,29 @@ TEXT;
             $showHtml = true;
         }
 
-        $var = $showHtml ? SqlFormatter::format($sql, $sqlHighlight) : $sql;
-        $var = str_replace(
-            '<span >:</span> <span style="color: #333;">',
-            '<span >:</span><span style="color: #333;">',
-            $var
-        );
+        if (static::isCli() && !$showHtml) {
+            $highlighter = new CliHighlighter([
+                CliHighlighter::HIGHLIGHT_QUOTE => "\x1b[33;1m",
+                CliHighlighter::HIGHLIGHT_WORD => "\x1b[36;1m",
+                CliHighlighter::HIGHLIGHT_VARIABLE => "\x1b[33;1m",
+            ]);
+        } elseif ($showHtml) {
+            $highlighter = new HtmlHighlighter(
+                [
+                    HtmlHighlighter::HIGHLIGHT_QUOTE => 'style="color: #004d40;"',
+                    HtmlHighlighter::HIGHLIGHT_BACKTICK_QUOTE => 'style="color: #26a69a;"',
+                    HtmlHighlighter::HIGHLIGHT_NUMBER => 'style="color: #ec407a;"',
+                    HtmlHighlighter::HIGHLIGHT_WORD => 'style="color: #9c27b0;"',
+                    HtmlHighlighter::HIGHLIGHT_PRE => 'style="color: #222; background-color: transparent;"',
+                ],
+                false
+            );
+        } else {
+            $highlighter = new NullHighlighter();
+        }
+
+        $var = (new SqlFormatter($highlighter))->format($sql);
+        $var = trim($var);
 
         if ($showHtml) {
             $template = self::$templateHtml;
@@ -141,6 +159,16 @@ TEXT;
     {
         static::sql($query, $showValues, $showHtml, $stackDepth);
         die(1);
+    }
+
+    /**
+     * Checks whether the current environment is CLI based.
+     *
+     * @return bool
+     */
+    protected static function isCli()
+    {
+        return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
     }
 
     /**

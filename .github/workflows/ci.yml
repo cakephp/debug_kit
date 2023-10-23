@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - '*'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,6 +22,8 @@ jobs:
         db-type: [mysql, pgsql, sqlite]
         prefer-lowest: ['']
         include:
+          - php-version: '8.2'
+            db-type: 'sqlite'
           - php-version: '8.1'
             db-type: 'sqlite'
           - php-version: '7.4'
@@ -36,7 +39,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup Service
       if: matrix.db-type == 'mysql'
@@ -69,8 +72,6 @@ jobs:
       run: |
         if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
           composer update --prefer-lowest --prefer-stable
-        elif ${{ matrix.php-version == '8.1' }}; then
-          composer update --ignore-platform-reqs
         else
           composer update
         fi
@@ -86,14 +87,14 @@ jobs:
         if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then
           export DB_URL='postgres://postgres:postgres@127.0.0.1/postgres'
         fi
-        if [[ ${{ matrix.php-version }} == '7.4' && ${{ matrix.db-type }} == 'mysql' ]]; then
+        if [[ ${{ matrix.php-version }} == '8.1' && ${{ matrix.db-type }} == 'mysql' ]]; then
           vendor/bin/phpunit --coverage-clover=coverage.xml
         else
           vendor/bin/phpunit
         fi
 
     - name: Code Coverage Report
-      if: success() && matrix.php-version == '7.4' && matrix.db-type == 'mysql'
+      if: success() && matrix.php-version == '8.1' && matrix.db-type == 'mysql'
       uses: codecov/codecov-action@v3
 
   cs-stan:
@@ -101,7 +102,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2

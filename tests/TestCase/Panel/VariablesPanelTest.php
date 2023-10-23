@@ -62,10 +62,8 @@ class VariablesPanelTest extends TestCase
         $requests = $this->getTableLocator()->get('Requests');
         $query = $requests->find('all');
         $result = $requests->find()->all();
-        $unbufferedQuery = $requests->find('all')->enableBufferedResults(false);
-        $unbufferedQuery->toArray(); //toArray call would normally happen somewhere in View, usually implicitly
-        $update = $requests->query()->update();
-        $debugInfoException = $requests->query()->contain('NonExistentAssociation');
+        $update = $requests->updateQuery();
+        $debugInfoException = $requests->selectQuery()->contain('NonExistentAssociation');
 
         $unserializable = new \stdClass();
         $unserializable->pdo = $requests->getConnection()->getDriver()->getConnection();
@@ -89,7 +87,6 @@ class VariablesPanelTest extends TestCase
             'debugInfoException' => $debugInfoException,
             'updateQuery' => $update,
             'query' => $query,
-            'unbufferedQuery' => $unbufferedQuery,
             'result set' => $result,
             'string' => 'yes',
             'array' => ['some' => 'key'],

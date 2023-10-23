@@ -135,6 +135,6 @@ EXPECTED;
      */
     private function newQuery()
     {
-        return $this->getTableLocator()->get('panels')->query();
+        return $this->getTableLocator()->get('panels')->selectQuery();
     }
 }

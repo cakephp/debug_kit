@@ -38,13 +38,15 @@ $this->addPlugin('DebugKit');
 
 If you don't see a CakePHP icon on the bottom right of your page DebugKit is not be
 working correctly. Some common problems are:
- 
+
 1. Your PHP environment doesn't have SQLite installed. Check your application
    logs to confirm if this happening. You can either configure DebugKit to use
    a different database, or install the PDO SQLite 3 extension.
 2. Your hostname needs to be added to the `DebugKit.safeTld`. If your local
    domain isn't a known development environment name, DebugKit will disable
    itself to protect a potentially non-development environment.
+3. If you are using the [Authorization Plugin](https://github.com/cakephp/authorization)
+   you need to set `DebugKit.ignoreAuthorization` to `true` in your config.
 
 ## Reporting Issues
 
@@ -61,5 +63,5 @@ requests](https://help.github.com/articles/using-pull-requests) or open
 
 ## Documentation
 
-Documentation for DebugKit can be found in the 
+Documentation for DebugKit can be found in the
 [CakePHP documentation](https://book.cakephp.org/debugkit/4/en/index.html).

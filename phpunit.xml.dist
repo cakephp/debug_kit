@@ -4,7 +4,7 @@
          processIsolation="false"
          stopOnFailure="false"
          cacheDirectory=".phpunit.cache"
-         bootstrap="./tests/bootstrap.php"
+         bootstrap="tests/bootstrap.php"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
 >
     <testsuites>

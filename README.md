@@ -45,6 +45,8 @@ working correctly. Some common problems are:
 2. Your hostname needs to be added to the `DebugKit.safeTld`. If your local
    domain isn't a known development environment name, DebugKit will disable
    itself to protect a potentially non-development environment.
+3. If you are using the [Authorization Plugin](https://github.com/cakephp/authorization)
+   you need to set `DebugKit.ignoreAuthorization` to `true` in your config.
 
 ## Reporting Issues
 

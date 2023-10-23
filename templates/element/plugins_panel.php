@@ -16,6 +16,7 @@
  * @var bool $hasEmptyAppConfig
  * @var array $plugins
  */
+use function Cake\Core\h;
 ?>
 <div class="c-plugins-panel">
     <?php
@@ -37,7 +38,7 @@
             <tbody>
             <?php foreach ($plugins as $pluginName => $pluginConfig) : ?>
                 <tr>
-                    <td><?= $pluginName ?></td>
+                    <td><?= h($pluginName) ?></td>
                     <td><?= $pluginConfig['isLoaded'] ? $this->Html->image('DebugKit./img/cake-red.svg') : '' ?></td>
                     <td><?= $pluginConfig['onlyDebug'] ? $this->Html->image('DebugKit./img/cake-red.svg') : '' ?></td>
                     <td><?= $pluginConfig['onlyCli'] ? $this->Html->image('DebugKit./img/cake-red.svg') : '' ?></td>

@@ -131,10 +131,10 @@ EXPECTED;
     /**
      * Creates a Query object for testing.
      *
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
     private function newQuery()
     {
-        return $this->fetchTable('panels')->query();
+        return $this->fetchTable('panels')->selectQuery();
     }
 }

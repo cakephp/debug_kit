@@ -676,6 +676,10 @@ strong {
     border-left: 1px solid var(--mail-border);
 }
 
+.c-plugins-panel img {
+    height: 18px;
+}
+
 .u-text-center {
     text-align: center;
 }

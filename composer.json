@@ -1,10 +1,14 @@
 {
     "name": "cakephp/debug_kit",
     "description": "CakePHP Debug Kit",
-    "type": "cakephp-plugin",
-    "keywords": ["cakephp", "debug", "kit", "dev"],
-    "homepage": "https://github.com/cakephp/debug_kit",
     "license": "MIT",
+    "type": "cakephp-plugin",
+    "keywords": [
+        "cakephp",
+        "debug",
+        "kit",
+        "dev"
+    ],
     "authors": [
         {
             "name": "Mark Story",
@@ -16,6 +20,7 @@
             "homepage": "https://github.com/cakephp/debug_kit/graphs/contributors"
         }
     ],
+    "homepage": "https://github.com/cakephp/debug_kit",
     "support": {
         "issues": "https://github.com/cakephp/debug_kit/issues",
         "forum": "https://stackoverflow.com/tags/cakephp",
@@ -32,6 +37,9 @@
         "cakephp/cakephp-codesniffer": "^5.0",
         "phpunit/phpunit": "^10.1.0"
     },
+    "suggest": {
+        "ext-pdo_sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
+    },
     "autoload": {
         "psr-4": {
             "DebugKit\\": "src/"
@@ -40,31 +48,28 @@
     "autoload-dev": {
         "psr-4": {
             "Cake\\Test\\": "vendor/cakephp/cakephp/tests/",
-            "DebugKit\\Test\\": "tests/",
             "DebugKit\\TestApp\\": "tests/test_app/",
+            "DebugKit\\Test\\": "tests/",
             "DebugkitTestPlugin\\": "tests/test_app/Plugin/DebugkitTestPlugin/src/"
         }
     },
-    "suggest": {
-        "ext-pdo_sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "scripts": {
         "cs-check": "phpcs --colors --parallel=16 -p src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
         "phpstan": "tools/phpstan analyse",
         "psalm": "tools/psalm --show-info=false",
+        "psalm-baseline": "tools/psalm  --set-baseline=psalm-baseline.xml",
         "stan": [
             "@phpstan",
             "@psalm"
         ],
         "stan-baseline": "tools/phpstan --generate-baseline",
-        "psalm-baseline": "tools/psalm  --set-baseline=psalm-baseline.xml",
         "stan-setup": "phive install",
         "test": "phpunit"
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
     }
 }

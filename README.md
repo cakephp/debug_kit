@@ -65,3 +65,7 @@ requests](https://help.github.com/articles/using-pull-requests) or open
 
 Documentation for DebugKit can be found in the
 [CakePHP documentation](https://book.cakephp.org/debugkit/5/en/index.html).
+
+## Panels
+Panels by other plugins:
+- `L10n` by [Setup plugin](https://github.com/dereuromark/cakephp-setup) to show current localization for Date, DateTime, Time objects/values.

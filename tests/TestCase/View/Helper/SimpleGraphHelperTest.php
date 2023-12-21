@@ -138,5 +138,4 @@ class SimpleGraphHelperTest extends TestCase
         ];
         $this->assertHtml($expected, $output);
     }
-
 }

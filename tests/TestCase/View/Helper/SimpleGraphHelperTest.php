@@ -113,4 +113,29 @@ class SimpleGraphHelperTest extends TestCase
         ];
         $this->assertHtml($expected, $output);
     }
+
+    /**
+     * Test bar() using float offset values
+     *
+     * @return void
+     */
+    public function testBarWithFloat()
+    {
+        $output = $this->Graph->bar(10.5, 10.5);
+        $expected = [
+            ['div' => [
+                'class' => 'c-graph-bar',
+                'style' => 'width: 350px',
+            ]],
+            ['div' => [
+                'class' => 'c-graph-bar__value',
+                'style' => 'margin-left: 37px; width: 37px',
+                'title' => 'Starting 10.5ms into the request, taking 10.5ms',
+            ]],
+            ' ',
+            '/div',
+            '/div',
+        ];
+        $this->assertHtml($expected, $output);
+    }
 }

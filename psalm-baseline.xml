@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.10.0@a5effd2d2dddd1a7ea7a0f6a051ce63ff979e356">
+<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+  <file src="src/Database/Log/DebugLog.php">
+    <InternalMethod>
+      <code>jsonSerialize</code>
+    </InternalMethod>
+  </file>
   <file src="src/DebugInclude.php">
     <PossiblyNullArrayOffset>
       <code><![CDATA[$this->_composerPaths]]></code>

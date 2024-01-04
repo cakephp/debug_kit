@@ -133,7 +133,10 @@ class DebugLog extends AbstractLogger
             $this->_logger->log($level, $message, $context);
         }
 
-        if ($this->_includeSchema === false && $this->isSchemaQuery($query)) {
+        if (
+            !$query instanceof LoggedQuery ||
+            ($this->_includeSchema === false && $this->isSchemaQuery($query))
+        ) {
             return;
         }
 

@@ -76,7 +76,7 @@ $noOutput = true;
                         <tr>
                             <td>
                                 <?php
-                                if($query['isSqlQuery']):
+                                if ($query['isSqlQuery']):
                                     echo (new SqlFormatter(
                                         new HtmlHighlighter([
                                             HtmlHighlighter::HIGHLIGHT_QUOTE => 'style="color: #004d40;"',

@@ -75,8 +75,9 @@ $noOutput = true;
                         <?php foreach ($queries as $query) : ?>
                         <tr>
                             <td>
-                                <?=
-                                    (new SqlFormatter(
+                                <?php
+                                if($query['isSqlQuery']):
+                                    echo (new SqlFormatter(
                                         new HtmlHighlighter([
                                             HtmlHighlighter::HIGHLIGHT_QUOTE => 'style="color: #004d40;"',
                                             HtmlHighlighter::HIGHLIGHT_BACKTICK_QUOTE => 'style="color: #26a69a;"',
@@ -85,8 +86,10 @@ $noOutput = true;
                                             HtmlHighlighter::HIGHLIGHT_PRE => 'style="color: #222; background-color: transparent;"',
                                         ])
                                     ))
-                                    ->format($query['query'])
-                                ?>
+                                    ->format($query['query']);
+                                else:
+                                    print_r($query['query']);
+                                endif; ?>
                             </td>
                             <td><?= h($query['rows']) ?></td>
                             <td><?= h($query['took']) ?></td>

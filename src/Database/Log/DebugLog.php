@@ -138,6 +138,7 @@ class DebugLog extends AbstractLogger
             $this->_totalTime += $context['response']['took'];
 
             $this->_queries[] = [
+                'isSqlQuery' => false,
                 'query' => $context['request'],
                 'took' => $context['response']['took'],
                 'rows' => $context['response']['hits']['total'],
@@ -158,6 +159,7 @@ class DebugLog extends AbstractLogger
         $this->_totalTime += $data['took'];
 
         $this->_queries[] = [
+            'isSqlQuery' => true,
             'query' => (string)$query,
             'took' => $data['took'],
             'rows' => $data['numRows'],

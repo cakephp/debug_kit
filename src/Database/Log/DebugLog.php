@@ -127,10 +127,23 @@ class DebugLog extends AbstractLogger
      */
     public function log($level, string|Stringable $message, array $context = []): void
     {
-        $query = $context['query'];
+        $query = $context['query'] ?? null;
 
         if ($this->_logger) {
             $this->_logger->log($level, $message, $context);
+        }
+
+        // This specific to Elastic Search
+        if (!$query instanceof LoggedQuery && isset($context['request']) && isset($context['response'])) {
+            $this->_totalTime += $context['response']['took'];
+
+            $this->_queries[] = [
+                'query' => $context['request'],
+                'took' => $context['response']['took'],
+                'rows' => $context['response']['hits']['total'],
+            ];
+
+            return;
         }
 
         if (

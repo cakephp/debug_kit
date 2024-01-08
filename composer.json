@@ -35,7 +35,7 @@
     "require-dev": {
         "cakephp/authorization": "^3.0",
         "cakephp/cakephp-codesniffer": "^5.0",
-        "phpunit/phpunit": "^10.1.0 <=10.5.3"
+        "phpunit/phpunit": "^10.5.5"
     },
     "suggest": {
         "ext-pdo_sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."

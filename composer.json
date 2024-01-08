@@ -28,6 +28,7 @@
         "source": "https://github.com/cakephp/debug_kit"
     },
     "require": {
+        "php": ">=8.1",
         "cakephp/cakephp": "^5.0",
         "composer/composer": "^2.0",
         "doctrine/sql-formatter": "^1.1.3"

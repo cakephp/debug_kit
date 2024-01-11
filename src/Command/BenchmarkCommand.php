@@ -57,7 +57,6 @@ class BenchmarkCommand extends Command
         $io->out(Text::insert('-> Testing :url', compact('url')));
         $io->out('');
         for ($i = 0; $i < $options['n']; $i++) {
-            /** @psalm-suppress PossiblyInvalidOperand */
             if (floor($options['t'] - array_sum($times)) <= 0 || $options['n'] <= 1) {
                 break;
             }

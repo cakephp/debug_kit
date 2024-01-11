@@ -17,6 +17,7 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\DeprecationsPanel;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use function Cake\Core\deprecationWarning;
 
 /**
@@ -53,6 +54,7 @@ class DeprecationsPanelTest extends TestCase
         }
     }
 
+    #[WithoutErrorHandler]
     public function testShutdown()
     {
         $event = new Event('Panel.shutdown');

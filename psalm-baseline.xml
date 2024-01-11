@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+  <file src="src/Command/BenchmarkCommand.php">
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$options['t'] - array_sum($times)]]></code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidOperand>
+      <code><![CDATA[$options['t']]]></code>
+      <code>array_sum($times)</code>
+    </PossiblyInvalidOperand>
+  </file>
   <file src="src/DebugInclude.php">
     <PossiblyNullArrayOffset>
       <code><![CDATA[$this->_composerPaths]]></code>

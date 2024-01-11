@@ -6,6 +6,16 @@ parameters:
 			path: src/Command/BenchmarkCommand.php
 
 		-
+			message: "#^Comparison operation \"\\<\" between int\\<0, max\\> and 10\\|100\\|array\\<int, string\\>\\|bool\\|string\\|null results in an error\\.$#"
+			count: 1
+			path: src/Command/BenchmarkCommand.php
+
+		-
+			message: "#^Comparison operation \"\\<\\=\" between 10\\|100\\|array\\<int, string\\>\\|string\\|true and 1 results in an error\\.$#"
+			count: 1
+			path: src/Command/BenchmarkCommand.php
+
+		-
 			message: "#^Method DebugKit\\\\Mailer\\\\Transport\\\\DebugKitTransport\\:\\:send\\(\\) should return array\\{headers\\: string, message\\: string\\} but returns array\\{headers\\: non\\-empty\\-array\\<string\\>, message\\: array\\{text\\: string, html\\: string\\}\\}\\.$#"
 			count: 1
 			path: src/Mailer/Transport/DebugKitTransport.php

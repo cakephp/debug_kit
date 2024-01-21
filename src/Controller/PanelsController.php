@@ -31,7 +31,7 @@ class PanelsController extends DebugKitController
      */
     public function viewClasses(): array
     {
-        return ['json' => JsonView::class];
+        return [JsonView::class];
     }
 
     /**

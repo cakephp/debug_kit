@@ -144,7 +144,7 @@ class DebugLog extends AbstractLogger
                     'path' => $context['request']['path'],
                     'data' => $context['request']['data'],
                 ], JSON_PRETTY_PRINT),
-                'took' => 0,
+                'took' => $took,
                 'rows' => $context['response']['hits']['total']['value'] ?? $context['response']['hits']['total'] ?? 0,
             ];
 

@@ -67,6 +67,47 @@ class DebugLogTest extends TestCase
     }
 
     /**
+     * Test logs being stored.
+     *
+     * @return void
+     */
+    public function testLogElastic()
+    {
+        $this->assertCount(0, $this->logger->queries());
+
+        $this->logger->log(LogLevel::DEBUG, 'title:Good', [
+            'query' => 'title:Good',
+            'request' => [
+                'method' => 'GET',
+                'path' => '/articles/_search',
+                'data' => '',
+            ],
+            'response' => [
+                'took' => 10,
+                'hits' => [
+                    'total' => 15,
+                ],
+            ],
+        ]);
+        $this->assertCount(1, $this->logger->queries());
+        $this->assertEquals(10, $this->logger->totalTime());
+
+        $this->logger->log(LogLevel::DEBUG, 'title:Best', [
+            'query' => 'title:Best',
+            'request' => [
+                'method' => 'GET',
+                'path' => '/articles/_search',
+                'data' => '',
+            ],
+            'response' => [
+                'lol' => 'nope',
+            ],
+        ]);
+        $this->assertCount(2, $this->logger->queries());
+        $this->assertEquals(10, $this->logger->totalTime());
+    }
+
+    /**
      * Test log ignores schema reflection
      *
      * @dataProvider schemaQueryProvider

@@ -135,7 +135,8 @@ class DebugLog extends AbstractLogger
 
         // This specific to Elastic Search
         if (!$query instanceof LoggedQuery && isset($context['request']) && isset($context['response'])) {
-            $this->_totalTime += $context['response']['took'];
+            $took = $context['response']['took'] ?? 0;
+            $this->_totalTime += $took;
 
             $this->_queries[] = [
                 'query' => json_encode([
@@ -143,7 +144,7 @@ class DebugLog extends AbstractLogger
                     'path' => $context['request']['path'],
                     'data' => $context['request']['data'],
                 ], JSON_PRETTY_PRINT),
-                'took' => $context['response']['took'] ?: 0,
+                'took' => $took,
                 'rows' => $context['response']['hits']['total']['value'] ?? $context['response']['hits']['total'] ?? 0,
             ];
 

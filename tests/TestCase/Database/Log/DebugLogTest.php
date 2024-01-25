@@ -73,9 +73,6 @@ class DebugLogTest extends TestCase
      */
     public function testLogElastic()
     {
-        $query = [
-        ];
-
         $this->assertCount(0, $this->logger->queries());
 
         $this->logger->log(LogLevel::DEBUG, 'title:Good', [

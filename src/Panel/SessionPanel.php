@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
+use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
@@ -34,7 +35,7 @@ class SessionPanel extends DebugPanel
         /** @var \Cake\Http\ServerRequest|null $request */
         $request = $event->getSubject()->getRequest();
         if ($request) {
-            $content = Debugger::exportVarAsNodes($request->getSession()->read());
+            $content = Debugger::exportVarAsNodes($request->getSession()->read(), Configure::read('DebugKit.maxDepth', 5));
             $this->_data = compact('content');
         }
     }

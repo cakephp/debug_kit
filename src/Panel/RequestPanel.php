@@ -36,6 +36,7 @@ class RequestPanel extends DebugPanel
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
         $request = $controller->getRequest();
+        $maxDepth = Configure::read('DebugKit.maxDepth', 5);
 
         $attributes = [];
         foreach ($request->getAttributes() as $attr => $value) {
@@ -44,15 +45,15 @@ class RequestPanel extends DebugPanel
             } catch (Exception $e) {
                 $value = "Could not serialize `{$attr}`. It failed with {$e->getMessage()}";
             }
-            $attributes[$attr] = Debugger::exportVarAsNodes($value, Configure::read('DebugKit.maxDepth', 5));
+            $attributes[$attr] = Debugger::exportVarAsNodes($value, $maxDepth);
         }
 
         $this->_data = [
             'attributes' => $attributes,
-            'query' => Debugger::exportVarAsNodes($request->getQueryParams(), Configure::read('DebugKit.maxDepth', 5)),
-            'data' => Debugger::exportVarAsNodes($request->getData(), Configure::read('DebugKit.maxDepth', 5)),
-            'cookie' => Debugger::exportVarAsNodes($request->getCookieParams(), Configure::read('DebugKit.maxDepth', 5)),
-            'get' => Debugger::exportVarAsNodes($_GET, Configure::read('DebugKit.maxDepth', 5)),
+            'query' => Debugger::exportVarAsNodes($request->getQueryParams(), $maxDepth),
+            'data' => Debugger::exportVarAsNodes($request->getData(), $maxDepth),
+            'cookie' => Debugger::exportVarAsNodes($request->getCookieParams(), $maxDepth),
+            'get' => Debugger::exportVarAsNodes($_GET, $maxDepth),
             'matchedRoute' => $request->getParam('_matchedRoute'),
             'headers' => [
                 'response' => headers_sent($file, $line),

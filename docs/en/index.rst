@@ -67,6 +67,9 @@ Configuration
 * ``DebugKit.maxDepth`` - Defines how many levels of nested data should be shown in general for debug output. Default is 5.
   WARNING: Increasing the max depth level can lead to an out of memory error.::
 
+    // Show more levels
+    Configure::write('DebugKit.maxDepth', 8);
+
 * ``DebugKit.variablesPanelMaxDepth`` - Defines how many levels of nested data should be shown in the variables tab. Default is 5.
   WARNING: Increasing the max depth level can lead to an out of memory error.::
 

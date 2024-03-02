@@ -96,6 +96,7 @@ TEXT;
             if (defined('CAKE_CORE_INCLUDE_PATH')) {
                 array_unshift($search, CAKE_CORE_INCLUDE_PATH);
             }
+            /** @var string $file */
             $file = str_replace($search, '', $file);
         }
 

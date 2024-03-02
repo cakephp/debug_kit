@@ -47,6 +47,7 @@ class DebugKitTransport extends AbstractTransport
 
         $className = false;
         if (!empty($config['originalClassName'])) {
+            /** @var class-string<\Cake\Mailer\AbstractTransport> $className */
             $className = App::className(
                 $config['originalClassName'],
                 'Mailer/Transport',
@@ -91,7 +92,10 @@ class DebugKitTransport extends AbstractTransport
      */
     public function __call(string $method, array $args): mixed
     {
-        return call_user_func_array([$this->originalTransport, $method], $args);
+        /** @var callable $callable */
+        $callable = [$this->originalTransport, $method];
+
+        return call_user_func_array($callable, $args);
     }
 
     /**

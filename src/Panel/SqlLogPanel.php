@@ -74,7 +74,8 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
-            $connection->getDriver()->setLogger($logger);
+            /** @var \Cake\Database\Driver $driver */
+            $driver->setLogger($logger);
 
             $this->_loggers[] = $logger;
         }

@@ -203,7 +203,9 @@ class MailPreviewController extends DebugKitController
                 }
             })
             ->unfold(function ($path, $plugin) {
-                foreach (glob($path . '*Preview.php') as $file) {
+                /** @var list<string> $files */
+                $files = glob($path . '*Preview.php');
+                foreach ($files as $file) {
                     $base = str_replace('.php', '', basename($file));
                     $class = App::className($plugin . $base, 'Mailer/Preview');
                     if ($class) {
@@ -271,6 +273,7 @@ class MailPreviewController extends DebugKitController
             $plugin = "$plugin.";
         }
 
+        /** @var \DebugKit\Mailer\MailPreview $realClass */
         $realClass = App::className($plugin . $previewName, 'Mailer/Preview');
         if (!$realClass) {
             throw new NotFoundException("Mailer preview $previewName not found");

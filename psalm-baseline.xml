@@ -68,9 +68,6 @@
     <NullArgument>
       <code><![CDATA[$this->emailLog]]></code>
     </NullArgument>
-    <PropertyTypeCoercion>
-      <code>new $className($config)</code>
-    </PropertyTypeCoercion>
   </file>
   <file src="src/Model/Table/LazyTableTrait.php">
     <RiskyTruthyFalsyComparison>

@@ -281,9 +281,9 @@ class MailPreviewController extends DebugKitController
         $mailPreview = new $realClass();
 
         $email = $mailPreview->find($emailName);
-        if (!$email) {
+        if ($email === null) {
             throw new NotFoundException(sprintf(
-                'Mailer preview %s::%s not found',
+                'Mailer preview `%s::%s` not found',
                 $previewName,
                 $emailName
             ));

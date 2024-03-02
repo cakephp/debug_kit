@@ -49,6 +49,7 @@ class RequestPanel extends DebugPanel
         }
 
         $this->_data = [
+            'params' => $request->getAttribute('params'),
             'attributes' => $attributes,
             'query' => Debugger::exportVarAsNodes($request->getQueryParams(), $maxDepth),
             'data' => Debugger::exportVarAsNodes($request->getData(), $maxDepth),

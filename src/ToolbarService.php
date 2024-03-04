@@ -143,7 +143,7 @@ class ToolbarService
     protected function isSuspiciouslyProduction(): bool
     {
         $host = parse_url('http://' . env('HTTP_HOST'), PHP_URL_HOST);
-        if ($host === false) {
+        if ($host === false || $host === null) {
             return false;
         }
 

@@ -32,12 +32,12 @@ class SessionPanel extends DebugPanel
      */
     public function shutdown(EventInterface $event): void
     {
-        /** @var \Cake\Http\ServerRequest|null $request */
-        $request = $event->getSubject()->getRequest();
-        if ($request) {
-            $maxDepth = Configure::read('DebugKit.maxDepth', 5);
-            $content = Debugger::exportVarAsNodes($request->getSession()->read(), $maxDepth);
-            $this->_data = compact('content');
-        }
+        /** @var \Cake\Controller\Controller $controller */
+        $controller = $event->getSubject();
+        $request = $controller->getRequest();
+
+        $maxDepth = Configure::read('DebugKit.maxDepth', 5);
+        $content = Debugger::exportVarAsNodes($request->getSession()->read(), $maxDepth);
+        $this->_data = compact('content');
     }
 }

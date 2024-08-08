@@ -256,13 +256,13 @@ class ToolbarServiceTest extends TestCase
         $this->assertSame(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertSame('Timer', $result->panels[12]->panel);
-        $this->assertSame('DebugKit.timer_panel', $result->panels[12]->element);
+        $this->assertSame('Timer', $result->panels[11]->panel);
+        $this->assertSame('DebugKit.timer_panel', $result->panels[11]->element);
         $this->assertMatchesRegularExpression(
             '/\d+\.\d+\s[ms]+\s+\/\s+\d+\.\d+\s+[mbMB]+/',
-            $result->panels[10]->summary
+            $result->panels[11]->summary
         );
-        $this->assertSame('Timer', $result->panels[12]->title);
+        $this->assertSame('Timer', $result->panels[11]->title);
     }
 
     /**

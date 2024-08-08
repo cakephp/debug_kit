@@ -40,6 +40,7 @@ class DeprecationsPanelTest extends TestCase
         parent::setUp();
         DeprecationsPanel::clearDeprecatedErrors();
 
+        $this->loadPlugins(['DebugKit']);
         $this->panel = new DeprecationsPanel();
 
         set_error_handler(function ($code, $message, $file, $line, $context = null) {
@@ -66,10 +67,10 @@ class DeprecationsPanelTest extends TestCase
         $this->assertArrayHasKey('vendor', $data);
         $this->assertArrayHasKey('plugins', $data);
         $this->assertArrayHasKey('other', $data);
-        $this->assertCount(1, $data['plugins']['DebugKit']);
+        $this->assertCount(3, $data['plugins']['DebugKit']);
 
         $error = $data['plugins']['DebugKit'][0];
-        $this->assertStringContainsString('Raw error', $error['message']);
+        $this->assertStringContainsString('Something going away', $error['message']);
         $this->assertArrayHasKey('niceFile', $error);
         $this->assertArrayHasKey('line', $error);
     }

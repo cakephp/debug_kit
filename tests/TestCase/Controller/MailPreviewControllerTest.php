@@ -15,11 +15,9 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\Controller;
 
-use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use DebugKit\Test\TestCase\FixtureFactoryTrait;
-use DebugKit\TestApp\Application;
 
 /**
  * Mail preview controller test
@@ -28,18 +26,6 @@ class MailPreviewControllerTest extends TestCase
 {
     use FixtureFactoryTrait;
     use IntegrationTestTrait;
-
-    /**
-     * Setup method.
-     *
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-        Router::createRouteBuilder('/')->connect('/users/{action}/*', ['controller' => 'Users']);
-        $this->configApplication(Application::class, []);
-    }
 
     /**
      * Test that plugin is passed to the view in email action

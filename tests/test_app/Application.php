@@ -20,6 +20,7 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Cake\Routing\RouteBuilder;
 
 /**
  * Application setup class.
@@ -37,6 +38,16 @@ class Application extends BaseApplication
         parent::bootstrap();
 
         $this->addPlugin('DebugKit');
+    }
+
+    /**
+     * @param \Cake\Routing\RouteBuilder $routes
+     * @return void
+     */
+    public function routes(RouteBuilder $routes): void
+    {
+        parent::routes($routes);
+        $routes->connect('/users/{action}/*', ['controller' => 'Users']);
     }
 
     /**

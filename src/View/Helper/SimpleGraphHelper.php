@@ -47,12 +47,12 @@ class SimpleGraphHelper extends Helper
     /**
      * bar method
      *
-     * @param float $value Value to be graphed
-     * @param int $offset how much indentation
+     * @param float|int $value Value to be graphed
+     * @param float|int $offset how much indentation
      * @param array $options Graph options
      * @return string Html graph
      */
-    public function bar(float $value, int $offset, array $options = []): string
+    public function bar(float|int $value, float|int $offset, array $options = []): string
     {
         $settings = array_merge($this->_defaultSettings, $options);
         $max = $settings['max'];

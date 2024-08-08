@@ -50,7 +50,7 @@ class CredentialsHelper extends Helper
             return $in;
         }
         preg_match_all($regexp, $in, $tokens);
-        if (empty($tokens[0])) {
+        if ($tokens[0] === []) {
             return h($in);
         }
         $protocol = Hash::get($tokens, '1.0');

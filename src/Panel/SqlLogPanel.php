@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace DebugKit\Panel;
 
 use Cake\Core\Configure;
+use Cake\Database\Driver;
 use Cake\Datasource\ConnectionInterface;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Locator\LocatorAwareTrait;
@@ -57,7 +58,14 @@ class SqlLogPanel extends DebugPanel
             ) {
                 continue;
             }
-            $logger = $connection->getDriver()->getLogger();
+            $driver = $connection->getDriver();
+            $logger = null;
+            if ($driver instanceof Driver) {
+                $logger = $driver->getLogger();
+            } elseif (method_exists($connection, 'getLogger')) {
+                // ElasticSearch connection holds the logger, not the Elastica Driver
+                $logger = $connection->getLogger();
+            }
 
             if ($logger instanceof DebugLog) {
                 $logger->setIncludeSchema($includeSchemaReflection);
@@ -66,7 +74,8 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = new DebugLog($logger, $name, $includeSchemaReflection);
 
-            $connection->getDriver()->setLogger($logger);
+            /** @var \Cake\Database\Driver $driver */
+            $driver->setLogger($logger);
 
             $this->_loggers[] = $logger;
         }

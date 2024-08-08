@@ -24,10 +24,10 @@ For details and older versions see [version map](https://github.com/cakephp/debu
 
 * Install the plugin with [Composer](https://getcomposer.org/) from your CakePHP Project's ROOT directory (where the **composer.json** file is located)
 ```sh
-php composer.phar require --dev cakephp/debug_kit:"^4.0"
+php composer.phar require --dev cakephp/debug_kit:"^5.0"
 ```
 
-* [Load the plugin](https://book.cakephp.org/4/en/plugins.html#loading-a-plugin)
+* [Load the plugin](https://book.cakephp.org/5/en/plugins.html#loading-a-plugin)
 ```php
 // src/Application.php
 $this->addPlugin('DebugKit');
@@ -45,6 +45,8 @@ working correctly. Some common problems are:
 2. Your hostname needs to be added to the `DebugKit.safeTld`. If your local
    domain isn't a known development environment name, DebugKit will disable
    itself to protect a potentially non-development environment.
+3. If you are using the [Authorization Plugin](https://github.com/cakephp/authorization)
+   you need to set `DebugKit.ignoreAuthorization` to `true` in your config.
 
 ## Reporting Issues
 
@@ -63,3 +65,7 @@ requests](https://help.github.com/articles/using-pull-requests) or open
 
 Documentation for DebugKit can be found in the
 [CakePHP documentation](https://book.cakephp.org/debugkit/5/en/index.html).
+
+## Panels
+Panels by other plugins:
+- `L10n` by [Setup plugin](https://github.com/dereuromark/cakephp-setup) to show current localization for Date, DateTime, Time objects/values.

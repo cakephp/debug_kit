@@ -34,7 +34,9 @@ class TimedBehavior extends Behavior
      */
     public function beforeFind(EventInterface $event, SelectQuery $query): SelectQuery
     {
-        $alias = $event->getSubject()->getAlias();
+        /** @var \Cake\Datasource\RepositoryInterface $table */
+        $table = $event->getSubject();
+        $alias = $table->getAlias();
         DebugTimer::start($alias . '_find', $alias . '->find()');
 
         return $query->formatResults(function ($results) use ($alias) {
@@ -52,7 +54,9 @@ class TimedBehavior extends Behavior
      */
     public function beforeSave(EventInterface $event): void
     {
-        $alias = $event->getSubject()->getAlias();
+        /** @var \Cake\Datasource\RepositoryInterface $table */
+        $table = $event->getSubject();
+        $alias = $table->getAlias();
         DebugTimer::start($alias . '_save', $alias . '->save()');
     }
 
@@ -64,7 +68,9 @@ class TimedBehavior extends Behavior
      */
     public function afterSave(EventInterface $event): void
     {
-        $alias = $event->getSubject()->getAlias();
+        /** @var \Cake\Datasource\RepositoryInterface $table */
+        $table = $event->getSubject();
+        $alias = $table->getAlias();
         DebugTimer::stop($alias . '_save');
     }
 }

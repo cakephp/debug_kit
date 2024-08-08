@@ -66,8 +66,10 @@ class DebugInclude
             $packages = array_merge($lockContent['packages'], $lockContent['packages-dev']);
 
             foreach ($packages as $package) {
-                $this->_composerPaths[$package['name']] = $vendorDir
-                    . str_replace('/', DIRECTORY_SEPARATOR, $package['name'])
+                /** @var string $name */
+                $name = $package['name'];
+                $this->_composerPaths[$name] = $vendorDir
+                    . str_replace('/', DIRECTORY_SEPARATOR, $name)
                     . DIRECTORY_SEPARATOR;
             }
         }
@@ -80,7 +82,8 @@ class DebugInclude
      */
     public function includePaths(): array
     {
-        $paths = explode(PATH_SEPARATOR, get_include_path());
+        /** @psalm-suppress RedundantCast */
+        $paths = explode(PATH_SEPARATOR, (string)get_include_path());
         $paths = array_filter($paths, function ($path) {
             if ($path === '.' || strlen($path) === 0) {
                 return false;

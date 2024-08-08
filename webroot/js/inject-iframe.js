@@ -98,9 +98,12 @@ if (elem) {
   if (doc.addEventListener) {
     // This ensures that all event listeners get applied only once.
     if (!win.debugKitListenersApplied) {
-      doc.addEventListener('DOMContentLoaded', onReady, false);
-      doc.addEventListener('DOMContentLoaded', proxyAjaxOpen, false);
-      doc.addEventListener('DOMContentLoaded', proxyAjaxSend, false);
+      // Add support for turbo DOMContentLoaded alternative
+      // see https://turbo.hotwired.dev/reference/events#turbo%3Aload
+      const loadedEvent = typeof Turbo !== 'undefined' && Turbo !== null ? 'turbo:load' : 'DOMContentLoaded';
+      doc.addEventListener(loadedEvent, onReady, false);
+      doc.addEventListener(loadedEvent, proxyAjaxOpen, false);
+      doc.addEventListener(loadedEvent, proxyAjaxSend, false);
       win.debugKitListenersApplied = true;
     }
   } else {

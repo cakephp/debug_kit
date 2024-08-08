@@ -85,7 +85,7 @@ class ComposerController extends DebugKitController
         putenv('COMPOSER_HOME=' . $bin);
         putenv('COMPOSER_CACHE_DIR=' . CACHE);
 
-        $dir = getcwd();
+        $dir = (string)getcwd();
         chdir(ROOT);
         $timeLimit = ini_get('max_execution_time');
         set_time_limit(300);

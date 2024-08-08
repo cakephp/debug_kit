@@ -182,7 +182,7 @@ export default class Toolbar {
     });
     $(document).on('click', '.js-toolbar-load-panel', function () {
       const panelId = $(this).attr('data-panel-id');
-      that.loadPanel(panelId, 'panelhistory');
+      that.loadPanel(panelId, 'history');
     });
     $(document).on('click', '.js-panel-close', () => {
       that.hide();

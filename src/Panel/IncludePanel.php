@@ -19,6 +19,7 @@ use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 use DebugKit\DebugInclude;
 use DebugKit\DebugPanel;
+use function Cake\Core\deprecationWarning;
 
 /**
  * Provides a list of included files for the current request
@@ -38,6 +39,10 @@ class IncludePanel extends DebugPanel
     public function __construct()
     {
         $this->_debug = new DebugInclude();
+        deprecationWarning(
+            '5.1.0',
+            'Include panel is deprecated. Remove it from your panel configuration, and use Environment Panel instead.'
+        );
     }
 
     /**

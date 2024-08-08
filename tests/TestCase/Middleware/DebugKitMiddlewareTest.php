@@ -42,7 +42,12 @@ class DebugKitMiddlewareTest extends TestCase
         'plugin.DebugKit.Panels',
     ];
 
-    protected $oldConfig;
+    protected ?array $oldConfig;
+
+    /**
+     * @var bool
+     */
+    protected bool $restore = false;
 
     /**
      * setup
@@ -56,7 +61,7 @@ class DebugKitMiddlewareTest extends TestCase
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'This test fails in CI with sqlite');
         $this->oldConfig = Configure::read('DebugKit');
-        $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'];
+        $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] ?? false;
         $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = true;
     }
 
@@ -126,7 +131,7 @@ class DebugKitMiddlewareTest extends TestCase
         $this->assertNotNull($result->panels[12]->summary);
         $this->assertSame('Sql Log', $result->panels[12]->title);
 
-        $timeStamp = filectime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'main.js');
+        $timeStamp = filectime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'inject-iframe.js');
 
         $expected = '<html><title>test</title><body><p>some text</p>' .
             '<script id="__debug_kit_script" data-id="' . $result->id . '" ' .

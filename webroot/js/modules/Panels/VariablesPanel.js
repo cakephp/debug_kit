@@ -6,7 +6,7 @@ export default (($) => {
       } else {
         document.cookie = `debugKit_sort=1; path=${window.debugKitWebroot}`;
       }
-      toolbar.loadPanel(toolbar.currentPanel(), 'panelvariables');
+      toolbar.loadPanel(toolbar.currentPanel(), 'variables');
     });
   }
 

@@ -25,6 +25,7 @@ use Cake\Log\Log;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
+use DebugKit\Panel\SqlLogPanel;
 use DebugKit\ToolbarService;
 
 /**
@@ -43,6 +44,11 @@ class ToolbarServiceTest extends TestCase
     ];
 
     /**
+     * @var bool
+     */
+    protected bool $restore = false;
+
+    /**
      * @var EventManager
      */
     protected $events;
@@ -59,7 +65,7 @@ class ToolbarServiceTest extends TestCase
 
         $connection = ConnectionManager::get('test');
         $this->skipIf($connection->getDriver() instanceof Sqlite, 'Schema insertion/removal breaks SQLite');
-        $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'];
+        $this->restore = $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] ?? false;
         $GLOBALS['FORCE_DEBUGKIT_TOOLBAR'] = true;
     }
 
@@ -87,7 +93,7 @@ class ToolbarServiceTest extends TestCase
 
         $this->assertContains('SqlLog', $bar->loadedPanels());
         $this->assertGreaterThan(1, $this->events->listeners('Controller.shutdown'));
-        $this->assertInstanceOf('DebugKit\Panel\SqlLogPanel', $bar->panel('SqlLog'));
+        $this->assertInstanceOf(SqlLogPanel::class, $bar->panel('SqlLog'));
     }
 
     /**
@@ -100,7 +106,7 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, ['panels' => [
             'DebugKit.SqlLog' => false,
             'DebugKit.Cache' => true,
-            'DebugKit.Session',
+            'DebugKit.Session' => true,
         ]]);
         $bar->loadPanels();
 
@@ -239,7 +245,7 @@ class ToolbarServiceTest extends TestCase
 
         $requests = $this->getTableLocator()->get('DebugKit.Requests');
         $result = $requests->find()
-            ->order(['Requests.requested_at' => 'DESC'])
+            ->orderBy(['Requests.requested_at' => 'DESC'])
             ->contain('Panels')
             ->first();
 
@@ -250,10 +256,13 @@ class ToolbarServiceTest extends TestCase
         $this->assertSame(200, $result->status_code);
         $this->assertGreaterThan(1, $result->panels);
 
-        $this->assertSame('SqlLog', $result->panels[12]->panel);
-        $this->assertSame('DebugKit.sql_log_panel', $result->panels[12]->element);
-        $this->assertSame('0', $result->panels[12]->summary);
-        $this->assertSame('Sql Log', $result->panels[12]->title);
+        $this->assertSame('Timer', $result->panels[12]->panel);
+        $this->assertSame('DebugKit.timer_panel', $result->panels[12]->element);
+        $this->assertMatchesRegularExpression(
+            '/\d+\.\d+\s[ms]+\s+\/\s+\d+\.\d+\s+[mbMB]+/',
+            $result->panels[10]->summary
+        );
+        $this->assertSame('Timer', $result->panels[12]->title);
     }
 
     /**
@@ -305,6 +314,8 @@ class ToolbarServiceTest extends TestCase
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
         $row = $bar->saveData($request, $response);
+        $this->assertNotEmpty($row);
+        /** @var \DebugKit\Model\Entity\Request $row */
         $response = $bar->injectScripts($row, $response);
 
         $timeStamp = filemtime(Plugin::path('DebugKit') . 'webroot' . DS . 'js' . DS . 'inject-iframe.js');
@@ -334,7 +345,7 @@ class ToolbarServiceTest extends TestCase
         $row = new RequestEntity(['id' => 'abc123']);
 
         $result = $bar->injectScripts($row, $response);
-        $this->assertInstanceOf('Cake\Http\Response', $result);
+        $this->assertInstanceOf(Response::class, $result);
         $this->assertSame(file_get_contents(__FILE__), '' . $result->getBody());
         $this->assertTrue($result->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
     }
@@ -356,7 +367,7 @@ class ToolbarServiceTest extends TestCase
         $row = new RequestEntity(['id' => 'abc123']);
 
         $result = $bar->injectScripts($row, $response);
-        $this->assertInstanceOf('Cake\Http\Response', $result);
+        $this->assertInstanceOf(Response::class, $result);
         $this->assertSame('I am a teapot!', (string)$response->getBody());
     }
 
@@ -381,6 +392,8 @@ class ToolbarServiceTest extends TestCase
         $bar->loadPanels();
 
         $row = $bar->saveData($request, $response);
+        $this->assertNotEmpty($row);
+        /** @var \DebugKit\Model\Entity\Request $row */
         $response = $bar->injectScripts($row, $response);
         $this->assertTextEquals('{"some":"json"}', (string)$response->getBody());
         $this->assertTrue($response->hasHeader('X-DEBUGKIT-ID'), 'Should have a tracking id');
@@ -410,7 +423,7 @@ class ToolbarServiceTest extends TestCase
      * @dataProvider domainsProvider
      * @return void
      */
-    public function testIsEnabledProductionEnv($domain, $isEnabled)
+    public function testIsEnabledProductionEnv(string $domain, bool $isEnabled)
     {
         Configure::write('debug', true);
         putenv("HTTP_HOST=$domain");
@@ -421,7 +434,7 @@ class ToolbarServiceTest extends TestCase
         $this->assertTrue($bar->isEnabled(), 'When forced should always be on.');
     }
 
-    public static function domainsProvider()
+    public static function domainsProvider(): array
     {
         return [
             ['localhost', true],

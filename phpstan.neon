@@ -3,10 +3,12 @@ includes:
 
 parameters:
 	level: 6
-	checkMissingIterableValueType: false
-	checkGenericClassInNonGenericObjectType: false
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- tests/bootstrap.php
 	paths:
 		- src/
+	ignoreErrors:
+			- identifier: missingType.generics
+			- identifier: missingType.iterableValue
+

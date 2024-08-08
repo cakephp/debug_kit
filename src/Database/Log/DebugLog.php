@@ -127,13 +127,34 @@ class DebugLog extends AbstractLogger
      */
     public function log($level, string|Stringable $message, array $context = []): void
     {
-        $query = $context['query'];
+        $query = $context['query'] ?? null;
 
         if ($this->_logger) {
             $this->_logger->log($level, $message, $context);
         }
 
-        if ($this->_includeSchema === false && $this->isSchemaQuery($query)) {
+        // This specific to Elastic Search
+        if (!$query instanceof LoggedQuery && isset($context['request']) && isset($context['response'])) {
+            $took = $context['response']['took'] ?? 0;
+            $this->_totalTime += $took;
+
+            $this->_queries[] = [
+                'query' => json_encode([
+                    'method' => $context['request']['method'],
+                    'path' => $context['request']['path'],
+                    'data' => $context['request']['data'],
+                ], JSON_PRETTY_PRINT),
+                'took' => $took,
+                'rows' => $context['response']['hits']['total']['value'] ?? $context['response']['hits']['total'] ?? 0,
+            ];
+
+            return;
+        }
+
+        if (
+            !$query instanceof LoggedQuery ||
+            ($this->_includeSchema === false && $this->isSchemaQuery($query))
+        ) {
             return;
         }
 

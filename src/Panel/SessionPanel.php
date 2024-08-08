@@ -14,9 +14,11 @@ declare(strict_types=1);
  */
 namespace DebugKit\Panel;
 
+use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Event\EventInterface;
 use DebugKit\DebugPanel;
+use function Cake\Core\deprecationWarning;
 
 /**
  * Provides debug information on the Session contents.
@@ -31,11 +33,16 @@ class SessionPanel extends DebugPanel
      */
     public function shutdown(EventInterface $event): void
     {
-        /** @var \Cake\Http\ServerRequest|null $request */
-        $request = $event->getSubject()->getRequest();
-        if ($request) {
-            $content = Debugger::exportVarAsNodes($request->getSession()->read());
-            $this->_data = compact('content');
-        }
+        deprecationWarning(
+            '5.1.0',
+            'SessionPanel is deprecated. Remove it from your panel list, and use Request panel instead.'
+        );
+        /** @var \Cake\Controller\Controller $controller */
+        $controller = $event->getSubject();
+        $request = $controller->getRequest();
+
+        $maxDepth = Configure::read('DebugKit.maxDepth', 5);
+        $content = Debugger::exportVarAsNodes($request->getSession()->read(), $maxDepth);
+        $this->_data = compact('content');
     }
 }

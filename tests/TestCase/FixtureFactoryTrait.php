@@ -51,6 +51,13 @@ trait FixtureFactoryTrait
                 'cookie' => Debugger::exportVarAsNodes([
                     'toolbarDisplay' => 'show',
                 ]),
+                'params' => [
+                    'plugin' => null,
+                    'controller' => 'Tasks',
+                    'action' => 'add',
+                    '_ext' => null,
+                    'pass' => [],
+                ],
             ];
         }
         $panels = $this->getTableLocator()->get('DebugKit.Panels');

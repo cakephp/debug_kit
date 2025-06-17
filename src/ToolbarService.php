@@ -178,7 +178,7 @@ class ToolbarService
             Log::warning(
                 "DebugKit is disabling itself as your host `{$host}` " .
                 "is not in the known safe list of top-level-domains ({$safeList}). " .
-                'If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option.'
+                'If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option.',
             );
         }
 
@@ -278,7 +278,7 @@ class ToolbarService
         } catch (MissingDatasourceConfigException $e) {
             Log::warning(
                 'Unable to save request. Check your debug_kit datasource connection ' .
-                'or ensure that PDO SQLite extension is enabled.'
+                'or ensure that PDO SQLite extension is enabled.',
             );
             Log::warning($e->getMessage());
 
@@ -379,7 +379,7 @@ class ToolbarService
             $row->id,
             $url,
             Router::url($this->getToolbarUrl()),
-            $nonce
+            $nonce,
         );
         $contents = substr($contents, 0, $pos) . $script . substr($contents, $pos);
         $body->rewind();

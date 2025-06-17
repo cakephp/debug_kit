@@ -73,7 +73,7 @@ class SimpleGraphHelper extends Helper
             '<div class="c-graph-bar" style="%s"><div class="c-graph-bar__value" style="%s" title="%s"> </div></div>',
             "width: {$width}px",
             "margin-left: {$graphOffset}px; width: {$graphValue}px",
-            "Starting {$offset}ms into the request, taking {$value}ms"
+            "Starting {$offset}ms into the request, taking {$value}ms",
         );
     }
 }

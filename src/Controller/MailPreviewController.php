@@ -254,8 +254,7 @@ class MailPreviewController extends DebugKitController
             }
         }
 
-        /** @psalm-suppress PossiblyNullArgument */
-        return $this->findPart($email, $partType) ?: null;
+        return $this->findPart($email, (string)$partType) ?: null;
     }
 
     /**
@@ -285,7 +284,7 @@ class MailPreviewController extends DebugKitController
             throw new NotFoundException(sprintf(
                 'Mailer preview `%s::%s` not found',
                 $previewName,
-                $emailName
+                $emailName,
             ));
         }
 

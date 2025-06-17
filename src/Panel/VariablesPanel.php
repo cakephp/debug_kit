@@ -65,6 +65,7 @@ class VariablesPanel extends DebugPanel
     protected function _walkDebugInfo(callable $walker, object $item): array|string
     {
         try {
+            /** @phpstan-ignore method.notFound */
             $info = $item->__debugInfo();
         } catch (Exception $exception) {
             return sprintf(
@@ -72,7 +73,7 @@ class VariablesPanel extends DebugPanel
                 get_class($item),
                 $exception->getMessage(),
                 $exception->getFile(),
-                $exception->getLine()
+                $exception->getLine(),
             );
         }
 

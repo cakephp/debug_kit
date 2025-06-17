@@ -2,6 +2,7 @@
 <files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Database/Log/DebugLog.php">
     <InternalMethod>
+      <code><![CDATA[getContext]]></code>
       <code><![CDATA[jsonSerialize]]></code>
     </InternalMethod>
   </file>

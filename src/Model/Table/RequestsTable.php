@@ -160,7 +160,7 @@ class RequestsTable extends Table
                 } catch (PDOException $e) {
                     Log::warning(
                         'Unable to run VACUUM on debug kit SQLite database. ' .
-                            'Please manually remove the database file'
+                            'Please manually remove the database file',
                     );
                     Log::warning((string)$e);
                 }

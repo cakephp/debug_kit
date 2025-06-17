@@ -46,7 +46,7 @@ class DebugKitTransportTest extends TestCase
         };
         $this->transport = new DebugKitTransport(
             ['debugKitLog' => $this->log],
-            $this->wrapped
+            $this->wrapped,
         );
     }
 

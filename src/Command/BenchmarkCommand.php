@@ -169,7 +169,7 @@ class BenchmarkCommand extends Command
     {
         $parser->setDescription(
             'Allows you to obtain some rough benchmarking statistics' .
-            'about a fully qualified URL.'
+            'about a fully qualified URL.',
         )
         ->addArgument('url', [
             'help' => 'The URL to request.',
@@ -187,7 +187,7 @@ class BenchmarkCommand extends Command
         ])
         ->setEpilog(
             'Example Use: `cake benchmark --n 10 --t 100 http://localhost/testsite`. ' .
-            '<info>Note:</info> this benchmark does not include browser render times.'
+            '<info>Note:</info> this benchmark does not include browser render times.',
         );
 
         return $parser;

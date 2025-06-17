@@ -41,7 +41,7 @@ class IncludePanel extends DebugPanel
         $this->_debug = new DebugInclude();
         deprecationWarning(
             '5.1.0',
-            'Include panel is deprecated. Remove it from your panel configuration, and use Environment Panel instead.'
+            'Include panel is deprecated. Remove it from your panel configuration, and use Environment Panel instead.',
         );
     }
 
@@ -62,7 +62,7 @@ class IncludePanel extends DebugPanel
                 $return['plugins'][$pluginName][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName(
                     $file,
                     'plugin',
-                    $pluginName
+                    $pluginName,
                 );
             } elseif ($this->_debug->isAppFile($file)) {
                 $return['app'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'app');

@@ -74,27 +74,27 @@ class DebugIncludeTest extends TestCase
 
         $this->assertSame(
             'CAKE/Controller/Controller.php',
-            $include->niceFileName(CAKE . 'Controller/Controller.php', 'cake')
+            $include->niceFileName(CAKE . 'Controller/Controller.php', 'cake'),
         );
 
         $this->assertSame(
             'APP/Application.php',
-            $include->niceFileName(APP . 'Application.php', 'app')
+            $include->niceFileName(APP . 'Application.php', 'app'),
         );
 
         $this->assertSame(
             'ROOT/tests/bootstrap.php',
-            $include->niceFileName(ROOT . '/tests/bootstrap.php', 'root')
+            $include->niceFileName(ROOT . '/tests/bootstrap.php', 'root'),
         );
 
         $this->assertSame(
             'DebugKit/tests/bootstrap.php',
-            $include->niceFileName(ROOT . '/tests/bootstrap.php', 'plugin', 'DebugKit')
+            $include->niceFileName(ROOT . '/tests/bootstrap.php', 'plugin', 'DebugKit'),
         );
 
         $this->assertSame(
             'src/Controller/Controller.php',
-            $include->niceFileName(CAKE . 'Controller/Controller.php', 'vendor', 'cakephp/cakephp')
+            $include->niceFileName(CAKE . 'Controller/Controller.php', 'vendor', 'cakephp/cakephp'),
         );
     }
 

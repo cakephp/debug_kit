@@ -66,7 +66,7 @@ trait SqlTraceTrait
     protected function fileStamp(
         SelectQuery|UpdateQuery|DeleteQuery $query,
         int $start = 1,
-        bool $debugOnly = true
+        bool $debugOnly = true,
     ): SelectQuery|UpdateQuery|DeleteQuery {
         if (!Configure::read('debug') && $debugOnly === true) {
             return $query;

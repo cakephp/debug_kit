@@ -605,6 +605,10 @@ strong {
     box-shadow: 0 2px 0 var(--routes-btn-active-border);
 }
 
+.c-sql-log-panel__entry .in-transaction {
+    background: var(--cake-light-gray);
+}
+
 .c-toolbar {
     display: flex;
     background: var(--toolbar-bg);

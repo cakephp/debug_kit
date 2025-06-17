@@ -35,7 +35,7 @@ class SessionPanel extends DebugPanel
     {
         deprecationWarning(
             '5.1.0',
-            'SessionPanel is deprecated. Remove it from your panel list, and use Request panel instead.'
+            'SessionPanel is deprecated. Remove it from your panel list, and use Request panel instead.',
         );
         /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();

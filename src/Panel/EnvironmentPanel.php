@@ -51,7 +51,7 @@ class EnvironmentPanel extends DebugPanel
         $phpVer = phpversion();
         $return['php'] = array_merge(
             ['PHP_VERSION' => $phpVer],
-            $_SERVER
+            $_SERVER,
         );
         unset($return['php']['argv']);
 
@@ -86,7 +86,7 @@ class EnvironmentPanel extends DebugPanel
             [
                 'TIME_START', 'SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR',
             ],
-            ''
+            '',
         );
         $var = get_defined_constants(true);
         $return['app'] = array_diff_key($var['user'], $return['cake'], $hiddenCakeConstants);
@@ -131,7 +131,7 @@ class EnvironmentPanel extends DebugPanel
                 $return['plugins'][$pluginName][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName(
                     $file,
                     'plugin',
-                    $pluginName
+                    $pluginName,
                 );
             } elseif ($this->_debug->isAppFile($file)) {
                 $return['app'][$this->_debug->getFileType($file)][] = $this->_debug->niceFileName($file, 'app');

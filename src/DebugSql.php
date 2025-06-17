@@ -72,7 +72,7 @@ TEXT;
         Query $query,
         bool $showValues = true,
         ?bool $showHtml = null,
-        int $stackDepth = 0
+        int $stackDepth = 0,
     ): Query {
         if (!Configure::read('debug')) {
             return $query;
@@ -126,7 +126,7 @@ TEXT;
                     HtmlHighlighter::HIGHLIGHT_WORD => 'style="color: #9c27b0;"',
                     HtmlHighlighter::HIGHLIGHT_PRE => 'style="color: #222; background-color: transparent;"',
                 ],
-                false
+                false,
             );
         } else {
             $highlighter = new NullHighlighter();
@@ -164,7 +164,7 @@ TEXT;
         Query $query,
         bool $showValues = true,
         ?bool $showHtml = null,
-        int $stackDepth = 1
+        int $stackDepth = 1,
     ): void {
         static::sql($query, $showValues, $showHtml, $stackDepth);
         die(1);
@@ -221,6 +221,6 @@ TEXT;
             $keys[] = is_string($key) ? "/$key\b/" : '/[?]/';
         }
 
-        return preg_replace($keys, $params, $sql, $limit);
+        return (string)preg_replace($keys, $params, $sql, $limit);
     }
 }

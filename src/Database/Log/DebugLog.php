@@ -66,6 +66,13 @@ class DebugLog extends AbstractLogger
     protected bool $_includeSchema = false;
 
     /**
+     * Whether a transaction is currently open or not.
+     *
+     * @var bool
+     */
+    protected bool $inTransaction = false;
+
+    /**
      * Constructor
      *
      * @param \Psr\Log\LoggerInterface|null $logger The logger to decorate and spy on.
@@ -127,6 +134,7 @@ class DebugLog extends AbstractLogger
      */
     public function log($level, string|Stringable $message, array $context = []): void
     {
+        /** @var \Cake\Database\Log\LoggedQuery|object|null $query */
         $query = $context['query'] ?? null;
 
         if ($this->_logger) {
@@ -146,6 +154,9 @@ class DebugLog extends AbstractLogger
                 ], JSON_PRETTY_PRINT),
                 'took' => $took,
                 'rows' => $context['response']['hits']['total']['value'] ?? $context['response']['hits']['total'] ?? 0,
+                'inTransaction' => $this->inTransaction,
+                'isCommitOrRollback' => false,
+                'role' => '',
             ];
 
             return;
@@ -162,11 +173,26 @@ class DebugLog extends AbstractLogger
 
         $this->_totalTime += $data['took'];
 
+        $sql = (string)$query;
+        $isBegin = $sql === 'BEGIN';
+        $isCommitOrRollback = $sql === 'COMMIT' || $sql === 'ROLLBACK';
+
+        if ($isBegin) {
+            $this->inTransaction = true;
+        }
+
         $this->_queries[] = [
-            'query' => (string)$query,
+            'query' => $sql,
             'took' => $data['took'],
             'rows' => $data['numRows'],
+            'inTransaction' => $this->inTransaction,
+            'isCommitOrRollback' => $isCommitOrRollback,
+            'role' => $query->getContext()['role'],
         ];
+
+        if ($isCommitOrRollback) {
+            $this->inTransaction = false;
+        }
     }
 
     /**

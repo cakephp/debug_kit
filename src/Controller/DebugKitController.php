@@ -49,7 +49,7 @@ class DebugKitController extends Controller
                 Log::info(
                     'Cake Authorization plugin is enabled. If you would like ' .
                     'to force DebugKit to ignore it, set `DebugKit.ignoreAuthorization` ' .
-                    ' Configure option to true.'
+                    ' Configure option to true.',
                 );
             }
         }

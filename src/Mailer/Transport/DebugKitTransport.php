@@ -51,7 +51,7 @@ class DebugKitTransport extends AbstractTransport
             $className = App::className(
                 $config['originalClassName'],
                 'Mailer/Transport',
-                'Transport'
+                'Transport',
             );
         }
 

@@ -55,6 +55,7 @@ class ToolbarService
     protected array $_defaultConfig = [
         'panels' => [
             'DebugKit.Cache' => true,
+            'DebugKit.Dump' => true,
             'DebugKit.Request' => true,
             'DebugKit.SqlLog' => true,
             'DebugKit.Timer' => true,

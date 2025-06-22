@@ -203,7 +203,6 @@ class DebugLog extends AbstractLogger
      */
     protected function isSchemaQuery(LoggedQuery $query): bool
     {
-        /** @psalm-suppress InternalMethod */
         $querystring = $query->jsonSerialize()['query'];
 
         return // Multiple engines

@@ -57,7 +57,6 @@ class DebugKitTransport extends AbstractTransport
 
         if ($className) {
             unset($config['originalClassName'], $config['debugKitLog']);
-            /** @psalm-suppress UnsafeInstantiation */
             $this->originalTransport = new $className($config);
         }
     }

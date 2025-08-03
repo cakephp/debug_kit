@@ -124,4 +124,21 @@ class SqlLogPanelTest extends TestCase
         $result = $this->panel->summary();
         $this->assertMatchesRegularExpression('/\d+ \\/ \d+(\.\d+)? ms/', $result);
     }
+
+    /**
+     * Testing a simple connection (no set/getLogger on driver).
+     *
+     * @return void
+     */
+    public function testWithSimpleConnection()
+    {
+        ConnectionManager::setConfig('simple', [
+            'className' => 'DebugKit\TestApp\Stub\SimpleConnectionStub',
+        ]);
+
+        $this->panel->addConnection('simple'); // should not throw an error
+        $this->assertTrue(true);
+
+        ConnectionManager::drop('simple');
+    }
 }

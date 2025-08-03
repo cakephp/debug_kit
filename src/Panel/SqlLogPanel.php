@@ -68,6 +68,11 @@ class SqlLogPanel extends DebugPanel
             return;
         }
         $driver = $connection->getDriver();
+
+        if (!method_exists($driver, 'setLogger')) {
+            return;
+        }
+
         $logger = null;
         if ($driver instanceof Driver) {
             $logger = $driver->getLogger();

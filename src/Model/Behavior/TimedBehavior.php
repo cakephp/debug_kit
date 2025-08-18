@@ -30,20 +30,22 @@ class TimedBehavior extends Behavior
      *
      * @param \Cake\Event\EventInterface $event The beforeFind event
      * @param \Cake\ORM\Query\SelectQuery $query SelectQuery
-     * @return \Cake\ORM\Query\SelectQuery
+     * @return void
      */
-    public function beforeFind(EventInterface $event, SelectQuery $query): SelectQuery
+    public function beforeFind(EventInterface $event, SelectQuery $query): void
     {
         /** @var \Cake\Datasource\RepositoryInterface $table */
         $table = $event->getSubject();
         $alias = $table->getAlias();
         DebugTimer::start($alias . '_find', $alias . '->find()');
 
-        return $query->formatResults(function ($results) use ($alias) {
+        $formattedQuery = $query->formatResults(function ($results) use ($alias) {
             DebugTimer::stop($alias . '_find');
 
             return $results;
         });
+
+        $event->setResult($formattedQuery);
     }
 
     /**

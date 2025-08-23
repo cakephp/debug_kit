@@ -34,7 +34,7 @@ class SqlLogPanel extends DebugPanel
      *
      * @var array
      */
-    protected array $_loggers = [];
+    protected static array $_loggers = [];
 
     /**
      * Initialize hook - configures logger.
@@ -47,34 +47,52 @@ class SqlLogPanel extends DebugPanel
     public function initialize(): void
     {
         $configs = ConnectionManager::configured();
-        $includeSchemaReflection = (bool)Configure::read('DebugKit.includeSchemaReflection');
 
         foreach ($configs as $name) {
-            $connection = ConnectionManager::get($name);
-            if ($connection->configName() === 'debug_kit') {
-                continue;
-            }
-            $driver = $connection->getDriver();
-            $logger = null;
-            if ($driver instanceof Driver) {
-                $logger = $driver->getLogger();
-            } elseif (method_exists($connection, 'getLogger')) {
-                // ElasticSearch connection holds the logger, not the Elastica Driver
-                $logger = $connection->getLogger();
-            }
-
-            if ($logger instanceof DebugLog) {
-                $logger->setIncludeSchema($includeSchemaReflection);
-                $this->_loggers[] = $logger;
-                continue;
-            }
-            $logger = new DebugLog($logger, $name, $includeSchemaReflection);
-
-            /** @var \Cake\Database\Driver $driver */
-            $driver->setLogger($logger);
-
-            $this->_loggers[] = $logger;
+            static::addConnection($name);
         }
+    }
+
+    /**
+     * Add a connection to the list of loggers.
+     *
+     * @param string $name The name of the connection to add.
+     * @return void
+     */
+    public static function addConnection(string $name): void
+    {
+        $includeSchemaReflection = (bool)Configure::read('DebugKit.includeSchemaReflection');
+
+        $connection = ConnectionManager::get($name);
+        if ($connection->configName() === 'debug_kit') {
+            return;
+        }
+        $driver = $connection->getDriver();
+
+        if (!method_exists($driver, 'setLogger')) {
+            return;
+        }
+
+        $logger = null;
+        if ($driver instanceof Driver) {
+            $logger = $driver->getLogger();
+        } elseif (method_exists($connection, 'getLogger')) {
+            // ElasticSearch connection holds the logger, not the Elastica Driver
+            $logger = $connection->getLogger();
+        }
+
+        if ($logger instanceof DebugLog) {
+            $logger->setIncludeSchema($includeSchemaReflection);
+            static::$_loggers[] = $logger;
+
+            return;
+        }
+        $logger = new DebugLog($logger, $name, $includeSchemaReflection);
+
+        /** @var \Cake\Database\Driver $driver */
+        $driver->setLogger($logger);
+
+        static::$_loggers[] = $logger;
     }
 
     /**
@@ -88,7 +106,7 @@ class SqlLogPanel extends DebugPanel
             'tables' => array_map(function (Table $table) {
                 return $table->getAlias();
             }, $this->getTableLocator()->genericInstances()),
-            'loggers' => $this->_loggers,
+            'loggers' => static::$_loggers,
         ];
     }
 
@@ -100,7 +118,7 @@ class SqlLogPanel extends DebugPanel
     public function summary(): string
     {
         $count = $time = 0;
-        foreach ($this->_loggers as $logger) {
+        foreach (static::$_loggers as $logger) {
             $count += count($logger->queries());
             $time += $logger->totalTime();
         }

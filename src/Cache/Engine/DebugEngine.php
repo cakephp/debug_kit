@@ -82,7 +82,6 @@ class DebugEngine extends CacheEngine
      */
     public function init(array $config = []): bool
     {
-        /** @psalm-suppress RedundantPropertyInitializationCheck */
         if (!isset($this->_engine)) {
             $registry = new CacheRegistry();
             $this->_engine = $registry->load('spies', $this->_config);
@@ -335,7 +334,6 @@ class DebugEngine extends CacheEngine
      */
     public function __toString(): string
     {
-        /** @psalm-suppress RedundantPropertyInitializationCheck */
         if (isset($this->_engine)) {
             // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
             [$ns, $class] = namespaceSplit(get_class($this->_engine));

@@ -82,7 +82,6 @@ class DebugInclude
      */
     public function includePaths(): array
     {
-        /** @psalm-suppress RedundantCast */
         $paths = explode(PATH_SEPARATOR, (string)get_include_path());
         $paths = array_filter($paths, function ($path) {
             if ($path === '.' || strlen($path) === 0) {

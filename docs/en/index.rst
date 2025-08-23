@@ -41,8 +41,8 @@ Configuration
 * ``DebugKit.safeTld`` - Set an array of whitelisted TLDs for local development.
   This can be used to make sure DebugKit displays on hosts it otherwise determines unsafe. ::
 
-    // Allow e.g. http://foo.bar.dev or http://my-shop.local domains locally
-    Configure::write('DebugKit.safeTld', ['dev', 'local', 'example']);
+    // Allow e.g. http://foo.bar.test or http://my-shop.local domains locally
+    Configure::write('DebugKit.safeTld', ['test', 'local', 'example']);
 
 * ``DebugKit.forceEnable`` - Force DebugKit to display. Careful with this, it is usually
   safer to simply whitelist your local TLDs. Example usage::

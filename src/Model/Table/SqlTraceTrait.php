@@ -57,11 +57,11 @@ trait SqlTraceTrait
      *
      * @template T of \Cake\ORM\Query\SelectQuery|\Cake\ORM\Query\UpdateQuery|\Cake\ORM\Query\DeleteQuery
      * @param \Cake\ORM\Query\SelectQuery|\Cake\ORM\Query\UpdateQuery|\Cake\ORM\Query\DeleteQuery $query The Query to insert a comment into.
-     * @psalm-param T $query
+     * @phpstan-param T $query
      * @param int $start How many entries in the stack trace to skip.
      * @param bool $debugOnly False to always stamp queries with a comment.
      * @return \Cake\ORM\Query\SelectQuery|\Cake\ORM\Query\UpdateQuery|\Cake\ORM\Query\DeleteQuery
-     * @psalm-return T
+     * @phpstan-return T
      */
     protected function fileStamp(
         SelectQuery|UpdateQuery|DeleteQuery $query,

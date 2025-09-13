@@ -10,27 +10,18 @@ if (elem) {
   let bodyOverflow;
 
   const onMessage = (event) => {
-    if (event.data === 'collapse') {
-      iframe.height = 40;
-      iframe.width = 40;
-      doc.body.style.overflow = bodyOverflow;
-      return;
-    }
-    if (event.data === 'toolbar') {
-      iframe.height = 40;
-      iframe.width = '100%';
-      doc.body.style.overflow = bodyOverflow;
-      return;
-    }
-    if (event.data === 'expand') {
-      iframe.width = '100%';
-      iframe.height = '100%';
-      doc.body.style.overflow = 'hidden';
-    }
-    if (event.data === 'error') {
-      iframe.width = '40%';
-      iframe.height = '40%';
-      doc.body.style.overflow = bodyOverflow;
+    const actions = {
+      collapse: { height: 40, width: 40, overflow: bodyOverflow },
+      toolbar: { height: 40, width: '100%', overflow: bodyOverflow },
+      expand: { height: '100%', width: '100%', overflow: 'hidden' },
+      error: { height: '40%', width: '40%', overflow: bodyOverflow }
+    };
+
+    const action = actions[event.data];
+    if (action) {
+      iframe.height = action.height;
+      iframe.width = action.width;
+      doc.body.style.overflow = action.overflow;
     }
   };
 
@@ -38,24 +29,29 @@ if (elem) {
     if (!win.debugKitId) {
       return;
     }
-    const { body } = doc;
 
-    // Cannot use css text, because of CSP compatibility.
-    iframe = doc.createElement('iframe');
-    iframe.style.position = 'fixed';
-    iframe.style.bottom = 0;
-    iframe.style.right = 0;
-    iframe.style.border = 0;
-    iframe.style.outline = 0;
-    iframe.style.overflow = 'hidden';
-    iframe.style.zIndex = 99999;
-    iframe.height = 40;
-    iframe.width = 40;
-    iframe.src = `${window.debugKitBaseUrl}debug-kit/toolbar/${window.debugKitId}`;
+    // Store body overflow before creating iframe
+    bodyOverflow = doc.body.style.overflow;
 
-    body.appendChild(iframe);
-    bodyOverflow = body.style.overflow;
+    // Create and configure iframe in one go
+    iframe = Object.assign(doc.createElement('iframe'), {
+      src: `${window.debugKitBaseUrl}debug-kit/toolbar/${window.debugKitId}`,
+      height: 40,
+      width: 40
+    });
 
+    // Set styles efficiently
+    Object.assign(iframe.style, {
+      position: 'fixed',
+      bottom: 0,
+      right: 0,
+      border: 0,
+      outline: 0,
+      overflow: 'hidden',
+      zIndex: 99999
+    });
+
+    doc.documentElement.appendChild(iframe);
     window.addEventListener('message', onMessage, false);
   };
 
@@ -69,7 +65,11 @@ if (elem) {
         url: this._arguments && this._arguments[1],
         type: this.getResponseHeader('Content-Type'),
       };
-      iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+      } else {
+        console.error('DebugKit: iframe not available for XHR logging');
+      }
     }
     if (original) {
       return original.apply(this, [].slice.call(arguments));

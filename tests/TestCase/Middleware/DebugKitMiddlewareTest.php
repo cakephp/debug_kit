@@ -42,7 +42,7 @@ class DebugKitMiddlewareTest extends TestCase
         'plugin.DebugKit.Panels',
     ];
 
-    protected ?array $oldConfig;
+    protected ?array $oldConfig = null;
 
     /**
      * @var bool

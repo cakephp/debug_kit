@@ -86,9 +86,8 @@ class PanelsController extends DebugKitController
         $panel = $this->Panels->get($id, ...['contain' => ['Requests']]);
 
         $this->set('panel', $panel);
-        // @codingStandardsIgnoreStart
+        // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
         $this->set(@unserialize($panel->content));
-        // @codingStandardsIgnoreEnd
     }
 
     /**

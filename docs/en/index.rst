@@ -326,14 +326,15 @@ Helper Functions
 Using DebugTimer
 ----------------
 
-Use the DebugTimer to measure parts of the code that are not captured by the default timers, such as portions of a controller action, service logic or view rendering::
+Use the `DebugTimer` to measure parts of the code that are not captured by the default timers,
+such as portions of a controller action, service logic or view rendering::
 
     use DebugKit\DebugTimer;
 
     public function view($id)
     {
         DebugTimer::start('load_article', 'Fetching article from database');
-            ...
+        // Code to measure the execution time for
         DebugTimer::stop('load_article');
     }
 

@@ -69,9 +69,8 @@ class MailPreviewController extends DebugKitController
         /** @var \DebugKit\Model\Entity\Panel $panel */
         $panel = $this->fetchTable('DebugKit.Panels')->get($panelId);
 
-        // @codingStandardsIgnoreStart
+        // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
         $content = @unserialize($panel->content);
-        // @codingStandardsIgnoreEnd
 
         if (empty($content['emails'][$number])) {
             throw new NotFoundException('No emails found in this request');

@@ -193,13 +193,13 @@ class DebugKitMiddlewareTest extends TestCase
         $handler = $this->handler();
         $handler->expects($this->once())
             ->method('handle')
-            ->will($this->returnCallback(function ($req) use ($response) {
+            ->willReturnCallback(function ($req) use ($response) {
                 $stream = new CallbackStream(function () {
                     return 'hi!';
                 });
 
                 return $response->withBody($stream);
-            }));
+            });
         $middleware = new DebugKitMiddleware();
         $result = $middleware->process($request, $handler);
         $this->assertInstanceOf(Response::class, $result, 'Should return a response');

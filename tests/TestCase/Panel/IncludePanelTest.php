@@ -17,6 +17,7 @@ namespace DebugKit\Test\TestCase\Panel;
 use Cake\Event\Event;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\IncludePanel;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * Class IncludePanelTest
@@ -36,7 +37,9 @@ class IncludePanelTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->panel = new IncludePanel();
+        $this->deprecated(function () {
+            $this->panel = new IncludePanel();
+        });
     }
 
     /**
@@ -44,6 +47,7 @@ class IncludePanelTest extends TestCase
      *
      * @return void
      */
+    #[WithoutErrorHandler]
     public function testShutdown()
     {
         $this->panel->shutdown(new Event('Controller.shutdown'));
@@ -61,6 +65,7 @@ class IncludePanelTest extends TestCase
      *
      * @return void
      */
+    #[WithoutErrorHandler]
     public function testSummary()
     {
         $total = $this->panel->summary();

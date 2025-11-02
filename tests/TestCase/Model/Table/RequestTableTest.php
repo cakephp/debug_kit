@@ -84,7 +84,7 @@ class RequestTableTest extends TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject&\DebugKit\Model\Table\RequestsTable $requestsTableMock */
         $requestsTableMock = $this->getMockForModel('DebugKit.Requests', ['shouldGc']);
         $requestsTableMock->method('shouldGc')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $data = array_fill(0, 10, [
             'url' => '/tasks/add',

@@ -20,6 +20,7 @@ use Cake\Http\ServerRequest;
 use Cake\Http\Session;
 use Cake\TestSuite\TestCase;
 use DebugKit\Panel\SessionPanel;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 
 /**
  * Class RequestPanelTest
@@ -47,6 +48,7 @@ class SessionPanelTest extends TestCase
      *
      * @return void
      */
+    #[WithoutErrorHandler]
     public function testShutdownSkipAttributes()
     {
         $session = new Session();
@@ -57,7 +59,9 @@ class SessionPanelTest extends TestCase
 
         $controller = new Controller($request);
         $event = new Event('Controller.shutdown', $controller);
-        $this->panel->shutdown($event);
+        $this->deprecated(function () use ($event) {
+            $this->panel->shutdown($event);
+        });
 
         $data = $this->panel->data();
         $this->assertArrayHasKey('content', $data);

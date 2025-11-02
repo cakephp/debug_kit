@@ -93,6 +93,49 @@ if (elem) {
     };
   };
 
+  const proxyFetch = () => {
+    if (!window.fetch) return; // in case browser doesn’t support fetch
+    const proxied = window.fetch;
+
+    window.fetch = async function (...args) {
+      const [input, init = {}] = args;
+      const method = (init.method || 'GET').toUpperCase();
+      const url = typeof input === 'string' ? input : input.url;
+
+      let response;
+      try {
+        response = await proxied.apply(this, args);
+
+        const debugId = response.headers.get('X-DEBUGKIT-ID');
+        if (debugId) {
+          const params = {
+            requestId: debugId,
+            status: response.status,
+            date: new Date(),
+            method,
+            url,
+            type: response.headers.get('Content-Type'),
+          };
+          iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+        }
+        return response;
+      } catch (error) {
+        // still notify iframe of a failed fetch if needed
+        const params = {
+          requestId: null,
+          status: 0,
+          date: new Date(),
+          method,
+          url,
+          type: null,
+          error: error.message,
+        };
+        iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+        throw error;
+      }
+    };
+  };
+
   // Bind on ready callbacks to DOMContentLoaded (native js)
   // Since the body is already loaded (DOMContentLoaded), the event is not triggered.
   if (doc.addEventListener) {
@@ -104,6 +147,7 @@ if (elem) {
       doc.addEventListener(loadedEvent, onReady, false);
       doc.addEventListener(loadedEvent, proxyAjaxOpen, false);
       doc.addEventListener(loadedEvent, proxyAjaxSend, false);
+      doc.addEventListener(loadedEvent, proxyFetch, false);
       win.debugKitListenersApplied = true;
     }
   } else {

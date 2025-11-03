@@ -291,10 +291,31 @@ class ToolbarService
         foreach ($this->registry->loaded() as $name) {
             $panel = $this->registry->{$name};
             try {
-                $content = serialize($panel->data());
+                $data = $panel->data();
+
+                // Set error handler to catch warnings/errors during serialization
+                set_error_handler(function ($errno, $errstr) use ($name): void {
+                    throw new Exception("Serialization error in panel '{$name}': {$errstr}");
+                });
+
+                $content = serialize($data);
+
+                restore_error_handler();
             } catch (Exception $e) {
+                restore_error_handler();
+
+                $errorMessage = sprintf(
+                    'Failed to serialize data for panel "%s": %s',
+                    $name,
+                    $e->getMessage(),
+                );
+
+                Log::warning($errorMessage);
+                Log::debug('Panel data type: ' . gettype($data ?? null));
+
                 $content = serialize([
-                    'error' => $e->getMessage(),
+                    'error' => $errorMessage,
+                    'panel' => $name,
                 ]);
             }
             $row->panels[] = $requests->Panels->newEntity([

@@ -26,6 +26,7 @@ use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
 use DebugKit\Panel\SqlLogPanel;
+use DebugKit\TestApp\Panel\SimplePanel;
 use DebugKit\ToolbarService;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -528,9 +529,12 @@ class ToolbarServiceTest extends TestCase
         $bar->loadPanels();
 
         // Create a panel with unserializable data
-        $panel = $bar->registry()->load('DebugKit.TestApp\Panel\SimplePanel');
+        /** @var SimplePanel $panel */
+        $panel = $bar->registry()->load('DebugKit.TestApp\Panel\SimplePanel', [
+            'className' => SimplePanel::class,
+        ]);
         // Mock the data() method to return something problematic
-        $panel->_data = ['closure' => fn () => 'test'];
+        $panel->setData(['closure' => fn() => 'test']);
 
         $row = $bar->saveData($request, $response);
         $this->assertNotEmpty($row, 'Should save data even with serialization errors');
@@ -544,7 +548,7 @@ class ToolbarServiceTest extends TestCase
         // Find the SimplePanel in the results
         $simplePanel = null;
         foreach ($result->panels as $p) {
-            if ($p->panel === 'SimplePanel') {
+            if ($p->panel === 'DebugKit.TestApp\Panel\SimplePanel') {
                 $simplePanel = $p;
                 break;
             }

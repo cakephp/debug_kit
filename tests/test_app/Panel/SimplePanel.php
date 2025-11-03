@@ -22,4 +22,8 @@ use DebugKit\DebugPanel;
  */
 class SimplePanel extends DebugPanel
 {
+    public function setData(array $data): void
+    {
+        $this->_data = $data;
+    }
 }

@@ -26,6 +26,7 @@ use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
 use DebugKit\Panel\SqlLogPanel;
+use DebugKit\TestApp\Panel\SimplePanel;
 use DebugKit\ToolbarService;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -505,5 +506,57 @@ class ToolbarServiceTest extends TestCase
             },
         ]);
         $this->assertTrue($bar->isEnabled(), 'debug is off, panel is forced on');
+    }
+
+    /**
+     * Test that saveData handles serialization errors gracefully
+     *
+     * @return void
+     */
+    public function testSaveDataSerializationError()
+    {
+        $request = new Request([
+            'url' => '/articles',
+            'environment' => ['REQUEST_METHOD' => 'GET'],
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
+
+        // Create a panel with unserializable data
+        /** @var SimplePanel $panel */
+        $panel = $bar->registry()->load('DebugKit.TestApp\Panel\SimplePanel', [
+            'className' => SimplePanel::class,
+        ]);
+        // Mock the data() method to return something problematic
+        $panel->setData(['closure' => fn() => 'test']);
+
+        $row = $bar->saveData($request, $response);
+        $this->assertNotEmpty($row, 'Should save data even with serialization errors');
+
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
+        $result = $requests->find()
+            ->orderBy(['Requests.requested_at' => 'DESC'])
+            ->contain('Panels')
+            ->first();
+
+        // Find the SimplePanel in the results
+        $simplePanel = null;
+        foreach ($result->panels as $p) {
+            if ($p->panel === 'DebugKit.TestApp\Panel\SimplePanel') {
+                $simplePanel = $p;
+                break;
+            }
+        }
+
+        $this->assertNotNull($simplePanel, 'SimplePanel should be present');
+        $content = unserialize($simplePanel->content);
+        $this->assertArrayHasKey('error', $content, 'Should have error key');
+        $this->assertStringContainsString('SimplePanel', $content['error'], 'Error should mention panel name');
     }
 }

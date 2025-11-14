@@ -74,12 +74,26 @@ class DebugKitControllerTest extends TestCase
      */
     public function testIgnoreAuthorization()
     {
-        Configure::write('DebugKit.ignoreAuthorization', true);
-
         $controller = $this->_buildController();
         $event = new Event('testing');
         $controller->beforeFilter($event);
 
         $this->assertTrue($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
+    }
+
+    /**
+     * tests authorization is enabled but not ignored
+     *
+     * @return void
+     */
+    public function testDontIgnoreAuthorization()
+    {
+        Configure::write('DebugKit.ignoreAuthorization', false);
+
+        $controller = $this->_buildController();
+        $event = new Event('testing');
+        $controller->beforeFilter($event);
+
+        $this->assertFalse($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
     }
 }

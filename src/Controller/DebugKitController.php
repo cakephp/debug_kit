@@ -43,7 +43,7 @@ class DebugKitController extends Controller
         // ignore it, only if `DebugKit.ignoreAuthorization` is set to true
         $authorizationService = $this->getRequest()->getAttribute('authorization');
         if ($authorizationService instanceof AuthorizationService) {
-            if (Configure::read('DebugKit.ignoreAuthorization') || Configure::read('debug')) {
+            if (Configure::read('DebugKit.ignoreAuthorization') !== false) {
                 $authorizationService->skipAuthorization();
             } else {
                 Log::info(

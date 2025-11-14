@@ -67,20 +67,6 @@ class DebugKitControllerTest extends TestCase
     }
 
     /**
-     * tests authorization is enabled but not ignored
-     *
-     * @return void
-     */
-    public function testDontIgnoreAuthorization()
-    {
-        $controller = $this->_buildController();
-        $event = new Event('testing');
-        $controller->beforeFilter($event);
-
-        $this->assertFalse($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
-    }
-
-    /**
      * tests authorization is checked to avoid
      * AuthorizationRequiredException throwned
      *

@@ -45,6 +45,7 @@ working correctly. Some common problems are:
    itself to protect a potentially non-development environment.
 3. If you are using the [Authorization Plugin](https://github.com/cakephp/authorization)
    you need to set `DebugKit.ignoreAuthorization` to `true` in your config.
+   Not needed anymore for DebugKit 5.3.0+.
 
 ## Reporting Issues
 

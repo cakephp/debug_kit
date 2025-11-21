@@ -62,9 +62,6 @@ Configuration
     // Ignore image paths
     Configure::write('DebugKit.ignorePathsPattern', '/\.(jpg|png|gif)$/');
 
-* ``DebugKit.ignoreAuthorization`` - Set to true to ignore Cake Authorization plugin for DebugKit requests.
-  Not needed anymore for DebugKit 5.3.0+.
-
 * ``DebugKit.maxDepth`` - Defines how many levels of nested data should be shown in general for debug output. Default is 5.
   WARNING: Increasing the max depth level can lead to an out of memory error.::
 

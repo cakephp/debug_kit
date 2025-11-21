@@ -26,7 +26,9 @@ use DebugKit\Controller\DebugKitController;
 use DebugKit\TestApp\Application;
 
 /**
- * Composer controller test.
+ * DebugKit controller test.
+ *
+ * @uses \DebugKit\Controller\DebugKitController
  */
 class DebugKitControllerTest extends TestCase
 {
@@ -67,33 +69,17 @@ class DebugKitControllerTest extends TestCase
     }
 
     /**
-     * tests authorization is checked to avoid
-     * AuthorizationRequiredException throwned
+     * Tests authorization is skipped to avoid
+     * AuthorizationRequiredException thrown.
      *
      * @return void
      */
-    public function testIgnoreAuthorization()
+    public function testAuthorizationSkipped(): void
     {
         $controller = $this->_buildController();
         $event = new Event('testing');
         $controller->beforeFilter($event);
 
         $this->assertTrue($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
-    }
-
-    /**
-     * tests authorization is enabled but not ignored
-     *
-     * @return void
-     */
-    public function testDontIgnoreAuthorization()
-    {
-        Configure::write('DebugKit.ignoreAuthorization', false);
-
-        $controller = $this->_buildController();
-        $event = new Event('testing');
-        $controller->beforeFilter($event);
-
-        $this->assertFalse($controller->getRequest()->getAttribute('authorization')->authorizationChecked());
     }
 }

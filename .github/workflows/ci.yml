@@ -5,6 +5,7 @@ on:
     branches:
       - 4.x
       - 5.x
+      - 5.next
   pull_request:
     branches:
       - '*'

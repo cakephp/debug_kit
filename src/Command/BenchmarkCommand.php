@@ -32,6 +32,14 @@ use Cake\Utility\Text;
 class BenchmarkCommand extends Command
 {
     /**
+     * @return string
+     */
+    public static function getDescription(): string
+    {
+        return 'Benchmark a fully qualified URL.';
+    }
+
+    /**
      * The console io
      *
      * @var \Cake\Console\ConsoleIo

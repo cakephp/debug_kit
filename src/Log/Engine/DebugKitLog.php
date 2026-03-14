@@ -24,8 +24,6 @@ class DebugKitLog extends BaseLog
 {
     /**
      * logs
-     *
-     * @var array
      */
     protected array $_logs = [];
 
@@ -62,7 +60,7 @@ class DebugKitLog extends BaseLog
      */
     public function count(): int
     {
-        return array_reduce($this->_logs, function ($sum, $v) {
+        return array_reduce($this->_logs, function (int|float $sum, $v): int {
             return $sum + count($v);
         }, 0);
     }
@@ -74,6 +72,6 @@ class DebugKitLog extends BaseLog
      */
     public function noLogs(): bool
     {
-        return empty($this->_logs);
+        return $this->_logs === [];
     }
 }

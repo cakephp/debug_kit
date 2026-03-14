@@ -41,7 +41,7 @@ class SimpleGraphHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         Router::createRouteBuilder('/')->connect('/{controller}/{action}');
@@ -58,7 +58,7 @@ class SimpleGraphHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         unset($this->Graph);
@@ -69,7 +69,7 @@ class SimpleGraphHelperTest extends TestCase
      *
      * @return void
      */
-    public function testBar()
+    public function testBar(): void
     {
         $output = $this->Graph->bar(10, 0);
         $expected = [
@@ -94,7 +94,7 @@ class SimpleGraphHelperTest extends TestCase
      *
      * @return void
      */
-    public function testBarOffset()
+    public function testBarOffset(): void
     {
         $output = $this->Graph->bar(10, 10);
         $expected = [
@@ -119,7 +119,7 @@ class SimpleGraphHelperTest extends TestCase
      *
      * @return void
      */
-    public function testBarWithFloat()
+    public function testBarWithFloat(): void
     {
         $output = $this->Graph->bar(10.5, 10.5);
         $expected = [

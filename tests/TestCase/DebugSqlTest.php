@@ -34,7 +34,7 @@ class DebugSqlTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->connection = ConnectionManager::get('test');
@@ -44,7 +44,7 @@ class DebugSqlTest extends TestCase
      * Tests that a SQL string is outputted in a formatted and
      * highlighted fashion in a CLI environment.
      */
-    public function testSqlCli()
+    public function testSqlCli(): void
     {
         $query = $this->newQuery()->select(['panels.id']);
 
@@ -65,7 +65,7 @@ EXPECTED;
      * Tests that a SQL string is outputted as HTML in a CLI
      * environment.
      */
-    public function testSqlHtmlOnCli()
+    public function testSqlHtmlOnCli(): void
     {
         $query = $this->newQuery()->select(['panels.id']);
 
@@ -84,7 +84,7 @@ EXPECTED;
      * Tests that a SQL string is outputted as HTML in a non-CLI
      * environment.
      */
-    public function testSqlHtml()
+    public function testSqlHtml(): void
     {
         $query = $this->newQuery()->select(['panels.id']);
 
@@ -108,7 +108,7 @@ EXPECTED;
      * Tests that a SQL string is outputted as plain text in a non-CLI
      * environment.
      */
-    public function testSqlPlain()
+    public function testSqlPlain(): void
     {
         $query = $this->newQuery()->select(['panels.id']);
 

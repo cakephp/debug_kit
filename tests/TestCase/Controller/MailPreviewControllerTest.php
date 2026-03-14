@@ -32,7 +32,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEmailPluginPassedToView()
+    public function testEmailPluginPassedToView(): void
     {
         $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
@@ -44,7 +44,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEmailPartTextContent()
+    public function testEmailPartTextContent(): void
     {
         $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?part=text&plugin=DebugkitTestPlugin');
 
@@ -58,7 +58,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testOnChangeJsPluginPassedToview()
+    public function testOnChangeJsPluginPassedToview(): void
     {
         $this->get('/debug-kit/mail-preview/preview/TestMailerPreview/test_email?plugin=DebugkitTestPlugin');
 
@@ -70,7 +70,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testSentInvalidData()
+    public function testSentInvalidData(): void
     {
         $this->get('/debug-kit/mail-preview/sent/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/0');
         $this->assertResponseCode(404);
@@ -81,7 +81,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testSentValidData()
+    public function testSentValidData(): void
     {
         $panels = $this->fetchTable('DebugKit.Panels');
         $request = $this->makeRequest();
@@ -97,7 +97,7 @@ class MailPreviewControllerTest extends TestCase
         $panel->content = serialize($data);
         $panels->save($panel);
 
-        $this->get("/debug-kit/mail-preview/sent/{$panel->id}/0");
+        $this->get(sprintf('/debug-kit/mail-preview/sent/%s/0', $panel->id));
         $this->assertResponseCode(200);
         $this->assertResponseContains('test@example.com');
         $this->assertResponseContains('<iframe');
@@ -108,7 +108,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testSentValidDataRenderPart()
+    public function testSentValidDataRenderPart(): void
     {
         $panels = $this->fetchTable('DebugKit.Panels');
         $request = $this->makeRequest();
@@ -124,7 +124,7 @@ class MailPreviewControllerTest extends TestCase
         $panel->content = serialize($data);
         $panels->save($panel);
 
-        $this->get("/debug-kit/mail-preview/sent/{$panel->id}/0?part=html");
+        $this->get(sprintf('/debug-kit/mail-preview/sent/%s/0?part=html', $panel->id));
         $this->assertResponseCode(200);
         $this->assertResponseContains('<h1>Hi</h1>');
     }

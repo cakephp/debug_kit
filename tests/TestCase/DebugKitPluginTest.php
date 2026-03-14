@@ -34,7 +34,7 @@ class DebugKitPluginTest extends TestCase
      *
      * @return void
      */
-    public function testSetDeprecationHandler()
+    public function testSetDeprecationHandler(): void
     {
         DeprecationsPanel::clearDeprecatedErrors();
         $service = new ToolbarService(new EventManager(), []);
@@ -86,7 +86,7 @@ TEXT;
      *
      * @return void
      */
-    public function testMiddlewareNotLoadedInTests()
+    public function testMiddlewareNotLoadedInTests(): void
     {
         $baseApp = new Application(dirname(__DIR__) . '/config');
         $baseApp->pluginBootstrap();

@@ -34,7 +34,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new LogPanel();
@@ -45,7 +45,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         Log::drop('debug_kit_log_panel');
@@ -56,7 +56,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->panel->initialize();
 
@@ -70,7 +70,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testData()
+    public function testData(): void
     {
         $this->panel->initialize();
         Log::write('error', 'Test');
@@ -90,7 +90,7 @@ class LogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testSummary()
+    public function testSummary(): void
     {
         $this->panel->initialize();
 

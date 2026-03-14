@@ -32,22 +32,16 @@ class DebugEngineTest extends TestCase
      */
     protected $engine;
 
-    /**
-     * @var \Cake\Cache\Engine\ArrayEngine
-     */
-    private $wrapped;
+    private ArrayEngine $wrapped;
 
-    /**
-     * @var \Cake\Log\Engine\ArrayLog
-     */
-    private $logger;
+    private ArrayLog $logger;
 
     /**
      * setup
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->wrapped = new ArrayEngine();
@@ -65,7 +59,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testInitEngineBasedOnConfig()
+    public function testInitEngineBasedOnConfig(): void
     {
         $engine = new DebugEngine([
             'className' => 'File',
@@ -81,7 +75,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testInitErrorOnInvalidConfig()
+    public function testInitErrorOnInvalidConfig(): void
     {
         $this->expectException(BadMethodCallException::class);
         $engine = new DebugEngine([
@@ -97,7 +91,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testProxyMethodsTracksMetrics()
+    public function testProxyMethodsTracksMetrics(): void
     {
         $this->engine->get('key');
         $this->engine->set('key', 'value');
@@ -118,7 +112,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testProxyMethodLogs()
+    public function testProxyMethodLogs(): void
     {
         $this->engine->get('key');
         $this->engine->set('key', 'value');
@@ -141,7 +135,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testGroupsProxies()
+    public function testGroupsProxies(): void
     {
         $engine = new DebugEngine([
             'className' => 'File',
@@ -159,7 +153,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testConfigProxies()
+    public function testConfigProxies(): void
     {
         $engine = new DebugEngine([
             'className' => 'File',
@@ -178,7 +172,7 @@ class DebugEngineTest extends TestCase
      *
      * @return void
      */
-    public function testToString()
+    public function testToString(): void
     {
         $engine = new DebugEngine([
             'className' => 'File',

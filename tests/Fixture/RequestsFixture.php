@@ -25,15 +25,11 @@ class RequestsFixture extends TestFixture
      * table property
      *
      * This is necessary to prevent userland inflections from causing issues.
-     *
-     * @var string
      */
     public string $table = 'requests';
 
     /**
      * Records
-     *
-     * @var array
      */
     public array $records = [];
 }

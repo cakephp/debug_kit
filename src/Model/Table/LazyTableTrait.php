@@ -47,7 +47,7 @@ trait LazyTableTrait
             $existing = $schema->listTables();
         } catch (PDOException $e) {
             // Handle errors when SQLite blows up if the schema has changed.
-            if (strpos($e->getMessage(), 'schema has changed') !== false) {
+            if (str_contains($e->getMessage(), 'schema has changed')) {
                 $existing = $schema->listTables();
             } else {
                 throw $e;
@@ -55,7 +55,7 @@ trait LazyTableTrait
         }
 
         try {
-            $config = require dirname(dirname(__DIR__)) . '/schema.php';
+            $config = require dirname(__DIR__, 2) . '/schema.php';
             $driver = $connection->getDriver();
             foreach ($config as $table) {
                 if (in_array($table['table'], $existing, true)) {
@@ -80,6 +80,8 @@ trait LazyTableTrait
                 throw new RuntimeException(
                     'Could not create a SQLite database. ' .
                     'Ensure that your webserver has write access to the database file and folder it is in.',
+                    $e->getCode(),
+                    $e,
                 );
             }
             throw $e;

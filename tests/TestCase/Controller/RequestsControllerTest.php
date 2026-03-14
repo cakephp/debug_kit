@@ -43,7 +43,7 @@ class RequestsControllerTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
@@ -54,13 +54,13 @@ class RequestsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $request = $this->makeRequest();
         $this->makePanel($request);
 
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->get("/debug-kit/toolbar/{$request->id}");
+        $this->get('/debug-kit/toolbar/' . $request->id);
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request', 'Has a panel button');
@@ -72,7 +72,7 @@ class RequestsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testViewNotExists()
+    public function testViewNotExists(): void
     {
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
         $this->get('/debug-kit/toolbar/bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb');

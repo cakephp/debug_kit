@@ -50,7 +50,7 @@ class SqlTraceTraitTest extends TestCase
         $this->debug = Configure::read('App.debug', true);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         Configure::write('App.debug', $this->debug);
@@ -59,7 +59,7 @@ class SqlTraceTraitTest extends TestCase
     /**
      * Verify file name when calling find()
      */
-    public function testFind()
+    public function testFind(): void
     {
         foreach ($this->tables as $table) {
             $table = $this->fetchTable($table);
@@ -71,7 +71,7 @@ class SqlTraceTraitTest extends TestCase
     /**
      * Verify file name when calling query()/select()
      */
-    public function testQuery()
+    public function testQuery(): void
     {
         foreach ($this->tables as $table) {
             $table = $this->fetchTable($table);
@@ -83,7 +83,7 @@ class SqlTraceTraitTest extends TestCase
     /**
      * Verify file name when calling update()
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
         foreach ($this->tables as $table) {
             $table = $this->fetchTable($table);
@@ -95,7 +95,7 @@ class SqlTraceTraitTest extends TestCase
     /**
      * Verify file name when calling delete()
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         foreach ($this->tables as $table) {
             $table = $this->fetchTable($table);

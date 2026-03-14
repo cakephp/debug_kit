@@ -35,7 +35,7 @@ class DeprecationsPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         DeprecationsPanel::clearDeprecatedErrors();
@@ -43,7 +43,7 @@ class DeprecationsPanelTest extends TestCase
         $this->loadPlugins(['DebugKit']);
         $this->panel = new DeprecationsPanel();
 
-        set_error_handler(function ($code, $message, $file, $line, $context = null) {
+        set_error_handler(function ($code, $message, $file, $line, $context = null): void {
             DeprecationsPanel::addDeprecatedError(compact('code', 'message', 'file', 'line', 'context'));
         });
         try {
@@ -56,7 +56,7 @@ class DeprecationsPanelTest extends TestCase
     }
 
     #[WithoutErrorHandler]
-    public function testShutdown()
+    public function testShutdown(): void
     {
         $event = new Event('Panel.shutdown');
         $this->panel->shutdown($event);
@@ -75,7 +75,7 @@ class DeprecationsPanelTest extends TestCase
         $this->assertArrayHasKey('line', $error);
     }
 
-    public function testSummary()
+    public function testSummary(): void
     {
         $this->assertSame('1', $this->panel->summary());
     }

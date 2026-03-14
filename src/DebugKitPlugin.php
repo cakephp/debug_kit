@@ -32,9 +32,6 @@ use DebugKit\Panel\DeprecationsPanel;
  */
 class DebugKitPlugin extends BasePlugin
 {
-    /**
-     * @var \DebugKit\ToolbarService|null
-     */
     protected ?ToolbarService $service = null;
 
     /**
@@ -67,7 +64,7 @@ class DebugKitPlugin extends BasePlugin
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         // Only insert middleware if Toolbar Service is available (not in phpunit run)
-        if ($this->service) {
+        if ($this->service instanceof ToolbarService) {
             $middlewareQueue->insertAt(0, new DebugKitMiddleware($this->service));
         }
 

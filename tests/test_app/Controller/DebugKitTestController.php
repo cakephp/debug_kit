@@ -54,7 +54,7 @@ class DebugKitTestController extends Controller
      *
      * @return string
      */
-    public function request_action_return()
+    public function request_action_return(): string
     {
         $this->autoRender = false;
 
@@ -64,7 +64,7 @@ class DebugKitTestController extends Controller
     /**
      * Render Request Action
      */
-    public function request_action_render()
+    public function request_action_render(): void
     {
         $this->set('test', 'I have been rendered.');
     }

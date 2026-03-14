@@ -16,16 +16,12 @@ class DebugKitTransport extends AbstractTransport
 {
     /**
      * The transport object this class is decorating
-     *
-     * @var \Cake\Mailer\AbstractTransport|null
      */
     protected ?AbstractTransport $originalTransport = null;
 
     /**
      * A reference to the object were emails will be pushed to
      * for logging.
-     *
-     * @var \ArrayObject
      */
     protected ArrayObject $emailLog;
 
@@ -39,7 +35,7 @@ class DebugKitTransport extends AbstractTransport
     {
         $this->emailLog = $config['debugKitLog'];
 
-        if ($originalTransport !== null) {
+        if ($originalTransport instanceof AbstractTransport) {
             $this->originalTransport = $originalTransport;
 
             return;
@@ -76,7 +72,7 @@ class DebugKitTransport extends AbstractTransport
         $result = ['headers' => $headers, 'message' => $parts];
         $this->emailLog[] = $result;
 
-        if ($this->originalTransport !== null) {
+        if ($this->originalTransport instanceof AbstractTransport) {
             return $this->originalTransport->send($message);
         }
 

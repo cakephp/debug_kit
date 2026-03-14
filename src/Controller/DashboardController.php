@@ -48,7 +48,7 @@ class DashboardController extends DebugKitController
         $requestsModel = $this->fetchTable('DebugKit.Requests');
 
         $data = [
-            'driver' => get_class($requestsModel->getConnection()->getDriver()),
+            'driver' => $requestsModel->getConnection()->getDriver()::class,
             'rows' => $requestsModel->find()->count(),
         ];
 

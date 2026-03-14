@@ -20,6 +20,7 @@ use Cake\Core\App;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
@@ -120,14 +121,14 @@ class MailPreviewController extends DebugKitController
 
         if ($partType) {
             $result = $this->respondWithPart($email, $partType);
-            if ($restore) {
+            if ($restore instanceof ServerRequest) {
                 Router::setRequest($restore);
             }
 
             return $result;
         }
 
-        $humanName = Inflector::humanize(Inflector::underscore($name) . "_$method");
+        $humanName = Inflector::humanize(Inflector::underscore($name) . '_' . $method);
         /** @var string $part */
         $part = $this->request->getQuery('part');
         $this->set('title', $humanName);
@@ -135,7 +136,7 @@ class MailPreviewController extends DebugKitController
         $this->set('plugin', $plugin);
         $this->set('part', $this->findPreferredPart($email, $part));
 
-        if ($restore) {
+        if ($restore instanceof ServerRequest) {
             Router::setRequest($restore);
         }
 
@@ -184,11 +185,11 @@ class MailPreviewController extends DebugKitController
     protected function getMailPreviewClasses(): CollectionInterface
     {
         $pluginPaths = collection(CorePlugin::loaded())
-            ->reject(function ($plugin) {
+            ->reject(function ($plugin): bool {
                 return $plugin === 'DebugKit';
             })
-            ->map(function ($plugin) {
-                return [[CorePlugin::classPath($plugin) . 'Mailer/Preview/'], "$plugin."];
+            ->map(function (string $plugin): array {
+                return [[CorePlugin::classPath($plugin) . 'Mailer/Preview/'], $plugin . '.'];
             });
 
         $appPaths = [App::classPath('Mailer/Preview'), ''];
@@ -201,7 +202,7 @@ class MailPreviewController extends DebugKitController
                     yield $plugin => $path;
                 }
             })
-            ->unfold(function ($path, $plugin) {
+            ->unfold(function (string $path, string $plugin) {
                 /** @var list<string> $files */
                 $files = glob($path . '*Preview.php');
                 foreach ($files as $file) {
@@ -223,13 +224,7 @@ class MailPreviewController extends DebugKitController
      */
     protected function findPart(AbstractResult $email, string $partType): ?string
     {
-        foreach ($email->getParts() as $part => $content) {
-            if ($part === $partType) {
-                return $content;
-            }
-        }
-
-        return null;
+        return $email->getParts()[$partType] ?? null;
     }
 
     /**
@@ -248,7 +243,7 @@ class MailPreviewController extends DebugKitController
         }
 
         if ($partType === null) {
-            foreach ($email->getParts() as $part => $content) {
+            foreach (array_keys($email->getParts()) as $part) {
                 return $part;
             }
         }
@@ -268,12 +263,12 @@ class MailPreviewController extends DebugKitController
     protected function findPreview(string $previewName, string $emailName, string $plugin = ''): PreviewResult
     {
         if ($plugin) {
-            $plugin = "$plugin.";
+            $plugin .= '.';
         }
 
         $realClass = App::className($plugin . $previewName, 'Mailer/Preview');
         if (!$realClass) {
-            throw new NotFoundException("Mailer preview $previewName not found");
+            throw new NotFoundException(sprintf('Mailer preview %s not found', $previewName));
         }
         /** @var \DebugKit\Mailer\MailPreview $mailPreview */
         $mailPreview = new $realClass();

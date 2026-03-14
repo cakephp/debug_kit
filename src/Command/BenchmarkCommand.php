@@ -41,8 +41,6 @@ class BenchmarkCommand extends Command
 
     /**
      * The console io
-     *
-     * @var \Cake\Console\ConsoleIo
      */
     protected ConsoleIo $io;
 
@@ -144,8 +142,8 @@ class BenchmarkCommand extends Command
         foreach ($times as $time) {
             $n += 1;
             $delta = $time - $mean;
-            $mean = $mean + $delta / $n;
-            $M2 = $M2 + $delta * ($time - $mean);
+            $mean += $delta / $n;
+            $M2 += $delta * ($time - $mean);
         }
 
         if ($sample) {

@@ -68,7 +68,7 @@ trait SqlTraceTrait
         int $start = 1,
         bool $debugOnly = true,
     ): SelectQuery|UpdateQuery|DeleteQuery {
-        if (!Configure::read('debug') && $debugOnly === true) {
+        if (!Configure::read('debug') && $debugOnly) {
             return $query;
         }
 
@@ -84,7 +84,7 @@ trait SqlTraceTrait
                 if ($path === '[internal]') {
                     continue;
                 }
-                if (defined('CAKE_CORE_INCLUDE_PATH') && strpos($path, CAKE_CORE_INCLUDE_PATH) !== 0) {
+                if (defined('CAKE_CORE_INCLUDE_PATH') && !str_starts_with((string)$path, CAKE_CORE_INCLUDE_PATH)) {
                     break;
                 }
             }

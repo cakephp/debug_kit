@@ -28,7 +28,7 @@ class DebugKitTransportTest extends TestCase
 
     protected $wrapped;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->log = new ArrayObject();
         $this->wrapped = new class extends AbstractTransport {
@@ -50,7 +50,7 @@ class DebugKitTransportTest extends TestCase
         );
     }
 
-    public function testPropertyProxies()
+    public function testPropertyProxies(): void
     {
         $this->wrapped->property = 'value';
         $this->assertTrue(isset($this->transport->property));
@@ -62,12 +62,12 @@ class DebugKitTransportTest extends TestCase
         $this->assertFalse(isset($this->wrapped->property));
     }
 
-    public function testMethodProxy()
+    public function testMethodProxy(): void
     {
         $this->assertSame('bloop', $this->transport->customMethod());
     }
 
-    public function testEmailCapture()
+    public function testEmailCapture(): void
     {
         $message = new Message();
         $message->setSubject('Testing 123')

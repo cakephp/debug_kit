@@ -87,7 +87,7 @@ class RequestsTable extends Table
      */
     protected function shouldGc(): bool
     {
-        return rand(1, 10) === 10;
+        return random_int(1, 10) === 10;
     }
 
     /**
@@ -97,7 +97,7 @@ class RequestsTable extends Table
      */
     protected function shouldGcVacuum(): bool
     {
-        return rand(1, 10) === 10;
+        return random_int(1, 10) === 10;
     }
 
     /**

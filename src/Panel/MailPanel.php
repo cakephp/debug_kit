@@ -28,8 +28,6 @@ class MailPanel extends DebugPanel
 {
     /**
      * The list of emails produced during the request
-     *
-     * @var \ArrayObject|null
      */
     protected ?ArrayObject $emailLog = null;
 
@@ -77,7 +75,7 @@ class MailPanel extends DebugPanel
     public function data(): array
     {
         return [
-            'emails' => isset($this->emailLog) ? $this->emailLog->getArrayCopy() : [],
+            'emails' => $this->emailLog instanceof ArrayObject ? $this->emailLog->getArrayCopy() : [],
         ];
     }
 
@@ -88,7 +86,7 @@ class MailPanel extends DebugPanel
      */
     public function summary(): string
     {
-        if (empty($this->emailLog)) {
+        if (!$this->emailLog instanceof ArrayObject) {
             return '';
         }
 

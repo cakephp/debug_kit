@@ -34,10 +34,10 @@ class IncludePanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->deprecated(function () {
+        $this->deprecated(function (): void {
             $this->panel = new IncludePanel();
         });
     }
@@ -48,7 +48,7 @@ class IncludePanelTest extends TestCase
      * @return void
      */
     #[WithoutErrorHandler]
-    public function testShutdown()
+    public function testShutdown(): void
     {
         $this->panel->shutdown(new Event('Controller.shutdown'));
 
@@ -66,7 +66,7 @@ class IncludePanelTest extends TestCase
      * @return void
      */
     #[WithoutErrorHandler]
-    public function testSummary()
+    public function testSummary(): void
     {
         $total = $this->panel->summary();
         $this->assertEquals(5, $total);

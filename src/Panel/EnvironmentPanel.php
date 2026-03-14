@@ -26,8 +26,6 @@ class EnvironmentPanel extends DebugPanel
 {
     /**
      * instance of DebugInclude
-     *
-     * @var \DebugKit\DebugInclude
      */
     protected DebugInclude $_debug;
 

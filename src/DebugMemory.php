@@ -24,8 +24,6 @@ class DebugMemory
 {
     /**
      * An array of recorded memory use points.
-     *
-     * @var array
      */
     protected static array $_points = [];
 

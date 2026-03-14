@@ -28,8 +28,6 @@ class IncludePanel extends DebugPanel
 {
     /**
      * instance of DebugInclude
-     *
-     * @var \DebugKit\DebugInclude
      */
     protected DebugInclude $_debug;
 
@@ -111,7 +109,7 @@ class IncludePanel extends DebugPanel
         }
 
         unset($data['paths']);
-        $data = array_filter($data, function ($v, $k) {
+        $data = array_filter($data, function ($v, $k): bool {
             return !empty($v);
         }, ARRAY_FILTER_USE_BOTH);
 

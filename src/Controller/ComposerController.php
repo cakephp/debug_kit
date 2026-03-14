@@ -55,10 +55,10 @@ class ComposerController extends DebugKitController
         $dependencies = array_filter(explode("\n", $output->fetch()));
         $packages = [];
         foreach ($dependencies as $dependency) {
-            if (strpos($dependency, 'php_network_getaddresses') !== false) {
+            if (str_contains($dependency, 'php_network_getaddresses')) {
                 throw new RuntimeException('You have to be connected to the internet');
             }
-            if (strpos($dependency, '<highlight>') !== false) {
+            if (str_contains($dependency, '<highlight>')) {
                 $packages['semverCompatible'][] = $dependency;
                 continue;
             }

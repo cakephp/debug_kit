@@ -34,7 +34,7 @@ class PackagesPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new PackagesPanel();
@@ -45,7 +45,7 @@ class PackagesPanelTest extends TestCase
      *
      * @return array
      */
-    public static function packagesProvider()
+    public static function packagesProvider(): array
     {
         return [
             'requirements' => ['packages'],
@@ -59,7 +59,7 @@ class PackagesPanelTest extends TestCase
      * @return void
      */
     #[DataProvider('packagesProvider')]
-    public function testData($package)
+    public function testData(string $package): void
     {
         $data = $this->panel->data();
         $this->assertArrayHasKey($package, $data);

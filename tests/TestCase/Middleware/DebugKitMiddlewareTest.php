@@ -24,6 +24,7 @@ use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use DebugKit\Middleware\DebugKitMiddleware;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionProperty;
 
@@ -44,9 +45,6 @@ class DebugKitMiddlewareTest extends TestCase
 
     protected ?array $oldConfig = null;
 
-    /**
-     * @var bool
-     */
     protected bool $restore = false;
 
     /**
@@ -54,7 +52,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -70,7 +68,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -80,11 +78,9 @@ class DebugKitMiddlewareTest extends TestCase
 
     protected function handler()
     {
-        $handler = $this->getMockBuilder(RequestHandlerInterface::class)
+        return $this->getMockBuilder(RequestHandlerInterface::class)
             ->onlyMethods(['handle'])
             ->getMock();
-
-        return $handler;
     }
 
     /**
@@ -92,7 +88,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function testInvokeSaveData()
+    public function testInvokeSaveData(): void
     {
         $request = new ServerRequest([
             'url' => '/articles',
@@ -146,7 +142,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function testInvokeInjectCspNonce()
+    public function testInvokeInjectCspNonce(): void
     {
         $request = new ServerRequest([
             'url' => '/articles',
@@ -179,7 +175,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function testInvokeNoModifyBinaryResponse()
+    public function testInvokeNoModifyBinaryResponse(): void
     {
         $request = new ServerRequest([
             'url' => '/articles',
@@ -193,8 +189,8 @@ class DebugKitMiddlewareTest extends TestCase
         $handler = $this->handler();
         $handler->expects($this->once())
             ->method('handle')
-            ->willReturnCallback(function ($req) use ($response) {
-                $stream = new CallbackStream(function () {
+            ->willReturnCallback(function ($req) use ($response): MessageInterface {
+                $stream = new CallbackStream(function (): string {
                     return 'hi!';
                 });
 
@@ -218,7 +214,7 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function testInvokeNoModifyNonHtmlResponse()
+    public function testInvokeNoModifyNonHtmlResponse(): void
     {
         $request = new ServerRequest([
             'url' => '/articles',
@@ -251,13 +247,12 @@ class DebugKitMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function testConfigIsPassed()
+    public function testConfigIsPassed(): void
     {
         $config = ['foo' => 'bar'];
         Configure::write('DebugKit', $config);
         $layer = new DebugKitMiddleware();
         $prop = new ReflectionProperty(DebugKitMiddleware::class, 'service');
-        $prop->setAccessible(true);
         $service = $prop->getValue($layer);
         $this->assertSame('bar', $service->getConfig('foo'));
     }

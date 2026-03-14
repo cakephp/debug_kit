@@ -25,8 +25,6 @@ class DebugTimer
 {
     /**
      * Internal timers array
-     *
-     * @var array
      */
     protected static array $_timers = [];
 

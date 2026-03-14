@@ -31,7 +31,7 @@ class ComposerControllerTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
@@ -42,7 +42,7 @@ class ComposerControllerTest extends TestCase
      *
      * @return void
      */
-    public function testCheckDependencies()
+    public function testCheckDependencies(): void
     {
         $this->configRequest([
             'headers' => [

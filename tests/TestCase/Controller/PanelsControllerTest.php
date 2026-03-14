@@ -43,7 +43,7 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
@@ -54,7 +54,7 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->configRequest([
             'headers' => [
@@ -63,7 +63,7 @@ class PanelsControllerTest extends TestCase
         ]);
         $request = $this->makeRequest();
         $this->makePanel($request);
-        $this->get("/debug-kit/panels/{$request->id}");
+        $this->get('/debug-kit/panels/' . $request->id);
 
         $this->assertResponseOk();
         $this->assertContentType('application/json');
@@ -74,12 +74,12 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $request = $this->makeRequest();
         $panel = $this->makePanel($request);
 
-        $this->get("/debug-kit/panels/view/{$panel->id}");
+        $this->get('/debug-kit/panels/view/' . $panel->id);
 
         $this->assertResponseOk();
         $this->assertResponseContains('Request</h2>');
@@ -91,7 +91,7 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testViewNotExists()
+    public function testViewNotExists(): void
     {
         $this->get('/debug-kit/panels/view/aaaaaaaa-ffff-ffff-ffff-aaaaaaaaaaaa');
         $this->assertResponseError();
@@ -101,7 +101,7 @@ class PanelsControllerTest extends TestCase
     /**
      * @return void
      */
-    public function testLatestHistory()
+    public function testLatestHistory(): void
     {
         $request = $this->fetchTable('DebugKit.Requests')->find('recent')->first();
         if (!$request) {

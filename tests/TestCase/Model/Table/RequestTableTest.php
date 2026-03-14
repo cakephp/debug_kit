@@ -32,7 +32,7 @@ class RequestTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $connection = ConnectionManager::get('test');
@@ -44,7 +44,7 @@ class RequestTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitializeCreatesSchema()
+    public function testInitializeCreatesSchema(): void
     {
         $connection = ConnectionManager::get('test');
         $stmt = $connection->execute('DROP TABLE IF EXISTS panels');
@@ -66,7 +66,7 @@ class RequestTableTest extends TestCase
      *
      * @return void
      */
-    public function testFindRecent()
+    public function testFindRecent(): void
     {
         $table = $this->fetchTable('DebugKit.Requests');
         $query = $table->find('recent');
@@ -79,7 +79,7 @@ class RequestTableTest extends TestCase
      *
      * @return void
      */
-    public function testGc()
+    public function testGc(): void
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\DebugKit\Model\Table\RequestsTable $requestsTableMock */
         $requestsTableMock = $this->getMockForModel('DebugKit.Requests', ['shouldGc']);

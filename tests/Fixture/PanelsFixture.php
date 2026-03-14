@@ -25,15 +25,11 @@ class PanelsFixture extends TestFixture
      * table property
      *
      * This is necessary to prevent userland inflections from causing issues.
-     *
-     * @var string
      */
     public string $table = 'panels';
 
     /**
      * Records
-     *
-     * @var array
      */
     public array $records = [];
 }

@@ -29,15 +29,11 @@ class DebugPanel implements EventListenerInterface
 {
     /**
      * Defines which plugin this panel is from so the element can be located.
-     *
-     * @var string
      */
     public string $plugin = 'DebugKit';
 
     /**
      * The data collected about a given request.
-     *
-     * @var array
      */
     protected array $_data = [];
 

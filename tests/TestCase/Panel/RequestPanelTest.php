@@ -35,7 +35,7 @@ class RequestPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new RequestPanel();
@@ -46,7 +46,7 @@ class RequestPanelTest extends TestCase
      *
      * @return void
      */
-    public function testShutdownSkipAttributes()
+    public function testShutdownSkipAttributes(): void
     {
         $request = new ServerRequest([
             'url' => '/',
@@ -55,7 +55,7 @@ class RequestPanelTest extends TestCase
         ]);
         $request = $request
             ->withAttribute('ok', 'string')
-            ->withAttribute('closure', function () {
+            ->withAttribute('closure', function (): void {
             });
 
         $controller = new Controller($request);

@@ -27,7 +27,7 @@ class DebugMemoryTest extends TestCase
      *
      * @return void
      */
-    public function testMemoryUsage()
+    public function testMemoryUsage(): void
     {
         $result = DebugMemory::getCurrent();
         $this->assertIsInt($result);
@@ -41,7 +41,7 @@ class DebugMemoryTest extends TestCase
      *
      * @return void
      */
-    public function testRecordNoKey()
+    public function testRecordNoKey(): void
     {
         DebugMemory::clear();
         DebugMemory::record();
@@ -55,7 +55,7 @@ class DebugMemoryTest extends TestCase
      *
      * @return void
      */
-    public function testMemorySettingAndGetting()
+    public function testMemorySettingAndGetting(): void
     {
         DebugMemory::clear();
         $result = DebugMemory::record('test marker');

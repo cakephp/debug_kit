@@ -41,7 +41,6 @@ class Application extends BaseApplication
     }
 
     /**
-     * @param \Cake\Routing\RouteBuilder $routes
      * @return void
      */
     public function routes(RouteBuilder $routes): void

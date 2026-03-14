@@ -26,9 +26,6 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class DebugKitMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var \DebugKit\ToolbarService
-     */
     protected ToolbarService $service;
 
     /**

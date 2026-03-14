@@ -83,7 +83,9 @@ class RequestTableTest extends TestCase
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\DebugKit\Model\Table\RequestsTable $requestsTableMock */
         $requestsTableMock = $this->getMockForModel('DebugKit.Requests', ['shouldGc']);
-        $requestsTableMock->method('shouldGc')
+        $requestsTableMock
+            ->expects($this->atLeastOnce())
+            ->method('shouldGc')
             ->willReturn(true);
 
         $data = array_fill(0, 10, [

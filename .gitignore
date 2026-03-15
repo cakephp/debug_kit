@@ -13,6 +13,7 @@ nbproject/*
 .DS_Store
 .cache
 .phpunit.cache
+.phpcs.cache
 .project
 .settings
 .svn

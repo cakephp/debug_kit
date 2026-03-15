@@ -18,6 +18,8 @@ use Cake\Mailer\Mailer;
 
 /**
  * Represents the result of a preview for a given mailer
+ *
+ * @psalm-external-mutation-free
  */
 class PreviewResult extends AbstractResult
 {

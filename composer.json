@@ -63,8 +63,12 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "phpstan": "tools/phpstan analyse",
-        "stan": "@phpstan",
+        "stan": [
+            "tools/phpstan analyse",
+            "tools/psalm"
+        ],
         "stan-baseline": "tools/phpstan --generate-baseline",
+        "psalm-baseline": "tools/psalm --set-baseline=psalm-baseline.xml",
         "stan-setup": "phive install",
         "test": "phpunit"
     },

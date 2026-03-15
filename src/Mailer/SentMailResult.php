@@ -16,6 +16,8 @@ namespace DebugKit\Mailer;
 
 /**
  * Represents the result of an already sent email
+ *
+ * @psalm-external-mutation-free
  */
 class SentMailResult extends AbstractResult
 {

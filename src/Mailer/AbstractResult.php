@@ -16,6 +16,8 @@ namespace DebugKit\Mailer;
 
 /**
  * A simple structure for representing the results of a sent email
+ *
+ * @psalm-external-mutation-free
  */
 abstract class AbstractResult
 {

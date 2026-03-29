@@ -33,7 +33,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->Article = $this->fetchTable('Articles');
@@ -45,7 +45,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         unset($this->Article);
@@ -57,7 +57,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @return void
      */
-    public function testFindTimers()
+    public function testFindTimers(): void
     {
         $timers = DebugTimer::getAll();
         $this->assertCount(1, $timers);
@@ -76,7 +76,7 @@ class TimedBehaviorTest extends TestCase
      *
      * @return void
      */
-    public function testSaveTimers()
+    public function testSaveTimers(): void
     {
         $timers = DebugTimer::getAll();
         $this->assertCount(1, $timers);

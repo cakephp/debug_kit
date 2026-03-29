@@ -70,7 +70,7 @@ class VariablesPanel extends DebugPanel
         } catch (Exception $exception) {
             return sprintf(
                 'Could not retrieve debug info - %s. Error: %s in %s, line %d',
-                get_class($item),
+                $item::class,
                 $exception->getMessage(),
                 $exception->getFile(),
                 $exception->getLine(),

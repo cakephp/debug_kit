@@ -28,18 +28,18 @@ class DebugPanelTest extends TestCase
      */
     protected $panel;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new SimplePanel();
     }
 
-    public function testTitle()
+    public function testTitle(): void
     {
         $this->assertSame('Simple', $this->panel->title());
     }
 
-    public function testElementName()
+    public function testElementName(): void
     {
         $this->assertSame('DebugKit.simple_panel', $this->panel->elementName());
 

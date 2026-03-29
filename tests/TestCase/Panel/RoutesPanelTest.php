@@ -33,7 +33,7 @@ class RoutesPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -54,7 +54,7 @@ class RoutesPanelTest extends TestCase
      *
      * @return void
      */
-    public function testSummary()
+    public function testSummary(): void
     {
         $this->panel->initialize();
         $this->assertSame('4', $this->panel->summary());

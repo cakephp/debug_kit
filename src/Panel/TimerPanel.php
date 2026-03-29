@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace DebugKit\Panel;
 
 use Cake\I18n\Number;
+use Closure;
 use DebugKit\DebugMemory;
 use DebugKit\DebugPanel;
 use DebugKit\DebugTimer;
@@ -31,17 +32,17 @@ class TimerPanel extends DebugPanel
      */
     public function implementedEvents(): array
     {
-        $before = function ($name) {
+        $before = function ($name): Closure {
             return function () use ($name): void {
                 DebugTimer::start($name);
             };
         };
-        $after = function ($name) {
+        $after = function ($name): Closure {
             return function () use ($name): void {
                 DebugTimer::stop($name);
             };
         };
-        $both = function ($name) use ($before, $after) {
+        $both = function (string $name) use ($before, $after): array {
             return [
                 ['priority' => 0, 'callable' => $before('Event: ' . $name)],
                 ['priority' => 999, 'callable' => $after('Event: ' . $name)],
@@ -80,12 +81,12 @@ class TimerPanel extends DebugPanel
             'View.beforeLayout' => $both('View.beforeLayout'),
             'View.afterLayout' => $both('View.afterLayout'),
             'View.beforeRenderFile' => [
-                ['priority' => 0, 'callable' => function ($event, $filename): void {
+                ['priority' => 0, 'callable' => function ($event, string $filename): void {
                     DebugTimer::start('Render File: ' . $filename);
                 }],
             ],
             'View.afterRenderFile' => [
-                ['priority' => 0, 'callable' => function ($event, $filename): void {
+                ['priority' => 0, 'callable' => function ($event, string $filename): void {
                     DebugTimer::stop('Render File: ' . $filename);
                 }],
             ],
@@ -125,6 +126,6 @@ class TimerPanel extends DebugPanel
         $time = Number::precision(DebugTimer::requestTime(), 2) . ' s';
         $memory = Number::toReadableSize(DebugMemory::getPeak());
 
-        return "$time / $memory";
+        return sprintf('%s / %s', $time, $memory);
     }
 }

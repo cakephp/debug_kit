@@ -31,8 +31,6 @@ class SqlLogPanel extends DebugPanel
 
     /**
      * Loggers connected
-     *
-     * @var array
      */
     protected static array $_loggers = [];
 
@@ -103,7 +101,7 @@ class SqlLogPanel extends DebugPanel
     public function data(): array
     {
         return [
-            'tables' => array_map(function (Table $table) {
+            'tables' => array_map(function (Table $table): string {
                 return $table->getAlias();
             }, $this->getTableLocator()->genericInstances()),
             'loggers' => static::$_loggers,
@@ -126,6 +124,6 @@ class SqlLogPanel extends DebugPanel
             return '0';
         }
 
-        return "$count / $time ms";
+        return sprintf('%d / %s ms', $count, $time);
     }
 }

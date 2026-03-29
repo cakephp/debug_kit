@@ -21,15 +21,11 @@ abstract class AbstractResult
 {
     /**
      * The list of headers included in the email
-     *
-     * @var array
      */
     protected array $headers = [];
 
     /**
      * The rendered parts of the email (for example text and html)
-     *
-     * @var array
      */
     protected array $parts = [];
 

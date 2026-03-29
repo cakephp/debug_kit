@@ -30,8 +30,6 @@ class DebugSql
 {
     /**
      * Template used for HTML output.
-     *
-     * @var string
      */
     private static string $templateHtml = <<<HTML
 <div class="cake-debug-output">
@@ -44,8 +42,6 @@ HTML;
 
     /**
      * Template used for CLI and text output.
-     *
-     * @var string
      */
     private static string $templateText = <<<TEXT
 %s
@@ -190,7 +186,7 @@ TEXT;
      */
     private static function interpolate(string $sql, array $bindings): string
     {
-        $params = array_map(function ($binding) {
+        $params = array_map(function (array $binding) {
             $p = $binding['value'];
 
             if ($p === null) {
@@ -209,7 +205,7 @@ TEXT;
 
                 $p = strtr($p, $replacements);
 
-                return "'$p'";
+                return sprintf("'%s'", $p);
             }
 
             return $p;
@@ -217,8 +213,8 @@ TEXT;
 
         $keys = [];
         $limit = is_int(key($params)) ? 1 : -1;
-        foreach ($params as $key => $param) {
-            $keys[] = is_string($key) ? "/$key\b/" : '/[?]/';
+        foreach (array_keys($params) as $key) {
+            $keys[] = is_string($key) ? sprintf('/%s\b/', $key) : '/[?]/';
         }
 
         return (string)preg_replace($keys, $params, $sql, $limit);

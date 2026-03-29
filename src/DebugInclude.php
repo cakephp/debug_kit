@@ -39,8 +39,6 @@ class DebugInclude
 
     /**
      * File Types
-     *
-     * @var array
      */
     protected array $_fileTypes = [
         'Auth', 'Cache', 'Collection', 'Config', 'Configure', 'Console', 'Component', 'Controller',
@@ -83,12 +81,8 @@ class DebugInclude
     public function includePaths(): array
     {
         $paths = explode(PATH_SEPARATOR, (string)get_include_path());
-        $paths = array_filter($paths, function ($path) {
-            if ($path === '.' || strlen($path) === 0) {
-                return false;
-            }
-
-            return true;
+        $paths = array_filter($paths, function ($path): bool {
+            return $path !== '.' && strlen($path) !== 0;
         });
 
         return array_values($paths);
@@ -102,7 +96,7 @@ class DebugInclude
      */
     public function isCakeFile(string $file): bool
     {
-        return strpos($file, CAKE) === 0;
+        return str_starts_with($file, CAKE);
     }
 
     /**
@@ -113,7 +107,7 @@ class DebugInclude
      */
     public function isAppFile(string $file): bool
     {
-        return strpos($file, APP) === 0;
+        return str_starts_with($file, APP);
     }
 
     /**
@@ -125,7 +119,7 @@ class DebugInclude
     public function getPluginName(string $file): string|bool
     {
         foreach ($this->_pluginPaths as $plugin => $path) {
-            if (strpos($file, $path) === 0) {
+            if (str_starts_with($file, $path)) {
                 return $plugin;
             }
         }
@@ -142,7 +136,7 @@ class DebugInclude
     public function getComposerPackageName(string $file): string|bool
     {
         foreach ($this->_composerPaths as $package => $path) {
-            if (strpos($file, $path) === 0) {
+            if (str_starts_with($file, $path)) {
                 return $package;
             }
         }
@@ -160,24 +154,14 @@ class DebugInclude
      */
     public function niceFileName(string $file, string $type, ?string $name = null): string
     {
-        switch ($type) {
-            case 'app':
-                return str_replace(APP, 'APP' . DIRECTORY_SEPARATOR, $file);
-
-            case 'cake':
-                return str_replace(CAKE, 'CAKE' . DIRECTORY_SEPARATOR, $file);
-
-            case 'root':
-                return str_replace(ROOT, 'ROOT', $file);
-
-            case 'plugin':
-                return str_replace($this->_pluginPaths[$name], $name . DIRECTORY_SEPARATOR, $file);
-
-            case 'vendor':
-                return str_replace($this->_composerPaths[$name], '', $file);
-        }
-
-        throw new InvalidArgumentException("Type `{$type}` is not supported.");
+        return match ($type) {
+            'app' => str_replace(APP, 'APP' . DIRECTORY_SEPARATOR, $file),
+            'cake' => str_replace(CAKE, 'CAKE' . DIRECTORY_SEPARATOR, $file),
+            'root' => str_replace(ROOT, 'ROOT', $file),
+            'plugin' => str_replace($this->_pluginPaths[$name], $name . DIRECTORY_SEPARATOR, $file),
+            'vendor' => str_replace($this->_composerPaths[$name], '', $file),
+            default => throw new InvalidArgumentException(sprintf('Type `%s` is not supported.', $type)),
+        };
     }
 
     /**

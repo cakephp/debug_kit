@@ -24,12 +24,12 @@ use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use DebugKit\Controller\DebugKitController;
 use DebugKit\TestApp\Application;
+use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
  * DebugKit controller test.
- *
- * @uses \DebugKit\Controller\DebugKitController
  */
+#[UsesClass('\DebugKit\Controller\DebugKitController')]
 class DebugKitControllerTest extends TestCase
 {
     use IntegrationTestTrait;
@@ -39,7 +39,7 @@ class DebugKitControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDebugDisabled()
+    public function testDebugDisabled(): void
     {
         Configure::write('debug', false);
 
@@ -56,7 +56,7 @@ class DebugKitControllerTest extends TestCase
      *
      * @return DebugKit\Controller\DebugKitController
      */
-    private function _buildController()
+    private function _buildController(): DebugKitController
     {
         $request = new ServerRequest(['url' => '/debug-kit/']);
 

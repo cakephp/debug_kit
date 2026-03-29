@@ -41,7 +41,7 @@ class CredentialsHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -56,18 +56,17 @@ class CredentialsHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         unset($this->Helper);
     }
 
     /**
-     * @dataProvider credentialsProvider
      * @return void
      */
     #[DataProvider('credentialsProvider')]
-    public function testFilter($in, $out)
+    public function testFilter(string|array|null $in, string|array|null $out): void
     {
         $this->assertSame($out, $this->Helper->filter($in));
     }
@@ -77,7 +76,7 @@ class CredentialsHelperTest extends TestCase
      *
      * @return array input, expected output
      */
-    public static function credentialsProvider()
+    public static function credentialsProvider(): array
     {
         return [
             [null, null],

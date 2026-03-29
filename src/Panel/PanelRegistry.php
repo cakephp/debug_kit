@@ -86,11 +86,7 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      */
     protected function _create(object|string $class, string $alias, array $config): DebugPanel
     {
-        if (is_string($class)) {
-            $instance = new $class();
-        } else {
-            $instance = $class;
-        }
+        $instance = is_string($class) ? new $class() : $class;
 
         $this->getEventManager()->on($instance);
 

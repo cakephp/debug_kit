@@ -3,8 +3,8 @@
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
-return function (RouteBuilder $routes) {
-    $routes->plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {
+return function (RouteBuilder $routes): void {
+    $routes->plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes): void {
         $routes->setExtensions('json');
         $routes->setRouteClass(DashedRoute::class);
 
@@ -37,7 +37,7 @@ return function (RouteBuilder $routes) {
         $routes->scope(
             '/mail-preview',
             ['controller' => 'MailPreview'],
-            function (RouteBuilder $routes) {
+            function (RouteBuilder $routes): void {
                 $routes->connect('/', ['action' => 'index']);
                 $routes->connect('/preview', ['action' => 'email']);
                 $routes->connect('/preview/*', ['action' => 'email']);

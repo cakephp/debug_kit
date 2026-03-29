@@ -22,7 +22,7 @@ use Cake\TestSuite\Fixture\SchemaLoader;
 use DebugKit\DebugKitPlugin;
 use function Cake\Core\env;
 
-require_once 'vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 // Path constants to a few helpful things.
 if (!defined('DS')) {

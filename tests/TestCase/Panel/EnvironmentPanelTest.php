@@ -34,7 +34,7 @@ class EnvironmentPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new EnvironmentPanel();
@@ -45,7 +45,7 @@ class EnvironmentPanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         unset($this->panel);
@@ -56,7 +56,7 @@ class EnvironmentPanelTest extends TestCase
      *
      * @return void
      */
-    public function testShutdown()
+    public function testShutdown(): void
     {
         $controller = new stdClass();
         $event = new Event('Controller.shutdown', $controller);

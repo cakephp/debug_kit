@@ -95,7 +95,7 @@ class MailPreview
 
         try {
             $method = new ReflectionMethod($this, $email);
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             return false;
         }
 

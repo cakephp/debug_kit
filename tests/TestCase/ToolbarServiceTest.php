@@ -45,9 +45,6 @@ class ToolbarServiceTest extends TestCase
         'plugin.DebugKit.Panels',
     ];
 
-    /**
-     * @var bool
-     */
     protected bool $restore = false;
 
     /**
@@ -60,7 +57,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->events = new EventManager();
@@ -76,7 +73,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         putenv('HTTP_HOST=');
@@ -88,7 +85,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testLoadPanels()
+    public function testLoadPanels(): void
     {
         $bar = new ToolbarService($this->events, []);
         $bar->loadPanels();
@@ -103,7 +100,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testDisablePanels()
+    public function testDisablePanels(): void
     {
         $bar = new ToolbarService($this->events, ['panels' => [
             'DebugKit.SqlLog' => false,
@@ -122,7 +119,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testInitializePanels()
+    public function testInitializePanels(): void
     {
         Log::drop('debug_kit_log_panel');
         $bar = new ToolbarService($this->events, []);
@@ -139,7 +136,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveDataIgnoreDebugKit()
+    public function testSaveDataIgnoreDebugKit(): void
     {
         $request = new Request([
             'url' => '/debug_kit/panel/abc123',
@@ -160,7 +157,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveDataIgnoreDebugKitDashedUrl()
+    public function testSaveDataIgnoreDebugKitDashedUrl(): void
     {
         $request = new Request([
             'url' => '/debug-kit/panel/abc123',
@@ -194,7 +191,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveDataIgnorePaths()
+    public function testSaveDataIgnorePaths(): void
     {
         $request = new Request([
             'url' => '/foo.jpg',
@@ -228,7 +225,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveData()
+    public function testSaveData(): void
     {
         $request = new Request([
             'url' => '/articles',
@@ -272,7 +269,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveDataMissingConnection()
+    public function testSaveDataMissingConnection(): void
     {
         $restore = ConnectionManager::getConfig('test_debug_kit');
         ConnectionManager::drop('test_debug_kit');
@@ -300,7 +297,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testInjectScriptsLastBodyTag()
+    public function testInjectScriptsLastBodyTag(): void
     {
         $request = new Request([
             'url' => '/articles',
@@ -335,7 +332,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testInjectScriptsFileBodies()
+    public function testInjectScriptsFileBodies(): void
     {
         $response = new Response([
             'statusCode' => 200,
@@ -357,7 +354,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testInjectScriptsStreamBodies()
+    public function testInjectScriptsStreamBodies(): void
     {
         $response = new Response([
             'statusCode' => 200,
@@ -378,7 +375,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testInjectScriptsNoModifyResponse()
+    public function testInjectScriptsNoModifyResponse(): void
     {
         $request = new Request([
             'url' => '/articles/view/123',
@@ -406,7 +403,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testIsEnabled()
+    public function testIsEnabled(): void
     {
         Configure::write('debug', true);
         $bar = new ToolbarService($this->events, []);
@@ -425,10 +422,10 @@ class ToolbarServiceTest extends TestCase
      * @return void
      */
     #[DataProvider('domainsProvider')]
-    public function testIsEnabledProductionEnv(string $domain, bool $isEnabled)
+    public function testIsEnabledProductionEnv(string $domain, bool $isEnabled): void
     {
         Configure::write('debug', true);
-        putenv("HTTP_HOST=$domain");
+        putenv('HTTP_HOST=' . $domain);
         $bar = new ToolbarService($this->events, []);
         $this->assertSame($isEnabled, $bar->isEnabled());
 
@@ -467,12 +464,12 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testIsEnabledProductionEnvCustomTld()
+    public function testIsEnabledProductionEnvCustomTld(): void
     {
         $domain = 'myapp.foobar';
         Configure::write('debug', true);
 
-        putenv("HTTP_HOST=$domain");
+        putenv('HTTP_HOST=' . $domain);
         $bar = new ToolbarService($this->events, []);
         $this->assertFalse($bar->isEnabled());
 
@@ -485,7 +482,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testIsEnabledForceEnable()
+    public function testIsEnabledForceEnable(): void
     {
         Configure::write('debug', false);
         $bar = new ToolbarService($this->events, ['forceEnable' => true]);
@@ -497,11 +494,11 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testIsEnabledForceEnableCallable()
+    public function testIsEnabledForceEnableCallable(): void
     {
         Configure::write('debug', false);
         $bar = new ToolbarService($this->events, [
-            'forceEnable' => function () {
+            'forceEnable' => function (): bool {
                 return true;
             },
         ]);
@@ -513,7 +510,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveDataSerializationError()
+    public function testSaveDataSerializationError(): void
     {
         $request = new Request([
             'url' => '/articles',
@@ -534,7 +531,7 @@ class ToolbarServiceTest extends TestCase
             'className' => SimplePanel::class,
         ]);
         // Mock the data() method to return something problematic
-        $panel->setData(['closure' => fn() => 'test']);
+        $panel->setData(['closure' => fn(): string => 'test']);
 
         $row = $bar->saveData($request, $response);
         $this->assertNotEmpty($row, 'Should save data even with serialization errors');

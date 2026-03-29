@@ -26,15 +26,11 @@ class DeprecationsPanel extends DebugPanel
 {
     /**
      * The list of depreated errors.
-     *
-     * @var array
      */
     protected static array $deprecatedErrors = [];
 
     /**
      * instance of DebugInclude
-     *
-     * @var \DebugKit\DebugInclude
      */
     protected DebugInclude $_debug;
 
@@ -135,7 +131,7 @@ class DeprecationsPanel extends DebugPanel
                 return $carry;
             }
             // app, cake, or other groups
-            if (Hash::dimensions($item) == 2) {
+            if (Hash::dimensions($item) === 2) {
                 return $carry + count($item);
             }
 

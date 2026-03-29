@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace DebugKit\Panel;
 
 use Cake\Event\EventInterface;
+use Cake\Routing\Route\Route;
 use Cake\Routing\Router;
 use DebugKit\DebugPanel;
 
@@ -30,7 +31,7 @@ class RoutesPanel extends DebugPanel
      */
     public function summary(): string
     {
-        $routes = array_filter(Router::routes(), function ($route) {
+        $routes = array_filter(Router::routes(), function (Route $route): bool {
             return !isset($route->defaults['plugin']) || $route->defaults['plugin'] !== 'DebugKit';
         });
 

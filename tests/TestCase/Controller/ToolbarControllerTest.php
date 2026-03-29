@@ -32,7 +32,7 @@ class ToolbarControllerTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
@@ -43,7 +43,7 @@ class ToolbarControllerTest extends TestCase
      *
      * @return void
      */
-    public function testClearCacheNoGet()
+    public function testClearCacheNoGet(): void
     {
         $this->get('/debug-kit/toolbar/clear-cache?name=testing');
         $this->assertResponseCode(405);
@@ -54,7 +54,7 @@ class ToolbarControllerTest extends TestCase
      *
      * @return void
      */
-    public function testClearCache()
+    public function testClearCache(): void
     {
         $mock = $this->getMockBuilder('Cake\Cache\CacheEngine')->getMock();
         $mock->expects($this->once())

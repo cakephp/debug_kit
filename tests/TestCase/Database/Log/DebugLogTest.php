@@ -36,7 +36,7 @@ class DebugLogTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->logger = new DebugLog(null, 'test');
@@ -47,7 +47,7 @@ class DebugLogTest extends TestCase
      *
      * @return void
      */
-    public function testLog()
+    public function testLog(): void
     {
         $query = new LoggedQuery();
         $query->setContext([
@@ -72,7 +72,7 @@ class DebugLogTest extends TestCase
      *
      * @return void
      */
-    public function testLogElastic()
+    public function testLogElastic(): void
     {
         $this->assertCount(0, $this->logger->queries());
 
@@ -114,7 +114,7 @@ class DebugLogTest extends TestCase
      * @return void
      */
     #[DataProvider('schemaQueryProvider')]
-    public function testLogIgnoreReflection($sql)
+    public function testLogIgnoreReflection(string $sql): void
     {
         $query = new LoggedQuery();
         $query->setContext([
@@ -135,7 +135,7 @@ class DebugLogTest extends TestCase
      * @return void
      */
     #[DataProvider('schemaQueryProvider')]
-    public function testLogIgnoreReflectionDisabled($sql)
+    public function testLogIgnoreReflectionDisabled(string $sql): void
     {
         $query = new LoggedQuery();
         $query->setContext([
@@ -151,7 +151,7 @@ class DebugLogTest extends TestCase
         $this->assertCount(1, $logger->queries());
     }
 
-    public static function schemaQueryProvider()
+    public static function schemaQueryProvider(): array
     {
         return [
             // MySQL
@@ -173,7 +173,7 @@ class DebugLogTest extends TestCase
      *
      * @return void
      */
-    public function testLogDecorates()
+    public function testLogDecorates(): void
     {
         $orig = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $orig->expects($this->once())

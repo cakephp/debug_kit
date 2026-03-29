@@ -43,13 +43,13 @@ class DashboardControllerTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->configApplication(Application::class, []);
     }
 
-    public function testIndexNoRequests()
+    public function testIndexNoRequests(): void
     {
         $requests = $this->fetchTable('DebugKit.Requests');
         $requests->Panels->deleteAll('1=1');
@@ -62,7 +62,7 @@ class DashboardControllerTest extends TestCase
         $this->assertResponseNotContains('Reset database');
     }
 
-    public function testIndexWithRequests()
+    public function testIndexWithRequests(): void
     {
         $request = $this->makeRequest();
         $this->makePanel($request);
@@ -74,7 +74,7 @@ class DashboardControllerTest extends TestCase
         $this->assertResponseContains('Reset database');
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         $request = $this->makeRequest();
         $this->makePanel($request);

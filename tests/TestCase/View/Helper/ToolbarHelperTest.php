@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace DebugKit\Test\TestCase\View\Helper;
 
+use Cake\Error\Debug\NodeInterface;
 use Cake\Error\Debugger;
 use Cake\Http\ServerRequest as Request;
 use Cake\Routing\Router;
@@ -44,7 +45,7 @@ class ToolbarHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         Router::createRouteBuilder('/')->connect('/{controller}/{action}');
@@ -61,17 +62,17 @@ class ToolbarHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         unset($this->Toolbar);
     }
 
-    public function testDumpNodesSorted()
+    public function testDumpNodesSorted(): void
     {
         $path = '//*[@class="cake-debug-array-item"]/*[@class="cake-debug-string"]';
         $data = ['z' => 1, 'a' => 99, 'm' => 123];
-        $nodes = array_map(function ($v) {
+        $nodes = array_map(function (int $v): NodeInterface {
             return Debugger::exportVarAsNodes($v);
         }, $data);
         $result = $this->Toolbar->dumpNodes($nodes);

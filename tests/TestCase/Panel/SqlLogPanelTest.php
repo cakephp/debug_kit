@@ -40,14 +40,14 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new SqlLogPanel();
         $this->logger = ConnectionManager::get('test')->getDriver()->getLogger();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -61,7 +61,7 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitializeTwiceNoDoubleProxy()
+    public function testInitializeTwiceNoDoubleProxy(): void
     {
         $this->panel->initialize();
         $db = ConnectionManager::get('test');
@@ -78,7 +78,7 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitializePassesIncludeSchema()
+    public function testInitializePassesIncludeSchema(): void
     {
         Configure::write('DebugKit.includeSchemaReflection', true);
         $this->panel->initialize();
@@ -87,7 +87,6 @@ class SqlLogPanelTest extends TestCase
         $this->assertInstanceOf('DebugKit\Database\Log\DebugLog', $logger);
 
         $property = new ReflectionProperty($logger, '_includeSchema');
-        $property->setAccessible(true);
         $this->assertTrue($property->getValue($logger));
     }
 
@@ -96,7 +95,7 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testData()
+    public function testData(): void
     {
         $this->panel->initialize();
 
@@ -113,7 +112,7 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testSummary()
+    public function testSummary(): void
     {
         $this->panel->initialize();
 
@@ -130,7 +129,7 @@ class SqlLogPanelTest extends TestCase
      *
      * @return void
      */
-    public function testWithSimpleConnection()
+    public function testWithSimpleConnection(): void
     {
         ConnectionManager::setConfig('simple', [
             'className' => 'DebugKit\TestApp\Stub\SimpleConnectionStub',

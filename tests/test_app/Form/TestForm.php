@@ -36,7 +36,7 @@ class TestForm extends Form
         return $validator
             ->requirePresence('accept')
             ->add('accept', 'accept', [
-                'rule' => function ($value) {
+                'rule' => function ($value): string {
                     return 'always fail validation';
                 },
             ]);

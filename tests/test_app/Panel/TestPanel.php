@@ -31,10 +31,8 @@ class TestPanel extends DebugPanel
 {
     /**
      * Startup
-     *
-     * @param Controller $controller
      */
-    public function startup(Controller $controller)
+    public function startup(Controller $controller): void
     {
         $controller->testPanel = true;
     }

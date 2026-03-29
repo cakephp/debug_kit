@@ -33,7 +33,7 @@ class CachePanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new CachePanel();
@@ -45,7 +45,7 @@ class CachePanelTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         Cache::drop('debug_kit_test');
@@ -57,7 +57,7 @@ class CachePanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->panel->initialize();
 
@@ -71,7 +71,7 @@ class CachePanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitializeNoProxyIncompleteConfig()
+    public function testInitializeNoProxyIncompleteConfig(): void
     {
         $data = ['duration' => '+2 seconds'];
         Cache::setConfig('incomplete', $data);
@@ -86,7 +86,7 @@ class CachePanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitializeIncompleteData()
+    public function testInitializeIncompleteData(): void
     {
         Cache::setConfig('incomplete', ['duration' => '+2 seconds']);
         $this->panel->initialize();
@@ -100,7 +100,7 @@ class CachePanelTest extends TestCase
      *
      * @return void
      */
-    public function testInitializeTwiceNoDoubleProxy()
+    public function testInitializeTwiceNoDoubleProxy(): void
     {
         $this->panel->initialize();
         $result = Cache::pool('debug_kit_test');
@@ -111,7 +111,7 @@ class CachePanelTest extends TestCase
         $this->assertSame($result2, $result);
     }
 
-    public function testInitializePreserveGlobalConfig()
+    public function testInitializePreserveGlobalConfig(): void
     {
         $this->panel->initialize();
         $result = Cache::getConfig('debug_kit_test');

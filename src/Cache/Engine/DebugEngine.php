@@ -28,19 +28,11 @@ class DebugEngine extends CacheEngine
 {
     /**
      * Proxied engine
-     *
-     * @var \Cake\Cache\CacheEngine
      */
     protected CacheEngine $_engine;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
     protected LoggerInterface $logger;
 
-    /**
-     * @var string
-     */
     protected string $name;
 
     /**
@@ -132,9 +124,9 @@ class DebugEngine extends CacheEngine
      */
     protected function log(string $operation, float $duration, ?string $key = null): void
     {
-        $key = $key ? " `{$key}`" : '';
+        $key = $key ? sprintf(' `%s`', $key) : '';
         $duration = number_format($duration, 5);
-        $this->logger->log('info', ":{$this->name}: {$operation}{$key} - {$duration}ms");
+        $this->logger->log('info', sprintf(':%s: %s%s - %sms', $this->name, $operation, $key, $duration));
     }
 
     /**
@@ -180,7 +172,7 @@ class DebugEngine extends CacheEngine
             $metric = 'miss';
         }
 
-        $this->track("get {$metric}");
+        $this->track('get ' . $metric);
         $this->log('get', $duration, $key);
 
         return $result;
@@ -336,7 +328,7 @@ class DebugEngine extends CacheEngine
     {
         if (isset($this->_engine)) {
             // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
-            [$ns, $class] = namespaceSplit(get_class($this->_engine));
+            [$ns, $class] = namespaceSplit($this->_engine::class);
 
             return str_replace('Engine', '', $class);
         }

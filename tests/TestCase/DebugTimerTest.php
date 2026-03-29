@@ -29,7 +29,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         DebugTimer::clear();
     }
@@ -39,7 +39,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testTimers()
+    public function testTimers(): void
     {
         $this->assertTrue(DebugTimer::start('test1', 'this is my first test'));
         usleep(5000);
@@ -64,7 +64,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testAnonymousTimers()
+    public function testAnonymousTimers(): void
     {
         $this->assertTrue(DebugTimer::start());
         usleep(2000);
@@ -72,9 +72,8 @@ class DebugTimerTest extends TestCase
         $timers = DebugTimer::getAll();
 
         $this->assertCount(2, $timers);
-        end($timers);
-        $key = key($timers);
-        $lineNo = __LINE__ - 8;
+        $key = array_key_last($timers);
+        $lineNo = __LINE__ - 7;
 
         $file = Debugger::trimPath(__FILE__);
         $expected = $file . ' line ' . $lineNo;
@@ -90,7 +89,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testNestedAnonymousTimers()
+    public function testNestedAnonymousTimers(): void
     {
         $this->assertTrue(DebugTimer::start());
         usleep(100);
@@ -119,7 +118,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testRepeatTimers()
+    public function testRepeatTimers(): void
     {
         DebugTimer::start('my timer', 'This is the first call');
         usleep(100);
@@ -145,7 +144,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testRequestTime()
+    public function testRequestTime(): void
     {
         $result1 = DebugTimer::requestTime();
         usleep(50);
@@ -158,7 +157,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testGetTimersWithClear()
+    public function testGetTimersWithClear(): void
     {
         DebugTimer::start('test1', 'this is my first test');
         DebugTimer::stop('test1');
@@ -173,7 +172,7 @@ class DebugTimerTest extends TestCase
      *
      * @return void
      */
-    public function testGetTimers()
+    public function testGetTimers(): void
     {
         DebugTimer::start('test1', 'this is my first test');
         DebugTimer::stop('test1');

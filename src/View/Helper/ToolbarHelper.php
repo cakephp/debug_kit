@@ -34,15 +34,11 @@ class ToolbarHelper extends Helper
 {
     /**
      * helpers property
-     *
-     * @var array
      */
     public array $helpers = ['Html', 'Form', 'Url'];
 
     /**
      * Whether or not the top level keys should be sorted.
-     *
-     * @var bool
      */
     protected bool $sort = false;
 
@@ -76,7 +72,7 @@ class ToolbarHelper extends Helper
         }
         $root = new ArrayNode($items);
 
-        return implode([
+        return implode('', [
             '<div class="cake-debug-output" style="direction:ltr">',
             $formatter->dump($root),
             '</div>',
@@ -93,7 +89,7 @@ class ToolbarHelper extends Helper
     {
         $formatter = new HtmlFormatter();
 
-        return implode([
+        return implode('', [
             '<div class="cake-debug-output" style="direction:ltr">',
             $formatter->dump($node),
             '</div>',

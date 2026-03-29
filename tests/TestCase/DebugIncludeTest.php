@@ -22,7 +22,7 @@ use DebugKit\DebugInclude;
  */
 class DebugIncludeTest extends TestCase
 {
-    public function testIncludePaths()
+    public function testIncludePaths(): void
     {
         $include = new DebugInclude();
         $result = $include->includePaths();
@@ -30,7 +30,7 @@ class DebugIncludeTest extends TestCase
         $this->assertStringContainsString($result[0], get_include_path());
     }
 
-    public function testIsCakeFile()
+    public function testIsCakeFile(): void
     {
         $include = new DebugInclude();
 
@@ -41,7 +41,7 @@ class DebugIncludeTest extends TestCase
         $this->assertFalse($include->isCakeFile(TMP));
     }
 
-    public function testIsAppFile()
+    public function testIsAppFile(): void
     {
         $include = new DebugInclude();
 
@@ -52,7 +52,7 @@ class DebugIncludeTest extends TestCase
         $this->assertFalse($include->isAppFile(TMP));
     }
 
-    public function testGetPluginName()
+    public function testGetPluginName(): void
     {
         $include = new DebugInclude();
 
@@ -60,7 +60,7 @@ class DebugIncludeTest extends TestCase
         $this->assertFalse($include->getPluginName(TMP));
     }
 
-    public function testGetComposerPackageName()
+    public function testGetComposerPackageName(): void
     {
         $include = new DebugInclude();
 
@@ -68,7 +68,7 @@ class DebugIncludeTest extends TestCase
         $this->assertSame('cakephp/cakephp', $include->getComposerPackageName($path));
     }
 
-    public function testNiceFileName()
+    public function testNiceFileName(): void
     {
         $include = new DebugInclude();
 
@@ -98,7 +98,7 @@ class DebugIncludeTest extends TestCase
         );
     }
 
-    public function testGetFileType()
+    public function testGetFileType(): void
     {
         $include = new DebugInclude();
 

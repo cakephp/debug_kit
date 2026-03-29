@@ -42,15 +42,11 @@ class ToolbarService
 
     /**
      * The panel registry.
-     *
-     * @var \DebugKit\Panel\PanelRegistry
      */
     protected PanelRegistry $registry;
 
     /**
      * Default configuration.
-     *
-     * @var array
      */
     protected array $_defaultConfig = [
         'panels' => [
@@ -113,7 +109,7 @@ class ToolbarService
         }
         $enabled = (bool)Configure::read('debug')
                 && !$this->isSuspiciouslyProduction()
-                && php_sapi_name() !== 'phpdbg';
+                && PHP_SAPI !== 'phpdbg';
 
         if ($enabled) {
             return true;
@@ -159,7 +155,7 @@ class ToolbarService
 
         // So it's not an IP address. It must be a domain name.
         $parts = explode('.', $host);
-        if (count($parts) == 1) {
+        if (count($parts) === 1) {
             return false;
         }
 
@@ -176,8 +172,8 @@ class ToolbarService
         if (!$this->getConfig('forceEnable')) {
             $safeList = implode(', ', $safeTlds);
             Log::warning(
-                "DebugKit is disabling itself as your host `{$host}` " .
-                "is not in the known safe list of top-level-domains ({$safeList}). " .
+                sprintf('DebugKit is disabling itself as your host `%s` ', $host) .
+                sprintf('is not in the known safe list of top-level-domains (%s). ', $safeList) .
                 'If you would like to force DebugKit on use the `DebugKit.forceEnable` Configure option.',
             );
         }
@@ -244,8 +240,8 @@ class ToolbarService
     {
         $path = $request->getUri()->getPath();
         $dashboardUrl = '/debug-kit';
-        if (strpos($path, 'debug_kit') !== false || strpos($path, 'debug-kit') !== false) {
-            if (!($path === $dashboardUrl || $path === $dashboardUrl . '/')) {
+        if (str_contains($path, 'debug_kit') || str_contains($path, 'debug-kit')) {
+            if ($path !== $dashboardUrl && $path !== $dashboardUrl . '/') {
                 // internal debug-kit request
                 return false;
             }
@@ -295,7 +291,7 @@ class ToolbarService
 
                 // Set error handler to catch warnings/errors during serialization
                 set_error_handler(function ($errno, $errstr) use ($name): void {
-                    throw new Exception("Serialization error in panel '{$name}': {$errstr}");
+                    throw new Exception(sprintf("Serialization error in panel '%s': %s", $name, $errstr));
                 });
 
                 $content = serialize($data);
@@ -372,7 +368,7 @@ class ToolbarService
     public function injectScripts(Request $row, ResponseInterface $response): ResponseInterface
     {
         $response = $response->withHeader('X-DEBUGKIT-ID', (string)$row->id);
-        if (strpos($response->getHeaderLine('Content-Type'), 'html') === false) {
+        if (!str_contains($response->getHeaderLine('Content-Type'), 'html')) {
             return $response;
         }
         $body = $response->getBody();
@@ -390,7 +386,7 @@ class ToolbarService
         // state after other middleware have been applied.
         $request = Router::getRequest();
         $nonce = '';
-        if ($request && $request->getAttribute('cspScriptNonce')) {
+        if ($request instanceof ServerRequest && $request->getAttribute('cspScriptNonce')) {
             $nonce = sprintf(' nonce="%s"', $request->getAttribute('cspScriptNonce'));
         }
 

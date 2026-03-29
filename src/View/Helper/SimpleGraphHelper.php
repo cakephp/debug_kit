@@ -35,8 +35,6 @@ class SimpleGraphHelper extends Helper
      * - width => (int)
      * - valueType => string (value, percentage)
      * - style => array
-     *
-     * @var array
      */
     protected array $_defaultSettings = [
         'max' => 100,
@@ -71,9 +69,9 @@ class SimpleGraphHelper extends Helper
 
         return sprintf(
             '<div class="c-graph-bar" style="%s"><div class="c-graph-bar__value" style="%s" title="%s"> </div></div>',
-            "width: {$width}px",
-            "margin-left: {$graphOffset}px; width: {$graphValue}px",
-            "Starting {$offset}ms into the request, taking {$value}ms",
+            sprintf('width: %spx', $width),
+            sprintf('margin-left: %spx; width: %spx', $graphOffset, $graphValue),
+            sprintf('Starting %sms into the request, taking %sms', $offset, $value),
         );
     }
 }

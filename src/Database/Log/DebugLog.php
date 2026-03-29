@@ -31,44 +31,32 @@ class DebugLog extends AbstractLogger
 {
     /**
      * Logs from the current request.
-     *
-     * @var array
      */
     protected array $_queries = [];
 
     /**
      * Decorated logger.
-     *
-     * @var \Psr\Log\LoggerInterface|null
      */
     protected ?LoggerInterface $_logger = null;
 
     /**
      * Name of the connection being logged.
-     *
-     * @var string
      */
     protected string $_connectionName;
 
     /**
      * Total time (ms) of all queries
-     *
-     * @var float
      */
     protected float $_totalTime = 0;
 
     /**
      * Set to true to capture schema reflection queries
      * in the SQL log panel.
-     *
-     * @var bool
      */
     protected bool $_includeSchema = false;
 
     /**
      * Whether a transaction is currently open or not.
-     *
-     * @var bool
      */
     protected bool $inTransaction = false;
 
@@ -137,7 +125,7 @@ class DebugLog extends AbstractLogger
         /** @var \Cake\Database\Log\LoggedQuery|object|null $query */
         $query = $context['query'] ?? null;
 
-        if ($this->_logger) {
+        if ($this->_logger instanceof LoggerInterface) {
             $this->_logger->log($level, $message, $context);
         }
 
@@ -206,18 +194,18 @@ class DebugLog extends AbstractLogger
         $querystring = $query->jsonSerialize()['query'];
 
         return // Multiple engines
-            strpos($querystring, 'FROM information_schema') !== false ||
+            str_contains((string)$querystring, 'FROM information_schema') ||
             // Postgres
-            strpos($querystring, 'FROM pg_catalog') !== false ||
+            str_contains((string)$querystring, 'FROM pg_catalog') ||
             // MySQL
-            strpos($querystring, 'SHOW TABLE') === 0 ||
-            strpos($querystring, 'SHOW FULL COLUMNS') === 0 ||
-            strpos($querystring, 'SHOW INDEXES') === 0 ||
+            str_starts_with((string)$querystring, 'SHOW TABLE') ||
+            str_starts_with((string)$querystring, 'SHOW FULL COLUMNS') ||
+            str_starts_with((string)$querystring, 'SHOW INDEXES') ||
             // Sqlite
-            strpos($querystring, 'FROM sqlite_master') !== false ||
-            strpos($querystring, 'PRAGMA') === 0 ||
+            str_contains((string)$querystring, 'FROM sqlite_master') ||
+            str_starts_with((string)$querystring, 'PRAGMA') ||
             // Sqlserver
-            strpos($querystring, 'FROM INFORMATION_SCHEMA') !== false ||
-            strpos($querystring, 'FROM sys.') !== false;
+            str_contains((string)$querystring, 'FROM INFORMATION_SCHEMA') ||
+            str_contains((string)$querystring, 'FROM sys.');
     }
 }

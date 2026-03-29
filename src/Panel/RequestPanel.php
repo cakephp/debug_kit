@@ -43,7 +43,7 @@ class RequestPanel extends DebugPanel
             try {
                 serialize($value);
             } catch (Exception $e) {
-                $value = "Could not serialize `{$attr}`. It failed with {$e->getMessage()}";
+                $value = sprintf('Could not serialize `%s`. It failed with %s', $attr, $e->getMessage());
             }
             $attributes[$attr] = Debugger::exportVarAsNodes($value, $maxDepth);
         }

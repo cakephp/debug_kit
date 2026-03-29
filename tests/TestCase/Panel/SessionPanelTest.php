@@ -37,7 +37,7 @@ class SessionPanelTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->panel = new SessionPanel();
@@ -49,7 +49,7 @@ class SessionPanelTest extends TestCase
      * @return void
      */
     #[WithoutErrorHandler]
-    public function testShutdownSkipAttributes()
+    public function testShutdownSkipAttributes(): void
     {
         $session = new Session();
         $session->write('test', 123);
@@ -59,7 +59,7 @@ class SessionPanelTest extends TestCase
 
         $controller = new Controller($request);
         $event = new Event('Controller.shutdown', $controller);
-        $this->deprecated(function () use ($event) {
+        $this->deprecated(function () use ($event): void {
             $this->panel->shutdown($event);
         });
 

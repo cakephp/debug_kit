@@ -24,9 +24,6 @@ use DebugKit\DebugPanel;
  */
 class CachePanel extends DebugPanel
 {
-    /**
-     * @var \Cake\Log\Engine\ArrayLog
-     */
     protected ArrayLog $logger;
 
     /**

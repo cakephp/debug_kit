@@ -6,6 +6,7 @@ import RoutesPanel from './modules/Panels/RoutesPanel.js';
 import VariablesPanel from './modules/Panels/VariablesPanel.js';
 import PackagesPanel from './modules/Panels/PackagesPanel.js';
 import MailPanel from './modules/Panels/MailPanel.js';
+import RequestPanel from './modules/Panels/RequestPanel.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const toolbar = Start.init();
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Init Panels
   CachePanel.onEvent();
+  RequestPanel.onEvent();
   RoutesPanel.onEvent();
   PackagesPanel.onEvent();
   MailPanel.onEvent();

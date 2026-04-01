@@ -53,4 +53,21 @@ class ToolbarController extends DebugKitController
         $this->set(compact('success', 'message'));
         $this->viewBuilder()->setOption('serialize', ['success', 'message']);
     }
+
+    /**
+     * Clear the session.
+     *
+     * @return void
+     */
+    public function clearSession(): void
+    {
+        $this->request->allowMethod('post');
+        $session = $this->request->getSession();
+        $session->destroy();
+
+        $success = true;
+        $message = 'Session cleared.';
+        $this->set(compact('success', 'message'));
+        $this->viewBuilder()->setOption('serialize', ['success', 'message']);
+    }
 }

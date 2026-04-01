@@ -70,4 +70,30 @@ class ToolbarControllerTest extends TestCase
         $this->assertResponseOk();
         $this->assertResponseContains('success');
     }
+
+    /**
+     * Test clearing the session does not work with GET
+     *
+     * @return void
+     */
+    public function testClearSessionNoGet()
+    {
+        $this->get('/debug-kit/toolbar/clear-session');
+        $this->assertResponseCode(405);
+    }
+
+    /**
+     * Test clearing the session.
+     *
+     * @return void
+     */
+    public function testClearSession()
+    {
+        $this->session(['test' => 'value']);
+        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
+        $this->post('/debug-kit/toolbar/clear-session');
+        $this->assertResponseOk();
+        $this->assertResponseContains('success');
+        $this->assertResponseContains('Session cleared');
+    }
 }

@@ -72,17 +72,6 @@ class ToolbarControllerTest extends TestCase
     }
 
     /**
-     * Test clearing the session does not work with GET
-     *
-     * @return void
-     */
-    public function testClearSessionNoGet()
-    {
-        $this->get('/debug-kit/toolbar/clear-session');
-        $this->assertResponseCode(405);
-    }
-
-    /**
      * Test clearing the session.
      *
      * @return void

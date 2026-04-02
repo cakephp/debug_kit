@@ -180,7 +180,7 @@ Creating Preview Classes
 ------------------------
 
 In order to preview emails before sending them, you need to create a preview
-class that defines the receipient and required template variables for your
+class that defines the recipient and required template variables for your
 mailer methods::
 
     // in src/Mailer/Preview/WelcomePreview.php
@@ -190,10 +190,10 @@ mailer methods::
 
     class WelcomePreview extends MailPreview
     {
-        public function welcome()
+        public function welcome(): \Cake\Mailer\Mailer
         {
             $mailer = $this->getMailer('Welcome');
-            // set any template variables receipients for the mailer.
+            // set any template variables and recipients for the mailer.
 
             return $mailer;
         }
@@ -246,9 +246,9 @@ Panel Elements
 
 Each Panel is expected to have a view element that renders the content from the
 panel. The element name must be the underscored inflection of the class name.
-For example ``SessionPanel`` has an element named **session_panel.ctp**, and
-SqllogPanel has an element named **sqllog_panel.ctp**. These elements should be
-located in the root of your **src/Template/Element** directory.
+For example ``SessionPanel`` has an element named **session_panel.php**, and
+SqllogPanel has an element named **sqllog_panel.php**. These elements should be
+located in the root of your **templates/element** directory.
 
 Custom Titles and Elements
 --------------------------
@@ -278,7 +278,7 @@ behaves and appears:
 Panels in Other Plugins
 -----------------------
 
-Panels provided by `plugins <https://book.cakephp.org/3.0/en/plugins.html>`_ work
+Panels provided by `plugins <https://book.cakephp.org/5/en/plugins.html>`_ work
 almost entirely the same as other plugins, with one minor difference:  You must
 set ``public $plugin`` to be the name of the plugin directory, so that the
 panel's Elements can be located at render time::
@@ -289,7 +289,7 @@ panel's Elements can be located at render time::
 
     class MyCustomPanel extends DebugPanel
     {
-        public $plugin = 'MyPlugin';
+        public string $plugin = 'MyPlugin';
             ...
     }
 

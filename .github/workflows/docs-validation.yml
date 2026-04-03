@@ -1,0 +1,27 @@
+name: Documentation Validation
+
+on:
+    push:
+        branches:
+            - 5.x
+        paths:
+            - 'docs/**'
+            - '.github/**'
+    pull_request:
+        paths:
+            - 'docs/**'
+            - '.github/**'
+
+jobs:
+    validate:
+        uses: cakephp/.github/.github/workflows/docs-validation.yml@5.x
+        with:
+            docs-path: 'docs'
+            vitepress-path: 'docs/.vitepress'
+            enable-config-js-check: true
+            enable-json-lint: true
+            enable-toc-check: true
+            enable-spell-check: true
+            enable-markdown-lint: true
+            enable-link-check: true
+            tools-ref: '5.x'

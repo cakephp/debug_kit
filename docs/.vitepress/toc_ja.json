@@ -1,0 +1,12 @@
+{
+  "/ja/": [
+    {
+      "text": "CakePHP DebugKit",
+      "collapsed": false,
+      "items": [
+        { "text": "概要", "link": "/ja/" },
+        { "text": "API", "link": "https://api.cakephp.org/debugkit/" }
+      ]
+    }
+  ]
+}

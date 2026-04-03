@@ -24,7 +24,6 @@
       "items": [
         { "text": "API Requests", "link": "/api-requests" },
         { "text": "Helper Functions", "link": "/helper-functions" },
-        { "text": "API", "link": "https://api.cakephp.org/debugkit/" }
       ]
     }
   ]

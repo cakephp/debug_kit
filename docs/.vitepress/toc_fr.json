@@ -1,0 +1,12 @@
+{
+  "/fr/": [
+    {
+      "text": "CakePHP DebugKit",
+      "collapsed": false,
+      "items": [
+        { "text": "Aperçu", "link": "/fr/" },
+        { "text": "API", "link": "https://api.cakephp.org/debugkit/" }
+      ]
+    }
+  ]
+}

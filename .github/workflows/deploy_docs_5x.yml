@@ -22,3 +22,4 @@ jobs:
           git_remote_url: 'ssh://dokku@apps.cakephp.org:22/debugkit-docs-5'
           git_push_flags: '-f'
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
+          branch: '5.x'

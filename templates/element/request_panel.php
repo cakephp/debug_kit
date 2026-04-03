@@ -95,6 +95,20 @@ use Cake\Error\Debugger;
 
     <h4>Session</h4>
     <?php if (isset($session)) : ?>
+        <p>
+            <button
+                class="o-button js-clear-session"
+                data-url="<?= $this->Url->build([
+                    'plugin' => 'DebugKit',
+                    'controller' => 'Toolbar',
+                    'action' => 'clearSession',
+                ]) ?>"
+                data-csrf="<?= $this->getRequest()->getAttribute('csrfToken') ?>"
+            >
+                Clear Session
+            </button>
+        </p>
+        <div class="c-request-panel__messages"></div>
         <?= $this->Toolbar->dumpNode($session) ?>
     <?php else : ?>
         <p class="c-flash c-flash--info">No Session data.</p>

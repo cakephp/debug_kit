@@ -28,6 +28,8 @@ export default {
     hostname: 'https://book.cakephp.org/debugkit/5/',
   },
   themeConfig: {
+    siteTitle: false,
+    pluginName: "DebugKit",
     socialLinks: [
       { icon: 'github', link: 'https://github.com/cakephp/debug_kit' },
     ],

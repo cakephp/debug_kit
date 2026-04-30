@@ -72,6 +72,6 @@
         "stan-setup": "phive install",
         "test": "phpunit"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

@@ -1,74 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
-  <file src="src/Database/Log/DebugLog.php">
-    <InternalMethod>
-      <code><![CDATA[getContext]]></code>
-      <code><![CDATA[jsonSerialize]]></code>
-    </InternalMethod>
-  </file>
-  <file src="src/DebugInclude.php">
-    <PossiblyNullArrayOffset>
-      <code><![CDATA[$this->_composerPaths]]></code>
-      <code><![CDATA[$this->_pluginPaths]]></code>
-    </PossiblyNullArrayOffset>
-  </file>
-  <file src="src/DebugSql.php">
-    <InternalMethod>
-      <code><![CDATA[bindings]]></code>
-    </InternalMethod>
-  </file>
-  <file src="src/DebugTimer.php">
-    <PossiblyNullArrayOffset>
-      <code><![CDATA[self::$_timers]]></code>
-    </PossiblyNullArrayOffset>
-  </file>
-  <file src="src/Mailer/MailPreview.php">
-    <PossiblyFalseOperand>
-      <code><![CDATA[$pos]]></code>
-    </PossiblyFalseOperand>
+<files psalm-version="7.0.0-beta16@491dd740b8862db7d4fe8c1f6c161055c32ad651">
+  <file src="src/Mailer/PreviewResult.php">
+    <ImpureMethodCall>
+      <code><![CDATA[$mailer->render()]]></code>
+      <code><![CDATA[$mailer->reset()]]></code>
+      <code><![CDATA[$mailer->viewBuilder()]]></code>
+      <code><![CDATA[$mailer->viewBuilder()]]></code>
+      <code><![CDATA[$mailer->viewBuilder()->setTemplate($method)]]></code>
+      <code><![CDATA[$message->getHeaders($extra)]]></code>
+    </ImpureMethodCall>
   </file>
   <file src="src/Mailer/Transport/DebugKitTransport.php">
     <InvalidReturnStatement>
       <code><![CDATA[$result]]></code>
     </InvalidReturnStatement>
-    <MoreSpecificReturnType>
-      <code><![CDATA[array]]></code>
-    </MoreSpecificReturnType>
     <NullArgument>
       <code><![CDATA[$this->emailLog]]></code>
     </NullArgument>
-  </file>
-  <file src="src/Panel/PanelRegistry.php">
-    <LessSpecificImplementedReturnType>
-      <code><![CDATA[string|null]]></code>
-    </LessSpecificImplementedReturnType>
-    <UnsafeInstantiation>
-      <code><![CDATA[new $class($this, $config)]]></code>
-    </UnsafeInstantiation>
-  </file>
-  <file src="src/Panel/PluginsPanel.php">
-    <InternalClass>
-      <code><![CDATA[PluginConfig::getAppConfig()]]></code>
-    </InternalClass>
-    <InternalMethod>
-      <code><![CDATA[PluginConfig::getAppConfig()]]></code>
-    </InternalMethod>
-  </file>
-  <file src="src/Panel/SqlLogPanel.php">
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[genericInstances]]></code>
-    </UndefinedInterfaceMethod>
-  </file>
-  <file src="src/View/Helper/ToolbarHelper.php">
-    <InternalClass>
-      <code><![CDATA[new HtmlFormatter()]]></code>
-      <code><![CDATA[new HtmlFormatter()]]></code>
-    </InternalClass>
-    <InternalMethod>
-      <code><![CDATA[dump]]></code>
-      <code><![CDATA[dump]]></code>
-      <code><![CDATA[new HtmlFormatter()]]></code>
-      <code><![CDATA[new HtmlFormatter()]]></code>
-    </InternalMethod>
   </file>
 </files>

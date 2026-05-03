@@ -1,26 +1,36 @@
-# Basic docker based environment
-# Necessary to trick dokku into building the documentation
-# using dockerfile instead of herokuish
-FROM ubuntu:22.04
+# ----------------------
+# 1. Build stage
+# ----------------------
+FROM node:24-alpine AS builder
 
-# Add basic tools
-RUN apt-get update && \
-  apt-get install -y build-essential \
-    software-properties-common \
-    curl \
-    git \
-    libxml2 \
-    libffi-dev \
-    libssl-dev
+# Git is required because docs/package.json pulls a dependency from GitHub.
+RUN apk add --no-cache git openssh-client
 
-# Prevent interactive timezone input
-ENV DEBIAN_FRONTEND=noninteractive
-RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php && \
-  apt-get update && \
-  apt-get install -y php8.1-cli php8.1-mbstring php8.1-xml php8.1-zip php8.1-intl php8.1-opcache php8.1-sqlite
+WORKDIR /app/docs
 
-WORKDIR /code
+# Copy dependency manifests first to preserve Docker layer caching.
+COPY docs/ ./
+RUN npm ci
 
-VOLUME ["/code"]
+# Increase max-old-space-size to avoid memory issues during build
+#ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-CMD [ '/bin/bash' ]
+# Build the site.
+RUN npm run docs:build
+
+# ----------------------
+# 2. Runtime stage (angie)
+# ----------------------
+FROM docker.angie.software/angie:latest AS runner
+
+# Copy built files
+COPY --from=builder /app/docs/.vitepress/dist /usr/share/angie/html
+
+# Expose port
+EXPOSE 80
+
+# Health check (optional)
+HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:80/ || exit 1
+
+# Start angie
+CMD ["angie", "-g", "daemon off;"]

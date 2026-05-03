@@ -13,6 +13,10 @@ return function (RouteBuilder $routes): void {
             ['controller' => 'Toolbar', 'action' => 'clearCache']
         );
         $routes->connect(
+            '/toolbar/clear-session',
+            ['controller' => 'Toolbar', 'action' => 'clearSession']
+        );
+        $routes->connect(
             '/toolbar/*',
             ['controller' => 'Requests', 'action' => 'view']
         );

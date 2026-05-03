@@ -1,0 +1,30 @@
+{
+  "/": [
+    {
+      "text": "Getting Started",
+      "collapsed": false,
+      "items": [
+        { "text": "Overview", "link": "/" },
+        { "text": "Configuration", "link": "/configuration" },
+        { "text": "Toolbar Usage", "link": "/toolbar" }
+      ]
+    },
+    {
+      "text": "Panels",
+      "collapsed": false,
+      "items": [
+        { "text": "History Panel", "link": "/history-panel" },
+        { "text": "Mail Panel", "link": "/mail-panel" },
+        { "text": "Custom Panels", "link": "/custom-panels" }
+      ]
+    },
+    {
+      "text": "Advanced",
+      "collapsed": false,
+      "items": [
+        { "text": "API Requests", "link": "/api-requests" },
+        { "text": "Helper Functions", "link": "/helper-functions" }
+      ]
+    }
+  ]
+}

@@ -60,17 +60,21 @@
         }
     },
     "scripts": {
-        "cs-check": "phpcs --colors --parallel=16 -p src/ tests/",
-        "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
         "phpstan": "tools/phpstan analyse",
-        "stan": "@phpstan",
+        "stan": [
+            "tools/phpstan analyse",
+            "tools/psalm"
+        ],
         "stan-baseline": "tools/phpstan --generate-baseline",
+        "psalm-baseline": "tools/psalm --set-baseline=psalm-baseline.xml",
         "stan-setup": "phive install",
         "rector-setup": "cp composer.json composer.backup && composer require --dev rector/rector:\"~2.3.1\" && mv composer.backup composer.json",
         "rector-check": "vendor/bin/rector process --dry-run",
         "rector-fix": "vendor/bin/rector process",
         "test": "phpunit"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

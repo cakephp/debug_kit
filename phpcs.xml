@@ -5,5 +5,8 @@
 
     <rule ref="CakePHP"/>
 
-    <arg value="s"/>
+    <arg value="nps"/>
+    <arg name="colors"/>
+    <arg name="parallel" value="4"/>
+    <arg name="cache" value=".phpcs.cache"/>
 </ruleset>

@@ -20,10 +20,6 @@ Chargez ensuite le plugin :
 bin/cake plugin load DebugKit --only-debug
 ```
 
-## Configuration
-
-* `DebugKit.ignoreAuthorization` doit être défini à `true` si vous souhaitez ignorer le plugin Cake Authorization pour les requêtes DebugKit.
-
 ## Stockage de DebugKit
 
 Par défaut, DebugKit utilise une base SQLite dans le répertoire `tmp` de l'application pour stocker les données des panneaux. Si vous souhaitez utiliser une autre base, définissez une connexion `debug_kit` dans `config/app.php`.

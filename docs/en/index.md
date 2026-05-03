@@ -30,7 +30,6 @@ If the toolbar icon does not appear in the bottom-right corner of the page, chec
 
 1. SQLite is not installed, and DebugKit cannot persist panel data.
 2. Your hostname is not recognized as a safe development host. Add the TLD to `DebugKit.safeTld`.
-3. You are using the Authorization plugin and need to set `DebugKit.ignoreAuthorization` to `true`.
 
 ## Documentation Map
 

@@ -32,7 +32,6 @@ Configure::write('DebugKit.forceEnable', function () {
 Configure::write('DebugKit.ignorePathsPattern', '/\.(jpg|png|gif)$/');
 ```
 
-* `DebugKit.ignoreAuthorization` tells DebugKit to ignore the Cake Authorization plugin for toolbar requests. It is disabled by default.
 * `DebugKit.maxDepth` controls how many levels of nested data are rendered in general debug output. The default is `5`.
 * `DebugKit.variablesPanelMaxDepth` controls how many levels of nested data are rendered in the Variables panel. The default is `5`.
 

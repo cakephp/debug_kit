@@ -18,11 +18,14 @@
  * @var array $variables
  * @var array $errors
  */
+
+use function Cake\Core\h;
+
 ?>
 <div class="c-variables-panel">
     <?php
     if (isset($error)) :
-        printf('<p class="c-flash c-flash--warning">%s</p>', $error);
+        printf('<p class="c-flash c-flash--warning">%s</p>', h($error));
     endif;
 
     if (isset($varsMaxDepth)) {

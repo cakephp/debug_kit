@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Method DebugKit\\Mailer\\Transport\\DebugKitTransport\:\:send\(\) should return array\{headers\: string, message\: string\} but returns array\{headers\: non\-empty\-array\<string, string\>, message\: array\{text\: string, html\: string\}\}\.$#'
-			identifier: return.type
-			count: 1
-			path: src/Mailer/Transport/DebugKitTransport.php
-
-		-
 			message: '#^Parameter \#1 \$request of method DebugKit\\ToolbarService\:\:saveData\(\) expects Cake\\Http\\ServerRequest, Psr\\Http\\Message\\ServerRequestInterface given\.$#'
 			identifier: argument.type
 			count: 1

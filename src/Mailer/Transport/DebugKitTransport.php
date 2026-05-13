@@ -7,6 +7,7 @@ use ArrayObject;
 use Cake\Core\App;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Message;
+use InvalidArgumentException;
 
 /**
  * Debug Transport class, useful for emulating the email sending process and inspecting
@@ -37,6 +38,11 @@ class DebugKitTransport extends AbstractTransport
      */
     public function __construct(array $config = [], ?AbstractTransport $originalTransport = null)
     {
+        if (!isset($config['debugKitLog']) || !$config['debugKitLog'] instanceof ArrayObject) {
+            throw new InvalidArgumentException(
+                'DebugKitTransport requires a `debugKitLog` config entry of type `ArrayObject`.',
+            );
+        }
         $this->emailLog = $config['debugKitLog'];
 
         if ($originalTransport !== null) {
@@ -62,7 +68,17 @@ class DebugKitTransport extends AbstractTransport
     }
 
     /**
-     * @inheritDoc
+     * Capture the message into the in-memory email log and optionally forward
+     * to a wrapped real transport.
+     *
+     * Overrides the parent return shape: DebugKit stores the headers as an
+     * associative array (so the panel can render rows) and splits the body
+     * into text/html parts. Callers that consume this transport's return
+     * value directly must account for this richer shape.
+     *
+     * @param \Cake\Mailer\Message $message The message to capture.
+     * @return array
+     * @phpstan-return array{headers: array<string, string>, message: array{text: string, html: string}}|array<string, mixed>
      */
     public function send(Message $message): array
     {

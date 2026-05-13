@@ -290,6 +290,7 @@ class ToolbarService
 
         foreach ($this->registry->loaded() as $name) {
             $panel = $this->registry->{$name};
+            $data = null;
             try {
                 $data = $panel->data();
 

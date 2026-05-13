@@ -1,6 +1,6 @@
 export default (($) => {
   const addMessage = (text) => {
-    $(`<p>${text}</p>`)
+    $('<p>').text(text)
       .appendTo('.c-request-panel__messages')
       .fadeOut(2000);
   };

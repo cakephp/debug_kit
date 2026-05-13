@@ -10,6 +10,14 @@ if (elem) {
   let bodyOverflow;
 
   const onMessage = (event) => {
+    // The toolbar iframe is same-origin with the host app; reject any
+    // postMessage that does not originate from the iframe we created.
+    if (event.origin !== win.location.origin) {
+      return;
+    }
+    if (!iframe || event.source !== iframe.contentWindow) {
+      return;
+    }
     if (event.data === 'collapse') {
       iframe.height = 40;
       iframe.width = 40;

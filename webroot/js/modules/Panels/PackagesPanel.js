@@ -1,26 +1,35 @@
 export default (($) => {
   const buildSuccessfulMessage = (response) => {
-    let html = '';
+    const $out = $('<div>');
     if (response.packages.bcBreaks === undefined && response.packages.semverCompatible === undefined) {
-      return '<pre class="c-packages-panel__up2date">All dependencies are up to date</pre>';
+      $out.append($('<pre>').addClass('c-packages-panel__up2date').text('All dependencies are up to date'));
+      return $out;
     }
     if (response.packages.bcBreaks !== undefined) {
-      html += '<h4 class="c-packages-panel__section-header">Update with potential BC break</h4>';
-      html += `<pre>${response.packages.bcBreaks}</pre>`;
+      $out.append($('<h4>').addClass('c-packages-panel__section-header').text('Update with potential BC break'));
+      $out.append($('<pre>').text(String(response.packages.bcBreaks)));
     }
     if (response.packages.semverCompatible !== undefined) {
-      html += '<h4 class="c-packages-panel__section-header">Update semver compatible</h4>';
-      html += `<pre>${response.packages.semverCompatible}</pre>`;
+      $out.append($('<h4>').addClass('c-packages-panel__section-header').text('Update semver compatible'));
+      $out.append($('<pre>').text(String(response.packages.semverCompatible)));
     }
-    return html;
+    return $out;
   };
 
-  const showMessage = (el, html) => {
-    el.show().html(html);
+  const showMessage = (el, $content) => {
+    el.show().empty().append($content);
     $('.o-loader').removeClass('is-loading');
   };
 
-  const buildErrorMessage = (response) => `<pre class="c-packages-panel__warning-message">${JSON.parse(response.responseText).message}</pre>`;
+  const buildErrorMessage = (jqXHR) => {
+    let message = '';
+    try {
+      message = String(JSON.parse(jqXHR.responseText).message ?? '');
+    } catch (_e) {
+      message = String(jqXHR.responseText || jqXHR.statusText || 'Request failed');
+    }
+    return $('<pre>').addClass('c-packages-panel__warning-message').text(message);
+  };
 
   const init = () => {
     const $panel = $('.c-packages-panel');
@@ -41,8 +50,8 @@ export default (($) => {
         success(data) {
           showMessage($terminal, buildSuccessfulMessage(data));
         },
-        error(jqXHR, textStatus) {
-          showMessage($terminal, buildErrorMessage(textStatus));
+        error(jqXHR) {
+          showMessage($terminal, buildErrorMessage(jqXHR));
         },
       });
       e.preventDefault();

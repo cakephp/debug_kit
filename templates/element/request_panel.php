@@ -28,6 +28,7 @@
  */
 
 use Cake\Error\Debugger;
+use function Cake\Core\h;
 
 ?>
 <div class="c-request-panel">
@@ -36,8 +37,8 @@ use Cake\Error\Debugger;
         <p class="c-flash c-flash--warning">
             <?= sprintf(
                 'Headers already sent at file %s and line %d.',
-                $headers['file'],
-                $headers['line']
+                h($headers['file']),
+                (int)$headers['line']
             ) ?>
         </p>
     <?php endif; ?>

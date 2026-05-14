@@ -19,6 +19,7 @@ use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Message;
 use Cake\TestSuite\TestCase;
 use DebugKit\Mailer\Transport\DebugKitTransport;
+use InvalidArgumentException;
 
 class DebugKitTransportTest extends TestCase
 {
@@ -65,6 +66,21 @@ class DebugKitTransportTest extends TestCase
     public function testMethodProxy()
     {
         $this->assertSame('bloop', $this->transport->customMethod());
+    }
+
+    public function testConstructorRejectsMissingDebugKitLog()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('debugKitLog');
+
+        new DebugKitTransport([]);
+    }
+
+    public function testConstructorRejectsWrongDebugKitLogType()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new DebugKitTransport(['debugKitLog' => 'not-an-arrayobject']);
     }
 
     public function testEmailCapture()

@@ -11,9 +11,6 @@
     </ImpureMethodCall>
   </file>
   <file src="src/Mailer/Transport/DebugKitTransport.php">
-    <InvalidReturnStatement>
-      <code><![CDATA[$result]]></code>
-    </InvalidReturnStatement>
     <NullArgument>
       <code><![CDATA[$this->emailLog]]></code>
     </NullArgument>

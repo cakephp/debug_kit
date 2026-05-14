@@ -54,7 +54,11 @@ use function Cake\Core\h;
                         </thead>
                         <tbody>
                         <?php foreach ($packages as $package) : ?>
-                            <?php extract($package); ?>
+                            <?php
+                            $name = (string)($package['name'] ?? '');
+                            $version = (string)($package['version'] ?? '');
+                            $description = (string)($package['description'] ?? '');
+                            ?>
                             <tr>
                                 <td title="<?= h($description) ?>">
                                     <a href="https://packagist.org/packages/<?= h($name) ?>"
@@ -85,7 +89,11 @@ use function Cake\Core\h;
                         </thead>
                         <tbody>
                         <?php foreach ($devPackages as $package) : ?>
-                            <?php extract($package); ?>
+                            <?php
+                            $name = (string)($package['name'] ?? '');
+                            $version = (string)($package['version'] ?? '');
+                            $description = (string)($package['description'] ?? '');
+                            ?>
                             <tr>
                                 <td title="<?= h($description) ?>">
                                     <a href="https://packagist.org/packages/<?= h($name) ?>"

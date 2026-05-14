@@ -291,20 +291,22 @@ class ToolbarService
         foreach ($this->registry->loaded() as $name) {
             $panel = $this->registry->{$name};
             $data = null;
+            $handlerInstalled = false;
             try {
                 $data = $panel->data();
 
-                // Set error handler to catch warnings/errors during serialization
-                set_error_handler(function ($errno, $errstr) use ($name): void {
-                    throw new Exception("Serialization error in panel '{$name}': {$errstr}");
-                });
+                // Catch only warnings/notices raised during serialization; fatals
+                // and exceptions in __sleep/__serialize already surface as throws.
+                set_error_handler(
+                    function ($errno, $errstr) use ($name): bool {
+                        throw new Exception("Serialization error in panel '{$name}': {$errstr}");
+                    },
+                    E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE,
+                );
+                $handlerInstalled = true;
 
                 $content = serialize($data);
-
-                restore_error_handler();
             } catch (Exception $e) {
-                restore_error_handler();
-
                 $errorMessage = sprintf(
                     'Failed to serialize data for panel "%s": %s',
                     $name,
@@ -312,12 +314,16 @@ class ToolbarService
                 );
 
                 Log::warning($errorMessage);
-                Log::debug('Panel data type: ' . gettype($data ?? null));
+                Log::debug('Panel data type: ' . gettype($data));
 
                 $content = serialize([
                     'error' => $errorMessage,
                     'panel' => $name,
                 ]);
+            } finally {
+                if ($handlerInstalled) {
+                    restore_error_handler();
+                }
             }
             $row->panels[] = $requests->Panels->newEntity([
                 'panel' => $name,

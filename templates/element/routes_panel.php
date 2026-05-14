@@ -45,7 +45,7 @@ foreach (CorePlugin::loaded() as $pluginName) {
             <button type="button" class="o-button js-toggle-plugin-route <?=
                     strpos($pluginName, 'DebugKit') === 0 ? ' is-active' : '' ?>"
                     data-plugin=".c-routes-panel__route-entry--plugin-<?= $parsedName ?>">
-                <?= $pluginName ?>
+                <?= h($pluginName) ?>
             </button>
         <?php endforeach; ?>
     </div>

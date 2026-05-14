@@ -46,6 +46,9 @@ class ToolbarController extends DebugKitController
         if (!$name) {
             throw new NotFoundException('Invalid cache engine name.');
         }
+        if (!Cache::getConfig($name)) {
+            throw new NotFoundException(sprintf('Unknown cache engine "%s".', $name));
+        }
         $success = Cache::clear($name);
         $message = $success ?
             sprintf('%s cache cleared.', $name) :

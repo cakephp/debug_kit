@@ -53,22 +53,24 @@ class ComposerController extends DebugKitController
 
         $output = $this->executeComposerCommand($input);
         $dependencies = array_filter(explode("\n", $output->fetch()));
-        $packages = [];
+        $semverCompatible = [];
+        $bcBreaks = [];
         foreach ($dependencies as $dependency) {
-            if (strpos($dependency, 'php_network_getaddresses') !== false) {
+            if (str_contains($dependency, 'php_network_getaddresses')) {
                 throw new RuntimeException('You have to be connected to the internet');
             }
-            if (strpos($dependency, '<highlight>') !== false) {
-                $packages['semverCompatible'][] = $dependency;
+            if (str_contains($dependency, '<highlight>')) {
+                $semverCompatible[] = $dependency;
                 continue;
             }
-            $packages['bcBreaks'][] = $dependency;
+            $bcBreaks[] = $dependency;
         }
-        if (!empty($packages['semverCompatible'])) {
-            $packages['semverCompatible'] = trim(implode("\n", $packages['semverCompatible']));
+        $packages = [];
+        if ($semverCompatible) {
+            $packages['semverCompatible'] = trim(implode("\n", $semverCompatible));
         }
-        if (!empty($packages['bcBreaks'])) {
-            $packages['bcBreaks'] = trim(implode("\n", $packages['bcBreaks']));
+        if ($bcBreaks) {
+            $packages['bcBreaks'] = trim(implode("\n", $bcBreaks));
         }
 
         $this->viewBuilder()->setOption('serialize', ['packages']);

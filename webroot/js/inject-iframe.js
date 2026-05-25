@@ -77,7 +77,7 @@ if (elem) {
         url: this._arguments && this._arguments[1],
         type: this.getResponseHeader('Content-Type'),
       };
-      iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+      iframe.contentWindow?.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
     }
     if (original) {
       return original.apply(this, [].slice.call(arguments));
@@ -124,7 +124,7 @@ if (elem) {
             url,
             type: response.headers.get('Content-Type'),
           };
-          iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+          iframe.contentWindow?.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
         }
         return response;
       } catch (error) {
@@ -138,7 +138,7 @@ if (elem) {
           type: null,
           error: error.message,
         };
-        iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+        iframe.contentWindow?.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
         throw error;
       }
     };

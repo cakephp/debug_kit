@@ -54,7 +54,7 @@ class RequestPanel extends DebugPanel
             'query' => Debugger::exportVarAsNodes($request->getQueryParams(), $maxDepth),
             'data' => Debugger::exportVarAsNodes($request->getData(), $maxDepth),
             'cookie' => Debugger::exportVarAsNodes($request->getCookieParams(), $maxDepth),
-            'get' => Debugger::exportVarAsNodes($_GET, $maxDepth),
+            'get' => Debugger::exportVarAsNodes($request->getQueryParams(), $maxDepth),
             'session' => Debugger::exportVarAsNodes($request->getSession()->read(), $maxDepth),
             'matchedRoute' => $request->getParam('_matchedRoute'),
             'headers' => [

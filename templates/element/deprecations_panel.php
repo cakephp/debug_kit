@@ -23,7 +23,7 @@
 
 use function Cake\Core\h;
 
-$hasAny = count($app) + count($plugins) + count($cake) + count($vendor);
+$hasAny = count($app) + count($plugins) + count($cake) + count($vendor) + count($other);
 
 $printer = function ($section, $data) {
 ?>
@@ -41,7 +41,7 @@ $printer = function ($section, $data) {
 }
 ?>
 <div class="c-deprecations-panel">
-    <?php if ($hasAny) : ?>
+    <?php if (!$hasAny) : ?>
         <p class="c-flash c-flash--info">No deprecations</p>
         <?php
     endif;

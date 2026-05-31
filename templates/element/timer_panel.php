@@ -65,7 +65,7 @@ use function Cake\Core\h;
             <?php
             $rows = [];
             $end = end($timers);
-            $maxTime = $end['end'];
+            $maxTime = $end ? $end['end'] : 0;
 
             $i = 0;
             $values = array_values($timers);

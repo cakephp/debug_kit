@@ -236,6 +236,14 @@ export default class Toolbar {
   // ========== AJAX related functionality ==========
 
   onMessage(event) {
+    // Only accept messages from the parent window that loaded the toolbar
+    // iframe; the toolbar is served same-origin so origin must match too.
+    if (event.origin !== window.location.origin) {
+      return;
+    }
+    if (event.source !== window.parent) {
+      return;
+    }
     if (typeof (event.data) === 'string' && event.data.indexOf('ajax-completed$$') === 0) {
       this.onRequest(JSON.parse(event.data.split('$$')[1]));
     }

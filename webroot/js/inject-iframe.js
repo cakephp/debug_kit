@@ -10,6 +10,14 @@ if (elem) {
   let bodyOverflow;
 
   const onMessage = (event) => {
+    // The toolbar iframe is same-origin with the host app; reject any
+    // postMessage that does not originate from the iframe we created.
+    if (event.origin !== win.location.origin) {
+      return;
+    }
+    if (!iframe || event.source !== iframe.contentWindow) {
+      return;
+    }
     if (event.data === 'collapse') {
       iframe.height = 40;
       iframe.width = 40;
@@ -69,7 +77,7 @@ if (elem) {
         url: this._arguments && this._arguments[1],
         type: this.getResponseHeader('Content-Type'),
       };
-      iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+      iframe.contentWindow?.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
     }
     if (original) {
       return original.apply(this, [].slice.call(arguments));
@@ -116,7 +124,7 @@ if (elem) {
             url,
             type: response.headers.get('Content-Type'),
           };
-          iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+          iframe.contentWindow?.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
         }
         return response;
       } catch (error) {
@@ -130,7 +138,7 @@ if (elem) {
           type: null,
           error: error.message,
         };
-        iframe.contentWindow.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
+        iframe.contentWindow?.postMessage(`ajax-completed$$${JSON.stringify(params)}`, window.location.origin);
         throw error;
       }
     };

@@ -72,6 +72,19 @@ class ToolbarControllerTest extends TestCase
     }
 
     /**
+     * Posting an unknown cache engine name 404s instead of returning a
+     * misleading 200 with `success: false`.
+     *
+     * @return void
+     */
+    public function testClearCacheUnknownEngine()
+    {
+        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
+        $this->post('/debug-kit/toolbar/clear-cache', ['name' => 'does-not-exist']);
+        $this->assertResponseCode(404);
+    }
+
+    /**
      * Test clearing the session.
      *
      * @return void

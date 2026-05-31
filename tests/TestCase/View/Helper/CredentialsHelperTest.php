@@ -83,8 +83,8 @@ class CredentialsHelperTest extends TestCase
             [['value'], ['value']],
             ['http://example.com', 'http://example.com'],
             ['ssh://ssh.example.com', 'ssh://ssh.example.com'],
-            ['http://user@example.com', 'http://<a class="filtered-credentials" title="user" onclick="this.innerHTML = this.title">******</a>@example.com'],
-            ['http://user:pass@example.com', 'http://<a class="filtered-credentials" title="user:pass" onclick="this.innerHTML = this.title">******</a>@example.com'],
+            ['http://user@example.com', 'http://<a class="filtered-credentials" title="user" onclick="this.textContent = this.title">******</a>@example.com'],
+            ['http://user:pass@example.com', 'http://<a class="filtered-credentials" title="user:pass" onclick="this.textContent = this.title">******</a>@example.com'],
         ];
     }
 }

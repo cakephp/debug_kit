@@ -27,6 +27,7 @@ use Cake\TestSuite\TestCase;
 use DebugKit\Model\Entity\Request as RequestEntity;
 use DebugKit\Panel\SqlLogPanel;
 use DebugKit\TestApp\Panel\SimplePanel;
+use DebugKit\TestApp\Panel\ThrowingDataPanel;
 use DebugKit\ToolbarService;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -555,5 +556,53 @@ class ToolbarServiceTest extends TestCase
         $content = unserialize($simplePanel->content);
         $this->assertArrayHasKey('error', $content, 'Should have error key');
         $this->assertStringContainsString('SimplePanel', $content['error'], 'Error should mention panel name');
+    }
+
+    /**
+     * Test that saveData survives a panel whose data() method itself throws,
+     * not just one whose serialize() fails.
+     *
+     * @return void
+     */
+    public function testSaveDataPanelDataThrows()
+    {
+        $request = new Request([
+            'url' => '/articles',
+            'environment' => ['REQUEST_METHOD' => 'GET'],
+        ]);
+        $response = new Response([
+            'statusCode' => 200,
+            'type' => 'text/html',
+            'body' => '<html><title>test</title><body><p>some text</p></body>',
+        ]);
+
+        $bar = new ToolbarService($this->events, []);
+        $bar->loadPanels();
+        $bar->registry()->load('DebugKit.TestApp\Panel\ThrowingDataPanel', [
+            'className' => ThrowingDataPanel::class,
+        ]);
+
+        $row = $bar->saveData($request, $response);
+        $this->assertNotEmpty($row, 'Should save data even when a panel data() throws');
+
+        $requests = $this->getTableLocator()->get('DebugKit.Requests');
+        $result = $requests->find()
+            ->orderBy(['Requests.requested_at' => 'DESC'])
+            ->contain('Panels')
+            ->first();
+
+        $throwingPanel = null;
+        foreach ($result->panels as $p) {
+            if ($p->panel === 'DebugKit.TestApp\Panel\ThrowingDataPanel') {
+                $throwingPanel = $p;
+                break;
+            }
+        }
+
+        $this->assertNotNull($throwingPanel, 'ThrowingDataPanel should be present');
+        $content = unserialize($throwingPanel->content);
+        $this->assertArrayHasKey('error', $content);
+        $this->assertStringContainsString('ThrowingDataPanel', $content['error']);
+        $this->assertStringContainsString('Simulated data() failure', $content['error']);
     }
 }

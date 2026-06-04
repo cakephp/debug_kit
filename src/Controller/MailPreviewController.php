@@ -266,7 +266,7 @@ class MailPreviewController extends DebugKitController
      * @return \DebugKit\Mailer\PreviewResult The result of the email preview
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    protected function findPreview(string $previewName, string $emailName, ?string $plugin = ''): PreviewResult
+    protected function findPreview(string $previewName, string $emailName, ?string $plugin = null): PreviewResult
     {
         if ($plugin) {
             $plugin = "$plugin.";

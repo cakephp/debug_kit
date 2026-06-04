@@ -23,6 +23,7 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use DebugKit\Mailer\AbstractResult;
+use DebugKit\Mailer\MailPreview;
 use DebugKit\Mailer\PreviewResult;
 use DebugKit\Mailer\SentMailResult;
 use Psr\Http\Message\ResponseInterface;
@@ -261,18 +262,21 @@ class MailPreviewController extends DebugKitController
      *
      * @param string $previewName The Mailer name
      * @param string $emailName The mailer preview method
-     * @param string $plugin The plugin where the mailer preview should be found
+     * @param ?string $plugin The plugin where the mailer preview should be found
      * @return \DebugKit\Mailer\PreviewResult The result of the email preview
      * @throws \Cake\Http\Exception\NotFoundException
      */
-    protected function findPreview(string $previewName, string $emailName, string $plugin = ''): PreviewResult
+    protected function findPreview(string $previewName, string $emailName, ?string $plugin = ''): PreviewResult
     {
         if ($plugin) {
             $plugin = "$plugin.";
         }
+        if (str_contains($previewName, '\\')) {
+            throw new NotFoundException("Mailer preview $previewName not found");
+        }
 
         $realClass = App::className($plugin . $previewName, 'Mailer/Preview');
-        if (!$realClass) {
+        if (!$realClass || !is_subclass_of($realClass, MailPreview::class, true)) {
             throw new NotFoundException("Mailer preview $previewName not found");
         }
         /** @var \DebugKit\Mailer\MailPreview $mailPreview */

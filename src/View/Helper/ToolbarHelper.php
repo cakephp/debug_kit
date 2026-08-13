@@ -35,7 +35,7 @@ class ToolbarHelper extends Helper
     /**
      * helpers property
      *
-     * @var array
+     * @var array<int|string, string|array<string, mixed>>
      */
     public array $helpers = ['Html', 'Form', 'Url'];
 

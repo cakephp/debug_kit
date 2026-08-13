@@ -155,6 +155,21 @@ class DebugEngine extends CacheEngine
     /**
      * @inheritDoc
      */
+    public function add(string $key, mixed $value): bool
+    {
+        $start = microtime(true);
+        $result = $this->_engine->add($key, $value);
+        $duration = microtime(true) - $start;
+
+        $this->track('set');
+        $this->log('add', $duration, $key);
+
+        return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setMultiple($values, $ttl = null): bool
     {
         $start = microtime(true);
@@ -182,6 +197,25 @@ class DebugEngine extends CacheEngine
 
         $this->track("get {$metric}");
         $this->log('get', $duration, $key);
+
+        return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function has(string $key): bool
+    {
+        $start = microtime(true);
+        $result = $this->_engine->has($key);
+        $duration = microtime(true) - $start;
+        $metric = 'hit';
+        if (!$result) {
+            $metric = 'miss';
+        }
+
+        $this->track("get {$metric}");
+        $this->log('has', $duration, $key);
 
         return $result;
     }

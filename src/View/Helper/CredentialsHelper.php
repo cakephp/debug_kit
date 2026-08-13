@@ -31,6 +31,8 @@ class CredentialsHelper extends Helper
 {
     /**
      * Helpers property
+     *
+     * @var array<int|string, string|array<string, mixed>>
      */
     public array $helpers = ['Html', 'DebugKit.Toolbar'];
 

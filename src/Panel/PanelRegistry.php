@@ -26,13 +26,9 @@ use RuntimeException;
  * Registry object for panels.
  *
  * @extends \Cake\Core\ObjectRegistry<\DebugKit\DebugPanel>
- * @implements \Cake\Event\EventDispatcherInterface<object>
  */
 class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
 {
-    /**
-     * @use \Cake\Event\EventDispatcherTrait<object>
-     */
     use EventDispatcherTrait;
 
     /**

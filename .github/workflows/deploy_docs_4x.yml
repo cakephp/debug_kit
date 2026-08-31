@@ -7,6 +7,9 @@ on:
       - 4.x
   workflow_dispatch:
 
+permissions:
+    contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Push to dokku
-        uses: dokku/github-action@master
+        uses: dokku/github-action@cc7dec1d2b9fed249a14ae462bc953bba436f78c # v1.10.0
         with:
           git_remote_url: 'ssh://dokku@apps.cakephp.org:22/debugkit-docs-4'
           git_push_flags: '-f'

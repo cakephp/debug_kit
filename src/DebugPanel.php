@@ -35,7 +35,7 @@ class DebugPanel implements EventListenerInterface
     /**
      * The data collected about a given request.
      */
-    protected array $_data = [];
+    protected array $data = [];
 
     /**
      * Get the title for the panel.
@@ -58,8 +58,7 @@ class DebugPanel implements EventListenerInterface
      */
     public function elementName(): string
     {
-        // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
-        [$ns, $name] = namespaceSplit(static::class);
+        [, $name] = namespaceSplit(static::class);
         if ($this->plugin) {
             return $this->plugin . '.' . Inflector::underscore($name);
         }
@@ -74,7 +73,7 @@ class DebugPanel implements EventListenerInterface
      */
     public function data(): array
     {
-        return $this->_data;
+        return $this->data;
     }
 
     /**

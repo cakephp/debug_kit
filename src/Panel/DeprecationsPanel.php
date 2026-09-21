@@ -47,7 +47,7 @@ class DeprecationsPanel extends DebugPanel
      *
      * @return array
      */
-    protected function _prepare(): array
+    protected function prepare(): array
     {
         $errors = static::$deprecatedErrors;
         $return = ['cake' => [], 'app' => [], 'plugins' => [], 'vendor' => [], 'other' => []];
@@ -121,9 +121,9 @@ class DeprecationsPanel extends DebugPanel
      */
     public function summary(): string
     {
-        $data = $this->_data;
+        $data = $this->data;
         if (empty($data)) {
-            $data = $this->_prepare();
+            $data = $this->prepare();
         }
 
         return (string)array_reduce($data, function ($carry, $item) {
@@ -152,6 +152,6 @@ class DeprecationsPanel extends DebugPanel
      */
     public function shutdown(EventInterface $event): void
     {
-        $this->_data = $this->_prepare();
+        $this->data = $this->prepare();
     }
 }

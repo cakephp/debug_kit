@@ -62,7 +62,7 @@ class VariablesPanel extends DebugPanel
      * @param object $item The item whose debug info to retrieve.
      * @return array|string
      */
-    protected function _walkDebugInfo(callable $walker, object $item): array|string
+    protected function walkDebugInfo(callable $walker, object $item): array|string
     {
         try {
             /** @phpstan-ignore method.notFound */
@@ -108,7 +108,7 @@ class VariablesPanel extends DebugPanel
             $content[$k] = Debugger::exportVarAsNodes($v, $varsMaxDepth);
         }
 
-        $this->_data = [
+        $this->data = [
             'variables' => $content,
             'errors' => $errors,
             'varsMaxDepth' => $varsMaxDepth,
@@ -122,10 +122,10 @@ class VariablesPanel extends DebugPanel
      */
     public function summary(): string
     {
-        if (!isset($this->_data['variables'])) {
+        if (!isset($this->data['variables'])) {
             return '0';
         }
 
-        return (string)count($this->_data['variables']);
+        return (string)count($this->data['variables']);
     }
 }

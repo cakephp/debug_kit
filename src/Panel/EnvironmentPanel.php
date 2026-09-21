@@ -42,7 +42,7 @@ class EnvironmentPanel extends DebugPanel
      *
      * @return array
      */
-    protected function _prepare(): array
+    protected function prepare(): array
     {
         $return = [];
         // PHP Data
@@ -109,7 +109,7 @@ class EnvironmentPanel extends DebugPanel
      */
     public function shutdown(EventInterface $event): void
     {
-        $this->_data = $this->_prepare();
+        $this->data = $this->prepare();
     }
 
     /**

@@ -31,7 +31,7 @@ class PluginsPanel extends DebugPanel
         $loadedPluginsCollection = Plugin::getCollection();
         $config = PluginConfig::getAppConfig();
 
-        $this->_data['hasEmptyAppConfig'] = empty($config);
+        $this->data['hasEmptyAppConfig'] = empty($config);
         $plugins = [];
 
         foreach ($config as $pluginName => $options) {
@@ -43,7 +43,7 @@ class PluginsPanel extends DebugPanel
             ];
         }
 
-        $this->_data['plugins'] = $plugins;
+        $this->data['plugins'] = $plugins;
     }
 
     /**
@@ -53,10 +53,10 @@ class PluginsPanel extends DebugPanel
      */
     public function summary(): string
     {
-        if (!isset($this->_data['plugins'])) {
+        if (!isset($this->data['plugins'])) {
             return '0';
         }
 
-        return (string)count($this->_data['plugins']);
+        return (string)count($this->data['plugins']);
     }
 }

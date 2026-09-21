@@ -48,7 +48,7 @@ class ToolbarService
     /**
      * Default configuration.
      */
-    protected array $_defaultConfig = [
+    protected array $defaultConfig = [
         'panels' => [
             'DebugKit.Cache' => true,
             'DebugKit.Request' => true,

@@ -116,9 +116,8 @@ class RequestsTable extends Table
         }
 
         try {
-            $noPurge = $this->find()
+            $noPurge = $this->unhydratedFind()
                 ->select(['id'])
-                ->enableHydration(false)
                 ->orderBy(['requested_at' => 'desc'])
                 ->limit(Configure::read('DebugKit.requestCount') ?: 20)
                 ->all()

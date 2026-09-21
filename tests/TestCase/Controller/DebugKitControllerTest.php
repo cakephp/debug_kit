@@ -54,9 +54,9 @@ class DebugKitControllerTest extends TestCase
      * Build controller with AuthorizationService
      * in request attribute
      *
-     * @return DebugKit\Controller\DebugKitController
+     * @return \DebugKit\Controller\DebugKitController
      */
-    private function _buildController(): DebugKitController
+    private function buildController(): DebugKitController
     {
         $request = new ServerRequest(['url' => '/debug-kit/']);
 
@@ -76,7 +76,9 @@ class DebugKitControllerTest extends TestCase
      */
     public function testAuthorizationSkipped(): void
     {
-        $controller = $this->_buildController();
+        $this->markTestSkipped('Skipped until the authorization plugin is added back as dev dependency');
+
+        $controller = $this->buildController();
         $event = new Event('testing');
         $controller->beforeFilter($event);
 

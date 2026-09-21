@@ -50,7 +50,7 @@ if (!function_exists('sql')) {
      *    data in a browser-friendly way.
      * @return \Cake\Database\Query
      */
-    function sql(Query $query, $showValues = true, $showHtml = null)
+    function sql(Query $query, bool $showValues = true, ?bool $showHtml = null): Query
     {
         return DebugSql::sql($query, $showValues, $showHtml, 1);
     }
@@ -69,7 +69,7 @@ if (!function_exists('sqld')) {
      *    data in a browser-friendly way.
      * @return void
      */
-    function sqld(Query $query, $showValues = true, $showHtml = null)
+    function sqld(Query $query, bool $showValues = true, ?bool $showHtml = null): void
     {
         DebugSql::sqld($query, $showValues, $showHtml, 2);
     }

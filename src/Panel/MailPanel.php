@@ -39,7 +39,7 @@ class MailPanel extends DebugPanel
     public function initialize(): void
     {
         $reflection = new ReflectionClass(TransportFactory::class);
-        $property = $reflection->getProperty('_config');
+        $property = $reflection->getProperty('config');
         /** @var array<\Cake\Mailer\AbstractTransport|array> $configs */
         $configs = $property->getValue();
 
@@ -64,7 +64,7 @@ class MailPanel extends DebugPanel
 
             $configs[$name] = $transport;
         }
-        $reflection->setStaticPropertyValue('_config', $configs);
+        $reflection->setStaticPropertyValue('config', $configs);
     }
 
     /**

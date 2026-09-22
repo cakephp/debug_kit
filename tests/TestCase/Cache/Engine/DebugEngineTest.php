@@ -94,17 +94,20 @@ class DebugEngineTest extends TestCase
     public function testProxyMethodsTracksMetrics(): void
     {
         $this->engine->get('key');
+        $this->engine->has('key');
         $this->engine->set('key', 'value');
         $this->engine->get('key');
+        $this->engine->has('key');
+        $this->engine->add('new-key', 'value');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
 
         $result = $this->engine->metrics();
-        $this->assertSame(3, $result['set']);
+        $this->assertSame(4, $result['set']);
         $this->assertSame(1, $result['delete']);
-        $this->assertSame(1, $result['get miss']);
-        $this->assertSame(1, $result['get hit']);
+        $this->assertSame(2, $result['get miss']);
+        $this->assertSame(2, $result['get hit']);
     }
 
     /**
@@ -115,7 +118,9 @@ class DebugEngineTest extends TestCase
     public function testProxyMethodLogs(): void
     {
         $this->engine->get('key');
+        $this->engine->has('key');
         $this->engine->set('key', 'value');
+        $this->engine->add('new-key', 'value');
         $this->engine->delete('key');
         $this->engine->increment('key');
         $this->engine->decrement('key');
@@ -125,9 +130,11 @@ class DebugEngineTest extends TestCase
         $this->engine->clearGroup('group');
 
         $logs = $this->logger->read();
-        $this->assertCount(9, $logs);
+        $this->assertCount(11, $logs);
         $this->assertStringStartsWith('info: :test: get `key`', $logs[0]);
-        $this->assertStringStartsWith('info: :test: set `key`', $logs[1]);
+        $this->assertStringStartsWith('info: :test: has `key`', $logs[1]);
+        $this->assertStringStartsWith('info: :test: set `key`', $logs[2]);
+        $this->assertStringStartsWith('info: :test: add `new-key`', $logs[3]);
     }
 
     /**

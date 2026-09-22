@@ -13,18 +13,6 @@ parameters:
 			path: src/Controller/DebugKitController.php
 
 		-
-			message: '#^Possibly invalid array key type string\|null\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 2
-			path: src/DebugInclude.php
-
-		-
-			message: '#^Possibly invalid array key type int\|string\|null\.$#'
-			identifier: offsetAccess.invalidOffset
-			count: 2
-			path: src/DebugTimer.php
-
-		-
 			message: '#^Parameter \#1 \$request of method DebugKit\\ToolbarService\:\:saveData\(\) expects Cake\\Http\\ServerRequest, Psr\\Http\\Message\\ServerRequestInterface given\.$#'
 			identifier: argument.type
 			count: 1

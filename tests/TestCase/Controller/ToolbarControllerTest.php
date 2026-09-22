@@ -77,7 +77,7 @@ class ToolbarControllerTest extends TestCase
      *
      * @return void
      */
-    public function testClearCacheUnknownEngine()
+    public function testClearCacheUnknownEngine(): void
     {
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);
         $this->post('/debug-kit/toolbar/clear-cache', ['name' => 'does-not-exist']);
@@ -89,7 +89,7 @@ class ToolbarControllerTest extends TestCase
      *
      * @return void
      */
-    public function testClearSession()
+    public function testClearSession(): void
     {
         $this->session(['test' => 'value']);
         $this->configRequest(['headers' => ['Accept' => 'application/json']]);

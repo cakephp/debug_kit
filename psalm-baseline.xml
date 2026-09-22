@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="7.0.0-beta16@491dd740b8862db7d4fe8c1f6c161055c32ad651">
+<files psalm-version="7.0.0-beta22@de27e5724ee5997a1e3baee4d394ca6f4e46eba0">
+  <file src="src/Cache/Engine/DebugEngine.php">
+    <MethodSignatureMismatch>
+      <code><![CDATA[public function setConfig(array|string $key, mixed $value = null, bool $merge = true): static]]></code>
+    </MethodSignatureMismatch>
+  </file>
+  <file src="src/Controller/DebugKitController.php">
+    <UndefinedClass>
+      <code><![CDATA[AuthorizationService]]></code>
+    </UndefinedClass>
+  </file>
   <file src="src/Mailer/PreviewResult.php">
     <ImpureMethodCall>
       <code><![CDATA[$mailer->render()]]></code>

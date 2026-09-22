@@ -33,7 +33,7 @@ class DebugKitTestController extends Controller
      *
      * @var string
      */
-    public $name = 'DebugKitTest';
+    public string $name = 'DebugKitTest';
 
     /**
      * Uses no Models

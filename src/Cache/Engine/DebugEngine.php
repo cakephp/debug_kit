@@ -17,6 +17,7 @@ namespace DebugKit\Cache\Engine;
 use Cake\Cache\CacheEngine;
 use Cake\Cache\CacheRegistry;
 use Psr\Log\LoggerInterface;
+use Stringable;
 use function Cake\Core\namespaceSplit;
 
 /**
@@ -24,16 +25,12 @@ use function Cake\Core\namespaceSplit;
  *
  * Used by the CachePanel to wrap and track metrics related to caching.
  */
-class DebugEngine extends CacheEngine
+class DebugEngine extends CacheEngine implements Stringable
 {
     /**
      * Proxied engine
      */
-    protected CacheEngine $_engine;
-
-    protected LoggerInterface $logger;
-
-    protected string $name;
+    protected CacheEngine $engine;
 
     /**
      * Hit/miss metrics.
@@ -54,16 +51,13 @@ class DebugEngine extends CacheEngine
      * @param string $name The name of the proxied cache engine.
      * @param \Psr\Log\LoggerInterface $logger Logger for collecting cache operation logs.
      */
-    public function __construct(CacheEngine|array $config, string $name, LoggerInterface $logger)
+    public function __construct(CacheEngine|array $config, protected string $name, protected LoggerInterface $logger)
     {
         if ($config instanceof CacheEngine) {
-            $this->_engine = $config;
+            $this->engine = $config;
         } else {
-            $this->_config = $config;
+            $this->config = $config;
         }
-
-        $this->logger = $logger;
-        $this->name = $name;
     }
 
     /**
@@ -74,9 +68,9 @@ class DebugEngine extends CacheEngine
      */
     public function init(array $config = []): bool
     {
-        if (!isset($this->_engine)) {
+        if (!isset($this->engine)) {
             $registry = new CacheRegistry();
-            $this->_engine = $registry->load('spies', $this->_config);
+            $this->engine = $registry->load('spies', $this->config);
             unset($registry);
         }
 
@@ -90,7 +84,7 @@ class DebugEngine extends CacheEngine
      */
     public function engine(): CacheEngine
     {
-        return $this->_engine;
+        return $this->engine;
     }
 
     /**
@@ -135,7 +129,7 @@ class DebugEngine extends CacheEngine
     public function set($key, $value, $ttl = null): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->set($key, $value, $ttl);
+        $result = $this->engine->set($key, $value, $ttl);
         $duration = microtime(true) - $start;
 
         $this->track('set');
@@ -150,7 +144,7 @@ class DebugEngine extends CacheEngine
     public function add(string $key, mixed $value): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->add($key, $value);
+        $result = $this->engine->add($key, $value);
         $duration = microtime(true) - $start;
 
         $this->track('set');
@@ -165,7 +159,7 @@ class DebugEngine extends CacheEngine
     public function setMultiple($values, $ttl = null): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->setMultiple($values);
+        $result = $this->engine->setMultiple($values);
         $duration = microtime(true) - $start;
 
         $this->track('set');
@@ -180,7 +174,7 @@ class DebugEngine extends CacheEngine
     public function get(string $key, mixed $default = null): mixed
     {
         $start = microtime(true);
-        $result = $this->_engine->get($key, $default);
+        $result = $this->engine->get($key, $default);
         $duration = microtime(true) - $start;
         $metric = 'hit';
         if ($result === null) {
@@ -199,7 +193,7 @@ class DebugEngine extends CacheEngine
     public function has(string $key): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->has($key);
+        $result = $this->engine->has($key);
         $duration = microtime(true) - $start;
         $metric = 'hit';
         if (!$result) {
@@ -218,7 +212,7 @@ class DebugEngine extends CacheEngine
     public function getMultiple($keys, $default = null): iterable
     {
         $start = microtime(true);
-        $result = $this->_engine->getMultiple($keys, $default);
+        $result = $this->engine->getMultiple($keys, $default);
         $duration = microtime(true) - $start;
 
         $this->track('get hit');
@@ -233,7 +227,7 @@ class DebugEngine extends CacheEngine
     public function increment(string $key, int $offset = 1): int|false
     {
         $start = microtime(true);
-        $result = $this->_engine->increment($key, $offset);
+        $result = $this->engine->increment($key, $offset);
         $duration = microtime(true) - $start;
 
         $this->track('set');
@@ -248,7 +242,7 @@ class DebugEngine extends CacheEngine
     public function decrement(string $key, int $offset = 1): int|false
     {
         $start = microtime(true);
-        $result = $this->_engine->decrement($key, $offset);
+        $result = $this->engine->decrement($key, $offset);
         $duration = microtime(true) - $start;
 
         $this->track('set');
@@ -263,7 +257,7 @@ class DebugEngine extends CacheEngine
     public function delete($key): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->delete($key);
+        $result = $this->engine->delete($key);
         $duration = microtime(true) - $start;
 
         $this->track('delete');
@@ -278,7 +272,7 @@ class DebugEngine extends CacheEngine
     public function deleteMultiple($keys): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->deleteMultiple($keys);
+        $result = $this->engine->deleteMultiple($keys);
         $duration = microtime(true) - $start;
 
         $this->track('delete');
@@ -293,7 +287,7 @@ class DebugEngine extends CacheEngine
     public function clear(): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->clear();
+        $result = $this->engine->clear();
         $duration = microtime(true) - $start;
 
         $this->track('delete');
@@ -307,7 +301,7 @@ class DebugEngine extends CacheEngine
      */
     public function groups(): array
     {
-        return $this->_engine->groups();
+        return $this->engine->groups();
     }
 
     /**
@@ -319,7 +313,7 @@ class DebugEngine extends CacheEngine
      */
     public function getConfig(?string $key = null, mixed $default = null): mixed
     {
-        return $this->_engine->getConfig($key, $default);
+        return $this->engine->getConfig($key, $default);
     }
 
     /**
@@ -331,9 +325,9 @@ class DebugEngine extends CacheEngine
      * @return $this
      * @throws \Cake\Core\Exception\CakeException When trying to set a key that is invalid.
      */
-    public function setConfig(array|string $key, mixed $value = null, bool $merge = true)
+    public function setConfig(array|string $key, mixed $value = null, bool $merge = true): static
     {
-        $this->_engine->setConfig($key, $value, $merge);
+        $this->engine->setConfig($key, $value, $merge);
 
         return $this;
     }
@@ -344,7 +338,7 @@ class DebugEngine extends CacheEngine
     public function clearGroup(string $group): bool
     {
         $start = microtime(true);
-        $result = $this->_engine->clearGroup($group);
+        $result = $this->engine->clearGroup($group);
         $duration = microtime(true) - $start;
 
         $this->track('delete');
@@ -360,13 +354,13 @@ class DebugEngine extends CacheEngine
      */
     public function __toString(): string
     {
-        if (isset($this->_engine)) {
+        if (isset($this->engine)) {
             // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
-            [$ns, $class] = namespaceSplit($this->_engine::class);
+            [$ns, $class] = namespaceSplit($this->engine::class);
 
             return str_replace('Engine', '', $class);
         }
 
-        return $this->_config['className'];
+        return (string)$this->config['className'];
     }
 }

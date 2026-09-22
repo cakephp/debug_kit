@@ -4,53 +4,53 @@ use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
 return function (RouteBuilder $routes): void {
-    $routes->plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes): void {
+    $routes->plugin('DebugKit', callback: function (RouteBuilder $routes): void {
         $routes->setExtensions('json');
         $routes->setRouteClass(DashedRoute::class);
 
         $routes->connect(
             '/toolbar/clear-cache',
-            ['controller' => 'Toolbar', 'action' => 'clearCache']
+            ['controller' => 'Toolbar', 'action' => 'clearCache'],
         );
         $routes->connect(
             '/toolbar/clear-session',
-            ['controller' => 'Toolbar', 'action' => 'clearSession']
+            ['controller' => 'Toolbar', 'action' => 'clearSession'],
         );
         $routes->connect(
             '/toolbar/*',
-            ['controller' => 'Requests', 'action' => 'view']
+            ['controller' => 'Requests', 'action' => 'view'],
         );
         $routes->connect(
             '/panels/view/latest-history',
-            ['controller' => 'Panels', 'action' => 'latestHistory']
+            ['controller' => 'Panels', 'action' => 'latestHistory'],
         );
         $routes->connect(
             '/panels/view/*',
-            ['controller' => 'Panels', 'action' => 'view']
+            ['controller' => 'Panels', 'action' => 'view'],
         );
         $routes->connect(
             '/panels/*',
-            ['controller' => 'Panels', 'action' => 'index']
+            ['controller' => 'Panels', 'action' => 'index'],
         );
 
         $routes->connect(
             '/composer/check-dependencies',
-            ['controller' => 'Composer', 'action' => 'checkDependencies']
+            ['controller' => 'Composer', 'action' => 'checkDependencies'],
         );
 
         $routes->scope(
             '/mail-preview',
-            ['controller' => 'MailPreview'],
-            function (RouteBuilder $routes): void {
+            callback: function (RouteBuilder $routes): void {
                 $routes->connect('/', ['action' => 'index']);
                 $routes->connect('/preview', ['action' => 'email']);
                 $routes->connect('/preview/*', ['action' => 'email']);
                 $routes->connect('/sent/{panel}/{id}', ['action' => 'sent'], ['pass' => ['panel', 'id']]);
-            }
+            },
+            params: ['controller' => 'MailPreview'],
         );
 
         $routes->get('/', ['controller' => 'Dashboard', 'action' => 'index']);
         $routes->get('/dashboard', ['controller' => 'Dashboard', 'action' => 'index']);
         $routes->post('/dashboard/reset', ['controller' => 'Dashboard', 'action' => 'reset']);
-    });
+    }, params: ['path' => '/debug-kit']);
 };

@@ -50,7 +50,7 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      * @param string $class Partial class name to resolve.
      * @return string|null Either the correct class name, null if the class is not found.
      */
-    protected function _resolveClassName(string $class): ?string
+    protected function resolveClassName(string $class): ?string
     {
         return App::className($class, 'Panel', 'Panel');
     }
@@ -61,11 +61,11 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      * Part of the template method for Cake\Utility\ObjectRegistry::load()
      *
      * @param string $class The classname that is missing.
-     * @param string $plugin The plugin the component is missing in.
+     * @param string|null $plugin The plugin the component is missing in.
      * @return void
      * @throws \RuntimeException
      */
-    protected function _throwMissingClassError(string $class, ?string $plugin): void
+    protected function throwMissingClassError(string $class, ?string $plugin): void
     {
         throw new RuntimeException(sprintf("Unable to find '%s' panel.", $class));
     }
@@ -80,7 +80,7 @@ class PanelRegistry extends ObjectRegistry implements EventDispatcherInterface
      * @param array $config An array of config to use for the panel.
      * @return \DebugKit\DebugPanel The constructed panel class.
      */
-    protected function _create(object|string $class, string $alias, array $config): DebugPanel
+    protected function create(object|string $class, string $alias, array $config): DebugPanel
     {
         $instance = is_string($class) ? new $class() : $class;
 

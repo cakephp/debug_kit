@@ -83,7 +83,7 @@ class PanelsController extends DebugKitController
     public function view(?string $id = null): void
     {
         $this->set('sort', $this->request->getCookie('debugKit_sort'));
-        $panel = $this->Panels->get($id, ...['contain' => ['Requests']]);
+        $panel = $this->Panels->get($id, contain: ['Requests']);
 
         $this->set('panel', $panel);
         // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
@@ -98,9 +98,8 @@ class PanelsController extends DebugKitController
     public function latestHistory(): ?Response
     {
         /** @var array{id:string}|null $request */
-        $request = $this->Panels->Requests->find('recent')
+        $request = $this->Panels->Requests->unhydratedFind('recent')
             ->select(['id'])
-            ->disableHydration()
             ->first();
         if (!$request) {
             throw new NotFoundException('No requests found');

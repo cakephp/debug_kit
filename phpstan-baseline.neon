@@ -1,6 +1,18 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Call to method skipAuthorization\(\) on an unknown class Authorization\\AuthorizationService\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Controller/DebugKitController.php
+
+		-
+			message: '#^Class Authorization\\AuthorizationService not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Controller/DebugKitController.php
+
+		-
 			message: '#^Parameter \#1 \$request of method DebugKit\\ToolbarService\:\:saveData\(\) expects Cake\\Http\\ServerRequest, Psr\\Http\\Message\\ServerRequestInterface given\.$#'
 			identifier: argument.type
 			count: 1
@@ -11,6 +23,12 @@ parameters:
 			identifier: propertyTag.unresolvableType
 			count: 1
 			path: src/Model/Table/PanelsTable.php
+
+		-
+			message: '#^Cannot call method getRequest\(\) on Cake\\Controller\\Controller\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Panel/RoutesPanel.php
 
 		-
 			message: '#^Call to an undefined method Cake\\ORM\\Locator\\LocatorInterface\:\:genericInstances\(\)\.$#'

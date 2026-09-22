@@ -39,11 +39,11 @@ class MailPanel extends DebugPanel
     public function initialize(): void
     {
         $reflection = new ReflectionClass(TransportFactory::class);
-        $property = $reflection->getProperty('_config');
+        $property = $reflection->getProperty('config');
         /** @var array<\Cake\Mailer\AbstractTransport|array> $configs */
         $configs = $property->getValue();
-
-        $log = $this->emailLog = new ArrayObject();
+        $log = new ArrayObject();
+        $this->emailLog = $log;
 
         foreach ($configs as $name => $transport) {
             if (is_object($transport)) {
@@ -64,7 +64,7 @@ class MailPanel extends DebugPanel
 
             $configs[$name] = $transport;
         }
-        $reflection->setStaticPropertyValue('_config', $configs);
+        $reflection->setStaticPropertyValue('config', $configs);
     }
 
     /**

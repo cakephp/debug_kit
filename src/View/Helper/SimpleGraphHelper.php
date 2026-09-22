@@ -36,7 +36,7 @@ class SimpleGraphHelper extends Helper
      * - valueType => string (value, percentage)
      * - style => array
      */
-    protected array $_defaultSettings = [
+    protected array $defaultSettings = [
         'max' => 100,
         'width' => 350,
         'valueType' => 'value',
@@ -52,7 +52,7 @@ class SimpleGraphHelper extends Helper
      */
     public function bar(float|int $value, float|int $offset, array $options = []): string
     {
-        $settings = array_merge($this->_defaultSettings, $options);
+        $settings = array_merge($this->defaultSettings, $options);
         $max = $settings['max'];
         $width = $settings['width'];
         $valueType = $settings['valueType'];

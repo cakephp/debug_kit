@@ -564,7 +564,7 @@ class ToolbarServiceTest extends TestCase
      *
      * @return void
      */
-    public function testSaveDataPanelDataThrows()
+    public function testSaveDataPanelDataThrows(): void
     {
         $request = new Request([
             'url' => '/articles',

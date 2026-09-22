@@ -43,6 +43,6 @@ class SessionPanel extends DebugPanel
 
         $maxDepth = Configure::read('DebugKit.maxDepth', 5);
         $content = Debugger::exportVarAsNodes($request->getSession()->read(), $maxDepth);
-        $this->_data = compact('content');
+        $this->data = compact('content');
     }
 }

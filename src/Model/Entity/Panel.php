@@ -33,7 +33,7 @@ class Panel extends Entity
      *
      * @var list<string>
      */
-    protected array $_hidden = ['content'];
+    protected array $hidden = ['content'];
 
     /**
      * Read the stream contents or inflate deflated data.

@@ -16,8 +16,6 @@ declare(strict_types=1);
 namespace DebugKit\Command;
 
 use Cake\Command\Command;
-use Cake\Console\Arguments;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Utility\Text;
 
@@ -40,33 +38,25 @@ class BenchmarkCommand extends Command
     }
 
     /**
-     * The console io
-     */
-    protected ConsoleIo $io;
-
-    /**
      * Execute.
      *
-     * @param \Cake\Console\Arguments $args The command arguments.
-     * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io): ?int
+    public function execute(): ?int
     {
-        $this->io = $io;
         /** @var string $url */
-        $url = $args->getArgumentAt(0);
+        $url = $this->args->getArgumentAt(0);
         $times = [];
 
-        $io->out(Text::insert('-> Testing :url', compact('url')));
-        $io->out('');
+        $this->io->out(Text::insert('-> Testing :url', compact('url')));
+        $this->io->out('');
         $count = 10;
-        if ($args->hasOption('n')) {
-            $count = (float)$args->getOption('n');
+        if ($this->args->hasOption('n')) {
+            $count = (float)$this->args->getOption('n');
         }
         $timeout = 100;
-        if ($args->hasOption('t')) {
-            $timeout = (float)$args->getOption('t');
+        if ($this->args->hasOption('t')) {
+            $timeout = (float)$this->args->getOption('t');
         }
 
         for ($i = 0; $i < $count; $i++) {
@@ -80,7 +70,7 @@ class BenchmarkCommand extends Command
 
             $times[] = $stop - $start;
         }
-        $this->_results($times);
+        $this->results($times);
 
         return static::CODE_SUCCESS;
     }
@@ -91,7 +81,7 @@ class BenchmarkCommand extends Command
      * @param array<float> $times Array of time values
      * @return void
      */
-    protected function _results(array $times): void
+    protected function results(array $times): void
     {
         $duration = array_sum($times);
         $requests = count($times);
@@ -110,10 +100,10 @@ class BenchmarkCommand extends Command
         ]));
 
         $this->io->out(Text::insert('Standard deviation of average request time: :std-dev', [
-            'std-dev' => round($this->_deviation($times, true), 3),
+            'std-dev' => round($this->deviation($times, true), 3),
         ]));
 
-        if (!empty($times)) {
+        if ($times !== []) {
             $this->io->out(Text::insert('Longest/shortest request: :longest sec/:shortest sec', [
                 'longest' => round(max($times), 3),
                 'shortest' => round(min($times), 3),
@@ -135,10 +125,11 @@ class BenchmarkCommand extends Command
      *                           variance from a finite sample.
      * @return float Variance
      */
-    protected function _variance(array $times, bool $sample = true): float
+    protected function variance(array $times, bool $sample = true): float
     {
-        $n = $mean = $M2 = 0;
-
+        $n = 0;
+        $mean = 0;
+        $M2 = 0;
         foreach ($times as $time) {
             $n += 1;
             $delta = $time - $mean;
@@ -160,9 +151,9 @@ class BenchmarkCommand extends Command
      * @param bool $sample ''
      * @return float Standard deviation
      */
-    protected function _deviation(array $times, bool $sample = true): float
+    protected function deviation(array $times, bool $sample = true): float
     {
-        return sqrt($this->_variance($times, $sample));
+        return sqrt($this->variance($times, $sample));
     }
 
     /**

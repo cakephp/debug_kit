@@ -52,7 +52,7 @@ class ComposerControllerTest extends TestCase
         $this->post('/debug-kit/composer/check-dependencies');
         $this->assertResponseOk();
         $this->assertContentType('application/json');
-        $data = json_decode((string)$this->_response->getBody(), true);
+        $data = json_decode((string)$this->response->getBody(), true);
         $this->assertArrayHasKey('packages', $data);
     }
 }

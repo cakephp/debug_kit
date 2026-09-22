@@ -25,7 +25,7 @@ class DebugKitLog extends BaseLog
     /**
      * logs
      */
-    protected array $_logs = [];
+    protected array $logs = [];
 
     /**
      * Captures log messages in memory
@@ -37,8 +37,8 @@ class DebugKitLog extends BaseLog
      */
     public function log(mixed $level, Stringable|string $message, array $context = []): void
     {
-        $this->_logs[$level] ??= [];
-        $this->_logs[$level][] = [date('Y-m-d H:i:s'), $this->interpolate($message)];
+        $this->logs[$level] ??= [];
+        $this->logs[$level][] = [date('Y-m-d H:i:s'), $this->interpolate($message)];
     }
 
     /**
@@ -48,7 +48,7 @@ class DebugKitLog extends BaseLog
      */
     public function all(): array
     {
-        return $this->_logs;
+        return $this->logs;
     }
 
     /**
@@ -58,7 +58,7 @@ class DebugKitLog extends BaseLog
      */
     public function count(): int
     {
-        return array_reduce($this->_logs, function (int $sum, $v): int {
+        return array_reduce($this->logs, function (int $sum, $v): int {
             return $sum + count($v);
         }, 0);
     }
@@ -70,6 +70,6 @@ class DebugKitLog extends BaseLog
      */
     public function noLogs(): bool
     {
-        return $this->_logs === [];
+        return $this->logs === [];
     }
 }

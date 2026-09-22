@@ -32,7 +32,7 @@ class SqlLogPanel extends DebugPanel
     /**
      * Loggers connected
      */
-    protected static array $_loggers = [];
+    protected static array $loggers = [];
 
     /**
      * Initialize hook - configures logger.
@@ -81,7 +81,7 @@ class SqlLogPanel extends DebugPanel
 
         if ($logger instanceof DebugLog) {
             $logger->setIncludeSchema($includeSchemaReflection);
-            static::$_loggers[] = $logger;
+            static::$loggers[] = $logger;
 
             return;
         }
@@ -90,7 +90,7 @@ class SqlLogPanel extends DebugPanel
         /** @var \Cake\Database\Driver $driver */
         $driver->setLogger($logger);
 
-        static::$_loggers[] = $logger;
+        static::$loggers[] = $logger;
     }
 
     /**
@@ -104,7 +104,7 @@ class SqlLogPanel extends DebugPanel
             'tables' => array_map(function (Table $table): string {
                 return $table->getAlias();
             }, $this->getTableLocator()->genericInstances()),
-            'loggers' => static::$_loggers,
+            'loggers' => static::$loggers,
         ];
     }
 
@@ -117,7 +117,7 @@ class SqlLogPanel extends DebugPanel
     {
         $count = 0;
         $time = 0;
-        foreach (static::$_loggers as $logger) {
+        foreach (static::$loggers as $logger) {
             $count += count($logger->queries());
             $time += $logger->totalTime();
         }

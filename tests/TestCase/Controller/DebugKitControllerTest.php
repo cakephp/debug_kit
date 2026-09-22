@@ -24,12 +24,10 @@ use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use DebugKit\Controller\DebugKitController;
 use DebugKit\TestApp\Application;
-use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
  * DebugKit controller test.
  */
-#[UsesClass('\DebugKit\Controller\DebugKitController')]
 class DebugKitControllerTest extends TestCase
 {
     use IntegrationTestTrait;

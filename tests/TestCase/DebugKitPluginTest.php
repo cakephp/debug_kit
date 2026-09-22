@@ -88,7 +88,7 @@ TEXT;
      */
     public function testMiddlewareNotLoadedInTests(): void
     {
-        $baseApp = new Application(dirname(__DIR__) . '/config');
+        $baseApp = new Application(__DIR__ . '/../config');
         $baseApp->pluginBootstrap();
         $middlewareQueue = $baseApp->middleware(new MiddlewareQueue());
         $beforeCount = $middlewareQueue->count();

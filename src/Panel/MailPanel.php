@@ -42,8 +42,8 @@ class MailPanel extends DebugPanel
         $property = $reflection->getProperty('config');
         /** @var array<\Cake\Mailer\AbstractTransport|array> $configs */
         $configs = $property->getValue();
-
-        $log = $this->emailLog = new ArrayObject();
+        $log = new ArrayObject();
+        $this->emailLog = $log;
 
         foreach ($configs as $name => $transport) {
             if (is_object($transport)) {

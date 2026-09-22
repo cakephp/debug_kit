@@ -17,6 +17,7 @@ namespace DebugKit\Cache\Engine;
 use Cake\Cache\CacheEngine;
 use Cake\Cache\CacheRegistry;
 use Psr\Log\LoggerInterface;
+use Stringable;
 use function Cake\Core\namespaceSplit;
 
 /**
@@ -24,16 +25,12 @@ use function Cake\Core\namespaceSplit;
  *
  * Used by the CachePanel to wrap and track metrics related to caching.
  */
-class DebugEngine extends CacheEngine
+class DebugEngine extends CacheEngine implements Stringable
 {
     /**
      * Proxied engine
      */
     protected CacheEngine $engine;
-
-    protected LoggerInterface $logger;
-
-    protected string $name;
 
     /**
      * Hit/miss metrics.
@@ -54,16 +51,13 @@ class DebugEngine extends CacheEngine
      * @param string $name The name of the proxied cache engine.
      * @param \Psr\Log\LoggerInterface $logger Logger for collecting cache operation logs.
      */
-    public function __construct(CacheEngine|array $config, string $name, LoggerInterface $logger)
+    public function __construct(CacheEngine|array $config, protected string $name, protected LoggerInterface $logger)
     {
         if ($config instanceof CacheEngine) {
             $this->engine = $config;
         } else {
             $this->config = $config;
         }
-
-        $this->logger = $logger;
-        $this->name = $name;
     }
 
     /**
@@ -367,6 +361,6 @@ class DebugEngine extends CacheEngine
             return str_replace('Engine', '', $class);
         }
 
-        return $this->config['className'];
+        return (string)$this->config['className'];
     }
 }

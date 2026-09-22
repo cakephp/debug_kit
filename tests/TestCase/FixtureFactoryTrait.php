@@ -32,34 +32,32 @@ trait FixtureFactoryTrait
 
     protected function makePanel($request, $name = 'DebugKit.Request', $title = 'Request', $element = 'DebugKit.request_panel', $content = null)
     {
-        if ($content === null) {
-            $content = [
-                'attributes' => [
-                    Debugger::exportVarAsNodes([
-                        'params' => [
-                            'plugin' => null,
-                            'controller' => 'Tasks',
-                            'action' => 'add',
-                            '_ext' => null,
-                            'pass' => [],
-                        ],
-                    ]),
-                ],
-                'query' => Debugger::exportVarAsNodes([]),
-                'data' => Debugger::exportVarAsNodes([]),
-                'get' => Debugger::exportVarAsNodes([]),
-                'cookie' => Debugger::exportVarAsNodes([
-                    'toolbarDisplay' => 'show',
+        $content ??= [
+            'attributes' => [
+                Debugger::exportVarAsNodes([
+                    'params' => [
+                        'plugin' => null,
+                        'controller' => 'Tasks',
+                        'action' => 'add',
+                        '_ext' => null,
+                        'pass' => [],
+                    ],
                 ]),
-                'params' => [
-                    'plugin' => null,
-                    'controller' => 'Tasks',
-                    'action' => 'add',
-                    '_ext' => null,
-                    'pass' => [],
-                ],
-            ];
-        }
+            ],
+            'query' => Debugger::exportVarAsNodes([]),
+            'data' => Debugger::exportVarAsNodes([]),
+            'get' => Debugger::exportVarAsNodes([]),
+            'cookie' => Debugger::exportVarAsNodes([
+                'toolbarDisplay' => 'show',
+            ]),
+            'params' => [
+                'plugin' => null,
+                'controller' => 'Tasks',
+                'action' => 'add',
+                '_ext' => null,
+                'pass' => [],
+            ],
+        ];
         $panels = $this->getTableLocator()->get('DebugKit.Panels');
         $panel = $panels->newEntity([
             'request_id' => $request->id,

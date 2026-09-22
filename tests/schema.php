@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-$tables = require dirname(__DIR__) . '/src/schema.php';
+$tables = require __DIR__ . '/../src/schema.php';
 
 /**
  * Additional tables used for tests.

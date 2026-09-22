@@ -68,7 +68,7 @@ class DebugKitTransportTest extends TestCase
         $this->assertSame('bloop', $this->transport->customMethod());
     }
 
-    public function testConstructorRejectsMissingDebugKitLog()
+    public function testConstructorRejectsMissingDebugKitLog(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('debugKitLog');
@@ -76,14 +76,14 @@ class DebugKitTransportTest extends TestCase
         new DebugKitTransport([]);
     }
 
-    public function testConstructorRejectsWrongDebugKitLogType()
+    public function testConstructorRejectsWrongDebugKitLogType(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         new DebugKitTransport(['debugKitLog' => 'not-an-arrayobject']);
     }
 
-    public function testEmailCapture()
+    public function testEmailCapture(): void
     {
         $message = new Message();
         $message->setSubject('Testing 123')

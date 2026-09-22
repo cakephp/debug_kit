@@ -103,7 +103,7 @@ class BenchmarkCommand extends Command
             'std-dev' => round($this->deviation($times, true), 3),
         ]));
 
-        if (!empty($times)) {
+        if ($times !== []) {
             $this->io->out(Text::insert('Longest/shortest request: :longest sec/:shortest sec', [
                 'longest' => round(max($times), 3),
                 'shortest' => round(min($times), 3),
@@ -127,8 +127,9 @@ class BenchmarkCommand extends Command
      */
     protected function variance(array $times, bool $sample = true): float
     {
-        $n = $mean = $M2 = 0;
-
+        $n = 0;
+        $mean = 0;
+        $M2 = 0;
         foreach ($times as $time) {
             $n += 1;
             $delta = $time - $mean;

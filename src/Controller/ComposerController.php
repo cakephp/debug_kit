@@ -66,10 +66,10 @@ class ComposerController extends DebugKitController
             $bcBreaks[] = $dependency;
         }
         $packages = [];
-        if ($semverCompatible) {
+        if ($semverCompatible !== []) {
             $packages['semverCompatible'] = trim(implode("\n", $semverCompatible));
         }
-        if ($bcBreaks) {
+        if ($bcBreaks !== []) {
             $packages['bcBreaks'] = trim(implode("\n", $bcBreaks));
         }
 

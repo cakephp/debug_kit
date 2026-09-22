@@ -102,7 +102,7 @@ class DebugKitPlugin extends BasePlugin
                 // Extract the line/file from the message as deprecationWarning
                 // will calculate the application frame when generating the message.
                 preg_match('/\\n([^\n,]+?), line: (\d+)\\n/', $error->getMessage(), $matches);
-                if ($matches) {
+                if ($matches !== []) {
                     $file = $matches[1];
                     $line = $matches[2];
                 }

@@ -104,7 +104,7 @@ class IncludePanel extends DebugPanel
     public function summary(): string
     {
         $data = $this->data;
-        if (empty($data)) {
+        if ($data === []) {
             $data = $this->prepare();
         }
 

@@ -31,7 +31,7 @@ class PluginsPanel extends DebugPanel
         $loadedPluginsCollection = Plugin::getCollection();
         $config = PluginConfig::getAppConfig();
 
-        $this->data['hasEmptyAppConfig'] = empty($config);
+        $this->data['hasEmptyAppConfig'] = $config === [];
         $plugins = [];
 
         foreach ($config as $pluginName => $options) {

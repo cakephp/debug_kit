@@ -105,7 +105,7 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testViewDeprecationsPanelEmpty()
+    public function testViewDeprecationsPanelEmpty(): void
     {
         $request = $this->makeRequest();
         $panel = $this->makePanel(
@@ -125,7 +125,7 @@ class PanelsControllerTest extends TestCase
     /**
      * @return void
      */
-    public function testViewDeprecationsPanelWithEntries()
+    public function testViewDeprecationsPanelWithEntries(): void
     {
         $request = $this->makeRequest();
         $entry = ['niceFile' => 'src/Foo.php', 'line' => 1, 'message' => 'deprecated thing'];
@@ -151,7 +151,7 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testViewDeprecationsPanelOtherOnly()
+    public function testViewDeprecationsPanelOtherOnly(): void
     {
         $request = $this->makeRequest();
         $entry = ['niceFile' => 'src/Bar.php', 'line' => 2, 'message' => 'only-other deprecation'];
@@ -178,7 +178,7 @@ class PanelsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testViewVariablesPanelErrorIsEscaped()
+    public function testViewVariablesPanelErrorIsEscaped(): void
     {
         $request = $this->makeRequest();
         $panel = $this->makePanel(

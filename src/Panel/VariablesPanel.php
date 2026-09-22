@@ -101,7 +101,7 @@ class VariablesPanel extends DebugPanel
                 $errors[$k] = Debugger::exportVarAsNodes($this->_getErrors($v), $varsMaxDepth);
             } elseif ($v instanceof Form) {
                 $formErrors = $v->getErrors();
-                if ($formErrors) {
+                if ($formErrors !== []) {
                     $errors[$k] = Debugger::exportVarAsNodes($formErrors, $varsMaxDepth);
                 }
             }

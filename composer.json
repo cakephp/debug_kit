@@ -69,7 +69,7 @@
         "stan-baseline": "tools/phpstan --generate-baseline",
         "psalm-baseline": "tools/psalm --set-baseline=psalm-baseline.xml",
         "stan-setup": "phive install",
-        "rector-setup": "cp composer.json composer.backup && composer require --dev rector/rector:\"~2.3.1\" && mv composer.backup composer.json",
+        "rector-setup": "cp composer.json composer.backup && composer require --dev rector/rector:\"~2.6.0\" && mv composer.backup composer.json",
         "rector-check": "vendor/bin/rector process --dry-run",
         "rector-fix": "vendor/bin/rector process",
         "test": "phpunit"

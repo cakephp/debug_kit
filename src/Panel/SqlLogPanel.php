@@ -115,7 +115,8 @@ class SqlLogPanel extends DebugPanel
      */
     public function summary(): string
     {
-        $count = $time = 0;
+        $count = 0;
+        $time = 0;
         foreach (static::$_loggers as $logger) {
             $count += count($logger->queries());
             $time += $logger->totalTime();

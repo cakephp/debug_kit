@@ -30,8 +30,8 @@ class PackagesPanel extends DebugPanel
      */
     public function data(): array
     {
-        $packages = $devPackages = [];
-
+        $packages = [];
+        $devPackages = [];
         $lockFile = new JsonFile(ROOT . DIRECTORY_SEPARATOR . 'composer.lock');
         if ($lockFile->exists()) {
             $lockContent = $lockFile->read();

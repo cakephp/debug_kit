@@ -37,9 +37,7 @@ class DebugKitLog extends BaseLog
      */
     public function log(mixed $level, Stringable|string $message, array $context = []): void
     {
-        if (!isset($this->_logs[$level])) {
-            $this->_logs[$level] = [];
-        }
+        $this->_logs[$level] ??= [];
         $this->_logs[$level][] = [date('Y-m-d H:i:s'), $this->interpolate($message)];
     }
 

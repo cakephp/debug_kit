@@ -45,7 +45,7 @@ class MailPreviewControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEmailRejectInvalidClassName()
+    public function testEmailRejectInvalidClassName(): void
     {
         $this->get('/debug-kit/mail-preview/preview/Cake\Utility\Inflector/slug');
         $this->assertResponseCode(404);

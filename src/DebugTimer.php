@@ -126,7 +126,7 @@ class DebugTimer
         $now = microtime(true);
 
         $times = [];
-        if (!empty(self::$timers)) {
+        if (self::$timers !== []) {
             $firstTimer = reset(self::$timers);
             $_end = $firstTimer['start'];
         } else {
@@ -140,9 +140,7 @@ class DebugTimer
             'named' => null,
         ];
         foreach (self::$timers as $name => $timer) {
-            if (!isset($timer['end'])) {
-                $timer['end'] = $now;
-            }
+            $timer['end'] ??= $now;
             $times[$name] = array_merge($timer, [
                 'start' => $timer['start'] - $start,
                 'end' => $timer['end'] - $start,

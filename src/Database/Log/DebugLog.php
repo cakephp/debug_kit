@@ -35,25 +35,9 @@ class DebugLog extends AbstractLogger
     protected array $_queries = [];
 
     /**
-     * Decorated logger.
-     */
-    protected ?LoggerInterface $_logger = null;
-
-    /**
-     * Name of the connection being logged.
-     */
-    protected string $_connectionName;
-
-    /**
      * Total time (ms) of all queries
      */
     protected float $_totalTime = 0;
-
-    /**
-     * Set to true to capture schema reflection queries
-     * in the SQL log panel.
-     */
-    protected bool $_includeSchema = false;
 
     /**
      * Whether a transaction is currently open or not.
@@ -63,15 +47,12 @@ class DebugLog extends AbstractLogger
     /**
      * Constructor
      *
-     * @param \Psr\Log\LoggerInterface|null $logger The logger to decorate and spy on.
-     * @param string $name The name of the connection being logged.
-     * @param bool $includeSchema Whether or not schema reflection should be included.
+     * @param \Psr\Log\LoggerInterface|null $_logger The logger to decorate and spy on.
+     * @param string $_connectionName The name of the connection being logged.
+     * @param bool $_includeSchema Whether or not schema reflection should be included.
      */
-    public function __construct(?LoggerInterface $logger, string $name, bool $includeSchema = false)
+    public function __construct(protected ?LoggerInterface $_logger, protected string $_connectionName, protected bool $_includeSchema = false)
     {
-        $this->_logger = $logger;
-        $this->_connectionName = $name;
-        $this->_includeSchema = $includeSchema;
     }
 
     /**

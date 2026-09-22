@@ -124,7 +124,7 @@ class RequestsTable extends Table
                 ->extract('id')
                 ->toArray();
 
-            if (empty($noPurge)) {
+            if ($noPurge === []) {
                 return;
             }
 

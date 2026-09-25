@@ -11,7 +11,7 @@ DebugKit est destiné uniquement aux environnements de développement local à u
 Par défaut, DebugKit est installé avec le squelette d'application. Si vous l'avez retiré, réinstallez-le depuis le répertoire racine de l'application :
 
 ```bash
-php composer.phar require --dev cakephp/debug_kit:"^5.0"
+php composer.phar require --dev cakephp/debug_kit:"^6.0"
 ```
 
 Chargez ensuite le plugin :
@@ -31,17 +31,20 @@ La toolbar DebugKit comprend plusieurs panneaux accessibles depuis l'icône Cake
 Chaque panneau inspecte un aspect différent de l'application :
 
 * **Cache** montre l'utilisation du cache et permet de le vider.
+* **Deprecations** affiche les avertissements de dépréciation dans un format moins intrusif.
 * **Environment** affiche les variables d'environnement liées à PHP et CakePHP.
 * **History** affiche la liste des requêtes précédentes et permet de recharger leurs données.
-* **Include** montre les fichiers inclus par type.
 * **Log** affiche les écritures de log de la requête.
-* **Packages** affiche les dépendances installées et les versions obsolètes.
 * **Mail** affiche les emails envoyés pendant la requête.
+* **Packages** affiche les dépendances installées et les versions obsolètes.
+* **Plugins** liste les plugins chargés par l'application.
 * **Request** affiche les informations de requête, de route et les cookies.
-* **Session** affiche le contenu de la session.
-* **Sql Logs** affiche les logs SQL pour chaque connexion.
+* **Routes** liste les routes correspondantes à la requête.
+* **Sql Log** affiche les logs SQL pour chaque connexion.
 * **Timer** affiche les timers créés avec `DebugKit\\DebugTimer` ainsi que l'usage mémoire via `DebugKit\\DebugMemory`.
 * **Variables** affiche les variables de vue définies par le contrôleur.
+
+Les panneaux dépréciés **Include** et **Session** existent toujours mais sont désactivés par défaut. Utilisez le panneau Environment à la place de Include, et le panneau Request à la place de Session.
 
 ## Utiliser le panneau History
 
@@ -80,11 +83,11 @@ class MyCustomPanel extends DebugPanel
 
 ### Callbacks
 
-Par défaut, les panneaux s'abonnent aux événements `Controller.initialize` et `Controller.shutdown`. Si vous avez besoin d'autres événements, implémentez `implementedEvents()`.
+Par défaut, les panneaux ne s'abonnent qu'à l'événement `Controller.shutdown`, dans lequel `shutdown()` collecte les données du panneau. La méthode `initialize()` est appelée pour chaque panneau chargé par le middleware de DebugKit avant l'exécution du contrôleur. Si vous avez besoin d'autres événements, implémentez `implementedEvents()`.
 
 ### Éléments de panneau
 
-Chaque panneau s'appuie sur un élément de vue. Le nom suit la convention underscore de la classe, par exemple `SessionPanel` devient `session_panel.php`.
+Chaque panneau s'appuie sur un élément de vue. Le nom suit la convention underscore de la classe, par exemple `CachePanel` devient `cache_panel.php`.
 
 ### Titres et éléments personnalisés
 

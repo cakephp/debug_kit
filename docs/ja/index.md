@@ -11,7 +11,7 @@ DebugKit は単一ユーザーのローカル開発環境でのみ使用して�
 アプリケーションのルートディレクトリーで次を実行します。
 
 ```bash
-php composer.phar require --dev cakephp/debug_kit:"^5.0"
+php composer.phar require --dev cakephp/debug_kit:"^6.0"
 ```
 
 続いてプラグインを有効化します。
@@ -26,6 +26,7 @@ bin/cake plugin load DebugKit --only-debug
 * `DebugKit.includeSchemaReflection` を `true` にするとスキーマリフレクションのクエリーを記録します。
 * `DebugKit.safeTld` でローカル開発用の TLD を追加できます。
 * `DebugKit.forceEnable` で DebugKit を強制表示できます。
+* `DebugKit.requestCount` で履歴パネルに保持するリクエスト数を変更できます（デフォルトは `20`）。
 
 ## データベース設定
 
@@ -36,17 +37,20 @@ bin/cake plugin load DebugKit --only-debug
 DebugKit ツールバーはブラウザー右下の CakePHP アイコンから開けます。各パネルはアプリケーションの異なる側面を表示します。
 
 * **Cache** キャッシュ使用状況の確認と削除。
+* **Deprecations** 非破壊的な形式で非推奨警告を表示します。
 * **Environment** PHP と CakePHP の環境情報。
 * **History** 過去のリクエスト一覧とそのデータの再表示。
-* **Include** 読み込まれたファイル一覧。
 * **Log** リクエスト中に書かれたログ。
-* **Packages** 依存パッケージとバージョン情報。
 * **Mail** 送信メールの確認とプレビュー。
+* **Packages** 依存パッケージとバージョン情報。
+* **Plugins** アプリケーションで読み込まれたプラグインの一覧。
 * **Request** 現在のリクエスト情報、ルート、Cookie。
-* **Session** セッション内容。
-* **Sql Logs** 接続ごとの SQL ログ。
+* **Routes** リクエストでマッチしたルートの一覧。
+* **Sql Log** 接続ごとの SQL ログ。
 * **Timer** `DebugKit\\DebugTimer` と `DebugKit\\DebugMemory` の情報。
 * **Variables** ビュー変数。
+
+非推奨の **Include** と **Session** パネルも残っていますが、デフォルトでは無効です。Include の代わりに Environment パネル、Session の代わりに Request パネルを使ってください。
 
 ## 履歴パネルを使う
 
@@ -107,11 +111,11 @@ class MyCustomPanel extends DebugPanel
 
 ### コールバック
 
-デフォルトでは `Controller.initialize` と `Controller.shutdown` を購読します。追加イベントが必要なら `implementedEvents()` を定義してください。
+デフォルトではパネルは `Controller.shutdown` イベントのみを購読し、`shutdown()` でパネルデータを収集します。`initialize()` はコントローラー実行前に DebugKit のミドルウェアが各パネルに対して呼び出します。追加イベントが必要なら `implementedEvents()` を定義してください。
 
 ### パネル要素
 
-パネル表示用のビュー要素を用意します。名前はクラス名のアンダースコア形式です。例えば `SessionPanel` は `session_panel.php` を使います。
+パネル表示用のビュー要素を用意します。名前はクラス名のアンダースコア形式です。例えば `CachePanel` は `cache_panel.php` を使います。
 
 ### カスタムタイトルとエレメント
 

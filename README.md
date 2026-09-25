@@ -24,10 +24,10 @@ For details and older versions see [version map](https://github.com/cakephp/debu
 
 * Install the plugin with [Composer](https://getcomposer.org/) from your CakePHP Project's ROOT directory (where the **composer.json** file is located)
 ```sh
-php composer.phar require --dev cakephp/debug_kit:"^5.0"
+php composer.phar require --dev cakephp/debug_kit:"^6.0"
 ```
 
-* [Load the plugin](https://book.cakephp.org/5/en/plugins.html#loading-a-plugin)
+* [Load the plugin](https://book.cakephp.org/6/en/plugins.html#loading-a-plugin)
 ```
 bin/cake plugin load DebugKit --only-debug
 ```
@@ -60,7 +60,7 @@ requests](https://help.github.com/articles/using-pull-requests) or open
 ## Documentation
 
 Documentation for DebugKit can be found in the
-[CakePHP documentation](https://book.cakephp.org/debugkit/5/en/index.html).
+[CakePHP documentation](https://book.cakephp.org/debugkit/6/en/index.html).
 
 ## Panels
 Panels by other plugins:

@@ -1,6 +1,6 @@
 # Configuration
 
-DebugKit supports several configuration keys that let you tailor the toolbar for local development.
+DebugKit supports several configuration keys that let you tailor the toolbar for local development. Every key below is listed with its default value in DebugKit's `config/app.example.php`, which you can copy into your application's `config` directory.
 
 * `DebugKit.panels` enables or disables individual panels:
 
@@ -30,6 +30,12 @@ Configure::write('DebugKit.forceEnable', function () {
 
 ```php
 Configure::write('DebugKit.ignorePathsPattern', '/\.(jpg|png|gif)$/');
+```
+
+* `DebugKit.requestCount` controls how many requests are kept in the History panel. The default is `20`:
+
+```php
+Configure::write('DebugKit.requestCount', 50);
 ```
 
 * `DebugKit.maxDepth` controls how many levels of nested data are rendered in general debug output. The default is `5`.

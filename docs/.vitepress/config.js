@@ -8,9 +8,10 @@ const tocJa = require('./toc_ja.json')
 const tocPt = require('./toc_pt.json')
 
 const versions = {
-  text: '5.x',
+  text: '6.x',
   items: [
-    { text: '5.x (current)', link: 'https://book.cakephp.org/debugkit/5/', target: '_self' },
+    { text: '6.x (current)', link: 'https://book.cakephp.org/debugkit/6/', target: '_self' },
+    { text: '5.x', link: 'https://book.cakephp.org/debugkit/5/', target: '_self' },
     { text: '4.x', link: 'https://book.cakephp.org/debugkit/4/en/', target: '_self' },
   ],
 }
@@ -20,12 +21,12 @@ export default {
   srcDir: '.',
   title: 'DebugKit',
   description: 'CakePHP DebugKit Documentation',
-  base: '/debugkit/5/',
+  base: '/debugkit/6/',
   rewrites: {
     'en/:slug*': ':slug*',
   },
   sitemap: {
-    hostname: 'https://book.cakephp.org/debugkit/5/',
+    hostname: 'https://book.cakephp.org/debugkit/6/',
   },
   themeConfig: {
     siteTitle: false,
@@ -34,7 +35,7 @@ export default {
       { icon: 'github', link: 'https://github.com/cakephp/debug_kit' },
     ],
     editLink: {
-      pattern: 'https://github.com/cakephp/debug_kit/edit/5.x/docs/:path',
+      pattern: 'https://github.com/cakephp/debug_kit/edit/6.x/docs/:path',
       text: 'Edit this page on GitHub',
     },
     sidebar: tocEn,

@@ -21,7 +21,7 @@ Custom panels must extend `DebugPanel`.
 
 ## Callbacks
 
-Panel objects hook into the current request through the `Controller.initialize` and `Controller.shutdown` events by default. If your panel needs additional events, implement `implementedEvents()` and return the full event map your panel requires.
+By default panels only subscribe to the `Controller.shutdown` event, which is where `shutdown()` collects the panel data. The `initialize()` hook is called for every loaded panel by DebugKit's middleware before the controller runs. If your panel needs additional events, implement `implementedEvents()` and return the full event map your panel requires.
 
 The built-in panels are the best reference when you need examples.
 
@@ -29,8 +29,8 @@ The built-in panels are the best reference when you need examples.
 
 Each panel should have a matching view element that renders the panel content. The element name is the underscored form of the class name:
 
-* `SessionPanel` maps to `session_panel.php`
-* `SqllogPanel` maps to `sqllog_panel.php`
+* `CachePanel` maps to `cache_panel.php`
+* `SqlLogPanel` maps to `sql_log_panel.php`
 
 Store panel elements in `templates/element`.
 

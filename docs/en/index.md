@@ -15,7 +15,7 @@ DebugKit stores panel data in a database. The default setup uses SQLite through 
 Install the plugin with Composer from your application's root directory:
 
 ```bash
-php composer.phar require --dev cakephp/debug_kit:"^5.0"
+php composer.phar require --dev cakephp/debug_kit:"^6.0"
 ```
 
 Then load the plugin in debug mode:

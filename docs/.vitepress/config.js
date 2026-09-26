@@ -44,6 +44,11 @@ export default {
       { text: 'API', link: 'https://api.cakephp.org/debugkit/' },
       { ...versions },
     ],
+    versionBanner: {
+      message: 'This is a development version of documentation for CakePHP 6.0.',
+      link: '/latest/',
+      linkText: 'Go to latest docs.'
+    }
   },
   locales: {
     root: {

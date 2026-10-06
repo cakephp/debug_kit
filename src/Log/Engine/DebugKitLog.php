@@ -62,7 +62,7 @@ class DebugKitLog extends BaseLog
      */
     public function count(): int
     {
-        return array_reduce($this->_logs, function ($sum, $v) {
+        return array_reduce($this->_logs, function (int $sum, array $v): int {
             return $sum + count($v);
         }, 0);
     }

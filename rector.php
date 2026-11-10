@@ -4,13 +4,11 @@ declare(strict_types=1);
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanNot\NegatedAndsToPositiveOrsRector;
 use Rector\CodeQuality\Rector\Catch_\ThrowWithPreviousExceptionRector;
-use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\ClassMethod\ExplicitReturnNullRector;
 use Rector\CodeQuality\Rector\ClassMethod\OptionalParametersAfterRequiredRector;
 use Rector\CodeQuality\Rector\Equal\UseIdenticalOverEqualWithSameTypeRector;
 use Rector\CodeQuality\Rector\Foreach_\ForeachToInArrayRector;
 use Rector\CodeQuality\Rector\FuncCall\CompactToVariablesRector;
-use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\ConsecutiveNullCompareReturnsToNullCoalesceQueueRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Include_\AbsolutizeRequireAndIncludePathRector;
@@ -29,11 +27,9 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveDoubleAssignRector;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
-use Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveEmptyClassMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveMixedDocblockOverruledByNativeTypeRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveNullTagValueNodeRector;
-use Rector\DeadCode\Rector\ClassMethod\RemoveParentDelegatingClassMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveReturnTagIncompatibleWithNativeTypeRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
@@ -66,20 +62,14 @@ use Rector\Php80\Rector\NotIdentical\MbStrContainsRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
-use Rector\TypeDeclaration\Rector\BooleanAnd\BinaryOpNullableToInstanceofRector;
+use Rector\TypeDeclaration\Rector\Class_\ReturnTypeFromMockObjectRector;
 use Rector\TypeDeclaration\Rector\Class_\TypedPropertyFromCreateMockAssignRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddParamStringTypeFromSprintfUseRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeBasedOnPHPUnitDataProviderRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\ArrayParamTypeByMethodCallTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\BoolReturnTypeFromBooleanConstReturnsRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromMockObjectRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictFluentReturnRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedCallRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnUnionTypeRector;
-use Rector\TypeDeclaration\Rector\ClassMethod\ScalarParamTypeByMethodCallTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector;
 use Rector\TypeDeclaration\Rector\Closure\AddClosureNeverReturnTypeRector;
 use Rector\TypeDeclaration\Rector\Closure\ClosureReturnTypeFromAssertInstanceOfRector;
@@ -90,7 +80,6 @@ use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictSetUpRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
-use Rector\TypeDeclaration\Rector\While_\WhileNullableToInstanceofRector;
 
 $cacheDir = getenv('RECTOR_CACHE_DIR') ?: sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'rector';
 
@@ -123,15 +112,12 @@ return RectorConfig::configure()
         ThrowWithPreviousExceptionRector::class,
         ExplicitReturnNullRector::class,
         OptionalParametersAfterRequiredRector::class,
-        CompleteDynamicPropertiesRector::class,
         ForeachToInArrayRector::class,
         CompactToVariablesRector::class,
-        FlipTypeControlToUseExclusiveTypeRector::class,
         ConsecutiveNullCompareReturnsToNullCoalesceQueueRector::class,
         SimplifyIfReturnBoolRector::class,
         AbsolutizeRequireAndIncludePathRector::class,
         IssetOnPropertyObjectToPropertyExistsRector::class,
-        CatchExceptionNameMatchingTypeRector::class,
         CatchExceptionNameMatchingTypeRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
         NewlineBeforeNewAssignSetRector::class,
@@ -169,13 +155,9 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         ReadOnlyPropertyRector::class,
         AddArrowFunctionReturnTypeRector::class,
-        BinaryOpNullableToInstanceofRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
-        AddParamStringTypeFromSprintfUseRector::class,
         AddParamTypeBasedOnPHPUnitDataProviderRector::class,
-        AddVoidReturnTypeWhereNoReturnRector::class,
         BoolReturnTypeFromBooleanConstReturnsRector::class,
-        ParamTypeByMethodCallTypeRector::class,
         ReturnNeverTypeRector::class,
         ReturnTypeFromMockObjectRector::class,
         ReturnTypeFromStrictFluentReturnRector::class,
@@ -188,7 +170,6 @@ return RectorConfig::configure()
         TypedPropertyFromAssignsRector::class,
         TypedPropertyFromStrictConstructorRector::class,
         TypedPropertyFromStrictSetUpRector::class,
-        WhileNullableToInstanceofRector::class,
         RestoreDefaultNullToNullableTypePropertyRector::class,
 
         // Manual - only appliable for part of the code
@@ -209,16 +190,12 @@ return RectorConfig::configure()
         // them is a separate decision from getting CI green again.
         NegatedAndsToPositiveOrsRector::class,
         FixClassCaseSensitivityVarDocblockRector::class,
-        RemoveDuplicatedReturnSelfDocblockRector::class,
         RemoveMixedDocblockOverruledByNativeTypeRector::class,
-        RemoveParentDelegatingClassMethodRector::class,
         RemoveReturnTagIncompatibleWithNativeTypeRector::class,
         RemoveUselessUnionReturnDocblockRector::class,
         RemoveDefaultValueFromAssignedPropertyRector::class,
         RemoveDeadInstanceOfAssertRector::class,
         MbStrContainsRector::class,
-        ArrayParamTypeByMethodCallTypeRector::class,
-        ScalarParamTypeByMethodCallTypeRector::class,
         ClosureReturnTypeFromAssertInstanceOfRector::class,
         AddClosureParamTypeForArrayMapRector::class,
         AddClosureParamTypeFromVariableCallRector::class,

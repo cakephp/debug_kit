@@ -21,6 +21,7 @@ use Cake\Log\Log;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
 use PDOException;
+use function Cake\Database\Expression\notIn;
 
 /**
  * The requests table tracks basic information about each request.
@@ -129,12 +130,12 @@ class RequestsTable extends Table
             }
 
             $query = $this->Panels->deleteQuery()
-                ->where(['request_id NOT IN' => $noPurge]);
+                ->where(['request_id' => notIn($noPurge)]);
             $statement = $query->execute();
             $statement->closeCursor();
 
             $query = $this->deleteQuery()
-                ->where(['id NOT IN' => $noPurge]);
+                ->where(['id' => notIn($noPurge)]);
 
             $statement = $query->execute();
             $statement->closeCursor();
